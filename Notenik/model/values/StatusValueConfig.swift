@@ -1,0 +1,116 @@
+//
+//  StatusValueConfig.swift
+//  Notenik
+//
+//  Created by Herb Bowie on 12/7/18.
+//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//
+
+import Foundation
+
+/// Information about the meaning of status values in the range of 0 through 9
+class StatusValueConfig {
+    
+    var statusOptions : [String] = []
+    
+    var doneThreshold = 6 
+    
+    init() {
+        statusOptions.append("Suggested")        // 0
+        statusOptions.append("Proposed")         // 1
+        statusOptions.append("Approved")         // 2
+        statusOptions.append("Planned")          // 3
+        statusOptions.append("Published")        // 4
+        statusOptions.append("Held")             // 5
+        statusOptions.append("Completed")        // 6
+        statusOptions.append("Canceled")         // 7
+        statusOptions.append("Closed")           // 8
+        statusOptions.append("Deleted")          // 9
+    }
+    
+    convenience init (_ options : String) {
+        self.init()
+        set(options)
+    }
+    
+    
+    /// Sets all of the status values from one passed string
+    ///
+    /// - Parameter options: A string containing a list of digits, each followed by its
+    ///                      corresponding label. Punctuation is optional but may be added
+    ///                      for readability.
+    func set (_ options : String) {
+        clear()
+        var i = -1
+        var label = ""
+        for c in options {
+            if StringUtils.isDigit(c) {
+                set(i: i, label: label)
+                label = ""
+                i = Int(String(c))!
+            } else if StringUtils.isAlpha(c) || StringUtils.isWhitespace(c) {
+                label.append(c)
+            }
+        }
+        set(i: i, label: label)
+    }
+    
+    /// Clear all of the status values
+    func clear() {
+        var i = 0
+        while i <= 9 {
+            statusOptions[i] = ""
+            i += 1
+        }
+    }
+    
+    /// Set the label for a given index
+    func set (i : Int, label: String) {
+        if i >= 0 && i <= 9 {
+            statusOptions[i] = StringUtils.trim(label)
+        }
+    }
+    
+    /// Is this status integer valid?
+    func validStatus(_ i : Int) -> Bool {
+        let label = get(i)
+        return label.count > 0
+    }
+    
+    /// Is this status label (or partial label) valid?
+    func validStatus(_ label : String) -> Bool {
+        let i = get(label)
+        return i >= 0
+    }
+    
+    /// Return the corresponding label for the passed index, or an
+    /// empty string if the index is invalid.
+    func get (_ i : Int) -> String {
+        if i < 0 || i > 9 {
+            return ""
+        } else {
+            return statusOptions[i]
+        }
+    }
+    
+    /// Return the corresponding index for the passed label (or partial label),
+    /// or -1 if the label is invalid. 
+    func get(_ label : String) -> Int {
+        let lower = label.lowercased()
+        var found = false
+        var i = 0
+        while !found && i <= 9 {
+            let nextLabel = statusOptions[i]
+            found = nextLabel.count > 0 && nextLabel.lowercased().hasPrefix(lower)
+            if !found {
+                i += 1
+            }
+        }
+        if found {
+            return i
+        } else {
+            return -1
+        }
+    }
+    
+}
