@@ -1,0 +1,582 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6D121F64B3B00C332ED /* AppDelegate.swift */; };
+		9C60E6D421F64B3B00C332ED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6D321F64B3B00C332ED /* ViewController.swift */; };
+		9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C60E6D521F64B3C00C332ED /* Assets.xcassets */; };
+		9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C60E6D721F64B3C00C332ED /* Main.storyboard */; };
+		9C60E6E521F64B3C00C332ED /* NotenikTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6E421F64B3C00C332ED /* NotenikTests.swift */; };
+		9C60E6F021F64B3C00C332ED /* NotenikUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6EF21F64B3C00C332ED /* NotenikUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9C60E6E121F64B3C00C332ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C60E6C621F64B3B00C332ED /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9C60E6CD21F64B3B00C332ED;
+			remoteInfo = Notenik;
+		};
+		9C60E6EC21F64B3C00C332ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C60E6C621F64B3B00C332ED /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9C60E6CD21F64B3B00C332ED;
+			remoteInfo = Notenik;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9C60E6CE21F64B3B00C332ED /* Notenik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notenik.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C60E6D121F64B3B00C332ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9C60E6D321F64B3B00C332ED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9C60E6D521F64B3C00C332ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9C60E6D821F64B3C00C332ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9C60E6DA21F64B3C00C332ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C60E6DB21F64B3C00C332ED /* Notenik.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Notenik.entitlements; sourceTree = "<group>"; };
+		9C60E6E021F64B3C00C332ED /* NotenikTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotenikTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C60E6E421F64B3C00C332ED /* NotenikTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotenikTests.swift; sourceTree = "<group>"; };
+		9C60E6E621F64B3C00C332ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C60E6EB21F64B3C00C332ED /* NotenikUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotenikUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C60E6EF21F64B3C00C332ED /* NotenikUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotenikUITests.swift; sourceTree = "<group>"; };
+		9C60E6F121F64B3C00C332ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9C60E6CB21F64B3B00C332ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C60E6DD21F64B3C00C332ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C60E6E821F64B3C00C332ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9C60E6C521F64B3B00C332ED = {
+			isa = PBXGroup;
+			children = (
+				9C60E6D021F64B3B00C332ED /* Notenik */,
+				9C60E6E321F64B3C00C332ED /* NotenikTests */,
+				9C60E6EE21F64B3C00C332ED /* NotenikUITests */,
+				9C60E6CF21F64B3B00C332ED /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9C60E6CF21F64B3B00C332ED /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9C60E6CE21F64B3B00C332ED /* Notenik.app */,
+				9C60E6E021F64B3C00C332ED /* NotenikTests.xctest */,
+				9C60E6EB21F64B3C00C332ED /* NotenikUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9C60E6D021F64B3B00C332ED /* Notenik */ = {
+			isa = PBXGroup;
+			children = (
+				9C60E6D121F64B3B00C332ED /* AppDelegate.swift */,
+				9C60E6D321F64B3B00C332ED /* ViewController.swift */,
+				9C60E6D521F64B3C00C332ED /* Assets.xcassets */,
+				9C60E6D721F64B3C00C332ED /* Main.storyboard */,
+				9C60E6DA21F64B3C00C332ED /* Info.plist */,
+				9C60E6DB21F64B3C00C332ED /* Notenik.entitlements */,
+			);
+			path = Notenik;
+			sourceTree = "<group>";
+		};
+		9C60E6E321F64B3C00C332ED /* NotenikTests */ = {
+			isa = PBXGroup;
+			children = (
+				9C60E6E421F64B3C00C332ED /* NotenikTests.swift */,
+				9C60E6E621F64B3C00C332ED /* Info.plist */,
+			);
+			path = NotenikTests;
+			sourceTree = "<group>";
+		};
+		9C60E6EE21F64B3C00C332ED /* NotenikUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9C60E6EF21F64B3C00C332ED /* NotenikUITests.swift */,
+				9C60E6F121F64B3C00C332ED /* Info.plist */,
+			);
+			path = NotenikUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9C60E6CD21F64B3B00C332ED /* Notenik */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C60E6F421F64B3C00C332ED /* Build configuration list for PBXNativeTarget "Notenik" */;
+			buildPhases = (
+				9C60E6CA21F64B3B00C332ED /* Sources */,
+				9C60E6CB21F64B3B00C332ED /* Frameworks */,
+				9C60E6CC21F64B3B00C332ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Notenik;
+			productName = Notenik;
+			productReference = 9C60E6CE21F64B3B00C332ED /* Notenik.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9C60E6DF21F64B3C00C332ED /* NotenikTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C60E6F721F64B3C00C332ED /* Build configuration list for PBXNativeTarget "NotenikTests" */;
+			buildPhases = (
+				9C60E6DC21F64B3C00C332ED /* Sources */,
+				9C60E6DD21F64B3C00C332ED /* Frameworks */,
+				9C60E6DE21F64B3C00C332ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9C60E6E221F64B3C00C332ED /* PBXTargetDependency */,
+			);
+			name = NotenikTests;
+			productName = NotenikTests;
+			productReference = 9C60E6E021F64B3C00C332ED /* NotenikTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9C60E6EA21F64B3C00C332ED /* NotenikUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C60E6FA21F64B3C00C332ED /* Build configuration list for PBXNativeTarget "NotenikUITests" */;
+			buildPhases = (
+				9C60E6E721F64B3C00C332ED /* Sources */,
+				9C60E6E821F64B3C00C332ED /* Frameworks */,
+				9C60E6E921F64B3C00C332ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9C60E6ED21F64B3C00C332ED /* PBXTargetDependency */,
+			);
+			name = NotenikUITests;
+			productName = NotenikUITests;
+			productReference = 9C60E6EB21F64B3C00C332ED /* NotenikUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9C60E6C621F64B3B00C332ED /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "PowerSurge Publishing";
+				TargetAttributes = {
+					9C60E6CD21F64B3B00C332ED = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					9C60E6DF21F64B3C00C332ED = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 9C60E6CD21F64B3B00C332ED;
+					};
+					9C60E6EA21F64B3C00C332ED = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 9C60E6CD21F64B3B00C332ED;
+					};
+				};
+			};
+			buildConfigurationList = 9C60E6C921F64B3B00C332ED /* Build configuration list for PBXProject "Notenik" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9C60E6C521F64B3B00C332ED;
+			productRefGroup = 9C60E6CF21F64B3B00C332ED /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9C60E6CD21F64B3B00C332ED /* Notenik */,
+				9C60E6DF21F64B3C00C332ED /* NotenikTests */,
+				9C60E6EA21F64B3C00C332ED /* NotenikUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9C60E6CC21F64B3B00C332ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */,
+				9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C60E6DE21F64B3C00C332ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C60E6E921F64B3C00C332ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9C60E6CA21F64B3B00C332ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C60E6D421F64B3B00C332ED /* ViewController.swift in Sources */,
+				9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C60E6DC21F64B3C00C332ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C60E6E521F64B3C00C332ED /* NotenikTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C60E6E721F64B3C00C332ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C60E6F021F64B3C00C332ED /* NotenikUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9C60E6E221F64B3C00C332ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9C60E6CD21F64B3B00C332ED /* Notenik */;
+			targetProxy = 9C60E6E121F64B3C00C332ED /* PBXContainerItemProxy */;
+		};
+		9C60E6ED21F64B3C00C332ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9C60E6CD21F64B3B00C332ED /* Notenik */;
+			targetProxy = 9C60E6EC21F64B3C00C332ED /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9C60E6D721F64B3C00C332ED /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C60E6D821F64B3C00C332ED /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9C60E6F221F64B3C00C332ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9C60E6F321F64B3C00C332ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		9C60E6F521F64B3C00C332ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Notenik/Notenik.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W3CJLBABN3;
+				INFOPLIST_FILE = Notenik/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.Notenik;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		9C60E6F621F64B3C00C332ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Notenik/Notenik.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W3CJLBABN3;
+				INFOPLIST_FILE = Notenik/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.Notenik;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+		9C60E6F821F64B3C00C332ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W3CJLBABN3;
+				INFOPLIST_FILE = NotenikTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.NotenikTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Notenik.app/Contents/MacOS/Notenik";
+			};
+			name = Debug;
+		};
+		9C60E6F921F64B3C00C332ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W3CJLBABN3;
+				INFOPLIST_FILE = NotenikTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.NotenikTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Notenik.app/Contents/MacOS/Notenik";
+			};
+			name = Release;
+		};
+		9C60E6FB21F64B3C00C332ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W3CJLBABN3;
+				INFOPLIST_FILE = NotenikUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.NotenikUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_TARGET_NAME = Notenik;
+			};
+			name = Debug;
+		};
+		9C60E6FC21F64B3C00C332ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W3CJLBABN3;
+				INFOPLIST_FILE = NotenikUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.NotenikUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_TARGET_NAME = Notenik;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9C60E6C921F64B3B00C332ED /* Build configuration list for PBXProject "Notenik" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C60E6F221F64B3C00C332ED /* Debug */,
+				9C60E6F321F64B3C00C332ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C60E6F421F64B3C00C332ED /* Build configuration list for PBXNativeTarget "Notenik" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C60E6F521F64B3C00C332ED /* Debug */,
+				9C60E6F621F64B3C00C332ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C60E6F721F64B3C00C332ED /* Build configuration list for PBXNativeTarget "NotenikTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C60E6F821F64B3C00C332ED /* Debug */,
+				9C60E6F921F64B3C00C332ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C60E6FA21F64B3C00C332ED /* Build configuration list for PBXNativeTarget "NotenikUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C60E6FB21F64B3C00C332ED /* Debug */,
+				9C60E6FC21F64B3C00C332ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9C60E6C621F64B3B00C332ED /* Project object */;
+}
