@@ -9,6 +9,7 @@
 import Foundation
 
 class FileIO : NotenikIO {
+
     
     let fileManager = FileManager.default
     
@@ -43,19 +44,28 @@ class FileIO : NotenikIO {
     /// Attempt to open the collection at the provided path.
     ///
     /// - Parameter realm: The realm housing the collection to be opened.
-    /// - Parameter collectionPath: The path identifying the collection within this
+    /// - Parameter collectionPath: The path identifying the collection within this realm
     /// - Returns: A NoteCollection object, if the collection was opened successfully;
     ///            otherwise nil.
     func openCollection(realm : Realm, collectionPath : String) -> NoteCollection? {
+        
+        // Initialization
         notesDict = [String : Note]()
         notesList = [Note]()
         Logger.shared.log(skip: true, indent: 0, level: .normal, message: "Opening Collection")
         self.realm = realm
         self.provider = realm.provider
-        Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Realm: " + realm.path)
-        let realmURL = URL(fileURLWithPath: realm.path)
+        Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Realm:      " + realm.path)
         Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Collection: " + collectionPath)
-        let collectionURL = realmURL.appendingPathComponent(collectionPath)
+        
+        // Let's see if we have an actual path to a usable directory
+        var collectionURL : URL
+        if realm.path == "" || realm.path == " " {
+            collectionURL = URL(fileURLWithPath: collectionPath)
+        } else {
+            let realmURL = URL(fileURLWithPath: realm.path)
+            collectionURL = realmURL.appendingPathComponent(collectionPath)
+        }
         let collectionFullPath = collectionURL.path
         if !fileManager.fileExists(atPath: collectionFullPath) {
             Logger.shared.log(skip: false, indent: 1, level: .moderate,
@@ -67,6 +77,8 @@ class FileIO : NotenikIO {
                               message: "Collection path does not point to a directory")
             return nil
         }
+        
+        // Let's read the directory contents
         collection = NoteCollection(realm: realm)
         collection.path = collectionPath
         
@@ -75,6 +87,7 @@ class FileIO : NotenikIO {
         do {
             let dirContents = try fileManager.contentsOfDirectory(atPath: collectionFullPath)
             
+            // First pass through directory contents -- look for template and info files
             for itemPath in dirContents {
                 let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath, path2: itemPath)
                 let fileName = FileName(itemFullPath)
@@ -88,6 +101,7 @@ class FileIO : NotenikIO {
                     let infoNote = readNote(collection: infoCollection, noteURL: itemURL)
                     if infoNote != nil {
                         print ("Note retrieved")
+                        collection.title = infoNote!.title.value
                         let sortParmStr = infoNote!.getFieldAsString(label: LabelConstants.sortParmCommon)
                         print ("With Sort Parm of \(sortParmStr)")
                         if sortParmStr.count > 0 {
@@ -115,6 +129,7 @@ class FileIO : NotenikIO {
                 }
             }
             
+            // Second pass through directory contents -- look for Notes
             for itemPath in dirContents {
                 let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath, path2: itemPath)
                 let fileName = FileName(itemFullPath)
@@ -183,6 +198,25 @@ class FileIO : NotenikIO {
         set {
             collection.sortParm = newValue
             notesList.sort()
+        }
+    }
+    
+    /// Return the number of notes in the current collection.
+    ///
+    /// - Returns: The number of notes in the current collection
+    var notesCount: Int {
+        return notesList.count
+    }
+    
+    /// Return the note at the specified position in the sorted list, if possible.
+    ///
+    /// - Parameter at: An index value pointing to a note in the list
+    /// - Returns: Either the note at that position, or nil, if the index is out of range.
+    func getNote(at index: Int) -> Note? {
+        if index < 0 || index >= notesCount {
+            return nil
+        } else {
+            return notesList[index]
         }
     }
     

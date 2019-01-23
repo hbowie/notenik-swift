@@ -31,6 +31,19 @@ protocol NotenikIO {
         set 
     }
     
+    /// Return the number of notes in the current collection.
+    ///
+    /// - Returns: The number of notes in the current collection
+    var notesCount: Int {
+        get
+    }
+    
+    /// Return the note at the specified position in the sorted list, if possible.
+    ///
+    /// - Parameter at: An index value pointing to a note in the list
+    /// - Returns: Either the note at that position, or nil, if the index is out of range.
+    func getNote(at: Int) -> Note?
+    
     /// Return the first note in the sorted list, along with its index position.
     ///
     /// If the list is empty, return a nil Note and an index position of -1.
