@@ -23,7 +23,7 @@ class Note : Comparable {
     var fields = [:] as [String: NoteField]
     
     /// Return the Note's Author Value
-    var author : AuthorValue {
+    var author: AuthorValue {
         let val = getFieldAsValue(label: LabelConstants.author)
         if val is AuthorValue {
             return val as! AuthorValue
@@ -33,7 +33,7 @@ class Note : Comparable {
     }
     
     /// Return the Note's Date Value
-    var date : DateValue {
+    var date: DateValue {
         let val = getFieldAsValue(label: LabelConstants.date)
         if val is DateValue {
             return val as! DateValue
@@ -43,7 +43,7 @@ class Note : Comparable {
     }
     
     /// Return the Note's Sequence Value
-    var seq : SeqValue {
+    var seq: SeqValue {
         let val = getFieldAsValue(label: LabelConstants.seq)
         if val is SeqValue {
             return val as! SeqValue
@@ -53,7 +53,7 @@ class Note : Comparable {
     }
     
     /// Return the Note's Status Value
-    var status : StatusValue {
+    var status: StatusValue {
         let val = getFieldAsValue(label: LabelConstants.status)
         if val is StatusValue {
             return val as! StatusValue
@@ -63,12 +63,22 @@ class Note : Comparable {
     }
     
     /// Return the Note's Title Value
-    var title : TitleValue {
+    var title: TitleValue {
         let val = getFieldAsValue(label: LabelConstants.title)
         if val is TitleValue {
             return val as! TitleValue
         } else {
             return TitleValue(val.value)
+        }
+    }
+    
+    /// Return the Note's Tags Value
+    var tags: TagsValue {
+        let val = getFieldAsValue(label: LabelConstants.tags)
+        if val is TagsValue {
+            return val as! TagsValue
+        } else {
+            return TagsValue(val.value)
         }
     }
     
@@ -121,6 +131,11 @@ class Note : Comparable {
         return title.count > 0
     }
     
+    /// Does this note have a non-blank tags field?
+    func hasTags() -> Bool {
+        return tags.count > 0
+    }
+    
     /// Does this Note contain a title?
     func containsTitle() -> Bool {
         return contains(label: LabelConstants.title)
@@ -151,7 +166,6 @@ class Note : Comparable {
         }
     }
     
-
     /// Return the value for the Note field identified by the passed label.
     ///
     /// - Parameter label: The label identifying the desired field.
@@ -169,6 +183,14 @@ class Note : Comparable {
     func getField (label: String) -> NoteField? {
         let fieldLabel = FieldLabel(label)
         return fields[fieldLabel.commonForm]
+    }
+    
+    /// Get the Note Field for a particular Field Definition
+    ///
+    /// - Parameter def: A Field Definition (typically from a Field Dictionary)
+    /// - Returns: The corresponding field within this Note, if one exists for this definition
+    func getField(def: FieldDefinition) -> NoteField? {
+        return fields[def.fieldLabel.commonForm]
     }
     
     /// Add a field to the note.

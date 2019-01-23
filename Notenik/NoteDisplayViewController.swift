@@ -13,29 +13,32 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate {
 
     @IBOutlet var webView: WKWebView!
     
-    override func loadView() {
-        webView = WKWebView()
-        webView.uiDelegate = self
-        view = webView
-        print ("Note Display load view completed")
-    }
+    let noteToHTML = NoteToHTML()
+    
+    // override func loadView() {
+        // webView = WKWebView()
+        
+        // view = webView
+        // print ("Note Display load view completed")
+    // }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print ("Note Display view did load")
+        webView.uiDelegate = self
         // Do view setup here.
     }
     
     func noteSelected(_ note: Note) {
         print ("Note Display note Selected")
         print ("title = \(note.title.value)")
-        var html = "<html><body><p>" + note.title.value + "</p></body></html>"
+        let html = noteToHTML.getHTML(from: note)
         // let url = URL(string: "https://practopians.org")!
         // webView.load(URLRequest(url: url))
-        let nav = webView.loadHTMLString(html, baseURL: nil)
+        let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
         if nav == nil {
             print ("load html String returned nil")
         }
+        // webView.reload()
     }
     
 }
