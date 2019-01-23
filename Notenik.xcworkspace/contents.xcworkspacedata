@@ -5,6 +5,6 @@
       location = "group:Notenik.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:../Down-master/Down.xcodeproj">
    </FileRef>
 </Workspace>

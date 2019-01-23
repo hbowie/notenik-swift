@@ -156,6 +156,8 @@
 		9C60E7C821F6525F00C332ED /* StringValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E7B421F6525F00C332ED /* StringValueTests.swift */; };
 		9C60E7C921F6525F00C332ED /* RecursValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E7B521F6525F00C332ED /* RecursValueTests.swift */; };
 		9C60E7CA21F6525F00C332ED /* FieldLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E7B621F6525F00C332ED /* FieldLabelTests.swift */; };
+		9C95CB1621F9243A0074D3EC /* Down.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C95CB1521F9243A0074D3EC /* Down.framework */; };
+		9C95CB1721F9243A0074D3EC /* Down.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C95CB1521F9243A0074D3EC /* Down.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025121F65AF00027F364 /* NoteListViewController.swift */; };
 		9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
 		9C9A028C21F694090027F364 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C9A028B21F694090027F364 /* notenik-swift-intro */; };
@@ -179,6 +181,20 @@
 			remoteInfo = Notenik;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9C95CB1821F9243A0074D3EC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9C95CB1721F9243A0074D3EC /* Down.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		9C21DB7F21F82D9800A5A08C /* NoteToHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteToHTML.swift; sourceTree = "<group>"; };
@@ -255,6 +271,7 @@
 		9C60E7B421F6525F00C332ED /* StringValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringValueTests.swift; sourceTree = "<group>"; };
 		9C60E7B521F6525F00C332ED /* RecursValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursValueTests.swift; sourceTree = "<group>"; };
 		9C60E7B621F6525F00C332ED /* FieldLabelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldLabelTests.swift; sourceTree = "<group>"; };
+		9C95CB1521F9243A0074D3EC /* Down.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Down.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C9A025121F65AF00027F364 /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
 		9C9A028B21F694090027F364 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../../Notenik/notenik-swift-intro"; sourceTree = "<group>"; };
@@ -265,6 +282,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C95CB1621F9243A0074D3EC /* Down.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,10 +306,12 @@
 		9C60E6C521F64B3B00C332ED = {
 			isa = PBXGroup;
 			children = (
+				9C95CB1521F9243A0074D3EC /* Down.framework */,
 				9C60E6D021F64B3B00C332ED /* Notenik */,
 				9C60E6E321F64B3C00C332ED /* NotenikTests */,
 				9C60E6EE21F64B3C00C332ED /* NotenikUITests */,
 				9C60E6CF21F64B3B00C332ED /* Products */,
+				9C65394E21F91EBB00012184 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -448,6 +468,13 @@
 			path = io;
 			sourceTree = "<group>";
 		};
+		9C65394E21F91EBB00012184 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -458,6 +485,7 @@
 				9C60E6CA21F64B3B00C332ED /* Sources */,
 				9C60E6CB21F64B3B00C332ED /* Frameworks */,
 				9C60E6CC21F64B3B00C332ED /* Resources */,
+				9C95CB1821F9243A0074D3EC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -580,7 +608,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
 
 /* Begin PBXSourcesBuildPhase section */
 		9C60E6CA21F64B3B00C332ED /* Sources */ = {
@@ -903,6 +930,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Mobile\\ Documents/com~apple~CloudDocs/Xcode/frameworks",
+				);
 				INFOPLIST_FILE = Notenik/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -922,6 +953,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Mobile\\ Documents/com~apple~CloudDocs/Xcode/frameworks",
+				);
 				INFOPLIST_FILE = Notenik/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
