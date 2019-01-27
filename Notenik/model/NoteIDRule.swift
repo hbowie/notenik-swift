@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum NoteIDRule : Int {
+enum NoteIDRule: Int {
     case fromTitle      = 0
     case fromDate       = 1
 }

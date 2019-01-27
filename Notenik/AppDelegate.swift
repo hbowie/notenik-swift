@@ -11,12 +11,19 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-
+    let controller : CollectionController = CollectionController()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        controller.startup()
     }
 
+    @IBAction func menuFileOpenAction(_ sender: NSMenuItem) {
+        
+        controller.userRequestsOpenCollection()
+
+
+    }
+    
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
@@ -26,5 +33,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
 
+    
 }
 

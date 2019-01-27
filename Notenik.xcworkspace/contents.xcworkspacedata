@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Notenik.xcodeproj">
+      location = "group:/Users/hbowie/Library/Mobile Documents/com~apple~CloudDocs/Xcode/Notenik/Notenik.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:../Down-master/Down.xcodeproj">

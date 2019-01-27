@@ -52,6 +52,8 @@ class FileIO : NotenikIO {
         // Initialization
         notesDict = [String : Note]()
         notesList = [Note]()
+        var templateFound = false
+        var infoFound = false
         Logger.shared.log(skip: true, indent: 0, level: .normal, message: "Opening Collection")
         self.realm = realm
         self.provider = realm.provider
@@ -92,8 +94,6 @@ class FileIO : NotenikIO {
                 let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath, path2: itemPath)
                 let fileName = FileName(itemFullPath)
                 let itemURL = URL(fileURLWithPath: itemFullPath)
-                var templateFound = false
-                var infoFound = false
                 if fileName.infofile {
                     print ("Apparent Info File found at \(itemPath)")
                     let infoCollection = NoteCollection(realm: realm)
@@ -165,10 +165,17 @@ class FileIO : NotenikIO {
         } catch let error {
             Logger.shared.log (skip: false, indent: 1, level: .moderate,
                                message: "Failed reading contents of directory: \(error)")
+            return nil
         }
-        Logger.shared.log(skip: false, indent: 1, level: .normal,
-                          message: "\(notesRead) Notes loaded for the Collection")
-        return collection
+        if (notesRead == 0 && !infoFound && !templateFound) {
+            Logger.shared.log(skip: false, indent: 1, level: .concerning,
+                              message: "This folder does not seem to contain a valid Collection")
+            return nil
+        } else {
+            Logger.shared.log(skip: false, indent: 1, level: .normal,
+                              message: "\(notesRead) Notes loaded for the Collection")
+            return collection
+        }
     }
     
     /// Read a note from disk.

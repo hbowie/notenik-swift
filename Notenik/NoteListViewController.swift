@@ -45,14 +45,32 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
         return io.notesCount
     }
     
+    /// Supply the value for a particular cell in the table.
+    ///
+    /// - Parameters:
+    ///   - tableView: A Table view for the table.
+    ///   - tableColumn: A description of the desired column.
+    ///   - row: An index pointing to the desired row of the table.
+    /// - Returns: The Cell View with the appropriate value set.
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        
+        // Try to get the appropriate cell view
         guard let cellView = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTableCellView else {
             return nil
         }
         
         let note = io.getNote(at: row)
+        
         if note != nil {
-            cellView.textField?.stringValue = note!.title.value
+            if tableColumn?.title == "Title" {
+                cellView.textField?.stringValue = note!.title.value
+            } else if tableColumn?.title == "Seq" {
+                cellView.textField?.stringValue = note!.seq.value
+            } else if tableColumn?.title == "X" {
+                cellView.textField?.stringValue = note!.status.doneX(config: note!.collection.statusConfig)
+            } else if tableColumn?.title == "Date" {
+                cellView.textField?.stringValue = note!.date.value
+            }
         }
         
         return cellView
