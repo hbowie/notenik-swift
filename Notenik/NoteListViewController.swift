@@ -10,39 +10,47 @@ import Cocoa
 
 class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
+    var collectionWindowController: CollectionWindowController?
+    var notenikIO: NotenikIO?
+   
     @IBOutlet var tableView: NSTableView!
     
-    var io: NotenikIO = FileIO()
-    var collection: NoteCollection?
+    var window: CollectionWindowController? {
+        get {
+            return collectionWindowController
+        }
+        set {
+            collectionWindowController = newValue
+        }
+    }
+    
+    var io: NotenikIO? {
+        get {
+            return notenikIO
+        }
+        set {
+            notenikIO = newValue
+            guard notenikIO != nil && notenikIO!.collection != nil else {
+                return
+            }
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        var provider = io.getProvider()
-        
-        var realm = Realm(provider: provider)
-        realm.name = "Herb Bowie"
-        realm.path = ""
-        
-        let path = Bundle.main.resourcePath! + "/notenik-swift-intro"
-        
-        collection = io.openCollection(realm: realm, collectionPath: path)
-        io.sortParm = .title
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        if collection == nil {
-            self.view.window?.title = "Current Collection"
-        } else if collection?.title != "" {
-            self.view.window?.title = collection!.title
-        } else {
-            self.view.window?.title = collection!.path
-        }
     }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return io.notesCount
+        if let notesCount = notenikIO?.notesCount {
+            return notesCount
+        } else {
+            return 0
+        }
     }
     
     /// Supply the value for a particular cell in the table.
@@ -59,17 +67,15 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
             return nil
         }
         
-        let note = io.getNote(at: row)
-        
-        if note != nil {
+        if let note = notenikIO?.getNote(at: row) {
             if tableColumn?.title == "Title" {
-                cellView.textField?.stringValue = note!.title.value
+                cellView.textField?.stringValue = note.title.value
             } else if tableColumn?.title == "Seq" {
-                cellView.textField?.stringValue = note!.seq.value
+                cellView.textField?.stringValue = note.seq.value
             } else if tableColumn?.title == "X" {
-                cellView.textField?.stringValue = note!.status.doneX(config: note!.collection.statusConfig)
+                cellView.textField?.stringValue = note.status.doneX(config: note.collection.statusConfig)
             } else if tableColumn?.title == "Date" {
-                cellView.textField?.stringValue = note!.date.value
+                cellView.textField?.stringValue = note.date.value
             }
         }
         
@@ -78,18 +84,13 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
     
     func tableViewSelectionDidChange(_ notification: Notification) {
         let row = tableView.selectedRow
-        guard row != -1 else {
+        guard row >= 0 else {
             return
         }
-        let note = io.getNote(at: row)
-        guard note != nil else {
-            return
-        }
-        guard let splitVC = parent as? NSSplitViewController else {
-            return
-        }
-        if let displayVC = splitVC.children[1] as? NoteDisplayViewController {
-            displayVC.noteSelected(note!)
+        if let note = notenikIO?.getNote(at: row) {
+            if collectionWindowController != nil {
+                collectionWindowController!.select(note: note)
+            }
         }
     }
     

@@ -10,7 +10,7 @@ import Cocoa
 import WebKit
 
 class NoteDisplayViewController: NSViewController, WKUIDelegate {
-
+    
     @IBOutlet var webView: WKWebView!
     
     let noteDisplay = NoteDisplay()
@@ -28,15 +28,14 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate {
         // Do view setup here.
     }
     
-    func noteSelected(_ note: Note) {
-        print ("Note Display note Selected")
-        print ("title = \(note.title.value)")
+    func select(note: Note) {
         let html = noteDisplay.display(note)
         // let url = URL(string: "https://practopians.org")!
         // webView.load(URLRequest(url: url))
         let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
         if nav == nil {
-            print ("load html String returned nil")
+            Logger.shared.log(skip: false, indent: 0, level: LogLevel.moderate,
+                              message: "load html String returned nil")
         }
         // webView.reload()
     }

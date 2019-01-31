@@ -10,6 +10,8 @@ import Foundation
 
 protocol NotenikIO {
     
+    var collection: NoteCollection? { get }
+    
     /// Get information about the provider.
     func getProvider() -> Provider
     
@@ -24,6 +26,9 @@ protocol NotenikIO {
     /// - Returns: A NoteCollection object, if the collection was opened successfully;
     ///            otherwise nil.
     func openCollection(realm : Realm, collectionPath : String) -> NoteCollection?
+    
+    /// Close the currently collection, if one is open
+    func closeCollection()
     
     /// Get or Set the NoteSortParm for this collection.
     var sortParm: NoteSortParm {

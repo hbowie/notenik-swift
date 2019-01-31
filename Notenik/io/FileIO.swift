@@ -10,14 +10,16 @@ import Foundation
 
 class FileIO : NotenikIO {
 
-    
     let fileManager = FileManager.default
     
     var provider    : Provider = Provider()
     var realm       : Realm
-    var collection  : NoteCollection
+    var collection  : NoteCollection?
+    var collectionOpen = false
     var notesDict = [String : Note]()
     var notesList = [Note]()
+    var templateFound = false
+    var infoFound = false
     
     /// Default initialization
     init() {
@@ -29,6 +31,7 @@ class FileIO : NotenikIO {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let docDir = paths[0]
         print ("Documents Directory = " + docDir.absoluteString)
+        closeCollection()
     }
     
     /// Get information about the provider.
@@ -50,10 +53,7 @@ class FileIO : NotenikIO {
     func openCollection(realm : Realm, collectionPath : String) -> NoteCollection? {
         
         // Initialization
-        notesDict = [String : Note]()
-        notesList = [Note]()
-        var templateFound = false
-        var infoFound = false
+        closeCollection()
         Logger.shared.log(skip: true, indent: 0, level: .normal, message: "Opening Collection")
         self.realm = realm
         self.provider = realm.provider
@@ -82,7 +82,7 @@ class FileIO : NotenikIO {
         
         // Let's read the directory contents
         collection = NoteCollection(realm: realm)
-        collection.path = collectionPath
+        collection!.path = collectionPath
         
         var notesRead = 0
         
@@ -101,7 +101,7 @@ class FileIO : NotenikIO {
                     let infoNote = readNote(collection: infoCollection, noteURL: itemURL)
                     if infoNote != nil {
                         print ("Note retrieved")
-                        collection.title = infoNote!.title.value
+                        collection!.title = infoNote!.title.value
                         let sortParmStr = infoNote!.getFieldAsString(label: LabelConstants.sortParmCommon)
                         print ("With Sort Parm of \(sortParmStr)")
                         if sortParmStr.count > 0 {
@@ -109,7 +109,7 @@ class FileIO : NotenikIO {
                             if sortParmInt != nil {
                                 let sortParm : NoteSortParm? = NoteSortParm(rawValue: sortParmInt!)
                                 if sortParm != nil {
-                                    collection.sortParm = sortParm!
+                                    collection!.sortParm = sortParm!
                                     print ("Setting sort parm to \(sortParmStr)")
                                     infoFound = true
                                 }
@@ -118,10 +118,10 @@ class FileIO : NotenikIO {
                     }
                     
                 } else if fileName.template {
-                    let templateNote = readNote(collection: collection, noteURL: itemURL)
-                    if templateNote != nil && templateNote!.fields.count > 0 && collection.dict.count > 0 {
+                    let templateNote = readNote(collection: collection!, noteURL: itemURL)
+                    if templateNote != nil && templateNote!.fields.count > 0 && collection!.dict.count > 0 {
                         templateFound = true
-                        collection.dict.lock()
+                        collection!.dict.lock()
                     }
                 }
                 if infoFound && templateFound {
@@ -145,7 +145,7 @@ class FileIO : NotenikIO {
                 } else if fileName.template {
                     // print ("- Is a Template")
                 } else if fileName.noteExt {
-                    let note = readNote(collection: collection, noteURL: itemURL)
+                    let note = readNote(collection: collection!, noteURL: itemURL)
                     if note != nil && note!.hasTitle() {
                         let noteAdded = addNoteToMemory(note!)
                         if noteAdded {
@@ -178,6 +178,16 @@ class FileIO : NotenikIO {
         }
     }
     
+    /// Close the currently collection, if one is open
+    func closeCollection() {
+        collection = nil
+        collectionOpen = false
+        notesDict = [String : Note]()
+        notesList = [Note]()
+        templateFound = false
+        infoFound = false
+    }
+    
     /// Read a note from disk.
     ///
     /// - Parameter noteURL: The complete URL pointing to the note file to be read.
@@ -200,10 +210,10 @@ class FileIO : NotenikIO {
     /// Get or Set the NoteSortParm for this collection. 
     var sortParm: NoteSortParm {
         get {
-            return collection.sortParm
+            return collection!.sortParm
         }
         set {
-            collection.sortParm = newValue
+            collection!.sortParm = newValue
             notesList.sort()
         }
     }

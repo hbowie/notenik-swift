@@ -11,17 +11,14 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    let controller : CollectionController = CollectionController()
+    let juggler : CollectionJuggler = CollectionJuggler.shared
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        controller.startup()
+        juggler.startup()
     }
 
     @IBAction func menuFileOpenAction(_ sender: NSMenuItem) {
-        
-        controller.userRequestsOpenCollection()
-
-
+        juggler.userRequestsOpenCollection()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
