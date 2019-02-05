@@ -39,16 +39,25 @@ class CollectionWindowController: NSWindowController {
                 window!.title = "No Collection to Display"
                 return
             }
+            
             if notenikIO!.collection!.title == "" {
                 window!.title = notenikIO!.collection!.path
             } else {
                 window!.title = notenikIO!.collection!.title
             }
+            
             if listVC == nil {
                 Logger.shared.log(skip: false, indent: 0, level: LogLevel.severe,
                                   message: "NoteListViewController is nil!")
             } else {
                 listVC!.io = newValue
+            }
+            
+            if tagsVC == nil {
+                Logger.shared.log(skip: false, indent: 0, level: LogLevel.severe,
+                                  message:"NoteTagsView Controller is nil!")
+            } else {
+                tagsVC!.io = newValue
             }
         }
     }
@@ -76,6 +85,7 @@ class CollectionWindowController: NSWindowController {
             listVC!.window = self
             tagsItem = collectionTabs?.tabViewItems[1]
             tagsVC = tagsItem?.viewController as? NoteTagsViewController
+            tagsVC!.window = self
             displayItem = noteTabs?.tabViewItems[0]
             displayVC = displayItem?.viewController as? NoteDisplayViewController
             editItem = noteTabs?.tabViewItems[1]

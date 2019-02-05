@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum FieldType : Int {
+enum FieldType: Int {
     case defaultType    = 0
     case string         = 1
     case title          = 2

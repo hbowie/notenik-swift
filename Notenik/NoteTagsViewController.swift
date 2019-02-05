@@ -8,11 +8,109 @@
 
 import Cocoa
 
-class NoteTagsViewController: NSViewController {
+class NoteTagsViewController: NSViewController, NSOutlineViewDataSource, NSOutlineViewDelegate {
+    
+    var collectionWindowController: CollectionWindowController?
+    var notenikIO: NotenikIO?
 
+    @IBOutlet var outlineView: NSOutlineView!
+    
+    var window: CollectionWindowController? {
+        get {
+            return collectionWindowController
+        }
+        set {
+            collectionWindowController = newValue
+        }
+    }
+    
+    var io: NotenikIO? {
+        get {
+            return notenikIO
+        }
+        set {
+            notenikIO = newValue
+            guard notenikIO != nil && notenikIO!.collection != nil else {
+                return
+            }
+            outlineView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        outlineView.dataSource = self
         // Do view setup here.
+    }
+    
+    /// How many children does this node have?
+    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+        if let node = item as? TagsNode {
+            return node.children.count
+        }
+        if notenikIO == nil {
+            return 0
+        } else {
+            return notenikIO!.getTagsNodeRoot().children.count
+        }
+    }
+    
+    /// Return the child of a node at the given index position.
+    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+        if let node = item as? TagsNode {
+            return node.children[index]
+        }
+        
+        return notenikIO!.getTagsNodeRoot().children[index]
+    }
+    
+    /// Is this node expandable?
+    func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+        if let node = item as? TagsNode {
+            return node.children.count > 0
+        }
+        
+        return notenikIO!.getTagsNodeRoot().children.count > 0
+    }
+    
+    /// Return a View for this Node
+    func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+        var view: NSTableCellView?
+        
+        if let node = item as? TagsNode {
+            let cellID = NSUserInterfaceItemIdentifier("tagsCell")
+            view = outlineView.makeView(withIdentifier: cellID, owner: self) as? NSTableCellView
+            if let textField = view?.textField {
+                switch node.type {
+                case .root:
+                    textField.stringValue = notenikIO!.collection!.path
+                case .tag:
+                    textField.stringValue = node.tag!
+                case .note:
+                    textField.stringValue = node.note!.title.value
+                }
+                textField.sizeToFit()
+            }
+        }
+        // More code here
+        return view
+    }
+    
+    /// Show the user the details for the row s/he selected
+    func outlineViewSelectionDidChange(_ notification: Notification) {
+        
+        guard let outlineView = notification.object as? NSOutlineView else {
+            return
+        }
+        
+        let selectedIndex = outlineView.selectedRow
+        if let node = outlineView.item(atRow: selectedIndex) as? TagsNode {
+            if node.type == TagsNodeType.note {
+                if collectionWindowController != nil {
+                    collectionWindowController!.select(note: node.note!)
+                }
+            }
+        }
     }
     
 }

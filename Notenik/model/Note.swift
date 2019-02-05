@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Note : Comparable {
+class Note: Comparable {
     
     static func < (lhs: Note, rhs: Note) -> Bool {
         return lhs.sortKey < rhs.sortKey

@@ -72,4 +72,6 @@ protocol NotenikIO {
     /// - Returns: A tuple containing the prior note, along with its index position.
     ///            if we're outside the bounds of the list, then return a nil Note and an index of -1.
     func priorNote(_ position : NotePosition) -> (Note?, NotePosition)
+    
+    func getTagsNodeRoot() -> TagsNode
 }

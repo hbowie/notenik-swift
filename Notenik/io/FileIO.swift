@@ -16,8 +16,7 @@ class FileIO : NotenikIO {
     var realm       : Realm
     var collection  : NoteCollection?
     var collectionOpen = false
-    var notesDict = [String : Note]()
-    var notesList = [Note]()
+    var bunch       : BunchOfNotes = BunchOfNotes()
     var templateFound = false
     var infoFound = false
     
@@ -83,6 +82,7 @@ class FileIO : NotenikIO {
         // Let's read the directory contents
         collection = NoteCollection(realm: realm)
         collection!.path = collectionPath
+        bunch = BunchOfNotes(collection: collection!)
         
         var notesRead = 0
         
@@ -147,7 +147,7 @@ class FileIO : NotenikIO {
                 } else if fileName.noteExt {
                     let note = readNote(collection: collection!, noteURL: itemURL)
                     if note != nil && note!.hasTitle() {
-                        let noteAdded = addNoteToMemory(note!)
+                        let noteAdded = bunch.add(note: note!)
                         if noteAdded {
                             notesRead += 1
                         } else {
@@ -182,8 +182,7 @@ class FileIO : NotenikIO {
     func closeCollection() {
         collection = nil
         collectionOpen = false
-        notesDict = [String : Note]()
-        notesList = [Note]()
+        bunch.close()
         templateFound = false
         infoFound = false
     }
@@ -214,7 +213,7 @@ class FileIO : NotenikIO {
         }
         set {
             collection!.sortParm = newValue
-            notesList.sort()
+            bunch.sortParm = newValue
         }
     }
     
@@ -222,7 +221,7 @@ class FileIO : NotenikIO {
     ///
     /// - Returns: The number of notes in the current collection
     var notesCount: Int {
-        return notesList.count
+      return bunch.count
     }
     
     /// Return the note at the specified position in the sorted list, if possible.
@@ -230,35 +229,21 @@ class FileIO : NotenikIO {
     /// - Parameter at: An index value pointing to a note in the list
     /// - Returns: Either the note at that position, or nil, if the index is out of range.
     func getNote(at index: Int) -> Note? {
-        if index < 0 || index >= notesCount {
-            return nil
-        } else {
-            return notesList[index]
-        }
+        return bunch.getNote(at: index)
     }
     
     /// Return the first note in the sorted list, along with its index position.
     ///
     /// If the list is empty, return a nil Note and an index position of -1.
     func firstNote() -> (Note?, NotePosition) {
-        if notesList.count == 0 {
-            
-            return (nil, NotePosition(index: -1))
-        } else {
-            return (notesList[0], NotePosition(index: 0))
-        }
+        return bunch.firstNote()
     }
     
     /// Return the last note in the sorted list, along with its index position
     ///
     /// if the list is empty, return a nil Note and an index position of -1.
     func lastNote() -> (Note?, NotePosition) {
-        if notesList.count == 0 {
-            return (nil, NotePosition(index: -1))
-        } else {
-            let index = notesList.count - 1
-            return (notesList[index], NotePosition(index: index))
-        }
+        return bunch.lastNote()
     }
     
 
@@ -268,12 +253,7 @@ class FileIO : NotenikIO {
     /// - Returns: A tuple containing the next note, along with its index position.
     ///            If we're at the end of the list, then return a nil Note and an index of -1.
     func nextNote(_ position : NotePosition) -> (Note?, NotePosition) {
-        let nextIndex = position.index + 1
-        if nextIndex >= notesList.count {
-            return (nil, NotePosition(index: -1))
-        } else {
-            return (notesList[nextIndex], NotePosition(index: nextIndex))
-        }
+        return bunch.nextNote(position)
     }
     
     /// Return the prior note in the sorted list, along with its index position.
@@ -282,67 +262,11 @@ class FileIO : NotenikIO {
     /// - Returns: A tuple containing the prior note, along with its index position.
     ///            if we're outside the bounds of the list, then return a nil Note and an index of -1.
     func priorNote(_ position : NotePosition) -> (Note?, NotePosition) {
-        let priorIndex = position.index - 1
-        if priorIndex < 0 || priorIndex >= notesList.count {
-            return (nil, NotePosition(index: -1))
-        } else {
-            return (notesList[priorIndex], NotePosition(index: priorIndex))
-        }
+        return bunch.priorNote(position)
     }
     
-    /// Add a new Note to memory, so it can be accessed later
-    ///
-    /// - Parameter note: The note to be added, whether from a data store or from a user
-    /// - Returns: True if the note was added to the collection, false if it could not be added.
-    func addNoteToMemory(_ note : Note) -> Bool {
-        let noteID = note.noteID
-        let existingNote = notesDict[noteID]
-        if existingNote != nil {
-            return false
-        } else {
-            notesDict[noteID] = note
-            let (index, exactMatch) = searchList(note.sortKey)
-            if index < 0 {
-                notesList.insert(note, at: 0)
-            } else if index >= notesList.count {
-                notesList.append(note)
-            } else {
-                notesList.insert(note, at: index + 1)
-            }
-            return true
-        }
+    func getTagsNodeRoot() -> TagsNode {
+        return bunch.notesTree.root
     }
     
-    /// Search the list to position the index at a matching entry, or the
-    /// last entry with a lower key.
-    ///
-    /// - Parameter sortKey: The sort key we are trying to position.
-    /// - Returns: A tuple containing the index position, and a boolean to indicate whether
-    ///            an exact match was found.
-    func searchList(_ sortKey : String) -> (Int, Bool) {
-        var index = 0
-        var exactMatch = false
-        if notesList.count == 0 {
-            index = -1
-            exactMatch = false
-        } else if sortKey < notesList[0].sortKey {
-            index = -1
-            exactMatch = false
-        } else if sortKey > notesList[notesList.count - 1].sortKey {
-            index = notesList.count - 1
-            exactMatch = false
-        } else {
-            index = 0
-            while sortKey > notesList[index].sortKey && index < notesList.count {
-                index += 1
-            }
-            index -= 1
-            if index < 0 || index >= notesList.count {
-                exactMatch = false
-            } else {
-                exactMatch = sortKey == notesList[index].sortKey
-            }
-        }
-        return (index, exactMatch)
-    }
 }
