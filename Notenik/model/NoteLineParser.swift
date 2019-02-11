@@ -9,7 +9,7 @@
 import Foundation
 
 /// Read lines in the Notenik format, and create a Note from their content.
-class LineParser {
+class NoteLineParser {
     
     var lineReader   : LineReader
     var note         : Note

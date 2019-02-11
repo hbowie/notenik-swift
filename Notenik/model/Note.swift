@@ -82,6 +82,17 @@ class Note: Comparable {
         }
     }
     
+    /// Return the Body of the Note
+    var body: LongTextValue {
+        let val = getFieldAsValue(label: LabelConstants.body)
+        if val is LongTextValue {
+            return val as! LongTextValue
+        } else {
+            return LongTextValue(val.value)
+        }
+    }
+    
+    
     /// Initialize without any input
     init() {
         collection = NoteCollection()
@@ -136,6 +147,11 @@ class Note: Comparable {
         return tags.count > 0
     }
     
+    /// Does this note have a non-blank body?
+    func hasBody() -> Bool {
+        return body.count > 0
+    }
+    
     /// Does this Note contain a title?
     func containsTitle() -> Bool {
         return contains(label: LabelConstants.title)
@@ -144,6 +160,11 @@ class Note: Comparable {
     /// Get the Title field, if one exists
     func getTitleAsField() -> NoteField? {
         return getField(label: LabelConstants.title)
+    }
+    
+    /// Get the body field, if one exists
+    func getBodyAsField() -> NoteField? {
+        return getField(label: LabelConstants.body)
     }
     
     /// See if the note contains a field with the given label.

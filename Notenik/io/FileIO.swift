@@ -196,7 +196,7 @@ class FileIO : NotenikIO {
         do {
             let itemContents = try String(contentsOf: noteURL, encoding: .utf8)
             let lineReader = BigStringReader(itemContents)
-            let parser = LineParser(collection: collection, lineReader: lineReader)
+            let parser = NoteLineParser(collection: collection, lineReader: lineReader)
             let note = parser.getNote()
             return note
         } catch {

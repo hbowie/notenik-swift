@@ -10,10 +10,12 @@ import Cocoa
 
 class CollectionWindowController: NSWindowController {
     
+    @IBOutlet var shareButton: NSButton!
+    
     let juggler : CollectionJuggler = CollectionJuggler.shared
     var notenikIO: NotenikIO?
     var windowNumber = 0
-    var splitViewController: NSSplitViewController?
+    var splitViewController: NoteSplitViewController?
     
         var collectionItem: NSSplitViewItem?
             var collectionTabs: NSTabViewController?
@@ -64,14 +66,15 @@ class CollectionWindowController: NSWindowController {
 
     override func windowDidLoad() {
         super.windowDidLoad()
+        shareButton.sendAction(on: .leftMouseDown)
         getWindowComponents()
         juggler.registerWindow(window: self)
     }
     
     /// Let's grab the key components of the window and store them for easier access later
     func getWindowComponents() {
-        if contentViewController != nil && contentViewController is NSSplitViewController {
-            splitViewController = contentViewController as? NSSplitViewController
+        if contentViewController != nil && contentViewController is NoteSplitViewController {
+            splitViewController = contentViewController as? NoteSplitViewController
         }
         if splitViewController != nil {
             collectionItem = splitViewController!.splitViewItems[0]
@@ -94,6 +97,9 @@ class CollectionWindowController: NSWindowController {
     }
     
     func select(note: Note) {
+        if splitViewController != nil {
+            splitViewController!.select(note: note)
+        }
         if displayVC != nil {
             displayVC!.select(note: note)
         }

@@ -691,11 +691,42 @@
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <value key="minSize" type="size" width="480" height="270"/>
+                        <toolbar key="toolbar" implicitIdentifier="D40306C0-D638-4F94-8D78-F3B60FAB80DD" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="bDX-x7-V0g">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="cCQ-Ex-nRC"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="XBJ-bT-dLm"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="Ico-l8-QuA"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="w8q-4o-bIy"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="uP7-Y2-WeW"/>
+                                <toolbarItem implicitItemIdentifier="F26549F0-21EC-463F-9229-446038A2F902" label="Share" paletteLabel="" image="NSShareTemplate" sizingBehavior="auto" id="z6q-Rn-8x2">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="UHS-eX-f3H">
+                                        <rect key="frame" x="0.0" y="14" width="50" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSShareTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mNk-JT-Fjy">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="shareClicked:" target="Oky-zY-oP4" id="PKp-Eu-VWV"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="cCQ-Ex-nRC"/>
+                                <toolbarItem reference="XBJ-bT-dLm"/>
+                                <toolbarItem reference="uP7-Y2-WeW"/>
+                                <toolbarItem reference="Ico-l8-QuA"/>
+                                <toolbarItem reference="z6q-Rn-8x2"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="shareButton" destination="UHS-eX-f3H" id="4vI-lQ-GXa"/>
                         <segue destination="ysx-uj-1Qh" kind="relationship" relationship="window.shadowedContentViewController" id="Yt8-Lj-4g6"/>
                     </connections>
                 </windowController>
@@ -703,10 +734,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--Split View Controller-->
+        <!--Note Split View Controller-->
         <scene sceneID="dNv-Yq-by4">
             <objects>
-                <splitViewController id="ysx-uj-1Qh" sceneMemberID="viewController">
+                <splitViewController id="ysx-uj-1Qh" customClass="NoteSplitViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="KPu-tD-S6y"/>
                         <splitViewItem id="usq-6U-rIp"/>
@@ -1012,4 +1043,7 @@
             <point key="canvasLocation" x="1321" y="1579"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSShareTemplate" width="11" height="16"/>
+    </resources>
 </document>
