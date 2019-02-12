@@ -14,6 +14,16 @@ class NotePosition {
     
     var index = 0
     
+    /// Is this a valid position pointing to an actual Note?
+    var valid: Bool {
+        return index >= 0
+    }
+    
+    /// Is this position that doesn't actually point to a Note?
+    var invalid: Bool {
+        return index < 0
+    }
+    
     /// Default initializer with index = 0.
     init() {
         

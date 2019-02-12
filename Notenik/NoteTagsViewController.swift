@@ -98,16 +98,13 @@ class NoteTagsViewController: NSViewController, NSOutlineViewDataSource, NSOutli
     
     /// Show the user the details for the row s/he selected
     func outlineViewSelectionDidChange(_ notification: Notification) {
-        
-        guard let outlineView = notification.object as? NSOutlineView else {
-            return
-        }
+        guard let outlineView = notification.object as? NSOutlineView else { return }
         
         let selectedIndex = outlineView.selectedRow
         if let node = outlineView.item(atRow: selectedIndex) as? TagsNode {
             if node.type == TagsNodeType.note {
                 if collectionWindowController != nil {
-                    collectionWindowController!.select(note: node.note!)
+                    collectionWindowController!.select(note: node.note!, position: nil, source: .tree)
                 }
             }
         }

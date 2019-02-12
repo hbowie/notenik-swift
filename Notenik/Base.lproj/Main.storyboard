@@ -691,7 +691,7 @@
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <value key="minSize" type="size" width="480" height="270"/>
-                        <toolbar key="toolbar" implicitIdentifier="D40306C0-D638-4F94-8D78-F3B60FAB80DD" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="bDX-x7-V0g">
+                        <toolbar key="toolbar" implicitIdentifier="D40306C0-D638-4F94-8D78-F3B60FAB80DD" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="bDX-x7-V0g">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="cCQ-Ex-nRC"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="XBJ-bT-dLm"/>
@@ -712,8 +712,42 @@
                                         </connections>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="57FC933C-64C5-4909-A7E5-39BD65095ABD" label="Custom View" paletteLabel="Custom View" sizingBehavior="auto" id="nQC-YT-8yD">
+                                    <nil key="toolTip"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" id="Ngm-9g-E62">
+                                        <rect key="frame" x="0.0" y="14" width="101" height="27"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="VKS-nS-Pxw">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment toolTip="Go Back to Top of the List" image="NSHomeTemplate" width="32"/>
+                                                <segment toolTip="Go Back to Prior Note in the List" image="NSGoLeftTemplate" width="32" tag="1"/>
+                                                <segment toolTip="Go to Next Note in the List" image="NSGoRightTemplate"/>
+                                            </segments>
+                                        </segmentedCell>
+                                        <connections>
+                                            <action selector="navigationClicked:" target="Oky-zY-oP4" id="pYT-Ya-Dzx"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="55EE9762-851D-4951-8006-22CE8C8951F1" label="Custom View" paletteLabel="Custom View" sizingBehavior="auto" id="TCK-3s-X5T">
+                                    <nil key="toolTip"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" id="WwU-9W-6dI">
+                                        <rect key="frame" x="1" y="14" width="75" height="27"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="vnT-ea-Zqa">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment toolTip="Prepare to Add a New Note" image="NSAddTemplate" width="32"/>
+                                                <segment toolTip="Remove the Currently Selected Note" image="NSRemoveTemplate" width="32" tag="1"/>
+                                            </segments>
+                                        </segmentedCell>
+                                    </segmentedControl>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
+                                <toolbarItem reference="nQC-YT-8yD"/>
+                                <toolbarItem reference="TCK-3s-X5T"/>
                                 <toolbarItem reference="cCQ-Ex-nRC"/>
                                 <toolbarItem reference="XBJ-bT-dLm"/>
                                 <toolbarItem reference="uP7-Y2-WeW"/>
@@ -1044,6 +1078,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSGoLeftTemplate" width="9" height="12"/>
+        <image name="NSGoRightTemplate" width="9" height="12"/>
+        <image name="NSHomeTemplate" width="14" height="14"/>
+        <image name="NSRemoveTemplate" width="11" height="11"/>
         <image name="NSShareTemplate" width="11" height="16"/>
     </resources>
 </document>

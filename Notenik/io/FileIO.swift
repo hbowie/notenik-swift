@@ -12,13 +12,24 @@ class FileIO : NotenikIO {
 
     let fileManager = FileManager.default
     
-    var provider    : Provider = Provider()
-    var realm       : Realm
-    var collection  : NoteCollection?
+    var provider       : Provider = Provider()
+    var realm          : Realm
+    var collection     : NoteCollection?
     var collectionOpen = false
-    var bunch       : BunchOfNotes = BunchOfNotes()
-    var templateFound = false
-    var infoFound = false
+    var bunch          : BunchOfNotes = BunchOfNotes()
+    var templateFound  = false
+    var infoFound      = false
+    var notePosition   = NotePosition(index: -1)
+    
+    /// The position of the selected note, if any, in the current collection
+    var position:   NotePosition? {
+        if !collectionOpen || collection == nil {
+            return nil
+        } else {
+            notePosition.index = bunch.listIndex
+            return notePosition
+        }
+    }
     
     /// Default initialization
     init() {
@@ -174,6 +185,7 @@ class FileIO : NotenikIO {
         } else {
             Logger.shared.log(skip: false, indent: 1, level: .normal,
                               message: "\(notesRead) Notes loaded for the Collection")
+            collectionOpen = true
             return collection
         }
     }
@@ -222,6 +234,16 @@ class FileIO : NotenikIO {
     /// - Returns: The number of notes in the current collection
     var notesCount: Int {
       return bunch.count
+    }
+    
+    /// Return the position of a given note.
+    ///
+    /// - Parameter note: The note to find.
+    /// - Returns: A Note Position
+    func positionOfNote(_ note: Note) -> NotePosition {
+        guard collection != nil && collectionOpen else { return NotePosition(index: -1) }
+        let (_, position) = bunch.selectNote(note)
+        return position
     }
     
     /// Return the note at the specified position in the sorted list, if possible.

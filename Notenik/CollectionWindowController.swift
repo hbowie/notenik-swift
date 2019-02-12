@@ -12,9 +12,9 @@ class CollectionWindowController: NSWindowController {
     
     @IBOutlet var shareButton: NSButton!
     
-    let juggler : CollectionJuggler = CollectionJuggler.shared
-    var notenikIO: NotenikIO?
-    var windowNumber = 0
+    let juggler:             CollectionJuggler = CollectionJuggler.shared
+    var notenikIO:           NotenikIO?
+    var windowNumber         = 0
     var splitViewController: NoteSplitViewController?
     
         var collectionItem: NSSplitViewItem?
@@ -61,6 +61,8 @@ class CollectionWindowController: NSWindowController {
             } else {
                 tagsVC!.io = newValue
             }
+            let (selected, position) = notenikIO!.firstNote()
+            select(note: selected, position: position, source: .nav)
         }
     }
 
@@ -96,12 +98,55 @@ class CollectionWindowController: NSWindowController {
         }
     }
     
-    func select(note: Note) {
-        if splitViewController != nil {
-            splitViewController!.select(note: note)
+    @IBAction func navigationClicked(_ sender: NSSegmentedControl) {
+        
+        guard let noteIO = notenikIO else { return }
+        
+        switch sender.selectedSegment {
+        case 0:
+            // Go to top of list
+            let (note, position) = noteIO.firstNote()
+            select(note: note, position: position, source: .nav)
+        case 1:
+            let startingPosition = noteIO.position
+            let (note, position) = noteIO.priorNote(startingPosition!)
+            select(note: note, position: position, source: .nav)
+        case 2:
+            let startingPosition = noteIO.position
+            let (note, position) = noteIO.nextNote(startingPosition!)
+            select(note: note, position: position, source: .nav)
+        default:
+            let startingPosition = noteIO.position
         }
-        if displayVC != nil {
-            displayVC!.select(note: note)
+    }
+    
+    /// React to the selection of a note, coordinating the various views as needed.
+    ///
+    /// - Parameters:
+    ///   - note:     A note, if we know which one has been selected.
+    ///   - position: A position in the collection, if we know what it is.
+    ///   - source:   An indicator of the source of the selection; if one of the views
+    ///               being coordinated is the source, then we don't need to modify it.
+    func select(note: Note?, position: NotePosition?, source: NoteSelectionSource) {
+        
+        guard notenikIO != nil && notenikIO!.collectionOpen else { return }
+        
+        var noteToUse: Note? = note
+        var positionToUse: NotePosition? = position
+        
+        if note != nil && (position == nil || position!.invalid) {
+            positionToUse = notenikIO!.positionOfNote(note!)
+        }
+        
+        if note == nil && position != nil && position!.valid {
+            noteToUse = notenikIO!.getNote(at: position!.index)
+        }
+        
+        if displayVC != nil  && noteToUse != nil {
+            displayVC!.select(note: noteToUse!)
+        }
+        if listVC != nil && source != .list && positionToUse != nil && positionToUse!.index >= 0 {
+            listVC!.selectRow(index: positionToUse!.index)
         }
     }
 

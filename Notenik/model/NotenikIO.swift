@@ -10,7 +10,14 @@ import Foundation
 
 protocol NotenikIO {
     
+    
+    /// The currently open collection, if any
     var collection: NoteCollection? { get }
+    
+    /// The position of the selected note, if any, in the current collection
+    var position:   NotePosition? { get }
+    
+    var collectionOpen: Bool { get }
     
     /// Get information about the provider.
     func getProvider() -> Provider
@@ -71,7 +78,13 @@ protocol NotenikIO {
     /// - Parameter position: The position of the last note accessed.
     /// - Returns: A tuple containing the prior note, along with its index position.
     ///            if we're outside the bounds of the list, then return a nil Note and an index of -1.
-    func priorNote(_ position : NotePosition) -> (Note?, NotePosition)
+    func priorNote(_ position: NotePosition) -> (Note?, NotePosition)
+    
+    /// Return the position of a given note.
+    ///
+    /// - Parameter note: The note to find.
+    /// - Returns: A Note Position
+    func positionOfNote(_ note: Note) -> NotePosition
     
     func getTagsNodeRoot() -> TagsNode
 }

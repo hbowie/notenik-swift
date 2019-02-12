@@ -84,14 +84,18 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
     
     func tableViewSelectionDidChange(_ notification: Notification) {
         let row = tableView.selectedRow
-        guard row >= 0 else {
-            return
-        }
+        guard row >= 0 else { return }
         if let note = notenikIO?.getNote(at: row) {
             if collectionWindowController != nil {
-                collectionWindowController!.select(note: note)
+                let position = NotePosition(index: row)
+                collectionWindowController!.select(note: note, position: position, source: NoteSelectionSource.list)
             }
         }
+    }
+    
+    func selectRow(index: Int) {
+        let indexSet = IndexSet(integer: index)
+        tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
     }
     
 }
