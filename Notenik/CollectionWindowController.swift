@@ -149,5 +149,32 @@ class CollectionWindowController: NSWindowController {
             listVC!.selectRow(index: positionToUse!.index)
         }
     }
+    
+    @IBAction func sortByTitle(_ sender: Any) {
+        setSortParm(.title)
+    }
+    
+    @IBAction func sortBySeqAndTitle(_ sender: Any) {
+        setSortParm(.seqPlusTitle)
+    }
+    
+    @IBAction func sortTasksByDate(_ sender: Any) {
+        setSortParm(.tasksByDate)
+    }
+    
+    @IBAction func sortTasksBySeq(_ sender: Any) {
+        setSortParm(.tasksBySeq)
+    }
+    
+    @IBAction func sortByAuthor(_ sender: Any) {
+        setSortParm(.author)
+    }
+    
+    func setSortParm(_ sortParm: NoteSortParm) {
+        guard var noteIO = notenikIO else { return }
+        guard let lister = listVC else { return }
+        noteIO.sortParm = sortParm
+        lister.setSortParm(sortParm)
+    }
 
 }

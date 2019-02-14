@@ -118,9 +118,13 @@ class FileIO : NotenikIO {
                         if sortParmStr.count > 0 {
                             let sortParmInt = Int(sortParmStr)
                             if sortParmInt != nil {
-                                let sortParm : NoteSortParm? = NoteSortParm(rawValue: sortParmInt!)
-                                if sortParm != nil {
-                                    collection!.sortParm = sortParm!
+                                var sortParmRaw = sortParmInt!
+                                if sortParmInt! > 0 {
+                                    sortParmRaw = sortParmInt! - 1
+                                }
+                                let sortParmWork: NoteSortParm? = NoteSortParm(rawValue: sortParmRaw)
+                                if sortParmWork != nil {
+                                    self.sortParm = sortParmWork!
                                     print ("Setting sort parm to \(sortParmStr)")
                                     infoFound = true
                                 }
@@ -186,6 +190,7 @@ class FileIO : NotenikIO {
             Logger.shared.log(skip: false, indent: 1, level: .normal,
                               message: "\(notesRead) Notes loaded for the Collection")
             collectionOpen = true
+            bunch.sortParm = collection!.sortParm
             return collection
         }
     }
@@ -218,7 +223,7 @@ class FileIO : NotenikIO {
         }
     }
     
-    /// Get or Set the NoteSortParm for this collection. 
+    /// Get or Set the NoteSortParm for the current collection.
     var sortParm: NoteSortParm {
         get {
             return collection!.sortParm

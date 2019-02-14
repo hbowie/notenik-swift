@@ -107,7 +107,6 @@ class DateUtils {
         return ymdFormatter.string(from: date)
     }
     
-
     /**
     Given a complete or partial month name, return an index value pointing to the full month name,
     or a negative number if no match.
@@ -156,6 +155,17 @@ class DateUtils {
             i = -1
         }
         return i
+    }
+    
+    /// Get a short (3-letter) name of the given month.
+    ///
+    /// - Parameter monthNumberStr: A string containing the month number (1 - 12)
+    /// - Returns: The 3-character beginning of the month name, or an empty string if an invalid month number. 
+    func getShortMonthName(for monthNumberStr: String) -> String {
+        let monthNumber = Int(monthNumberStr)
+        guard let mm = monthNumber else { return "" }
+        guard mm > 0 && mm <= 12 else { return "" }
+        return String(DateUtils.monthNames[mm].prefix(3))
     }
     
 }

@@ -46,13 +46,23 @@ class DateValue: StringValue {
     }
 
     /// Return a full or partial date in a yyyy-MM-dd format.
-    var ymdDate : String {
+    var ymdDate: String {
         if mm.count == 0 {
             return yyyy
         } else if dd.count == 0 {
             return yyyy + "-" + mm
         } else {
             return yyyy + "-" + mm + "-" + dd
+        }
+    }
+    
+    var dMyDate: String {
+        if mm.count == 0 {
+            return yyyy
+        } else if dd.count == 0 {
+            return "   " + DateUtils.shared.getShortMonthName(for: mm) + " " + yyyy
+        } else {
+            return dd + " " + DateUtils.shared.getShortMonthName(for: mm) + " " + yyyy
         }
     }
     

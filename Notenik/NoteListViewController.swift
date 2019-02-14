@@ -30,10 +30,8 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
         }
         set {
             notenikIO = newValue
-            guard notenikIO != nil && notenikIO!.collection != nil else {
-                return
-            }
-            tableView.reloadData()
+            guard notenikIO != nil && notenikIO!.collection != nil else { return }
+            setSortParm(notenikIO!.collection!.sortParm)
         }
     }
     
@@ -61,11 +59,10 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
     ///   - row: An index pointing to the desired row of the table.
     /// - Returns: The Cell View with the appropriate value set.
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        
+
         // Try to get the appropriate cell view
-        guard let cellView = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) as? NSTableCellView else {
-            return nil
-        }
+        guard let anyView = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) else { return nil }
+        guard let cellView = anyView as? NSTableCellView else { return nil }
         
         if let note = notenikIO?.getNote(at: row) {
             if tableColumn?.title == "Title" {
@@ -75,7 +72,9 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
             } else if tableColumn?.title == "X" {
                 cellView.textField?.stringValue = note.status.doneX(config: note.collection.statusConfig)
             } else if tableColumn?.title == "Date" {
-                cellView.textField?.stringValue = note.date.value
+                cellView.textField?.stringValue = note.date.dMyDate
+            } else if tableColumn?.title == "Author" {
+                cellView.textField?.stringValue = note.author.value
             }
         }
         
@@ -96,6 +95,105 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
     func selectRow(index: Int) {
         let indexSet = IndexSet(integer: index)
         tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
+    }
+    
+    func setSortParm(_ sortParm: NoteSortParm) {
+
+        switch sortParm {
+        case .title:
+            addTitleColumn(at: 0)
+            trimColumns(to: 1)
+        case .seqPlusTitle:
+            addSeqColumn(at: 0)
+            addTitleColumn(at: 1)
+            trimColumns(to: 2)
+        case .tasksByDate:
+            addXColumn(at: 0)
+            addDateColumn(at: 1)
+            addSeqColumn(at: 2)
+            addTitleColumn(at: 3)
+            trimColumns(to: 4)
+        case .tasksBySeq:
+            addXColumn(at: 0)
+            addSeqColumn(at: 1)
+            addDateColumn(at: 2)
+            addTitleColumn(at: 3)
+            trimColumns(to: 4)
+        case .author:
+            addAuthorColumn(at: 0)
+            addTitleColumn(at: 1)
+            trimColumns(to: 2)
+        }
+        tableView.reloadData()
+    }
+    
+    func addTitleColumn(at desiredIndex: Int) {
+        addColumn(title: "Title", strID: "title-column", at: desiredIndex, min: 200, width: 445, max: 1500)
+    }
+    
+    func addSeqColumn(at desiredIndex: Int) {
+        addColumn(title: "Seq", strID: "seq-column", at: desiredIndex, min: 50, width: 80, max: 250)
+    }
+    
+    func addXColumn(at desiredIndex: Int) {
+        addColumn(title: "X", strID: "x-column", at: desiredIndex, min: 12, width: 20, max: 50)
+    }
+    
+    func addDateColumn(at desiredIndex: Int) {
+        addColumn(title: "Date", strID: "date-column", at: desiredIndex, min: 100, width: 120, max: 300)
+    }
+    
+    func addAuthorColumn(at desiredIndex: Int) {
+        addColumn(title: "Author", strID: "author-column", at: desiredIndex, min: 100, width: 200, max: 1000)
+    }
+    
+    /// Add a column, or make sure it already exists, and position it appropriately.
+    ///
+    /// - Parameters:
+    ///   - title: The title of the column.
+    ///   - strID: The String used to identify the column in the UI.
+    ///   - desiredIndex: The desired index position for the column.
+    func addColumn(title: String, strID: String, at desiredIndex: Int, min: Int, width: Int, max: Int) {
+        
+        let id = NSUserInterfaceItemIdentifier(strID)
+        // let existingIndex = tableView.column(withIdentifier: id)
+        var i = 0
+        var existingIndex = -1
+        while i < tableView.tableColumns.count && existingIndex < 0 {
+            if tableView.tableColumns[i].title == title {
+                existingIndex = i
+            } else {
+                i += 1
+            }
+        }
+        var column: NSTableColumn?
+        if existingIndex >= 0 && existingIndex != desiredIndex {
+            tableView.moveColumn(existingIndex, toColumn: desiredIndex)
+            column = tableView.tableColumns[desiredIndex]
+        } else if existingIndex < 0 {
+            column = NSTableColumn(identifier: id)
+            column!.title = title
+            let newIndex = tableView.tableColumns.count
+            tableView.addTableColumn(column!)
+            if newIndex != desiredIndex {
+                tableView.moveColumn(newIndex, toColumn: desiredIndex)
+            }
+        }
+        if column != nil {
+            column!.minWidth = CGFloat(min)
+            column!.width = CGFloat(width)
+            column!.maxWidth = CGFloat(max)
+        }
+    }
+    
+    /// Trim the table view to only show the desired number of columns.
+    ///
+    /// - Parameter desiredNumberOfColumns: The number of columns to retain. 
+    func trimColumns(to desiredNumberOfColumns: Int) {
+        while tableView.tableColumns.count > desiredNumberOfColumns {
+            let columntToRemove = tableView.tableColumns[tableView.tableColumns.count - 1]
+            tableView.removeTableColumn(columntToRemove)
+        }
     }
     
 }
