@@ -15,6 +15,7 @@ class CollectionJuggler: NSObject {
     
     let storyboard: NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
     let defaults = UserDefaults.standard
+    let parentFolderKey = "parent-folder"
     var windows: Array<CollectionWindowController> = Array()
     var highestWindowNumber = -1
     
@@ -37,6 +38,10 @@ class CollectionJuggler: NSObject {
     func userRequestsOpenCollection() {
         let openPanel = NSOpenPanel();
         openPanel.title = "Select a Notenik Collection"
+        var parent = self.defaults.url(forKey: self.parentFolderKey)
+        if parent != nil {
+            openPanel.directoryURL = parent!
+        }
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
         openPanel.canChooseDirectories = true
@@ -62,6 +67,8 @@ class CollectionJuggler: NSObject {
                 } else {
                     Logger.shared.log(skip: true, indent: 0, level: LogLevel.normal,
                                       message: "Collection successfully opened: \(collection!.title)")
+                    parent = collectionURL.deletingLastPathComponent()
+                    self.defaults.set(parent, forKey: self.parentFolderKey)
                     if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
                         windowController.shouldCascadeWindows = true
                         windowController.io = io
