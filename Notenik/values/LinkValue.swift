@@ -96,9 +96,9 @@ class LinkValue : StringValue {
     }
     
     /// Return the link value as an optional URL
-    func getURL() -> URL? {
-        let url = URL(string: value)
-        return url
+    var url: URL? {
+        let possibleURL = URL(string: value)
+        return possibleURL
     }
     
     /// Set the link value from an actual URL

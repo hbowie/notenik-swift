@@ -776,6 +776,13 @@
                                         </segmentedCell>
                                     </segmentedControl>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="91D94A37-757B-459C-AA9F-64ACAD9F6283" label="" paletteLabel="Toolbar Item" toolTip="Open the Note's Link in your Web Browser" tag="-1" image="NSFollowLinkFreestandingTemplate" id="QaA-dG-0Br">
+                                    <size key="minSize" width="14" height="14"/>
+                                    <size key="maxSize" width="14" height="14"/>
+                                    <connections>
+                                        <action selector="launchLink:" target="Oky-zY-oP4" id="bpu-hT-ocE"/>
+                                    </connections>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="nQC-YT-8yD"/>
@@ -783,6 +790,7 @@
                                 <toolbarItem reference="cCQ-Ex-nRC"/>
                                 <toolbarItem reference="XBJ-bT-dLm"/>
                                 <toolbarItem reference="uP7-Y2-WeW"/>
+                                <toolbarItem reference="QaA-dG-0Br"/>
                                 <toolbarItem reference="Ico-l8-QuA"/>
                                 <toolbarItem reference="z6q-Rn-8x2"/>
                             </defaultToolbarItems>
@@ -1243,6 +1251,7 @@
     </scenes>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSFollowLinkFreestandingTemplate" width="14" height="14"/>
         <image name="NSGoLeftTemplate" width="9" height="12"/>
         <image name="NSGoRightTemplate" width="9" height="12"/>
         <image name="NSHomeTemplate" width="14" height="14"/>

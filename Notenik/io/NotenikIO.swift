@@ -50,6 +50,15 @@ protocol NotenikIO {
         get
     }
     
+    /// Select the note at the given position in the sorted list.
+    ///
+    /// - Parameter index: An index value pointing to a position in the list.
+    /// - Returns: A tuple containing the indicated note, along with its index position.
+    ///            - If the list is empty, return nil and -1.
+    ///            - If the index is too high, return the last note.
+    ///            - If the index is too low, return the first note.
+    func selectNote(at index: Int) -> (Note?, NotePosition)
+    
     /// Return the note at the specified position in the sorted list, if possible.
     ///
     /// - Parameter at: An index value pointing to a note in the list
@@ -85,6 +94,11 @@ protocol NotenikIO {
     /// - Parameter note: The note to find.
     /// - Returns: A Note Position
     func positionOfNote(_ note: Note) -> NotePosition
+    
+    /// Return the note currently selected.
+    ///
+    /// If no note is selected, return a nil Note and an index posiiton of -1.
+    func getSelectedNote() -> (Note?, NotePosition)
     
     func getTagsNodeRoot() -> TagsNode
 }

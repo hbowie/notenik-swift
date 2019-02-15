@@ -42,6 +42,27 @@ class Note: Comparable {
         }
     }
     
+    /// Return the Note's Link Value
+    var link: LinkValue {
+        let val = getFieldAsValue(label: LabelConstants.link)
+        if val is LinkValue {
+            return val as! LinkValue
+        } else {
+            return LinkValue(val.value)
+        }
+    }
+    
+    /// Return the Note's Link Value (if any) as a possible URL
+    var linkAsURL: URL? {
+        let val = getFieldAsValue(label: LabelConstants.link)
+        if val is LinkValue {
+            let linkVal = val as! LinkValue
+            return linkVal.url
+        } else {
+            return nil
+        }
+    }
+    
     /// Return the Note's Sequence Value
     var seq: SeqValue {
         let val = getFieldAsValue(label: LabelConstants.seq)

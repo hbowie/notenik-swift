@@ -251,6 +251,18 @@ class FileIO : NotenikIO {
         return position
     }
     
+    /// Select the note at the given position in the sorted list.
+    ///
+    /// - Parameter index: An index value pointing to a position in the list.
+    /// - Returns: A tuple containing the indicated note, along with its index position.
+    ///            - If the list is empty, return nil and -1.
+    ///            - If the index is too high, return the last note.
+    ///            - If the index is too low, return the first note.
+    func selectNote(at index: Int) -> (Note?, NotePosition) {
+        guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
+        return bunch.selectNote(at: index)
+    }
+    
     /// Return the note at the specified position in the sorted list, if possible.
     ///
     /// - Parameter at: An index value pointing to a note in the list
@@ -290,6 +302,14 @@ class FileIO : NotenikIO {
     ///            if we're outside the bounds of the list, then return a nil Note and an index of -1.
     func priorNote(_ position : NotePosition) -> (Note?, NotePosition) {
         return bunch.priorNote(position)
+    }
+    
+    /// Return the note currently selected.
+    ///
+    /// If the list index is out of range, return a nil Note and an index posiiton of -1.
+    func getSelectedNote() -> (Note?, NotePosition) {
+        guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
+        return bunch.getSelectedNote()
     }
     
     func getTagsNodeRoot() -> TagsNode {

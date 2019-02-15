@@ -150,6 +150,16 @@ class CollectionWindowController: NSWindowController {
         }
     }
     
+    @IBAction func launchLink(_ sender: Any) {
+        guard let noteIO = notenikIO else { return }
+        let (note, _) = noteIO.getSelectedNote()
+        guard let noteToUse = note else { return }
+        let url = noteToUse.linkAsURL
+        if url != nil {
+            NSWorkspace.shared.open(url!)
+        }
+    }
+    
     @IBAction func sortByTitle(_ sender: Any) {
         setSortParm(.title)
     }

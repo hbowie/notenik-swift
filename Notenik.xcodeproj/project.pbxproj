@@ -504,7 +504,6 @@
 				9C60E73921F651E500C332ED /* Note.swift */,
 				9CD82F6A2211EDC2002314E4 /* NoteLineMaker.swift */,
 				9C60E73721F651E500C332ED /* NoteLineParser.swift */,
-				9C60E71E21F651E500C332ED /* NotenikIO.swift */,
 				9C60E73D21F651E500C332ED /* NotePosition.swift */,
 				9C60E72221F651E500C332ED /* NoteSortParm.swift */,
 				9C60E73321F651E500C332ED /* NoteType.swift */,
@@ -539,6 +538,7 @@
 			isa = PBXGroup;
 			children = (
 				9C60E79F21F6520100C332ED /* FileIO.swift */,
+				9C60E71E21F651E500C332ED /* NotenikIO.swift */,
 			);
 			path = io;
 			sourceTree = "<group>";
