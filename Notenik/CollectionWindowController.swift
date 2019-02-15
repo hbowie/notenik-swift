@@ -150,6 +150,15 @@ class CollectionWindowController: NSWindowController {
         }
     }
     
+    @IBAction func textEditNote(_ sender: Any) {
+        guard let noteIO = notenikIO else { return }
+        let (note, _) = noteIO.getSelectedNote()
+        guard let noteToUse = note else { return }
+        if noteToUse.hasFileName() {
+            NSWorkspace.shared.openFile(noteToUse.fullPath!)
+        }
+    }
+    
     @IBAction func launchLink(_ sender: Any) {
         guard let noteIO = notenikIO else { return }
         let (note, _) = noteIO.getSelectedNote()

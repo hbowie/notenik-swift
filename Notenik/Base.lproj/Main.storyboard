@@ -151,6 +151,18 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Note" id="6dp-U5-Q9Q" userLabel="Note">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Note" id="RHt-4N-8CS">
+                                    <items>
+                                        <menuItem title="Text Edit Note" keyEquivalent="t" toolTip="Open the Current Note in your Preferred Text Editor" id="bpk-dF-vAM" userLabel="Text Edit Note">
+                                            <connections>
+                                                <action selector="textEditNote:" target="Ady-hI-5gd" id="6P1-cp-ypG"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Edit" id="5QF-Oa-p0T">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Edit" id="W48-6f-4Dl">

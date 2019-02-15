@@ -35,6 +35,26 @@ class NoteCollection {
         self.realm = realm
     }
     
+    var collectionFullPathURL: URL? {
+        var collectionURL: URL
+        if realm.path == "" || realm.path == " " {
+            collectionURL = URL(fileURLWithPath: path)
+        } else {
+            let realmURL = URL(fileURLWithPath: realm.path)
+            collectionURL = realmURL.appendingPathComponent(path)
+        }
+        return collectionURL
+    }
+    
+    /// The complete path to this collection, represented as a String
+    var collectionFullPath: String {
+        if realm.path == "" || realm.path == " " {
+            return path
+        } else {
+            return FileUtils.joinPaths(path1: realm.path, path2: path)
+        }
+    }
+    
     /// Attempt to obtain or create a Field Definition for the given Label.
     ///
     /// Note that the Collection's Field Dictionary may be updated as part of this call.

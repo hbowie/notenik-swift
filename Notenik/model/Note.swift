@@ -18,9 +18,19 @@ class Note: Comparable {
         return lhs.sortKey == rhs.sortKey
     }
     
-    var collection : NoteCollection
+    var collection:  NoteCollection
+    
+    var fileName:    String?
     
     var fields = [:] as [String: NoteField]
+    
+    var fullPath: String? {
+        if hasFileName() {
+            return FileUtils.joinPaths(path1: collection.collectionFullPath, path2: fileName!)
+        } else {
+            return nil
+        }
+    }
     
     /// Return the Note's Author Value
     var author: AuthorValue {
@@ -156,6 +166,10 @@ class Note: Comparable {
                 + date.sortKey
                 + title.sortKey)
         }
+    }
+    
+    func hasFileName() -> Bool {
+        return fileName != nil && fileName!.count > 0
     }
     
     /// Does this note have a non-blank title field?

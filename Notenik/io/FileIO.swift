@@ -60,7 +60,7 @@ class FileIO : NotenikIO {
     /// - Parameter collectionPath: The path identifying the collection within this realm
     /// - Returns: A NoteCollection object, if the collection was opened successfully;
     ///            otherwise nil.
-    func openCollection(realm : Realm, collectionPath : String) -> NoteCollection? {
+    func openCollection(realm: Realm, collectionPath: String) -> NoteCollection? {
         
         // Initialization
         closeCollection()
@@ -215,6 +215,10 @@ class FileIO : NotenikIO {
             let lineReader = BigStringReader(itemContents)
             let parser = NoteLineParser(collection: collection, lineReader: lineReader)
             let note = parser.getNote()
+            let fileName = noteURL.lastPathComponent
+            if fileName.count > 0 {
+                note.fileName = fileName
+            }
             return note
         } catch {
             Logger.shared.log(skip: false, indent: 1, level: .severe,
