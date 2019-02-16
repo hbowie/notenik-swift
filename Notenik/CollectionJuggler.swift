@@ -24,12 +24,7 @@ class CollectionJuggler: NSObject {
     }
     
     func startup() {
-        let launchAtStartupValue = defaults.string(forKey: "launch-at-startup")
-        if launchAtStartupValue == nil {
-            print ("No launch at startup value found!")
-        } else {
-            print("Launch at startup value = \(launchAtStartupValue!)")
-        }
+
     }
     
     /// Respond to a user request to open another Collection. Present the user
