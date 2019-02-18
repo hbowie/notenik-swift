@@ -1255,6 +1255,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </view>
+                    <connections>
+                        <outlet property="editView" destination="q7s-Kw-CJU" id="fM2-LO-AmX"/>
+                    </connections>
                 </viewController>
                 <customObject id="Mst-Ko-Xww" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

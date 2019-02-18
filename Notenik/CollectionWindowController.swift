@@ -61,6 +61,13 @@ class CollectionWindowController: NSWindowController {
             } else {
                 tagsVC!.io = newValue
             }
+            
+            if editVC == nil {
+                Logger.shared.log(skip: false, indent: 0, level: LogLevel.severe,
+                                  message: "NoteEditViewController is nil")
+            } else {
+                editVC!.io = newValue
+            }
             let (selected, position) = notenikIO!.firstNote()
             select(note: selected, position: position, source: .nav)
         }
@@ -142,11 +149,14 @@ class CollectionWindowController: NSWindowController {
             noteToUse = notenikIO!.getNote(at: position!.index)
         }
         
+        if listVC != nil && source != .list && positionToUse != nil && positionToUse!.index >= 0 {
+            listVC!.selectRow(index: positionToUse!.index)
+        }
         if displayVC != nil  && noteToUse != nil {
             displayVC!.select(note: noteToUse!)
         }
-        if listVC != nil && source != .list && positionToUse != nil && positionToUse!.index >= 0 {
-            listVC!.selectRow(index: positionToUse!.index)
+        if editVC != nil && noteToUse != nil {
+            editVC!.select(note: noteToUse!)
         }
     }
     
