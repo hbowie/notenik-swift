@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C09E1762248601D0046D50D /* notenik.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 9C09E1752248601D0046D50D /* notenik.iconset */; };
 		9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49022134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49122134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
@@ -196,6 +197,15 @@
 		9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
 		9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */; };
 		9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */; };
+		9CD326202233068F00D06B77 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* EditView.swift */; };
+		9CD326212233068F00D06B77 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* EditView.swift */; };
+		9CD326222233068F00D06B77 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* EditView.swift */; };
+		9CD32624223308C400D06B77 /* StringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD32623223308C400D06B77 /* StringView.swift */; };
+		9CD32625223308C400D06B77 /* StringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD32623223308C400D06B77 /* StringView.swift */; };
+		9CD32626223308C400D06B77 /* StringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD32623223308C400D06B77 /* StringView.swift */; };
+		9CD3262822330C8A00D06B77 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3262722330C8A00D06B77 /* ViewFactory.swift */; };
+		9CD3262922330C8A00D06B77 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3262722330C8A00D06B77 /* ViewFactory.swift */; };
+		9CD3262A22330C8A00D06B77 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3262722330C8A00D06B77 /* ViewFactory.swift */; };
 		9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD756D82210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD82F632211E456002314E4 /* LineWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F622211E456002314E4 /* LineWriter.swift */; };
@@ -242,6 +252,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9C09E1752248601D0046D50D /* notenik.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = notenik.iconset; sourceTree = "<group>"; };
 		9C12D48E22134970003136B2 /* NoteSelectionSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSelectionSource.swift; sourceTree = "<group>"; };
 		9C21749C22024D0C00B4BF48 /* Down.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Down.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C21749E22024E2900B4BF48 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../notenik-swift-intro"; sourceTree = "<group>"; };
@@ -330,6 +341,9 @@
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
 		9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTagsViewController.swift; sourceTree = "<group>"; };
 		9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
+		9CD3261F2233068F00D06B77 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
+		9CD32623223308C400D06B77 /* StringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringView.swift; sourceTree = "<group>"; };
+		9CD3262722330C8A00D06B77 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSplitViewController.swift; sourceTree = "<group>"; };
 		9CD82F622211E456002314E4 /* LineWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineWriter.swift; sourceTree = "<group>"; };
 		9CD82F662211E4BA002314E4 /* BigStringWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigStringWriter.swift; sourceTree = "<group>"; };
@@ -416,6 +430,7 @@
 				9C60E6D521F64B3C00C332ED /* Assets.xcassets */,
 				9C21749E22024E2900B4BF48 /* notenik-swift-intro */,
 				9C60E6DA21F64B3C00C332ED /* Info.plist */,
+				9C09E1752248601D0046D50D /* notenik.iconset */,
 				9C60E6DB21F64B3C00C332ED /* Notenik.entitlements */,
 				9C2AE510220A028000AE8BEE /* bunch */,
 				9C60E79E21F6520100C332ED /* io */,
@@ -424,6 +439,7 @@
 				9CD82F612211E29E002314E4 /* textio */,
 				9C60E6FD21F650B800C332ED /* utils */,
 				9C60E72421F651E500C332ED /* values */,
+				9CD3261E2233063100D06B77 /* views */,
 			);
 			path = Notenik;
 			sourceTree = "<group>";
@@ -551,6 +567,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9CD3261E2233063100D06B77 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				9CD3261F2233068F00D06B77 /* EditView.swift */,
+				9CD32623223308C400D06B77 /* StringView.swift */,
+				9CD3262722330C8A00D06B77 /* ViewFactory.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
 		9CD82F612211E29E002314E4 /* textio */ = {
 			isa = PBXGroup;
 			children = (
@@ -635,6 +661,9 @@
 							com.apple.Sandbox = {
 								enabled = 1;
 							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
 						};
 					};
 					9C60E6DF21F64B3C00C332ED = {
@@ -672,6 +701,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C09E1762248601D0046D50D /* notenik.iconset in Resources */,
 				9C21749F22024E2900B4BF48 /* notenik-swift-intro in Resources */,
 				9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */,
 				9C8FD8D82216302900F16669 /* README.md in Resources */,
@@ -725,11 +755,14 @@
 				9C60E76821F651E500C332ED /* AuthorValue.swift in Sources */,
 				9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */,
 				9C60E79821F651E500C332ED /* FieldType.swift in Sources */,
+				9CD3262822330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9C60E77421F651E500C332ED /* TagsValue.swift in Sources */,
 				9C60E79221F651E500C332ED /* NoteCollection.swift in Sources */,
+				9CD32624223308C400D06B77 /* StringView.swift in Sources */,
 				9CD82F672211E4BA002314E4 /* BigStringWriter.swift in Sources */,
 				9C21DB8021F82D9800A5A08C /* NoteDisplay.swift in Sources */,
 				9C2AE512220A030800AE8BEE /* TagsTree.swift in Sources */,
+				9CD326202233068F00D06B77 /* EditView.swift in Sources */,
 				9C60E76B21F651E500C332ED /* StatusValueConfig.swift in Sources */,
 				9C60E74D21F651E500C332ED /* ValueFactory.swift in Sources */,
 				9C60E73E21F651E500C332ED /* FieldLabel.swift in Sources */,
@@ -792,6 +825,7 @@
 				9C60E79921F651E500C332ED /* FieldType.swift in Sources */,
 				9C60E7C921F6525F00C332ED /* RecursValueTests.swift in Sources */,
 				9C60E7C821F6525F00C332ED /* StringValueTests.swift in Sources */,
+				9CD3262922330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9C60E77B21F651E500C332ED /* FieldDefinition.swift in Sources */,
 				9C60E71321F6518400C332ED /* Logger.swift in Sources */,
 				9C60E78121F651E500C332ED /* NoteType.swift in Sources */,
@@ -812,6 +846,7 @@
 				9C2AE517220A033C00AE8BEE /* TagsTree.swift in Sources */,
 				9C60E71921F6518400C332ED /* LogDestination.swift in Sources */,
 				9C78888B21FB950900452D74 /* Markedup.swift in Sources */,
+				9CD326212233068F00D06B77 /* EditView.swift in Sources */,
 				9C60E7B821F6525F00C332ED /* BigStringReaderTests.swift in Sources */,
 				9C60E70921F650B800C332ED /* FileName.swift in Sources */,
 				9C60E7C421F6525F00C332ED /* DateValueTests.swift in Sources */,
@@ -838,6 +873,7 @@
 				9C60E77521F651E500C332ED /* TagsValue.swift in Sources */,
 				9C60E74821F651E500C332ED /* ProviderType.swift in Sources */,
 				9C60E7C221F6525F00C332ED /* SeqValueTests.swift in Sources */,
+				9CD32625223308C400D06B77 /* StringView.swift in Sources */,
 				9C60E7C521F6525F00C332ED /* StringUtilsTests.swift in Sources */,
 				9C60E7BF21F6525F00C332ED /* StatusValueConfigTests.swift in Sources */,
 				9C60E70C21F650B800C332ED /* FileUtils.swift in Sources */,
@@ -884,9 +920,12 @@
 				9C60E74C21F651E500C332ED /* Realm.swift in Sources */,
 				9C60E71A21F6518400C332ED /* LogDestination.swift in Sources */,
 				9C78888821FB826100452D74 /* MarkedupFormat.swift in Sources */,
+				9CD32626223308C400D06B77 /* StringView.swift in Sources */,
 				9C60E70A21F650B800C332ED /* FileName.swift in Sources */,
+				9CD326222233068F00D06B77 /* EditView.swift in Sources */,
 				9C60E78E21F651E500C332ED /* FieldDictionary.swift in Sources */,
 				9C12D49122134970003136B2 /* NoteSelectionSource.swift in Sources */,
+				9CD3262A22330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9CD82F6D2211EDC2002314E4 /* NoteLineMaker.swift in Sources */,
 				9C60E71721F6518400C332ED /* LogLevel.swift in Sources */,
 				9C60E79121F651E500C332ED /* Note.swift in Sources */,
@@ -1071,7 +1110,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.Notenik;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.powersurgepub.notenik-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
@@ -1094,7 +1133,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.Notenik;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.powersurgepub.notenik-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};

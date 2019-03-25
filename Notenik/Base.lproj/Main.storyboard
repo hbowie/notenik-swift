@@ -825,7 +825,7 @@
             <objects>
                 <splitViewController id="ysx-uj-1Qh" customClass="NoteSplitViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <splitViewItems>
-                        <splitViewItem id="KPu-tD-S6y"/>
+                        <splitViewItem holdingPriority="255" behavior="contentList" id="KPu-tD-S6y"/>
                         <splitViewItem id="usq-6U-rIp"/>
                     </splitViewItems>
                     <splitView key="splitView" dividerStyle="thin" vertical="YES" id="Wg6-Vg-avH">
@@ -1256,7 +1256,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </view>
                     <connections>
-                        <outlet property="editView" destination="q7s-Kw-CJU" id="fM2-LO-AmX"/>
+                        <outlet property="parentView" destination="q7s-Kw-CJU" id="n7a-fu-bfM"/>
                     </connections>
                 </viewController>
                 <customObject id="Mst-Ko-Xww" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
