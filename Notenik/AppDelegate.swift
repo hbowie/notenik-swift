@@ -28,6 +28,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         juggler.userRequestsOpenCollection()
     }
     
+    @IBAction func menuFileOpenEssential(_ sender: NSMenuItem) {
+        juggler.openEssentialCollection()
+    }
+    
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }

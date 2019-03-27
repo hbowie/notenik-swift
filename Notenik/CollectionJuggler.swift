@@ -11,10 +11,16 @@ import Cocoa
 /// A singleton object that controls all of the Note Collections that are open. 
 class CollectionJuggler: NSObject {
     
+    // Singleton instance
     static let shared = CollectionJuggler()
+    
+    // Shorthand references to System Objects
+    private let defaults = UserDefaults.standard
     
     let storyboard: NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
     let osdir = OpenSaveDirectory.shared
+    let essentialURLKey = "essential-collection"
+    var essentialURL: URL?
     
     var docController: NoteDocumentController?
     
@@ -23,10 +29,31 @@ class CollectionJuggler: NSObject {
     
     override private init() {
         super.init()
+        essentialURL = defaults.url(forKey: essentialURLKey)
     }
     
     func startup() {
 
+    }
+    
+    /// Make the given collection the easily accessible Essential collection
+    ///
+    /// - Parameter io: The Notenik Input/Output module accessing the collection that is to become essential
+    func makeCollectionEssential(io: NotenikIO) {
+        let collection = io.collection
+        if collection != nil {
+            essentialURL = collection!.collectionFullPathURL
+            if essentialURL != nil {
+                defaults.set(essentialURL!, forKey: essentialURLKey)
+            }
+        }
+    }
+    
+    /// Open the Essential Collection, if we have one
+    func openEssentialCollection() {
+        if essentialURL != nil {
+            openFile(fileURL: essentialURL!)
+        }
     }
     
     /// Respond to a user request to open another Collection. Present the user

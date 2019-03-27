@@ -168,6 +168,10 @@ class CollectionWindowController: NSWindowController {
         }
     }
     
+    @IBAction func makeCollectionEssential(_ sender: Any) {
+        juggler.makeCollectionEssential(io: notenikIO!)
+    }
+    
     @IBAction func textEditNote(_ sender: Any) {
         guard let noteIO = notenikIO else { return }
         let (note, _) = noteIO.getSelectedNote()
