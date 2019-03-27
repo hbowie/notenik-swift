@@ -14,8 +14,10 @@ class CollectionJuggler: NSObject {
     static let shared = CollectionJuggler()
     
     let storyboard: NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
-    let defaults = UserDefaults.standard
-    let parentFolderKey = "parent-folder"
+    let osdir = OpenSaveDirectory.shared
+    
+    var docController: NoteDocumentController?
+    
     var windows: Array<CollectionWindowController> = Array()
     var highestWindowNumber = -1
     
@@ -33,7 +35,7 @@ class CollectionJuggler: NSObject {
     func userRequestsOpenCollection() {
         let openPanel = NSOpenPanel();
         openPanel.title = "Select a Notenik Collection"
-        var parent = self.defaults.url(forKey: self.parentFolderKey)
+        let parent = osdir.directoryURL
         if parent != nil {
             openPanel.directoryURL = parent!
         }
@@ -45,37 +47,61 @@ class CollectionJuggler: NSObject {
         openPanel.allowsMultipleSelection = false
         openPanel.begin { (result) -> Void  in
             if result == .OK {
-                let io: NotenikIO = FileIO()
-                let realm = io.getDefaultRealm()
-                realm.path = ""
-                let selectedURL = openPanel.url
-                var collectionURL: URL
-                if FileUtils.isDir(selectedURL!.path) {
-                    collectionURL = selectedURL!
-                } else {
-                    collectionURL = selectedURL!.deletingLastPathComponent()
-                }
-                let collection = io.openCollection(realm: realm, collectionPath: collectionURL.path)
-                if collection == nil {
-                    Logger.shared.log(skip: true, indent: 0, level: LogLevel.moderate,
-                                      message: "Problems opening the collection at " + collectionURL.path)
-                } else {
-                    Logger.shared.log(skip: true, indent: 0, level: LogLevel.normal,
-                                      message: "Collection successfully opened: \(collection!.title)")
-                    parent = collectionURL.deletingLastPathComponent()
-                    self.defaults.set(parent, forKey: self.parentFolderKey)
-                    if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
-                        windowController.shouldCascadeWindows = true
-                        windowController.io = io
-                        self.registerWindow(window: windowController)
-                        windowController.showWindow(self)
-                    } else {
-                        Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
-                                          message: "Couldn't get a Window Controller!")
-                    }
-                }
+                self.openFile(fileURL: openPanel.url!)
             }
         }
+    }
+    
+    func openFile(filename: String) -> Bool {
+        print ("CollectionJuggler.openFile with filename of \(filename)")
+        let fileURL = URL(fileURLWithPath: filename)
+        print ("CollectionJuggler.openFile with url of \(fileURL)")
+        if fileURL == nil {
+            return false
+        } else {
+            return openFile(fileURL: fileURL)
+        }
+    }
+    
+
+    /// Attempt to open a Notenik Collection.
+    ///
+    /// - Parameter fileURL: A URL pointing to a Notenik folder.
+    /// - Returns: True if open was successful, false if not.
+    func openFile(fileURL: URL) -> Bool {
+        var openOK = false
+        let io: NotenikIO = FileIO()
+        let realm = io.getDefaultRealm()
+        realm.path = ""
+        var collectionURL: URL
+        if FileUtils.isDir(fileURL.path) {
+            collectionURL = fileURL
+        } else {
+            collectionURL = fileURL.deletingLastPathComponent()
+        }
+        let collection = io.openCollection(realm: realm, collectionPath: collectionURL.path)
+        if collection == nil {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.moderate,
+                              message: "Problems opening the collection at " + collectionURL.path)
+        } else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.normal,
+                              message: "Collection successfully opened: \(collection!.title)")
+            if self.docController != nil {
+                self.docController!.noteNewRecentDocumentURL(collectionURL)
+            }
+            self.osdir.lastParentFolder = collectionURL.deletingLastPathComponent()
+            if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
+                windowController.shouldCascadeWindows = true
+                windowController.io = io
+                self.registerWindow(window: windowController)
+                windowController.showWindow(self)
+                openOK = true
+            } else {
+                Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                                  message: "Couldn't get a Window Controller!")
+            }
+        }
+        return openOK
     }
     
     /// Register a window so that we can keep track of it. If we've already got the window

@@ -12,8 +12,15 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     let juggler : CollectionJuggler = CollectionJuggler.shared
+    var docController: NoteDocumentController!
+    
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        docController = NoteDocumentController()
+        // NoteDocumentController.init()
+    }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        juggler.docController = docController
         juggler.startup()
     }
 
@@ -29,7 +36,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 
-
+    /// Attempt to open the passed file
+    func application(_ sender: NSApplication,
+                     openFile filename: String) -> Bool {
+        juggler.openFile(filename: filename)
+        return true
+    }
     
 }
 

@@ -115,12 +115,20 @@ class CollectionWindowController: NSWindowController {
             let (note, position) = noteIO.firstNote()
             select(note: note, position: position, source: .nav)
         case 1:
+            // Go to prior note
             let startingPosition = noteIO.position
-            let (note, position) = noteIO.priorNote(startingPosition!)
+            var (note, position) = noteIO.priorNote(startingPosition!)
+            if note == nil {
+                (note, position) = noteIO.lastNote()
+            }
             select(note: note, position: position, source: .nav)
         case 2:
+            // Go to next note
             let startingPosition = noteIO.position
-            let (note, position) = noteIO.nextNote(startingPosition!)
+            var (note, position) = noteIO.nextNote(startingPosition!)
+            if note == nil {
+                (note, position) = noteIO.firstNote()
+            }
             select(note: note, position: position, source: .nav)
         default:
             let startingPosition = noteIO.position

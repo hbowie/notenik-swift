@@ -164,11 +164,12 @@ class BunchOfNotes {
     ///
     /// - Parameter position: The position of the last note.
     /// - Returns: A tuple containing the next note, along with its index position.
-    ///            If we're at the end of the list, then wrap around to the first note.
+    ///            If we're at the end of the list, then return a nil note and an index of -1.
     func nextNote(_ position : NotePosition) -> (Note?, NotePosition) {
         let nextIndex = position.index + 1
-        if nextIndex >= notesList.count {
-            return firstNote()
+        if nextIndex < 0 || nextIndex >= notesList.count {
+            listIndex = -1
+            return (nil, NotePosition(index: listIndex))
         } else {
             listIndex = nextIndex
             return (notesList[listIndex], NotePosition(index: listIndex))
@@ -183,7 +184,8 @@ class BunchOfNotes {
     func priorNote(_ position : NotePosition) -> (Note?, NotePosition) {
         let priorIndex = position.index - 1
         if priorIndex < 0 || priorIndex >= notesList.count {
-            return lastNote()
+            listIndex = -1
+            return (nil, NotePosition(index: listIndex))
         } else {
             listIndex = priorIndex
             return (notesList[listIndex], NotePosition(index: listIndex))
