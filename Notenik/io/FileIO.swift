@@ -106,30 +106,16 @@ class FileIO : NotenikIO {
                 let fileName = FileName(itemFullPath)
                 let itemURL = URL(fileURLWithPath: itemFullPath)
                 if fileName.infofile {
-                    print ("Apparent Info File found at \(itemPath)")
                     let infoCollection = NoteCollection(realm: realm)
                     infoCollection.path = collectionPath
                     let infoNote = readNote(collection: infoCollection, noteURL: itemURL)
                     if infoNote != nil {
-                        print ("Note retrieved")
                         collection!.title = infoNote!.title.value
                         let sortParmStr = infoNote!.getFieldAsString(label: LabelConstants.sortParmCommon)
-                        print ("With Sort Parm of \(sortParmStr)")
-                        if sortParmStr.count > 0 {
-                            let sortParmInt = Int(sortParmStr)
-                            if sortParmInt != nil {
-                                var sortParmRaw = sortParmInt!
-                                if sortParmInt! > 0 {
-                                    sortParmRaw = sortParmInt! - 1
-                                }
-                                let sortParmWork: NoteSortParm? = NoteSortParm(rawValue: sortParmRaw)
-                                if sortParmWork != nil {
-                                    self.sortParm = sortParmWork!
-                                    print ("Setting sort parm to \(sortParmStr)")
-                                    infoFound = true
-                                }
-                            }
-                        }
+                        var nsp: NoteSortParm = sortParm
+                        nsp.str = sortParmStr
+                        sortParm = nsp
+                        infoFound = true
                     }
                     
                 } else if fileName.template {

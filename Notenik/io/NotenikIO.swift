@@ -10,7 +10,6 @@ import Foundation
 
 protocol NotenikIO {
     
-    
     /// The currently open collection, if any
     var collection: NoteCollection? { get }
     

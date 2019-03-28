@@ -80,9 +80,7 @@ class CollectionJuggler: NSObject {
     }
     
     func openFile(filename: String) -> Bool {
-        print ("CollectionJuggler.openFile with filename of \(filename)")
         let fileURL = URL(fileURLWithPath: filename)
-        print ("CollectionJuggler.openFile with url of \(fileURL)")
         if fileURL == nil {
             return false
         } else {
