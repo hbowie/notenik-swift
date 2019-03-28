@@ -6,15 +6,17 @@
 //  Copyright © 2018 PowerSurge Publishing. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 class Logger {
     
     static let shared = Logger()
     
-    var logDest : LogDestination = .print
+    var logDest: LogDestination = .print
     
-    var logThreshold : LogLevel = .routine
+    var logThreshold: LogLevel = .routine
+    
+    var log = ""
     
     init() {
         
@@ -26,7 +28,7 @@ class Logger {
             if skip {
                 writeLine(" ")
             }
-            print (message)
+            writeLine(message)
         }
     }
     
@@ -35,8 +37,9 @@ class Logger {
         switch logDest {
         case .print:
             print(line)
-        default:
-            print(line)
+        case .window:
+            log.append(line)
+            log.append("\n")
         }
     }
 }

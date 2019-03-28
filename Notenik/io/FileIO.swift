@@ -136,15 +136,15 @@ class FileIO : NotenikIO {
                 let fileName = FileName(itemFullPath)
                 let itemURL = URL(fileURLWithPath: itemFullPath)
                 if FileUtils.isDir(itemFullPath) {
-                    // print ("- Is a Directory")
+                    // Skip directories
                 } else if fileName.readme {
-                    // print ("- Is a Read me file")
+                    // Skip the readme file
                 } else if fileName.infofile {
-                    // print ("- Is an Info file")
+                    // Skip the info file
                 } else if fileName.dotfile {
-                    // print ("- Is a Dot File")
+                    // Skip filenames starting with a period
                 } else if fileName.template {
-                    // print ("- Is a Template")
+                    // Skip the template file
                 } else if fileName.noteExt {
                     let note = readNote(collection: collection!, noteURL: itemURL)
                     if note != nil && note!.hasTitle() {

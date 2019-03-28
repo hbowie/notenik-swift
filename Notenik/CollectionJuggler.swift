@@ -17,7 +17,9 @@ class CollectionJuggler: NSObject {
     // Shorthand references to System Objects
     private let defaults = UserDefaults.standard
     
-    let storyboard: NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
+    let storyboard:      NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
+    let logStoryboard:   NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
+    
     let osdir = OpenSaveDirectory.shared
     let essentialURLKey = "essential-collection"
     var essentialURL: URL?
@@ -161,6 +163,13 @@ class CollectionJuggler: NSObject {
     /// - Parameter window: <#window description#>
     func loadInitialCollection(window: CollectionWindowController) {
         
+        if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
+            Logger.shared.logDest = .window
+        } else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                              message: "Couldn't get a Log Window Controller! when loading initial collection")
+        }
+        
         // For now, let's just show the Notenik Help Notes
         var io: NotenikIO = FileIO()
         let provider = io.getProvider()
@@ -171,7 +180,7 @@ class CollectionJuggler: NSObject {
         _ = io.openCollection(realm: realm, collectionPath: path)
         
         // For now, let's sort everything by title
-        io.sortParm = .title
+        io.sortParm = .seqPlusTitle
         
         window.io = io
     }

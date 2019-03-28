@@ -14,14 +14,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let juggler : CollectionJuggler = CollectionJuggler.shared
     var docController: NoteDocumentController!
     
+    let prefsStoryboard: NSStoryboard = NSStoryboard(name: "Preferences", bundle: nil)
+    let logStoryboard:   NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
+    
+    var logController: LogWindowController?
+    
     func applicationWillFinishLaunching(_ notification: Notification) {
         docController = NoteDocumentController()
-        // NoteDocumentController.init()
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         juggler.docController = docController
         juggler.startup()
+    }
+    
+    @IBAction func menuAppPreferences(_ sender: NSMenuItem) {
+        if let prefsController = self.prefsStoryboard.instantiateController(withIdentifier: "prefsWC") as? PrefsWindowController {
+            prefsController.showWindow(self)
+        } else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                              message: "Couldn't get a Prefs Window Controller!")
+        }
     }
 
     @IBAction func menuFileOpenAction(_ sender: NSMenuItem) {
@@ -30,6 +43,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func menuFileOpenEssential(_ sender: NSMenuItem) {
         juggler.openEssentialCollection()
+    }
+    
+    @IBAction func menuWindowLog(_ sender: NSMenuItem) {
+        if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
+            print ("Found a good Log Controller")
+            logController.showWindow(self)
+        } else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                              message: "Couldn't get a Log Window Controller!")
+        }
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

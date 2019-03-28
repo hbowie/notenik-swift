@@ -10,4 +10,5 @@ import Foundation
 
 enum LogDestination : Int {
     case print = 0
+    case window = 1
 }

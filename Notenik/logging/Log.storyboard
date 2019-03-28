@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="U8z-0E-A42">
+            <objects>
+                <windowController storyboardIdentifier="logWC" id="mow-Yk-8gr" customClass="LogWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Log" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="7tV-bw-xvf">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="461" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+                        <connections>
+                            <outlet property="delegate" destination="mow-Yk-8gr" id="UT0-wi-IJR"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="0cZ-vt-fSz" kind="relationship" relationship="window.shadowedContentViewController" id="UUl-gz-ht9"/>
+                    </connections>
+                </windowController>
+                <customObject id="zcJ-Ut-yGI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-211" y="-90"/>
+        </scene>
+        <!--Log View Controller-->
+        <scene sceneID="bxZ-zF-si1">
+            <objects>
+                <customObject id="6DD-XV-Wch" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <viewController id="0cZ-vt-fSz" customClass="LogViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="qKV-yR-zw2">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7UA-fH-QsF">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="QY4-ez-yPB">
+                                    <rect key="frame" x="0.0" y="0.0" width="465" height="270"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" verticallyResizable="YES" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="P1M-wL-EjX">
+                                            <rect key="frame" x="0.0" y="0.0" width="465" height="270"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="465" height="270"/>
+                                            <size key="maxSize" width="480" height="10000000"/>
+                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="0cZ-vt-fSz" id="f5t-bf-bt8"/>
+                                            </connections>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="LZI-z9-kfb">
+                                    <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="y8y-WV-EOZ">
+                                    <rect key="frame" x="465" y="0.0" width="15" height="270"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="7UA-fH-QsF" secondAttribute="trailing" id="IR3-mu-d4w"/>
+                            <constraint firstAttribute="bottom" secondItem="7UA-fH-QsF" secondAttribute="bottom" id="nkD-Np-fEK"/>
+                            <constraint firstItem="7UA-fH-QsF" firstAttribute="top" secondItem="qKV-yR-zw2" secondAttribute="top" id="pM0-es-ZPl"/>
+                            <constraint firstItem="7UA-fH-QsF" firstAttribute="leading" secondItem="qKV-yR-zw2" secondAttribute="leading" id="wBe-bA-mhf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="P1M-wL-EjX" id="WDd-7S-6M6"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="496" y="-115"/>
+        </scene>
+    </scenes>
+</document>
