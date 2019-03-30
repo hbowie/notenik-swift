@@ -30,13 +30,13 @@ class StringView: EditView {
     }
     
     func buildView() {
-        textField = NSTextField(wrappingLabelWithString: "")
-        textField.translatesAutoresizingMaskIntoConstraints = true
-        textField.autoresizingMask = [.width]
-        textField.isEditable = true
-        textField.isSelectable = true
-        textField.alignment = .left
-        textField.preferredMaxLayoutWidth = 300
+        textField = NSTextField(string: "")
+        // textField.translatesAutoresizingMaskIntoConstraints = true
+        // textField.autoresizingMask = [.width]
+        // textField.isEditable = true
+        // textField.isSelectable = true
+        // textField.alignment = .left
+        // textField.preferredMaxLayoutWidth = 300
     }
     
 }

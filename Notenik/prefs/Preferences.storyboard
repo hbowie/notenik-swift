@@ -31,7 +31,7 @@
             <objects>
                 <tabViewController id="QcO-UB-82s" sceneMemberID="viewController">
                     <tabViewItems>
-                        <tabViewItem identifier="" id="jFi-DJ-6Nk"/>
+                        <tabViewItem label="Files" identifier="" id="jFi-DJ-6Nk"/>
                         <tabViewItem identifier="" id="LYn-6D-v3b"/>
                     </tabViewItems>
                     <tabView key="tabView" type="noTabsNoBorder" id="1MM-le-9ts">
@@ -57,13 +57,52 @@
             <objects>
                 <viewController id="i5j-TU-ObT" sceneMemberID="viewController">
                     <view key="view" id="SVv-OQ-5hv">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="504" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <gridView xPlacement="leading" yPlacement="bottom" rowAlignment="none" translatesAutoresizingMaskIntoConstraints="NO" id="6Fg-gc-hvN">
+                                <rect key="frame" x="0.0" y="211" width="371" height="89"/>
+                                <rows>
+                                    <gridRow id="pzB-ZA-DN7"/>
+                                    <gridRow id="q0u-hx-Fei"/>
+                                    <gridRow id="O6V-kF-frb"/>
+                                </rows>
+                                <columns>
+                                    <gridColumn width="159" id="CtC-T0-1OV"/>
+                                    <gridColumn id="HJn-NQ-J0r"/>
+                                    <gridColumn id="lbK-Qm-XWb"/>
+                                </columns>
+                                <gridCells>
+                                    <gridCell row="pzB-ZA-DN7" column="CtC-T0-1OV" id="Yws-Rj-0dS"/>
+                                    <gridCell row="pzB-ZA-DN7" column="HJn-NQ-J0r" id="aP9-yH-XVP"/>
+                                    <gridCell row="pzB-ZA-DN7" column="lbK-Qm-XWb" id="zxi-Zr-3fr"/>
+                                    <gridCell row="q0u-hx-Fei" column="CtC-T0-1OV" id="exS-Qr-DQO"/>
+                                    <gridCell row="q0u-hx-Fei" column="HJn-NQ-J0r" id="D3s-aZ-EGO"/>
+                                    <gridCell row="q0u-hx-Fei" column="lbK-Qm-XWb" id="A3K-MV-gbf"/>
+                                    <gridCell row="O6V-kF-frb" column="CtC-T0-1OV" id="PNP-2y-85l">
+                                        <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eqy-sv-PMo">
+                                            <rect key="frame" x="-2" y="0.0" width="150" height="17"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="left" title="Number of Recent Files:" id="jgK-CC-hdc">
+                                                <font key="font" usesAppearanceFont="YES"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </gridCell>
+                                    <gridCell row="O6V-kF-frb" column="HJn-NQ-J0r" id="GgX-gN-rvz"/>
+                                    <gridCell row="O6V-kF-frb" column="lbK-Qm-XWb" id="u9n-3K-fyJ"/>
+                                </gridCells>
+                            </gridView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="6Fg-gc-hvN" firstAttribute="leading" secondItem="SVv-OQ-5hv" secondAttribute="leading" id="642-LY-8mI"/>
+                            <constraint firstItem="6Fg-gc-hvN" firstAttribute="top" secondItem="SVv-OQ-5hv" secondAttribute="top" id="b7T-ra-srK"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <customObject id="tyM-SV-eCN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="223" y="525"/>
+            <point key="canvasLocation" x="250" y="525"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="cc2-rL-Wox">

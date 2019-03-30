@@ -85,8 +85,8 @@ class NoteEditViewController: NSViewController {
             
             var hStack = NSStackView()
             hStack.orientation = .horizontal
-            hStack.translatesAutoresizingMaskIntoConstraints = false
-            hStack.alignment = .top
+            // hStack.translatesAutoresizingMaskIntoConstraints = false
+            // hStack.alignment = .top
             hStack.addArrangedSubview(labelView)
             hStack.addArrangedSubview(editView.view)
             
@@ -121,7 +121,7 @@ class NoteEditViewController: NSViewController {
         // gridView!.setContentHuggingPriority(600, for: .horizontal)
         // gridView!.setContentHuggingPriority(600, for: .vertical)
         
-        print ("Grid View Built")
+        print ("Making Grid View")
         gridView.translatesAutoresizingMaskIntoConstraints = false
         gridView.column(at: 0).width = 100
         gridView.column(at: 0).xPlacement = .trailing
@@ -142,33 +142,12 @@ class NoteEditViewController: NSViewController {
     
     func makeLabelView(with label: FieldLabel) -> NSView {
         let vw = NSTextField(labelWithString: label.properForm + ": ")
-        vw.translatesAutoresizingMaskIntoConstraints = false
-        vw.isEditable = false
-        vw.isSelectable = false
-        vw.alignment = .left
+        // vw.translatesAutoresizingMaskIntoConstraints = false
+        // vw.isEditable = false
+        // vw.isSelectable = false
+        // vw.alignment = .left
         return vw
     
-    }
-    
-    func makeValueView(for def: FieldDefinition) -> NSView {
-        // if def.fieldLabel.commonForm == LabelConstants.bodyCommon {
-        //     bodyStorage = NSTextStorage()
-        //     var layoutManager = NSLayoutManager()
-        //     bodyStorage.addLayoutManager(layoutManager)
-        //     var bodySize = NSSize(width: 200, height: 100)
-        //     var bodyContainer = NSTextContainer(bodySize)
-        //     layoutManager.addTextContainer(bodyContainer)
-        //     bodyView = NSTextView(
-        // } else {
-            let vw = NSTextField(wrappingLabelWithString: "")
-            vw.translatesAutoresizingMaskIntoConstraints = false
-            vw.isEditable = true
-            vw.isSelectable = true
-            vw.alignment = .left
-            vw.preferredMaxLayoutWidth = 300
-            return vw
-        // }
-        
     }
     
     /// Update appropriate stuff when a new note has been selected

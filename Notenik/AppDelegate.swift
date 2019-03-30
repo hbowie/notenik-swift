@@ -47,7 +47,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func menuWindowLog(_ sender: NSMenuItem) {
         if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
-            print ("Found a good Log Controller")
             logController.showWindow(self)
         } else {
             Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,

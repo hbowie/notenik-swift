@@ -237,6 +237,9 @@
 		9CE3250E224D5A4D0051CA1F /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */; };
 		9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
 		9CE32511224D5E180051CA1F /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
+		9CED2810224EB39900798621 /* LongTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED280F224EB39900798621 /* LongTextView.swift */; };
+		9CED2811224EB39900798621 /* LongTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED280F224EB39900798621 /* LongTextView.swift */; };
+		9CED2812224EB8F200798621 /* LongTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED280F224EB39900798621 /* LongTextView.swift */; };
 		9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF256CA21FD0FF000D9F06A /* CollectionJuggler.swift */; };
 		9CF256CD21FD175E00D9F06A /* CollectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF256CC21FD175E00D9F06A /* CollectionWindowController.swift */; };
 /* End PBXBuildFile section */
@@ -376,6 +379,7 @@
 		9CE32509224D58360051CA1F /* Log.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Log.storyboard; sourceTree = "<group>"; };
 		9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
 		9CE3250F224D5E180051CA1F /* LogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
+		9CED280F224EB39900798621 /* LongTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextView.swift; sourceTree = "<group>"; };
 		9CF256CA21FD0FF000D9F06A /* CollectionJuggler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionJuggler.swift; sourceTree = "<group>"; };
 		9CF256CC21FD175E00D9F06A /* CollectionWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -615,6 +619,7 @@
 			isa = PBXGroup;
 			children = (
 				9CD3261F2233068F00D06B77 /* EditView.swift */,
+				9CED280F224EB39900798621 /* LongTextView.swift */,
 				9CD32623223308C400D06B77 /* StringView.swift */,
 				9CD3262722330C8A00D06B77 /* ViewFactory.swift */,
 			);
@@ -805,6 +810,7 @@
 				9C60E70B21F650B800C332ED /* FileUtils.swift in Sources */,
 				9C60E76821F651E500C332ED /* AuthorValue.swift in Sources */,
 				9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */,
+				9CED2810224EB39900798621 /* LongTextView.swift in Sources */,
 				9C60E79821F651E500C332ED /* FieldType.swift in Sources */,
 				9CD3262822330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9C60E77421F651E500C332ED /* TagsValue.swift in Sources */,
@@ -889,6 +895,7 @@
 				9C60E7BD21F6525F00C332ED /* DateUtilsTests.swift in Sources */,
 				9C60E74221F651E500C332ED /* NoteField.swift in Sources */,
 				9C2AE515220A033300AE8BEE /* TagsNode.swift in Sources */,
+				9CED2812224EB8F200798621 /* LongTextView.swift in Sources */,
 				9C60E75421F651E500C332ED /* Provider.swift in Sources */,
 				9C60E70621F650B800C332ED /* DateUtils.swift in Sources */,
 				9C60E7C321F6525F00C332ED /* LineParserTests.swift in Sources */,
@@ -975,6 +982,7 @@
 				9C2AE528220A34D100AE8BEE /* NoteTagsViewController.swift in Sources */,
 				9C60E75521F651E500C332ED /* Provider.swift in Sources */,
 				9CD756D82210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */,
+				9CED2811224EB39900798621 /* LongTextView.swift in Sources */,
 				9C2AE518220A033D00AE8BEE /* TagsTree.swift in Sources */,
 				9C60E70721F650B800C332ED /* DateUtils.swift in Sources */,
 				9C60E74021F651E500C332ED /* FieldLabel.swift in Sources */,
