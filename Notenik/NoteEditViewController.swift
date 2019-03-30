@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/28/19.
-//  Copyright © 2019 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Cocoa
@@ -20,8 +23,8 @@ class NoteEditViewController: NSViewController {
     var containerViewBuilt = false
     
     var editViews: [EditView] = []
-    var grid:  [[NSView]] = []
-    var gridView: NSGridView!
+    var grid:      [[NSView]] = []
+    var gridView:  NSGridView!
     
     var bodyView:    NSTextView!
     var bodyStorage: NSTextStorage!
@@ -59,46 +62,53 @@ class NoteEditViewController: NSViewController {
     func makeEditView() {
         
         print("NoteEditViewController makeEditView starting")
+        
         // Make sure we have everything we need
         guard let collection = io?.collection else { return }
         guard io!.collectionOpen else { return }
         guard initialViewLoaded && !containerViewBuilt else { return }
         
+        let dict = collection.dict
+        let defs = dict.list
+        
+        // Create a Vertical Stack View to contain the rows of fields to be edited.
         vStack = NSStackView()
         vStack.orientation = .vertical
         vStack.translatesAutoresizingMaskIntoConstraints = false
         
         // Let's build a two-dimensional array of views to be displayed in the grid
-        let dict = collection.dict
-        let defs = dict.list
+
         editViews = []
         grid = []
+        
+        // Build the label and value views for each field in the dictionary
         for def in defs {
-            
-            let editView = ViewFactory.getEditView(def: def)
-            editViews.append(editView)
             
             let label = def.fieldLabel
             let labelView = makeLabelView(with: label)
             
+            let editView = ViewFactory.getEditView(def: def)
             let valueView = editView.view
             
-            var hStack = NSStackView()
+            editViews.append(editView)
+            
+            // Build a horizontal stack for this field and add it to our vertical stack
+            let hStack = NSStackView()
             hStack.orientation = .horizontal
             // hStack.translatesAutoresizingMaskIntoConstraints = false
             // hStack.alignment = .top
             hStack.addArrangedSubview(labelView)
             hStack.addArrangedSubview(editView.view)
-            
             vStack.addArrangedSubview(hStack)
             
+            // Add the next row to the Grid View
             let row = [labelView, valueView]
             grid.append(row)
         }
         print("\(grid.count) rows built")
         
-        // makeGridView()
-        makeStackView()
+        makeGridView()
+        // makeStackView()
         
         containerViewBuilt = true
     }
@@ -113,6 +123,7 @@ class NoteEditViewController: NSViewController {
     }
     
     func makeGridView() {
+        print ("Making Grid View")
         gridView = NSGridView(views: grid)
         // gridView = NSGridView(numberOfColumns: 2, rows: 0)
         // for row in grid {
@@ -121,16 +132,14 @@ class NoteEditViewController: NSViewController {
         // gridView!.setContentHuggingPriority(600, for: .horizontal)
         // gridView!.setContentHuggingPriority(600, for: .vertical)
         
-        print ("Making Grid View")
         gridView.translatesAutoresizingMaskIntoConstraints = false
-        gridView.column(at: 0).width = 100
-        gridView.column(at: 0).xPlacement = .trailing
-        gridView.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 600), for: .horizontal)
-        gridView.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 600), for: .vertical)
-        gridView.column(at: 1).width = 200
+        // gridView.column(at: 0).width = 100
+        // gridView.column(at: 0).xPlacement = .trailing
+        // gridView.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 600), for: .horizontal)
+        // gridView.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 600), for: .vertical)
+        // gridView.column(at: 1).width = 200
         // scrollView.documentView = gridView
         parentView.addSubview(gridView!)
-        print ("Grid View added to Edit View")
         // scrollView.contentView.scroll(to: .zero)
         
         // Pin the grid to the edges of our main view
