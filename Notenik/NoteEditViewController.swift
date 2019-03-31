@@ -19,6 +19,8 @@ class NoteEditViewController: NSViewController {
     var collectionWindowController: CollectionWindowController?
     var notenikIO: NotenikIO?
     
+    var selectedNote: Note?
+    
     var initialViewLoaded  = false
     var containerViewBuilt = false
     
@@ -60,8 +62,6 @@ class NoteEditViewController: NSViewController {
     
     /// Let's build the grid view to be used for editing the contents of a note
     func makeEditView() {
-        
-        print("NoteEditViewController makeEditView starting")
         
         // Make sure we have everything we need
         guard let collection = io?.collection else { return }
@@ -105,7 +105,6 @@ class NoteEditViewController: NSViewController {
             let row = [labelView, valueView]
             grid.append(row)
         }
-        print("\(grid.count) rows built")
         
         makeGridView()
         // makeStackView()
@@ -166,6 +165,8 @@ class NoteEditViewController: NSViewController {
         guard io!.collectionOpen else { return }
         guard initialViewLoaded && containerViewBuilt else { return }
         
+        selectedNote = note
+        
         let dict = collection.dict
         let defs = dict.list
         var i = 0
@@ -179,6 +180,38 @@ class NoteEditViewController: NSViewController {
                 fieldView.text = strVal
             }
             i += 1
+        }
+    }
+    
+    /// Modify the Note if the user has changed anything
+    func modIfChanged() {
+        guard let collection = io?.collection else { return }
+        guard io!.collectionOpen else { return }
+        guard initialViewLoaded && containerViewBuilt else { return }
+        guard selectedNote != nil else { return }
+        guard window != nil else { return }
+        
+        var modified = false
+        let dict = collection.dict
+        let defs = dict.list
+        var i = 0
+        for def in defs {
+            let field = selectedNote!.getField(def: def)
+            var fieldView = editViews[i]
+            var noteValue = ""
+            if field != nil {
+                noteValue = field!.value.value
+            }
+            let userValue = fieldView.text
+            if userValue != noteValue {
+                print("\(def.fieldLabel.properForm) changed!")
+                field!.value.set(userValue)
+                modified = true
+            }
+            i += 1
+        }
+        if modified {
+            window!.noteModified(note: selectedNote!)
         }
     }
     

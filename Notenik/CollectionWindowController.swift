@@ -25,7 +25,7 @@ class CollectionWindowController: NSWindowController {
                     var tagsVC: NoteTagsViewController?
 
         var noteItem: NSSplitViewItem?
-            var noteTabs: NSTabViewController?
+            var noteTabs: NoteTabsViewController?
                 var displayItem: NSTabViewItem?
                     var displayVC: NoteDisplayViewController?
                 var editItem: NSTabViewItem?
@@ -90,7 +90,8 @@ class CollectionWindowController: NSWindowController {
             noteItem = splitViewController!.splitViewItems[1]
             collectionTabs = collectionItem?.viewController as? NSTabViewController
             collectionTabs?.selectedTabViewItemIndex = 0
-            noteTabs = noteItem?.viewController as? NSTabViewController
+            noteTabs = noteItem?.viewController as? NoteTabsViewController
+            noteTabs!.window = self
             noteTabs?.selectedTabViewItemIndex = 0
             listItem = collectionTabs?.tabViewItems[0]
             listVC = listItem?.viewController as? NoteListViewController
@@ -102,6 +103,7 @@ class CollectionWindowController: NSWindowController {
             displayVC = displayItem?.viewController as? NoteDisplayViewController
             editItem = noteTabs?.tabViewItems[1]
             editVC = editItem?.viewController as? NoteEditViewController
+            editVC!.window = self
         }
     }
     
@@ -112,10 +114,12 @@ class CollectionWindowController: NSWindowController {
         switch sender.selectedSegment {
         case 0:
             // Go to top of list
+            modIfChanged(sender)
             let (note, position) = noteIO.firstNote()
             select(note: note, position: position, source: .nav)
         case 1:
             // Go to prior note
+            modIfChanged(sender)
             let startingPosition = noteIO.position
             var (note, position) = noteIO.priorNote(startingPosition!)
             if note == nil {
@@ -124,6 +128,7 @@ class CollectionWindowController: NSWindowController {
             select(note: note, position: position, source: .nav)
         case 2:
             // Go to next note
+            modIfChanged(sender)
             let startingPosition = noteIO.position
             var (note, position) = noteIO.nextNote(startingPosition!)
             if note == nil {
@@ -166,6 +171,19 @@ class CollectionWindowController: NSWindowController {
         if editVC != nil && noteToUse != nil {
             editVC!.select(note: noteToUse!)
         }
+    }
+    
+    /// Modify the Note if the user changed anything on the Edit Screen
+    @IBAction func modIfChanged(_ sender: Any) {
+        
+        guard editVC != nil else { return }
+        
+        editVC!.modIfChanged()
+    }
+    
+    /// Take appropriate actions when the user has modified the note
+    func noteModified(note: Note) {
+        print ("CollectionWindowController. noteModified!")
     }
     
     @IBAction func makeCollectionEssential(_ sender: Any) {

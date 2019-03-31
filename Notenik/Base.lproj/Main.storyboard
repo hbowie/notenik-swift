@@ -817,10 +817,25 @@
                                         <action selector="launchLink:" target="Oky-zY-oP4" id="bpu-hT-ocE"/>
                                     </connections>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="DFDC60A3-7B44-45B7-884F-821DB14F1234" label="" paletteLabel="" sizingBehavior="auto" id="0br-Uy-6m2">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="fbp-L5-Kpu">
+                                        <rect key="frame" x="0.0" y="14" width="47" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" title="OK" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tcP-83-Eps">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <connections>
+                                                <action selector="modIfChanged:" target="B8D-0N-5wS" id="kMu-UD-lnX"/>
+                                            </connections>
+                                        </buttonCell>
+                                    </button>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="nQC-YT-8yD"/>
                                 <toolbarItem reference="TCK-3s-X5T"/>
+                                <toolbarItem reference="0br-Uy-6m2"/>
                                 <toolbarItem reference="cCQ-Ex-nRC"/>
                                 <toolbarItem reference="XBJ-bT-dLm"/>
                                 <toolbarItem reference="uP7-Y2-WeW"/>
@@ -1212,10 +1227,10 @@
             </objects>
             <point key="canvasLocation" x="1321" y="735"/>
         </scene>
-        <!--Tab View Controller-->
+        <!--Note Tabs View Controller-->
         <scene sceneID="wP9-dx-Vni">
             <objects>
-                <tabViewController selectedTabViewItemIndex="1" id="32M-8N-gv3" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="1" id="32M-8N-gv3" customClass="NoteTabsViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="Display" identifier="" id="2Cn-o6-6S6"/>
                         <tabViewItem label="Edit" identifier="" id="Hkk-RO-LGC"/>

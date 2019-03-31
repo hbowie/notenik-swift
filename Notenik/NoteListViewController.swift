@@ -85,6 +85,7 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
         let row = tableView.selectedRow
         guard collectionWindowController != nil && row >= 0 else { return }
         if let (note, position) = notenikIO?.selectNote(at: row) {
+            collectionWindowController!.modIfChanged(self)
             collectionWindowController!.select(note: note, position: position, source: NoteSelectionSource.list)
         }
     }
