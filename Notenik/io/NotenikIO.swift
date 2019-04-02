@@ -99,5 +99,11 @@ protocol NotenikIO {
     /// If no note is selected, return a nil Note and an index posiiton of -1.
     func getSelectedNote() -> (Note?, NotePosition)
     
+    /// Delete the currently selected Note
+    ///
+    /// - Returns: The new Note on which the collection should be positioned.
+    func deleteSelectedNote() -> (Note?, NotePosition)
+    
+    /// Return the root of the Tags tree
     func getTagsNodeRoot() -> TagsNode
 }

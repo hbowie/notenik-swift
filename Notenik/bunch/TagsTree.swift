@@ -12,6 +12,7 @@ class TagsTree {
     
     let root = TagsNode()
     
+    /// Add a note to the Tags Tree, with one leaf for each Tag that the note possesses
     func add(note: Note) {
         if note.hasTags() {
             let tags = note.tags
@@ -31,6 +32,29 @@ class TagsTree {
             }
         } else {
             _ = root.addChild(note: note)
+        }
+    }
+    
+    /// Delete a note from the tree, wherever it appears
+    func delete(note: Note) {
+        deleteNoteInChildren (note: note, node: root)
+    }
+    
+    /// Delete child nodes where this Note is found
+    func deleteNoteInChildren(note: Note, node: TagsNode) {
+        var i = 0
+        while i < node.countChildren {
+            let child = node.getChild(at: i)
+            if child!.type == .note {
+                if child!.note!.noteID == note.noteID {
+                    node.remove(at: i)
+                } else {
+                    i += 1
+                }
+            } else {
+                deleteNoteInChildren(note: note, node: child!)
+                i += 1
+            }
         }
     }
     

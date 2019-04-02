@@ -3,11 +3,15 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 2/5/19.
-//  Copyright © 2019 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
 
+/// A bunch of notes stored in memory
 class BunchOfNotes {
     
     var collection = NoteCollection()
@@ -55,7 +59,7 @@ class BunchOfNotes {
     ///
     /// - Parameter note: The note to be added, whether from a data store or from a user
     /// - Returns: True if the note was added to the collection, false if it could not be added.
-    func add(note : Note) -> Bool {
+    func add(note: Note) -> Bool {
         let noteID = note.noteID
         let existingNote = notesDict[noteID]
         if existingNote != nil {
@@ -76,6 +80,26 @@ class BunchOfNotes {
             notesTree.add(note: note)
             return true
         }
+    }
+    
+    func delete(note: Note) ->  Bool {
+        let noteID = note.noteID
+        let existingNote = notesDict[noteID]
+        guard existingNote != nil else { return false }
+        
+        // Remove the note from the notes dictionary
+        notesDict.removeValue(forKey: noteID)
+        
+        // Remove the note from sorted list of notes
+        let (index, found) = searchList(note.sortKey)
+        if found {
+            notesList.remove(at: index)
+        }
+        
+        // Remove the note from the Tags Tree
+        notesTree.delete(note: note)
+        
+        return true
     }
     
     /// Select the given note and return its index, if it can be found in the sorted list.

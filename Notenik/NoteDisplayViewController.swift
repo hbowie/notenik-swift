@@ -28,7 +28,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate {
         // Do view setup here.
     }
     
-    func select(note: Note) {
+    func display(note: Note) {
         let html = noteDisplay.display(note)
         // let url = URL(string: "https://practopians.org")!
         // webView.load(URLRequest(url: url))

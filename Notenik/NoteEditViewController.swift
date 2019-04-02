@@ -192,6 +192,9 @@ class NoteEditViewController: NSViewController {
         guard window != nil else { return }
         
         var modified = false
+        let oldID = selectedNote!.noteID
+        let oldSortKey = selectedNote!.sortKey
+        
         let dict = collection.dict
         let defs = dict.list
         var i = 0
@@ -211,7 +214,7 @@ class NoteEditViewController: NSViewController {
             i += 1
         }
         if modified {
-            window!.noteModified(note: selectedNote!)
+            window!.noteModified(updatedNote: selectedNote!)
         }
     }
     

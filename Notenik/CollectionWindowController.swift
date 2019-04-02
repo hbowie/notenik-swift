@@ -166,11 +166,59 @@ class CollectionWindowController: NSWindowController {
             listVC!.selectRow(index: positionToUse!.index)
         }
         if displayVC != nil  && noteToUse != nil {
-            displayVC!.select(note: noteToUse!)
+            displayVC!.display(note: noteToUse!)
         }
         if editVC != nil && noteToUse != nil {
             editVC!.select(note: noteToUse!)
         }
+    }
+    
+    /// Allow the user to add or delete a Note
+    @IBAction func addOrDeleteNote(_ sender: NSSegmentedControl) {
+        print ("CollectionWindowController.addOrDeleteNote")
+        if sender.selectedSegment == 0 {
+            print ("  - Adding a Note")
+        } else {
+            deleteNote(sender)
+        }
+    }
+    
+    @IBAction func newNote(_ sender: Any) {
+        print ("CollectionWindowController.newNote")
+    }
+    
+    /// Delete the Note
+    @IBAction func deleteNote(_ sender: Any) {
+        guard notenikIO != nil && notenikIO!.collectionOpen else { return }
+        let (selectedNote, _) = notenikIO!.getSelectedNote()
+        guard selectedNote != nil else { return }
+        
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = "Really delete the Note titled '\(selectedNote!.title)'?"
+        // alert.informativeText = "Informative Text"
+        
+        alert.addButton(withTitle: "OK")
+        alert.addButton(withTitle: "Cancel")
+        // alert.showsSuppressionButton = true
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            let (nextNote, nextPosition) = notenikIO!.deleteSelectedNote()
+            reload()
+            if nextNote != nil {
+                select(note: nextNote, position: nextPosition, source: .action)
+            }
+        }
+    }
+    
+    func reload() {
+        listVC!.reload()
+        tagsVC!.reload()
+    }
+    
+    /// Duplicate the Selected Note
+    @IBAction func duplicateNote(_ sender: Any) {
+        print ("CollectionWindowController.duplicateNote")
     }
     
     /// Modify the Note if the user changed anything on the Edit Screen
@@ -181,9 +229,15 @@ class CollectionWindowController: NSWindowController {
         editVC!.modIfChanged()
     }
     
+
+    
     /// Take appropriate actions when the user has modified the note
-    func noteModified(note: Note) {
+    func noteModified(updatedNote: Note) {
         print ("CollectionWindowController. noteModified!")
+        
+        if displayVC != nil {
+            displayVC!.display(note: updatedNote)
+        }
     }
     
     @IBAction func makeCollectionEssential(_ sender: Any) {

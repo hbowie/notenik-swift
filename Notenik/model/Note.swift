@@ -8,15 +8,7 @@
 
 import Foundation
 
-class Note: Comparable {
-    
-    static func < (lhs: Note, rhs: Note) -> Bool {
-        return lhs.sortKey < rhs.sortKey
-    }
-    
-    static func == (lhs: Note, rhs: Note) -> Bool {
-        return lhs.sortKey == rhs.sortKey
-    }
+class Note: Comparable, NSCopying {
     
     var collection:  NoteCollection
     
@@ -30,6 +22,35 @@ class Note: Comparable {
         } else {
             return nil
         }
+    }
+    
+    static func < (lhs: Note, rhs: Note) -> Bool {
+        return lhs.sortKey < rhs.sortKey
+    }
+    
+    static func == (lhs: Note, rhs: Note) -> Bool {
+        return lhs.sortKey == rhs.sortKey
+    }
+    
+    /// Make a copy of this Note
+    func copy(with zone: NSZone? = nil) -> Any {
+        var newNote = Note()
+        newNote.collection = collection
+        if fileName == nil {
+            newNote.fileName = nil
+        } else {
+            newNote.fileName = String(fileName!)
+        }
+        let dict = collection.dict
+        let defs = dict.list
+        for def in defs {
+            let field = getField(def: def)
+            if field != nil {
+                let field2 = NoteField(def: def, value: field!.value.value)
+                newNote.addField(field2)
+            }
+        }
+        return newNote
     }
     
     /// Return the Note's Author Value

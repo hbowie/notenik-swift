@@ -51,6 +51,11 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
         }
     }
     
+    /// Reload the Table's Data.
+    func reload() {
+        tableView.reloadData()
+    }
+    
     /// Supply the value for a particular cell in the table.
     ///
     /// - Parameters:

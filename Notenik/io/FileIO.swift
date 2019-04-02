@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/14/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2018 - 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -40,7 +43,6 @@ class FileIO : NotenikIO {
         realm.path = NSHomeDirectory()
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let docDir = paths[0]
-        print ("Documents Directory = " + docDir.absoluteString)
         closeCollection()
     }
     
@@ -300,6 +302,47 @@ class FileIO : NotenikIO {
     func getSelectedNote() -> (Note?, NotePosition) {
         guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
         return bunch.getSelectedNote()
+    }
+    
+    /// Delete the currently selected Note
+    ///
+    /// - Returns: The new Note on which the collection should be positioned.
+    func deleteSelectedNote() -> (Note?, NotePosition) {
+        
+        // Make sure we have an open collection available to us
+        guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
+        
+        // Make sure we have a selected note
+        let (noteToDelete, oldPosition) = bunch.getSelectedNote()
+        guard noteToDelete != nil && oldPosition.index >= 0 else { return (nil, NotePosition(index: -1)) }
+        
+        let (priorNote, priorPosition) = bunch.priorNote(oldPosition)
+        var nextNote = priorNote
+        var nextPosition = priorPosition
+ 
+        bunch.delete(note: noteToDelete!)
+        var positioned = false
+        if priorNote != nil {
+            (nextNote, nextPosition) = bunch.nextNote(priorPosition)
+            if nextNote != nil {
+                positioned = true
+            }
+        }
+        if !positioned {
+            bunch.firstNote()
+        }
+        
+        let notePath = noteToDelete!.fullPath
+        if notePath != nil {
+            do {
+                try fileManager.removeItem(atPath: notePath!)
+            } catch {
+                Logger.shared.log(skip: true, indent: 0, level: .concerning,
+                                  message: "Could not delete note file at '\(notePath)'")
+            }
+        }
+        
+        return (nextNote, nextPosition)
     }
     
     func getTagsNodeRoot() -> TagsNode {

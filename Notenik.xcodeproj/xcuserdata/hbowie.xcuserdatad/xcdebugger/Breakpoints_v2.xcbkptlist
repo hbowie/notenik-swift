@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Notenik/NoteDisplayViewController.swift"
-            timestampString = "573683663.3914829"
+            timestampString = "575782942.801205"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "35"
             endingLineNumber = "35"
-            landmarkName = "select(note:)"
+            landmarkName = "display(note:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

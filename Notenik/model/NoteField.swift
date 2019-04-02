@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/4/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -24,7 +27,7 @@ class NoteField {
         value = ValueFactory.getValue(type: def.fieldType, value: "")
     }
     
-    convenience init(def : FieldDefinition, value : String) {
+    convenience init(def: FieldDefinition, value: String) {
         self.init()
         self.def = def
         self.value = ValueFactory.getValue(type: def.fieldType, value: value)

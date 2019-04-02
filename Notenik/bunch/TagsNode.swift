@@ -89,4 +89,25 @@ class TagsNode: Comparable {
             return children[i]
         }
     }
+    
+    /// Return the child at the specified index, or nil if bad index
+    func getChild(at index: Int) -> TagsNode? {
+        if index < 0 || index >= children.count {
+            return nil
+        } else {
+            return children[index]
+        }
+    }
+    
+    /// Remove the child at the specified index.
+    func remove(at index: Int) {
+        if index >= 0 && index < children.count {
+            children.remove(at: index)
+        }
+    }
+    
+    /// Return the number of children for which this node is a parent
+    var countChildren: Int {
+        return children.count
+    }
 }

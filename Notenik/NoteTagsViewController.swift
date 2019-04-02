@@ -44,6 +44,10 @@ class NoteTagsViewController: NSViewController, NSOutlineViewDataSource, NSOutli
         // Do view setup here.
     }
     
+    func reload() {
+        outlineView.reloadData()
+    }
+    
     /// How many children does this node have?
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         if let node = item as? TagsNode {

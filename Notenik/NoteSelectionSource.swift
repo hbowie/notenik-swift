@@ -12,4 +12,5 @@ enum NoteSelectionSource {
     case nav
     case list
     case tree
+    case action
 }

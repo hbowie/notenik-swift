@@ -64,7 +64,8 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
+                                        <menuItem title="New" id="Was-JA-tGl">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="newDocument:" target="Ady-hI-5gd" id="4Si-XN-c54"/>
                                             </connections>
@@ -170,6 +171,27 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Note" id="RHt-4N-8CS">
                                     <items>
+                                        <menuItem title="New Note" keyEquivalent="n" id="JqS-AY-3Qr">
+                                            <connections>
+                                                <action selector="newNote:" target="Ady-hI-5gd" id="0DJ-E7-uxz"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Delete Note" id="0Jv-3J-PYF" userLabel="Delete Note">
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="deleteNote:" target="Ady-hI-5gd" id="ia0-wa-vUT"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Duplicate Note" id="UDW-k7-1JK" userLabel="Duplicate Note">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="duplicateNote:" target="Ady-hI-5gd" id="xgg-V8-mip"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="aKs-Gn-B6L"/>
                                         <menuItem title="Text Edit Note" keyEquivalent="t" toolTip="Open the Current Note in your Preferred Text Editor" id="bpk-dF-vAM" userLabel="Text Edit Note">
                                             <connections>
                                                 <action selector="textEditNote:" target="Ady-hI-5gd" id="6P1-cp-ypG"/>
@@ -807,6 +829,9 @@
                                                 <segment toolTip="Prepare to Add a New Note" image="NSAddTemplate" width="32"/>
                                                 <segment toolTip="Remove the Currently Selected Note" image="NSRemoveTemplate" width="32" tag="1"/>
                                             </segments>
+                                            <connections>
+                                                <action selector="addOrDeleteNote:" target="B8D-0N-5wS" id="JcG-BO-oY9"/>
+                                            </connections>
                                         </segmentedCell>
                                     </segmentedControl>
                                 </toolbarItem>
