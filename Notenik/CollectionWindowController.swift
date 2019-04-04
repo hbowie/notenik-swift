@@ -255,9 +255,14 @@ class CollectionWindowController: NSWindowController {
         guard editVC != nil else { return }
         
         let (outcome, note) = editVC!.modIfChanged(newNoteRequested: newNoteRequested, newNote: newNote)
+        
         if outcome == .add || outcome == .deleteAndAdd {
             reload()
             select(note: note, position: nil, source: .action)
+            noteTabs!.tabView.selectFirstTabViewItem(sender)
+        }
+        if outcome == .modify {
+            noteModified(updatedNote: note!)
             noteTabs!.tabView.selectFirstTabViewItem(sender)
         }
         if outcome != .tryAgain {

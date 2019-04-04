@@ -60,6 +60,12 @@ protocol NotenikIO {
     ///            otherwise nil and -1.
     func addNote(newNote: Note) -> (Note?, NotePosition)
     
+    /// Write a note to its data store within its collection.
+    ///
+    /// - Parameter note: The Note to be saved.
+    /// - Returns: True if saved successfully, false otherwise.
+    func writeNote(_ note: Note) -> Bool
+    
     /// Select the note at the given position in the sorted list.
     ///
     /// - Parameter index: An index value pointing to a position in the list.

@@ -280,6 +280,7 @@ class NoteEditViewController: NSViewController {
                 }
             }
         }
+        
         // Figure out what we need to do
         switch outcome {
         case .notReady:
@@ -302,8 +303,9 @@ class NoteEditViewController: NSViewController {
         case .deleteAndAdd:
             return (outcome, nil)
         case .modify:
-            return (outcome, nil)
+            modNote.copyFields(to: selectedNote!)
+            io!.writeNote(selectedNote!)
+            return (outcome, selectedNote)
         }
-        window!.noteModified(updatedNote: selectedNote!)
     } // end modIfChanged method
 }

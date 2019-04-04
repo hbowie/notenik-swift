@@ -15,6 +15,7 @@ class Note: Comparable, NSCopying {
     
     var collection:  NoteCollection
     
+    /// This should contain the file name (without the path) plus the file extension
     var fileName:    String?
     
     var fields = [:] as [String: NoteField]
@@ -30,6 +31,7 @@ class Note: Comparable, NSCopying {
         self.collection = collection
     }
     
+    /// Return the full file path for the Note
     var fullPath: String? {
         if hasFileName() {
             return FileUtils.joinPaths(path1: collection.collectionFullPath, path2: fileName!)
@@ -38,6 +40,7 @@ class Note: Comparable, NSCopying {
         }
     }
     
+    /// Create a file name for the file, based on the Note's title
     func makeFileNameFromTitle() {
         guard collection.preferredExt != nil else { return }
         if hasTitle() {
@@ -62,16 +65,31 @@ class Note: Comparable, NSCopying {
         } else {
             newNote.fileName = String(fileName!)
         }
+        copyFields(to: newNote)
+        return newNote
+    }
+    
+    /// Copy field values from this Note to a second Note, making sure all fields have
+    /// matching definitions and values.
+    ///
+    /// - Parameter note2: The Note to be updated with this Note's field values.
+    func copyFields(to note2: Note) {
+
         let dict = collection.dict
         let defs = dict.list
-        for def in defs {
-            let field = getField(def: def)
-            if field != nil {
-                let field2 = NoteField(def: def, value: field!.value.value)
-                newNote.addField(field2)
+        for definition in defs {
+            let field = getField(def: definition)
+            let field2 = note2.getField(def: definition)
+            if field == nil && field2 == nil {
+                // Nothing to do here -- just move on
+            } else if field == nil && field2 != nil {
+                field2!.value.set("")
+            } else if field != nil && field2 == nil {
+                note2.addField(def: definition, strValue: field!.value.value)
+            } else {
+                field2!.value.set(field!.value.value)
             }
         }
-        return newNote
     }
     
     /// Return the Note's Author Value

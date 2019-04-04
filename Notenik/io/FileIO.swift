@@ -239,6 +239,7 @@ class FileIO : NotenikIO {
             do {
                 try stringToSave.write(toFile: note.fullPath!, atomically: true, encoding: String.Encoding.utf8.rawValue)
             } catch {
+                print("Problem writing to disk!")
                 return false
             }
         }
