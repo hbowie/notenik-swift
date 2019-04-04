@@ -19,6 +19,8 @@ class NoteCollection {
     var idRule       : NoteIDRule
     var sortParm     : NoteSortParm
     var statusConfig : StatusValueConfig
+    /// Preferred file extension for the current collection
+    var preferredExt:  String?
     
     /// Default initialization of a new Realm.
     init () {

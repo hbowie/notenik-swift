@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/14/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2018 - 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -16,6 +19,7 @@ protocol NotenikIO {
     /// The position of the selected note, if any, in the current collection
     var position:   NotePosition? { get }
     
+    /// An indicator of the status of the Collection: open or closed
     var collectionOpen: Bool { get }
     
     /// Get information about the provider.
@@ -49,6 +53,13 @@ protocol NotenikIO {
         get
     }
     
+    /// Add a new Note to the Collection
+    ///
+    /// - Parameter newNote: The Note to be added
+    /// - Returns: The added Note and its position, if added successfully;
+    ///            otherwise nil and -1.
+    func addNote(newNote: Note) -> (Note?, NotePosition)
+    
     /// Select the note at the given position in the sorted list.
     ///
     /// - Parameter index: An index value pointing to a position in the list.
@@ -63,6 +74,12 @@ protocol NotenikIO {
     /// - Parameter at: An index value pointing to a note in the list
     /// - Returns: Either the note at that position, or nil, if the index is out of range.
     func getNote(at: Int) -> Note?
+    
+    /// Get the existing note with the specified ID.
+    ///
+    /// - Parameter id: The ID we are looking for.
+    /// - Returns: The Note with this key, if one exists; otherwise nil.
+    func getNote(forID id: String) -> Note?
     
     /// Return the first note in the sorted list, along with its index position.
     ///

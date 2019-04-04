@@ -82,6 +82,10 @@ class StringUtilsTests: XCTestCase {
         XCTAssertTrue(StringUtils.trimHeading("# Heading 1") == "Heading 1")
         XCTAssertTrue(StringUtils.trimHeading("# Heading 1 #") == "Heading 1")
     }
+    
+    func testToReadableFilename () {
+        XCTAssertTrue(StringUtils.toReadableFilename("This is a file name") == "This is a file name")
+    }
 
     func testPerformanceExample() {
         // This is an example of a performance test case.

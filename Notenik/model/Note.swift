@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/4/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2018 - 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -16,11 +19,29 @@ class Note: Comparable, NSCopying {
     
     var fields = [:] as [String: NoteField]
     
+    /// Initialize without any input
+    init() {
+        collection = NoteCollection()
+    }
+    
+    /// Initialize with a Collection
+    convenience init (collection : NoteCollection) {
+        self.init()
+        self.collection = collection
+    }
+    
     var fullPath: String? {
         if hasFileName() {
             return FileUtils.joinPaths(path1: collection.collectionFullPath, path2: fileName!)
         } else {
             return nil
+        }
+    }
+    
+    func makeFileNameFromTitle() {
+        guard collection.preferredExt != nil else { return }
+        if hasTitle() {
+            fileName = StringUtils.toReadableFilename(title.value) + "." + collection.preferredExt!
         }
     }
     
@@ -144,18 +165,6 @@ class Note: Comparable, NSCopying {
         }
     }
     
-    
-    /// Initialize without any input
-    init() {
-        collection = NoteCollection()
-    }
-    
-    /// Initialize with a Collection
-    convenience init (collection : NoteCollection) {
-        self.init()
-        self.collection = collection
-    }
-    
     /// Get the unique ID used to identify this note within its collection
     var noteID : String {
         switch collection.idRule {
@@ -166,6 +175,7 @@ class Note: Comparable, NSCopying {
         }
     }
     
+    /// Return a String containing the current sort key for the Note
     var sortKey : String {
         switch collection.sortParm {
         case .title:
@@ -189,6 +199,7 @@ class Note: Comparable, NSCopying {
         }
     }
     
+    /// Does this note have a file name?
     func hasFileName() -> Bool {
         return fileName != nil && fileName!.count > 0
     }
@@ -268,6 +279,18 @@ class Note: Comparable, NSCopying {
     /// - Returns: The corresponding field within this Note, if one exists for this definition
     func getField(def: FieldDefinition) -> NoteField? {
         return fields[def.fieldLabel.commonForm]
+    }
+    
+    
+    /// Add a field to the note, given a definition and a String value.
+    ///
+    /// - Parameters:
+    ///   - def: A Field Definition for this field.
+    ///   - strValue: A String containing the intended value for this field.
+    /// - Returns: True if added successfully, false otherwise.
+    func addField(def: FieldDefinition, strValue: String) -> Bool {
+        let field = NoteField(def: def, value: strValue)
+        return addField(field)
     }
     
     /// Add a field to the note.

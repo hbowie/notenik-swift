@@ -74,8 +74,8 @@ class BunchOfNotes {
                 listIndex = notesList.count
                 notesList.append(note)
             } else {
-                notesList.insert(note, at: index + 1)
-                listIndex = index + 1
+                notesList.insert(note, at: index)
+                listIndex = index
             }
             notesTree.add(note: note)
             return true
@@ -122,7 +122,8 @@ class BunchOfNotes {
     ///
     /// - Parameter sortKey: The sort key we are trying to position.
     /// - Returns: A tuple containing the index position, and a boolean to indicate whether
-    ///            an exact match was found.
+    ///            an exact match was found. The index will either point at the first
+    ///            exact match, or the first row beyond the desired key.
     func searchList(_ sortKey : String) -> (Int, Bool) {
         var index = 0
         var exactMatch = false
@@ -133,7 +134,7 @@ class BunchOfNotes {
             index = -1
             exactMatch = false
         } else if sortKey > notesList[notesList.count - 1].sortKey {
-            index = notesList.count - 1
+            index = notesList.count
             exactMatch = false
         } else {
             index = 0
@@ -182,6 +183,15 @@ class BunchOfNotes {
         } else {
             return notesList[index]
         }
+    }
+    
+    
+    /// Get the existing note with the specified ID.
+    ///
+    /// - Parameter id: The ID we are looking for.
+    /// - Returns: The Note with this key, if one exists; otherwise nil.
+    func getNote(forID id: String) -> Note? {
+        return notesDict[id]
     }
     
     /// Return the next note in the sorted list, along with its index position.

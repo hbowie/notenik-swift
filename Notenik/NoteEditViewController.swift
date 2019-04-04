@@ -167,7 +167,12 @@ class NoteEditViewController: NSViewController {
         
         selectedNote = note
         
-        let dict = collection.dict
+        populateFields(with: note)
+    }
+    
+    /// Populate the Edit View fields with values from the given Note
+    func populateFields(with note: Note) {
+        let dict = note.collection.dict
         let defs = dict.list
         var i = 0
         for def in defs {
@@ -184,22 +189,40 @@ class NoteEditViewController: NSViewController {
     }
     
     /// Modify the Note if the user has changed anything
-    func modIfChanged() {
-        guard let collection = io?.collection else { return }
-        guard io!.collectionOpen else { return }
-        guard initialViewLoaded && containerViewBuilt else { return }
-        guard selectedNote != nil else { return }
-        guard window != nil else { return }
+    
+    /// <#Description#>
+    ///
+    /// - Parameters:
+    ///   - newNoteRequested: Are we trying to add a new note, rather than modify an existing one?
+    ///   - newNote: A possible new note to start with
+    func modIfChanged(newNoteRequested: Bool, newNote: Note?) -> (modIfChangedOutcome, Note?) {
         
+        var outcome: modIfChangedOutcome = .notReady
+        
+        // See if we're ready for this
+        guard let collection = io?.collection else { return (outcome, nil) }
+        guard io!.collectionOpen else { return (outcome, nil) }
+        guard initialViewLoaded && containerViewBuilt else { return (outcome, nil) }
+        guard window != nil else { return (outcome, nil) }
+        guard selectedNote != nil || newNoteRequested else { return (outcome, nil) }
+        
+        outcome = .noChange
+        
+        // Let's get a Note ready for comparison and possible modifications
+        var modNote: Note
+        if newNoteRequested {
+            modNote = newNote!
+        } else {
+            modNote = selectedNote!.copy() as! Note
+        }
+        
+        // See if any fields were modified by the user, and update corresponding Note fields
         var modified = false
-        let oldID = selectedNote!.noteID
-        let oldSortKey = selectedNote!.sortKey
-        
         let dict = collection.dict
         let defs = dict.list
         var i = 0
         for def in defs {
-            let field = selectedNote!.getField(def: def)
+            let field = modNote.getField(def: def)
             var fieldView = editViews[i]
             var noteValue = ""
             if field != nil {
@@ -208,14 +231,79 @@ class NoteEditViewController: NSViewController {
             let userValue = fieldView.text
             if userValue != noteValue {
                 print("\(def.fieldLabel.properForm) changed!")
-                field!.value.set(userValue)
+                if field == nil {
+                    modNote.addField(def: def, strValue: userValue)
+                } else {
+                    field!.value.set(userValue)
+                }
                 modified = true
             }
             i += 1
         }
+        
+        // Were any fields modified?
         if modified {
-            window!.noteModified(updatedNote: selectedNote!)
+            outcome = .modify
+            let modID = modNote.noteID
+            
+            // If we have a new Note ID, make sure it's unique
+            var newID = newNoteRequested
+            if newNoteRequested {
+                outcome = .add
+            }
+            if !newNoteRequested {
+                newID = (selectedNote!.noteID != modID)
+                if newID {
+                    outcome = .deleteAndAdd
+                }
+            }
+            if newID {
+                let existingNote = io!.getNote(forID: modID)
+                if existingNote != nil {
+                    let alert = NSAlert()
+                    alert.alertStyle = .warning
+                    alert.messageText = "Note titled '\(existingNote!.title)' already has the same ID"
+                    alert.informativeText = "Each Note in a Collection must have a unique ID"
+                    alert.addButton(withTitle: "Fix It")
+                    alert.addButton(withTitle: "Discard")
+                    let response = alert.runModal()
+                    if response == .alertFirstButtonReturn {
+                        outcome = .tryAgain
+                    } else {
+                        outcome = .discard
+                    }
+                }
+            }
+            if outcome == .modify {
+                if selectedNote!.sortKey != modNote.sortKey {
+                    outcome = .deleteAndAdd
+                }
+            }
         }
-    }
-    
+        // Figure out what we need to do
+        switch outcome {
+        case .notReady:
+            return (outcome, nil)
+        case .noChange:
+            return (outcome, nil)
+        case .tryAgain:
+            return (outcome, nil)
+        case .discard:
+            return (outcome, nil)
+        case .add:
+            let (addedNote, addedPosition) = io!.addNote(newNote: modNote)
+            if addedNote != nil {
+                selectedNote = addedNote
+                return (outcome, modNote)
+            } else {
+                print ("Problems adding note titled \(modNote.title)")
+                return (.tryAgain, nil)
+            }
+        case .deleteAndAdd:
+            return (outcome, nil)
+        case .modify:
+            return (outcome, nil)
+        }
+        window!.noteModified(updatedNote: selectedNote!)
+    } // end modIfChanged method
 }

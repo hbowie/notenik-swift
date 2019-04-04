@@ -13,12 +13,14 @@ import Foundation
 
 class FileIO : NotenikIO {
 
+
     let fileManager = FileManager.default
     
     var provider       : Provider = Provider()
     var realm          : Realm
     var collection     : NoteCollection?
     var collectionOpen = false
+    
     var bunch          : BunchOfNotes = BunchOfNotes()
     var templateFound  = false
     var infoFound      = false
@@ -125,6 +127,7 @@ class FileIO : NotenikIO {
                     if templateNote != nil && templateNote!.fields.count > 0 && collection!.dict.count > 0 {
                         templateFound = true
                         collection!.dict.lock()
+                        collection!.preferredExt = fileName.extLower
                     }
                 }
                 if infoFound && templateFound {
@@ -190,6 +193,56 @@ class FileIO : NotenikIO {
         bunch.close()
         templateFound = false
         infoFound = false
+    }
+    
+    /// Add a new Note to the Collection
+    ///
+    /// - Parameter newNote: The Note to be added
+    /// - Returns: The added Note and its position, if added successfully;
+    ///            otherwise nil and -1.
+    func addNote(newNote: Note) -> (Note?, NotePosition) {
+        
+        // Make sure we have an open collection available to us
+        guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
+        guard newNote.hasTitle() else { return (nil, NotePosition(index: -1)) }
+        
+        let added = bunch.add(note: newNote)
+        guard added else { return (nil, NotePosition(index: -1)) }
+        
+        newNote.makeFileNameFromTitle()
+        let written = writeNote(newNote)
+        if !written {
+            return (nil, NotePosition(index: -1))
+        } else {
+            let (_, position) = bunch.selectNote(newNote)
+            return (newNote, position)
+        }
+    }
+    
+    /// Write a note to disk within its collection.
+    ///
+    /// - Parameter note: The Note to be saved to disk.
+    /// - Returns: True if saved successfully, false otherwise.
+    func writeNote(_ note: Note) -> Bool {
+        
+        // Make sure we have an open collection available to us
+        guard collection != nil && collectionOpen else { return false }
+        guard note.hasFileName() else { return false }
+        
+        let writer = BigStringWriter()
+        let maker = NoteLineMaker(writer: writer)
+        let fieldsWritten = maker.putNote(note)
+        if fieldsWritten == 0 {
+            return false
+        } else {
+            let stringToSave = NSString(string: writer.bigString)
+            do {
+                try stringToSave.write(toFile: note.fullPath!, atomically: true, encoding: String.Encoding.utf8.rawValue)
+            } catch {
+                return false
+            }
+        }
+        return true
     }
     
     /// Read a note from disk.
@@ -261,6 +314,14 @@ class FileIO : NotenikIO {
     /// - Returns: Either the note at that position, or nil, if the index is out of range.
     func getNote(at index: Int) -> Note? {
         return bunch.getNote(at: index)
+    }
+    
+    /// Get the existing note with the specified ID.
+    ///
+    /// - Parameter id: The ID we are looking for.
+    /// - Returns: The Note with this key, if one exists; otherwise nil.
+    func getNote(forID id: String) -> Note? {
+        return bunch.getNote(forID: id)
     }
     
     /// Return the first note in the sorted list, along with its index position.

@@ -105,11 +105,6 @@
                                                 <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
-                                            <connections>
-                                                <action selector="saveDocument:" target="Ady-hI-5gd" id="teZ-XB-qJY"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Save As…" keyEquivalent="S" id="Bw7-FT-i3A">
                                             <connections>
                                                 <action selector="saveDocumentAs:" target="Ady-hI-5gd" id="mDf-zr-I0C"/>
@@ -189,6 +184,11 @@ CA
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="duplicateNote:" target="Ady-hI-5gd" id="xgg-V8-mip"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Save Note" keyEquivalent="s" id="YKI-vO-asj" userLabel="Save Note">
+                                            <connections>
+                                                <action selector="modIfChanged:" target="Ady-hI-5gd" id="g72-F2-iuO"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aKs-Gn-B6L"/>

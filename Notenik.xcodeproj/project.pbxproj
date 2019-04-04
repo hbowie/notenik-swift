@@ -209,6 +209,8 @@
 		9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
 		9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */; };
 		9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */; };
+		9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */; };
+		9CD0718F22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */; };
 		9CD326202233068F00D06B77 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* EditView.swift */; };
 		9CD326212233068F00D06B77 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* EditView.swift */; };
 		9CD326222233068F00D06B77 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* EditView.swift */; };
@@ -370,6 +372,7 @@
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
 		9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTagsViewController.swift; sourceTree = "<group>"; };
 		9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
+		9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModIfChangedOutcome.swift; sourceTree = "<group>"; };
 		9CD3261F2233068F00D06B77 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		9CD32623223308C400D06B77 /* StringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringView.swift; sourceTree = "<group>"; };
 		9CD3262722330C8A00D06B77 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
@@ -464,6 +467,7 @@
 				9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */,
 				9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */,
 				9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */,
+				9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */,
 				9C60E6D521F64B3C00C332ED /* Assets.xcassets */,
 				9C21749E22024E2900B4BF48 /* notenik-swift-intro */,
 				9C60E6DA21F64B3C00C332ED /* Info.plist */,
@@ -804,6 +808,7 @@
 				9C60E78C21F651E500C332ED /* FieldDictionary.swift in Sources */,
 				9C60E75621F651E500C332ED /* StringValue.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
+				9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
 				9C60E75321F651E500C332ED /* Provider.swift in Sources */,
 				9C60E75C21F651E500C332ED /* RecursValue.swift in Sources */,
 				9C60E74A21F651E500C332ED /* Realm.swift in Sources */,
@@ -991,6 +996,7 @@
 				9CED2811224EB39900798621 /* LongTextView.swift in Sources */,
 				9C2AE518220A033D00AE8BEE /* TagsTree.swift in Sources */,
 				9C60E70721F650B800C332ED /* DateUtils.swift in Sources */,
+				9CD0718F22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
 				9C60E74021F651E500C332ED /* FieldLabel.swift in Sources */,
 				9C2AE516220A033300AE8BEE /* TagsNode.swift in Sources */,
 				9CD82F692211E4BA002314E4 /* BigStringWriter.swift in Sources */,

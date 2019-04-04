@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Cocoa
@@ -15,6 +18,10 @@ class CollectionWindowController: NSWindowController {
     let juggler:             CollectionJuggler = CollectionJuggler.shared
     var notenikIO:           NotenikIO?
     var windowNumber         = 0
+    
+    var newNoteRequested = false
+    var newNote: Note?
+    
     var splitViewController: NoteSplitViewController?
     
         var collectionItem: NSSplitViewItem?
@@ -175,16 +182,41 @@ class CollectionWindowController: NSWindowController {
     
     /// Allow the user to add or delete a Note
     @IBAction func addOrDeleteNote(_ sender: NSSegmentedControl) {
-        print ("CollectionWindowController.addOrDeleteNote")
+        
+        guard notenikIO != nil && notenikIO!.collectionOpen else { return }
+        
         if sender.selectedSegment == 0 {
-            print ("  - Adding a Note")
+            newNote(sender)
         } else {
             deleteNote(sender)
         }
     }
     
     @IBAction func newNote(_ sender: Any) {
-        print ("CollectionWindowController.newNote")
+        
+        guard notenikIO != nil && notenikIO!.collectionOpen else { return }
+        
+        modIfChanged(sender)
+        
+        newNoteRequested = true
+        newNote = Note(collection: notenikIO!.collection!)
+        editVC!.populateFields(with: newNote!)
+        noteTabs!.tabView.selectLastTabViewItem(sender)
+    }
+    
+    /// Duplicate the Selected Note
+    @IBAction func duplicateNote(_ sender: Any) {
+        print ("CollectionWindowController.duplicateNote")
+        guard notenikIO != nil && notenikIO!.collectionOpen else { return }
+        let (selectedNote, _) = notenikIO!.getSelectedNote()
+        guard selectedNote != nil else { return }
+        
+        modIfChanged(sender)
+        
+        newNoteRequested = true
+        newNote = Note(collection: notenikIO!.collection!)
+        editVC!.populateFields(with: selectedNote!)
+        noteTabs!.tabView.selectLastTabViewItem(sender)
     }
     
     /// Delete the Note
@@ -211,14 +243,10 @@ class CollectionWindowController: NSWindowController {
         }
     }
     
+    /// Reload the Collection Views when data has changed
     func reload() {
         listVC!.reload()
         tagsVC!.reload()
-    }
-    
-    /// Duplicate the Selected Note
-    @IBAction func duplicateNote(_ sender: Any) {
-        print ("CollectionWindowController.duplicateNote")
     }
     
     /// Modify the Note if the user changed anything on the Edit Screen
@@ -226,7 +254,15 @@ class CollectionWindowController: NSWindowController {
         
         guard editVC != nil else { return }
         
-        editVC!.modIfChanged()
+        let (outcome, note) = editVC!.modIfChanged(newNoteRequested: newNoteRequested, newNote: newNote)
+        if outcome == .add || outcome == .deleteAndAdd {
+            reload()
+            select(note: note, position: nil, source: .action)
+            noteTabs!.tabView.selectFirstTabViewItem(sender)
+        }
+        if outcome != .tryAgain {
+            newNoteRequested = false
+        }
     }
     
 
