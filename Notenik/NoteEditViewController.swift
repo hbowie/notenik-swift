@@ -18,13 +18,14 @@ class NoteEditViewController: NSViewController {
     
     var collectionWindowController: CollectionWindowController?
     var notenikIO: NotenikIO?
+    var modWhenChanged: ModWhenChanged?
     
     var selectedNote: Note?
     
     var initialViewLoaded  = false
     var containerViewBuilt = false
     
-    var editViews: [EditView] = []
+    var editViews: [CocoaEditView] = []
     var grid:      [[NSView]] = []
     var gridView:  NSGridView!
     
@@ -51,6 +52,7 @@ class NoteEditViewController: NSViewController {
             containerViewBuilt = false
             guard notenikIO != nil && notenikIO!.collection != nil else { return }
             makeEditView()
+            modWhenChanged = ModWhenChanged(io: notenikIO!)
         }
     }
 
@@ -199,119 +201,42 @@ class NoteEditViewController: NSViewController {
         var outcome: modIfChangedOutcome = .notReady
         
         // See if we're ready for this
-        guard let collection = io?.collection else { return (outcome, nil) }
-        guard io!.collectionOpen else { return (outcome, nil) }
         guard initialViewLoaded && containerViewBuilt else { return (outcome, nil) }
         guard window != nil else { return (outcome, nil) }
+        guard modWhenChanged != nil else { return (outcome, nil) }
         guard selectedNote != nil || newNoteRequested else { return (outcome, nil) }
         
-        outcome = .noChange
-        
-        // Let's get a Note ready for comparison and possible modifications
-        var modNote: Note
+        // Let's run through the modIfChanged logic
+        var inNote = selectedNote
         if newNoteRequested {
-            modNote = newNote!
-        } else {
-            modNote = selectedNote!.copy() as! Note
+            inNote = newNote
         }
+        var outNote: Note?
+        (outcome, outNote) = modWhenChanged!.modIfChanged(newNoteRequested: newNoteRequested,
+                                                          startingNote: inNote!,
+                                                          modViews: editViews)
         
-        // See if any fields were modified by the user, and update corresponding Note fields
-        var modified = false
-        let dict = collection.dict
-        let defs = dict.list
-        var i = 0
-        for def in defs {
-            let field = modNote.getField(def: def)
-            var fieldView = editViews[i]
-            var noteValue = ""
-            if field != nil {
-                noteValue = field!.value.value
-            }
-            let userValue = fieldView.text
-            if userValue != noteValue {
-                if field == nil {
-                    modNote.addField(def: def, strValue: userValue)
-                } else {
-                    field!.value.set(userValue)
-                }
-                modified = true
-            }
-            i += 1
-        }
-        
-        // Were any fields modified?
-        if modified {
-            outcome = .modify
-            let modID = modNote.noteID
-            
-            // If we have a new Note ID, make sure it's unique
-            var newID = newNoteRequested
-            if newNoteRequested {
-                outcome = .add
-            }
-            if !newNoteRequested {
-                newID = (selectedNote!.noteID != modID)
-                if newID {
-                    outcome = .deleteAndAdd
-                }
-            }
-            if newID {
-                let existingNote = io!.getNote(forID: modID)
-                if existingNote != nil {
-                    let alert = NSAlert()
-                    alert.alertStyle = .warning
-                    alert.messageText = "Note titled '\(existingNote!.title)' already has the same ID"
-                    alert.informativeText = "Each Note in a Collection must have a unique ID"
-                    alert.addButton(withTitle: "Fix It")
-                    alert.addButton(withTitle: "Discard")
-                    let response = alert.runModal()
-                    if response == .alertFirstButtonReturn {
-                        outcome = .tryAgain
-                    } else {
-                        outcome = .discard
-                    }
-                }
-            }
-            if outcome == .modify {
-                if selectedNote!.sortKey != modNote.sortKey {
-                    outcome = .deleteAndAdd
-                }
-            }
-        }
-        
-        // Figure out what we need to do
-        switch outcome {
-        case .notReady:
-            return (outcome, nil)
-        case .noChange:
-            return (outcome, nil)
-        case .tryAgain:
-            return (outcome, nil)
-        case .discard:
-            return (outcome, nil)
-        case .add:
-            let (addedNote, addedPosition) = io!.addNote(newNote: modNote)
-            if addedNote != nil {
-                selectedNote = addedNote
-                return (outcome, modNote)
+        // If we tried to add a note but it had a key that already exists, then ask the user for help
+        if outcome == .idAlreadyExists {
+            let alert = NSAlert()
+            alert.alertStyle = .warning
+            alert.messageText = "Note titled '\(outNote!.title)' already has the same ID"
+            alert.informativeText = "Each Note in a Collection must have a unique ID"
+            alert.addButton(withTitle: "Fix It")
+            alert.addButton(withTitle: "Discard")
+            let response = alert.runModal()
+            if response == .alertFirstButtonReturn {
+                outcome = .tryAgain
             } else {
-                Logger.shared.log(skip: true, indent: 0, level: .severe, message: "Problems adding note titled \(modNote.title)")
-                return (.tryAgain, nil)
+                outcome = .discard
             }
-        case .deleteAndAdd:
-            let (nextNote, nextPosition) = io!.deleteSelectedNote()
-            let (addedNote, addedPosition) = io!.addNote(newNote: modNote)
-            if addedNote != nil {
-                selectedNote = addedNote
-                return (outcome, modNote)
-            } else {
-                print ("Problems adding note titled \(modNote.title)")
-                return (.tryAgain, nil)
-            }
-        case .modify:
-            modNote.copyFields(to: selectedNote!)
-            io!.writeNote(selectedNote!)
-            return (outcome, selectedNote)
         }
+        
+        // See if a new note needs to be selected.
+        if (outcome == .add || outcome == .deleteAndAdd) && outNote != nil {
+            selectedNote = outNote
+        }
+
+        return (outcome, outNote)
     } // end modIfChanged method
 }

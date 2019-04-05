@@ -10,7 +10,7 @@ import Cocoa
 
 class ViewFactory {
     
-    static func getEditView(def: FieldDefinition) -> EditView {
+    static func getEditView(def: FieldDefinition) -> CocoaEditView {
         if def.fieldType == .longText || def.fieldType == .code {
             return LongTextView()
         } else {

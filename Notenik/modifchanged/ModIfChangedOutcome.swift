@@ -15,6 +15,7 @@ import Foundation
 enum modIfChangedOutcome {
     case notReady
     case noChange
+    case idAlreadyExists
     case tryAgain
     case discard
     case add

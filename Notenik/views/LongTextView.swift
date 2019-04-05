@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class LongTextView: EditView {
+class LongTextView: CocoaEditView {
     
     var scrollView: NSScrollView!
     var textView: NSTextView!

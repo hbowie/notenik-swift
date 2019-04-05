@@ -280,8 +280,6 @@ class CollectionWindowController: NSWindowController {
     
     /// Take appropriate actions when the user has modified the note
     func noteModified(updatedNote: Note) {
-        print ("CollectionWindowController. noteModified!")
-        
         if displayVC != nil {
             displayVC!.display(note: updatedNote)
         }

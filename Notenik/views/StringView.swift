@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class StringView: EditView {
+class StringView: CocoaEditView {
     
     var textField: NSTextField!
     
