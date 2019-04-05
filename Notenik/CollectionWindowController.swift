@@ -114,19 +114,21 @@ class CollectionWindowController: NSWindowController {
         }
     }
     
+    /// Respond to the user's request to move forward, backwards, or back to start of list
     @IBAction func navigationClicked(_ sender: NSSegmentedControl) {
         
         guard let noteIO = notenikIO else { return }
         
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        
         switch sender.selectedSegment {
         case 0:
             // Go to top of list
-            modIfChanged(sender)
             let (note, position) = noteIO.firstNote()
             select(note: note, position: position, source: .nav)
         case 1:
             // Go to prior note
-            modIfChanged(sender)
             let startingPosition = noteIO.position
             var (note, position) = noteIO.priorNote(startingPosition!)
             if note == nil {
@@ -135,7 +137,6 @@ class CollectionWindowController: NSWindowController {
             select(note: note, position: position, source: .nav)
         case 2:
             // Go to next note
-            modIfChanged(sender)
             let startingPosition = noteIO.position
             var (note, position) = noteIO.nextNote(startingPosition!)
             if note == nil {
@@ -196,7 +197,8 @@ class CollectionWindowController: NSWindowController {
         
         guard notenikIO != nil && notenikIO!.collectionOpen else { return }
         
-        modIfChanged(sender)
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
         
         newNoteRequested = true
         newNote = Note(collection: notenikIO!.collection!)
@@ -206,12 +208,12 @@ class CollectionWindowController: NSWindowController {
     
     /// Duplicate the Selected Note
     @IBAction func duplicateNote(_ sender: Any) {
-        print ("CollectionWindowController.duplicateNote")
+        
         guard notenikIO != nil && notenikIO!.collectionOpen else { return }
         let (selectedNote, _) = notenikIO!.getSelectedNote()
         guard selectedNote != nil else { return }
-        
-        modIfChanged(sender)
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
         
         newNoteRequested = true
         newNote = Note(collection: notenikIO!.collection!)
@@ -249,25 +251,29 @@ class CollectionWindowController: NSWindowController {
         tagsVC!.reload()
     }
     
+    @IBAction func saveEdits(_ sender: Any) {
+        modIfChanged()
+    }
+    
     /// Modify the Note if the user changed anything on the Edit Screen
-    @IBAction func modIfChanged(_ sender: Any) {
+    func modIfChanged() -> modIfChangedOutcome {
         
-        guard editVC != nil else { return }
+        guard editVC != nil else { return .notReady }
         
         let (outcome, note) = editVC!.modIfChanged(newNoteRequested: newNoteRequested, newNote: newNote)
         
         if outcome == .add || outcome == .deleteAndAdd {
             reload()
             select(note: note, position: nil, source: .action)
-            noteTabs!.tabView.selectFirstTabViewItem(sender)
-        }
-        if outcome == .modify {
+            noteTabs!.tabView.selectFirstTabViewItem(nil)
+        } else if outcome == .modify {
             noteModified(updatedNote: note!)
-            noteTabs!.tabView.selectFirstTabViewItem(sender)
+            noteTabs!.tabView.selectFirstTabViewItem(nil)
         }
         if outcome != .tryAgain {
             newNoteRequested = false
         }
+        return outcome
     }
     
 

@@ -37,7 +37,7 @@ class NoteTabsViewController: NSTabViewController {
         guard window != nil else { return }
         
         if tabViewItem!.label != "Edit" {
-            window!.modIfChanged(self)
+            window!.modIfChanged()
         }
     }
     

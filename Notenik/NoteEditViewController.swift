@@ -122,7 +122,6 @@ class NoteEditViewController: NSViewController {
     }
     
     func makeGridView() {
-        print ("Making Grid View")
         gridView = NSGridView(views: grid)
         // gridView = NSGridView(numberOfColumns: 2, rows: 0)
         // for row in grid {
@@ -230,7 +229,6 @@ class NoteEditViewController: NSViewController {
             }
             let userValue = fieldView.text
             if userValue != noteValue {
-                print("\(def.fieldLabel.properForm) changed!")
                 if field == nil {
                     modNote.addField(def: def, strValue: userValue)
                 } else {
@@ -297,11 +295,19 @@ class NoteEditViewController: NSViewController {
                 selectedNote = addedNote
                 return (outcome, modNote)
             } else {
-                print ("Problems adding note titled \(modNote.title)")
+                Logger.shared.log(skip: true, indent: 0, level: .severe, message: "Problems adding note titled \(modNote.title)")
                 return (.tryAgain, nil)
             }
         case .deleteAndAdd:
-            return (outcome, nil)
+            let (nextNote, nextPosition) = io!.deleteSelectedNote()
+            let (addedNote, addedPosition) = io!.addNote(newNote: modNote)
+            if addedNote != nil {
+                selectedNote = addedNote
+                return (outcome, modNote)
+            } else {
+                print ("Problems adding note titled \(modNote.title)")
+                return (.tryAgain, nil)
+            }
         case .modify:
             modNote.copyFields(to: selectedNote!)
             io!.writeNote(selectedNote!)

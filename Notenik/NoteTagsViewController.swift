@@ -109,7 +109,8 @@ class NoteTagsViewController: NSViewController, NSOutlineViewDataSource, NSOutli
         guard let outlineView = notification.object as? NSOutlineView else { return }
         guard collectionWindowController != nil else { return }
         
-        collectionWindowController!.modIfChanged(self)
+        let outcome = collectionWindowController!.modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
         
         let selectedIndex = outlineView.selectedRow
         if let node = outlineView.item(atRow: selectedIndex) as? TagsNode {

@@ -92,8 +92,9 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
     func tableViewSelectionDidChange(_ notification: Notification) {
         let row = tableView.selectedRow
         guard collectionWindowController != nil && row >= 0 else { return }
+        let outcome = collectionWindowController!.modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
         if let (note, position) = notenikIO?.selectNote(at: row) {
-            collectionWindowController!.modIfChanged(self)
             collectionWindowController!.select(note: note, position: position, source: NoteSelectionSource.list)
         }
     }

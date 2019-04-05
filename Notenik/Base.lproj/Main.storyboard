@@ -188,7 +188,7 @@ CA
                                         </menuItem>
                                         <menuItem title="Save Note" keyEquivalent="s" id="YKI-vO-asj" userLabel="Save Note">
                                             <connections>
-                                                <action selector="modIfChanged:" target="Ady-hI-5gd" id="g72-F2-iuO"/>
+                                                <action selector="saveEdits:" target="Ady-hI-5gd" id="Gia-1T-DT2"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aKs-Gn-B6L"/>
@@ -851,7 +851,7 @@ CA
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <connections>
-                                                <action selector="modIfChanged:" target="B8D-0N-5wS" id="kMu-UD-lnX"/>
+                                                <action selector="saveEdits:" target="B8D-0N-5wS" id="S1G-Sf-cS7"/>
                                             </connections>
                                         </buttonCell>
                                     </button>
