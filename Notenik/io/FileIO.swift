@@ -19,6 +19,7 @@ class FileIO : NotenikIO {
     var provider       : Provider = Provider()
     var realm          : Realm
     var collection     : NoteCollection?
+    var collectionFullPath: String?
     var collectionOpen = false
     
     var bunch          : BunchOfNotes = BunchOfNotes()
@@ -43,8 +44,8 @@ class FileIO : NotenikIO {
         collection = NoteCollection(realm: realm)
         realm.name = NSUserName()
         realm.path = NSHomeDirectory()
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let docDir = paths[0]
+        // let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        // let docDir = paths[0]
         closeCollection()
     }
     
@@ -66,47 +67,21 @@ class FileIO : NotenikIO {
     ///            otherwise nil.
     func openCollection(realm: Realm, collectionPath: String) -> NoteCollection? {
         
-        // Initialization
-        closeCollection()
-        Logger.shared.log(skip: true, indent: 0, level: .normal, message: "Opening Collection")
-        self.realm = realm
-        self.provider = realm.provider
-        Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Realm:      " + realm.path)
-        Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Collection: " + collectionPath)
-        
-        // Let's see if we have an actual path to a usable directory
-        var collectionURL : URL
-        if realm.path == "" || realm.path == " " {
-            collectionURL = URL(fileURLWithPath: collectionPath)
-        } else {
-            let realmURL = URL(fileURLWithPath: realm.path)
-            collectionURL = realmURL.appendingPathComponent(collectionPath)
-        }
-        let collectionFullPath = collectionURL.path
-        if !fileManager.fileExists(atPath: collectionFullPath) {
-            Logger.shared.log(skip: false, indent: 1, level: .moderate,
-                              message: "Collection folder does not exist")
-            return nil
-        }
-        if !collectionURL.hasDirectoryPath {
-            Logger.shared.log(skip: false, indent: 1, level: .moderate,
-                              message: "Collection path does not point to a directory")
-            return nil
-        }
+        let initOK = initCollection(realm: realm, collectionPath: collectionPath)
+        guard initOK else { return nil }
         
         // Let's read the directory contents
-        collection = NoteCollection(realm: realm)
-        collection!.path = collectionPath
         bunch = BunchOfNotes(collection: collection!)
         
         var notesRead = 0
         
         do {
-            let dirContents = try fileManager.contentsOfDirectory(atPath: collectionFullPath)
+            let dirContents = try fileManager.contentsOfDirectory(atPath: collectionFullPath!)
             
             // First pass through directory contents -- look for template and info files
             for itemPath in dirContents {
-                let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath, path2: itemPath)
+                let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath!,
+                                                       path2: itemPath)
                 let fileName = FileName(itemFullPath)
                 let itemURL = URL(fileURLWithPath: itemFullPath)
                 if fileName.infofile {
@@ -137,7 +112,8 @@ class FileIO : NotenikIO {
             
             // Second pass through directory contents -- look for Notes
             for itemPath in dirContents {
-                let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath, path2: itemPath)
+                let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath!,
+                                                       path2: itemPath)
                 let fileName = FileName(itemFullPath)
                 let itemURL = URL(fileURLWithPath: itemFullPath)
                 if FileUtils.isDir(itemFullPath) {
@@ -186,7 +162,181 @@ class FileIO : NotenikIO {
         }
     }
     
-    /// Close the currently collection, if one is open
+    /// Attempt to initialize the collection at the provided path.
+    ///
+    /// - Parameter realm: The realm housing the collection to be opened.
+    /// - Parameter collectionPath: The path identifying the collection within this realm
+    /// - Returns: True if successful, false otherwise.
+    func initCollection(realm: Realm, collectionPath: String) -> Bool {
+        closeCollection()
+        Logger.shared.log(skip: true, indent: 0, level: .normal, message: "Initializing Collection")
+        self.realm = realm
+        self.provider = realm.provider
+        Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Realm:      " + realm.path)
+        Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Collection: " + collectionPath)
+        
+        // Let's see if we have an actual path to a usable directory
+        var collectionURL : URL
+        if realm.path == "" || realm.path == " " {
+            collectionURL = URL(fileURLWithPath: collectionPath)
+        } else {
+            let realmURL = URL(fileURLWithPath: realm.path)
+            collectionURL = realmURL.appendingPathComponent(collectionPath)
+        }
+        collectionFullPath = collectionURL.path
+        if !fileManager.fileExists(atPath: collectionFullPath!) {
+            Logger.shared.log(skip: false, indent: 1, level: .moderate,
+                              message: "Collection folder does not exist")
+            return false
+        }
+        if !collectionURL.hasDirectoryPath {
+            Logger.shared.log(skip: false, indent: 1, level: .moderate,
+                              message: "Collection path does not point to a directory")
+            return false
+        }
+        collection = NoteCollection(realm: realm)
+        collection!.path = collectionPath
+        let folderIndex = collectionURL.pathComponents.count - 1
+        let parentIndex = folderIndex - 1
+        let folder = collectionURL.pathComponents[folderIndex]
+        let parent = collectionURL.pathComponents[parentIndex]
+        collection!.title = parent + " " + folder
+        
+        return true
+    }
+    
+    /// Add the default definitions to the Collection's dictionary:
+    /// Title, Tags, Link and Body
+    func addDefaultDefinitions() {
+        guard collection != nil else { return }
+        let dict = collection!.dict
+        dict.addDef(LabelConstants.title)
+        dict.addDef(LabelConstants.tags)
+        dict.addDef(LabelConstants.link)
+        dict.addDef(LabelConstants.body)
+    }
+    
+    /// Open a New Collection.
+    ///
+    /// The passed collection should already have been initialized
+    /// via a call to initCollection above.
+    func newCollection(collection: NoteCollection) -> Bool {
+        
+        self.collection = collection
+        
+        var ok = false
+        
+        // Make sure we have a good folder
+        let collectionURL = collection.collectionFullPathURL
+        guard collectionURL != nil else { return false }
+        if !fileManager.fileExists(atPath: collection.collectionFullPath) {
+            Logger.shared.log(skip: false, indent: 1, level: .moderate,
+                              message: "Collection folder does not exist")
+            return false
+        }
+        
+        ok = saveReadMe()
+        guard ok else { return ok }
+        
+        ok = saveInfoFile()
+        guard ok else { return ok }
+        
+        ok = saveTemplateFile()
+        guard ok else { return ok }
+        
+        var firstNote = Note(collection: collection)
+        firstNote.setTitle("Notenik")
+        firstNote.setLink("https://notenik.net")
+        firstNote.setTags("Software.Groovy")
+        firstNote.setBody("A note-taking system cunningly devised by Herb Bowie of PowerSurge Publishing")
+        
+        bunch = BunchOfNotes(collection: collection)
+        let added = bunch.add(note: firstNote)
+        guard added else {
+            Logger.shared.log(skip: false,
+                              indent: 0,
+                              level: .severe,
+                              message: "Couldn't add first note to internal storage")
+            return false
+        }
+        
+        firstNote.makeFileNameFromTitle()
+        collectionOpen = true
+        ok = writeNote(firstNote)
+        guard ok else {
+            Logger.shared.log(skip: false,
+                              indent: 0,
+                              level: .severe,
+                              message: "Couldn't write first note to disk!")
+            collectionOpen = false
+            return ok
+        }
+        
+        collectionOpen = true
+        bunch.sortParm = collection.sortParm
+        
+        return ok
+    }
+    
+    /// Save a README file into the current collection
+    func saveReadMe() -> Bool {
+        var str = "This folder contains a collection of notes created by the Notenik application."
+        str.append("\n\n")
+        str.append("Learn more at https://Notenik.net")
+        str.append("\n")
+        let filePath = collection!.makeFilePath(fileName: "- README.txt")
+        
+        do {
+            try str.write(toFile: filePath, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            Logger.shared.log(skip: false,
+                              indent: 0,
+                              level: .severe,
+                              message: "Problem writing README to disk!")
+            return false
+        }
+        return true
+    }
+    
+    /// Save the INFO file into the current collection
+    func saveInfoFile() -> Bool {
+        var str = "Title: " + collection!.title + "\n\n"
+        str.append("Link: " + collection!.collectionFullPathURL!.absoluteString + "\n\n")
+        str.append("Sort Parm: " + collection!.sortParm.str + "\n\n")
+        let filePath = collection!.makeFilePath(fileName: "- INFO.nnk")
+        
+        do {
+            try str.write(toFile: filePath, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            Logger.shared.log(skip: false,
+                              indent: 0,
+                              level: .severe,
+                              message: "Problem writing INFO file to disk!")
+            return false
+        }
+        return true
+    }
+    
+    func saveTemplateFile() -> Bool {
+        let dict = collection!.dict
+        var str = ""
+        for def in dict.list {
+            str.append(def.fieldLabel.properForm + ": \n\n")
+        }
+        let filePath = collection!.makeFilePath(fileName: "template." + collection!.preferredExt)
+        do {
+            try str.write(toFile: filePath, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            Logger.shared.log(skip: false,
+                              indent: 0,
+                              level: .severe,
+                              message: "Problem writing template file to disk!")
+            return false
+        }
+        return true
+    }
+    
+    /// Close the current collection, if one is open
     func closeCollection() {
         collection = nil
         collectionOpen = false
@@ -239,7 +389,10 @@ class FileIO : NotenikIO {
             do {
                 try stringToSave.write(toFile: note.fullPath!, atomically: true, encoding: String.Encoding.utf8.rawValue)
             } catch {
-                print("Problem writing to disk!")
+                Logger.shared.log(skip: false,
+                                  indent: 0,
+                                  level: .severe,
+                                  message: "Problem writing Note to disk at \(note.fullPath!)")
                 return false
             }
         }

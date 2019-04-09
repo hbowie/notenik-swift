@@ -44,7 +44,7 @@ class Note: Comparable, NSCopying {
     func makeFileNameFromTitle() {
         guard collection.preferredExt != nil else { return }
         if hasTitle() {
-            fileName = StringUtils.toReadableFilename(title.value) + "." + collection.preferredExt!
+            fileName = StringUtils.toReadableFilename(title.value) + "." + collection.preferredExt
         }
     }
     
@@ -90,6 +90,26 @@ class Note: Comparable, NSCopying {
                 field2!.value.set(field!.value.value)
             }
         }
+    }
+    
+    /// Set the Note's Title value
+    func setTitle(_ title: String) -> Bool {
+        return setField(label: LabelConstants.title, value: title)
+    }
+    
+    /// Set the Note's Link value
+    func setLink(_ link: String) -> Bool {
+        return setField(label: LabelConstants.link, value: link)
+    }
+    
+    /// Set the Note's Tags value
+    func setTags(_ tags: String) -> Bool {
+        return setField(label: LabelConstants.tags, value: tags)
+    }
+    
+    /// Set the Note's Body value
+    func setBody(_ body: String) -> Bool {
+        return setField(label: LabelConstants.body, value: body)
     }
     
     /// Return the Note's Author Value
@@ -334,6 +354,13 @@ class Note: Comparable, NSCopying {
             fields[def.fieldLabel.commonForm] = field
             return true
         }
+    }
+    
+    /// Set a Note field given a label and a value
+    func setField(label: String, value: String) -> Bool {
+        let field = NoteField(label: label, value: value)
+        return setField(field)
+        
     }
     
     /// Set the indicated field to the passed Note Field

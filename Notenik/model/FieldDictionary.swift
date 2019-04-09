@@ -12,7 +12,7 @@ import Foundation
 class FieldDictionary {
     
     var dict = [:] as [String: FieldDefinition]
-    var list : [FieldDefinition] = []
+    var list: [FieldDefinition] = []
     var locked = false
     
     /// Default initializer
@@ -46,36 +46,36 @@ class FieldDictionary {
     }
     
     /// Does the dictionary contain a definition for this field label?
-    func contains (_ def : FieldDefinition) -> Bool {
+    func contains (_ def: FieldDefinition) -> Bool {
         let def = dict[def.fieldLabel.commonForm]
         return def != nil
     }
     
     /// Does the dictionary contain a definition for this field label?
-    func contains (_ label : FieldLabel) -> Bool {
+    func contains (_ label: FieldLabel) -> Bool {
         let def = dict[label.commonForm]
         return def != nil
     }
     
     /// Does the dictionary contain a definition for this field label?
-    func contains (_ label : String) -> Bool {
+    func contains (_ label: String) -> Bool {
         let fieldLabel = FieldLabel(label)
         let def = dict[fieldLabel.commonForm]
         return def != nil
     }
     
     /// Return the optional definition for this field label
-    func getDef(_ def : FieldDefinition) -> FieldDefinition? {
+    func getDef(_ def: FieldDefinition) -> FieldDefinition? {
         return dict[def.fieldLabel.commonForm]
     }
     
     /// Return the optional definition for this field label
-    func getDef(_ label : FieldLabel) -> FieldDefinition? {
+    func getDef(_ label: FieldLabel) -> FieldDefinition? {
         return dict[label.commonForm]
     }
     
     /// Return the optional definition for this field label
-    func getDef(_ labelStr : String) -> FieldDefinition? {
+    func getDef(_ labelStr: String) -> FieldDefinition? {
         let fieldLabel = FieldLabel(labelStr)
         return dict[fieldLabel.commonForm]
     }
@@ -134,5 +134,25 @@ class FieldDictionary {
             }
             return def
         }
+    }
+    
+    /// Remove the given definition from the dictionary and report our success
+    func removeDef(_ def: FieldDefinition) -> Bool {
+        var removeOK = false
+        let common = def.fieldLabel.commonForm
+        dict.removeValue(forKey: common)
+        var i = 0
+        var looking = true
+        while looking && i < list.count {
+            let listDef = list[i]
+            if common == listDef.fieldLabel.commonForm {
+                looking = false
+                removeOK = true
+                list.remove(at: i)
+            } else {
+                i += 1
+            }
+        }
+        return removeOK
     }
 }

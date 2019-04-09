@@ -67,7 +67,7 @@
                                         <menuItem title="New" id="Was-JA-tGl">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="newDocument:" target="Ady-hI-5gd" id="4Si-XN-c54"/>
+                                                <action selector="menuFileNewAction:" target="Voe-Tx-rLC" id="QKw-wB-CYX"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
@@ -125,6 +125,19 @@
                                         <menuItem title="Print…" keyEquivalent="p" id="aTl-1u-JFS">
                                             <connections>
                                                 <action selector="print:" target="Ady-hI-5gd" id="qaZ-4w-aoO"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Collection" id="Uh4-R7-pPF" userLabel="Collection">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Collection" id="Qnz-mP-j2r">
+                                    <items>
+                                        <menuItem title="Preferences" id="Zv0-Hl-djv" userLabel="Preferences">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuCollectionPreferences:" target="Ady-hI-5gd" id="LL2-DD-SPe"/>
                                             </connections>
                                         </menuItem>
                                     </items>

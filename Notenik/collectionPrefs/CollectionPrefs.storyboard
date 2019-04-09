@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="PoV-NS-zsE">
+            <objects>
+                <windowController storyboardIdentifier="collectionPrefsWC" id="n74-1I-UsU" customClass="CollectionPrefsWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Collection Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="3Me-9l-PW4">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="461" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+                        <connections>
+                            <outlet property="delegate" destination="n74-1I-UsU" id="7CX-GF-X6N"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="CWf-be-GpI" kind="relationship" relationship="window.shadowedContentViewController" id="l3q-JZ-fh7"/>
+                    </connections>
+                </windowController>
+                <customObject id="3jq-v3-YV0" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="101" y="-104"/>
+        </scene>
+        <!--Collection Prefs View Controller-->
+        <scene sceneID="aLq-Zz-bRx">
+            <objects>
+                <viewController id="CWf-be-GpI" customClass="CollectionPrefsViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="Gr5-Kw-6rc">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="466"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DXr-Jd-qax">
+                                <rect key="frame" x="5" y="5" width="470" height="456"/>
+                                <edgeInsets key="edgeInsets" left="5" right="5" top="5" bottom="5"/>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="DXr-Jd-qax" firstAttribute="top" secondItem="Gr5-Kw-6rc" secondAttribute="top" constant="5" id="6zh-Q3-iVS"/>
+                            <constraint firstAttribute="trailing" secondItem="DXr-Jd-qax" secondAttribute="trailing" constant="5" id="Kdz-aK-l9r"/>
+                            <constraint firstAttribute="bottom" secondItem="DXr-Jd-qax" secondAttribute="bottom" constant="5" id="Y8g-QS-73w"/>
+                            <constraint firstItem="DXr-Jd-qax" firstAttribute="leading" secondItem="Gr5-Kw-6rc" secondAttribute="leading" constant="5" id="kfW-md-zf5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="stackView" destination="DXr-Jd-qax" id="PWe-Pm-roh"/>
+                    </connections>
+                </viewController>
+                <customObject id="W5F-Ur-H03" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="101" y="546"/>
+        </scene>
+    </scenes>
+</document>

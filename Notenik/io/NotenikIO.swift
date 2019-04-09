@@ -37,6 +37,20 @@ protocol NotenikIO {
     ///            otherwise nil.
     func openCollection(realm : Realm, collectionPath : String) -> NoteCollection?
     
+    /// Attempt to initialize the collection at the provided path.
+    ///
+    /// - Parameter realm: The realm housing the collection to be opened.
+    /// - Parameter collectionPath: The path identifying the collection within this realm
+    /// - Returns: True if successful, false otherwise.
+    func initCollection(realm: Realm, collectionPath: String) -> Bool
+    
+    /// Add the default definitions to the Collection's dictionary:
+    /// Title, Tags, Link and Body
+    func addDefaultDefinitions()
+    
+    /// Open a New Collection
+    func newCollection(collection: NoteCollection) -> Bool
+    
     /// Close the currently collection, if one is open
     func closeCollection()
     

@@ -39,6 +39,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                               message: "Couldn't get a Prefs Window Controller!")
         }
     }
+    
+    @IBAction func menuFileNewAction(_ sender: NSMenuItem) {
+        juggler.userRequestsNewCollection()
+    }
 
     @IBAction func menuFileOpenAction(_ sender: NSMenuItem) {
         juggler.userRequestsOpenCollection()

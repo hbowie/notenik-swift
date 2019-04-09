@@ -19,6 +19,8 @@ class CollectionWindowController: NSWindowController {
     var notenikIO:           NotenikIO?
     var windowNumber         = 0
     
+    let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
+    
     var newNoteRequested = false
     var newNote: Note?
     
@@ -111,6 +113,19 @@ class CollectionWindowController: NSWindowController {
             editItem = noteTabs?.tabViewItems[1]
             editVC = editItem?.viewController as? NoteEditViewController
             editVC!.window = self
+        }
+    }
+    
+    @IBAction func menuCollectionPreferences(_ sender: Any) {
+        
+        guard io != nil && io!.collectionOpen else { return }
+        
+        if let templateController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
+            // templateController.collection = io!.collection
+            // templateController.showWindow(self)
+        } else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                              message: "Couldn't get a Collection Prefs Window Controller!")
         }
     }
     

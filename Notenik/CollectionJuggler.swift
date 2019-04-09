@@ -12,7 +12,7 @@
 import Cocoa
 
 /// A singleton object that controls all of the Note Collections that are open. 
-class CollectionJuggler: NSObject {
+class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     // Singleton instance
     static let shared = CollectionJuggler()
@@ -22,6 +22,7 @@ class CollectionJuggler: NSObject {
     
     let storyboard:      NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
     let logStoryboard:   NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
+    let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
     
     let osdir = OpenSaveDirectory.shared
     let essentialURLKey = "essential-collection"
@@ -39,6 +40,100 @@ class CollectionJuggler: NSObject {
     
     func startup() {
 
+    }
+    
+    /// The user has indicated they'd like to create a new collection
+    func userRequestsNewCollection() {
+        
+        // Ask the user for a location on disk
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Create and Select a New Notenik Folder"
+        let parent = osdir.directoryURL
+        if parent != nil {
+            openPanel.directoryURL = parent!
+        }
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = true
+        openPanel.canChooseFiles = false
+        openPanel.allowsMultipleSelection = false
+        openPanel.begin { (result) -> Void  in
+            if result == .OK {
+                self.newCollection(fileURL: openPanel.url!)
+            }
+        }
+    }
+    
+    /// Now that we have a disk location, let's take other steps
+    /// to create a new collection.
+    func newCollection(fileURL: URL) -> Bool {
+        
+        // Create and populate a starting NoteCollection object
+        var openOK = false
+        
+        let io: NotenikIO = FileIO()
+        let realm = io.getDefaultRealm()
+        realm.path = ""
+        
+        var collectionURL: URL
+        if FileUtils.isDir(fileURL.path) {
+            collectionURL = fileURL
+        } else {
+            collectionURL = fileURL.deletingLastPathComponent()
+        }
+        
+        let initOK = io.initCollection(realm: realm, collectionPath: collectionURL.path)
+        guard initOK else { return false }
+        
+        io.addDefaultDefinitions()
+        
+        // Now let the user tailor the starting Collection default values
+        if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
+            collectionPrefsController.showWindow(self)
+            collectionPrefsController.passJugglerInfo(owner: self, collection: io.collection!)
+        } else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                              message: "Couldn't get a Collection Prefs Window Controller!")
+        }
+        
+        return openOK
+    }
+    
+    /// Let the calling class know that the user has completed modifications
+    /// of the Collection Preferences.
+    func collectionPrefsModified(ok: Bool,
+                                 collection: NoteCollection,
+                                 window: CollectionPrefsWindowController) {
+        window.close()
+        let io: NotenikIO = FileIO()
+        let realm = io.getDefaultRealm()
+        realm.path = ""
+        var ok = io.newCollection(collection: collection)
+        guard ok else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.moderate,
+                              message: "Problems initializing the new collection at " + collection.collectionFullPath)
+            return
+        }
+        
+
+        Logger.shared.log(skip: true, indent: 0, level: LogLevel.normal,
+                              message: "New Collection successfully initialized at \(collection.collectionFullPath)")
+        
+        if self.docController != nil {
+            self.docController!.noteNewRecentDocumentURL(collection.collectionFullPathURL!)
+        }
+        self.osdir.lastParentFolder = collection.collectionFullPathURL!.deletingLastPathComponent()
+        if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
+            windowController.shouldCascadeWindows = true
+            windowController.io = io
+            self.registerWindow(window: windowController)
+            windowController.showWindow(self)
+            ok = true
+        } else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                              message: "Couldn't get a Window Controller!")
+        }
     }
     
     /// Make the given collection the easily accessible Essential collection

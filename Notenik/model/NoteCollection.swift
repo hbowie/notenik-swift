@@ -20,7 +20,7 @@ class NoteCollection {
     var sortParm     : NoteSortParm
     var statusConfig : StatusValueConfig
     /// Preferred file extension for the current collection
-    var preferredExt:  String?
+    var preferredExt:  String = "txt"
     
     /// Default initialization of a new Realm.
     init () {
@@ -55,6 +55,11 @@ class NoteCollection {
         } else {
             return FileUtils.joinPaths(path1: realm.path, path2: path)
         }
+    }
+    
+    /// Make a complete path to a file residing within this collection
+    func makeFilePath(fileName: String) -> String {
+        return FileUtils.joinPaths(path1: collectionFullPath, path2: fileName)
     }
     
     /// Attempt to obtain or create a Field Definition for the given Label.
