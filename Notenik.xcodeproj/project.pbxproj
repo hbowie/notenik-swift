@@ -44,6 +44,7 @@
 		9C2AE528220A34D100AE8BEE /* NoteTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */; };
 		9C2AE529220A34D400AE8BEE /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
 		9C2AE52A220A34D800AE8BEE /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */; };
+		9C58BCF9225EF11B008E57D1 /* Notenik.help in Resources */ = {isa = PBXBuildFile; fileRef = 9C58BCF8225EF11B008E57D1 /* Notenik.help */; };
 		9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6D121F64B3B00C332ED /* AppDelegate.swift */; };
 		9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C60E6D521F64B3C00C332ED /* Assets.xcassets */; };
 		9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C60E6D721F64B3C00C332ED /* Main.storyboard */; };
@@ -303,6 +304,7 @@
 		9C2AE513220A033300AE8BEE /* TagsNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNode.swift; sourceTree = "<group>"; };
 		9C2AE519220A044800AE8BEE /* TagsNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNodeType.swift; sourceTree = "<group>"; };
 		9C2AE51D220A1ED700AE8BEE /* BunchOfNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunchOfNotes.swift; sourceTree = "<group>"; };
+		9C58BCF8225EF11B008E57D1 /* Notenik.help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Notenik.help; path = "Notenik Help/Notenik.help"; sourceTree = SOURCE_ROOT; };
 		9C60E6CE21F64B3B00C332ED /* Notenik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notenik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C60E6D121F64B3B00C332ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C60E6D521F64B3C00C332ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 		9CE32509224D58360051CA1F /* Log.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Log.storyboard; sourceTree = "<group>"; };
 		9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
 		9CE3250F224D5E180051CA1F /* LogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
+		9CE715B0225E887300025C00 /* Notenik Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Notenik Help"; sourceTree = "<group>"; };
 		9CED280F224EB39900798621 /* LongTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextView.swift; sourceTree = "<group>"; };
 		9CF1192D2257FDD50015AE91 /* ModWhenChanged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModWhenChanged.swift; sourceTree = "<group>"; };
 		9CF11931225802AA0015AE91 /* ModView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModView.swift; sourceTree = "<group>"; };
@@ -455,6 +458,7 @@
 				9C8FD8D92216303F00F16669 /* LICENSE.txt */,
 				9C8FD8D72216302900F16669 /* README.md */,
 				9C60E6D021F64B3B00C332ED /* Notenik */,
+				9CE715B0225E887300025C00 /* Notenik Help */,
 				9C60E6E321F64B3C00C332ED /* NotenikTests */,
 				9C60E6EE21F64B3C00C332ED /* NotenikUITests */,
 				9C60E6CF21F64B3B00C332ED /* Products */,
@@ -490,6 +494,7 @@
 				9C60E6D521F64B3C00C332ED /* Assets.xcassets */,
 				9C21749E22024E2900B4BF48 /* notenik-swift-intro */,
 				9C60E6DA21F64B3C00C332ED /* Info.plist */,
+				9C58BCF8225EF11B008E57D1 /* Notenik.help */,
 				9C09E1752248601D0046D50D /* notenik.iconset */,
 				9C60E6DB21F64B3C00C332ED /* Notenik.entitlements */,
 				9C2AE510220A028000AE8BEE /* bunch */,
@@ -808,6 +813,7 @@
 				9CF11937225821670015AE91 /* CollectionPrefs.storyboard in Resources */,
 				9CE32504224D48180051CA1F /* Preferences.storyboard in Resources */,
 				9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */,
+				9C58BCF9225EF11B008E57D1 /* Notenik.help in Resources */,
 				9C8FD8D82216302900F16669 /* README.md in Resources */,
 				9C8FD8DA2216303F00F16669 /* LICENSE.txt in Resources */,
 				9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */,

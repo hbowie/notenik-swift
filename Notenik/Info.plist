@@ -50,5 +50,9 @@
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>Notenik.help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>com.powersurgepub.notenik.help</string>
 </dict>
 </plist>

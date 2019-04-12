@@ -16,6 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     let juggler : CollectionJuggler = CollectionJuggler.shared
     var docController: NoteDocumentController!
+    var recentDocumentURLs: [URL] = []
     
     let prefsStoryboard: NSStoryboard = NSStoryboard(name: "Preferences", bundle: nil)
     let logStoryboard:   NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
@@ -28,6 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         juggler.docController = docController
+        recentDocumentURLs = docController.recentDocumentURLs
         juggler.startup()
     }
     
@@ -72,7 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Attempt to open the passed file
     func application(_ sender: NSApplication,
                      openFile filename: String) -> Bool {
-        juggler.openFile(filename: filename)
+        juggler.openFileWithNewWindow(filename: filename)
         return true
     }
     

@@ -35,7 +35,7 @@ protocol NotenikIO {
     /// - Parameter path: The path identifying the collection within this
     /// - Returns: A NoteCollection object, if the collection was opened successfully;
     ///            otherwise nil.
-    func openCollection(realm : Realm, collectionPath : String) -> NoteCollection?
+    func openCollection(realm: Realm, collectionPath: String) -> NoteCollection?
     
     /// Attempt to initialize the collection at the provided path.
     ///

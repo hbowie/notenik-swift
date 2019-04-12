@@ -1,5 +1,5 @@
 //
-//  CollectionController.swift
+//  CollectionJuggler.swift
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
@@ -28,18 +28,33 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     let essentialURLKey = "essential-collection"
     var essentialURL: URL?
     
+    let lastURLKey = "last-collection"
+    var lastURL: URL?
+    
     var docController: NoteDocumentController?
     
     var windows: Array<CollectionWindowController> = Array()
     var highestWindowNumber = -1
     
+    var initialWindow: CollectionWindowController?
+    
     override private init() {
         super.init()
         essentialURL = defaults.url(forKey: essentialURLKey)
+        lastURL = defaults.url(forKey: lastURLKey)
     }
     
+    /// Startup called by AppDelegate
     func startup() {
-
+        
+        if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
+            Logger.shared.logDest = .window
+        } else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                              message: "Couldn't get a Log Window Controller! when loading initial collection")
+        }
+        
+        loadInitialCollection()
     }
     
     /// The user has indicated they'd like to create a new collection
@@ -120,10 +135,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         Logger.shared.log(skip: true, indent: 0, level: LogLevel.normal,
                               message: "New Collection successfully initialized at \(collection.collectionFullPath)")
         
-        if self.docController != nil {
-            self.docController!.noteNewRecentDocumentURL(collection.collectionFullPathURL!)
-        }
-        self.osdir.lastParentFolder = collection.collectionFullPathURL!.deletingLastPathComponent()
+        saveCollectionURLInfo(collectionURL: collection.collectionFullPathURL!)
+
         if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
             windowController.shouldCascadeWindows = true
             windowController.io = io
@@ -152,12 +165,12 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Open the Essential Collection, if we have one
     func openEssentialCollection() {
         if essentialURL != nil {
-            openFile(fileURL: essentialURL!)
+            openFileWithNewWindow(fileURL: essentialURL!)
         }
     }
     
     /// Respond to a user request to open another Collection. Present the user
-    /// with an Open Panel to allow the selection of a folder containing a
+    /// with an Open Panel to allow the selection of a folder containing an
     /// existing Notenik Collection. 
     func userRequestsOpenCollection() {
         let openPanel = NSOpenPanel();
@@ -174,17 +187,17 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         openPanel.allowsMultipleSelection = false
         openPanel.begin { (result) -> Void  in
             if result == .OK {
-                self.openFile(fileURL: openPanel.url!)
+                self.openFileWithNewWindow(fileURL: openPanel.url!)
             }
         }
     }
     
-    func openFile(filename: String) -> Bool {
+    func openFileWithNewWindow(filename: String) -> Bool {
         let fileURL = URL(fileURLWithPath: filename)
         if fileURL == nil {
             return false
         } else {
-            return openFile(fileURL: fileURL)
+            return openFileWithNewWindow(fileURL: fileURL)
         }
     }
     
@@ -193,7 +206,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     ///
     /// - Parameter fileURL: A URL pointing to a Notenik folder.
     /// - Returns: True if open was successful, false if not.
-    func openFile(fileURL: URL) -> Bool {
+    func openFileWithNewWindow(fileURL: URL) -> Bool {
         var openOK = false
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
@@ -211,10 +224,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         } else {
             Logger.shared.log(skip: true, indent: 0, level: LogLevel.normal,
                               message: "Collection successfully opened: \(collection!.title)")
-            if self.docController != nil {
-                self.docController!.noteNewRecentDocumentURL(collectionURL)
-            }
-            self.osdir.lastParentFolder = collectionURL.deletingLastPathComponent()
+            saveCollectionURLInfo(collectionURL: collectionURL)
             if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
                 windowController.shouldCascadeWindows = true
                 windowController.io = io
@@ -252,35 +262,53 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             }
         }
         if window.windowNumber == 0 && window.io == nil {
-            loadInitialCollection(window: window)
+            initialWindow = window
         }
     }
     
     /// Find a collection to show in the initial window shown upon application launch.
     ///
     /// - Parameter window: <#window description#>
-    func loadInitialCollection(window: CollectionWindowController) {
+    func loadInitialCollection() {
         
-        if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
-            Logger.shared.logDest = .window
-        } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
-                              message: "Couldn't get a Log Window Controller! when loading initial collection")
+        let home = FileManager.default.homeDirectoryForCurrentUser
+        print ("Home Directory for current user is \(home)")
+        
+        // Figure out a good collection to open
+        var io: NotenikIO = FileIO()
+        let realm = io.getDefaultRealm()
+        realm.path = ""
+        var collection: NoteCollection?
+        var collectionURL: URL?
+
+        if essentialURL != nil {
+            collectionURL = essentialURL
+            collection = io.openCollection(realm: realm, collectionPath: essentialURL!.path)
+        }
+
+        if collection == nil && lastURL != nil {
+            collectionURL = lastURL
+            collection = io.openCollection(realm: realm, collectionPath: lastURL!.path)
         }
         
-        // For now, let's just show the Notenik Help Notes
-        var io: NotenikIO = FileIO()
-        let provider = io.getProvider()
-        let realm = Realm(provider: provider)
-        realm.name = "Herb Bowie"
-        realm.path = ""
-        let path = Bundle.main.resourcePath! + "/notenik-swift-intro"
-        _ = io.openCollection(realm: realm, collectionPath: path)
+        if collection != nil {
+            saveCollectionURLInfo(collectionURL: collectionURL!)
+        }
+
+        if collection == nil {
+            let path = Bundle.main.resourcePath! + "/notenik-swift-intro"
+            collection = io.openCollection(realm: realm, collectionPath: path)
+        }
         
-        // For now, let's sort everything by title
-        io.sortParm = .seqPlusTitle
-        
-        window.io = io
+        initialWindow!.io = io
+    }
+    
+    func saveCollectionURLInfo(collectionURL: URL) {
+        if self.docController != nil {
+            self.docController!.noteNewRecentDocumentURL(collectionURL)
+        }
+        defaults.set(collectionURL, forKey: lastURLKey)
+        self.osdir.lastParentFolder = collectionURL.deletingLastPathComponent()
     }
 
 }
