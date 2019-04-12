@@ -127,7 +127,7 @@ class FieldDictionary {
                 } else {
                     list.insert(def, at: 0)
                 }
-            } else if list[list.count - 1].fieldLabel.commonForm == "body" {
+            } else if (list.count > 0 && list[list.count - 1].fieldLabel.commonForm == "body") {
                 list.insert(def, at: list.count - 1)
             } else {
                 list.append(def)

@@ -103,16 +103,18 @@ class NoteLineParser {
                 }
             } else if label.isValid() {
                 appendNonBlankLine()
-            } else if note.containsTitle() {
+            // } else if note.containsTitle() {
+            } else {
                 label.set(LabelConstants.body)
                 def = note.collection.getDef(label: &label)!
                 value = line
                 bodyStarted = true
-            } else {
+            }
+            /* else {
                 let titleField = NoteField(label: LabelConstants.title,
                                            value: StringUtils.trimHeading(line))
                 note.setField(titleField)
-            }
+            } */
         } while possibleLine != nil
         lineReader.close()
         return note

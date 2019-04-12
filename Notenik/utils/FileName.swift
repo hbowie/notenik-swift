@@ -54,7 +54,7 @@ class FileName: CustomStringConvertible {
     
     /// Set a new value with a URL providing the path
     func set(_ url: URL) {
-        set(url.absoluteString)
+        set(url.path)
     }
     
     /// Set a new value with a path stored in a String

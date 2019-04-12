@@ -767,6 +767,25 @@ CA
                                                 <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Open Help Notes" id="Sro-v0-iUk" userLabel="Open Help Notes">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuOpenHelpNotes:" target="Voe-Tx-rLC" id="Kfp-kT-M62"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="W1W-7X-I33"/>
+                                        <menuItem title="Notenik.net" id="YxM-hp-SS4" userLabel="Notenik.net">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuHelpNotenikDotNet:" target="Voe-Tx-rLC" id="LbT-YG-y8c"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="PowerSurgePub.com" id="aCA-X3-kXN" userLabel="PowerSurgePub.com">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuHelpPowerSurgePubDotCom:" target="Voe-Tx-rLC" id="gLm-G6-dhf"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

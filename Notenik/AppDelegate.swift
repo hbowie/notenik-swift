@@ -54,12 +54,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         juggler.openEssentialCollection()
     }
     
+    @IBAction func menuOpenHelpNotes(_ sender: NSMenuItem) {
+        juggler.openHelpNotes()
+    }
+    
     @IBAction func menuWindowLog(_ sender: NSMenuItem) {
         if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
             logController.showWindow(self)
         } else {
             Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
                               message: "Couldn't get a Log Window Controller!")
+        }
+    }
+    
+    @IBAction func menuHelpNotenikDotNet(_ sender: NSMenuItem) {
+        let url = URL(string: "https://notenik.net")
+        if url != nil {
+            NSWorkspace.shared.open(url!)
+        }
+    }
+    
+    @IBAction func menuHelpPowerSurgePubDotCom(_ sender: NSMenuItem) {
+        let url = URL(string: "https://powersurgepub.com")
+        if url != nil {
+            NSWorkspace.shared.open(url!)
         }
     }
     

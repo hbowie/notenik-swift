@@ -244,11 +244,11 @@ class FileIO : NotenikIO {
         ok = saveTemplateFile()
         guard ok else { return ok }
         
-        var firstNote = Note(collection: collection)
-        firstNote.setTitle("Notenik")
-        firstNote.setLink("https://notenik.net")
-        firstNote.setTags("Software.Groovy")
-        firstNote.setBody("A note-taking system cunningly devised by Herb Bowie of PowerSurge Publishing")
+        let firstNote = Note(collection: collection)
+        _ = firstNote.setTitle("Notenik")
+        _ = firstNote.setLink("https://notenik.net")
+        _ = firstNote.setTags("Software.Groovy")
+        _ = firstNote.setBody("A note-taking system cunningly devised by Herb Bowie of PowerSurge Publishing")
         
         bunch = BunchOfNotes(collection: collection)
         let added = bunch.add(note: firstNote)
@@ -404,7 +404,7 @@ class FileIO : NotenikIO {
     /// - Parameter noteURL: The complete URL pointing to the note file to be read.
     /// - Returns: A note composed from the contents of the indicated file,
     ///            or nil, if problems reading file.
-    func readNote(collection : NoteCollection, noteURL : URL) -> Note? {
+    func readNote(collection: NoteCollection, noteURL: URL) -> Note? {
         do {
             let itemContents = try String(contentsOf: noteURL, encoding: .utf8)
             let lineReader = BigStringReader(itemContents)
@@ -413,6 +413,10 @@ class FileIO : NotenikIO {
             let fileName = noteURL.lastPathComponent
             if fileName.count > 0 {
                 note.fileName = fileName
+                if !note.hasTitle() {
+                    let fileNameUtil = FileName(noteURL)
+                    _ = note.setTitle(fileNameUtil.base) 
+                }
             }
             return note
         } catch {

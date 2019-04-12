@@ -169,6 +169,12 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
     }
     
+    /// Open the Application's Internal Collection of Help Notes
+    func openHelpNotes() {
+        let path = Bundle.main.resourcePath! + "/notenik-swift-intro"
+        openFileWithNewWindow(filename: path)
+    }
+    
     /// Respond to a user request to open another Collection. Present the user
     /// with an Open Panel to allow the selection of a folder containing an
     /// existing Notenik Collection. 
