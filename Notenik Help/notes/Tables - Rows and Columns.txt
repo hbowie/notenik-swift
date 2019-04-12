@@ -1,0 +1,19 @@
+Title:  Tables, Rows and Columns
+
+Seq:    30
+
+Tags:   columns, PSTextMerge, rows, table
+
+Date Added: 2017-10-27 12:55:15
+
+Body:   
+ 
+Each Collection may be thought of as a Table, with each Note in the Collection treated as a Row, and each Field in the collection represented as a Column, with the Field Labels used as Column Headings.
+
+When considered in this way, each Collection may be Viewed in a grid, Sorted on one or more columns, Filtered using one or more criteria, Output in one or more formats, and used to generate things like web pages through the use of Templates.
+
+In fact, all of this and more can be accomplished through the [PSTextMerge](http://www.powersurgepub.com/products/pstextmerge/index.html) application.
+
+You can read and process any Notes Collection by downloading and executing PSTextMerge, but much of the power of this application is also built right in to Notenik, as we'll see in the next couple of sections. 
+
+

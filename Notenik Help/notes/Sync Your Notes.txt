@@ -1,0 +1,11 @@
+Title:  Sync Your Notes
+
+Seq:    11
+
+Tags:   dropbox, icloud, sync
+
+Body:   
+ 
+Since a Collection of Notes lives on your local storage as a folder full of text files, it can be easily synced to the cloud and/or to other devices via a service such as [Dropbox](http://www.dropbox.com) or [iCloud](http://www.apple.com/icloud/icloud-drive/). 
+
+

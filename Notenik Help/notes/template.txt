@@ -1,0 +1,10 @@
+Title:  The unique title for this note
+
+Seq:    RevLetterorVersionNumber
+
+Tags:   One or more tags, separated by commas
+
+Body:   
+ 
+The body of the note
+

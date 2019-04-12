@@ -1,0 +1,30 @@
+Title:  The Notenik Application
+
+Seq:    4
+
+Tags:   application, download, java, signed, software, warnings
+
+Date Added: 2017-11-12 08:44:24
+
+Body:   
+ 
+The Notenik App looks something like this. 
+
+![Notenik Screenshot](http://www.powersurgepub.com/screenshots/notenik.png "Notenik Screenshot")
+
+Notenik software is written in [Java](http://www.java.net) using the [IntelliJ IDEA IDE](https://www.jetbrains.com/idea/). Source can be found on [GitHub](https://github.com/hbowie/notenik2). Executables can be downloaded in either of two forms. The first is packaged as a typical Mac Application, and can only be run on macOS (formerly known as OS X). The second contains a folder full of jar files, and can be run on Windows and on Linux, as well as on macOS. Double-click on the 'notenik2.jar' file to launch the application when using this second form.
+
+Although the Notenik application can be run on other platforms, my preference is for the Mac, and so the instructions that follow will primarily focus on the Mac user interface. Users on other platforms should be able to easily adjust, where necessary, for their systems. 
+
+Starting with version 3.00, you can expect the Mac application packaged as a disk image to be signed, which means that you should not see any macOS messages saying that the application is from an unidentified developer. 
+
+If you see a message saying you need Java, then you can visit [Java.com](http://www.java.com) to download a recent version for most operating systems.
+
+If you'd like to learn more about Notenik, then it's probably best to download the application now and get it launched, so that you can follow along with the examples given below. 
+
+* [Notenik macOS application version 4.80](http://www.notenik.net/Notenik-4.80.dmg)
+* [PowerSurge Publishing Omni Pack](http://www.powersurgepub.com/downloads/pspub-omni-pack.zip)
+
+From this point on, I'll introduce one concept at a time. 
+
+

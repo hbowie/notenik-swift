@@ -1,0 +1,31 @@
+Title:  Sync Multiple Collections to a Common Folder
+
+Seq:    36
+
+Tags:   folders, nvalt, sync
+
+Date Added: 2017-10-27 12:55:15
+
+Body:   
+ 
+The Folder Sync tab in the Collection preferences, on the Collection menu, allows the user to identify a common folder to which several different Notenik collections can be synced.
+
+Such a common folder could then be conveniently accessed using [nvAlt](http://brettterpstra.com/projects/nvalt/), for example.
+
+Each collection can have a different prefix assigned, and that prefix will then be used to keep the notes from the different collections separately identified within the common folder. The prefix will default to the folder name for the collection, with a trailing 's' removed if one is found, and with a dash added as a separator. A folder name of 'Bookmarks', for example, would result in a prefix of 'Bookmark - ' being appended to the front of each note as it is stored in the common folder.
+
+The logic for the syncing works as follows.
+
+A sweep of the entire common folder will be performed whenever syncing is first turned on for a collection, and henceforth whenever a collection with syncing already on is opened.
+
+The sweep sync includes the following logic.
+
+* For any common folder notes with a matching prefix, where the corresponding note does not already exist within the Notenik collection, the note will be added to the Notenik collection.
+
+* For any Notenik notes where a matching nvAlt note is not found, the note will be added to the nvAlt folder.
+
+* For any Notenik notes where a matching nvAlt note has been updated more recently than the matching Notenik note, the Notenik note will be updated to match the nvAlt note.
+
+Once folder sync has been turned on for a collection, then every time that Notenik makes an update to any note within that collection, a parallel update will be made to the corresponding note within the common folder.
+
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en_us</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.powersurgepub.notenik.help</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Notenik</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
+	<key>CFBundleSignature</key>
+	<string>hbwr</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>MacOSX</string>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>HPDBookAccessPath</key>
+	<string>seq-01-introduction-to-notenik.html</string>
+	<key>HPDBookIconPath</key>
+	<string>notenik16.png</string>
+	<key>HPDBookIndexPath</key>
+	<string>Notenik.helpindex</string>
+	<key>HPDBookKBProduct</key>
+	<string>notenik</string>
+	<key>HPDBookKBURL</key>
+	<string>https://www.notenik.net</string>
+	<key>HPDBookTitle</key>
+	<string>Notenik Help</string>
+	<key>HPDBookType</key>
+	<string>3</string>
+</dict>
+</plist>

@@ -1,0 +1,23 @@
+Title:  Create Backups
+
+Seq:    34
+
+Tags:   backups
+
+Date Added: 2017-10-27 12:55:15
+
+Body:   
+ 
+Since your Notenik Collections are just folders full of text files, and they stay wherever you put them, whatever backup scheme(s) you may already be using for the rest of your data will likely also be backing up your Notes. 
+
+However Notenik also has a special backup mechanism you may choose to use. 
+
+Use the Backup command on the File menu to create a backup of your current Collection. 
+
+When you create a backup of a Collection, Notenik creates an exact copy of the current folder of Notes, and gives the new folder a name starting with the name of your source folder, and ending with the current date and time.
+
+Additionally, on the Files tab of the Notenik preferences, you can specify whether you want Notenik to backup automatically, or to occasionally (on a weekly basis) prompt you to create a backup. And if you would like Notenik to automatically delete older backups, then you can specify the maximum number of backups to keep for any Collection.
+
+If you select automatic backups, then you should probably also specify a Master Backup Folder into which all these backups will be placed. The backup function will then track its actions within a log file named '- Backup Log.txt'. 
+
+

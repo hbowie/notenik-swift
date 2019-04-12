@@ -1,0 +1,43 @@
+Title:  A Note File Template
+
+Seq:    17
+
+Tags:   fields, revision, seq, sort, version
+
+Body:   
+ 
+Following is a sample Note file, showing all of the Fields that Notenik treats as special in some way. Feel free to copy and paste to create a template file, as described in the previous section. 
+
+    Title:  The unique title for this note
+
+    Author: The author of the Note
+
+    Date:   2016-12-13
+
+    Status: 0 - Suggested
+
+    Type:   The type of note
+
+    Seq:    Rev Letter or Version Number
+
+    Tags:   One or more tags, separated by commas
+
+    Link:   http://notenik.com
+
+    Rating: 5
+
+    Index:  Index Term 1;
+
+    Code: 
+
+    A block of programming code
+
+    Teaser:
+
+    A brief sample of the note
+
+    Body:
+
+    The substance of the note
+
+

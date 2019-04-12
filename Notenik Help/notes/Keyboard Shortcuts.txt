@@ -1,0 +1,47 @@
+Title:  Keyboard Shortcuts
+
+Seq:    39
+
+Tags:   keys, shortcuts
+
+Date Added: 2017-10-27 12:55:15
+
+Body:   
+ 
+Following are the keyboard shortcuts available within the app. Tap the appropriate modifier key for your computer (CMD for a Mac), and then combine with a letter, number or symbol indicated below. 
+
+* B - Backup
+* C - Copy
+* D - Delete Note
+* E - Open Essential Collection
+* F - Find
+* G - Find Again
+* H - Hide Notenik
+* I - Increment Date or Seq
+* J - Jump to Last Collection
+* K - Close Note
+* L - Leap using Seq as Shortcut
+* M - Open Master Collection
+* N - New Note
+* O - Open
+* P - Publish
+* Q - Quit Notenik
+* R - Replace
+* S - Save
+* T - Text Edit Note
+* U - Catch Up Daily Tasks
+* V - Paste
+* W - Reduce Window Size
+* X - Cut
+* Y - Copy Code
+* Z - Undo Edits
+* 1 - Sort by Title
+* 2 - Sort by Seq + Title
+* 3 - Sort Tasks by Date
+* 4 - Sort Tasks by Seq
+* , - Notenik Preferences
+* [ - Prior Note
+* ]  - Next Note
+* → - Scroll to Selected Note
+
+

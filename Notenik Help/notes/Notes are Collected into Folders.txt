@@ -1,0 +1,25 @@
+Title:  Notes are Collected into Folders
+
+Seq:    8
+
+Tags:   collection, folders, title
+
+Date Added: 2017-10-09 12:00:42
+
+Body:   
+ 
+Each Note is part of a Collection, and each Collection is stored in its own folder (aka directory). Each Note within a Collection must have its own unique Title. 
+
+You can organize your Notes into as many Collections as you would like, and store each Collection wherever you would like. 
+
+The Notenik application can only open one Collection at a time, but you can easily switch from one to another using the Open Recent command on the File menu. If you want to quickly go back and forth between two Collections, use the Jump to Last Collection command, or its keyboard shortcut. 
+
+If you decide to move a Collection to a different location on disk, there's a command for that under the File menu as well. 
+
+You can adjust the number of Recent Files to retain using the File Tab in the Notenik preferences. This is also the place where you can specify whether you would like Notenik to open the most recently used Collection used when it starts up, or always open one specific Collection. All of Notenik's application preferences are available from the Options menu. 
+
+You can also use the File Tab in the Notenik preferences to select a Collection you'd like to identify as your Essential Collection -- whichever Collection you wish to designate as primary, or most frequently used. You can then use a special command on the File menu -- or its keyboard shortcut -- to quickly open that Essential Collection. 
+
+You might want to use the New command on the File menu to create your first Collection now, if you don't already have one created. 
+
+

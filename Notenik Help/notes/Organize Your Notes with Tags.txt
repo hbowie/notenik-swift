@@ -1,0 +1,31 @@
+Title:  Organize Your Notes with Tags
+
+Seq:    14
+
+Tags:   categories, favorites, organize, reports, startup, tags, tree
+
+Body:   
+ 
+The Tags Field offers another way to organize the Notes within a Collection. 
+
+Tags may be used to group related notes into categories. One or more tags may be associated with each note, and each tag may contain one or more sub-tags. A period or a slash may be used to separate one level of a tag from the next level, with the period being preferred. A comma or a semi-colon may be used to separate one tag from another, with the comma being preferred.
+
+Click on the Tags tab to see your Notes organized by tags, instead of appearing in a straight List. If a Note has multiple Tags assigned, then it will appear multiple times on the Tags tab, once for each Tag. By adding multiple levels to your Tags, you can effectively organize your Notes into an outline.
+
+The "Favorites" tag may be used to identify favored notes within a collection, and these notes will appear on the Favorites Report. 
+
+The "Startup" tag may be used to identify notes whose links you wish to have opened by the application when it first starts, so long as you check this option on the Favorites tab of the Notenik preferences. 
+
+There are two buttons beneath the Tags list. The first will expand all Tags, showing all the sub-categories and Notes beneath each top-level Tag. The second will collapse all Tags other than the first level ones, to allow easier navigation to the Notes beneath a specific Tag. 
+
+The Collections Menu contains a few nice options for making mass changes to the Tags in a Collection.
+
+* Replace one Tag with another.
+
+* Flatten the levels of all your Tags, making each level a separate Tag.
+
+* Change all your tags to lower case letters.
+
+There's also an option under the File menu to Reload the current Collection without any untagged items. This doesn't permanently delete the items with blank tags -- it just temporarily hides them from view. 
+
+

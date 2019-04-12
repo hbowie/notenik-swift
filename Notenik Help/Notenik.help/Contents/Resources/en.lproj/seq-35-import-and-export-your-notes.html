@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Import and Export Your Notes</title>
+	<meta name="KEYWORDS" content="export, import, mac apps, opml, tab-delimited, tags, xml">
+</head>
+<body class="Aside apd-topic" dir="ltr" id="seq-35-import-and-export-your-notes" data-istaskopen="false">
+<a name="seq-35-import-and-export-your-notes"></a>
+<h1>
+	Import and Export Your Notes
+</h1>
+<p>You can import and export a Collection in a variety of formats, using commands found under the File menu.</p>
+<p>You may filter the notes to be exported, for any of these formats, by adjusting the entries in the Tags Export preferences. You may specify one or more Tags to be selected, so that only notes containing those Tags will be exported. You may also suppress one or more Tags, meaning that exported notes will have those Tags removed from the resulting output.</p>
+<p>For example, if you have a collection of blog entries stored as a Collection of Notes, and you have multiple blogs to which they are published, you can specify Tags for the relevant blogs for each note, and then select only those Notes when publishing a particular blog (and suppress the Tags for the other blogs).</p>
+<p>If you leave the Tags to Select field blank, then all Notes will be exported.</p>
+<p>Following are the supported formats.</p>
+<ul>
+<li>
+<p>Import/Export in Notenik Format</p>
+<p>You can import and export your Notes in the current collection from/to a folder in the same Notenik format.</p>
+</li>
+<li>
+<p>Export to <a href="http://en.wikipedia.org/wiki/OPML">OPML</a></p>
+<p>The Notes in the current collection will be exported to an XML-based Outline format that can be opened by an app such as OmniOutliner. The Tags in the collection will be used to create the outline.</p>
+<p>Note that, for XML formats, the resulting file may contain invalid characters if those are present in your Notes.</p>
+</li>
+<li>
+<p>Import/Export in Tab-Delimited Format</p>
+<p>Each Note will be represented as one row/line, and each field will be represented in a separate column. This format is suitable for import into MS Excel, for example.</p>
+</li>
+<li>
+<p>Export to Tab-Delimited for MS Links</p>
+<p>Similar to tab-delimited, but the Title and link are concatenated into a single field, with a &lsquo;#&rsquo; character separating the title from the link. Some Microsoft apps can use this format to import each link into a special field that combines the title and the hyperlink into a single field.</p>
+</li>
+<li>
+<p>Import/Export in XML Format</p>
+<p>Your Notes will be represented in an XML format with each field represented as a separate XML tag.</p>
+<p>Note that, for XML formats, an exported file may contain invalid characters if those are present in your Notes.</p>
+</li>
+<li>
+<p>Import Mac App Info</p>
+<p>When running on a Mac, if you choose this option, and then select your Applications folder, Notenik will import one Note for each application found in the folder. If duplicates are found then the existing notes will be updated rather than adding new notes. You will get the best results by first specifying a &lsquo;template.txt&rsquo; file for the Collection in the following format.</p>
+<pre><code>  Title:  The unique title for this note
+
+  Tags:   One or more tags, separated by commas
+
+  Link:   http://anyurl.com
+
+  Date:   2017-01-22
+
+  Seq:    Rev Letter or Version Number
+
+  Minimum System Version:
+
+  Body:   
+
+  The body of the note
+</code></pre>
+<p>After the import, you can use the Tags field to organize the applications in any way you like, and clicking on the Link field will launch the selected application.</p>
+</li>
+</ul>
+
+<p>Next Topic: <a href="seq-36-sync-multiple-collections-to-a-common-folder.html">Sync Multiple Collections to a Common Folder</a></p>
+</body>
+</html>

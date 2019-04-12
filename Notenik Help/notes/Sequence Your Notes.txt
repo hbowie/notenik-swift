@@ -1,0 +1,23 @@
+Title:  Sequence Your Notes
+
+Seq:    18
+
+Tags:   fields, revision, seq, sort, version
+
+Date Added: 2017-05-02 17:43:10
+
+Body:   
+ 
+Add a Seq Field to a Collection (using a template file) in order to specify a sequence number, revision letter, version number or priority to be associated with each Note. 
+
+A Seq field may contain letters, digits and one or more periods (aka decimal points) or hyphens or a dollar sign ('$'). 
+
+You may wish to assign a unique Seq value to each Note in a Collection, but Notenik does not require this (in other words, it does allow duplicate Seq values to be assigned to different Notes). 
+
+If you'd like to see your Notes listed in sequence by their assigned number, you can use the Sort Menu to change the sequence of the displayed list from Title to Seq + Title.
+
+If you want to insert a new note with a Seq Value already assigned to another Note, then first select the other Note, then use the Increment Seq command on the Note menu to increment the Seq field of the existing note, as well as following notes that might otherwise cause duplicate Seq values. 
+
+To add a new Note with the next available Seq value, first select the last note in the list (the one with the highest seq field) and then add a New Note in the normal manner. 
+
+

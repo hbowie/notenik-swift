@@ -1,0 +1,17 @@
+Title:  Index Your Notes
+
+Seq:    24
+
+Tags:   index, PSTextMerge
+
+Date Added: 2017-05-06 10:28:37
+
+Body:   
+ 
+An Index Field can contain one or more terms under which this note should appear in an index of the collection. Multiple terms can be placed on separate Index lines within the note, or can be entered as one field by using a semi-colon (';') to end each term entry. A URL to be associated with the term can be placed in parentheses following the term. If the term should reference a specific anchor within the note, then the anchor can be specified by preceding it with the usual pound sign ('#').
+
+See the [Alphabetical Index](http://www.softdevbigideas.com/alphabetical-index.html) to Software Development Big Ideas for an example of an Index that can be generated in this manner. 
+
+[PSTextMerge](http://www.powersurgepub.com/products/pstextmerge/index.html) has a special Type of Data Source that will read a Notenik Index, and can then be used to generate an index page such as the example just cited. 
+
+

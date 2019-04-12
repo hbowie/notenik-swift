@@ -1,0 +1,21 @@
+Title:  Add, Delete and Update Your Notes
+
+Seq:    9
+
+Tags:   +, -, edit, minus sign, ok, plus sign
+
+Body:   
+ 
+The Display tab shows you what your Note looks like. Your note is formatted as a web page, and displayed within Notenik using a built-in web browser. If you click on a hyperlink within the display, then the linked page will replace your Note. If you wish to get back to your Note, then click on the Reload button beneath the display. If your Note has a Link value, then click on the Launch Link button to see the linked page within your default web browser, instead of Notenik's internal browser. 
+
+The Edit tab lets you make changes to the Field Values of a Note. 
+
+Use the '+' (plus) sign on the Toolbar to clear the Field Values and prepare to Add a new Note. 
+
+Use the '-' (minus) sign on the Toolbar to delete the currently selected Note. 
+
+Click on the OK button on the Toolbar, or click on the Display tab, to complete and save your latest entries on the Edit tab. 
+
+The Note Menu also has equivalent commands, with keyboard shortcuts, to add a New Note, Delete a Note, or to Undo Edits. Use the Undo Edits item before saving your entries, to undo any changes you've made on the Edit tab. 
+
+
