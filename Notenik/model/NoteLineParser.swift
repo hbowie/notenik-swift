@@ -86,6 +86,7 @@ class NoteLineParser {
                     let field = NoteField(def: def, value: value)
                     note.setField(field)
                 }
+                pendingBlankLines = 0
             }
             
             if possibleLine == nil {
@@ -195,6 +196,7 @@ class NoteLineParser {
         }
         value.append(line)
         value.append("\n")
+        pendingBlankLines = 0
     }
     
 }
