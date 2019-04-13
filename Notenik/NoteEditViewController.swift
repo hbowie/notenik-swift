@@ -143,10 +143,10 @@ class NoteEditViewController: NSViewController {
         // scrollView.contentView.scroll(to: .zero)
         
         // Pin the grid to the edges of our main view
-        gridView!.leadingAnchor.constraint(equalTo: parentView.leadingAnchor).isActive = true
-        gridView!.trailingAnchor.constraint(equalTo: parentView.trailingAnchor).isActive = true
-        gridView!.topAnchor.constraint(equalTo: parentView.topAnchor).isActive = true
-        gridView!.bottomAnchor.constraint(equalTo: parentView.bottomAnchor).isActive = true
+        gridView!.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 8).isActive = true
+        gridView!.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: 8).isActive = true
+        gridView!.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 8).isActive = true
+        gridView!.bottomAnchor.constraint(equalTo: parentView.bottomAnchor, constant: 8).isActive = true
     }
     
     func makeLabelView(with label: FieldLabel) -> NSView {
