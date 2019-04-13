@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/4/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -20,7 +23,8 @@ class NoteCollection {
     var sortParm     : NoteSortParm
     var statusConfig : StatusValueConfig
     /// Preferred file extension for the current collection
-    var preferredExt:  String = "txt"
+    var preferredExt : String = "txt"
+    var readOnly     : Bool = false
     
     /// Default initialization of a new Realm.
     init () {

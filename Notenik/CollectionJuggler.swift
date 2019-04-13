@@ -165,14 +165,14 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Open the Essential Collection, if we have one
     func openEssentialCollection() {
         if essentialURL != nil {
-            openFileWithNewWindow(fileURL: essentialURL!)
+            openFileWithNewWindow(fileURL: essentialURL!, readOnly: false)
         }
     }
     
     /// Open the Application's Internal Collection of Help Notes
     func openHelpNotes() {
         let path = Bundle.main.resourcePath! + "/notenik-swift-intro"
-        openFileWithNewWindow(filename: path)
+        openFileWithNewWindow(folderPath: path, readOnly: true)
     }
     
     /// Respond to a user request to open another Collection. Present the user
@@ -193,26 +193,27 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         openPanel.allowsMultipleSelection = false
         openPanel.begin { (result) -> Void  in
             if result == .OK {
-                self.openFileWithNewWindow(fileURL: openPanel.url!)
+                self.openFileWithNewWindow(fileURL: openPanel.url!, readOnly: false)
             }
         }
     }
     
-    func openFileWithNewWindow(filename: String) -> Bool {
-        let fileURL = URL(fileURLWithPath: filename)
-        if fileURL == nil {
-            return false
-        } else {
-            return openFileWithNewWindow(fileURL: fileURL)
-        }
+    /// Attempt to open a Notenik collection, starting with a file path.
+    ///
+    /// - Parameters:
+    ///   - folderPath: The path to the collection folder.
+    ///   - readOnly:   Should this collection be opened read-only?
+    /// - Returns: True if open was successful; false otherwise.
+    func openFileWithNewWindow(folderPath: String, readOnly: Bool) -> Bool {
+        let fileURL = URL(fileURLWithPath: folderPath)
+        return openFileWithNewWindow(fileURL: fileURL, readOnly: readOnly)
     }
     
-
     /// Attempt to open a Notenik Collection.
     ///
     /// - Parameter fileURL: A URL pointing to a Notenik folder.
     /// - Returns: True if open was successful, false if not.
-    func openFileWithNewWindow(fileURL: URL) -> Bool {
+    func openFileWithNewWindow(fileURL: URL, readOnly: Bool) -> Bool {
         var openOK = false
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
@@ -230,6 +231,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         } else {
             Logger.shared.log(skip: true, indent: 0, level: LogLevel.normal,
                               message: "Collection successfully opened: \(collection!.title)")
+            collection!.readOnly = readOnly
             saveCollectionURLInfo(collectionURL: collectionURL)
             if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
                 windowController.shouldCascadeWindows = true
@@ -309,6 +311,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         initialWindow!.io = io
     }
     
+    /// Once we've opened a collection, save some info about it so we can use it later
     func saveCollectionURLInfo(collectionURL: URL) {
         if self.docController != nil {
             self.docController!.noteNewRecentDocumentURL(collectionURL)

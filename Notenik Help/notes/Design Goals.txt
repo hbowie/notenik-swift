@@ -8,7 +8,7 @@ Date Added: 2017-10-06 15:36:54
 
 Body:   
  
-It may help you to better appreciate Notenik once you understand the design goals for the app. 
+A good place to start in your review of Notenik is with the overall goals that guided the design of the application. 
 
 1. Help a user to maintain and easily access small bits of information in the form of notes. 
 

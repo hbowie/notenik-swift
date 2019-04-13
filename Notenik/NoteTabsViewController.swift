@@ -31,6 +31,22 @@ class NoteTabsViewController: NSTabViewController {
         // Do view setup here.
     }
     
+    /// If collection is read-only, then don't allow Edit tab to be selected
+    override func tabView(_ tabView: NSTabView, shouldSelect tabViewItem: NSTabViewItem?) -> Bool {
+        let superResponse = super.tabView(tabView, shouldSelect: tabViewItem)
+        guard tabViewItem != nil else { return superResponse }
+        guard window != nil else { return superResponse }
+        guard tabViewItem!.label == "Edit" else { return superResponse }
+        guard window!.io != nil else { return superResponse }
+        guard let collection = window!.io!.collection else { return superResponse }
+        if collection.readOnly {
+            return false
+        } else {
+            return superResponse
+        }
+    }
+    
+    /// If we're leaving the Edit Tab, then check for any changes made by the user
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
         
         guard tabViewItem != nil else { return }

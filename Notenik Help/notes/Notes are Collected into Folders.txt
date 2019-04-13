@@ -12,7 +12,11 @@ Each Note is part of a Collection, and each Collection is stored in its own fold
 
 You can organize your Notes into as many Collections as you would like, and store each Collection wherever you would like. 
 
-The Notenik application can only open one Collection at a time, but you can easily switch from one to another using the Open Recent command on the File menu. If you want to quickly go back and forth between two Collections, use the Jump to Last Collection command, or its keyboard shortcut. 
+The Notenik application can open multiple Collections at a time, each within its own window. 
+
+The Open Recent command on the File menu allows you to easily open any collection that you recently had open. 
+
+If you want to quickly go back and forth between two Collections, use the Jump to Last Collection command, or its keyboard shortcut. 
 
 If you decide to move a Collection to a different location on disk, there's a command for that under the File menu as well. 
 
