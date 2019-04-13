@@ -12,18 +12,26 @@ Each Note is part of a Collection, and each Collection is stored in its own fold
 
 You can organize your Notes into as many Collections as you would like, and store each Collection wherever you would like. 
 
+Note that commands on the File menu generally refer to Collection folders, and not to individual Note files within a folder. 
+
 The Notenik application can open multiple Collections at a time, each within its own window. 
 
-The Open Recent command on the File menu allows you to easily open any collection that you recently had open. 
+The Open Recent command on the File menu allows you to easily open any collection that you've recently accessed. 
 
-If you want to quickly go back and forth between two Collections, use the Jump to Last Collection command, or its keyboard shortcut. 
+The Save As command on the File menu allows you to save a currently open collection to a new location (and optionally move the folder at the old location to the trash). 
 
-If you decide to move a Collection to a different location on disk, there's a command for that under the File menu as well. 
-
-You can adjust the number of Recent Files to retain using the File Tab in the Notenik preferences. This is also the place where you can specify whether you would like Notenik to open the most recently used Collection used when it starts up, or always open one specific Collection. All of Notenik's application preferences are available from the Options menu. 
-
-You can also use the File Tab in the Notenik preferences to select a Collection you'd like to identify as your Essential Collection -- whichever Collection you wish to designate as primary, or most frequently used. You can then use a special command on the File menu -- or its keyboard shortcut -- to quickly open that Essential Collection. 
+You may wish to identify one of your Collections as your Essential Collection. If you have identified an Essential Collection, then this will be the first Collection opened by default when you launch the application. Once you have your desired Collection open, just select the 'Make this Collection Essential' command from the File menu to designate that Collection as your Essential Collection. 
 
 You might want to use the New command on the File menu to create your first Collection now, if you don't already have one created. 
+
+Note that, when creating a New Collection, you will be presented with a standard Open/Save dialog. Within this dialog, you will need to take four separate actions:
+
+1. Navigate to the desired parent folder (if you're not already there);
+
+2. Click on the 'New Folder' button and give the new Collection folder a name;
+
+3. Select the folder you just created (if it's not already selected);
+
+4. Click the 'Open' button to finish initialization and opening of the new Collection. 
 
 

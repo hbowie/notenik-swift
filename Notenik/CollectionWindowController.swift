@@ -50,11 +50,19 @@ class CollectionWindowController: NSWindowController {
                 window!.title = "No Collection to Display"
                 return
             }
-            
+            window!.representedURL = notenikIO!.collection!.collectionFullPathURL
             if notenikIO!.collection!.title == "" {
                 window!.title = notenikIO!.collection!.path
             } else {
                 window!.title = notenikIO!.collection!.title
+            }
+            
+            if self.window == nil {
+                Logger.shared.log(skip: false, indent: 0, level: .severe,
+                                  message: "Collection Window is nil!")
+            } else {
+                let window = self.window as? CollectionWindow
+                window!.io = notenikIO
             }
             
             if listVC == nil {
@@ -291,13 +299,17 @@ class CollectionWindowController: NSWindowController {
         return outcome
     }
     
-
-    
     /// Take appropriate actions when the user has modified the note
     func noteModified(updatedNote: Note) {
         if displayVC != nil {
             displayVC!.display(note: updatedNote)
         }
+    }
+    
+    @IBAction func saveDocumentAs(_ sender: NSMenuItem) {
+        guard notenikIO != nil && notenikIO!.collectionOpen else { return }
+        guard let window = self.window as? CollectionWindow else { return }
+        juggler.userRequestsSaveAs(currentIO: io!, currentWindow: window)
     }
     
     @IBAction func makeCollectionEssential(_ sender: Any) {

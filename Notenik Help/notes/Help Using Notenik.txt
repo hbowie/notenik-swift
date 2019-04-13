@@ -4,6 +4,8 @@ Seq:    5
 
 Tags:   help, window placement
 
+Date Added: 2017-05-06 10:02:44
+
 Body:   
  
 You're already reading this intro, so obviously I don't need to tell you how to find this. 
@@ -12,7 +14,7 @@ But here's a few other help items that are available, including some that may no
 
 This User Guide is available as a web page from the [Notenik](http://www.notenik.net) site, from the [PowerSurge Publishing](http://www.powersurgepub.com) site, and from the Notenik Help Menu. 
 
-But the same content is also available as a Collection of Help Notes, by selecting the corresponding Open Command from Notenik's File menu. You may find it a little easier to read and navigate in this form, plus you can practice using Notenik as you read the Intro!
+But the same content is also available as a Collection of Help Notes, by selecting the appropriate command from Notenik's Help menu. You may find it a little easier to read and navigate in this form, plus you can practice using Notenik as you read the Intro!
 
 The Help Menu also provides access to a few other helpful items that you can explore on your own. You may wish to memorize the keyboard shortcut to Reduce the Window Size, since this can be handy if your Notenik window ends up missing because you've shifted your Monitor setup since the last time you used it. 
 

@@ -22,6 +22,8 @@
 		9C21DB8021F82D9800A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
 		9C21DB8121F82DB500A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
 		9C21DB8221F82DB600A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
+		9C29DD29226286A100928180 /* CollectionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29DD28226286A100928180 /* CollectionWindow.swift */; };
+		9C29DD2A226286A100928180 /* CollectionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29DD28226286A100928180 /* CollectionWindow.swift */; };
 		9C2AE512220A030800AE8BEE /* TagsTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2AE511220A030800AE8BEE /* TagsTree.swift */; };
 		9C2AE514220A033300AE8BEE /* TagsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2AE513220A033300AE8BEE /* TagsNode.swift */; };
 		9C2AE515220A033300AE8BEE /* TagsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2AE513220A033300AE8BEE /* TagsNode.swift */; };
@@ -300,6 +302,7 @@
 		9C21749C22024D0C00B4BF48 /* Down.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Down.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C21749E22024E2900B4BF48 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../notenik-swift-intro"; sourceTree = "<group>"; };
 		9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplay.swift; sourceTree = "<group>"; };
+		9C29DD28226286A100928180 /* CollectionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindow.swift; sourceTree = "<group>"; };
 		9C2AE511220A030800AE8BEE /* TagsTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsTree.swift; sourceTree = "<group>"; };
 		9C2AE513220A033300AE8BEE /* TagsNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNode.swift; sourceTree = "<group>"; };
 		9C2AE519220A044800AE8BEE /* TagsNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNodeType.swift; sourceTree = "<group>"; };
@@ -484,6 +487,7 @@
 				9C9094C42249A664002207EB /* NoteDocumentController.swift */,
 				9CF256CA21FD0FF000D9F06A /* CollectionJuggler.swift */,
 				9CF256CC21FD175E00D9F06A /* CollectionWindowController.swift */,
+				9C29DD28226286A100928180 /* CollectionWindow.swift */,
 				9C12D48E22134970003136B2 /* NoteSelectionSource.swift */,
 				9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */,
 				9C9A025121F65AF00027F364 /* NoteListViewController.swift */,
@@ -871,6 +875,7 @@
 				9C60E70B21F650B800C332ED /* FileUtils.swift in Sources */,
 				9C60E76821F651E500C332ED /* AuthorValue.swift in Sources */,
 				9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */,
+				9C29DD29226286A100928180 /* CollectionWindow.swift in Sources */,
 				9CED2810224EB39900798621 /* LongTextView.swift in Sources */,
 				9CF1192E2257FDD50015AE91 /* ModWhenChanged.swift in Sources */,
 				9C60E79821F651E500C332ED /* FieldType.swift in Sources */,
@@ -1083,6 +1088,7 @@
 				9C60E75E21F651E500C332ED /* RecursValue.swift in Sources */,
 				9C60E74F21F651E500C332ED /* ValueFactory.swift in Sources */,
 				9C60E76121F651E500C332ED /* TitleValue.swift in Sources */,
+				9C29DD2A226286A100928180 /* CollectionWindow.swift in Sources */,
 				9C60E79D21F651E500C332ED /* NotePosition.swift in Sources */,
 				9C21DB8221F82DB600A5A08C /* NoteDisplay.swift in Sources */,
 				9C60E6F021F64B3C00C332ED /* NotenikUITests.swift in Sources */,

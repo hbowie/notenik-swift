@@ -8,7 +8,7 @@ Date Added: 2017-10-06 15:36:54
 
 Body:   
  
-A good place to start in your review of Notenik is with the overall goals that guided the design of the application. 
+A good place to start in your review of Notenik's capabilities is with the overall goals that guided the design of the application. Let's take a quick look.
 
 1. Help a user to maintain and easily access small bits of information in the form of notes. 
 
@@ -16,7 +16,7 @@ A good place to start in your review of Notenik is with the overall goals that g
 
 3. Store notes in an open, non-proprietary format that humans can easily write, read and understand, but also in a format that can be usefully manipulated by a number of software tools. 
 
-4. Notes should be portable, easily moved from one device to another, from one platform to another, without losing anything in the process.   
+4. Notes should be portable, easily moved from one device to another, and from one platform to another, without losing anything in the process.   
 
 5. Notes should be durable, able to survive the disappearance of any single piece of software or service.  
 

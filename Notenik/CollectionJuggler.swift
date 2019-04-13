@@ -57,6 +57,67 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         loadInitialCollection()
     }
     
+    /// The user has requested us to save the current collection in a new location
+    func userRequestsSaveAs(currentIO: NotenikIO, currentWindow: CollectionWindow) {
+        guard currentIO.collectionOpen else { return }
+        
+        // Ask the user for a new location on disk
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Select a New Location for this Notenik Folder"
+        let parent = osdir.directoryURL
+        if parent != nil {
+            openPanel.directoryURL = parent!
+        }
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = true
+        openPanel.canChooseFiles = false
+        openPanel.allowsMultipleSelection = false
+        openPanel.begin { (result) -> Void  in
+            if result == .OK {
+                self.saveCollectionAs(currentIO: currentIO, currentWindow: currentWindow, newURL: openPanel.url!)
+            }
+        }
+    }
+    
+    func saveCollectionAs(currentIO: NotenikIO, currentWindow: CollectionWindow, newURL: URL) -> Bool {
+        guard currentIO.collectionOpen else { return false }
+        guard let oldCollection = currentIO.collection else { return false }
+        guard let oldURL = oldCollection.collectionFullPathURL else { return false }
+        do {
+            try FileManager.default.removeItem(at: newURL)
+            try FileManager.default.copyItem(at: oldURL, to: newURL)
+        } catch {
+            Logger.shared.log(skip: true, indent: 0, level: .severe,
+                              message: "Could not Save current Collection as a new folder")
+            return false
+        }
+        
+        let openOK = openFileWithNewWindow(fileURL: newURL, readOnly: false)
+        
+        if openOK {
+            currentWindow.close()
+            let alert = NSAlert()
+            alert.alertStyle = .informational
+            alert.messageText = "Retain the Original Collection?"
+            alert.informativeText = "Collection originally located at \(oldURL.path) was successfully copied to \(newURL.path)"
+            alert.addButton(withTitle: "OK")
+            alert.addButton(withTitle: "No - Trash It")
+            let response = alert.runModal()
+            if response != .alertFirstButtonReturn {
+                do {
+                    try FileManager.default.trashItem(at: oldURL, resultingItemURL: nil)
+                } catch {
+                    Logger.shared.log(skip: false, indent: 0, level: .severe,
+                                      message: "Could not trash the Collection located at \(oldURL.path)")
+                }
+            }
+        }
+        
+        return openOK
+    }
+    
     /// The user has indicated they'd like to create a new collection
     func userRequestsNewCollection() {
         
