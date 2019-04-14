@@ -207,6 +207,17 @@ CA
                                                 <action selector="saveEdits:" target="Ady-hI-5gd" id="Gia-1T-DT2"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="5ZL-zp-Wne"/>
+                                        <menuItem title="Go To Next Note" keyEquivalent="]" id="IvG-LL-jYe" userLabel="Go To Next Note">
+                                            <connections>
+                                                <action selector="goToNextNote:" target="Ady-hI-5gd" id="TKQ-6h-RVt"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Go To Prior Note" keyEquivalent="[" id="UOV-EN-ZWW" userLabel="Go To Prior Note">
+                                            <connections>
+                                                <action selector="goToPriorNote:" target="Ady-hI-5gd" id="Xyb-mG-qYl"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aKs-Gn-B6L"/>
                                         <menuItem title="Text Edit Note" keyEquivalent="t" toolTip="Open the Current Note in your Preferred Text Editor" id="bpk-dF-vAM" userLabel="Text Edit Note">
                                             <connections>

@@ -13,8 +13,7 @@ The first half of the Notenik display shows all the Notes in your current Collec
 You can navigate through this list using some of the buttons on the Toolbar:
 
 <ul>
-<li>&lt;&lt; Takes you to the first Note.</li>
-<li>&gt;&gt; Takes you to the last note. </li>
+<li>The home button takes you to the first hote. </li>
 <li>&lt;&nbsp; Takes you to the prior note.</li>
 <li>&gt;&nbsp; Takes you to the next note. </li>
 </ul>

@@ -148,27 +148,51 @@ class CollectionWindowController: NSWindowController {
         switch sender.selectedSegment {
         case 0:
             // Go to top of list
-            let (note, position) = noteIO.firstNote()
-            select(note: note, position: position, source: .nav)
+            goToFirstNote(sender)
         case 1:
             // Go to prior note
-            let startingPosition = noteIO.position
-            var (note, position) = noteIO.priorNote(startingPosition!)
-            if note == nil {
-                (note, position) = noteIO.lastNote()
-            }
-            select(note: note, position: position, source: .nav)
+            goToPriorNote(sender)
         case 2:
             // Go to next note
-            let startingPosition = noteIO.position
-            var (note, position) = noteIO.nextNote(startingPosition!)
-            if note == nil {
-                (note, position) = noteIO.firstNote()
-            }
-            select(note: note, position: position, source: .nav)
+            goToNextNote(sender)
         default:
             let startingPosition = noteIO.position
         }
+    }
+    
+    /// Go to the first note in the list
+    @IBAction func goToFirstNote(_ sender: Any) {
+        guard let noteIO = notenikIO else { return }
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        let (note, position) = noteIO.firstNote()
+        select(note: note, position: position, source: .nav)
+    }
+    
+    /// Go to the next note in the list
+    @IBAction func goToNextNote(_ sender: Any) {
+        guard let noteIO = notenikIO else { return }
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        let startingPosition = noteIO.position
+        var (note, position) = noteIO.nextNote(startingPosition!)
+        if note == nil {
+            (note, position) = noteIO.firstNote()
+        }
+        select(note: note, position: position, source: .nav)
+    }
+    
+    /// Go to the prior note in the list
+    @IBAction func goToPriorNote(_ sender: Any) {
+        guard let noteIO = notenikIO else { return }
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        let startingPosition = noteIO.position
+        var (note, position) = noteIO.priorNote(startingPosition!)
+        if note == nil {
+            (note, position) = noteIO.lastNote()
+        }
+        select(note: note, position: position, source: .nav)
     }
     
     /// React to the selection of a note, coordinating the various views as needed.
