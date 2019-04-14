@@ -218,6 +218,11 @@ CA
                                                 <action selector="goToPriorNote:" target="Ady-hI-5gd" id="Xyb-mG-qYl"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Scroll to Selected Note" keyEquivalent="" id="M8F-LB-WOU" userLabel="Scroll to Selected Note">
+                                            <connections>
+                                                <action selector="scrollToSelected:" target="Ady-hI-5gd" id="iQa-OJ-Ymh"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aKs-Gn-B6L"/>
                                         <menuItem title="Text Edit Note" keyEquivalent="t" toolTip="Open the Current Note in your Preferred Text Editor" id="bpk-dF-vAM" userLabel="Text Edit Note">
                                             <connections>

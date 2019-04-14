@@ -104,6 +104,11 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
         tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
     }
     
+    @IBAction func scrollToSelected(_ sender: Any) {
+        let selected = tableView.selectedRow
+        tableView.scrollRowToVisible(selected)
+    }
+    
     func setSortParm(_ sortParm: NoteSortParm) {
 
         switch sortParm {
