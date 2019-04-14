@@ -316,6 +316,18 @@ class CollectionWindowController: NSWindowController {
         juggler.makeCollectionEssential(io: notenikIO!)
     }
     
+    /// Reload the current collection from disk
+    @IBAction func reloadCollection(_ sender: Any) {
+        guard notenikIO != nil && notenikIO!.collection != nil && notenikIO!.collectionOpen else { return }
+        let url = notenikIO!.collection!.collectionFullPathURL
+        notenikIO!.closeCollection()
+        let newIO: NotenikIO = FileIO()
+        let realm = newIO.getDefaultRealm()
+        realm.path = ""
+        let collection = newIO.openCollection(realm: realm, collectionPath: url!.path)
+        self.io = newIO
+    }
+    
     @IBAction func textEditNote(_ sender: Any) {
         guard let noteIO = notenikIO else { return }
         let (note, _) = noteIO.getSelectedNote()
@@ -333,6 +345,11 @@ class CollectionWindowController: NSWindowController {
         if url != nil {
             NSWorkspace.shared.open(url!)
         }
+    }
+    
+    @IBAction func reloadDisplayView(_ sender: Any) {
+        guard displayVC != nil else { return }
+        displayVC!.reload()
     }
     
     @IBAction func sortByTitle(_ sender: Any) {

@@ -18,29 +18,31 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate {
     
     let noteDisplay = NoteDisplay()
     
-    // override func loadView() {
-        // webView = WKWebView()
-        
-        // view = webView
-        // print ("Note Display load view completed")
-    // }
+    var html = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.uiDelegate = self
-        // Do view setup here.
     }
     
     func display(note: Note) {
-        let html = noteDisplay.display(note)
-        // let url = URL(string: "https://practopians.org")!
-        // webView.load(URLRequest(url: url))
+        html = noteDisplay.display(note)
         let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
         if nav == nil {
             Logger.shared.log(skip: false, indent: 0, level: LogLevel.moderate,
                               message: "load html String returned nil")
         }
-        // webView.reload()
+    }
+    
+    /// Reload the Note's HTML when user requests this from Toolbar button.
+    /// This can be helpful after the user has clicked on a link in the Note's display,
+    /// to get back to the original display of the Note.
+    func reload() {
+        let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
+        if nav == nil {
+            Logger.shared.log(skip: false, indent: 0, level: LogLevel.moderate,
+                              message: "load html String returned nil")
+        }
     }
     
 }

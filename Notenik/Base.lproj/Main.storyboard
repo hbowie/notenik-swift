@@ -111,9 +111,11 @@
                                                 <action selector="saveDocumentAs:" target="Ady-hI-5gd" id="mDf-zr-I0C"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Revert to Saved" keyEquivalent="r" id="KaW-ft-85H">
+                                        <menuItem isSeparatorItem="YES" id="dtd-8L-zM9"/>
+                                        <menuItem title="Reload Collection" toolTip="Reload the Collection from Disk" id="tn6-GD-mIH" userLabel="Reload Collection">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="revertDocumentToSaved:" target="Ady-hI-5gd" id="iJ3-Pv-kwq"/>
+                                                <action selector="reloadCollection:" target="Ady-hI-5gd" id="hPS-9D-cBK"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
@@ -889,6 +891,13 @@ CA
                                         </buttonCell>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="07F85546-608D-4983-8ACD-E334EA136275" label="Refresh" paletteLabel="Refresh" toolTip="Refresh the Note Display after clicking on a Link" tag="-1" image="NSRefreshTemplate" id="kwJ-9j-ppu" userLabel="Refresh">
+                                    <size key="minSize" width="11" height="15"/>
+                                    <size key="maxSize" width="11" height="15"/>
+                                    <connections>
+                                        <action selector="reloadDisplayView:" target="B8D-0N-5wS" id="5rY-nl-5Uz"/>
+                                    </connections>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="nQC-YT-8yD"/>
@@ -898,6 +907,7 @@ CA
                                 <toolbarItem reference="XBJ-bT-dLm"/>
                                 <toolbarItem reference="uP7-Y2-WeW"/>
                                 <toolbarItem reference="QaA-dG-0Br"/>
+                                <toolbarItem reference="kwJ-9j-ppu"/>
                                 <toolbarItem reference="Ico-l8-QuA"/>
                                 <toolbarItem reference="z6q-Rn-8x2"/>
                             </defaultToolbarItems>
@@ -1365,6 +1375,7 @@ CA
         <image name="NSGoLeftTemplate" width="9" height="12"/>
         <image name="NSGoRightTemplate" width="9" height="12"/>
         <image name="NSHomeTemplate" width="14" height="14"/>
+        <image name="NSRefreshTemplate" width="11" height="15"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
         <image name="NSShareTemplate" width="11" height="16"/>
     </resources>
