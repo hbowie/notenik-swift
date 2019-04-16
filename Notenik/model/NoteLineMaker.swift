@@ -26,7 +26,7 @@ class NoteLineMaker {
     /// Initialize with the Line Writer to be used.
     ///
     /// - Parameter writer: The line writer to be used.
-    init(writer: LineWriter) {
+    init(_ writer: LineWriter) {
         self.writer = writer
     }
     

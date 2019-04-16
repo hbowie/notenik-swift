@@ -25,7 +25,7 @@ class NoteSplitViewController: NSSplitViewController {
             return
         }
         let writer = BigStringWriter()
-        let maker = NoteLineMaker(writer: writer)
+        let maker = NoteLineMaker(writer)
         let fieldsWritten = maker.putNote(noteToShare)
         if fieldsWritten > 0 {
             let stringToShare = NSString(string: writer.bigString)

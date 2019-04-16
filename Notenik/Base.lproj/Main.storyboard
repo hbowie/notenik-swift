@@ -224,6 +224,12 @@ CA
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aKs-Gn-B6L"/>
+                                        <menuItem title="Share..." id="VIj-k3-Vo3" userLabel="Share">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuNoteShare:" target="Ady-hI-5gd" id="xSu-vb-Bgc"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Text Edit Note" keyEquivalent="t" toolTip="Open the Current Note in your Preferred Text Editor" id="bpk-dF-vAM" userLabel="Text Edit Note">
                                             <connections>
                                                 <action selector="textEditNote:" target="Ady-hI-5gd" id="6P1-cp-ypG"/>

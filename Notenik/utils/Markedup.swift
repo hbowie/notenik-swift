@@ -3,16 +3,19 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/25/19.
-//  Copyright © 2019 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Down
 import Foundation
 
 /// An object capable of generating marked up text (currently HTML or Markdown)
-class Markedup: NSObject {
+class Markedup: CustomStringConvertible {
     
-    var format : MarkedupFormat = .html
+    var format: MarkedupFormat = .htmlFragment
     var code = ""
     
     convenience init (format: MarkedupFormat) {
@@ -21,25 +24,28 @@ class Markedup: NSObject {
     }
     
     /// Return the description, used as the String value for the object
-    override var description: String {
+    var description: String {
         return code
     }
     
-    func startDoc() {
+    func startDoc(withTitle title: String?) {
         switch format {
-        case .html:
+        case .htmlDoc:
             code.append("<html>")
             code.append("<head>")
+            if title != nil && title!.count > 0 {
+                code.append("<title>\(title!)</title>")
+            }
             code.append("</head>")
             code.append("<body>")
-        case .markdown:
+        default:
             let x = 0
         }
     }
     
     func startParagraph() {
         switch format {
-        case .html:
+        case .htmlFragment, .htmlDoc:
             code.append("<p>")
         case .markdown:
             if code.count > 0 {
@@ -50,7 +56,7 @@ class Markedup: NSObject {
     
     func startStrong() {
         switch format {
-        case .html:
+        case .htmlFragment, .htmlDoc:
             code.append("<strong>")
         case .markdown:
             code.append("**")
@@ -59,7 +65,7 @@ class Markedup: NSObject {
     
     func finishStrong() {
         switch format {
-        case .html:
+        case .htmlFragment, .htmlDoc:
             code.append("</strong>")
         case .markdown:
             code.append("**")
@@ -68,7 +74,7 @@ class Markedup: NSObject {
     
     func startEmphasis() {
         switch format {
-        case .html:
+        case .htmlFragment, .htmlDoc:
             code.append("<em>")
         case .markdown:
             code.append("*")
@@ -77,7 +83,7 @@ class Markedup: NSObject {
     
     func finishEmphasis() {
         switch format {
-        case .html:
+        case .htmlFragment, .htmlDoc:
             code.append("</em>")
         case .markdown:
             code.append("*")
@@ -86,7 +92,7 @@ class Markedup: NSObject {
     
     func link(text: String, path: String) {
         switch format {
-        case .html:
+        case .htmlFragment, .htmlDoc:
             code.append("<a href=\"" + path + "\">" + text + "</a>")
         case .markdown:
             code.append("[" + text + "](" + path + ")")
@@ -95,7 +101,7 @@ class Markedup: NSObject {
     
     func codeBlock(_ block: String) {
         switch format {
-        case .html:
+        case .htmlFragment, .htmlDoc:
             code.append("<pre><code>")
             code.append(block)
             code.append("</code></pre>")
@@ -113,7 +119,7 @@ class Markedup: NSObject {
     
     func finishParagraph() {
         switch format {
-        case .html:
+        case .htmlFragment, .htmlDoc:
             code.append("</p>")
         case .markdown:
             newLine()
@@ -130,7 +136,7 @@ class Markedup: NSObject {
     
     func append(markdown: String) {
         switch format {
-        case.html:
+        case.htmlFragment, .htmlDoc:
             let down = Down(markdownString: markdown)
             var html = ""
             do {
@@ -147,7 +153,7 @@ class Markedup: NSObject {
     
     func finishDoc() {
         switch format {
-        case .html:
+        case .htmlFragment, .htmlDoc:
             code.append("</body>")
             code.append("</html>")
         case .markdown:

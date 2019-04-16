@@ -3,15 +3,18 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/22/19.
-//  Copyright © 2019 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
 
-/// Generate the coding necessary to display a Note in a pretty format.
+/// Generate the coding necessary to display a Note in a readable format.
 class NoteDisplay: NSObject {
     
-    var format: MarkedupFormat = .html
+    var format: MarkedupFormat = .htmlFragment
 
     /// Get the code used to display this entire note as a web page, including html tags.
     ///
@@ -21,7 +24,7 @@ class NoteDisplay: NSObject {
         let collection = note.collection
         let dict = collection.dict
         let code = Markedup(format: format)
-        code.startDoc()
+        code.startDoc(withTitle: note.title.value)
         var i = 0
         if note.hasTags() {
             let tagsField = note.getField(label: LabelConstants.tags)

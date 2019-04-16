@@ -20,6 +20,7 @@ class CollectionWindowController: NSWindowController {
     var windowNumber         = 0
     
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
+    let shareStoryboard: NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
     
     var newNoteRequested = false
     var newNote: Note?
@@ -134,6 +135,21 @@ class CollectionWindowController: NSWindowController {
         } else {
             Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
                               message: "Couldn't get a Collection Prefs Window Controller!")
+        }
+    }
+    
+    @IBAction func menuNoteShare(_ sender: Any) {
+        guard io != nil && io!.collectionOpen else { return }
+        let (note, notePosition) = io!.getSelectedNote()
+        guard note != nil else { return }
+        if let shareController = self.shareStoryboard.instantiateController(withIdentifier: "shareWC") as? ShareWindowController {
+            guard let vc = shareController.contentViewController as? ShareViewController else { return }
+            shareController.showWindow(sender)
+            vc.window = shareController
+            vc.note = note
+        } else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                              message: "Couldn't get a Share Window Controller!")
         }
     }
     

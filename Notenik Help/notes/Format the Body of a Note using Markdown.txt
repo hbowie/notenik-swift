@@ -4,14 +4,33 @@ Seq:    12
 
 Tags:   body, html, markdown
 
+Date Added: 2017-05-02 18:08:06
+
 Body:   
  
 [Markdown](http://daringfireball.net/projects/markdown/) is a simple syntax for formatting plain text files so that they can be easily read and written by humans, but also can easily be converted into HTML for use on the Web. If you'd like, you can use the Markdown syntax for formatting the body of each note. But it's not required. 
 
 When you view a Note on the Display tab, you will see the Body Field Value converted to HTML using a Markdown parser. If you haven't used any special Markdown formatting, then the text will simply appear as you entered it. 
 
-In fact, there is an option under the Note menu to generate HTML from the Body of a Note, and to either copy it to your system clipboard, in preparation for pasting the HTML somewhere else, or to store it in a file. You can even specify a preferred HTML folder for each of your Collections, in your Collection Preferences.
+In fact, there is an option under the Note menu to Share the currently selected Note. Clicking on this option wll bring up a small window that will allow you to choose from the following options:
 
-Notenik uses the [Flexmark](https://github.com/vsch/flexmark-java) parser to convert from Markdown to HTML, and includes the Typographic, Tables and Definitions extensions. 
+Content:
+
+* Body Only
+* Entire Note
+
+Format:
+
+* HTML Document (with html, head, title and body tags) 
+* HTML Fragment (without html, head or body tags)
+* Markdown
+* Notenik
+
+Destination:
+
+* Copy to Clipboard (enabling you to paste it wherever)
+* Write to a File (allowing you to specify the output destination)
+
+Notenik uses the [Down](https://github.com/iwasrobbed/Down) rendering engine to convert from Markdown to HTML. 
 
 

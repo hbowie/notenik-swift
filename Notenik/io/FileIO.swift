@@ -380,7 +380,7 @@ class FileIO : NotenikIO {
         guard note.hasFileName() else { return false }
         
         let writer = BigStringWriter()
-        let maker = NoteLineMaker(writer: writer)
+        let maker = NoteLineMaker(writer)
         let fieldsWritten = maker.putNote(note)
         if fieldsWritten == 0 {
             return false
