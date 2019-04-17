@@ -2,16 +2,9 @@ Title:  StatusValueConfigTests
 
 Type:   Class
 
+Tags:   fields.status, swift.class
+
+Date Added: 2019-04-16 10:00:14
+
 Major Group: NotenikTests
-
-Sub Group:   
-
-Tags:   swift.class
-
-Code:
-
-
-
-Body:
-
 

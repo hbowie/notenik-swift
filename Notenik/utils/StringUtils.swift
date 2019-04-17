@@ -205,7 +205,7 @@ class StringUtils {
     }
     
     /// Return the character located at the given position within the passed string
-    static func charAt (index : Int, str: String) -> Character {
+    static func charAt (index: Int, str: String) -> Character {
         let s = str.index(str.startIndex, offsetBy: index)
         return charAt(index: s, str: str)
     }

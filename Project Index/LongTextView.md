@@ -2,16 +2,11 @@ Title:  LongTextView
 
 Type:   Class
 
-Major Group: Notenik
-
-Sub Group:   views
-
 Tags:   swift.class
 
-Code:
+Date Added: 2019-04-16 10:00:14
 
+Major Group: Notenik
 
-
-Body:
-
+Sub Group: views
 

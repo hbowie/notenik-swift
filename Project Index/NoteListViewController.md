@@ -2,16 +2,9 @@ Title:  NoteListViewController
 
 Type:   Class
 
-Major Group: Notenik
-
-Sub Group:   
-
 Tags:   swift.class
 
-Code:
+Date Added: 2019-04-16 10:00:14
 
-
-
-Body:
-
+Major Group: Notenik
 

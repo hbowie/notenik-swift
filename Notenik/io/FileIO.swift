@@ -103,6 +103,11 @@ class FileIO : NotenikIO {
                         templateFound = true
                         collection!.dict.lock()
                         collection!.preferredExt = fileName.extLower
+                        let templateStatusValue = templateNote!.status.value
+                        if templateStatusValue.count > 1 {
+                            let config = collection!.statusConfig
+                            config.set(templateStatusValue)
+                        }
                     }
                 }
                 if infoFound && templateFound {
@@ -552,12 +557,13 @@ class FileIO : NotenikIO {
         }
         
         let notePath = noteToDelete!.fullPath
-        if notePath != nil {
+        let noteURL = noteToDelete!.url
+        if noteURL != nil {
             do {
-                try fileManager.removeItem(atPath: notePath!)
+                try fileManager.trashItem(at: noteURL!, resultingItemURL: nil)
             } catch {
                 Logger.shared.log(skip: true, indent: 0, level: .concerning,
-                                  message: "Could not delete note file at '\(notePath)'")
+                                  message: "Could not delete note file at '\(noteURL!.path)'")
             }
         }
         

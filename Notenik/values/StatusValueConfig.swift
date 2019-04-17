@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/7/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2018 - 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -39,7 +42,7 @@ class StatusValueConfig {
     /// - Parameter options: A string containing a list of digits, each followed by its
     ///                      corresponding label. Punctuation is optional but may be added
     ///                      for readability.
-    func set (_ options : String) {
+    func set (_ options: String) {
         clear()
         var i = -1
         var label = ""
@@ -85,7 +88,7 @@ class StatusValueConfig {
     
     /// Return the corresponding label for the passed index, or an
     /// empty string if the index is invalid.
-    func get (_ i : Int) -> String {
+    func get (_ i: Int) -> String {
         if i < 0 || i > 9 {
             return ""
         } else {
@@ -93,10 +96,53 @@ class StatusValueConfig {
         }
     }
     
+    /// Format a String starting with the status integer, followed by a hyphen,
+    /// followed by the standard label.
+    func getFullString(fromLabel label: String) -> String {
+        let i = get(label)
+        return getFullString(fromIndex: i)
+    }
+    
+    /// Format a String starting with the status integer, followed by a hyphen,
+    /// followed by the standard label. 
+    func getFullString(fromIndex i: Int) -> String {
+        if i >= 0 && i <= 9 {
+            return String(i) + " - " + statusOptions[i]
+        } else {
+            return ""
+        }
+    }
+    
     /// Return the corresponding index for the passed label (or partial label),
     /// or -1 if the label is invalid. 
     func get(_ label : String) -> Int {
+        if label.count > 0 {
+            let firstChar = StringUtils.charAt(index: 0, str: label)
+            var index = 0
+            if StringUtils.isDigit(firstChar) {
+                index = Int(String(firstChar))!
+                let statusOption = statusOptions[index]
+                if statusOption.count > 0 {
+                    return index
+                }
+            }
+        }
         let lower = label.lowercased()
+        var j = 0
+        var looking = true
+        var alphaLabel = ""
+        while j < lower.count {
+            let nextChar = StringUtils.charAt(index: j, str: lower)
+            if StringUtils.isDigit(nextChar) || nextChar == " " || nextChar == "-" {
+                // Keep looking
+            } else {
+                looking = false
+            }
+            if !looking {
+                alphaLabel.append(nextChar)
+            }
+            j += 1
+        }
         var found = false
         var i = 0
         while !found && i <= 9 {

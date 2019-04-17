@@ -3,13 +3,16 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/7/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2018 - 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
 
 /// A representation of an item's status using both a string label and an integer value
-class StatusValue : StringValue {
+class StatusValue: StringValue {
     
     var statusInt = 0
     

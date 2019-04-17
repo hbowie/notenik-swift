@@ -23,6 +23,7 @@ class CollectionWindowController: NSWindowController {
     let shareStoryboard: NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
     
     var newNoteRequested = false
+    var pendingMod = false
     var newNote: Note?
     
     var splitViewController: NoteSplitViewController?
@@ -301,7 +302,7 @@ class CollectionWindowController: NSWindowController {
         let response = alert.runModal()
         if response == .alertFirstButtonReturn {
             let (nextNote, nextPosition) = notenikIO!.deleteSelectedNote()
-            reload()
+            reloadViews()
             if nextNote != nil {
                 select(note: nextNote, position: nextPosition, source: .action)
             }
@@ -309,7 +310,7 @@ class CollectionWindowController: NSWindowController {
     }
     
     /// Reload the Collection Views when data has changed
-    func reload() {
+    func reloadViews() {
         listVC!.reload()
         tagsVC!.reload()
     }
@@ -320,13 +321,11 @@ class CollectionWindowController: NSWindowController {
     
     /// Modify the Note if the user changed anything on the Edit Screen
     func modIfChanged() -> modIfChangedOutcome {
-        
         guard editVC != nil else { return .notReady }
-        
+        guard newNoteRequested || pendingMod else { return .noChange }
         let (outcome, note) = editVC!.modIfChanged(newNoteRequested: newNoteRequested, newNote: newNote)
-        
         if outcome == .add || outcome == .deleteAndAdd {
-            reload()
+            reloadViews()
             select(note: note, position: nil, source: .action)
             noteTabs!.tabView.selectFirstTabViewItem(nil)
         } else if outcome == .modify {
@@ -335,6 +334,7 @@ class CollectionWindowController: NSWindowController {
         }
         if outcome != .tryAgain {
             newNoteRequested = false
+            pendingMod = false
         }
         return outcome
     }
@@ -361,6 +361,8 @@ class CollectionWindowController: NSWindowController {
         guard notenikIO != nil && notenikIO!.collection != nil && notenikIO!.collectionOpen else { return }
         let url = notenikIO!.collection!.collectionFullPathURL
         notenikIO!.closeCollection()
+        newNoteRequested = false
+        pendingMod = false
         let newIO: NotenikIO = FileIO()
         let realm = newIO.getDefaultRealm()
         realm.path = ""

@@ -31,6 +31,16 @@ class Note: Comparable, NSCopying {
         self.collection = collection
     }
     
+    /// Return the full URL pointing to the Note's file
+    var url: URL? {
+        let path = fullPath
+        if path == nil {
+            return nil
+        } else {
+            return URL(fileURLWithPath: path!)
+        }
+    }
+    
     /// Return the full file path for the Note
     var fullPath: String? {
         if hasFileName() {

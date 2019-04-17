@@ -89,7 +89,7 @@ class NoteEditViewController: NSViewController {
             let label = def.fieldLabel
             let labelView = makeLabelView(with: label)
             
-            let editView = ViewFactory.getEditView(def: def)
+            let editView = ViewFactory.getEditView(collection: collection, def: def)
             let valueView = editView.view
             
             editViews.append(editView)
@@ -187,6 +187,7 @@ class NoteEditViewController: NSViewController {
             }
             i += 1
         }
+        collectionWindowController?.pendingMod = true
     }
     
     /// Modify the Note if the user has changed anything
