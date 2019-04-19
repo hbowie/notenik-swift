@@ -47,4 +47,9 @@ class StatusView: CocoaEditView {
             }
         }
     }
+    
+    /// Close the note by selecting the last status value in the list
+    func close() {
+        menu.selectItem(at: (menu.numberOfItems - 1))
+    }
 }

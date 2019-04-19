@@ -207,6 +207,12 @@ CA
                                                 <action selector="saveEdits:" target="Ady-hI-5gd" id="Gia-1T-DT2"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="hO4-zP-9EJ"/>
+                                        <menuItem title="Close Note" keyEquivalent="k" id="EML-WV-90f" userLabel="Close Note">
+                                            <connections>
+                                                <action selector="menuNoteClose:" target="Ady-hI-5gd" id="6iQ-D2-sUO"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="5ZL-zp-Wne"/>
                                         <menuItem title="Go To Next Note" keyEquivalent="]" id="IvG-LL-jYe" userLabel="Go To Next Note">
                                             <connections>

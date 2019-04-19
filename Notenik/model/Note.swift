@@ -102,6 +102,18 @@ class Note: Comparable, NSCopying {
         }
     }
     
+    /// Close the note, either by applying the recurs rule, or changing the status to 9
+    func close() {
+        if hasDate() && hasRecurs() {
+            let dateVal = date
+            let recursVal = recurs
+            let newDate = recursVal.recur(dateVal)
+            dateVal.set(String(describing: newDate))
+        } else if hasStatus()  {
+            status.close(config: collection.statusConfig)
+        }
+    }
+    
     /// Set the Note's Title value
     func setTitle(_ title: String) -> Bool {
         return setField(label: LabelConstants.title, value: title)
@@ -139,6 +151,16 @@ class Note: Comparable, NSCopying {
             return val as! DateValue
         } else {
             return DateValue(val.value)
+        }
+    }
+    
+    /// Return the Note's Recurs Value
+    var recurs: RecursValue {
+        let val = getFieldAsValue(label: LabelConstants.recurs)
+        if val is RecursValue {
+            return val as! RecursValue
+        } else {
+            return RecursValue(val.value)
         }
     }
     
@@ -260,6 +282,21 @@ class Note: Comparable, NSCopying {
     /// Does this note have a non-blank tags field?
     func hasTags() -> Bool {
         return tags.count > 0
+    }
+    
+    /// Does this note have a non-blank date field?
+    func hasDate() -> Bool {
+        return date.count > 0
+    }
+    
+    /// Does this note have a non-blank recurs field?
+    func hasRecurs() -> Bool {
+        return recurs.count > 0
+    }
+    
+    /// Does this note have a non-blank status field?
+    func hasStatus() -> Bool {
+        return status.count > 0
     }
     
     /// Does this note have a non-blank body?

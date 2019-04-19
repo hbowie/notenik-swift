@@ -105,6 +105,10 @@ class DateView: CocoaEditView {
     }
     
     @objc func recurButtonClicked() {
+        applyRecursRule()
+    }
+    
+    func applyRecursRule() {
         guard recursView != nil else { return }
         let recurs = RecursValue(recursView!.text)
         let date = DateValue(text)

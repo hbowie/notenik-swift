@@ -32,8 +32,9 @@ class NoteEditViewController: NSViewController {
     var bodyView:    NSTextView!
     var bodyStorage: NSTextStorage!
     
-    var dateView: DateView?
+    var dateView:   DateView?
     var recursView: CocoaEditView?
+    var statusView: StatusView?
     
     var window: CollectionWindowController? {
         get {
@@ -80,6 +81,7 @@ class NoteEditViewController: NSViewController {
         grid = []
         dateView = nil
         recursView = nil
+        statusView = nil
         
         // Build the label and value views for each field in the dictionary
         for def in defs {
@@ -100,6 +102,8 @@ class NoteEditViewController: NSViewController {
                 dateView = editView as? DateView
             } else if label.commonForm == LabelConstants.recursCommon {
                 recursView = editView
+            } else if label.commonForm == LabelConstants.statusCommon {
+                statusView = editView as? StatusView
             }
         }
         
@@ -179,9 +183,16 @@ class NoteEditViewController: NSViewController {
         collectionWindowController?.pendingMod = true
     }
     
-    /// Modify the Note if the user has changed anything
+    /// Close the note, either by applying the recurs rule, or changing the status to 9
+    func closeNote() {
+        if dateView != nil && recursView != nil && dateView!.text.count > 0 && recursView!.text.count > 0 {
+            dateView!.applyRecursRule()
+        } else if statusView != nil {
+            statusView!.close()
+        }
+    }
     
-    /// <#Description#>
+    /// Modify the Note if the user has changed anything
     ///
     /// - Parameters:
     ///   - newNoteRequested: Are we trying to add a new note, rather than modify an existing one?

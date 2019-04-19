@@ -28,8 +28,14 @@ class StatusValue: StringValue {
         set(str: str, config: config)
     }
     
+    /// Close the Note
+    func close(config: StatusValueConfig) {
+        let closeIndex = config.statusOptions.count - 1
+        set(i: closeIndex, config: config)
+    }
+    
     /// Set the status using an integer and the passed Status Value Config
-    func set (i : Int, config : StatusValueConfig) {
+    func set (i: Int, config: StatusValueConfig) {
         if config.validStatus(i) {
             self.value = config.get(i)
         }

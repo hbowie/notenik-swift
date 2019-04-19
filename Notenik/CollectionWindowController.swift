@@ -139,6 +139,29 @@ class CollectionWindowController: NSWindowController {
         }
     }
     
+    /// Close the note, either by applying the recurs rule, or changing the status to 9
+    @IBAction func menuNoteClose(_ sender: Any) {
+        guard io != nil && io!.collectionOpen else { return }
+        let (note, notePosition) = io!.getSelectedNote()
+        guard note != nil else { return }
+        if (pendingMod || newNoteRequested) && noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
+            editVC!.closeNote()
+        } else {
+            let modNote = note!.copy() as! Note
+            modNote.close()
+            let (nextNote, nextPosition) = io!.deleteSelectedNote()
+            let (addedNote, addedPosition) = io!.addNote(newNote: modNote)
+            if addedNote == nil {
+                Logger.shared.log(skip: true, indent: 0, level: .severe,
+                                  message: "Problems adding note titled \(modNote.title)")
+            } else {
+                noteModified(updatedNote: addedNote!)
+                reloadViews()
+                select(note: note, position: nil, source: .action)
+            }
+        }
+    }
+    
     @IBAction func menuNoteShare(_ sender: Any) {
         guard io != nil && io!.collectionOpen else { return }
         let (note, notePosition) = io!.getSelectedNote()
