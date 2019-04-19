@@ -2,7 +2,7 @@ Title:  The unique title for this note
 
 Date:   2019-04-04
 
-Status: 0 - Idea
+Status: 
 
 Seq:    RevLetterorVersionNumber
 

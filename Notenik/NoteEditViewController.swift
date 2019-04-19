@@ -32,7 +32,8 @@ class NoteEditViewController: NSViewController {
     var bodyView:    NSTextView!
     var bodyStorage: NSTextStorage!
     
-    var vStack = NSStackView()
+    var dateView: DateView?
+    var recursView: CocoaEditView?
     
     var window: CollectionWindowController? {
         get {
@@ -73,15 +74,12 @@ class NoteEditViewController: NSViewController {
         let dict = collection.dict
         let defs = dict.list
         
-        // Create a Vertical Stack View to contain the rows of fields to be edited.
-        vStack = NSStackView()
-        vStack.orientation = .vertical
-        vStack.translatesAutoresizingMaskIntoConstraints = false
-        
         // Let's build a two-dimensional array of views to be displayed in the grid
 
         editViews = []
         grid = []
+        dateView = nil
+        recursView = nil
         
         // Build the label and value views for each field in the dictionary
         for def in defs {
@@ -94,33 +92,24 @@ class NoteEditViewController: NSViewController {
             
             editViews.append(editView)
             
-            // Build a horizontal stack for this field and add it to our vertical stack
-            let hStack = NSStackView()
-            hStack.orientation = .horizontal
-            // hStack.translatesAutoresizingMaskIntoConstraints = false
-            // hStack.alignment = .top
-            hStack.addArrangedSubview(labelView)
-            hStack.addArrangedSubview(editView.view)
-            vStack.addArrangedSubview(hStack)
-            
             // Add the next row to the Grid View
             let row = [labelView, valueView]
             grid.append(row)
+            
+            if label.commonForm == LabelConstants.dateCommon {
+                dateView = editView as? DateView
+            } else if label.commonForm == LabelConstants.recursCommon {
+                recursView = editView
+            }
+        }
+        
+        if dateView != nil && recursView != nil {
+            dateView!.recursView = recursView
         }
         
         makeGridView()
-        // makeStackView()
         
         containerViewBuilt = true
-    }
-    
-    func makeStackView() {
-        print ("Making Stack View")
-        parentView.addSubview(vStack)
-        vStack.leadingAnchor.constraint(equalTo: parentView.leadingAnchor).isActive = true
-        vStack.trailingAnchor.constraint(equalTo: parentView.trailingAnchor).isActive = true
-        vStack.topAnchor.constraint(equalTo: parentView.topAnchor).isActive = true
-        vStack.bottomAnchor.constraint(equalTo: parentView.bottomAnchor).isActive = true
     }
     
     func makeGridView() {
@@ -144,9 +133,9 @@ class NoteEditViewController: NSViewController {
         
         // Pin the grid to the edges of our main view
         gridView!.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 8).isActive = true
-        gridView!.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: 8).isActive = true
+        gridView!.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -8).isActive = true
         gridView!.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 8).isActive = true
-        gridView!.bottomAnchor.constraint(equalTo: parentView.bottomAnchor, constant: 8).isActive = true
+        gridView!.bottomAnchor.constraint(equalTo: parentView.bottomAnchor, constant: -8).isActive = true
     }
     
     func makeLabelView(with label: FieldLabel) -> NSView {

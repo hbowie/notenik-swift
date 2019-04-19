@@ -19,16 +19,16 @@ class StatusValueConfig {
     var doneThreshold = 6 
     
     init() {
-        statusOptions.append("Suggested")        // 0
+        statusOptions.append("Idea")             // 0
         statusOptions.append("Proposed")         // 1
         statusOptions.append("Approved")         // 2
         statusOptions.append("Planned")          // 3
-        statusOptions.append("Published")        // 4
+        statusOptions.append("In Work")          // 4
         statusOptions.append("Held")             // 5
         statusOptions.append("Completed")        // 6
-        statusOptions.append("Canceled")         // 7
-        statusOptions.append("Closed")           // 8
-        statusOptions.append("Deleted")          // 9
+        statusOptions.append("Follow-Up")        // 9
+        statusOptions.append("Canceled")         // 8
+        statusOptions.append("Closed")           // 9
     }
     
     convenience init (_ options : String) {

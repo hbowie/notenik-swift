@@ -15,6 +15,8 @@ class ViewFactory {
             return LongTextView()
         } else if def.fieldType == .status {
             return StatusView(config: collection.statusConfig)
+        } else if def.fieldType == .date {
+            return DateView()
         } else {
             return StringView()
         }

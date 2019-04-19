@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C02D2AE2267D46000587EDF /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
+		9C02D2B02267F29400587EDF /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C02D2AF2267F29400587EDF /* Calendar.storyboard */; };
+		9C02D2B12267F29400587EDF /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C02D2AF2267F29400587EDF /* Calendar.storyboard */; };
+		9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2B22267F41200587EDF /* CalendarWindowController.swift */; };
+		9C02D2B42267F41200587EDF /* CalendarWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2B22267F41200587EDF /* CalendarWindowController.swift */; };
+		9C02D2B62267F5E700587EDF /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2B52267F5E700587EDF /* CalendarViewController.swift */; };
+		9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2B52267F5E700587EDF /* CalendarViewController.swift */; };
 		9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
 		9C055D4F2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
 		9C09E1762248601D0046D50D /* notenik.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 9C09E1752248601D0046D50D /* notenik.iconset */; };
@@ -304,6 +311,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9C02D2AD2267D46000587EDF /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
+		9C02D2AF2267F29400587EDF /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
+		9C02D2B22267F41200587EDF /* CalendarWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWindowController.swift; sourceTree = "<group>"; };
+		9C02D2B52267F5E700587EDF /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTabsViewController.swift; sourceTree = "<group>"; };
 		9C09E1752248601D0046D50D /* notenik.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = notenik.iconset; sourceTree = "<group>"; };
 		9C12D48E22134970003136B2 /* NoteSelectionSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSelectionSource.swift; sourceTree = "<group>"; };
@@ -681,7 +692,11 @@
 		9CD3261E2233063100D06B77 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				9C02D2AF2267F29400587EDF /* Calendar.storyboard */,
+				9C02D2B22267F41200587EDF /* CalendarWindowController.swift */,
+				9C02D2B52267F5E700587EDF /* CalendarViewController.swift */,
 				9CD3261F2233068F00D06B77 /* CocoaEditView.swift */,
+				9C02D2AD2267D46000587EDF /* DateView.swift */,
 				9CED280F224EB39900798621 /* LongTextView.swift */,
 				9C553C602266A0D50008D176 /* StatusView.swift */,
 				9CD32623223308C400D06B77 /* StringView.swift */,
@@ -838,6 +853,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C02D2B02267F29400587EDF /* Calendar.storyboard in Resources */,
 				9C09E1762248601D0046D50D /* notenik.iconset in Resources */,
 				9C21749F22024E2900B4BF48 /* notenik-swift-intro in Resources */,
 				9CF11937225821670015AE91 /* CollectionPrefs.storyboard in Resources */,
@@ -871,6 +887,7 @@
 				9CF11939225821670015AE91 /* CollectionPrefs.storyboard in Resources */,
 				9C2AE524220A34BB00AE8BEE /* Main.storyboard in Resources */,
 				9CE3250B224D58360051CA1F /* Log.storyboard in Resources */,
+				9C02D2B12267F29400587EDF /* Calendar.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -892,6 +909,7 @@
 				9C60E78C21F651E500C332ED /* FieldDictionary.swift in Sources */,
 				9C60E75621F651E500C332ED /* StringValue.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
+				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
 				9C60E75321F651E500C332ED /* Provider.swift in Sources */,
 				9C60E75C21F651E500C332ED /* RecursValue.swift in Sources */,
@@ -952,6 +970,7 @@
 				9C60E79B21F651E500C332ED /* NotePosition.swift in Sources */,
 				9C78888A21FB950900452D74 /* Markedup.swift in Sources */,
 				9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */,
+				9C02D2B62267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9C832A02224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
 				9CB60BC322650A89003B5655 /* ShareWindowController.swift in Sources */,
 				9C60E71821F6518400C332ED /* LogDestination.swift in Sources */,
@@ -959,6 +978,7 @@
 				9C60E77721F651E500C332ED /* StatusValue.swift in Sources */,
 				9C60E70821F650B800C332ED /* FileName.swift in Sources */,
 				9C8329FD224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */,
+				9C02D2AE2267D46000587EDF /* DateView.swift in Sources */,
 				9C60E78F21F651E500C332ED /* Note.swift in Sources */,
 				9C60E77A21F651E500C332ED /* FieldDefinition.swift in Sources */,
 			);
@@ -1067,6 +1087,7 @@
 				9C2AE526220A34C700AE8BEE /* CollectionWindowController.swift in Sources */,
 				9C60E76721F651E500C332ED /* RatingValue.swift in Sources */,
 				9C60E78B21F651E500C332ED /* NoteLineParser.swift in Sources */,
+				9C02D2B42267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C60E78521F651E500C332ED /* LineReader.swift in Sources */,
 				9C60E78821F651E500C332ED /* BigStringReader.swift in Sources */,
 				9C78888C21FB950900452D74 /* Markedup.swift in Sources */,
@@ -1127,6 +1148,7 @@
 				9C21DB8221F82DB600A5A08C /* NoteDisplay.swift in Sources */,
 				9C60E6F021F64B3C00C332ED /* NotenikUITests.swift in Sources */,
 				9C60E7A221F6520100C332ED /* FileIO.swift in Sources */,
+				9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9C60E75821F651E500C332ED /* StringValue.swift in Sources */,
 				9C60E75B21F651E500C332ED /* SeqValue.swift in Sources */,
 				9C60E79721F651E500C332ED /* NoteIDRule.swift in Sources */,

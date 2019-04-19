@@ -20,6 +20,8 @@ class DateValue: StringValue {
     var year1 = ""
     var year2 = ""
     
+    var alphaMonth = false
+    
     /// Default initialization
     override init() {
         super.init()
@@ -31,9 +33,39 @@ class DateValue: StringValue {
         set(value)
     }
     
+    /// Set an initial value with year, month and day integers
+    convenience init (year: Int, month: Int, day: Int) {
+        self.init()
+        yyyy = String(format: "%04d", year)
+        
+        if month > 0 && month <= 12 {
+            mm = String(format: "%02d", month)
+        } else {
+            mm = ""
+        }
+        if day > 0 && day <= 31 {
+            dd = String(format: "%02d", day)
+        } else {
+            dd = ""
+        }
+        set(ymdDate)
+    }
+    
     /// Return an optional Date object based on the user's text input
     var date : Date? {
         return DateUtils.shared.dateFromYMD(ymdDate)
+    }
+    
+    var year: Int? {
+        return Int(yyyy)
+    }
+    
+    var month: Int? {
+        return Int(mm)
+    }
+    
+    var day: Int? {
+        return Int(dd)
     }
     
     /// Return a value that can be used as a key for comparison purposes
@@ -77,6 +109,7 @@ class DateValue: StringValue {
         yyyy = ""
         mm = ""
         dd = ""
+        alphaMonth = false
         
         let parseContext = ParseContext()
         
@@ -194,6 +227,7 @@ class DateValue: StringValue {
                     dd = String(mm)
                 }
                 mm = String(format: "%02d", monthIndex)
+                alphaMonth = true
             }
         }
     }

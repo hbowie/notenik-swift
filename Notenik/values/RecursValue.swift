@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 11/29/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2018 - 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -39,7 +42,7 @@ class RecursValue : StringValue {
     /**
      Increment a date using this recurs rule.
      */
-    func recur(_ strDate : DateValue) -> String {
+    func recur(_ strDate: DateValue) -> String {
         let possibleDate = strDate.date
         var newDate = Date()
         if possibleDate == nil {
@@ -94,7 +97,11 @@ class RecursValue : StringValue {
                     dow = DateUtils.shared.dayOfWeekForDate(newDate)
                 }
             }
-            return DateUtils.shared.ymdFromDate(newDate)
+            if strDate.alphaMonth {
+                return DateUtils.shared.dMyFromDate(newDate)
+            } else {
+                return DateUtils.shared.ymdFromDate(newDate)
+            }
         } // end if we have a real date to increment
     } // end func recur
     

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="dbN-8s-Das">
+            <objects>
+                <windowController storyboardIdentifier="calendarWC" id="W7l-OO-yy8" customClass="CalendarWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Calendar" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="lgq-bl-k7y">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="461" width="480" height="300"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+                        <connections>
+                            <outlet property="delegate" destination="W7l-OO-yy8" id="OCs-af-t20"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="Rfc-za-MGR" kind="relationship" relationship="window.shadowedContentViewController" id="jkg-iD-yZt"/>
+                    </connections>
+                </windowController>
+                <customObject id="gGN-2o-oOL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="91" y="-2"/>
+        </scene>
+        <!--Calendar View Controller-->
+        <scene sceneID="rvo-Db-Wnm">
+            <objects>
+                <viewController id="Rfc-za-MGR" customClass="CalendarViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="Uew-al-QXS">
+                        <rect key="frame" x="0.0" y="0.0" width="363" height="350"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Es-6C-9GQ">
+                                <rect key="frame" x="30" y="302" width="49" height="32"/>
+                                <buttonCell key="cell" type="push" title="&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mNq-ha-Gq7">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="bumpYearDown:" target="Rfc-za-MGR" id="buv-am-Jid"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TT0-qI-FRN">
+                                <rect key="frame" x="283" y="301" width="49" height="32"/>
+                                <buttonCell key="cell" type="push" title="&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ezy-wd-0or">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="bumpYearUp:" target="Rfc-za-MGR" id="QMM-kf-iZq"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vrV-UA-1BD">
+                                <rect key="frame" x="30" y="269" width="49" height="32"/>
+                                <buttonCell key="cell" type="push" title="&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hEX-tM-lHh">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="bumpMonthDown:" target="Rfc-za-MGR" id="ruh-1B-mlV"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bGG-72-f9q">
+                                <rect key="frame" x="283" y="269" width="49" height="32"/>
+                                <buttonCell key="cell" type="push" title="&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4un-HL-0fY">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="bumpMonthUp:" target="Rfc-za-MGR" id="Qh6-dK-0Zj"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1ym-x2-Kh6">
+                                <rect key="frame" x="30" y="236" width="49" height="32"/>
+                                <buttonCell key="cell" type="push" title="&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6bV-XJ-bdC">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="bumpDayDown:" target="Rfc-za-MGR" id="C6v-hj-Wjh"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bi6-v2-pdB">
+                                <rect key="frame" x="81" y="308" width="200" height="23"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="23" id="45N-7C-FFK"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="f7y-is-QU3">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aGs-NA-u6c">
+                                <rect key="frame" x="81" y="277" width="200" height="23"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="Hpv-dQ-DiG">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7VZ-dA-kRo">
+                                <rect key="frame" x="81" y="242" width="200" height="23"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="keS-Ug-xLZ">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VsW-h6-pTL">
+                                <rect key="frame" x="283" y="234" width="49" height="32"/>
+                                <buttonCell key="cell" type="push" title="&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qRq-CS-KcM">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="bumpDayUp:" target="Rfc-za-MGR" id="GBk-f3-6N2"/>
+                                </connections>
+                            </button>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oUv-TO-N7g">
+                                <rect key="frame" x="36" y="61" width="290" height="160"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </customView>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Sl-NY-QfE">
+                                <rect key="frame" x="273" y="13" width="59" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2FH-zP-Uyu">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="okClicked:" target="Rfc-za-MGR" id="M8F-E3-IAy"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pSL-hP-TLY">
+                                <rect key="frame" x="194" y="13" width="77" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Today" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JR3-KZ-Jf4">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="todayClicked:" target="Rfc-za-MGR" id="Ti0-nr-0SJ"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dtM-pg-I5v">
+                                <rect key="frame" x="30" y="13" width="63" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="N/A" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UH0-ke-UIk">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="naClicked:" target="Rfc-za-MGR" id="A0d-tk-kMd"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6BZ-xD-OaD">
+                                <rect key="frame" x="93" y="13" width="76" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Recur" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7Ob-ja-fTa">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="recurClicked:" target="Rfc-za-MGR" id="5U3-KY-YGI"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="bGG-72-f9q" firstAttribute="leading" secondItem="aGs-NA-u6c" secondAttribute="trailing" constant="8" symbolic="YES" id="02v-C0-o2h"/>
+                            <constraint firstItem="VsW-h6-pTL" firstAttribute="baseline" secondItem="1ym-x2-Kh6" secondAttribute="firstBaseline" id="5kD-m9-lA2"/>
+                            <constraint firstItem="7Es-6C-9GQ" firstAttribute="top" secondItem="Uew-al-QXS" secondAttribute="top" constant="20" symbolic="YES" id="71p-ng-0OA"/>
+                            <constraint firstItem="1ym-x2-Kh6" firstAttribute="top" secondItem="7VZ-dA-kRo" secondAttribute="top" id="7N7-Jp-HEk"/>
+                            <constraint firstItem="7Es-6C-9GQ" firstAttribute="leading" secondItem="vrV-UA-1BD" secondAttribute="leading" id="9eo-9H-giY"/>
+                            <constraint firstItem="TT0-qI-FRN" firstAttribute="top" secondItem="Uew-al-QXS" secondAttribute="top" constant="24" id="Atp-0I-l0R"/>
+                            <constraint firstItem="vrV-UA-1BD" firstAttribute="top" secondItem="7Es-6C-9GQ" secondAttribute="bottom" constant="12" symbolic="YES" id="BPj-sA-SIE"/>
+                            <constraint firstItem="aGs-NA-u6c" firstAttribute="top" secondItem="bi6-v2-pdB" secondAttribute="bottom" constant="8" id="DzR-f1-2EV"/>
+                            <constraint firstAttribute="trailing" secondItem="TT0-qI-FRN" secondAttribute="trailing" constant="37" id="ECW-vT-Oli"/>
+                            <constraint firstItem="1ym-x2-Kh6" firstAttribute="top" secondItem="vrV-UA-1BD" secondAttribute="bottom" constant="12" symbolic="YES" id="Hc2-hk-chR"/>
+                            <constraint firstItem="bGG-72-f9q" firstAttribute="leading" secondItem="VsW-h6-pTL" secondAttribute="leading" id="JVo-mp-gu3"/>
+                            <constraint firstItem="aGs-NA-u6c" firstAttribute="leading" secondItem="7VZ-dA-kRo" secondAttribute="leading" id="Lgc-hG-0m1"/>
+                            <constraint firstItem="aGs-NA-u6c" firstAttribute="baseline" secondItem="bGG-72-f9q" secondAttribute="baseline" id="NKm-w7-fJI"/>
+                            <constraint firstItem="bi6-v2-pdB" firstAttribute="leading" secondItem="aGs-NA-u6c" secondAttribute="leading" id="YVR-OH-hKC"/>
+                            <constraint firstItem="vrV-UA-1BD" firstAttribute="baseline" secondItem="aGs-NA-u6c" secondAttribute="baseline" id="ZEc-XD-WG8"/>
+                            <constraint firstItem="bGG-72-f9q" firstAttribute="top" secondItem="TT0-qI-FRN" secondAttribute="bottom" constant="8" id="bF5-a8-WGl"/>
+                            <constraint firstItem="bi6-v2-pdB" firstAttribute="leading" secondItem="7Es-6C-9GQ" secondAttribute="trailing" constant="8" symbolic="YES" id="cYX-UT-y30"/>
+                            <constraint firstItem="1ym-x2-Kh6" firstAttribute="baseline" secondItem="VsW-h6-pTL" secondAttribute="baseline" id="dfA-HB-aal"/>
+                            <constraint firstItem="vrV-UA-1BD" firstAttribute="leading" secondItem="1ym-x2-Kh6" secondAttribute="leading" id="gei-aO-bRh"/>
+                            <constraint firstItem="VsW-h6-pTL" firstAttribute="leading" secondItem="7VZ-dA-kRo" secondAttribute="trailing" constant="8" symbolic="YES" id="juA-pu-H7b"/>
+                            <constraint firstItem="7Es-6C-9GQ" firstAttribute="leading" secondItem="Uew-al-QXS" secondAttribute="leading" constant="36" id="kkV-6H-jad"/>
+                            <constraint firstItem="7Es-6C-9GQ" firstAttribute="top" secondItem="bi6-v2-pdB" secondAttribute="top" id="kye-BZ-leP"/>
+                            <constraint firstItem="TT0-qI-FRN" firstAttribute="leading" secondItem="bGG-72-f9q" secondAttribute="leading" id="lgL-X6-0iz"/>
+                            <constraint firstItem="TT0-qI-FRN" firstAttribute="leading" secondItem="bi6-v2-pdB" secondAttribute="trailing" constant="8" symbolic="YES" id="rfP-Tl-f0s"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="dayTextField" destination="7VZ-dA-kRo" id="PEe-Ub-QHT"/>
+                        <outlet property="gridParent" destination="oUv-TO-N7g" id="adV-lH-8No"/>
+                        <outlet property="monthTextField" destination="aGs-NA-u6c" id="TIy-Dh-Dih"/>
+                        <outlet property="year" destination="bi6-v2-pdB" id="htj-Z4-ZLU"/>
+                        <outlet property="yearTextField" destination="bi6-v2-pdB" id="Pxb-7b-fXh"/>
+                    </connections>
+                </viewController>
+                <customObject id="dz1-Ef-3Aq" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="39.5" y="523"/>
+        </scene>
+    </scenes>
+</document>
