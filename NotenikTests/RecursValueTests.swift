@@ -26,6 +26,10 @@ class RecursValueTests: XCTestCase {
         XCTAssertTrue(date2.mm == "12")
         XCTAssertTrue(date2.yyyy == "2018")
         XCTAssertTrue(date2.dd == "11")
+        let date3 = DateValue("23 Apr 2019")
+        let recurs2 = RecursValue("the 20th of every month")
+        let date4 = recurs2.recur(date3)
+        XCTAssertEqual(date4, "20 May 2019")
     }
 
     func testPerformanceExample() {

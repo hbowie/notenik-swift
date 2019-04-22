@@ -67,12 +67,26 @@ protocol NotenikIO {
         get
     }
     
+    /// Register modifications to the old note to make the new note.
+    ///
+    /// - Parameters:
+    ///   - oldNote: The old version of the note.
+    ///   - newNote: The new version of the note.
+    /// - Returns: <#return value description#>
+    func modNote(oldNote: Note, newNote: Note) -> (Note?, NotePosition)
+    
     /// Add a new Note to the Collection
     ///
     /// - Parameter newNote: The Note to be added
     /// - Returns: The added Note and its position, if added successfully;
     ///            otherwise nil and -1.
     func addNote(newNote: Note) -> (Note?, NotePosition)
+    
+    /// Delete the given note
+    ///
+    /// - Parameter oldNote: The note to be deleted.
+    /// - Returns: True if delete was successful, false otherwise.
+    func deleteNote(_ oldNote: Note) -> Bool
     
     /// Write a note to its data store within its collection.
     ///

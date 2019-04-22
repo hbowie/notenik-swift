@@ -230,13 +230,10 @@
 		9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */; };
 		9CD0718F22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */; };
 		9CD326202233068F00D06B77 /* CocoaEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* CocoaEditView.swift */; };
-		9CD326212233068F00D06B77 /* CocoaEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* CocoaEditView.swift */; };
 		9CD326222233068F00D06B77 /* CocoaEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* CocoaEditView.swift */; };
 		9CD32624223308C400D06B77 /* StringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD32623223308C400D06B77 /* StringView.swift */; };
-		9CD32625223308C400D06B77 /* StringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD32623223308C400D06B77 /* StringView.swift */; };
 		9CD32626223308C400D06B77 /* StringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD32623223308C400D06B77 /* StringView.swift */; };
 		9CD3262822330C8A00D06B77 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3262722330C8A00D06B77 /* ViewFactory.swift */; };
-		9CD3262922330C8A00D06B77 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3262722330C8A00D06B77 /* ViewFactory.swift */; };
 		9CD3262A22330C8A00D06B77 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3262722330C8A00D06B77 /* ViewFactory.swift */; };
 		9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD756D82210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
@@ -261,7 +258,6 @@
 		9CE32511224D5E180051CA1F /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
 		9CED2810224EB39900798621 /* LongTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED280F224EB39900798621 /* LongTextView.swift */; };
 		9CED2811224EB39900798621 /* LongTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED280F224EB39900798621 /* LongTextView.swift */; };
-		9CED2812224EB8F200798621 /* LongTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED280F224EB39900798621 /* LongTextView.swift */; };
 		9CF1192E2257FDD50015AE91 /* ModWhenChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF1192D2257FDD50015AE91 /* ModWhenChanged.swift */; };
 		9CF119302257FDD50015AE91 /* ModWhenChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF1192D2257FDD50015AE91 /* ModWhenChanged.swift */; };
 		9CF11932225802AA0015AE91 /* ModView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF11931225802AA0015AE91 /* ModView.swift */; };
@@ -278,6 +274,10 @@
 		9CF256CD21FD175E00D9F06A /* CollectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF256CC21FD175E00D9F06A /* CollectionWindowController.swift */; };
 		9CF96EE0225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */; };
 		9CF96EE1225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */; };
+		9CFCB047226BC7FF00443FFA /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
+		9CFCB049226BCE1700443FFA /* SimpleDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB048226BCE1700443FFA /* SimpleDate.swift */; };
+		9CFCB04A226BCE1700443FFA /* SimpleDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB048226BCE1700443FFA /* SimpleDate.swift */; };
+		9CFCB04B226BE71500443FFA /* SimpleDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB048226BCE1700443FFA /* SimpleDate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -438,6 +438,7 @@
 		9CF256CA21FD0FF000D9F06A /* CollectionJuggler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionJuggler.swift; sourceTree = "<group>"; };
 		9CF256CC21FD175E00D9F06A /* CollectionWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindowController.swift; sourceTree = "<group>"; };
 		9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPrefsOwner.swift; sourceTree = "<group>"; };
+		9CFCB048226BCE1700443FFA /* SimpleDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleDate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -588,6 +589,7 @@
 				9C60E70121F650B800C332ED /* FileUtils.swift */,
 				9C78888921FB950900452D74 /* Markedup.swift */,
 				9C78888521FB826100452D74 /* MarkedupFormat.swift */,
+				9CFCB048226BCE1700443FFA /* SimpleDate.swift */,
 				9C60E6FE21F650B800C332ED /* StringUtils.swift */,
 			);
 			path = utils;
@@ -935,6 +937,7 @@
 				9C21DB8021F82D9800A5A08C /* NoteDisplay.swift in Sources */,
 				9C2AE512220A030800AE8BEE /* TagsTree.swift in Sources */,
 				9CD326202233068F00D06B77 /* CocoaEditView.swift in Sources */,
+				9CFCB049226BCE1700443FFA /* SimpleDate.swift in Sources */,
 				9CE3250D224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
 				9CF96EE0225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */,
 				9C60E76B21F651E500C332ED /* StatusValueConfig.swift in Sources */,
@@ -1010,14 +1013,12 @@
 				9C60E79921F651E500C332ED /* FieldType.swift in Sources */,
 				9C60E7C921F6525F00C332ED /* RecursValueTests.swift in Sources */,
 				9C60E7C821F6525F00C332ED /* StringValueTests.swift in Sources */,
-				9CD3262922330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9C60E77B21F651E500C332ED /* FieldDefinition.swift in Sources */,
 				9C60E71321F6518400C332ED /* Logger.swift in Sources */,
 				9C60E78121F651E500C332ED /* NoteType.swift in Sources */,
 				9C60E7BD21F6525F00C332ED /* DateUtilsTests.swift in Sources */,
 				9C60E74221F651E500C332ED /* NoteField.swift in Sources */,
 				9C2AE515220A033300AE8BEE /* TagsNode.swift in Sources */,
-				9CED2812224EB8F200798621 /* LongTextView.swift in Sources */,
 				9C60E75421F651E500C332ED /* Provider.swift in Sources */,
 				9C60E70621F650B800C332ED /* DateUtils.swift in Sources */,
 				9C60E7C321F6525F00C332ED /* LineParserTests.swift in Sources */,
@@ -1032,7 +1033,6 @@
 				9C2AE517220A033C00AE8BEE /* TagsTree.swift in Sources */,
 				9C60E71921F6518400C332ED /* LogDestination.swift in Sources */,
 				9C78888B21FB950900452D74 /* Markedup.swift in Sources */,
-				9CD326212233068F00D06B77 /* CocoaEditView.swift in Sources */,
 				9C60E7B821F6525F00C332ED /* BigStringReaderTests.swift in Sources */,
 				9C8329FE224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */,
 				9C60E70921F650B800C332ED /* FileName.swift in Sources */,
@@ -1040,6 +1040,7 @@
 				9C0B25E5224D6548003AAF21 /* LogWindowController.swift in Sources */,
 				9C60E7B921F6525F00C332ED /* LinkValueTests.swift in Sources */,
 				9C60E78D21F651E500C332ED /* FieldDictionary.swift in Sources */,
+				9CFCB04A226BCE1700443FFA /* SimpleDate.swift in Sources */,
 				9C60E71621F6518400C332ED /* LogLevel.swift in Sources */,
 				9C60E79021F651E500C332ED /* Note.swift in Sources */,
 				9C12D49022134970003136B2 /* NoteSelectionSource.swift in Sources */,
@@ -1064,7 +1065,6 @@
 				9C60E77521F651E500C332ED /* TagsValue.swift in Sources */,
 				9C60E74821F651E500C332ED /* ProviderType.swift in Sources */,
 				9C60E7C221F6525F00C332ED /* SeqValueTests.swift in Sources */,
-				9CD32625223308C400D06B77 /* StringView.swift in Sources */,
 				9C60E7C521F6525F00C332ED /* StringUtilsTests.swift in Sources */,
 				9C60E7BF21F6525F00C332ED /* StatusValueConfigTests.swift in Sources */,
 				9C60E70C21F650B800C332ED /* FileUtils.swift in Sources */,
@@ -1106,6 +1106,7 @@
 				9C60E78221F651E500C332ED /* NoteType.swift in Sources */,
 				9C2AE527220A34CC00AE8BEE /* NoteListViewController.swift in Sources */,
 				9C832A04224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
+				9CFCB047226BC7FF00443FFA /* DateView.swift in Sources */,
 				9C60E74321F651E500C332ED /* NoteField.swift in Sources */,
 				9C2AE528220A34D100AE8BEE /* NoteTagsViewController.swift in Sources */,
 				9C60E75521F651E500C332ED /* Provider.swift in Sources */,
@@ -1135,6 +1136,7 @@
 				9C60E79121F651E500C332ED /* Note.swift in Sources */,
 				9C553C622266A0D50008D176 /* StatusView.swift in Sources */,
 				9C2AE51C220A044800AE8BEE /* TagsNodeType.swift in Sources */,
+				9CFCB04B226BE71500443FFA /* SimpleDate.swift in Sources */,
 				9C60E76421F651E500C332ED /* DateValue.swift in Sources */,
 				9C60E76A21F651E500C332ED /* AuthorValue.swift in Sources */,
 				9C60E77021F651E500C332ED /* LongTextValue.swift in Sources */,

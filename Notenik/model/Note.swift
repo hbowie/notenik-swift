@@ -105,12 +105,19 @@ class Note: Comparable, NSCopying {
     /// Close the note, either by applying the recurs rule, or changing the status to 9
     func close() {
         if hasDate() && hasRecurs() {
+            recur()
+        } else if hasStatus()  {
+            status.close(config: collection.statusConfig)
+        }
+    }
+    
+    /// Apply the recurs rule to the note
+    func recur() {
+        if hasDate() && hasRecurs() {
             let dateVal = date
             let recursVal = recurs
             let newDate = recursVal.recur(dateVal)
             dateVal.set(String(describing: newDate))
-        } else if hasStatus()  {
-            status.close(config: collection.statusConfig)
         }
     }
     
@@ -127,6 +134,11 @@ class Note: Comparable, NSCopying {
     /// Set the Note's Tags value
     func setTags(_ tags: String) -> Bool {
         return setField(label: LabelConstants.tags, value: tags)
+    }
+    
+    /// Set the Note's Status value
+    func setStatus(_ status: String) -> Bool {
+        return setField(label: LabelConstants.status, value: status)
     }
     
     /// Set the Note's Body value
@@ -152,6 +164,12 @@ class Note: Comparable, NSCopying {
         } else {
             return DateValue(val.value)
         }
+    }
+    
+    /// Does this note recur on a daily basis?
+    var daily: Bool {
+        guard let recursVal = getFieldAsValue(label: LabelConstants.recurs) as? RecursValue else { return false }
+        return recursVal.daily
     }
     
     /// Return the Note's Recurs Value
@@ -193,6 +211,13 @@ class Note: Comparable, NSCopying {
         } else {
             return SeqValue(val.value)
         }
+    }
+    
+    /// Is the user done with this item? 
+    var isDone: Bool {
+        let val = getFieldAsValue(label: LabelConstants.status)
+        guard let status = val as? StatusValue else { return false }
+        return status.isDone(config: collection.statusConfig)
     }
     
     /// Return the Note's Status Value

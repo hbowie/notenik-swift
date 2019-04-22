@@ -20,8 +20,8 @@ class StatusValueConfigTests: XCTestCase {
 
     func testStatusValueConfig() {
         let config1 = StatusValueConfig()
-        XCTAssertTrue(config1.get(4) == "Published")
-        XCTAssertTrue(config1.get("ca") == 7)
+        XCTAssertTrue(config1.get(4) == "In Work")
+        XCTAssertTrue(config1.get("ca") == 8)
         let options = ("0 = Idea, 1 = Proposed, 2 = Approved, 3 = Planned, 4 = In Work, "
             + "5 = Hold, 6 = Done, 7 = Canceled, 8 = Closed, 9 = Archived")
         let config2 = StatusValueConfig(options)

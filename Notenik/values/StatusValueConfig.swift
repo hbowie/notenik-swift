@@ -26,7 +26,7 @@ class StatusValueConfig {
         statusOptions.append("In Work")          // 4
         statusOptions.append("Held")             // 5
         statusOptions.append("Completed")        // 6
-        statusOptions.append("Follow-Up")        // 9
+        statusOptions.append("Follow-Up")        // 7
         statusOptions.append("Canceled")         // 8
         statusOptions.append("Closed")           // 9
     }

@@ -350,6 +350,18 @@ class FileIO : NotenikIO {
         infoFound = false
     }
     
+    /// Register modifications to the old note to make the new note.
+    ///
+    /// - Parameters:
+    ///   - oldNote: The old version of the note.
+    ///   - newNote: The new version of the note.
+    /// - Returns: <#return value description#>
+    func modNote(oldNote: Note, newNote: Note) -> (Note?, NotePosition) {
+        var modOK = deleteNote(oldNote)
+        guard modOK else { return (nil, NotePosition(index: -1)) }
+        return addNote(newNote: newNote)
+    }
+    
     /// Add a new Note to the Collection
     ///
     /// - Parameter newNote: The Note to be added
@@ -372,6 +384,35 @@ class FileIO : NotenikIO {
             let (_, position) = bunch.selectNote(newNote)
             return (newNote, position)
         }
+    }
+    
+    /// Delete the given note
+    ///
+    /// - Parameter noteToDelete: The note to be deleted.
+    /// - Returns: True if delete was successful, false otherwise.
+    func deleteNote(_ noteToDelete: Note) -> Bool {
+
+        var deleted = false
+        
+        guard collection != nil && collectionOpen else { return false }
+        
+        deleted = bunch.delete(note: noteToDelete)
+        
+        guard deleted else { return false }
+
+        let notePath = noteToDelete.fullPath
+        let noteURL = noteToDelete.url
+        if noteURL != nil {
+            do {
+                try fileManager.trashItem(at: noteURL!, resultingItemURL: nil)
+            } catch {
+                Logger.shared.log(skip: true, indent: 0, level: .concerning,
+                                  message: "Could not delete note file at '\(noteURL!.path)'")
+                deleted = false
+            }
+        }
+        
+        return deleted
     }
     
     /// Write a note to disk within its collection.

@@ -68,7 +68,7 @@ class DateUtils {
         yyyyFormatter = DateFormatter()
         yyyyFormatter.dateFormat = "yyyy"
         mmFormatter = DateFormatter()
-        mmFormatter.dateFormat = "mm"
+        mmFormatter.dateFormat = "MM"
         ddFormatter = DateFormatter()
         ddFormatter.dateFormat = "dd"
         gregCalendar = Calendar(identifier: .gregorian)
@@ -110,6 +110,15 @@ class DateUtils {
         // Create date from components
         let userCalendar = Calendar.current
         return userCalendar.date(from: dateComponents)
+    }
+    
+    func dayOfWeekForYMD(year: Int, month: Int, day: Int) -> Int {
+        let date = dateFromYMD(year: year, month: month, day: day)
+        if date == nil {
+            return 0
+        } else {
+            return dayOfWeekForDate(date!)
+        }
     }
     
     /// Return the day of week for a date, where 1 is Sunday, 2 is Monday, etc.

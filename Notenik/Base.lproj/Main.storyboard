@@ -143,6 +143,11 @@
                                                 <action selector="menuCollectionPreferences:" target="Ady-hI-5gd" id="LL2-DD-SPe"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Catch Up Daily Tasks" keyEquivalent="u" id="3Ch-CE-cpI" userLabel="Catch Up Daily Tasks">
+                                            <connections>
+                                                <action selector="menuCatchUpDailyTasks:" target="Ady-hI-5gd" id="ifG-WZ-FUI"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -926,6 +931,18 @@ CA
                                         <action selector="reloadDisplayView:" target="B8D-0N-5wS" id="5rY-nl-5Uz"/>
                                     </connections>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="0B5C72E8-6D42-4C35-B8E2-DF9C58E7FC87" label="Custom View" paletteLabel="Custom View" sizingBehavior="auto" id="kQO-NK-gn9">
+                                    <nil key="toolTip"/>
+                                    <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="7V6-9K-EEY">
+                                        <rect key="frame" x="0.0" y="14" width="96" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="1UG-wK-0Qy">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </searchFieldCell>
+                                    </searchField>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="nQC-YT-8yD"/>
@@ -938,6 +955,7 @@ CA
                                 <toolbarItem reference="kwJ-9j-ppu"/>
                                 <toolbarItem reference="Ico-l8-QuA"/>
                                 <toolbarItem reference="z6q-Rn-8x2"/>
+                                <toolbarItem reference="kQO-NK-gn9"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>

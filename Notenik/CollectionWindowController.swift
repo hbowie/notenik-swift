@@ -139,6 +139,35 @@ class CollectionWindowController: NSWindowController {
         }
     }
     
+    /// If we have past due daily tasks, then update the dates to make them current
+    @IBAction func menuCatchUpDailyTasks(_ sender: Any) {
+        
+        guard io != nil && io!.collectionOpen else { return }
+        
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        
+        let today = DateValue("today")
+        var notesToUpdate: [Note] = []
+        var (note, position) = io!.firstNote()
+        while note != nil {
+            if note!.hasDate() && note!.hasRecurs() && !note!.isDone && note!.daily && note!.date < today {
+                notesToUpdate.append(note!)
+            }
+            (note, position) = io!.nextNote(position)
+        }
+        for noteToUpdate in notesToUpdate {
+            let modNote = noteToUpdate.copy() as! Note
+            while modNote.date < today {
+                modNote.recur()
+            }
+            io!.modNote(oldNote: noteToUpdate, newNote: modNote)
+        }
+        reloadViews()
+        (note, position) = io!.firstNote()
+        select(note: note, position: position, source: .nav)
+    }
+    
     /// Close the note, either by applying the recurs rule, or changing the status to 9
     @IBAction func menuNoteClose(_ sender: Any) {
         guard io != nil && io!.collectionOpen else { return }
@@ -157,7 +186,7 @@ class CollectionWindowController: NSWindowController {
             } else {
                 noteModified(updatedNote: addedNote!)
                 reloadViews()
-                select(note: note, position: nil, source: .action)
+                select(note: addedNote, position: nil, source: .action)
             }
         }
     }
@@ -290,7 +319,7 @@ class CollectionWindowController: NSWindowController {
         newNoteRequested = true
         newNote = Note(collection: notenikIO!.collection!)
         editVC!.populateFields(with: newNote!)
-        noteTabs!.tabView.selectLastTabViewItem(sender)
+        noteTabs!.tabView.selectTabViewItem(at: 1)
     }
     
     /// Duplicate the Selected Note

@@ -39,68 +39,60 @@ class RecursValue : StringValue {
         set(value)
     }
     
+    /// Recurs every day?
+    var daily: Bool {
+        return unit == unitDays && interval == 1
+    }
+    
     /**
      Increment a date using this recurs rule.
      */
     func recur(_ strDate: DateValue) -> String {
         let possibleDate = strDate.date
-        var newDate = Date()
+        var newDate = SimpleDate(dateValue: strDate)
         if possibleDate == nil {
             return String(describing: strDate)
         } else {
-            let date = possibleDate!
             var bumped = false
-            var dateComponent = DateComponents()
-            var oneDay = DateComponents()
-            oneDay.day = 1
             switch unit {
             case unitDays:
-                dateComponent.day = interval
-                newDate = Calendar.current.date(byAdding: dateComponent, to: date)!
+                newDate.addDays(interval)
                 bumped = true
                 if weekdays {
-                    var dow = DateUtils.shared.dayOfWeekForDate(newDate)
-                    while dow == DateUtils.saturday || dow == DateUtils.sunday {
-                        newDate = Calendar.current.date(byAdding: oneDay, to: newDate)!
-                        dow = DateUtils.shared.dayOfWeekForDate(newDate)
+                    while newDate.weekend {
+                        newDate.addDays(1)
                     }
                 }
             case unitWeeks:
-                dateComponent.day = interval * 7
-                newDate = Calendar.current.date(byAdding: dateComponent, to: date)!
+                newDate.addDays(interval * 7)
                 bumped = true
             case unitMonths:
-                dateComponent.month = interval
-                newDate = Calendar.current.date(byAdding: dateComponent, to: date)!
+                newDate.addMonths(interval)
                 bumped = true
             case unitQuarters:
-                dateComponent.month = interval * 3
-                newDate = Calendar.current.date(byAdding: dateComponent, to: date)!
+                newDate.addMonths(interval * 3)
                 bumped = true
             case unitYears:
-                dateComponent.year = interval
-                newDate = Calendar.current.date(byAdding: dateComponent, to: date)!
+                newDate.addYears(interval)
                 bumped = true
             default:
                 break
             }
             if !(bumped) {
-                newDate = Calendar.current.date(byAdding: oneDay, to: date)!
+                newDate.addDays(1)
             }
             if dayOfMonth > 0 {
-                newDate = Calendar.current.date(bySetting: .day, value: dayOfMonth, of: newDate)!
+                newDate.setDayOfMonth(dayOfMonth)
             }
             if dayOfWeek > 0 {
-                var dow = DateUtils.shared.dayOfWeekForDate(newDate)
-                while dow != dayOfWeek {
-                    newDate = Calendar.current.date(byAdding: oneDay, to: newDate)!
-                    dow = DateUtils.shared.dayOfWeekForDate(newDate)
+                while newDate.dayOfWeek != dayOfWeek {
+                    newDate.addDays(1)
                 }
             }
             if strDate.alphaMonth {
-                return DateUtils.shared.dMyFromDate(newDate)
+                return DateUtils.shared.dMyFromDate(newDate.date!)
             } else {
-                return DateUtils.shared.ymdFromDate(newDate)
+                return DateUtils.shared.ymdFromDate(newDate.date!)
             }
         } // end if we have a real date to increment
     } // end func recur

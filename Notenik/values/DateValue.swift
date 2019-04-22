@@ -3,7 +3,10 @@
 //  notenik
 //
 //  Created by Herb Bowie on 11/26/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2018-2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -66,6 +69,16 @@ class DateValue: StringValue {
     
     var day: Int? {
         return Int(dd)
+    }
+    
+    /// See if two of these objects have equal keys
+    static func == (lhs: DateValue, rhs: DateValue) -> Bool {
+        return lhs.ymdDate == rhs.ymdDate
+    }
+    
+    /// See which of these objects should come before the other in a sorted list
+    static func < (lhs: DateValue, rhs: DateValue) -> Bool {
+        return lhs.ymdDate < rhs.ymdDate
     }
     
     /// Return a value that can be used as a key for comparison purposes
