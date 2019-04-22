@@ -85,26 +85,7 @@ class NoteEditViewController: NSViewController {
         
         // Build the label and value views for each field in the dictionary
         for def in defs {
-            
-            let label = def.fieldLabel
-            let labelView = makeLabelView(with: label)
-            
-            let editView = ViewFactory.getEditView(collection: collection, def: def)
-            let valueView = editView.view
-            
-            editViews.append(editView)
-            
-            // Add the next row to the Grid View
-            let row = [labelView, valueView]
-            grid.append(row)
-            
-            if label.commonForm == LabelConstants.dateCommon {
-                dateView = editView as? DateView
-            } else if label.commonForm == LabelConstants.recursCommon {
-                recursView = editView
-            } else if label.commonForm == LabelConstants.statusCommon {
-                statusView = editView as? StatusView
-            }
+            makeEditRow(collection: collection, def: def)
         }
         
         if dateView != nil && recursView != nil {
@@ -114,6 +95,28 @@ class NoteEditViewController: NSViewController {
         makeGridView()
         
         containerViewBuilt = true
+    }
+    
+    func makeEditRow(collection: NoteCollection, def: FieldDefinition) {
+        let label = def.fieldLabel
+        let labelView = makeLabelView(with: label)
+        
+        let editView = ViewFactory.getEditView(collection: collection, def: def)
+        let valueView = editView.view
+        
+        editViews.append(editView)
+        
+        // Add the next row to the Grid View
+        let row = [labelView, valueView]
+        grid.append(row)
+        
+        if label.commonForm == LabelConstants.dateCommon {
+            dateView = editView as? DateView
+        } else if label.commonForm == LabelConstants.recursCommon {
+            recursView = editView
+        } else if label.commonForm == LabelConstants.statusCommon {
+            statusView = editView as? StatusView
+        }
     }
     
     func makeGridView() {

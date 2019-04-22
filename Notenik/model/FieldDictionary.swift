@@ -13,6 +13,7 @@ class FieldDictionary {
     
     var dict = [:] as [String: FieldDefinition]
     var list: [FieldDefinition] = []
+    var insertPositionFromEnd = 1
     var locked = false
     
     /// Default initializer
@@ -121,16 +122,26 @@ class FieldDictionary {
             return nil
         } else {
             dict [common] = def
-            if common == "title" {
+            if common == LabelConstants.titleCommon {
                 if list.isEmpty {
                     list.append(def)
                 } else {
                     list.insert(def, at: 0)
                 }
-            } else if (list.count > 0 && list[list.count - 1].fieldLabel.commonForm == "body") {
-                list.insert(def, at: list.count - 1)
-            } else {
+            } else if common == LabelConstants.bodyCommon {
+                if insertPositionFromEnd <= 1 {
+                    list.append(def)
+                } else {
+                    list.insert(def, at: list.count - insertPositionFromEnd)
+                }
+                insertPositionFromEnd += 1
+            } else if common == LabelConstants.dateAddedCommon {
                 list.append(def)
+                insertPositionFromEnd += 1
+            } else if insertPositionFromEnd <= 1 {
+                list.append(def)
+            } else {
+                list.insert(def, at: list.count - insertPositionFromEnd)
             }
             return def
         }

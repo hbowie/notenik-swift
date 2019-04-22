@@ -17,6 +17,8 @@ class ViewFactory {
             return StatusView(config: collection.statusConfig)
         } else if def.fieldType == .date {
             return DateView()
+        } else if def.fieldType == .label  || def.fieldType == .dateAdded {
+            return LabelView()
         } else {
             return StringView()
         }

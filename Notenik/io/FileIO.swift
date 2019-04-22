@@ -434,6 +434,8 @@ class FileIO : NotenikIO {
             let stringToSave = NSString(string: writer.bigString)
             do {
                 try stringToSave.write(toFile: note.fullPath!, atomically: true, encoding: String.Encoding.utf8.rawValue)
+                let noteURL = URL(fileURLWithPath: note.fullPath!)
+                updateEnvDates(note: note, noteURL: noteURL)
             } catch {
                 Logger.shared.log(skip: false,
                                   indent: 0,
@@ -464,11 +466,39 @@ class FileIO : NotenikIO {
                     _ = note.setTitle(fileNameUtil.base) 
                 }
             }
+            updateEnvDates(note: note, noteURL: noteURL)
             return note
         } catch {
             Logger.shared.log(skip: false, indent: 1, level: .severe,
                               message: "Error reading Note from \(noteURL)")
             return nil
+        }
+    }
+    
+    /// Update the Note with the latest creation and modification dates from our storage environment
+    func updateEnvDates(note: Note, noteURL: URL) {
+        do {
+            let attributes = try fileManager.attributesOfItem(atPath: noteURL.path)
+            let creationDate = attributes[FileAttributeKey.creationDate]
+            let lastModDate = attributes[FileAttributeKey.modificationDate]
+            if creationDate != nil {
+                let creationDateStr = String(describing: creationDate!)
+                note.envCreateDate = creationDateStr
+            } else {
+                Logger.shared.log(skip: false, indent: 0, level: .concerning,
+                                  message: "Inscrutable creation date for note at \(noteURL.path)")
+            }
+            if (lastModDate != nil) {
+                let lastModDateStr = String(describing: lastModDate!)
+                note.envModDate = lastModDateStr
+            } else {
+                Logger.shared.log(skip: false, indent: 0, level: .concerning,
+                                  message: "Inscrutable modification date for note at \(noteURL.path)")
+            }
+        }
+        catch let error as NSError {
+            Logger.shared.log(skip: false, indent: 0, level: .concerning,
+                              message: "Unable to obtain file attributes for for note at \(noteURL.path)")
         }
     }
     

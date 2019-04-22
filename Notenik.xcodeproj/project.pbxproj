@@ -207,6 +207,8 @@
 		9C78888A21FB950900452D74 /* Markedup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78888921FB950900452D74 /* Markedup.swift */; };
 		9C78888B21FB950900452D74 /* Markedup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78888921FB950900452D74 /* Markedup.swift */; };
 		9C78888C21FB950900452D74 /* Markedup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78888921FB950900452D74 /* Markedup.swift */; };
+		9C79BDB0226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
+		9C79BDB1226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
 		9C8329FD224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */; };
 		9C8329FE224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */; };
 		9C8329FF224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */; };
@@ -402,6 +404,7 @@
 		9C60E7B621F6525F00C332ED /* FieldLabelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldLabelTests.swift; sourceTree = "<group>"; };
 		9C78888521FB826100452D74 /* MarkedupFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedupFormat.swift; sourceTree = "<group>"; };
 		9C78888921FB950900452D74 /* Markedup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markedup.swift; sourceTree = "<group>"; };
+		9C79BDAF226E368800796E93 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDiskLocation.swift; sourceTree = "<group>"; };
 		9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSaveDirectory.swift; sourceTree = "<group>"; };
 		9C8FD8D72216302900F16669 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -699,6 +702,7 @@
 				9C02D2B52267F5E700587EDF /* CalendarViewController.swift */,
 				9CD3261F2233068F00D06B77 /* CocoaEditView.swift */,
 				9C02D2AD2267D46000587EDF /* DateView.swift */,
+				9C79BDAF226E368800796E93 /* LabelView.swift */,
 				9CED280F224EB39900798621 /* LongTextView.swift */,
 				9C553C602266A0D50008D176 /* StatusView.swift */,
 				9CD32623223308C400D06B77 /* StringView.swift */,
@@ -909,6 +913,7 @@
 				9C60E70521F650B800C332ED /* DateUtils.swift in Sources */,
 				9C60E76521F651E500C332ED /* RatingValue.swift in Sources */,
 				9C60E78C21F651E500C332ED /* FieldDictionary.swift in Sources */,
+				9C79BDB0226E368800796E93 /* LabelView.swift in Sources */,
 				9C60E75621F651E500C332ED /* StringValue.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
@@ -1109,6 +1114,7 @@
 				9CFCB047226BC7FF00443FFA /* DateView.swift in Sources */,
 				9C60E74321F651E500C332ED /* NoteField.swift in Sources */,
 				9C2AE528220A34D100AE8BEE /* NoteTagsViewController.swift in Sources */,
+				9C79BDB1226E368800796E93 /* LabelView.swift in Sources */,
 				9C60E75521F651E500C332ED /* Provider.swift in Sources */,
 				9CF1193C225822870015AE91 /* CollectionPrefsWindowController.swift in Sources */,
 				9CD756D82210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */,

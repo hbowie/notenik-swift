@@ -20,6 +20,9 @@ class Note: Comparable, NSCopying {
     
     var fields = [:] as [String: NoteField]
     
+    var _envCreateDate = ""
+    var _envModDate    = ""
+    
     /// Initialize without any input
     init() {
         collection = NoteCollection()
@@ -29,6 +32,31 @@ class Note: Comparable, NSCopying {
     convenience init (collection : NoteCollection) {
         self.init()
         self.collection = collection
+    }
+    
+    var envCreateDate: String {
+        get {
+            return _envCreateDate
+        }
+        set {
+            _envCreateDate = newValue
+            let dateAddedDef = collection.dict.getDef(LabelConstants.dateAdded)
+            if dateAddedDef != nil {
+                let dateAddedValue = dateAdded
+                if dateAddedValue == nil || dateAddedValue.value.count == 0 {
+                    setDateAdded(newValue)
+                }
+            }
+        }
+    }
+    
+    var envModDate: String {
+        get {
+            return _envModDate
+        }
+        set {
+            _envModDate = newValue
+        }
     }
     
     /// Return the full URL pointing to the Note's file
