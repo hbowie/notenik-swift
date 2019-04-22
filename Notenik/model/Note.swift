@@ -146,6 +146,11 @@ class Note: Comparable, NSCopying {
         return setField(label: LabelConstants.body, value: body)
     }
     
+    /// Set the Note's Date Added field
+    func setDateAdded(_ dateAdded: String) -> Bool {
+        return setField(label: LabelConstants.dateAdded, value: dateAdded)
+    }
+    
     /// Return the Note's Author Value
     var author: AuthorValue {
         let val = getFieldAsValue(label: LabelConstants.author)
@@ -260,6 +265,16 @@ class Note: Comparable, NSCopying {
         }
     }
     
+    /// Return the date the note was originally added
+    var dateAdded: DateValue {
+        let val = getFieldAsValue(label: LabelConstants.dateAdded)
+        if val is DateValue {
+            return val as! DateValue
+        } else {
+            return DateValue(val.value)
+        }
+    }
+    
     /// Get the unique ID used to identify this note within its collection
     var noteID : String {
         switch collection.idRule {
@@ -327,6 +342,11 @@ class Note: Comparable, NSCopying {
     /// Does this note have a non-blank body?
     func hasBody() -> Bool {
         return body.count > 0
+    }
+    
+    /// Does this note have a date added?
+    func hasDateAdded() -> Bool {
+        return dateAdded.count > 0
     }
     
     /// Does this Note contain a title?

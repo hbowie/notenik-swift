@@ -99,6 +99,17 @@ class Markedup: CustomStringConvertible {
         }
     }
     
+    func horizontalRule() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("<hr>")
+        case .markdown:
+            newLine()
+            code.append("---")
+            newLine()
+        }
+    }
+    
     func codeBlock(_ block: String) {
         switch format {
         case .htmlFragment, .htmlDoc:

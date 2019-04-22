@@ -36,11 +36,19 @@ class NoteDisplay: NSObject {
                 let field = note.getField(def: def!)
                 if (field != nil &&
                     field!.value.hasData &&
-                    field!.def.fieldLabel.commonForm != LabelConstants.tagsCommon) {
+                    field!.def.fieldLabel.commonForm != LabelConstants.tagsCommon &&
+                    field!.def.fieldLabel.commonForm != LabelConstants.dateAddedCommon) {
                     code.append(display(field!))
                 }
             }
             i += 1
+        }
+        if note.hasDateAdded() {
+            let dateAdded = note.getField(label: LabelConstants.dateAdded)
+            if dateAdded != nil {
+                code.horizontalRule()
+                code.append(display(dateAdded!))
+            }
         }
         code.finishDoc()
         return String(describing: code)
