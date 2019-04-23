@@ -30,7 +30,8 @@ class ModWhenChanged {
     /// - Returns: The outcome of the analysis and actions performed, plus the relevant Note.
     func modIfChanged(newNoteRequested: Bool,
                       startingNote: Note,
-                      modViews: [ModView]) -> (modIfChangedOutcome, Note?) {
+                      modViews: [ModView],
+                      statusConfig: StatusValueConfig) -> (modIfChangedOutcome, Note?) {
         
         var outcome: modIfChangedOutcome = .notReady
         
@@ -62,10 +63,13 @@ class ModWhenChanged {
             }
             let userValue = fieldView.text
             if userValue != noteValue {
+                let newValue = ValueFactory.getValue(type: def.fieldType, value: userValue, statusConfig: statusConfig)
                 if field == nil {
-                    modNote.addField(def: def, strValue: userValue)
+                    let newField = NoteField(def: def, statusConfig: statusConfig)
+                    newField.value = newValue
+                    modNote.addField(newField)
                 } else {
-                    field!.value.set(userValue)
+                    field!.value = newValue
                 }
                 modified = true
             }

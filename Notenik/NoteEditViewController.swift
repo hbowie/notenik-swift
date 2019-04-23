@@ -218,7 +218,8 @@ class NoteEditViewController: NSViewController {
         var outNote: Note?
         (outcome, outNote) = modWhenChanged!.modIfChanged(newNoteRequested: newNoteRequested,
                                                           startingNote: inNote!,
-                                                          modViews: editViews)
+                                                          modViews: editViews,
+                                                          statusConfig: inNote!.collection.statusConfig)
         
         // If we tried to add a note but it had a key that already exists, then ask the user for help
         if outcome == .idAlreadyExists {
@@ -239,6 +240,10 @@ class NoteEditViewController: NSViewController {
         // See if a new note needs to be selected.
         if (outcome == .add || outcome == .deleteAndAdd) && outNote != nil {
             selectedNote = outNote
+        }
+        
+        if outcome == .add || outcome == .deleteAndAdd || outcome == .modify {
+            populateFields(with: selectedNote!)
         }
 
         return (outcome, outNote)

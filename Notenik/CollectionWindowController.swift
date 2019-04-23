@@ -15,6 +15,8 @@ class CollectionWindowController: NSWindowController {
     
     @IBOutlet var shareButton: NSButton!
     
+    @IBOutlet var searchField: NSSearchField!
+    
     let juggler:             CollectionJuggler = CollectionJuggler.shared
     var notenikIO:           NotenikIO?
     var windowNumber         = 0
@@ -25,6 +27,7 @@ class CollectionWindowController: NSWindowController {
     var newNoteRequested = false
     var pendingMod = false
     var newNote: Note?
+    var modInProgress = false
     
     var splitViewController: NoteSplitViewController?
     
@@ -264,6 +267,88 @@ class CollectionWindowController: NSWindowController {
         select(note: note, position: position, source: .nav)
     }
     
+    @IBAction func findNote(_ sender: Any) {
+        print("Find Note")
+        guard let confirmedWindow = self.window else { return }
+        confirmedWindow.makeFirstResponder(searchField)
+    }
+    
+    @IBAction func searchNow(_ sender: Any) {
+        print("CollectionWindowController.searchNow with sender \(sender)")
+        guard let searchField = sender as? NSSearchField else { return }
+        let searchString = searchField.stringValue
+        print ("  - Searching for \(searchString)")
+        let searchFor = searchString
+        guard let noteIO = notenikIO else { return }
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        var found = false
+        var (note, position) = noteIO.firstNote()
+        while !found && note != nil {
+            found = searchNote(note!, for: searchFor)
+            if !found {
+                (note, position) = noteIO.nextNote(position)
+            }
+        }
+        if found {
+            select(note: note, position: position, source: .action)
+        } else {
+            let alert = NSAlert()
+            alert.alertStyle = .warning
+            alert.messageText = "No Note found containing search string '\(searchFor)'"
+            alert.informativeText = "Searched for case-insensitve match on title, link, tags and body fields"
+            
+            alert.addButton(withTitle: "OK")
+            let response = alert.runModal()
+        }
+    }
+    
+    @IBAction func searchForNext(_ sender: Any) {
+        print("CollectionWindowController.searchForNext with sender \(sender)")
+        let searchString = searchField.stringValue
+        print ("  - Searching for \(searchString)")
+        let searchFor = searchString
+        guard let noteIO = notenikIO else { return }
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        var (note, position) = noteIO.getSelectedNote()
+        guard note != nil && position.valid else { return }
+        (note, position) = noteIO.nextNote(position)
+        var found = false
+        while !found && note != nil {
+            found = searchNote(note!, for: searchFor)
+            if !found {
+                (note, position) = noteIO.nextNote(position)
+            }
+        }
+        if found {
+            select(note: note, position: position, source: .action)
+        } else {
+            let alert = NSAlert()
+            alert.alertStyle = .informational
+            alert.messageText = "No more notes found containing search string '\(searchFor)'"
+            alert.informativeText = "Searched for case-insensitve match on title, link, tags and body fields"
+            alert.addButton(withTitle: "OK")
+            let response = alert.runModal()
+        }
+    }
+    
+    func searchNote(_ note: Note, for searchFor: String) -> Bool {
+        if note.title.value.lowercased().contains(searchFor) {
+            return true
+        }
+        if note.link.value.lowercased().contains(searchFor) {
+            return true
+        }
+        if note.tags.value.lowercased().contains(searchFor) {
+            return true
+        }
+        if note.body.value.lowercased().contains(searchFor) {
+            return true
+        }
+        return false
+    }
+    
     /// React to the selection of a note, coordinating the various views as needed.
     ///
     /// - Parameters:
@@ -376,6 +461,10 @@ class CollectionWindowController: NSWindowController {
         guard editVC != nil else { return .notReady }
         guard newNoteRequested || pendingMod else { return .noChange }
         let (outcome, note) = editVC!.modIfChanged(newNoteRequested: newNoteRequested, newNote: newNote)
+        if outcome != .tryAgain {
+            newNoteRequested = false
+            pendingMod = false
+        }
         if outcome == .add || outcome == .deleteAndAdd {
             reloadViews()
             select(note: note, position: nil, source: .action)
@@ -383,10 +472,6 @@ class CollectionWindowController: NSWindowController {
         } else if outcome == .modify {
             noteModified(updatedNote: note!)
             noteTabs!.tabView.selectFirstTabViewItem(nil)
-        }
-        if outcome != .tryAgain {
-            newNoteRequested = false
-            pendingMod = false
         }
         return outcome
     }
@@ -469,6 +554,7 @@ class CollectionWindowController: NSWindowController {
     func setSortParm(_ sortParm: NoteSortParm) {
         guard var noteIO = notenikIO else { return }
         guard let lister = listVC else { return }
+        print("Setting sort parm to \(sortParm)")
         noteIO.sortParm = sortParm
         lister.setSortParm(sortParm)
     }

@@ -44,10 +44,9 @@ class NoteLineParser {
     var lineNumber   = 0
     var fileSize     = 0
     
-    /// Default initializer with nothing to read
-    init() {
-        lineReader = BigStringReader()
-        note       = Note()
+    /// Initialize with a functioning Line Reader
+    init (collection: NoteCollection, lineReader: LineReader) {
+        note       = Note(collection: collection)
         line       = ""
         possibleLine = ""
         firstIndex = line.startIndex
@@ -58,11 +57,6 @@ class NoteLineParser {
         possibleLabel = FieldLabel()
         label = FieldLabel()
         def = FieldDefinition()
-    }
-    
-    /// Initialize with a functioning Line Reader
-    convenience init (collection : NoteCollection, lineReader : LineReader) {
-        self.init()
         note.collection = collection
         self.lineReader = lineReader
     }
@@ -83,7 +77,7 @@ class NoteLineParser {
             // then finish up the last field we were working on.
             if possibleLine == nil || possibleLabel.isValid() {
                 if label.isValid() && value.count > 0 {
-                    let field = NoteField(def: def, value: value)
+                    let field = NoteField(def: def, value: value, statusConfig: note.collection.statusConfig)
                     note.setField(field)
                 }
                 pendingBlankLines = 0

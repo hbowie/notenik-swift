@@ -47,8 +47,8 @@ class StatusValue: StringValue {
     }
     
     /// Set the status using a string and the passed Status Value Config
-    func set(str : String, config : StatusValueConfig) {
-        super.set(value)
+    func set(str: String, config : StatusValueConfig) {
+        super.set(str)
         var i = config.get(str)
         if i >= 0 {
             statusInt = i

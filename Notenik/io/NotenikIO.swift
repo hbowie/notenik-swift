@@ -156,5 +156,5 @@ protocol NotenikIO {
     func deleteSelectedNote() -> (Note?, NotePosition)
     
     /// Return the root of the Tags tree
-    func getTagsNodeRoot() -> TagsNode
+    func getTagsNodeRoot() -> TagsNode?
 }

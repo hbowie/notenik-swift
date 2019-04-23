@@ -59,7 +59,7 @@ class NoteTagsViewController: NSViewController, NSOutlineViewDataSource, NSOutli
         if notenikIO == nil {
             return 0
         } else {
-            return notenikIO!.getTagsNodeRoot().children.count
+            return notenikIO!.getTagsNodeRoot()!.children.count
         }
     }
     
@@ -69,7 +69,7 @@ class NoteTagsViewController: NSViewController, NSOutlineViewDataSource, NSOutli
             return node.children[index]
         }
         
-        return notenikIO!.getTagsNodeRoot().children[index]
+        return notenikIO!.getTagsNodeRoot()!.children[index]
     }
     
     /// Is this node expandable?
@@ -78,7 +78,7 @@ class NoteTagsViewController: NSViewController, NSOutlineViewDataSource, NSOutli
             return node.children.count > 0
         }
         
-        return notenikIO!.getTagsNodeRoot().children.count > 0
+        return notenikIO!.getTagsNodeRoot()!.children.count > 0
     }
     
     /// Return a View for this Node

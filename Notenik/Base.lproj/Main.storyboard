@@ -235,6 +235,16 @@ CA
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aKs-Gn-B6L"/>
+                                        <menuItem title="Find" keyEquivalent="f" id="O5R-wR-C3l" userLabel="Find">
+                                            <connections>
+                                                <action selector="findNote:" target="Ady-hI-5gd" id="997-as-N8H"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Find Again" keyEquivalent="g" id="Sis-fg-Ibk" userLabel="Find Again">
+                                            <connections>
+                                                <action selector="searchForNext:" target="Ady-hI-5gd" id="UmC-9P-PSt"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Share..." id="VIj-k3-Vo3" userLabel="Share">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -936,12 +946,15 @@ CA
                                     <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="7V6-9K-EEY">
                                         <rect key="frame" x="0.0" y="14" width="96" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="1UG-wK-0Qy">
+                                        <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" sendsWholeSearchString="YES" id="1UG-wK-0Qy">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </searchFieldCell>
                                     </searchField>
+                                    <connections>
+                                        <action selector="searchNow:" target="B8D-0N-5wS" id="BY9-wS-fUM"/>
+                                    </connections>
                                 </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
@@ -963,6 +976,7 @@ CA
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="searchField" destination="7V6-9K-EEY" id="KqQ-uS-wc7"/>
                         <outlet property="shareButton" destination="UHS-eX-f3H" id="4vI-lQ-GXa"/>
                         <segue destination="ysx-uj-1Qh" kind="relationship" relationship="window.shadowedContentViewController" id="Yt8-Lj-4g6"/>
                     </connections>

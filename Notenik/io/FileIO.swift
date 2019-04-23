@@ -11,8 +11,7 @@
 
 import Foundation
 
-class FileIO : NotenikIO {
-
+class FileIO: NotenikIO {
 
     let fileManager = FileManager.default
     
@@ -22,17 +21,17 @@ class FileIO : NotenikIO {
     var collectionFullPath: String?
     var collectionOpen = false
     
-    var bunch          : BunchOfNotes = BunchOfNotes()
+    var bunch          : BunchOfNotes?
     var templateFound  = false
     var infoFound      = false
     var notePosition   = NotePosition(index: -1)
     
     /// The position of the selected note, if any, in the current collection
     var position:   NotePosition? {
-        if !collectionOpen || collection == nil {
+        if !collectionOpen || collection == nil || bunch == nil {
             return nil
         } else {
-            notePosition.index = bunch.listIndex
+            notePosition.index = bunch!.listIndex
             return notePosition
         }
     }
@@ -134,7 +133,7 @@ class FileIO : NotenikIO {
                 } else if fileName.noteExt {
                     let note = readNote(collection: collection!, noteURL: itemURL)
                     if note != nil && note!.hasTitle() {
-                        let noteAdded = bunch.add(note: note!)
+                        let noteAdded = bunch!.add(note: note!)
                         if noteAdded {
                             notesRead += 1
                         } else {
@@ -162,7 +161,7 @@ class FileIO : NotenikIO {
             Logger.shared.log(skip: false, indent: 1, level: .normal,
                               message: "\(notesRead) Notes loaded for the Collection")
             collectionOpen = true
-            bunch.sortParm = collection!.sortParm
+            bunch!.sortParm = collection!.sortParm
             return collection
         }
     }
@@ -256,7 +255,7 @@ class FileIO : NotenikIO {
         _ = firstNote.setBody("A note-taking system cunningly devised by Herb Bowie of PowerSurge Publishing")
         
         bunch = BunchOfNotes(collection: collection)
-        let added = bunch.add(note: firstNote)
+        let added = bunch!.add(note: firstNote)
         guard added else {
             Logger.shared.log(skip: false,
                               indent: 0,
@@ -278,7 +277,7 @@ class FileIO : NotenikIO {
         }
         
         collectionOpen = true
-        bunch.sortParm = collection.sortParm
+        bunch!.sortParm = collection.sortParm
         
         return ok
     }
@@ -345,7 +344,9 @@ class FileIO : NotenikIO {
     func closeCollection() {
         collection = nil
         collectionOpen = false
-        bunch.close()
+        if bunch != nil {
+            bunch!.close()
+        }
         templateFound = false
         infoFound = false
     }
@@ -373,7 +374,7 @@ class FileIO : NotenikIO {
         guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
         guard newNote.hasTitle() else { return (nil, NotePosition(index: -1)) }
         
-        let added = bunch.add(note: newNote)
+        let added = bunch!.add(note: newNote)
         guard added else { return (nil, NotePosition(index: -1)) }
         
         newNote.makeFileNameFromTitle()
@@ -381,7 +382,7 @@ class FileIO : NotenikIO {
         if !written {
             return (nil, NotePosition(index: -1))
         } else {
-            let (_, position) = bunch.selectNote(newNote)
+            let (_, position) = bunch!.selectNote(newNote)
             return (newNote, position)
         }
     }
@@ -396,7 +397,7 @@ class FileIO : NotenikIO {
         
         guard collection != nil && collectionOpen else { return false }
         
-        deleted = bunch.delete(note: noteToDelete)
+        deleted = bunch!.delete(note: noteToDelete)
         
         guard deleted else { return false }
 
@@ -509,7 +510,8 @@ class FileIO : NotenikIO {
         }
         set {
             collection!.sortParm = newValue
-            bunch.sortParm = newValue
+            bunch!.sortParm = newValue
+            _ = saveInfoFile()
         }
     }
     
@@ -517,7 +519,8 @@ class FileIO : NotenikIO {
     ///
     /// - Returns: The number of notes in the current collection
     var notesCount: Int {
-      return bunch.count
+        guard bunch != nil else { return 0 }
+        return bunch!.count
     }
     
     /// Return the position of a given note.
@@ -526,7 +529,7 @@ class FileIO : NotenikIO {
     /// - Returns: A Note Position
     func positionOfNote(_ note: Note) -> NotePosition {
         guard collection != nil && collectionOpen else { return NotePosition(index: -1) }
-        let (_, position) = bunch.selectNote(note)
+        let (_, position) = bunch!.selectNote(note)
         return position
     }
     
@@ -539,7 +542,7 @@ class FileIO : NotenikIO {
     ///            - If the index is too low, return the first note.
     func selectNote(at index: Int) -> (Note?, NotePosition) {
         guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
-        return bunch.selectNote(at: index)
+        return bunch!.selectNote(at: index)
     }
     
     /// Return the note at the specified position in the sorted list, if possible.
@@ -547,7 +550,8 @@ class FileIO : NotenikIO {
     /// - Parameter at: An index value pointing to a note in the list
     /// - Returns: Either the note at that position, or nil, if the index is out of range.
     func getNote(at index: Int) -> Note? {
-        return bunch.getNote(at: index)
+        guard collection != nil && collectionOpen else { return nil }
+        return bunch!.getNote(at: index)
     }
     
     /// Get the existing note with the specified ID.
@@ -555,21 +559,24 @@ class FileIO : NotenikIO {
     /// - Parameter id: The ID we are looking for.
     /// - Returns: The Note with this key, if one exists; otherwise nil.
     func getNote(forID id: String) -> Note? {
-        return bunch.getNote(forID: id)
+        guard collection != nil && collectionOpen else { return nil }
+        return bunch!.getNote(forID: id)
     }
     
     /// Return the first note in the sorted list, along with its index position.
     ///
     /// If the list is empty, return a nil Note and an index position of -1.
     func firstNote() -> (Note?, NotePosition) {
-        return bunch.firstNote()
+        guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
+        return bunch!.firstNote()
     }
     
     /// Return the last note in the sorted list, along with its index position
     ///
     /// if the list is empty, return a nil Note and an index position of -1.
     func lastNote() -> (Note?, NotePosition) {
-        return bunch.lastNote()
+        guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
+        return bunch!.lastNote()
     }
     
 
@@ -579,7 +586,8 @@ class FileIO : NotenikIO {
     /// - Returns: A tuple containing the next note, along with its index position.
     ///            If we're at the end of the list, then return a nil Note and an index of -1.
     func nextNote(_ position : NotePosition) -> (Note?, NotePosition) {
-        return bunch.nextNote(position)
+        guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
+        return bunch!.nextNote(position)
     }
     
     /// Return the prior note in the sorted list, along with its index position.
@@ -588,7 +596,8 @@ class FileIO : NotenikIO {
     /// - Returns: A tuple containing the prior note, along with its index position.
     ///            if we're outside the bounds of the list, then return a nil Note and an index of -1.
     func priorNote(_ position : NotePosition) -> (Note?, NotePosition) {
-        return bunch.priorNote(position)
+        guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
+        return bunch!.priorNote(position)
     }
     
     /// Return the note currently selected.
@@ -596,7 +605,7 @@ class FileIO : NotenikIO {
     /// If the list index is out of range, return a nil Note and an index posiiton of -1.
     func getSelectedNote() -> (Note?, NotePosition) {
         guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
-        return bunch.getSelectedNote()
+        return bunch!.getSelectedNote()
     }
     
     /// Delete the currently selected Note
@@ -608,23 +617,23 @@ class FileIO : NotenikIO {
         guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
         
         // Make sure we have a selected note
-        let (noteToDelete, oldPosition) = bunch.getSelectedNote()
+        let (noteToDelete, oldPosition) = bunch!.getSelectedNote()
         guard noteToDelete != nil && oldPosition.index >= 0 else { return (nil, NotePosition(index: -1)) }
         
-        let (priorNote, priorPosition) = bunch.priorNote(oldPosition)
+        let (priorNote, priorPosition) = bunch!.priorNote(oldPosition)
         var nextNote = priorNote
         var nextPosition = priorPosition
  
-        bunch.delete(note: noteToDelete!)
+        bunch!.delete(note: noteToDelete!)
         var positioned = false
         if priorNote != nil {
-            (nextNote, nextPosition) = bunch.nextNote(priorPosition)
+            (nextNote, nextPosition) = bunch!.nextNote(priorPosition)
             if nextNote != nil {
                 positioned = true
             }
         }
         if !positioned {
-            bunch.firstNote()
+            bunch!.firstNote()
         }
         
         let notePath = noteToDelete!.fullPath
@@ -641,8 +650,9 @@ class FileIO : NotenikIO {
         return (nextNote, nextPosition)
     }
     
-    func getTagsNodeRoot() -> TagsNode {
-        return bunch.notesTree.root
+    func getTagsNodeRoot() -> TagsNode? {
+        guard collection != nil && collectionOpen else { return nil }
+        return bunch!.notesTree.root
     }
     
 }

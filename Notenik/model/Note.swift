@@ -24,13 +24,13 @@ class Note: Comparable, NSCopying {
     var _envModDate    = ""
     
     /// Initialize without any input
-    init() {
-        collection = NoteCollection()
-    }
+    // init() {
+    //     collection = NoteCollection()
+    // }
     
     /// Initialize with a Collection
-    convenience init (collection : NoteCollection) {
-        self.init()
+    init (collection : NoteCollection) {
+        // self.init()
         self.collection = collection
     }
     
@@ -96,8 +96,7 @@ class Note: Comparable, NSCopying {
     
     /// Make a copy of this Note
     func copy(with zone: NSZone? = nil) -> Any {
-        var newNote = Note()
-        newNote.collection = collection
+        var newNote = Note(collection: collection)
         if fileName == nil {
             newNote.fileName = nil
         } else {
@@ -447,7 +446,7 @@ class Note: Comparable, NSCopying {
     ///   - strValue: A String containing the intended value for this field.
     /// - Returns: True if added successfully, false otherwise.
     func addField(def: FieldDefinition, strValue: String) -> Bool {
-        let field = NoteField(def: def, value: strValue)
+        let field = NoteField(def: def, value: strValue, statusConfig: collection.statusConfig)
         return addField(field)
     }
     
@@ -478,7 +477,7 @@ class Note: Comparable, NSCopying {
     
     /// Set a Note field given a label and a value
     func setField(label: String, value: String) -> Bool {
-        let field = NoteField(label: label, value: value)
+        let field = NoteField(label: label, value: value, statusConfig: collection.statusConfig)
         return setField(field)
         
     }

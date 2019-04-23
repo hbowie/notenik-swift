@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 11/30/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2018 - 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -12,7 +15,7 @@ import Foundation
 class ValueFactory {
     
     /// Given a field type and a String, return the appropriate field value
-    static func getValue (type: FieldType, value : String) -> StringValue {
+    static func getValue (type: FieldType, value: String, statusConfig: StatusValueConfig) -> StringValue {
         switch type {
         case .string:
             return StringValue(value)
@@ -33,7 +36,7 @@ class ValueFactory {
         case .rating:
             return RatingValue(value)
         case .status:
-            return StatusValue(value)
+            return StatusValue(str: value, config: statusConfig)
         case .seq:
             return SeqValue(value)
         case .index:

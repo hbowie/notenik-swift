@@ -21,22 +21,22 @@ class NoteField {
         value = StringValue()
     }
     
-    convenience init(def : FieldDefinition) {
+    convenience init(def: FieldDefinition, statusConfig: StatusValueConfig) {
         self.init()
         self.def = def
-        value = ValueFactory.getValue(type: def.fieldType, value: "")
+        value = ValueFactory.getValue(type: def.fieldType, value: "", statusConfig: statusConfig)
     }
     
-    convenience init(def: FieldDefinition, value: String) {
+    convenience init(def: FieldDefinition, value: String, statusConfig: StatusValueConfig) {
         self.init()
         self.def = def
-        self.value = ValueFactory.getValue(type: def.fieldType, value: value)
+        self.value = ValueFactory.getValue(type: def.fieldType, value: value, statusConfig: statusConfig)
     }
     
-    convenience init(label : String, value: String) {
+    convenience init(label: String, value: String, statusConfig: StatusValueConfig) {
         self.init()
         let fieldLabel = FieldLabel(label)
         self.def = FieldDefinition(label: fieldLabel)
-        self.value = ValueFactory.getValue(type: def.fieldType, value: value)
+        self.value = ValueFactory.getValue(type: def.fieldType, value: value, statusConfig: statusConfig)
     }
 }

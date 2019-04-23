@@ -14,7 +14,7 @@ import Foundation
 /// A bunch of notes stored in memory
 class BunchOfNotes {
     
-    var collection = NoteCollection()
+    var collection: NoteCollection
     var notesDict = [String : Note]()
     var notesList = [Note]()
     var notesTree = TagsTree()
@@ -45,13 +45,8 @@ class BunchOfNotes {
         }
     }
     
-    init() {
-        
-    }
-    
     /// Initialize with a Note Collection
-    convenience init(collection: NoteCollection) {
-        self.init()
+    init(collection: NoteCollection) {
         self.collection = collection
     }
     
