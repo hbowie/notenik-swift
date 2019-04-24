@@ -859,9 +859,6 @@ CA
                         <value key="minSize" type="size" width="480" height="270"/>
                         <toolbar key="toolbar" implicitIdentifier="D40306C0-D638-4F94-8D78-F3B60FAB80DD" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="bDX-x7-V0g">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="cCQ-Ex-nRC"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="XBJ-bT-dLm"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="Ico-l8-QuA"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="w8q-4o-bIy"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="uP7-Y2-WeW"/>
                                 <toolbarItem implicitItemIdentifier="F26549F0-21EC-463F-9229-446038A2F902" label="Share" paletteLabel="" image="NSShareTemplate" sizingBehavior="auto" id="z6q-Rn-8x2">
@@ -961,12 +958,9 @@ CA
                                 <toolbarItem reference="nQC-YT-8yD"/>
                                 <toolbarItem reference="TCK-3s-X5T"/>
                                 <toolbarItem reference="0br-Uy-6m2"/>
-                                <toolbarItem reference="cCQ-Ex-nRC"/>
-                                <toolbarItem reference="XBJ-bT-dLm"/>
                                 <toolbarItem reference="uP7-Y2-WeW"/>
                                 <toolbarItem reference="QaA-dG-0Br"/>
                                 <toolbarItem reference="kwJ-9j-ppu"/>
-                                <toolbarItem reference="Ico-l8-QuA"/>
                                 <toolbarItem reference="z6q-Rn-8x2"/>
                                 <toolbarItem reference="kQO-NK-gn9"/>
                             </defaultToolbarItems>

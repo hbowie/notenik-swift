@@ -194,6 +194,21 @@ class CollectionWindowController: NSWindowController {
         }
     }
     
+    @IBAction func shareClicked(_ sender: NSView) {
+        print("NoteSplitViewController.shareClicked")
+        guard io != nil && io!.collectionOpen else { return }
+        let (noteToShare, notePosition) = io!.getSelectedNote()
+        guard noteToShare != nil else { return }
+        let writer = BigStringWriter()
+        let maker = NoteLineMaker(writer)
+        let fieldsWritten = maker.putNote(noteToShare!)
+        if fieldsWritten > 0 {
+            let stringToShare = NSString(string: writer.bigString)
+            let picker = NSSharingServicePicker(items: [stringToShare])
+            picker.show(relativeTo: .zero, of: sender, preferredEdge: .minY)
+        }
+    }
+    
     @IBAction func menuNoteShare(_ sender: Any) {
         guard io != nil && io!.collectionOpen else { return }
         let (note, notePosition) = io!.getSelectedNote()
