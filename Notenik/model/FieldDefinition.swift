@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 11/30/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -18,14 +21,14 @@ class FieldDefinition {
     }
     
     /// Initialize with a string label and guess the type
-    convenience init(_ label : String) {
+    convenience init(_ label: String) {
         self.init()
         fieldLabel.set(label)
         guessFieldType()
     }
     
     /// Initialize with a FieldLabel object
-    convenience init (label : FieldLabel) {
+    convenience init (label: FieldLabel) {
         self.init()
         self.fieldLabel = label
         guessFieldType()

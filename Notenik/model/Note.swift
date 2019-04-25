@@ -23,11 +23,6 @@ class Note: Comparable, NSCopying {
     var _envCreateDate = ""
     var _envModDate    = ""
     
-    /// Initialize without any input
-    // init() {
-    //     collection = NoteCollection()
-    // }
-    
     /// Initialize with a Collection
     init (collection : NoteCollection) {
         // self.init()

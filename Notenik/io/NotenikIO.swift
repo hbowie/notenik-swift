@@ -51,6 +51,12 @@ protocol NotenikIO {
     /// Open a New Collection
     func newCollection(collection: NoteCollection) -> Bool
     
+    /// Import Notes from a CSV or tab-delimited file
+    ///
+    /// - Parameter fileURL: The URL of the file to be imported.
+    /// - Returns: The number of notes imported. 
+    func importDelimited(fileURL: URL) -> Int
+    
     /// Close the currently collection, if one is open
     func closeCollection()
     

@@ -229,6 +229,12 @@
 		9CB60BC722651074003B5655 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB60BC522651074003B5655 /* ShareViewController.swift */; };
 		9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */; };
 		9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */; };
+		9CCFEE712270DD5C00F472C5 /* DelimitedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */; };
+		9CCFEE722270DD5C00F472C5 /* DelimitedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */; };
+		9CCFEE732270DD5C00F472C5 /* DelimitedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */; };
+		9CCFEE752270F52200F472C5 /* RowConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE742270F52200F472C5 /* RowConsumer.swift */; };
+		9CCFEE762270F52200F472C5 /* RowConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE742270F52200F472C5 /* RowConsumer.swift */; };
+		9CCFEE772270F52200F472C5 /* RowConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE742270F52200F472C5 /* RowConsumer.swift */; };
 		9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */; };
 		9CD0718F22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */; };
 		9CD326202233068F00D06B77 /* CocoaEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* CocoaEditView.swift */; };
@@ -418,6 +424,8 @@
 		9CB60BC522651074003B5655 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTagsViewController.swift; sourceTree = "<group>"; };
 		9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
+		9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelimitedReader.swift; sourceTree = "<group>"; };
+		9CCFEE742270F52200F472C5 /* RowConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowConsumer.swift; sourceTree = "<group>"; };
 		9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModIfChangedOutcome.swift; sourceTree = "<group>"; };
 		9CD3261F2233068F00D06B77 /* CocoaEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaEditView.swift; sourceTree = "<group>"; };
 		9CD32623223308C400D06B77 /* StringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringView.swift; sourceTree = "<group>"; };
@@ -716,8 +724,10 @@
 			children = (
 				9C60E73621F651E500C332ED /* BigStringReader.swift */,
 				9CD82F662211E4BA002314E4 /* BigStringWriter.swift */,
+				9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */,
 				9C60E73521F651E500C332ED /* LineReader.swift */,
 				9CD82F622211E456002314E4 /* LineWriter.swift */,
+				9CCFEE742270F52200F472C5 /* RowConsumer.swift */,
 			);
 			path = textio;
 			sourceTree = "<group>";
@@ -928,6 +938,7 @@
 				9C60E70B21F650B800C332ED /* FileUtils.swift in Sources */,
 				9C60E76821F651E500C332ED /* AuthorValue.swift in Sources */,
 				9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */,
+				9CCFEE712270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
 				9C29DD29226286A100928180 /* CollectionWindow.swift in Sources */,
 				9CED2810224EB39900798621 /* LongTextView.swift in Sources */,
 				9CF1192E2257FDD50015AE91 /* ModWhenChanged.swift in Sources */,
@@ -975,6 +986,7 @@
 				9C60E74721F651E500C332ED /* ProviderType.swift in Sources */,
 				9CB60BC622651074003B5655 /* ShareViewController.swift in Sources */,
 				9C60E78621F651E500C332ED /* BigStringReader.swift in Sources */,
+				9CCFEE752270F52200F472C5 /* RowConsumer.swift in Sources */,
 				9C60E79B21F651E500C332ED /* NotePosition.swift in Sources */,
 				9C78888A21FB950900452D74 /* Markedup.swift in Sources */,
 				9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */,
@@ -1065,6 +1077,7 @@
 				9C60E75721F651E500C332ED /* StringValue.swift in Sources */,
 				9C832A03224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
 				9C60E75A21F651E500C332ED /* SeqValue.swift in Sources */,
+				9CCFEE722270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
 				9CF11933225802AA0015AE91 /* ModView.swift in Sources */,
 				9C60E79621F651E500C332ED /* NoteIDRule.swift in Sources */,
 				9C60E77521F651E500C332ED /* TagsValue.swift in Sources */,
@@ -1074,6 +1087,7 @@
 				9C60E7BF21F6525F00C332ED /* StatusValueConfigTests.swift in Sources */,
 				9C60E70C21F650B800C332ED /* FileUtils.swift in Sources */,
 				9C60E7BE21F6525F00C332ED /* TagsValueTests.swift in Sources */,
+				9CCFEE762270F52200F472C5 /* RowConsumer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1142,6 +1156,7 @@
 				9C60E79121F651E500C332ED /* Note.swift in Sources */,
 				9C553C622266A0D50008D176 /* StatusView.swift in Sources */,
 				9C2AE51C220A044800AE8BEE /* TagsNodeType.swift in Sources */,
+				9CCFEE732270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
 				9CFCB04B226BE71500443FFA /* SimpleDate.swift in Sources */,
 				9C60E76421F651E500C332ED /* DateValue.swift in Sources */,
 				9C60E76A21F651E500C332ED /* AuthorValue.swift in Sources */,
@@ -1159,6 +1174,7 @@
 				9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9C60E75821F651E500C332ED /* StringValue.swift in Sources */,
 				9C60E75B21F651E500C332ED /* SeqValue.swift in Sources */,
+				9CCFEE772270F52200F472C5 /* RowConsumer.swift in Sources */,
 				9C60E79721F651E500C332ED /* NoteIDRule.swift in Sources */,
 				9CD82F652211E456002314E4 /* LineWriter.swift in Sources */,
 				9C60E77621F651E500C332ED /* TagsValue.swift in Sources */,

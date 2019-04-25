@@ -129,6 +129,42 @@ class CollectionWindowController: NSWindowController {
         }
     }
     
+    /// Import additional notes from a comma- or tab-separated text file. 
+    @IBAction func importDelimited(_ sender: Any) {
+        
+        guard io != nil && io!.collectionOpen else { return }
+        
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
+
+        // Ask the user for a location on disk
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Open an input tab- or comma-separated text file"
+        let parent = io!.collection!.collectionFullPathURL!.deletingLastPathComponent()
+        openPanel.directoryURL = parent
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.allowsMultipleSelection = false
+        openPanel.begin { (result) -> Void  in
+            if result == .OK {
+                let imports = self.io!.importDelimited(fileURL: openPanel.url!)
+                Logger.shared.log(skip: false, indent: 0, level: .routine,
+                                  message: "Imported \(imports) notes from \(openPanel.url!.path)")
+                let alert = NSAlert()
+                alert.alertStyle = .informational
+                alert.messageText = "Imported \(imports) notes from \(openPanel.url!.path)"
+                alert.addButton(withTitle: "OK")
+                _ = alert.runModal()
+            }
+        }
+        reloadViews()
+        let (note, position) = io!.firstNote()
+        select(note: note, position: position, source: .nav)
+    }
+    
     @IBAction func menuCollectionPreferences(_ sender: Any) {
         
         guard io != nil && io!.collectionOpen else { return }
@@ -195,7 +231,6 @@ class CollectionWindowController: NSWindowController {
     }
     
     @IBAction func shareClicked(_ sender: NSView) {
-        print("NoteSplitViewController.shareClicked")
         guard io != nil && io!.collectionOpen else { return }
         let (noteToShare, notePosition) = io!.getSelectedNote()
         guard noteToShare != nil else { return }
@@ -283,16 +318,13 @@ class CollectionWindowController: NSWindowController {
     }
     
     @IBAction func findNote(_ sender: Any) {
-        print("Find Note")
         guard let confirmedWindow = self.window else { return }
         confirmedWindow.makeFirstResponder(searchField)
     }
     
     @IBAction func searchNow(_ sender: Any) {
-        print("CollectionWindowController.searchNow with sender \(sender)")
         guard let searchField = sender as? NSSearchField else { return }
         let searchString = searchField.stringValue
-        print ("  - Searching for \(searchString)")
         let searchFor = searchString
         guard let noteIO = notenikIO else { return }
         let outcome = modIfChanged()
@@ -319,9 +351,7 @@ class CollectionWindowController: NSWindowController {
     }
     
     @IBAction func searchForNext(_ sender: Any) {
-        print("CollectionWindowController.searchForNext with sender \(sender)")
         let searchString = searchField.stringValue
-        print ("  - Searching for \(searchString)")
         let searchFor = searchString
         guard let noteIO = notenikIO else { return }
         let outcome = modIfChanged()
@@ -569,7 +599,6 @@ class CollectionWindowController: NSWindowController {
     func setSortParm(_ sortParm: NoteSortParm) {
         guard var noteIO = notenikIO else { return }
         guard let lister = listVC else { return }
-        print("Setting sort parm to \(sortParm)")
         noteIO.sortParm = sortParm
         lister.setSortParm(sortParm)
     }

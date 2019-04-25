@@ -11,7 +11,7 @@
 
 import Foundation
 
-class FileIO: NotenikIO {
+class FileIO: NotenikIO, RowConsumer {
 
     let fileManager = FileManager.default
     
@@ -25,6 +25,9 @@ class FileIO: NotenikIO {
     var templateFound  = false
     var infoFound      = false
     var notePosition   = NotePosition(index: -1)
+    
+    var notesImported  = 0
+    var noteToImport:    Note?
     
     /// The position of the selected note, if any, in the current collection
     var position:   NotePosition? {
@@ -280,6 +283,47 @@ class FileIO: NotenikIO {
         bunch!.sortParm = collection.sortParm
         
         return ok
+    }
+    
+    /// Import Notes from a CSV or tab-delimited file
+    ///
+    /// - Parameter fileURL: The URL of the file to be imported.
+    /// - Returns: The number of notes imported.
+    func importDelimited(fileURL: URL) -> Int {
+        notesImported = 0
+        guard collection != nil && collectionOpen else { return 0 }
+        let reader = DelimitedReader(consumer: self)
+        noteToImport = Note(collection: collection!)
+        reader.read(fileURL: fileURL)
+        return notesImported
+    }
+    
+    /// Do something with the next field produced.
+    ///
+    /// - Parameters:
+    ///   - label: A string containing the column heading for the field.
+    ///   - value: The actual value for the field.
+    func consumeField(label: String, value: String) {
+        noteToImport!.setField(label: label, value: value)
+    }
+    
+    
+    /// Do something with a completed row.
+    ///
+    /// - Parameters:
+    ///   - labels: An array of column headings.
+    ///   - fields: A corresponding array of field values.
+    func consumeRow(labels: [String], fields: [String]) {
+        let (newNote, _) = addNote(newNote: noteToImport!)
+        if newNote != nil {
+            notesImported += 1
+        }
+        noteToImport = Note(collection: collection!)
+    }
+    
+    /// Do something with the next note produced by the Delimited Reader
+    func consumeNote(_ anotherNote: Note) {
+
     }
     
     /// Save a README file into the current collection
