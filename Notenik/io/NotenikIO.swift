@@ -60,6 +60,9 @@ protocol NotenikIO {
     /// Close the currently collection, if one is open
     func closeCollection()
     
+    /// Save some of the collection info to make it persistent
+    func persistCollectionInfo()
+    
     /// Get or Set the NoteSortParm for this collection.
     var sortParm: NoteSortParm {
         get

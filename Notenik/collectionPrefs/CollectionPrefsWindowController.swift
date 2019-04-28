@@ -22,13 +22,14 @@ class CollectionPrefsWindowController: NSWindowController {
         }
     }
     
-    /// Pass needed info from the Collection Juggler
-    func passJugglerInfo(owner: CollectionPrefsOwner, collection: NoteCollection) {
+    /// Pass needed info from the Collection Prefs Requestor
+    func passCollectionPrefsRequesterInfo(owner: CollectionPrefsOwner, collection: NoteCollection) {
         guard collectionPrefsViewController != nil else {
-            print ("Passing Juggler Info but collectionPrefsViewController is nil!")
+            Logger.shared.log(skip: false, indent: 9, level: .severe,
+                              message: "CollectionPrefsWindowController passsing Requester Info but view controller is missing")
             return
         }
-        collectionPrefsViewController!.passJugglerInfo(owner: owner, collection: collection, window: self)
+        collectionPrefsViewController!.passCollectionPrefsRequesterInfo(owner: owner, collection: collection, window: self)
     }
 
 }

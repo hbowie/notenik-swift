@@ -167,7 +167,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         // Now let the user tailor the starting Collection default values
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
             collectionPrefsController.showWindow(self)
-            collectionPrefsController.passJugglerInfo(owner: self, collection: io.collection!)
+            collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io.collection!)
         } else {
             Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
                               message: "Couldn't get a Collection Prefs Window Controller!")
@@ -178,6 +178,11 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     /// Let the calling class know that the user has completed modifications
     /// of the Collection Preferences.
+    ///
+    /// - Parameters:
+    ///   - ok: True if they clicked on OK, false if they clicked Cancel.
+    ///   - collection: The Collection whose prefs are being modified.
+    ///   - window: The Collection Prefs window.
     func collectionPrefsModified(ok: Bool,
                                  collection: NoteCollection,
                                  window: CollectionPrefsWindowController) {

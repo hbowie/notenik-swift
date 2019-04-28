@@ -92,10 +92,18 @@ class FileIO: NotenikIO, RowConsumer {
                     let infoNote = readNote(collection: infoCollection, noteURL: itemURL)
                     if infoNote != nil {
                         collection!.title = infoNote!.title.value
+                        
+                        let otherFieldsField = infoNote!.getField(label: LabelConstants.otherFields)
+                        if otherFieldsField != nil {
+                            let otherFields = BooleanValue(otherFieldsField!.value.value)
+                            collection!.otherFields = otherFields.isTrue
+                        }
+                        
                         let sortParmStr = infoNote!.getFieldAsString(label: LabelConstants.sortParmCommon)
                         var nsp: NoteSortParm = sortParm
                         nsp.str = sortParmStr
                         sortParm = nsp
+
                         infoFound = true
                     }
                     
@@ -326,6 +334,12 @@ class FileIO: NotenikIO, RowConsumer {
 
     }
     
+    /// Save some of the collection info to make it persistent
+    func persistCollectionInfo() {
+        saveInfoFile()
+        saveTemplateFile()
+    }
+    
     /// Save a README file into the current collection
     func saveReadMe() -> Bool {
         var str = "This folder contains a collection of notes created by the Notenik application."
@@ -351,6 +365,8 @@ class FileIO: NotenikIO, RowConsumer {
         var str = "Title: " + collection!.title + "\n\n"
         str.append("Link: " + collection!.collectionFullPathURL!.absoluteString + "\n\n")
         str.append("Sort Parm: " + collection!.sortParm.str + "\n\n")
+        str.append("Other Fields Allowed: " + String(collection!.otherFields) + "\n\n")
+        
         let filePath = collection!.makeFilePath(fileName: "- INFO.nnk")
         
         do {
@@ -365,6 +381,7 @@ class FileIO: NotenikIO, RowConsumer {
         return true
     }
     
+    /// Save the template file into the current collection
     func saveTemplateFile() -> Bool {
         let dict = collection!.dict
         var str = ""
@@ -553,9 +570,11 @@ class FileIO: NotenikIO, RowConsumer {
             return collection!.sortParm
         }
         set {
-            collection!.sortParm = newValue
-            bunch!.sortParm = newValue
-            _ = saveInfoFile()
+            if newValue != collection!.sortParm {
+                collection!.sortParm = newValue
+                bunch!.sortParm = newValue
+                saveInfoFile()
+            }
         }
     }
     

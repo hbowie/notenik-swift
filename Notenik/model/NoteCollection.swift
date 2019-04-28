@@ -24,6 +24,7 @@ class NoteCollection {
     var statusConfig : StatusValueConfig
     /// Preferred file extension for the current collection
     var preferredExt : String = "txt"
+    var otherFields  = false
     var readOnly     : Bool = false
     
     /// Default initialization of a new Realm.

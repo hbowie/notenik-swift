@@ -11,7 +11,7 @@
 
 import Cocoa
 
-class CollectionWindowController: NSWindowController {
+class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     
     @IBOutlet var shareButton: NSButton!
     
@@ -165,17 +165,32 @@ class CollectionWindowController: NSWindowController {
         select(note: note, position: position, source: .nav)
     }
     
+    /// The user has requested a chance to review and possibly modify the Collection Preferences. 
     @IBAction func menuCollectionPreferences(_ sender: Any) {
         
         guard io != nil && io!.collectionOpen else { return }
         
-        if let templateController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
-            // templateController.collection = io!.collection
-            // templateController.showWindow(self)
+        if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
+            collectionPrefsController.showWindow(self)
+            collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io!.collection!)
         } else {
             Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
                               message: "Couldn't get a Collection Prefs Window Controller!")
         }
+    }
+    
+    /// Let the calling class know that the user has completed modifications
+    /// of the Collection Preferences.
+    ///
+    /// - Parameters:
+    ///   - ok: True if they clicked on OK, false if they clicked Cancel.
+    ///   - collection: The Collection whose prefs are being modified.
+    ///   - window: The Collection Prefs window.
+    func collectionPrefsModified(ok: Bool, collection: NoteCollection, window: CollectionPrefsWindowController) {
+        window.close()
+        guard ok else { return }
+        guard io != nil && io!.collectionOpen else { return }
+        io!.persistCollectionInfo()
     }
     
     /// If we have past due daily tasks, then update the dates to make them current

@@ -48,12 +48,14 @@ class CollectionPrefsViewController: NSViewController {
     
     var checkBoxInsertionPoint = 0
     
+    var otherFieldsCkBox: NSButton!
+    
     var okButton:        NSButton!
     var cancelButton:    NSButton!
     var actionStack:     NSStackView!
     
     /// Pass needed info from the Collection Juggler
-    func passJugglerInfo(owner: CollectionPrefsOwner,
+    func passCollectionPrefsRequesterInfo(owner: CollectionPrefsOwner,
                          collection: NoteCollection,
                          window: CollectionPrefsWindowController) {
         self.owner = owner
@@ -64,6 +66,7 @@ class CollectionPrefsViewController: NSViewController {
         }
         setFileExt(collection.preferredExt)
         setFieldsForCollection()
+        setOtherFieldsAllowed(collection.otherFields)
     }
     
     override func viewDidLoad() {
@@ -146,11 +149,15 @@ class CollectionPrefsViewController: NSViewController {
         bodyCkBox = NSButton(checkboxWithTitle: "Body", target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(bodyCkBox)
         stackView.addArrangedSubview(bodyCkBox)
-        checkBoxInsertionPoint = stackView.arrangedSubviews.count - 1
         
         dateAddedCkBox = NSButton(checkboxWithTitle: "Date Added", target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(dateAddedCkBox)
         stackView.addArrangedSubview(dateAddedCkBox)
+        
+        checkBoxInsertionPoint = stackView.arrangedSubviews.count - 1
+        
+        otherFieldsCkBox = NSButton(checkboxWithTitle: "Other fields allowed?", target: self, action: #selector(checkBoxClicked))
+        stackView.addArrangedSubview(otherFieldsCkBox)
         
         okButton = NSButton(title: "OK", target: self, action: #selector(okButtonClicked))
         cancelButton = NSButton(title: "Cancel", target: self, action: #selector(cancelButtonClicked))
@@ -163,6 +170,7 @@ class CollectionPrefsViewController: NSViewController {
         collectionTitle.stringValue = collection!.title
         setFileExt(collection!.preferredExt)
         setFieldsForCollection()
+        setOtherFieldsAllowed(collection!.otherFields)
     }
     
     func setFileExt(_ ext: String?) {
@@ -217,6 +225,14 @@ class CollectionPrefsViewController: NSViewController {
         bodyCkBox.isEnabled = false
     }
     
+    func setOtherFieldsAllowed(_ allowed: Bool) {
+        if allowed {
+            otherFieldsCkBox.state = NSControl.StateValue.on
+        } else {
+            otherFieldsCkBox.state = NSControl.StateValue.off
+        }
+    }
+    
     @objc func checkBoxClicked() {
         // No need to take any immediate action here
     }
@@ -225,6 +241,7 @@ class CollectionPrefsViewController: NSViewController {
         guard collection != nil else { return }
         collection!.title = collectionTitle.stringValue
         collection!.preferredExt = fileExtComboBox.stringValue
+        collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
         let dict = collection!.dict
         for checkBox in fieldSelectors {
             let def = dict.getDef(checkBox.title)

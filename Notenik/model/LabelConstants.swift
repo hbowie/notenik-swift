@@ -23,6 +23,8 @@ struct LabelConstants {
     static let indexCommon  = "index"
     static let link         = "Link"
     static let linkCommon   = "link"
+    static let otherFields  = "Other Fields Allowed"
+    static let otherFieldsCommon = "otherfieldsallowed"
     static let rating       = "Rating"
     static let ratingCommon = "rating"
     static let recurs       = "Recurs"
