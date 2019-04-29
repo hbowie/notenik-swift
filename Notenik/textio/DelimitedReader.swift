@@ -69,9 +69,23 @@ class DelimitedReader {
         beginLine()
         beginField()
         
+        var i = bigString.startIndex
+        var skipNextChar = false
         for c in bigString {
-            if openQuote {
-                if c == openQuoteChar {
+            
+            let nextIndex = bigString.index(after: i)
+            var nextChar: Character = " "
+            if nextIndex < bigString.endIndex {
+                nextChar = bigString[nextIndex]
+            }
+            
+            if skipNextChar {
+                skipNextChar = false
+            } else if openQuote {
+                if c == openQuoteChar && nextChar == openQuoteChar {
+                    appendToField(c)
+                    skipNextChar = true
+                } else if c == openQuoteChar {
                     openQuote = false
                 } else {
                     appendToField(c)
@@ -95,6 +109,7 @@ class DelimitedReader {
                 appendToField(c)
             }
             lastChar = c
+            i = bigString.index(after: i)
         }
         endLine()
     }
@@ -147,6 +162,8 @@ class DelimitedReader {
     func beginField() {
         field = ""
         pendingSpaces = ""
+        openQuote = false
+        openQuoteChar = " "
     }
     
     /// End a line of input
@@ -164,8 +181,6 @@ class DelimitedReader {
     /// Prepare to process a new line of input
     func beginLine() {
         lastChar = " "
-        openQuote = false
-        openQuoteChar = " "
         fieldCount = 0
         endCount = 0
         charsInLine = 0
