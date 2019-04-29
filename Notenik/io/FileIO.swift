@@ -329,9 +329,42 @@ class FileIO: NotenikIO, RowConsumer {
         noteToImport = Note(collection: collection!)
     }
     
-    /// Do something with the next note produced by the Delimited Reader
-    func consumeNote(_ anotherNote: Note) {
-
+    /// Export the current set of notes to a comma-separated or tab-delimited file.
+    ///
+    /// - Parameters:
+    ///   - fileURL: The destination folder and file name.
+    ///   - sep: An indicator of the type of delimiter requested.
+    /// - Returns: The number of notes exported, or -1 in the event of an error.
+    func exportDelimited(fileURL: URL, sep: DelimitedSeparator) -> Int {
+        guard collection != nil && collectionOpen else { return -1 }
+        guard let dict = collection?.dict else { return -1 }
+        guard let notes = bunch?.notesList else { return -1 }
+        let writer = DelimitedWriter(destination: fileURL, sep: sep)
+        writer.open()
+        var notesExported = 0
+        
+        // Write out column headers
+        for def in dict.list {
+            writer.write(value: def.fieldLabel.properForm)
+        }
+        writer.endLine()
+        
+        // Now write out data rows
+        for note in notes {
+            for def in dict.list {
+                writer.write(value: note.getFieldAsString(label: def.fieldLabel.commonForm))
+            }
+            writer.endLine()
+            notesExported += 1
+        }
+        
+        // Now close the writer, which is when the write to disk happens
+        let ok = writer.close()
+        if ok {
+            return notesExported
+        } else {
+            return -1
+        }
     }
     
     /// Save some of the collection info to make it persistent

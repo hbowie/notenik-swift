@@ -102,6 +102,8 @@ class ModWhenChanged {
             if outcome == .modify {
                 if startingNote.sortKey != modNote.sortKey {
                     outcome = .deleteAndAdd
+                } else if startingNote.tags != modNote.tags {
+                    outcome = .deleteAndAdd
                 }
             }
         }

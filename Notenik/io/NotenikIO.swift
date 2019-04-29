@@ -57,6 +57,14 @@ protocol NotenikIO {
     /// - Returns: The number of notes imported. 
     func importDelimited(fileURL: URL) -> Int
     
+    /// Export the current set of notes to a comma-separated or tab-delimited file.
+    ///
+    /// - Parameters:
+    ///   - fileURL: The destination folder and file name.
+    ///   - sep: An indicator of the type of delimiter requested.
+    /// - Returns: The number of notes exported, or -1 in the event of an error. 
+    func exportDelimited(fileURL: URL, sep: DelimitedSeparator) -> Int
+    
     /// Close the currently collection, if one is open
     func closeCollection()
     

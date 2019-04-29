@@ -132,6 +132,25 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
+                                        <menuItem title="Export" id="ZvS-ZH-J6W" userLabel="Export...">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Export" id="fHo-4C-Wed">
+                                                <items>
+                                                    <menuItem title="CSV" id="Hb9-Re-g2M">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="exportCSV:" target="Ady-hI-5gd" id="wW2-zM-gxb"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Tab-Delimited" id="iGe-UX-72e" userLabel="Tab-Delimited">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="exportTabDelim:" target="Ady-hI-5gd" id="fzA-QH-nnx"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

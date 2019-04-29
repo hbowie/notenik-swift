@@ -165,6 +165,64 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         select(note: note, position: position, source: .nav)
     }
     
+    /// Export Notes to a Comma-Separated Values File
+    @IBAction func exportCSV(_ sender: Any) {
+        print("Export CSV")
+        guard let fileURL = getExportURL(fileExt: "csv") else { return }
+        exportDelimited(fileURL: fileURL, sep: .comma)
+    }
+    
+    /// Export Notes to a Tab-Delimited File
+    @IBAction func exportTabDelim(_ sender: Any) {
+        print ("Export Tab-Delim")
+        guard let fileURL = getExportURL(fileExt: "tab") else { return }
+        exportDelimited(fileURL: fileURL, sep: .tab)
+    }
+    
+    /// Ask the user where to save the export file
+    func getExportURL(fileExt: String) -> URL? {
+        guard io != nil && io!.collectionOpen else { return nil }
+        
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return nil }
+        
+        let savePanel = NSSavePanel();
+        savePanel.title = "Specify an output file"
+        let parent = io!.collection!.collectionFullPathURL
+        if parent != nil {
+            savePanel.directoryURL = parent!
+        }
+        savePanel.showsResizeIndicator = true
+        savePanel.showsHiddenFiles = false
+        savePanel.canCreateDirectories = true
+        savePanel.nameFieldStringValue = "export." + fileExt
+        let userChoice = savePanel.runModal()
+        if userChoice == .OK {
+            return savePanel.url
+        } else {
+            return nil
+        }
+    }
+    
+    /// Export a text file with fields separated by something-or-other
+    func exportDelimited(fileURL: URL, sep: DelimitedSeparator) {
+        let notesExported = io!.exportDelimited(fileURL: fileURL, sep: sep)
+
+        let alert = NSAlert()
+        if notesExported >= 0 {
+            alert.alertStyle = .informational
+            alert.messageText = "\(notesExported) Notes exported"
+            alert.informativeText = "Notes written to '\(fileURL.path)'"
+        } else {
+            alert.alertStyle = .critical
+            alert.messageText = "Problems exporting to disk"
+            alert.informativeText = "Check Log for possible details"
+        }
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+
+    }
+    
     /// The user has requested a chance to review and possibly modify the Collection Preferences. 
     @IBAction func menuCollectionPreferences(_ sender: Any) {
         

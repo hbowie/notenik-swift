@@ -219,6 +219,12 @@
 		9C8FD8DA2216303F00F16669 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9C8FD8D92216303F00F16669 /* LICENSE.txt */; };
 		9C9094C52249A664002207EB /* NoteDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9094C42249A664002207EB /* NoteDocumentController.swift */; };
 		9C9094C62249A664002207EB /* NoteDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9094C42249A664002207EB /* NoteDocumentController.swift */; };
+		9C96BAA0227669D7008635B3 /* DelimitedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96BA9F227669D7008635B3 /* DelimitedWriter.swift */; };
+		9C96BAA1227669D7008635B3 /* DelimitedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96BA9F227669D7008635B3 /* DelimitedWriter.swift */; };
+		9C96BAA2227669D7008635B3 /* DelimitedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96BA9F227669D7008635B3 /* DelimitedWriter.swift */; };
+		9C96BAA422766A68008635B3 /* DelimitedSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96BAA322766A68008635B3 /* DelimitedSeparator.swift */; };
+		9C96BAA522766A68008635B3 /* DelimitedSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96BAA322766A68008635B3 /* DelimitedSeparator.swift */; };
+		9C96BAA622766A68008635B3 /* DelimitedSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96BAA322766A68008635B3 /* DelimitedSeparator.swift */; };
 		9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025121F65AF00027F364 /* NoteListViewController.swift */; };
 		9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
 		9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CB60BBF226509B2003B5655 /* Share.storyboard */; };
@@ -419,6 +425,8 @@
 		9C8FD8D72216302900F16669 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9C8FD8D92216303F00F16669 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		9C9094C42249A664002207EB /* NoteDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDocumentController.swift; sourceTree = "<group>"; };
+		9C96BA9F227669D7008635B3 /* DelimitedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelimitedWriter.swift; sourceTree = "<group>"; };
+		9C96BAA322766A68008635B3 /* DelimitedSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelimitedSeparator.swift; sourceTree = "<group>"; };
 		9C9A025121F65AF00027F364 /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
 		9CAF2B2622664237009E19E2 /* Project Index */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Project Index"; sourceTree = "<group>"; };
@@ -730,6 +738,8 @@
 				9C60E73621F651E500C332ED /* BigStringReader.swift */,
 				9CD82F662211E4BA002314E4 /* BigStringWriter.swift */,
 				9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */,
+				9C96BAA322766A68008635B3 /* DelimitedSeparator.swift */,
+				9C96BA9F227669D7008635B3 /* DelimitedWriter.swift */,
 				9C60E73521F651E500C332ED /* LineReader.swift */,
 				9CD82F622211E456002314E4 /* LineWriter.swift */,
 				9CCFEE742270F52200F472C5 /* RowConsumer.swift */,
@@ -954,6 +964,7 @@
 				9C60E79221F651E500C332ED /* NoteCollection.swift in Sources */,
 				9C9094C52249A664002207EB /* NoteDocumentController.swift in Sources */,
 				9CD32624223308C400D06B77 /* StringView.swift in Sources */,
+				9C96BAA422766A68008635B3 /* DelimitedSeparator.swift in Sources */,
 				9CE32507224D561E0051CA1F /* PrefsWindowController.swift in Sources */,
 				9CD82F672211E4BA002314E4 /* BigStringWriter.swift in Sources */,
 				9C21DB8021F82D9800A5A08C /* NoteDisplay.swift in Sources */,
@@ -981,6 +992,7 @@
 				9C60E77121F651E500C332ED /* LinkValue.swift in Sources */,
 				9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */,
 				9C2AE51A220A044800AE8BEE /* TagsNodeType.swift in Sources */,
+				9C96BAA0227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9C60E78921F651E500C332ED /* NoteLineParser.swift in Sources */,
 				9CF1193E225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
 				9C2AE514220A033300AE8BEE /* TagsNode.swift in Sources */,
@@ -1050,6 +1062,7 @@
 				9C60E7B721F6525F00C332ED /* FileUtilsTests.swift in Sources */,
 				9C60E75121F651E500C332ED /* NoteSortParm.swift in Sources */,
 				9C60E7BC21F6525F00C332ED /* AuthorValueTests.swift in Sources */,
+				9C96BAA1227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9CD82F682211E4BA002314E4 /* BigStringWriter.swift in Sources */,
 				9CD82F642211E456002314E4 /* LineWriter.swift in Sources */,
 				9C60E74B21F651E500C332ED /* Realm.swift in Sources */,
@@ -1070,6 +1083,7 @@
 				9C12D49022134970003136B2 /* NoteSelectionSource.swift in Sources */,
 				9C60E7C021F6525F00C332ED /* StatusValueTests.swift in Sources */,
 				9C60E76321F651E500C332ED /* DateValue.swift in Sources */,
+				9C96BAA522766A68008635B3 /* DelimitedSeparator.swift in Sources */,
 				9C60E76921F651E500C332ED /* AuthorValue.swift in Sources */,
 				9C60E76F21F651E500C332ED /* LongTextValue.swift in Sources */,
 				9C60E75D21F651E500C332ED /* RecursValue.swift in Sources */,
@@ -1128,6 +1142,7 @@
 				9CB60BC722651074003B5655 /* ShareViewController.swift in Sources */,
 				9C60E71421F6518400C332ED /* Logger.swift in Sources */,
 				9CF96EE1225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */,
+				9C96BAA622766A68008635B3 /* DelimitedSeparator.swift in Sources */,
 				9C2AE529220A34D400AE8BEE /* NoteDisplayViewController.swift in Sources */,
 				9C60E78221F651E500C332ED /* NoteType.swift in Sources */,
 				9CC0F5AA227629C4002683F8 /* BooleanValue.swift in Sources */,
@@ -1190,6 +1205,7 @@
 				9CE32508224D561E0051CA1F /* PrefsWindowController.swift in Sources */,
 				9C2AE52A220A34D800AE8BEE /* NoteEditViewController.swift in Sources */,
 				9C60E70D21F650B800C332ED /* FileUtils.swift in Sources */,
+				9C96BAA2227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9C8329FF224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

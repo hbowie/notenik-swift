@@ -11,7 +11,7 @@
 
 import Foundation
 
-/// A class to read a comma-delimited or tab-delimited file and return a dictionary and notes.
+/// A class to read a comma-delimited or tab-delimited file and return column headings and row values.
 ///
 /// The file must have UTF-8 encoding. 
 /// The first line of the file must contain column headings.
