@@ -27,6 +27,9 @@ class NoteCollection {
     var otherFields  = false
     var readOnly     : Bool = false
     
+    ///Is this collection the user's master collection?
+    var master =        false
+    
     /// Default initialization of a new Realm.
     init () {
         realm = Realm()

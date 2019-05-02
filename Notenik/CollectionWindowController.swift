@@ -249,6 +249,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         guard ok else { return }
         guard io != nil && io!.collectionOpen else { return }
         io!.persistCollectionInfo()
+        MasterCollection.shared.registerCollection(title: collection.title, collectionURL: collection.collectionFullPathURL!)
     }
     
     /// If we have past due daily tasks, then update the dates to make them current
@@ -634,13 +635,18 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         }
     }
     
+    /// Launch a Note's Link
     @IBAction func launchLink(_ sender: Any) {
         guard let noteIO = notenikIO else { return }
         let (note, _) = noteIO.getSelectedNote()
         guard let noteToUse = note else { return }
         let url = noteToUse.linkAsURL
         if url != nil {
-            NSWorkspace.shared.open(url!)
+            if noteIO.collection!.master {
+                juggler.openFileWithNewWindow(fileURL: url!, readOnly: false)
+            } else {
+                NSWorkspace.shared.open(url!)
+            }
         }
     }
     

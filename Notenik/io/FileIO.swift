@@ -15,6 +15,8 @@ class FileIO: NotenikIO, RowConsumer {
 
     let fileManager = FileManager.default
     
+    let infoFileName = "- INFO.nnk"
+    
     var provider       : Provider = Provider()
     var realm          : Realm
     var collection     : NoteCollection?
@@ -400,7 +402,7 @@ class FileIO: NotenikIO, RowConsumer {
         str.append("Sort Parm: " + collection!.sortParm.str + "\n\n")
         str.append("Other Fields Allowed: " + String(collection!.otherFields) + "\n\n")
         
-        let filePath = collection!.makeFilePath(fileName: "- INFO.nnk")
+        let filePath = collection!.makeFilePath(fileName: infoFileName)
         
         do {
             try str.write(toFile: filePath, atomically: true, encoding: String.Encoding.utf8)
