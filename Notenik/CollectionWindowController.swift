@@ -22,7 +22,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     var windowNumber         = 0
     
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
-    let shareStoryboard: NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
+    let shareStoryboard:           NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
+    let displayPrefsStoryboard:    NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
     
     var newNoteRequested = false
     var pendingMod = false
@@ -167,14 +168,12 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     
     /// Export Notes to a Comma-Separated Values File
     @IBAction func exportCSV(_ sender: Any) {
-        print("Export CSV")
         guard let fileURL = getExportURL(fileExt: "csv") else { return }
         exportDelimited(fileURL: fileURL, sep: .comma)
     }
     
     /// Export Notes to a Tab-Delimited File
     @IBAction func exportTabDelim(_ sender: Any) {
-        print ("Export Tab-Delim")
         guard let fileURL = getExportURL(fileExt: "tab") else { return }
         exportDelimited(fileURL: fileURL, sep: .tab)
     }
@@ -400,6 +399,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         guard let searchField = sender as? NSSearchField else { return }
         let searchString = searchField.stringValue
         let searchFor = searchString
+        guard searchString.count > 0 else { return }
         guard let noteIO = notenikIO else { return }
         let outcome = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
@@ -591,6 +591,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         } else if outcome == .modify {
             noteModified(updatedNote: note!)
             noteTabs!.tabView.selectFirstTabViewItem(nil)
+        } else if outcome != .tryAgain {
+            noteTabs!.tabView.selectFirstTabViewItem(nil)
         }
         return outcome
     }
@@ -680,6 +682,16 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         guard let lister = listVC else { return }
         noteIO.sortParm = sortParm
         lister.setSortParm(sortParm)
+    }
+    
+    @IBAction func displayPrefs(_ sender: Any) {
+        if let displayPrefsController = self.displayPrefsStoryboard.instantiateController(withIdentifier: "displayPrefsWC") as? DisplayPrefsWindowController {
+            displayPrefsController.showWindow(self)
+            // displayPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io!.collection!)
+        } else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                              message: "Couldn't get a Display Prefs Window Controller!")
+        }
     }
 
 }

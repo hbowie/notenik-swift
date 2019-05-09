@@ -28,13 +28,18 @@ class Markedup: CustomStringConvertible {
         return code
     }
     
-    func startDoc(withTitle title: String?) {
+    func startDoc(withTitle title: String?, withCSS css: String?) {
         switch format {
         case .htmlDoc:
             code.append("<html>")
             code.append("<head>")
             if title != nil && title!.count > 0 {
                 code.append("<title>\(title!)</title>")
+            }
+            if css != nil && css!.count > 0 {
+                code.append("<style>")
+                code.append("body {" + css! + "}")
+                code.append("</style>")
             }
             code.append("</head>")
             code.append("<body>")
@@ -154,7 +159,7 @@ class Markedup: CustomStringConvertible {
                 html = try down.toHTML()
                 code.append(html)
             } catch {
-                print("Markdown parser threw an error!")
+                Logger.shared.log(skip: false, indent: 0, level: .concerning, message: "Markdown parser threw an error")
                 code.append(markdown)
             }
         case.markdown:

@@ -48,10 +48,9 @@ class NoteTabsViewController: NSTabViewController {
     
     /// If we're leaving the Edit Tab, then check for any changes made by the user
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
-        
+        super.tabView(tabView, willSelect: tabViewItem)
         guard tabViewItem != nil else { return }
         guard window != nil else { return }
-        
         if tabViewItem!.label != "Edit" {
             window!.modIfChanged()
         }

@@ -1,5 +1,5 @@
 //
-//  NoteToHTML.swift
+//  NoteDisplay.swift
 //  Notenik
 //
 //  Created by Herb Bowie on 1/22/19.
@@ -14,7 +14,9 @@ import Foundation
 /// Generate the coding necessary to display a Note in a readable format.
 class NoteDisplay: NSObject {
     
-    var format: MarkedupFormat = .htmlFragment
+    var format: MarkedupFormat = .htmlDoc
+    
+    let displayPrefs = DisplayPrefs.shared
 
     /// Get the code used to display this entire note as a web page, including html tags.
     ///
@@ -24,7 +26,7 @@ class NoteDisplay: NSObject {
         let collection = note.collection
         let dict = collection.dict
         let code = Markedup(format: format)
-        code.startDoc(withTitle: note.title.value)
+        code.startDoc(withTitle: note.title.value, withCSS: displayPrefs.css)
         var i = 0
         if note.hasTags() {
             let tagsField = note.getField(label: LabelConstants.tags)
