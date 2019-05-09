@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// A Singleton Class for sharing and updating appearance preferences for the Display tab
 class DisplayPrefs {
     
     // Provide a single standard shared singleton instance
