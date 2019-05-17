@@ -118,25 +118,14 @@
                                                 <action selector="reloadCollection:" target="Ady-hI-5gd" id="hPS-9D-cBK"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="30S-KW-yDc"/>
+                                        <menuItem title="Open Parent Realm..." id="qGi-li-dJF">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuFileOpenParentRealm:" target="Voe-Tx-rLC" id="mXe-2Q-4cT"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
-                                        <menuItem title="Create Master Collection..." id="n7n-QU-KMh" userLabel="Create Master Collection...">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="menuFileCreateMasterCollection:" target="Voe-Tx-rLC" id="rKV-Od-HqW"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Open Master Collection" keyEquivalent="m" id="Do3-Lc-ckh" userLabel="Open Master Collection">
-                                            <connections>
-                                                <action selector="menuFileOpenMasterCollection:" target="Voe-Tx-rLC" id="Nid-OL-mSV"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Search for Collections..." id="KIl-zT-VQo">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="menuFileSearchForCollections:" target="Voe-Tx-rLC" id="Evz-dj-RBJ"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="1e6-qQ-AOS"/>
                                         <menuItem title="Import" id="Cp9-0O-bv9" userLabel="Import...">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Import" id="XBl-XV-yV3">

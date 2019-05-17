@@ -63,6 +63,9 @@ class ModWhenChanged {
             }
             let userValue = fieldView.text
             if userValue != noteValue {
+                print("\(def.fieldLabel) values unequal: ")
+                print("  Note = \(noteValue)")
+                print("  User = \(userValue)")
                 let newValue = ValueFactory.getValue(type: def.fieldType, value: userValue, statusConfig: statusConfig)
                 if field == nil {
                     let newField = NoteField(def: def, statusConfig: statusConfig)
@@ -107,6 +110,8 @@ class ModWhenChanged {
                 }
             }
         }
+        
+        print("Overall outcome = \(outcome)")
         
         // Figure out what we need to do
         switch outcome {

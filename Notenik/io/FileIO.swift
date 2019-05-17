@@ -15,7 +15,7 @@ class FileIO: NotenikIO, RowConsumer {
 
     let fileManager = FileManager.default
     
-    let infoFileName = "- INFO.nnk"
+    static let infoFileName = "- INFO.nnk"
     
     var provider       : Provider = Provider()
     var realm          : Realm
@@ -193,8 +193,12 @@ class FileIO: NotenikIO, RowConsumer {
         Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Collection: " + collectionPath)
         
         // Let's see if we have an actual path to a usable directory
-        var collectionURL : URL
+        var collectionURL: URL
         if realm.path == "" || realm.path == " " {
+            collectionURL = URL(fileURLWithPath: collectionPath)
+        } else if collectionPath == "" || collectionPath == " " {
+            collectionURL = URL(fileURLWithPath: realm.path)
+        } else if collectionPath.starts(with: realm.path) {
             collectionURL = URL(fileURLWithPath: collectionPath)
         } else {
             let realmURL = URL(fileURLWithPath: realm.path)
@@ -227,10 +231,10 @@ class FileIO: NotenikIO, RowConsumer {
     func addDefaultDefinitions() {
         guard collection != nil else { return }
         let dict = collection!.dict
-        dict.addDef(LabelConstants.title)
-        dict.addDef(LabelConstants.tags)
-        dict.addDef(LabelConstants.link)
-        dict.addDef(LabelConstants.body)
+        _ = dict.addDef(LabelConstants.title)
+        _ = dict.addDef(LabelConstants.tags)
+        _ = dict.addDef(LabelConstants.link)
+        _ = dict.addDef(LabelConstants.body)
     }
     
     /// Open a New Collection.
@@ -402,7 +406,7 @@ class FileIO: NotenikIO, RowConsumer {
         str.append("Sort Parm: " + collection!.sortParm.str + "\n\n")
         str.append("Other Fields Allowed: " + String(collection!.otherFields) + "\n\n")
         
-        let filePath = collection!.makeFilePath(fileName: infoFileName)
+        let filePath = collection!.makeFilePath(fileName: FileIO.infoFileName)
         
         do {
             try str.write(toFile: filePath, atomically: true, encoding: String.Encoding.utf8)
@@ -452,7 +456,7 @@ class FileIO: NotenikIO, RowConsumer {
     /// - Parameters:
     ///   - oldNote: The old version of the note.
     ///   - newNote: The new version of the note.
-    /// - Returns: <#return value description#>
+    /// - Returns: The modified note and its position.
     func modNote(oldNote: Note, newNote: Note) -> (Note?, NotePosition) {
         var modOK = deleteNote(oldNote)
         guard modOK else { return (nil, NotePosition(index: -1)) }

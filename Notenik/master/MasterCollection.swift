@@ -36,7 +36,7 @@ class MasterCollection {
             realm.path = ""
             let collection = masterIO!.openCollection(realm: realm, collectionPath: masterURL!.path)
             if collection != nil {
-                collection!.master = true
+                collection!.isRealmCollection = true
                 Logger.shared.log(skip: false, indent: 0, level: .normal, message: "Master Collection successfully opened: \(masterURL!.path)")
             }
         }
@@ -60,7 +60,7 @@ class MasterCollection {
         _ = dict.addDef(LabelConstants.link)
         _ = dict.addDef(LabelConstants.seq)
         _ = dict.addDef(LabelConstants.body)
-        collection.master = true
+        collection.isRealmCollection = true
         masterIO = FileIO()
         let ok = masterIO!.newCollection(collection: collection)
         guard ok else {
@@ -93,7 +93,7 @@ class MasterCollection {
             for itemPath in dirContents {
                 let itemFullPath = FileUtils.joinPaths(path1: folderPath,
                                                        path2: itemPath)
-                if itemPath == masterIO!.infoFileName {
+                if itemPath == FileIO.infoFileName {
                     let infoCollection = NoteCollection(realm: masterIO!.realm)
                     infoCollection.path = folderPath
                     let itemURL = URL(fileURLWithPath: itemFullPath)

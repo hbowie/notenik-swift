@@ -119,24 +119,13 @@ class NoteEditViewController: NSViewController {
         }
     }
     
+    /// Create a Grid View to hold the field labels and values to be edited
     func makeGridView() {
         gridView = NSGridView(views: grid)
-        // gridView = NSGridView(numberOfColumns: 2, rows: 0)
-        // for row in grid {
-        //     gridView!.addRow(with: row)
-        // }
-        // gridView!.setContentHuggingPriority(600, for: .horizontal)
-        // gridView!.setContentHuggingPriority(600, for: .vertical)
         
         gridView.translatesAutoresizingMaskIntoConstraints = false
-        // gridView.column(at: 0).width = 100
-        // gridView.column(at: 0).xPlacement = .trailing
-        // gridView.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 600), for: .horizontal)
-        // gridView.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 600), for: .vertical)
-        // gridView.column(at: 1).width = 200
-        // scrollView.documentView = gridView
+
         parentView.addSubview(gridView!)
-        // scrollView.contentView.scroll(to: .zero)
         
         // Pin the grid to the edges of our main view
         gridView!.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 8).isActive = true
@@ -145,12 +134,9 @@ class NoteEditViewController: NSViewController {
         gridView!.bottomAnchor.constraint(equalTo: parentView.bottomAnchor, constant: -8).isActive = true
     }
     
+    /// Make a View to contain a field label
     func makeLabelView(with label: FieldLabel) -> NSView {
         let vw = NSTextField(labelWithString: label.properForm + ": ")
-        // vw.translatesAutoresizingMaskIntoConstraints = false
-        // vw.isEditable = false
-        // vw.isSelectable = false
-        // vw.alignment = .left
         return vw
     
     }
@@ -169,6 +155,7 @@ class NoteEditViewController: NSViewController {
     
     /// Populate the Edit View fields with values from the given Note
     func populateFields(with note: Note) {
+        print("NoteEditViewController.populateFields")
         let dict = note.collection.dict
         let defs = dict.list
         var i = 0
@@ -183,7 +170,7 @@ class NoteEditViewController: NSViewController {
             }
             i += 1
         }
-        collectionWindowController?.pendingMod = true
+        collectionWindowController!.pendingEdits = true
     }
     
     /// Close the note, either by applying the recurs rule, or changing the status to 9
@@ -202,6 +189,7 @@ class NoteEditViewController: NSViewController {
     ///   - newNote: A possible new note to start with
     func modIfChanged(newNoteRequested: Bool, newNote: Note?) -> (modIfChangedOutcome, Note?) {
         
+        print("NoteEditViewController.modIfChanged")
         var outcome: modIfChangedOutcome = .notReady
         
         // See if we're ready for this
@@ -240,10 +228,6 @@ class NoteEditViewController: NSViewController {
         // See if a new note needs to be selected.
         if (outcome == .add || outcome == .deleteAndAdd) && outNote != nil {
             selectedNote = outNote
-        }
-        
-        if outcome == .add || outcome == .deleteAndAdd || outcome == .modify {
-            populateFields(with: selectedNote!)
         }
 
         return (outcome, outNote)

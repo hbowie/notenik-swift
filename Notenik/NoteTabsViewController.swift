@@ -51,7 +51,7 @@ class NoteTabsViewController: NSTabViewController {
         super.tabView(tabView, willSelect: tabViewItem)
         guard tabViewItem != nil else { return }
         guard window != nil else { return }
-        if tabViewItem!.label != "Edit" {
+        if tabViewItem!.label != "Edit" && !window!.pendingMod  {
             window!.modIfChanged()
         }
     }

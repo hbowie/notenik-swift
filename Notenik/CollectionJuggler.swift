@@ -24,13 +24,10 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     let storyboard:      NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
     let logStoryboard:   NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
-    let parentStoryboard: NSStoryboard = NSStoryboard(name: "ParentLocation", bundle: nil)
     
     let osdir = OpenSaveDirectory.shared
     let essentialURLKey = "essential-collection"
     var essentialURL: URL?
-    
-    var master = MasterCollection.shared
     
     let lastURLKey = "last-collection"
     var lastURL: URL?
@@ -64,36 +61,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         selectCollection(requestType: .new)
     }
     
-    /// Respond to a user request to create a master collection
-    func userRequestsCreateMasterCollection() {
-        selectCollection(requestType: .newMaster)
-    }
-    
-    /// Display the Parent Location Window
-    func selectCollection (requestType: CollectionRequestType) {
-        if let parentController = self.parentStoryboard.instantiateController(withIdentifier: "parentWC") as? ParentLocationWindowController {
-            guard let vc = parentController.contentViewController as? ParentLocationViewController else { return }
-            parentController.showWindow(self)
-            vc.window = parentController
-            vc.juggler = self
-            vc.requestType = requestType
-        } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
-                              message: "Couldn't get a Parent Location Window Controller!")
-        }
-    }
-    
-    /// User clicked OK on the Parent Location Window
-    func parentLocationOK(requestType: CollectionRequestType, parentOption: ParentOptions, folderName: String) {
-        if parentOption == .freerange {
-            roamTheRange(requestType: requestType)
-        } else {
-            playInSandbox(requestType: requestType, folderName: folderName)
-        }
-    }
-    
-    /// User selected free range in the Parent Location Window
-    func roamTheRange(requestType: CollectionRequestType) {
+    /// Let the user select a Collection to be opened
+    func selectCollection(requestType: CollectionRequestType) {
         let openPanel = prepCollectionOpenPanel()
         openPanel.begin { (result) -> Void  in
             if result == .OK {
@@ -102,78 +71,18 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
     }
     
-    /// User requested sandbox in the Parent Location Window
-    func playInSandbox(requestType: CollectionRequestType, folderName: String) {
-        let collectionURL = home.appendingPathComponent(folderName)
-        if requestType == .new || requestType == .newMaster || requestType == .saveAs {
-            if folderName.count == 0 {
-                let alert = NSAlert()
-                alert.alertStyle = .warning
-                alert.messageText = "Sandbox Folder cannot be blank"
-                alert.addButton(withTitle: "Cancel")
-                let response = alert.runModal()
-                return
-            } else {
-                print("Attempting to create folder \(folderName) in app sandbox")
-                print ("  - Collection URL is \(collectionURL)")
-                do {
-                    try FileManager.default.createDirectory(at: collectionURL, withIntermediateDirectories: false, attributes: nil)
-                } catch {
-                    print("  - Unable to create new collection folder")
-                    let alert = NSAlert()
-                    alert.alertStyle = .warning
-                    alert.messageText = "Sandbox folder \(folderName) already seems to exist"
-                    alert.addButton(withTitle: "Cancel")
-                    let response = alert.runModal()
-                    return
-                }
-            }
-        }
-        proceedWithSelectedURL(requestType: requestType, fileURL: collectionURL)
-    }
-    
     /// Proceed with the user request, now that we have a URL
     func proceedWithSelectedURL(requestType: CollectionRequestType, fileURL: URL) {
         if requestType == .new {
             newCollection(fileURL: fileURL)
-        } else if requestType == .newMaster {
-            createNewMaster(masterURL: fileURL)
         }
     }
     
-    /// Create a new Master Collection
-    func createNewMaster(masterURL: URL) -> Bool {
-        var masterOK = master.newMaster(newURL: masterURL)
-        if masterOK {
-            saveCollectionInfo(master.masterIO!.collection!)
-            if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
-                windowController.shouldCascadeWindows = true
-                windowController.io = master.masterIO!
-                self.registerWindow(window: windowController)
-                windowController.showWindow(self)
-            } else {
-                Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
-                                  message: "Couldn't get a Window Controller!")
-                masterOK = false
-            }
-        }
-        return masterOK
-    }
-    
-    /// Respond to a user request to open the master collection
-    func userRequestsOpenMasterCollection() {
-        guard let masterURL = master.masterURL else { return }
-        openFileWithNewWindow(fileURL: masterURL, readOnly: false)
-    }
-    
-    func searchForCollections() {
-        guard master.masterIO != nil else { return }
+    /// Open a Parent Folder containing one or more Notenik Collections
+    func openParentRealm() {
         let openPanel = NSOpenPanel();
-        openPanel.title = "Select a Starting Point for the Collection Search"
-        let parent = osdir.directoryURL
-        if parent != nil {
-            openPanel.directoryURL = parent!
-        }
+        openPanel.title = "Select a Parent Folder containing one or more Collections"
+        openPanel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
         openPanel.canChooseDirectories = true
@@ -182,13 +91,26 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         openPanel.allowsMultipleSelection = false
         openPanel.begin { (result) -> Void  in
             if result == .OK {
-                let added = self.master.searchForCollections(within: openPanel.url!)
-                let alert = NSAlert()
-                alert.alertStyle = .informational
-                alert.messageText = "\(added) Collections found and added to Master"
-                alert.addButton(withTitle: "OK")
-                let response = alert.runModal()
+                self.openParentRealm(parentURL: openPanel.url!)
             }
+        }
+    }
+    
+    func openParentRealm(parentURL: URL) {
+        let io = RealmIO.shared.openRealm(path: parentURL.path)
+        guard io != nil else {
+            Logger.shared.log(skip: false, indent: 0, level: .moderate,
+                              message: "Could not open Parent Realm at \(parentURL.path)")
+            return
+        }
+        if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
+            windowController.shouldCascadeWindows = true
+            windowController.io = io
+            self.registerWindow(window: windowController)
+            windowController.showWindow(self)
+        } else {
+            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                              message: "Couldn't get a Window Controller!")
         }
     }
     
@@ -440,7 +362,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             Logger.shared.log(skip: true, indent: 0, level: LogLevel.normal,
                               message: "Collection successfully opened: \(collection!.title)")
             collection!.readOnly = readOnly
-            collection!.master = (fileURL == master.masterURL)
             saveCollectionInfo(collection!)
             if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
                 windowController.shouldCascadeWindows = true
@@ -484,12 +405,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     }
     
     /// Find a collection to show in the initial window shown upon application launch.
-    ///
-    /// - Parameter window: <#window description#>
     func loadInitialCollection() {
-        
-        // let home = FileManager.default.homeDirectoryForCurrentUser
-        print ("Home Directory for current user is \(home)")
         
         // Figure out a good collection to open
         var io: NotenikIO = FileIO()
@@ -522,9 +438,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     /// Once we've opened a collection, save some info about it so we can use it later
     func saveCollectionInfo(_ collection: NoteCollection) {
-        if !collection.master {
-            master.registerCollection(title: collection.title, collectionURL: collection.collectionFullPathURL!)
-        }
         guard let collectionURL = collection.collectionFullPathURL else { return }
         if self.docController != nil {
             self.docController!.noteNewRecentDocumentURL(collectionURL)

@@ -25,8 +25,15 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     let shareStoryboard:           NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
     let displayPrefsStoryboard:    NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
     
+    // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
+    
+    // Do we have a selected Note that might have been edited?
+    var pendingEdits = false
+    
+    // Is modIfChanged logic in progress? (Test to prevent unintended recursion.)
     var pendingMod = false
+    
     var newNote: Note?
     var modInProgress = false
     
@@ -285,7 +292,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         guard io != nil && io!.collectionOpen else { return }
         let (note, notePosition) = io!.getSelectedNote()
         guard note != nil else { return }
-        if (pendingMod || newNoteRequested) && noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
+        // if (pendingMod || newNoteRequested) && noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
+        if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
             editVC!.closeNote()
         } else {
             let modNote = note!.copy() as! Note
@@ -572,17 +580,28 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     }
     
     @IBAction func saveEdits(_ sender: Any) {
-        modIfChanged()
+        if !pendingMod {
+            modIfChanged()
+        }
     }
     
     /// Modify the Note if the user changed anything on the Edit Screen
     func modIfChanged() -> modIfChangedOutcome {
+        print("CollectionWindowController.modIfChanged")
         guard editVC != nil else { return .notReady }
-        guard newNoteRequested || pendingMod else { return .noChange }
+        guard !pendingMod else { return .notReady }
+        guard newNoteRequested || pendingEdits else { return .noChange }
+        pendingMod = true
         let (outcome, note) = editVC!.modIfChanged(newNoteRequested: newNoteRequested, newNote: newNote)
         if outcome != .tryAgain {
             newNoteRequested = false
-            pendingMod = false
+        }
+        if outcome != .tryAgain && outcome != .noChange {
+            pendingEdits = false
+            print("  - pendingEdits set to false")
+        }
+        if outcome == .add || outcome == .deleteAndAdd || outcome == .modify {
+            editVC!.populateFields(with: note!)
         }
         if outcome == .add || outcome == .deleteAndAdd {
             reloadViews()
@@ -594,6 +613,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         } else if outcome != .tryAgain {
             noteTabs!.tabView.selectFirstTabViewItem(nil)
         }
+        pendingMod = false
         return outcome
     }
     
@@ -617,10 +637,13 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     /// Reload the current collection from disk
     @IBAction func reloadCollection(_ sender: Any) {
         guard notenikIO != nil && notenikIO!.collection != nil && notenikIO!.collectionOpen else { return }
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
         let url = notenikIO!.collection!.collectionFullPathURL
         notenikIO!.closeCollection()
         newNoteRequested = false
         pendingMod = false
+        pendingEdits = false
         let newIO: NotenikIO = FileIO()
         let realm = newIO.getDefaultRealm()
         realm.path = ""
@@ -630,6 +653,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     
     @IBAction func textEditNote(_ sender: Any) {
         guard let noteIO = notenikIO else { return }
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
         let (note, _) = noteIO.getSelectedNote()
         guard let noteToUse = note else { return }
         if noteToUse.hasFileName() {
@@ -644,7 +669,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         guard let noteToUse = note else { return }
         let url = noteToUse.linkAsURL
         if url != nil {
-            if noteIO.collection!.master {
+            if noteIO.collection!.isRealmCollection {
                 juggler.openFileWithNewWindow(fileURL: url!, readOnly: false)
             } else {
                 NSWorkspace.shared.open(url!)

@@ -55,19 +55,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         juggler.openEssentialCollection()
     }
     
-    @IBAction func menuFileCreateMasterCollection(_ sender: Any) {
-        juggler.userRequestsCreateMasterCollection()
-    }
-    
-    @IBAction func menuFileOpenMasterCollection(_ sender: Any) {
-        juggler.userRequestsOpenMasterCollection()
-    }
-    
-    @IBAction func menuFileSearchForCollections( _ sender: Any) {
-        let master = MasterCollection.shared
-        if master.masterIO != nil && master.masterIO!.collectionOpen {
-            juggler.searchForCollections()
-        }
+    @IBAction func menuFileOpenParentRealm(_ sender: Any) {
+        juggler.openParentRealm()
     }
     
     @IBAction func menuOpenHelpNotes(_ sender: NSMenuItem) {

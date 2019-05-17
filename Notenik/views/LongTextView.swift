@@ -51,6 +51,13 @@ class LongTextView: CocoaEditView {
         textView.textContainer!.containerSize = NSSize(width: contentSize.width, height: 32000)
         textView.textContainer!.widthTracksTextView = true
         
+        textView.isRichText = false
+        textView.usesFontPanel = false
+        textView.isAutomaticQuoteSubstitutionEnabled = false
+        
+        let regularFont = NSFont.userFont(ofSize: 16.0)
+        textView.font = regularFont
+        
         // Add the Text View to the Scroll View
         scrollView.documentView = textView
 
