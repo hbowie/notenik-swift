@@ -89,7 +89,7 @@ protocol NotenikIO {
     /// - Parameters:
     ///   - oldNote: The old version of the note.
     ///   - newNote: The new version of the note.
-    /// - Returns: <#return value description#>
+    /// - Returns: The modified note and its position.
     func modNote(oldNote: Note, newNote: Note) -> (Note?, NotePosition)
     
     /// Add a new Note to the Collection
@@ -144,10 +144,10 @@ protocol NotenikIO {
     
     /// Return the next note in the sorted list, along with its index position.
     ///
-    /// - Parameter position: The position of the last note.
+    /// - Parameter position: The position of the next note.
     /// - Returns: A tuple containing the next note, along with its index position.
     ///            If we're at the end of the list, then return a nil Note and an index of -1.
-    func nextNote(_ position : NotePosition) -> (Note?, NotePosition)
+    func nextNote(_ position: NotePosition) -> (Note?, NotePosition)
     
     /// Return the prior note in the sorted list, along with its index position.
     ///

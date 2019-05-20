@@ -143,6 +143,8 @@ class FileIO: NotenikIO, RowConsumer {
                     // Skip filenames starting with a period
                 } else if fileName.template {
                     // Skip the template file
+                } else if fileName.licenseFile {
+                    // Skip a LICENSE file
                 } else if fileName.noteExt {
                     let note = readNote(collection: collection!, noteURL: itemURL)
                     if note != nil && note!.hasTitle() {

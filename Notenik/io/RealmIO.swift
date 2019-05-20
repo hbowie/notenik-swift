@@ -18,29 +18,14 @@ class RealmIO {
     
     let fileManager = FileManager.default
     
-    var realms = [Realm]()
+    let foldersToSkip = Set(["cgi-bin", "core", "css", "downloads", "files", "fonts", "images", "includes", "javascript", "js", "lib", "modules", "reports", "scripts", "themes", "wp-admin", "wp-content", "wp-includes"])
     
     /// Open a realm, looking for its collections
     func openRealm(path: String) -> NotenikIO? {
         let provider = Provider()
-        var realm = Realm(provider: provider)
+        let realm = Realm(provider: provider)
         realm.path = path
         realm.name = path
-        
-        var found = false
-        var i = 0
-        while i < realms.count && !found {
-            let existingRealm = realms[i]
-            if realm.path == existingRealm.path {
-                realm = existingRealm
-                found = true
-            } else {
-                i += 1
-            }
-        }
-        if !found {
-            realms.append(realm)
-        }
         
         let io = BunchIO()
         let collection = io.openCollection(realm: realm, collectionPath: "")
@@ -115,7 +100,9 @@ class RealmIO {
                 } else if itemPath.hasSuffix(".dmg") {
                     // Ignore disk image bundles
                 } else if FileUtils.isDir(itemFullPath) {
-                    scanFolder(folderPath: itemFullPath, realm: realm, io: io)
+                    if !foldersToSkip.contains(itemPath) {
+                        scanFolder(folderPath: itemFullPath, realm: realm, io: io)
+                    }
                 }
             }
         } catch {

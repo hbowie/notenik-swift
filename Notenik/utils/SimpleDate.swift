@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// A simple date class that allows a date to be easily incremented.
 class SimpleDate: CustomStringConvertible {
     
     var year = 2019
@@ -43,6 +44,12 @@ class SimpleDate: CustomStringConvertible {
         return DateUtils.shared.dateFromYMD(year: year, month: month, day: day)
     }
     
+    var goodDate: Bool {
+        return (year > 0
+            && month > 0 && month <= 12
+            && day > 0 && day <= 31)
+    }
+    
     convenience init(year: Int, month: Int, day: Int) {
         self.init()
         self.year = year
@@ -54,11 +61,28 @@ class SimpleDate: CustomStringConvertible {
     
     convenience init(dateValue strDate: DateValue) {
         self.init()
-        self.year = strDate.year!
-        self.month = strDate.month!
-        self.day = strDate.day!
-        calcDaysInMonth()
-        calcDayOfWeek()
+        if let y = strDate.year {
+            year = y
+        } else {
+            year = 0
+        }
+        if let m = strDate.month {
+            month = m
+        } else {
+            month = 0
+        }
+        if let d = strDate.day {
+            day = d
+        } else {
+            day = 0
+        }
+        if goodDate {
+            calcDaysInMonth()
+            calcDayOfWeek()
+        } else {
+            dayOfWeek = 1
+            daysInMonth = 30
+        }
     }
     
     func setDayOfMonth(_ dayOfMonth: Int) {

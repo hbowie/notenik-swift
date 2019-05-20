@@ -137,98 +137,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         }
     }
     
-    /// Import additional notes from a comma- or tab-separated text file. 
-    @IBAction func importDelimited(_ sender: Any) {
-        
-        guard io != nil && io!.collectionOpen else { return }
-        
-        let outcome = modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return }
-
-        // Ask the user for a location on disk
-        let openPanel = NSOpenPanel();
-        openPanel.title = "Open an input tab- or comma-separated text file"
-        let parent = io!.collection!.collectionFullPathURL!.deletingLastPathComponent()
-        openPanel.directoryURL = parent
-        openPanel.showsResizeIndicator = true
-        openPanel.showsHiddenFiles = false
-        openPanel.canChooseDirectories = false
-        openPanel.canCreateDirectories = false
-        openPanel.canChooseFiles = true
-        openPanel.allowsMultipleSelection = false
-        openPanel.begin { (result) -> Void  in
-            if result == .OK {
-                let imports = self.io!.importDelimited(fileURL: openPanel.url!)
-                Logger.shared.log(skip: false, indent: 0, level: .routine,
-                                  message: "Imported \(imports) notes from \(openPanel.url!.path)")
-                let alert = NSAlert()
-                alert.alertStyle = .informational
-                alert.messageText = "Imported \(imports) notes from \(openPanel.url!.path)"
-                alert.addButton(withTitle: "OK")
-                _ = alert.runModal()
-            }
-        }
-        reloadViews()
-        let (note, position) = io!.firstNote()
-        select(note: note, position: position, source: .nav)
-    }
-    
-    /// Export Notes to a Comma-Separated Values File
-    @IBAction func exportCSV(_ sender: Any) {
-        guard let fileURL = getExportURL(fileExt: "csv") else { return }
-        exportDelimited(fileURL: fileURL, sep: .comma)
-    }
-    
-    /// Export Notes to a Tab-Delimited File
-    @IBAction func exportTabDelim(_ sender: Any) {
-        guard let fileURL = getExportURL(fileExt: "tab") else { return }
-        exportDelimited(fileURL: fileURL, sep: .tab)
-    }
-    
-    /// Ask the user where to save the export file
-    func getExportURL(fileExt: String) -> URL? {
-        guard io != nil && io!.collectionOpen else { return nil }
-        
-        let outcome = modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return nil }
-        
-        let savePanel = NSSavePanel();
-        savePanel.title = "Specify an output file"
-        let parent = io!.collection!.collectionFullPathURL
-        if parent != nil {
-            savePanel.directoryURL = parent!
-        }
-        savePanel.showsResizeIndicator = true
-        savePanel.showsHiddenFiles = false
-        savePanel.canCreateDirectories = true
-        savePanel.nameFieldStringValue = "export." + fileExt
-        let userChoice = savePanel.runModal()
-        if userChoice == .OK {
-            return savePanel.url
-        } else {
-            return nil
-        }
-    }
-    
-    /// Export a text file with fields separated by something-or-other
-    func exportDelimited(fileURL: URL, sep: DelimitedSeparator) {
-        let notesExported = io!.exportDelimited(fileURL: fileURL, sep: sep)
-
-        let alert = NSAlert()
-        if notesExported >= 0 {
-            alert.alertStyle = .informational
-            alert.messageText = "\(notesExported) Notes exported"
-            alert.informativeText = "Notes written to '\(fileURL.path)'"
-        } else {
-            alert.alertStyle = .critical
-            alert.messageText = "Problems exporting to disk"
-            alert.informativeText = "Check Log for possible details"
-        }
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
-
-    }
-    
     /// The user has requested a chance to review and possibly modify the Collection Preferences. 
     @IBAction func menuCollectionPreferences(_ sender: Any) {
         
@@ -255,7 +163,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         guard ok else { return }
         guard io != nil && io!.collectionOpen else { return }
         io!.persistCollectionInfo()
-        MasterCollection.shared.registerCollection(title: collection.title, collectionURL: collection.collectionFullPathURL!)
     }
     
     /// If we have past due daily tasks, then update the dates to make them current
@@ -292,6 +199,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         guard io != nil && io!.collectionOpen else { return }
         let (note, notePosition) = io!.getSelectedNote()
         guard note != nil else { return }
+        
         // if (pendingMod || newNoteRequested) && noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
         if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
             editVC!.closeNote()
@@ -308,6 +216,105 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
                 reloadViews()
                 select(note: addedNote, position: nil, source: .action)
             }
+        }
+    }
+    
+    /// Increment either the Seq field or the Date field
+    @IBAction func menuNoteIncrement(_ sender: Any) {
+        
+        let (nio, sel) = noteSelection()
+        guard let noteIO = nio, let selNote = sel else { return }
+        
+        let modNote = selNote.copy() as! Note
+        let sortParm = noteIO.collection!.sortParm
+        
+        // Determine which field to increment
+        if !selNote.hasSeq() && !selNote.hasDate() {
+            return
+        } else if selNote.hasSeq() && !selNote.hasDate() {
+            incrementSeq(noteIO: noteIO, note: selNote, modNote: modNote)
+        } else if selNote.hasDate() && !selNote.hasDate() {
+            incrementDate(noteIO: noteIO, note: selNote, modNote: modNote)
+        } else if sortParm == .seqPlusTitle || sortParm == .tasksBySeq {
+            incrementSeq(noteIO: noteIO, note: selNote, modNote: modNote)
+        } else {
+            incrementDate(noteIO: noteIO, note: selNote, modNote: modNote)
+        }
+    }
+    
+    /// Increment the Note's Date field by one day.
+    ///
+    /// - Parameters:
+    ///   - noteIO: The NotenikIO module to use.
+    ///   - note: The note prior to being incremented.
+    ///   - modNote: A copy of the note being incremented.
+    func incrementDate(noteIO: NotenikIO, note: Note, modNote: Note) {
+        let incDate = SimpleDate(dateValue: note.date)
+        if incDate.goodDate {
+            incDate.addDays(1)
+            let strDate = String(describing: incDate)
+            modNote.setDate(strDate)
+            recordMods(noteIO: noteIO, note: note, modNote: modNote)
+        }
+    }
+    
+    /// Increment the Note's Seq field by one.
+    ///
+    /// - Parameters:
+    ///   - noteIO: The NotenikIO module to use.
+    ///   - note: The note prior to being incremented.
+    ///   - modNote: A copy of the note being incremented.
+    func incrementSeq(noteIO: NotenikIO, note: Note, modNote: Note) {
+        let incSeq = note.seq
+        if incSeq.count > 0 {
+            incSeq.increment(onLeft: false)
+            modNote.setSeq(String(describing: incSeq))
+            recordMods(noteIO: noteIO, note: note, modNote: modNote)
+            var lastSeq = incSeq
+            if let sortParm = noteIO.collection?.sortParm {
+                if sortParm == .seqPlusTitle || sortParm == .tasksBySeq {
+                    var (nextNote, position) = noteIO.getSelectedNote()
+                    if position.valid {
+                        (nextNote, position) = noteIO.nextNote(position)
+                        while nextNote != nil && position.valid && lastSeq.sortKey >= nextNote!.seq.sortKey {
+                            let oldSeq = nextNote!.seq.value
+                            nextNote!.seq.increment(onLeft: false)
+                            lastSeq = nextNote!.seq
+                            let writeOK = noteIO.writeNote(nextNote!)
+                            if !writeOK {
+                                Logger.shared.log(skip: false, indent: 0, level: .concerning,
+                                                  message: "Trouble writing updated Note back to disk")
+                            }
+                            (nextNote, position) = noteIO.nextNote(position)
+                        } // end while more note sequences to increment
+                        reloadViews()
+                    } // end if we can determine the position of the selected note
+                } // end if we have a sort parm based on seq
+            } // end if we have a good sort parm
+            select(note: modNote, position: nil, source: .action)
+        } // end if we have a non-blank seq to start with
+    }
+    
+    /// Record modifications made to the Selected Note
+    ///
+    /// - Parameters:
+    ///   - noteIO: The NotenikIO module to use
+    ///   - note: The note that's been changed.
+    ///   - modNote: The note with modifications.
+    /// - Returns: True if changes were recorded successfully; false otherwise.
+    func recordMods (noteIO: NotenikIO, note: Note, modNote: Note) -> Bool {
+        let (nextNote, nextPosition) = noteIO.deleteSelectedNote()
+        let (addedNote, addedPosition) = noteIO.addNote(newNote: modNote)
+        if addedNote == nil {
+            Logger.shared.log(skip: true, indent: 0, level: .severe,
+                              message: "Problems adding note titled \(modNote.title)")
+            return false
+        } else {
+            noteModified(updatedNote: addedNote!)
+            editVC!.populateFields(with: addedNote!)
+            reloadViews()
+            select(note: addedNote, position: nil, source: .action)
+            return true
         }
     }
     
@@ -521,6 +528,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         }
     }
     
+    /// Respond to the user's request to add a new note to the collection.
     @IBAction func newNote(_ sender: Any) {
         
         guard notenikIO != nil && notenikIO!.collectionOpen else { return }
@@ -528,8 +536,17 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         let outcome = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
         
+        let (selection, _) = notenikIO!.getSelectedNote()
+        
         newNoteRequested = true
         newNote = Note(collection: notenikIO!.collection!)
+        
+        if selection != nil && selection!.hasSeq() {
+            let incSeq = SeqValue(selection!.seq.value)
+            incSeq.increment(onLeft: false)
+            newNote!.setSeq(incSeq.value)
+        }
+        
         editVC!.populateFields(with: newNote!)
         noteTabs!.tabView.selectTabViewItem(at: 1)
     }
@@ -583,6 +600,20 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         if !pendingMod {
             modIfChanged()
         }
+    }
+    
+
+    /// See if we're ready to do something with a selected note.
+    ///
+    /// - Returns: The I/O module and the selected Note (both optionals)
+    func noteSelection() -> (NotenikIO?, Note?) {
+        guard !pendingMod else { return (nil, nil) }
+        guard io != nil && io!.collectionOpen else { return (nil, nil) }
+        let (note, _) = io!.getSelectedNote()
+        guard note != nil else { return (io!, nil) }
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return (io!, nil) }
+        return (io!, note!)
     }
     
     /// Modify the Note if the user changed anything on the Edit Screen
@@ -717,6 +748,104 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
                               message: "Couldn't get a Display Prefs Window Controller!")
         }
+    }
+    
+    // ----------------------------------------------------------------------------------
+    //
+    // The following section of code contains importers and exporters.
+    //
+    // ----------------------------------------------------------------------------------
+    
+    /// Import additional notes from a comma- or tab-separated text file.
+    @IBAction func importDelimited(_ sender: Any) {
+        
+        guard io != nil && io!.collectionOpen else { return }
+        
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        
+        // Ask the user for a location on disk
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Open an input tab- or comma-separated text file"
+        let parent = io!.collection!.collectionFullPathURL!.deletingLastPathComponent()
+        openPanel.directoryURL = parent
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.allowsMultipleSelection = false
+        openPanel.begin { (result) -> Void  in
+            if result == .OK {
+                let imports = self.io!.importDelimited(fileURL: openPanel.url!)
+                Logger.shared.log(skip: false, indent: 0, level: .routine,
+                                  message: "Imported \(imports) notes from \(openPanel.url!.path)")
+                let alert = NSAlert()
+                alert.alertStyle = .informational
+                alert.messageText = "Imported \(imports) notes from \(openPanel.url!.path)"
+                alert.addButton(withTitle: "OK")
+                _ = alert.runModal()
+            }
+        }
+        reloadViews()
+        let (note, position) = io!.firstNote()
+        select(note: note, position: position, source: .nav)
+    }
+    
+    /// Export Notes to a Comma-Separated Values File
+    @IBAction func exportCSV(_ sender: Any) {
+        guard let fileURL = getExportURL(fileExt: "csv") else { return }
+        exportDelimited(fileURL: fileURL, sep: .comma)
+    }
+    
+    /// Export Notes to a Tab-Delimited File
+    @IBAction func exportTabDelim(_ sender: Any) {
+        guard let fileURL = getExportURL(fileExt: "tab") else { return }
+        exportDelimited(fileURL: fileURL, sep: .tab)
+    }
+    
+    /// Ask the user where to save the export file
+    func getExportURL(fileExt: String) -> URL? {
+        guard io != nil && io!.collectionOpen else { return nil }
+        
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return nil }
+        
+        let savePanel = NSSavePanel();
+        savePanel.title = "Specify an output file"
+        let parent = io!.collection!.collectionFullPathURL
+        if parent != nil {
+            savePanel.directoryURL = parent!
+        }
+        savePanel.showsResizeIndicator = true
+        savePanel.showsHiddenFiles = false
+        savePanel.canCreateDirectories = true
+        savePanel.nameFieldStringValue = "export." + fileExt
+        let userChoice = savePanel.runModal()
+        if userChoice == .OK {
+            return savePanel.url
+        } else {
+            return nil
+        }
+    }
+    
+    /// Export a text file with fields separated by something-or-other
+    func exportDelimited(fileURL: URL, sep: DelimitedSeparator) {
+        let notesExported = io!.exportDelimited(fileURL: fileURL, sep: sep)
+        
+        let alert = NSAlert()
+        if notesExported >= 0 {
+            alert.alertStyle = .informational
+            alert.messageText = "\(notesExported) Notes exported"
+            alert.informativeText = "Notes written to '\(fileURL.path)'"
+        } else {
+            alert.alertStyle = .critical
+            alert.messageText = "Problems exporting to disk"
+            alert.informativeText = "Check Log for possible details"
+        }
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+        
     }
 
 }

@@ -75,7 +75,7 @@ class Note: Comparable, NSCopying {
     
     /// Create a file name for the file, based on the Note's title
     func makeFileNameFromTitle() {
-        guard collection.preferredExt != nil else { return }
+        guard collection.preferredExt.count > 0 else { return }
         if hasTitle() {
             fileName = StringUtils.toReadableFilename(title.value) + "." + collection.preferredExt
         }
@@ -91,7 +91,7 @@ class Note: Comparable, NSCopying {
     
     /// Make a copy of this Note
     func copy(with zone: NSZone? = nil) -> Any {
-        var newNote = Note(collection: collection)
+        let newNote = Note(collection: collection)
         if fileName == nil {
             newNote.fileName = nil
         } else {
@@ -133,6 +133,11 @@ class Note: Comparable, NSCopying {
         }
     }
     
+    /// Bump the Note's Date up by 1
+    func incrementDate() {
+        
+    }
+    
     /// Apply the recurs rule to the note
     func recur() {
         if hasDate() && hasRecurs() {
@@ -161,6 +166,16 @@ class Note: Comparable, NSCopying {
     /// Set the Note's Status value
     func setStatus(_ status: String) -> Bool {
         return setField(label: LabelConstants.status, value: status)
+    }
+    
+    /// Set the Note's Date value
+    func setDate(_ date: String) -> Bool {
+        return setField(label: LabelConstants.date, value: date)
+    }
+    
+    /// Set the Note's Sequence value
+    func setSeq(_ seq: String) -> Bool {
+        return setField(label: LabelConstants.seq, value: seq)
     }
     
     /// Set the Note's Body value
@@ -298,7 +313,7 @@ class Note: Comparable, NSCopying {
     }
     
     /// Get the unique ID used to identify this note within its collection
-    var noteID : String {
+    var noteID: String {
         switch collection.idRule {
         case .fromTitle:
             return StringUtils.toCommon(title.value)
@@ -308,7 +323,7 @@ class Note: Comparable, NSCopying {
     }
     
     /// Return a String containing the current sort key for the Note
-    var sortKey : String {
+    var sortKey: String {
         switch collection.sortParm {
         case .title:
             return title.sortKey
@@ -344,6 +359,11 @@ class Note: Comparable, NSCopying {
     /// Does this note have a non-blank tags field?
     func hasTags() -> Bool {
         return tags.count > 0
+    }
+    
+    // Does this note have a non-blank Sequence field?
+    func hasSeq() -> Bool {
+        return seq.count > 0
     }
     
     /// Does this note have a non-blank date field?

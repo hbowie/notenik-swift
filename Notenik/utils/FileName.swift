@@ -29,6 +29,7 @@ class FileName: CustomStringConvertible {
     var template = false
     var noteExt = false
     var infofile = false
+    var licenseFile = false
     var conflictedCopy = false
     
     var description: String {
@@ -99,7 +100,7 @@ class FileName: CustomStringConvertible {
 
     }
     
-    func setExt(_ ext : String) {
+    func setExt(_ ext: String) {
         self.ext = ext
         extLower = ext.lowercased()
         if ext.count > 0 {
@@ -113,8 +114,9 @@ class FileName: CustomStringConvertible {
         }
     }
     
-    func setBase(_ base : String) {
+    func setBase(_ base: String) {
         self.base = base
+        licenseFile = (base == "LICENSE")
         baseLower = base.lowercased()
         
         if base.count == 0 || base.hasPrefix(".") {

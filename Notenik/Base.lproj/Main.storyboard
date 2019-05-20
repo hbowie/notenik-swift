@@ -246,6 +246,11 @@ CA
                                                 <action selector="menuNoteClose:" target="Ady-hI-5gd" id="6iQ-D2-sUO"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Increment" keyEquivalent="i" id="J0I-XO-zUw">
+                                            <connections>
+                                                <action selector="menuNoteIncrement:" target="Ady-hI-5gd" id="66V-9N-FPy"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="5ZL-zp-Wne"/>
                                         <menuItem title="Go To Next Note" keyEquivalent="]" id="IvG-LL-jYe" userLabel="Go To Next Note">
                                             <connections>

@@ -269,9 +269,6 @@
 		9CD32626223308C400D06B77 /* StringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD32623223308C400D06B77 /* StringView.swift */; };
 		9CD3262822330C8A00D06B77 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3262722330C8A00D06B77 /* ViewFactory.swift */; };
 		9CD3262A22330C8A00D06B77 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3262722330C8A00D06B77 /* ViewFactory.swift */; };
-		9CD64FB12277C1D0005236DA /* MasterCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD64FB02277C1D0005236DA /* MasterCollection.swift */; };
-		9CD64FB22277C1D0005236DA /* MasterCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD64FB02277C1D0005236DA /* MasterCollection.swift */; };
-		9CD64FB32277C1D0005236DA /* MasterCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD64FB02277C1D0005236DA /* MasterCollection.swift */; };
 		9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD756D82210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD82F632211E456002314E4 /* LineWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F622211E456002314E4 /* LineWriter.swift */; };
@@ -469,7 +466,6 @@
 		9CD3261F2233068F00D06B77 /* CocoaEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaEditView.swift; sourceTree = "<group>"; };
 		9CD32623223308C400D06B77 /* StringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringView.swift; sourceTree = "<group>"; };
 		9CD3262722330C8A00D06B77 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
-		9CD64FB02277C1D0005236DA /* MasterCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterCollection.swift; sourceTree = "<group>"; };
 		9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSplitViewController.swift; sourceTree = "<group>"; };
 		9CD82F622211E456002314E4 /* LineWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineWriter.swift; sourceTree = "<group>"; };
 		9CD82F662211E4BA002314E4 /* BigStringWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigStringWriter.swift; sourceTree = "<group>"; };
@@ -583,7 +579,6 @@
 				9CC78E672283560F00640477 /* displayPrefs */,
 				9C60E79E21F6520100C332ED /* io */,
 				9C60E70E21F6518400C332ED /* logging */,
-				9CD64FAF2277C1A7005236DA /* master */,
 				9C60E71B21F651E500C332ED /* model */,
 				9CF1192C2257FD170015AE91 /* modifchanged */,
 				9C832A00224ABDBD007DA6FC /* prefs */,
@@ -774,14 +769,6 @@
 				9CD3262722330C8A00D06B77 /* ViewFactory.swift */,
 			);
 			path = views;
-			sourceTree = "<group>";
-		};
-		9CD64FAF2277C1A7005236DA /* master */ = {
-			isa = PBXGroup;
-			children = (
-				9CD64FB02277C1D0005236DA /* MasterCollection.swift */,
-			);
-			path = master;
 			sourceTree = "<group>";
 		};
 		9CD82F612211E29E002314E4 /* textio */ = {
@@ -989,7 +976,6 @@
 				9C60E7A021F6520100C332ED /* FileIO.swift in Sources */,
 				9C60E70221F650B800C332ED /* StringUtils.swift in Sources */,
 				9CF11932225802AA0015AE91 /* ModView.swift in Sources */,
-				9CD64FB12277C1D0005236DA /* MasterCollection.swift in Sources */,
 				9C4018A422838F4F002C2B3D /* DisplayPrefs.swift in Sources */,
 				9C97C1B02278F46100A43913 /* CollectionRequestType.swift in Sources */,
 				9C60E70521F650B800C332ED /* DateUtils.swift in Sources */,
@@ -1158,7 +1144,6 @@
 				9C60E79C21F651E500C332ED /* NotePosition.swift in Sources */,
 				9C60E6E521F64B3C00C332ED /* NotenikTests.swift in Sources */,
 				9C60E7A121F6520100C332ED /* FileIO.swift in Sources */,
-				9CD64FB22277C1D0005236DA /* MasterCollection.swift in Sources */,
 				9C60E75721F651E500C332ED /* StringValue.swift in Sources */,
 				9C832A03224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
 				9C60E75A21F651E500C332ED /* SeqValue.swift in Sources */,
@@ -1234,7 +1219,6 @@
 				9C4018A522838F4F002C2B3D /* DisplayPrefs.swift in Sources */,
 				9C60E74C21F651E500C332ED /* Realm.swift in Sources */,
 				9C60E71A21F6518400C332ED /* LogDestination.swift in Sources */,
-				9CD64FB32277C1D0005236DA /* MasterCollection.swift in Sources */,
 				9CF119302257FDD50015AE91 /* ModWhenChanged.swift in Sources */,
 				9C78888821FB826100452D74 /* MarkedupFormat.swift in Sources */,
 				9CD32626223308C400D06B77 /* StringView.swift in Sources */,

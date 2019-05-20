@@ -155,7 +155,6 @@ class NoteEditViewController: NSViewController {
     
     /// Populate the Edit View fields with values from the given Note
     func populateFields(with note: Note) {
-        print("NoteEditViewController.populateFields")
         let dict = note.collection.dict
         let defs = dict.list
         var i = 0
