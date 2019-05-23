@@ -11,6 +11,7 @@
 
 import Cocoa
 
+/// Custom Edit View for a Date
 class DateView: CocoaEditView {
     
     var stack: NSStackView!
@@ -75,24 +76,28 @@ class DateView: CocoaEditView {
         if let calendarController = self.calendarStoryboard.instantiateController(withIdentifier: "calendarWC") as? CalendarWindowController {
             calendarController.showWindow(self)
             let vc = calendarController.contentViewController as? CalendarViewController
-            let dateValue = DateValue(text)
-            
-            let yyyy = dateValue.yyyy
-            let yearInt = Int(yyyy)
-            if yearInt != nil && yearInt! > 0 {
-                vc!.setYear(withInt: yearInt!)
-            }
-            
-            let mm = dateValue.mm
-            let monthInt = Int(mm)
-            if monthInt != nil && monthInt! > 0 && monthInt! < 13 {
-                vc!.setMonth(withInt: monthInt!)
-            }
-            
-            let dd = dateValue.dd
-            let dayInt = Int(dd)
-            if dayInt != nil && dayInt! > 0 && dayInt! < 32 {
-                vc!.setDay(withInt: dayInt!)
+            if text.count == 0 {
+                vc!.todayClicked(self)
+            } else {
+                let dateValue = DateValue(text)
+                
+                let yyyy = dateValue.yyyy
+                let yearInt = Int(yyyy)
+                if yearInt != nil && yearInt! > 0 {
+                    vc!.setYear(withInt: yearInt!)
+                }
+                
+                let mm = dateValue.mm
+                let monthInt = Int(mm)
+                if monthInt != nil && monthInt! > 0 && monthInt! < 13 {
+                    vc!.setMonth(withInt: monthInt!)
+                }
+                
+                let dd = dateValue.dd
+                let dayInt = Int(dd)
+                if dayInt != nil && dayInt! > 0 && dayInt! < 32 {
+                    vc!.setDay(withInt: dayInt!)
+                }
             }
             
             vc!.dateView = self

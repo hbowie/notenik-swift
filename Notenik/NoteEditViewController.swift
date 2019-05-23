@@ -188,7 +188,7 @@ class NoteEditViewController: NSViewController {
     ///   - newNote: A possible new note to start with
     func modIfChanged(newNoteRequested: Bool, newNote: Note?) -> (modIfChangedOutcome, Note?) {
         
-        print("NoteEditViewController.modIfChanged")
+        // print("NoteEditViewController.modIfChanged")
         var outcome: modIfChangedOutcome = .notReady
         
         // See if we're ready for this

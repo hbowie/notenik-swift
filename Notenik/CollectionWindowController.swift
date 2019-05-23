@@ -222,7 +222,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     /// Increment either the Seq field or the Date field
     @IBAction func menuNoteIncrement(_ sender: Any) {
         
-        let (nio, sel) = noteSelection()
+        let (nio, sel) = guardForNoteAction()
         guard let noteIO = nio, let selNote = sel else { return }
         
         let modNote = selNote.copy() as! Note
@@ -602,23 +602,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         }
     }
     
-
-    /// See if we're ready to do something with a selected note.
-    ///
-    /// - Returns: The I/O module and the selected Note (both optionals)
-    func noteSelection() -> (NotenikIO?, Note?) {
-        guard !pendingMod else { return (nil, nil) }
-        guard io != nil && io!.collectionOpen else { return (nil, nil) }
-        let (note, _) = io!.getSelectedNote()
-        guard note != nil else { return (io!, nil) }
-        let outcome = modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return (io!, nil) }
-        return (io!, note!)
-    }
-    
     /// Modify the Note if the user changed anything on the Edit Screen
     func modIfChanged() -> modIfChangedOutcome {
-        print("CollectionWindowController.modIfChanged")
+        // print("CollectionWindowController.modIfChanged")
         guard editVC != nil else { return .notReady }
         guard !pendingMod else { return .notReady }
         guard newNoteRequested || pendingEdits else { return .noChange }
@@ -629,7 +615,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         }
         if outcome != .tryAgain && outcome != .noChange {
             pendingEdits = false
-            print("  - pendingEdits set to false")
+            // print("  - pendingEdits set to false")
         }
         if outcome == .add || outcome == .deleteAndAdd || outcome == .modify {
             editVC!.populateFields(with: note!)
@@ -752,9 +738,86 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     
     // ----------------------------------------------------------------------------------
     //
-    // The following section of code contains importers and exporters.
+    // The following section of code contains import, export and archive routines.
     //
     // ----------------------------------------------------------------------------------
+    
+    
+    /// Purge closed Notes from this Collection
+    @IBAction func userRequestsPurge(_ sender: Any) {
+        
+        // See if we're ready to take action
+        let nio = guardForCollectionAction()
+        guard let noteIO = nio else { return }
+        
+        // Make sure we have a status field for this collection
+        let dict = noteIO.collection!.dict
+        if !dict.contains(LabelConstants.status) {
+            let alert = NSAlert()
+            alert.alertStyle = .warning
+            alert.messageText = "Cannot perform a Purge since the Collection does not use the Status field"
+            alert.addButton(withTitle: "Cancel")
+            let _ = alert.runModal()
+            return
+        }
+        
+        // Ask the user for direction
+        var archive = false
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "Purge closed Notes?"
+        alert.addButton(withTitle: "Cancel")
+        alert.addButton(withTitle: "Purge and Archive")
+        alert.addButton(withTitle: "Purge and Discard")
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            return
+        } else if response == .alertSecondButtonReturn {
+            archive = true
+        }
+        
+        // Let's perform the purge
+        if archive {
+            let openPanel = juggler.prepCollectionOpenPanel()
+            openPanel.begin { (result) -> Void  in
+                if result == .OK {
+                    self.purge(archiveURL: openPanel.url!)
+                }
+            }
+        } else {
+            purge(archiveURL: nil)
+        }
+    }
+    
+    /// Now actually perform the purge
+    func purge(archiveURL: URL?) {
+        var archiveIO: NotenikIO?
+        if archiveURL != nil {
+            archiveIO = FileIO()
+            let archiveRealm = archiveIO!.getDefaultRealm()
+            archiveRealm.path = ""
+            let archiveCollection = archiveIO!.openArchive(primeIO: io!, archivePath: archiveURL!.path)
+            if archiveCollection == nil {
+                return
+            }
+        }
+        let purgeCount = io!.purgeClosed(archiveIO: archiveIO)
+        
+        Logger.shared.log(skip: false, indent: 0, level: .routine,
+                          message: "\(purgeCount) Notes purged from Collection at \(io!.collection!.collectionFullPath)")
+        reloadViews()
+        let (note, position) = io!.firstNote()
+        select(note: note, position: position, source: .nav)
+        
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "\(purgeCount) Notes purged from the Collection"
+        if archiveURL != nil {
+            alert.informativeText = "Archived to \(archiveURL!.path)"
+        }
+        alert.addButton(withTitle: "OK")
+        let _ = alert.runModal()
+    }
     
     /// Import additional notes from a comma- or tab-separated text file.
     @IBAction func importDelimited(_ sender: Any) {
@@ -847,5 +910,35 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         alert.runModal()
         
     }
+    
+    // ----------------------------------------------------------------------------------
+    //
+    // The following section of code contains internal utility routines.
+    //
+    // ----------------------------------------------------------------------------------
 
+    /// See if we're ready to do something with a selected note.
+    ///
+    /// - Returns: The I/O module and the selected Note (both optionals)
+    func guardForNoteAction() -> (NotenikIO?, Note?) {
+        guard !pendingMod else { return (nil, nil) }
+        guard io != nil && io!.collectionOpen else { return (nil, nil) }
+        let (note, _) = io!.getSelectedNote()
+        guard note != nil else { return (io!, nil) }
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return (io!, nil) }
+        return (io!, note!)
+    }
+    
+
+    /// See if we're ready to do something affecting multiple Notes in the Collection.
+    ///
+    /// - Returns: The Notenik I/O module to use, if we're ready to go, otherwise nil.
+    func guardForCollectionAction() -> NotenikIO? {
+        guard !pendingMod else { return nil }
+        guard io != nil && io!.collectionOpen else { return nil }
+        let outcome = modIfChanged()
+        guard outcome != modIfChangedOutcome.tryAgain else { return nil }
+        return io
+    }
 }

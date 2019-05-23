@@ -63,6 +63,34 @@ class FileIO: NotenikIO, RowConsumer {
         return realm
     }
     
+    /// Open a Collection to be used as an archive for another Collection. This will
+    /// be a normal open, if the archive has already been created, or will create
+    /// a new Collection, if the Archive is being accessed for the first time.
+    ///
+    /// - Parameters:
+    ///   - primeIO: The I/O module for the primary collection.
+    ///   - archivePath: The location of the archive collection.
+    /// - Returns: The Archive Note Collection, if collection opened successfully.
+    func openArchive(primeIO: NotenikIO, archivePath: String) -> NoteCollection? {
+        
+        // See if the archive already exists
+        let primeCollection = primeIO.collection!
+        let primeRealm = primeCollection.realm
+        var archiveCollection = openCollection(realm: primeRealm, collectionPath: archivePath)
+        guard archiveCollection == nil else { return archiveCollection }
+        
+        // If not, then create a new one
+        var newOK = initCollection(realm: primeRealm, collectionPath: archivePath)
+        guard newOK else { return nil }
+        archiveCollection = collection
+        archiveCollection!.sortParm = primeCollection.sortParm
+        archiveCollection!.dict = primeCollection.dict
+        archiveCollection!.preferredExt = primeCollection.preferredExt
+        newOK = newCollection(collection: archiveCollection!)
+        guard newOK else { return nil }
+        return collection
+    }
+    
     /// Attempt to open the collection at the provided path.
     ///
     /// - Parameter realm: The realm housing the collection to be opened.
@@ -375,6 +403,46 @@ class FileIO: NotenikIO, RowConsumer {
         }
     }
     
+    /// Purge closed notes from the collection, optionally writing them
+    /// to an archive collection.
+    ///
+    /// - Parameter archiveIO: An optional I/O module already set up
+    ///                        for an archive collection.
+    /// - Returns: The number of notes purged. 
+    func purgeClosed(archiveIO: NotenikIO?) -> Int {
+
+        guard collection != nil && collectionOpen else { return 0 }
+        guard let notes = bunch?.notesList else { return 0 }
+        
+        // Now look for closed notes
+        var notesToDelete: [Note] = []
+        for note in notes {
+            if note.isDone {
+                var okToDelete = true
+                if archiveIO != nil {
+                    let noteCopy = note.copy() as! Note
+                    noteCopy.collection = archiveIO!.collection!
+                    let (archiveNote, archivePosition) = archiveIO!.addNote(newNote: noteCopy)
+                    if archiveNote == nil {
+                        okToDelete = false
+                        Logger.shared.log(skip: false, indent: 0, level: .severe,
+                                          message: "Could not add note titled '\(note.title.value)' to archive")
+                    }
+                } // end of optional archive operation
+                if okToDelete {
+                    notesToDelete.append(note)
+                }
+            } // end if note is done
+        } // end for each note in the collection
+        
+        // Now do the actual deletes
+        for note in notesToDelete {
+            let deleted = deleteNote(note)
+        }
+        
+        return notesToDelete.count
+    }
+    
     /// Save some of the collection info to make it persistent
     func persistCollectionInfo() {
         saveInfoFile()
@@ -471,14 +539,11 @@ class FileIO: NotenikIO, RowConsumer {
     /// - Returns: The added Note and its position, if added successfully;
     ///            otherwise nil and -1.
     func addNote(newNote: Note) -> (Note?, NotePosition) {
-        
         // Make sure we have an open collection available to us
         guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
         guard newNote.hasTitle() else { return (nil, NotePosition(index: -1)) }
-        
         let added = bunch!.add(note: newNote)
         guard added else { return (nil, NotePosition(index: -1)) }
-        
         newNote.makeFileNameFromTitle()
         let written = writeNote(newNote)
         if !written {

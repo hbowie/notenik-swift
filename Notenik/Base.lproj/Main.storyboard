@@ -158,6 +158,12 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
+                                        <menuItem title="Purge..." id="EEu-OA-BXX">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="userRequestsPurge:" target="Ady-hI-5gd" id="7Tn-8o-NLg"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

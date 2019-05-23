@@ -51,6 +51,27 @@ protocol NotenikIO {
     /// Open a New Collection
     func newCollection(collection: NoteCollection) -> Bool
     
+    /// Open a Collection to be used as an archive for another Collection.
+    
+    
+    /// Open a Collection to be used as an archive for another Collection. This will
+    /// be a normal open, if the archive has already been created, or will create
+    /// a new Collection, if the Archive is being accessed for the first time.
+    ///
+    /// - Parameters:
+    ///   - primeIO: The I/O module for the primary collection.
+    ///   - archivePath: The location of the archive collection.
+    /// - Returns: The Archive Note Collection, if collection opened successfully.
+    func openArchive(primeIO: NotenikIO, archivePath: String) -> NoteCollection?
+    
+    /// Purge closed notes from the collection, optionally writing them
+    /// to an archive collection.
+    ///
+    /// - Parameter archiveIO: An optional I/O module already set up
+    ///                        for an archive collection.
+    /// - Returns: The number of notes purged.
+    func purgeClosed(archiveIO: NotenikIO?) -> Int
+    
     /// Import Notes from a CSV or tab-delimited file
     ///
     /// - Parameter fileURL: The URL of the file to be imported.

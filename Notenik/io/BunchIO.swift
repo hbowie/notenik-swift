@@ -69,6 +69,68 @@ class BunchIO: NotenikIO, RowConsumer  {
         }
     }
     
+    /// Open a Collection to be used as an archive for another Collection. This will
+    /// be a normal open, if the archive has already been created, or will create
+    /// a new Collection, if the Archive is being accessed for the first time.
+    ///
+    /// - Parameters:
+    ///   - primeIO: The I/O module for the primary collection.
+    ///   - archivePath: The location of the archive collection.
+    /// - Returns: The Archive Note Collection, if collection opened successfully.
+    func openArchive(primeIO: NotenikIO, archivePath: String) -> NoteCollection? {
+        
+        let primeCollection = primeIO.collection!
+        let primeRealm = primeCollection.realm
+        var newOK = initCollection(realm: primeRealm, collectionPath: archivePath)
+        guard newOK else { return nil }
+        let archiveCollection = collection
+        archiveCollection!.sortParm = primeCollection.sortParm
+        archiveCollection!.dict = primeCollection.dict
+        newOK = newCollection(collection: archiveCollection!)
+        guard newOK else { return nil }
+        return collection
+    }
+    
+    /// Purge closed notes from the collection, optionally writing them
+    /// to an archive collection.
+    ///
+    /// - Parameter archiveIO: An optional I/O module already set up
+    ///                        for an archive collection.
+    /// - Returns: The number of notes purged.
+    func purgeClosed(archiveIO: NotenikIO?) -> Int {
+        guard collection != nil && collectionOpen else { return 0 }
+        guard let notes = bunch?.notesList else { return 0 }
+        
+        // Now look for closed notes
+        var notesToDelete: [Note] = []
+        for note in notes {
+            if note.isDone {
+                var okToDelete = true
+                if archiveIO != nil {
+                    let (archiveNote, _) = archiveIO!.addNote(newNote: note)
+                    if archiveNote == nil {
+                        okToDelete = false
+                        Logger.shared.log(skip: false, indent: 0, level: .severe,
+                                          message: "Could not add note titled '\(note.title.value)' to archive")
+                    }
+                } // end of optional archive operation
+                if okToDelete {
+                    notesToDelete.append(note)
+                }
+            } // end if note is done
+        } // end for each note in the collection
+        
+        // Now do the actual deletes
+        for note in notesToDelete {
+            let deleted = deleteNote(note)
+            if !deleted {
+                print ("Problems deleting note!")
+            }
+        }
+        
+        return notesToDelete.count
+    }
+    
     /// Open the collection.
     ///
     /// - Parameter realm: The realm housing the collection to be opened.

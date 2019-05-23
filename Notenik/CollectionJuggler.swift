@@ -175,12 +175,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         return openOK
     }
     
-
-    
-
-    
-
-    
     /// User clicked Cancel on the Parent Location Window
     func parentLocationCancel() {
         // Apparently we're done
