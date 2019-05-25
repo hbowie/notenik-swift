@@ -44,7 +44,7 @@ class ValueFactory {
         case .recurs:
             return RecursValue(value)
         case .code:
-            return LongTextValue()
+            return LongTextValue(value)
         case .dateAdded:
             return DateValue(value)
         case .work:

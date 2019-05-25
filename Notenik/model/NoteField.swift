@@ -39,4 +39,11 @@ class NoteField {
         self.def = FieldDefinition(label: fieldLabel)
         self.value = ValueFactory.getValue(type: def.fieldType, value: value, statusConfig: statusConfig)
     }
+    
+    func display() {
+        print("NoteField.display")
+        print("FieldDefinition has label of \(def.fieldLabel)")
+        print("Value has type of \(type(of: value))")
+        print("Value has value of \(value.value)")
+    }
 }

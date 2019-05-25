@@ -14,7 +14,7 @@ import Cocoa
 class CodeView: CocoaEditView {
     
     var scrollView: NSScrollView!
-    var textView: NSTextView!
+    var textView:   NSTextView!
     
     var view: NSView {
         return scrollView
@@ -59,7 +59,7 @@ class CodeView: CocoaEditView {
         textView.usesFontPanel = false
         textView.isAutomaticQuoteSubstitutionEnabled = false
         
-        let regularFont = NSFont.userFont(ofSize: 16.0)
+        let regularFont = NSFont.userFixedPitchFont(ofSize: 14.0)
         textView.font = regularFont
         
         // Add the Text View to the Scroll View

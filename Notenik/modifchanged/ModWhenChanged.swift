@@ -70,7 +70,10 @@ class ModWhenChanged {
                 if field == nil {
                     let newField = NoteField(def: def, statusConfig: statusConfig)
                     newField.value = newValue
-                    modNote.addField(newField)
+                    let addOK = modNote.addField(newField)
+                    if !addOK {
+                        print("Unable to add field to note")
+                    }
                 } else {
                     field!.value = newValue
                 }
@@ -146,7 +149,10 @@ class ModWhenChanged {
             }
         case .modify:
             modNote.copyFields(to: startingNote)
-            io.writeNote(startingNote)
+            let writeOK = io.writeNote(startingNote)
+            if !writeOK {
+                print ("Write Note failed!")
+            }
             return (outcome, startingNote)
         }
     } // end modIfChanged method

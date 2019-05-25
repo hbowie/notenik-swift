@@ -178,6 +178,11 @@ class Note: Comparable, NSCopying {
         return setField(label: LabelConstants.seq, value: seq)
     }
     
+    /// Set the Note's Code value
+    func setCode(_ code: String) -> Bool {
+        return setField(label: LabelConstants.code, value: code)
+    }
+    
     /// Set the Note's Body value
     func setBody(_ body: String) -> Bool {
         return setField(label: LabelConstants.body, value: body)
@@ -195,6 +200,16 @@ class Note: Comparable, NSCopying {
             return val as! AuthorValue
         } else {
             return AuthorValue(val.value)
+        }
+    }
+    
+    /// Return the Note's Code Value
+    var code: LongTextValue {
+        let val = getFieldAsValue(label: LabelConstants.code)
+        if val is LongTextValue {
+            return val as! LongTextValue
+        } else {
+            return LongTextValue(val.value)
         }
     }
     

@@ -58,7 +58,7 @@ class BodyView: CocoaEditView {
         textView.usesFontPanel = false
         textView.isAutomaticQuoteSubstitutionEnabled = false
         
-        let regularFont = NSFont.userFont(ofSize: 16.0)
+        let regularFont = NSFont.userFont(ofSize: 14.0)
         textView.font = regularFont
         
         // Add the Text View to the Scroll View
