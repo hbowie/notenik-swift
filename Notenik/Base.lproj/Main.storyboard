@@ -269,6 +269,12 @@ CA
                                                 <action selector="menuNoteIncrement:" target="Ady-hI-5gd" id="66V-9N-FPy"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Set Local Link..." id="deb-mi-do2">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="setLocalLink:" target="Ady-hI-5gd" id="VcW-BQ-9uq"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="5ZL-zp-Wne"/>
                                         <menuItem title="Go To Next Note" keyEquivalent="]" id="IvG-LL-jYe" userLabel="Go To Next Note">
                                             <connections>
@@ -659,11 +665,11 @@ CA
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <value key="minSize" type="size" width="480" height="270"/>
-                        <toolbar key="toolbar" implicitIdentifier="D40306C0-D638-4F94-8D78-F3B60FAB80DD" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="bDX-x7-V0g">
+                        <toolbar key="toolbar" implicitIdentifier="D40306C0-D638-4F94-8D78-F3B60FAB80DD" displayMode="iconAndLabel" sizeMode="regular" id="bDX-x7-V0g">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="w8q-4o-bIy"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="uP7-Y2-WeW"/>
-                                <toolbarItem implicitItemIdentifier="F26549F0-21EC-463F-9229-446038A2F902" label="Share" paletteLabel="" image="NSShareTemplate" sizingBehavior="auto" id="z6q-Rn-8x2">
+                                <toolbarItem implicitItemIdentifier="F26549F0-21EC-463F-9229-446038A2F902" label="Share" paletteLabel="Share" image="NSShareTemplate" sizingBehavior="auto" id="z6q-Rn-8x2">
                                     <nil key="toolTip"/>
                                     <button key="view" verticalHuggingPriority="750" id="UHS-eX-f3H">
                                         <rect key="frame" x="0.0" y="14" width="50" height="25"/>
@@ -677,7 +683,7 @@ CA
                                         </connections>
                                     </button>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="57FC933C-64C5-4909-A7E5-39BD65095ABD" label="Custom View" paletteLabel="Custom View" sizingBehavior="auto" id="nQC-YT-8yD">
+                                <toolbarItem implicitItemIdentifier="57FC933C-64C5-4909-A7E5-39BD65095ABD" label="Navigation" paletteLabel="Navigation" sizingBehavior="auto" id="nQC-YT-8yD">
                                     <nil key="toolTip"/>
                                     <segmentedControl key="view" verticalHuggingPriority="750" id="Ngm-9g-E62">
                                         <rect key="frame" x="0.0" y="14" width="101" height="27"/>
@@ -695,10 +701,10 @@ CA
                                         </connections>
                                     </segmentedControl>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="55EE9762-851D-4951-8006-22CE8C8951F1" label="Custom View" paletteLabel="Custom View" sizingBehavior="auto" id="TCK-3s-X5T">
+                                <toolbarItem implicitItemIdentifier="55EE9762-851D-4951-8006-22CE8C8951F1" label="Add / Delete" paletteLabel="Add / Delete" sizingBehavior="auto" id="TCK-3s-X5T">
                                     <nil key="toolTip"/>
                                     <segmentedControl key="view" verticalHuggingPriority="750" id="WwU-9W-6dI">
-                                        <rect key="frame" x="1" y="14" width="75" height="27"/>
+                                        <rect key="frame" x="0.0" y="14" width="75" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="vnT-ea-Zqa">
                                             <font key="font" metaFont="system"/>
@@ -712,14 +718,14 @@ CA
                                         </segmentedCell>
                                     </segmentedControl>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="91D94A37-757B-459C-AA9F-64ACAD9F6283" label="" paletteLabel="Toolbar Item" toolTip="Open the Note's Link in your Web Browser" tag="-1" image="NSFollowLinkFreestandingTemplate" id="QaA-dG-0Br">
+                                <toolbarItem implicitItemIdentifier="91D94A37-757B-459C-AA9F-64ACAD9F6283" label="Launch Link" paletteLabel="Launch Link" toolTip="Open the Note's Link in your Web Browser" tag="-1" image="NSFollowLinkFreestandingTemplate" id="QaA-dG-0Br">
                                     <size key="minSize" width="14" height="14"/>
                                     <size key="maxSize" width="14" height="14"/>
                                     <connections>
                                         <action selector="launchLink:" target="Oky-zY-oP4" id="bpu-hT-ocE"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="DFDC60A3-7B44-45B7-884F-821DB14F1234" label="" paletteLabel="" sizingBehavior="auto" id="0br-Uy-6m2">
+                                <toolbarItem implicitItemIdentifier="DFDC60A3-7B44-45B7-884F-821DB14F1234" label="Save" paletteLabel="Save" sizingBehavior="auto" id="0br-Uy-6m2">
                                     <nil key="toolTip"/>
                                     <button key="view" verticalHuggingPriority="750" id="fbp-L5-Kpu">
                                         <rect key="frame" x="0.0" y="14" width="47" height="25"/>
@@ -747,7 +753,7 @@ CA
                                         <action selector="displayPrefs:" target="B8D-0N-5wS" id="88b-sy-JM3"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="0B5C72E8-6D42-4C35-B8E2-DF9C58E7FC87" label="Custom View" paletteLabel="Custom View" sizingBehavior="auto" id="kQO-NK-gn9">
+                                <toolbarItem implicitItemIdentifier="0B5C72E8-6D42-4C35-B8E2-DF9C58E7FC87" label="Search" paletteLabel="Search" sizingBehavior="auto" id="kQO-NK-gn9">
                                     <nil key="toolTip"/>
                                     <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="7V6-9K-EEY">
                                         <rect key="frame" x="0.0" y="14" width="96" height="22"/>

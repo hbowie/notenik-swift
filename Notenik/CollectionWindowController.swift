@@ -18,6 +18,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     @IBOutlet var searchField: NSSearchField!
     
     let juggler:             CollectionJuggler = CollectionJuggler.shared
+    let osdir = OpenSaveDirectory.shared
+    
     var notenikIO:           NotenikIO?
     var windowNumber         = 0
     
@@ -192,6 +194,53 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         reloadViews()
         (note, position) = io!.firstNote()
         select(note: note, position: position, source: .nav)
+    }
+    
+    /// Ask the user to pick a file or folder and set the link field to the local URL
+    @IBAction func setLocalLink(_ sender: Any) {
+
+        // See if we have what we need to proceed
+        guard !pendingMod else { return }
+        guard io != nil && io!.collectionOpen else { return }
+        guard let noteIO = io else { return }
+        let (note, _) = noteIO.getSelectedNote()
+        guard let selNote = note else { return }
+        guard noteIO.collection!.dict.contains(LabelConstants.link) else { return }
+
+        // Ask the user to pick a local file or folder
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Select a File or Folder"
+        let parent = osdir.directoryURL
+        if parent != nil {
+            openPanel.directoryURL = parent!
+        }
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = true
+        openPanel.canChooseFiles = true
+        openPanel.allowsMultipleSelection = false
+        let userChoice = openPanel.runModal()
+        guard userChoice == .OK else { return }
+        
+        // Now let's make the appropriate updates
+        let localLink = openPanel.url!.absoluteString
+        if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
+            editVC!.setLink(localLink)
+        } else {
+            let setOK = selNote.setLink(localLink)
+            if !setOK {
+                logUnlikelyProblem("Attempt to set link value for selected note failed!")
+            }
+            editVC!.populateFields(with: selNote)
+            let writeOK = noteIO.writeNote(selNote)
+            if !writeOK {
+                logUnlikelyProblem("Attempted write of updated note failed!")
+            }
+            noteModified(updatedNote: selNote)
+            reloadViews()
+            select(note: selNote, position: nil, source: .action)
+        }
     }
     
     /// Close the note, either by applying the recurs rule, or changing the status to 9
@@ -1065,6 +1114,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         }
         alert.addButton(withTitle: "OK")
         _ = alert.runModal()
+    }
+    
+    func logUnlikelyProblem(_ msg: String) {
+        Logger.shared.log(skip: false, indent: 0, level: .concerning, message: msg)
     }
     
     /// Finish up batch operations by reloading the lists and selecting the first note

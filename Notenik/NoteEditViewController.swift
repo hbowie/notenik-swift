@@ -35,6 +35,7 @@ class NoteEditViewController: NSViewController {
     var dateView:   DateView?
     var recursView: CocoaEditView?
     var statusView: StatusView?
+    var linkView:   LinkView?
     
     var window: CollectionWindowController? {
         get {
@@ -82,6 +83,7 @@ class NoteEditViewController: NSViewController {
         dateView = nil
         recursView = nil
         statusView = nil
+        linkView = nil
         
         // Build the label and value views for each field in the dictionary
         for def in defs {
@@ -116,6 +118,8 @@ class NoteEditViewController: NSViewController {
             recursView = editView
         } else if label.commonForm == LabelConstants.statusCommon {
             statusView = editView as? StatusView
+        } else if label.commonForm == LabelConstants.linkCommon {
+            linkView = editView as? LinkView
         }
     }
     
@@ -170,6 +174,13 @@ class NoteEditViewController: NSViewController {
             i += 1
         }
         collectionWindowController!.pendingEdits = true
+    }
+    
+    /// Set the link field on the edit screen
+    func setLink(_ localLink: String) {
+        if linkView != nil {
+            linkView!.text = localLink
+        }
     }
     
     /// Close the note, either by applying the recurs rule, or changing the status to 9
