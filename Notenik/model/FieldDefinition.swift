@@ -47,7 +47,9 @@ class FieldDefinition {
         switch fieldLabel.commonForm {
         case "author", "by", "creator":
             fieldType = FieldType.author
-        case "body", "teaser":
+        case "body":
+            fieldType = FieldType.body
+        case "teaser":
             fieldType = FieldType.longText
         case "code":
             fieldType = FieldType.code

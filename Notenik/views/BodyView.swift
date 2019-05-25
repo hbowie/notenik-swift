@@ -1,8 +1,8 @@
 //
-//  LinkView.swift
+//  BodyView.swift
 //  Notenik
 //
-//  Created by Herb Bowie on 5/20/19.
+//  Created by Herb Bowie on 5/24/19.
 //  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
@@ -11,7 +11,7 @@
 
 import Cocoa
 
-class LinkView: CocoaEditView {
+class BodyView: CocoaEditView {
     
     var scrollView: NSScrollView!
     var textView: NSTextView!
@@ -40,8 +40,7 @@ class LinkView: CocoaEditView {
         scrollView = NSScrollView(frame: scrollRect)
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
-        scrollView.autoresizingMask = [.width]
-        scrollView.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
+        scrollView.autoresizingMask = [.width, .height]
         
         // Set up the Text View
         let contentSize = scrollView.contentSize
@@ -68,4 +67,3 @@ class LinkView: CocoaEditView {
     }
     
 }
-

@@ -59,6 +59,10 @@
 		9C4018A422838F4F002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
 		9C4018A522838F4F002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
 		9C4018A62283B68B002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
+		9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BA2298B87C003F6589 /* BodyView.swift */; };
+		9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BA2298B87C003F6589 /* BodyView.swift */; };
+		9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BD2298BC87003F6589 /* CodeView.swift */; };
+		9C45E8BF2298BC87003F6589 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BD2298BC87003F6589 /* CodeView.swift */; };
 		9C553C612266A0D50008D176 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553C602266A0D50008D176 /* StatusView.swift */; };
 		9C553C622266A0D50008D176 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553C602266A0D50008D176 /* StatusView.swift */; };
 		9C58BCF9225EF11B008E57D1 /* Notenik.help in Resources */ = {isa = PBXBuildFile; fileRef = 9C58BCF8225EF11B008E57D1 /* Notenik.help */; };
@@ -364,6 +368,8 @@
 		9C2AE519220A044800AE8BEE /* TagsNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNodeType.swift; sourceTree = "<group>"; };
 		9C2AE51D220A1ED700AE8BEE /* BunchOfNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunchOfNotes.swift; sourceTree = "<group>"; };
 		9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefs.swift; sourceTree = "<group>"; };
+		9C45E8BA2298B87C003F6589 /* BodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyView.swift; sourceTree = "<group>"; };
+		9C45E8BD2298BC87003F6589 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		9C553C602266A0D50008D176 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		9C58BCF8225EF11B008E57D1 /* Notenik.help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Notenik.help; path = "Notenik Help/Notenik.help"; sourceTree = SOURCE_ROOT; };
 		9C60E6CE21F64B3B00C332ED /* Notenik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notenik.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -760,10 +766,12 @@
 		9CD3261E2233063100D06B77 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				9C45E8BA2298B87C003F6589 /* BodyView.swift */,
 				9C02D2AF2267F29400587EDF /* Calendar.storyboard */,
 				9C02D2B22267F41200587EDF /* CalendarWindowController.swift */,
 				9C02D2B52267F5E700587EDF /* CalendarViewController.swift */,
 				9CD3261F2233068F00D06B77 /* CocoaEditView.swift */,
+				9C45E8BD2298BC87003F6589 /* CodeView.swift */,
 				9C02D2AD2267D46000587EDF /* DateView.swift */,
 				9C79BDAF226E368800796E93 /* LabelView.swift */,
 				9CD358882293C42B00C9203F /* LinkView.swift */,
@@ -994,6 +1002,7 @@
 				9C060687228E0A9300CB8C10 /* RealmIO.swift in Sources */,
 				9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
 				9C60E75321F651E500C332ED /* Provider.swift in Sources */,
+				9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */,
 				9C60E75C21F651E500C332ED /* RecursValue.swift in Sources */,
 				9C60E74A21F651E500C332ED /* Realm.swift in Sources */,
 				9CF256CD21FD175E00D9F06A /* CollectionWindowController.swift in Sources */,
@@ -1045,6 +1054,7 @@
 				9C96BAA0227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9C60E78921F651E500C332ED /* NoteLineParser.swift in Sources */,
 				9CF1193E225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
+				9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */,
 				9C2AE514220A033300AE8BEE /* TagsNode.swift in Sources */,
 				9CF1193B225822870015AE91 /* CollectionPrefsWindowController.swift in Sources */,
 				9C60E78321F651E500C332ED /* LineReader.swift in Sources */,
@@ -1174,6 +1184,7 @@
 				9C60E77F21F651E500C332ED /* LabelConstants.swift in Sources */,
 				9C60E70421F650B800C332ED /* StringUtils.swift in Sources */,
 				9C055D4F2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
+				9C45E8BF2298BC87003F6589 /* CodeView.swift in Sources */,
 				9C60E77321F651E500C332ED /* LinkValue.swift in Sources */,
 				9C60E76D21F651E500C332ED /* StatusValueConfig.swift in Sources */,
 				9C2AE525220A34C300AE8BEE /* CollectionJuggler.swift in Sources */,
@@ -1254,6 +1265,7 @@
 				9CB60BC422650A89003B5655 /* ShareWindowController.swift in Sources */,
 				9C21DB8221F82DB600A5A08C /* NoteDisplay.swift in Sources */,
 				9C60E6F021F64B3C00C332ED /* NotenikUITests.swift in Sources */,
+				9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */,
 				9C60E7A221F6520100C332ED /* FileIO.swift in Sources */,
 				9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9C60E75821F651E500C332ED /* StringValue.swift in Sources */,

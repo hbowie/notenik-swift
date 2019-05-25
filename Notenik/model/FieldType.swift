@@ -12,20 +12,21 @@ enum FieldType: Int {
     case defaultType    = 0
     case string         = 1
     case title          = 2
-    case longText       = 3
-    case tags           = 4
-    case link           = 5
-    case label          = 6
-    case author         = 7
-    case date           = 8
-    case rating         = 9
-    case status         = 10
-    case seq            = 11
-    case index          = 12
-    case recurs         = 13
-    case code           = 14
-    case dateAdded      = 15
-    case work           = 16
-    case pickFromList   = 17
+    case body           = 3
+    case longText       = 4
+    case tags           = 5
+    case link           = 6
+    case label          = 7
+    case author         = 8
+    case date           = 9
+    case rating         = 10
+    case status         = 11
+    case seq            = 12
+    case index          = 13
+    case recurs         = 14
+    case code           = 15
+    case dateAdded      = 16
+    case work           = 17
+    case pickFromList   = 18
 }
 

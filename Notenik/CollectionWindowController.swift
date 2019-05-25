@@ -855,14 +855,75 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         select(note: note, position: position, source: .nav)
     }
     
+    /// Import the notes from another Notenik Collection
+    @IBAction func importNotenik(_ sender: Any) {
+
+        // See if we're ready to take action
+        let nio = guardForCollectionAction()
+        guard let noteIO = nio else { return }
+        
+        // Ask the user for an import location
+        let openPanel = juggler.prepCollectionOpenPanel()
+        openPanel.canCreateDirectories = false
+        let userChoice = openPanel.runModal()
+        guard userChoice == .OK else { return }
+
+        let importIO: NotenikIO = FileIO()
+        let importRealm = importIO.getDefaultRealm()
+        let importURL = openPanel.url!
+        importRealm.path = ""
+        let importCollection = importIO.openCollection(realm: importRealm, collectionPath: importURL.path)
+        guard importCollection != nil else {
+            blockingAlert(msg: "The import location does not seem to be a valid Notenik Collection",
+                          info: "Attempted to import from \(importURL.path)")
+            return
+        }
+
+        // OK, let's import
+        var imported = 0
+        var rejected = 0
+        var (importNote, importPosition) = importIO.firstNote()
+        while importNote != nil && importPosition.valid {
+            let noteCopy = importNote!.copy() as! Note
+            noteCopy.collection = noteIO.collection!
+            let (importedNote, _) = noteIO.addNote(newNote: noteCopy)
+            if importedNote == nil {
+                rejected += 1
+                Logger.shared.log(skip: false, indent: 0, level: .severe,
+                                  message: "Could not import note titled '\(importNote!.title.value)'")
+            } else {
+                imported += 1
+            }
+            (importNote, importPosition) = importIO.nextNote(importPosition)
+        }
+        
+        if rejected > 0 {
+            blockingAlert(msg: "\(rejected) Notes could not be imported", info: "See the Log Window for details")
+        }
+        let ok = imported > 0
+        informUserOfImportExportResults(operation: "import", ok: ok, numberOfNotes: imported, path: importURL.path)
+        
+        finishBatchOperation()
+    }
+    
     /// Export Notes to a Comma-Separated Values File
     @IBAction func exportCSV(_ sender: Any) {
+        
+        // See if we're ready to take action
+        let nio = guardForCollectionAction()
+        guard nio != nil else { return }
+        
         guard let fileURL = getExportURL(fileExt: "csv") else { return }
         exportDelimited(fileURL: fileURL, sep: .comma)
     }
     
     /// Export Notes to a Tab-Delimited File
     @IBAction func exportTabDelim(_ sender: Any) {
+        
+        // See if we're ready to take action
+        let nio = guardForCollectionAction()
+        guard nio != nil else { return }
+        
         guard let fileURL = getExportURL(fileExt: "tab") else { return }
         exportDelimited(fileURL: fileURL, sep: .tab)
     }
@@ -895,20 +956,67 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     /// Export a text file with fields separated by something-or-other
     func exportDelimited(fileURL: URL, sep: DelimitedSeparator) {
         let notesExported = io!.exportDelimited(fileURL: fileURL, sep: sep)
+        let ok = notesExported > 0
+        informUserOfImportExportResults(operation: "export", ok: ok, numberOfNotes: notesExported, path: fileURL.path)
+    }
+    
+    /// Export the current collection in Notenik format.
+    @IBAction func exportNotenik(_ sender: Any) {
         
+        // See if we're ready to take action
+        let nio = guardForCollectionAction()
+        guard let noteIO = nio else { return }
+        
+        let collectionURL = noteIO.collection!.collectionFullPathURL!
+        
+        let openPanel = juggler.prepCollectionOpenPanel()
+        let userChoice = openPanel.runModal()
+        guard userChoice == .OK else { return }
+        
+        let exportURL = openPanel.url!
+        
+        var ok = true
+        var numberOfNotes = 0
+        do {
+            try FileManager.default.removeItem(at: exportURL)
+            try FileManager.default.copyItem(at: collectionURL, to: exportURL)
+            numberOfNotes = noteIO.notesCount
+        } catch {
+            Logger.shared.log(skip: true, indent: 0, level: .severe,
+                              message: "Could not Export current Collection to selected folder")
+            ok = false
+        }
+        informUserOfImportExportResults(operation: "export", ok: ok, numberOfNotes: numberOfNotes, path: exportURL.path)
+    }
+    
+    /// Let the user know the results of an import/export operation
+    ///
+    /// - Parameters:
+    ///   - operation: Either "import" or "export"
+    ///   - ok: Was the operation successful?
+    ///   - numberOfNotes: Number of notes imported or exported.
+    ///   - path: The path to the export destination or the import source.
+    func informUserOfImportExportResults(operation: String, ok: Bool, numberOfNotes: Int, path: String) {
         let alert = NSAlert()
-        if notesExported >= 0 {
+        if ok {
             alert.alertStyle = .informational
-            alert.messageText = "\(notesExported) Notes exported"
-            alert.informativeText = "Notes written to '\(fileURL.path)'"
+            alert.messageText = "\(numberOfNotes) Notes \(operation)ed"
+            if operation == "import" {
+                alert.informativeText = "Notes imported from '\(path)'"
+            } else {
+                alert.informativeText = "Notes exported to \(path)"
+            }
         } else {
             alert.alertStyle = .critical
-            alert.messageText = "Problems exporting to disk"
-            alert.informativeText = "Check Log for possible details"
+            if operation == "import" {
+                alert.messageText = "Problems importing from \(path)"
+            } else {
+                alert.messageText = "Problems exporting to \(path)"
+            }
+            alert.informativeText = "Check Log Window for possible details"
         }
         alert.addButton(withTitle: "OK")
         alert.runModal()
-        
     }
     
     // ----------------------------------------------------------------------------------
@@ -940,5 +1048,29 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         let outcome = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return nil }
         return io
+    }
+    
+    /// Notify the user via a modal alert box that something has gone wrong,
+    /// and the requested operation cannot be completed.
+    ///
+    /// - Parameters:
+    ///   - msg: The message to be displayed.
+    ///   - info: Optional additional informative text to be displayed.
+    func blockingAlert(msg: String, info: String?) {
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = msg
+        if info != nil && info!.count > 0 {
+            alert.informativeText = info!
+        }
+        alert.addButton(withTitle: "OK")
+        _ = alert.runModal()
+    }
+    
+    /// Finish up batch operations by reloading the lists and selecting the first note
+    func finishBatchOperation() {
+        reloadViews()
+        let (note, position) = io!.firstNote()
+        select(note: note, position: position, source: .nav)
     }
 }

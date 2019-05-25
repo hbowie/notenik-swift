@@ -136,6 +136,12 @@
                                                             <action selector="importDelimited:" target="Ady-hI-5gd" id="7kH-T8-AFP"/>
                                                         </connections>
                                                     </menuItem>
+                                                    <menuItem title="Notenik" id="Oio-hl-Bgc">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="importNotenik:" target="Ady-hI-5gd" id="Aaw-Dm-0eU"/>
+                                                        </connections>
+                                                    </menuItem>
                                                 </items>
                                             </menu>
                                         </menuItem>
@@ -147,6 +153,12 @@
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="exportCSV:" target="Ady-hI-5gd" id="wW2-zM-gxb"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Notenik" id="XCX-rd-6ov">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="exportNotenik:" target="Ady-hI-5gd" id="NLP-Gh-cGv"/>
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem title="Tab-Delimited" id="iGe-UX-72e" userLabel="Tab-Delimited">
