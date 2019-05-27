@@ -41,7 +41,8 @@ class LinkView: CocoaEditView {
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
         scrollView.autoresizingMask = [.width]
-        scrollView.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
+        let height = AppPrefs.shared.getViewHeight(lines: 3.0)
+        scrollView.heightAnchor.constraint(equalToConstant: height).isActive = true
         
         // Set up the Text View
         let contentSize = scrollView.contentSize
@@ -59,8 +60,7 @@ class LinkView: CocoaEditView {
         textView.usesFontPanel = false
         textView.isAutomaticQuoteSubstitutionEnabled = false
         
-        let regularFont = NSFont.userFixedPitchFont(ofSize: 14.0)
-        textView.font = regularFont
+        AppPrefs.shared.setFixedPitchFont(view: textView)
         
         // Add the Text View to the Scroll View
         scrollView.documentView = textView

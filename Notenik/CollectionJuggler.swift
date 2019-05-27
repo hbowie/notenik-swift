@@ -21,6 +21,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     private let defaults = UserDefaults.standard
     let home = FileManager.default.homeDirectoryForCurrentUser
     
+    let appPrefs = AppPrefs.shared
+    
     let storyboard:      NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
     let logStoryboard:   NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
@@ -232,6 +234,33 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
         
         return openOK
+    }
+    
+    
+    /// Increase the font size used on the Edit panel
+    func viewIncreaseEditFontSize() {
+        appPrefs.increaseEditFontSize(by: 1.0)
+        adjustEditWindows()
+    }
+    
+    /// Decrease the font size used on the Edit Panel
+    func viewDecreaseEditFontSize() {
+        appPrefs.decreaseEditFontSize(by: 1.0)
+        adjustEditWindows()
+    }
+    
+    func viewResetEditFontSize() {
+        appPrefs.resetEditFontSize()
+        adjustEditWindows()
+    }
+    
+    /// Adjust all the open windows to reflect any changes in the UI appearance.
+    func adjustEditWindows() {
+        for window in windows {
+            window.editVC!.containerViewBuilt = false
+            window.editVC!.makeEditView()
+            window.editVC!.populateFieldsWithSelectedNote()
+        }
     }
     
     /// Let the calling class know that the user has completed modifications

@@ -16,6 +16,8 @@ class NoteEditViewController: NSViewController {
     
     @IBOutlet var parentView: NSView!
     
+    var subView: NSView?
+    
     var collectionWindowController: CollectionWindowController?
     var notenikIO: NotenikIO?
     var modWhenChanged: ModWhenChanged?
@@ -129,7 +131,12 @@ class NoteEditViewController: NSViewController {
         
         gridView.translatesAutoresizingMaskIntoConstraints = false
 
-        parentView.addSubview(gridView!)
+        if subView == nil {
+            parentView.addSubview(gridView)
+        } else {
+            parentView.replaceSubview(subView!, with: gridView)
+        }
+        subView = gridView
         
         // Pin the grid to the edges of our main view
         gridView!.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 8).isActive = true
@@ -140,7 +147,8 @@ class NoteEditViewController: NSViewController {
     
     /// Make a View to contain a field label
     func makeLabelView(with label: FieldLabel) -> NSView {
-        let vw = NSTextField(labelWithString: label.properForm + ": ")
+        let str = AppPrefs.shared.makeUserAttributedString(text: label.properForm + ": ")
+        let vw = NSTextField(labelWithAttributedString: str)
         return vw
     
     }
@@ -154,7 +162,14 @@ class NoteEditViewController: NSViewController {
         
         selectedNote = note
         
-        populateFields(with: note)
+        populateFieldsWithSelectedNote()
+    }
+    
+    /// Populate the Edit View's fields with data from the currently selected Note.
+    func populateFieldsWithSelectedNote() {
+        if selectedNote != nil {
+            populateFields(with: selectedNote!)
+        }
     }
     
     /// Populate the Edit View fields with values from the given Note

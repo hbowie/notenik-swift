@@ -577,6 +577,23 @@ CA
                                                 <action selector="toggleFullScreen:" target="Ady-hI-5gd" id="dU3-MA-1Rq"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="UcZ-8K-reD"/>
+                                        <menuItem title="Increase Edit Font Size" keyEquivalent="=" id="1vR-eb-NBn">
+                                            <connections>
+                                                <action selector="viewIncreaseEditFontSize:" target="Voe-Tx-rLC" id="KoV-L9-cbW"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Decrease Edit Font Size" keyEquivalent="-" id="qgr-ma-NlF">
+                                            <connections>
+                                                <action selector="viewDecreaseEditFontSize:" target="Voe-Tx-rLC" id="H2K-nc-Sem"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reset Edit Font Size" id="5WM-S2-RNE" userLabel="Reset Edit Font Size">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="viewResetEditFontSize:" target="Voe-Tx-rLC" id="x7R-bM-cHH"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

@@ -22,6 +22,9 @@
 		9C09E1762248601D0046D50D /* notenik.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 9C09E1752248601D0046D50D /* notenik.iconset */; };
 		9C0B25E5224D6548003AAF21 /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */; };
 		9C0B25E6224D654E003AAF21 /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
+		9C10311D229A134E009CCE3B /* AppPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C10311C229A134E009CCE3B /* AppPrefs.swift */; };
+		9C10311E229A134E009CCE3B /* AppPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C10311C229A134E009CCE3B /* AppPrefs.swift */; };
+		9C10311F229A134E009CCE3B /* AppPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C10311C229A134E009CCE3B /* AppPrefs.swift */; };
 		9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49022134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49122134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
@@ -358,6 +361,7 @@
 		9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTabsViewController.swift; sourceTree = "<group>"; };
 		9C060686228E0A9300CB8C10 /* RealmIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmIO.swift; sourceTree = "<group>"; };
 		9C09E1752248601D0046D50D /* notenik.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = notenik.iconset; sourceTree = "<group>"; };
+		9C10311C229A134E009CCE3B /* AppPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrefs.swift; sourceTree = "<group>"; };
 		9C12D48E22134970003136B2 /* NoteSelectionSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSelectionSource.swift; sourceTree = "<group>"; };
 		9C21749C22024D0C00B4BF48 /* Down.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Down.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C21749E22024E2900B4BF48 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../notenik-swift-intro"; sourceTree = "<group>"; };
@@ -734,6 +738,7 @@
 		9C832A00224ABDBD007DA6FC /* prefs */ = {
 			isa = PBXGroup;
 			children = (
+				9C10311C229A134E009CCE3B /* AppPrefs.swift */,
 				9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */,
 				9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */,
 				9CE32503224D48180051CA1F /* Preferences.storyboard */,
@@ -988,6 +993,7 @@
 				9C60E7A021F6520100C332ED /* FileIO.swift in Sources */,
 				9CD358892293C42B00C9203F /* LinkView.swift in Sources */,
 				9C60E70221F650B800C332ED /* StringUtils.swift in Sources */,
+				9C10311D229A134E009CCE3B /* AppPrefs.swift in Sources */,
 				9CF11932225802AA0015AE91 /* ModView.swift in Sources */,
 				9C4018A422838F4F002C2B3D /* DisplayPrefs.swift in Sources */,
 				9C97C1B02278F46100A43913 /* CollectionRequestType.swift in Sources */,
@@ -1138,6 +1144,7 @@
 				9C60E70921F650B800C332ED /* FileName.swift in Sources */,
 				9C60E7C421F6525F00C332ED /* DateValueTests.swift in Sources */,
 				9C0B25E5224D6548003AAF21 /* LogWindowController.swift in Sources */,
+				9C10311E229A134E009CCE3B /* AppPrefs.swift in Sources */,
 				9C4018A62283B68B002C2B3D /* DisplayPrefs.swift in Sources */,
 				9C60E7B921F6525F00C332ED /* LinkValueTests.swift in Sources */,
 				9C60E78D21F651E500C332ED /* FieldDictionary.swift in Sources */,
@@ -1183,6 +1190,7 @@
 			files = (
 				9C60E77F21F651E500C332ED /* LabelConstants.swift in Sources */,
 				9C60E70421F650B800C332ED /* StringUtils.swift in Sources */,
+				9C10311F229A134E009CCE3B /* AppPrefs.swift in Sources */,
 				9C055D4F2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
 				9C45E8BF2298BC87003F6589 /* CodeView.swift in Sources */,
 				9C60E77321F651E500C332ED /* LinkValue.swift in Sources */,

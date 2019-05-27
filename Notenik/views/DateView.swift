@@ -14,6 +14,8 @@ import Cocoa
 /// Custom Edit View for a Date
 class DateView: CocoaEditView {
     
+    let appPrefs = AppPrefs.shared
+    
     var stack: NSStackView!
     var textField: NSTextField!
     var calendarButton: NSButton!
@@ -48,17 +50,25 @@ class DateView: CocoaEditView {
         textField = NSTextField()
         controls.append(textField)
         
+        let todayTitle = appPrefs.makeUserAttributedString(text: "Today")
         todayButton = NSButton(title: "Today", target: self, action: #selector(todayButtonClicked))
+        todayButton.attributedTitle = todayTitle
         controls.append(todayButton)
         
+        let calendarTitle = appPrefs.makeUserAttributedString(text: "Calendar")
         calendarButton = NSButton(title: "Calendar", target: self, action: #selector(calendarButtonClicked))
+        calendarButton.attributedTitle = calendarTitle
         controls.append(calendarButton)
         
+        let recurTitle = appPrefs.makeUserAttributedString(text: "Recur")
         recurButton = NSButton(title: "Recur", target: self, action: #selector(recurButtonClicked))
+        recurButton.attributedTitle = recurTitle
         controls.append(recurButton)
         
         stack = NSStackView(views: controls)
         stack.orientation = .horizontal
+        
+        AppPrefs.shared.setRegularFont(object: textField)
         
     }
     

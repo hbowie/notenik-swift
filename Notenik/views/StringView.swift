@@ -33,12 +33,7 @@ class StringView: CocoaEditView {
     
     func buildView() {
         textField = NSTextField(string: "")
-        // textField.translatesAutoresizingMaskIntoConstraints = true
-        // textField.autoresizingMask = [.width]
-        // textField.isEditable = true
-        // textField.isSelectable = true
-        // textField.alignment = .left
-        // textField.preferredMaxLayoutWidth = 300
+        AppPrefs.shared.setRegularFont(object: textField)
     }
     
 }

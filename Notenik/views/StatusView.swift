@@ -44,8 +44,11 @@ class StatusView: CocoaEditView {
         for option in config.statusOptions {
             if option.count > 0 {
                 menu.addItem(withTitle: option)
+                let menuItem = menu.item(at: menu.numberOfItems - 1)
+                menuItem!.attributedTitle = AppPrefs.shared.makeUserAttributedString(text: option)
             }
         }
+        AppPrefs.shared.setRegularFont(object: menu!.menu!)
     }
     
     /// Close the note by selecting the last status value in the list

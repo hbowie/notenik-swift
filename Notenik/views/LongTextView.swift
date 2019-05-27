@@ -41,7 +41,8 @@ class LongTextView: CocoaEditView {
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
         scrollView.autoresizingMask = [.width, .height]
-        scrollView.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
+        let height = AppPrefs.shared.getViewHeight(lines: 5.0)
+        scrollView.heightAnchor.constraint(equalToConstant: height).isActive = true
         
         // Set up the Text View
         let contentSize = scrollView.contentSize
@@ -59,8 +60,7 @@ class LongTextView: CocoaEditView {
         textView.usesFontPanel = false
         textView.isAutomaticQuoteSubstitutionEnabled = false
         
-        // let regularFont = NSFont.userFont(ofSize: 16.0)
-        // textView.font = regularFont
+        AppPrefs.shared.setRegularFont(object: textView)
         
         // Add the Text View to the Scroll View
         scrollView.documentView = textView

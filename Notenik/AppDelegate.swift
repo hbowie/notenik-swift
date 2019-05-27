@@ -59,6 +59,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         juggler.openParentRealm()
     }
     
+    @IBAction func viewIncreaseEditFontSize(_ sender: Any) {
+        juggler.viewIncreaseEditFontSize()
+    }
+    
+    @IBAction func viewDecreaseEditFontSize(_ sender: Any) {
+        juggler.viewDecreaseEditFontSize()
+    }
+    
+    @IBAction func viewResetEditFontSize(_ sender: Any) {
+        juggler.viewResetEditFontSize()
+    }
+    
     @IBAction func menuOpenHelpNotes(_ sender: NSMenuItem) {
         juggler.openHelpNotes()
     }
