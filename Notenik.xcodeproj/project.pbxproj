@@ -253,6 +253,7 @@
 		9CC0F5A8227629C4002683F8 /* BooleanValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC0F5A7227629C4002683F8 /* BooleanValue.swift */; };
 		9CC0F5A9227629C4002683F8 /* BooleanValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC0F5A7227629C4002683F8 /* BooleanValue.swift */; };
 		9CC0F5AA227629C4002683F8 /* BooleanValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC0F5A7227629C4002683F8 /* BooleanValue.swift */; };
+		9CC41CD5229CA61700E92A66 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9CC41CD4229CA61700E92A66 /* Credits.rtf */; };
 		9CC78E692283565E00640477 /* DisplayPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CC78E682283565E00640477 /* DisplayPrefs.storyboard */; };
 		9CC78E6A2283565E00640477 /* DisplayPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CC78E682283565E00640477 /* DisplayPrefs.storyboard */; };
 		9CC78E6C2283587300640477 /* DisplayPrefsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC78E6B2283587300640477 /* DisplayPrefsWindowController.swift */; };
@@ -468,6 +469,7 @@
 		9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTagsViewController.swift; sourceTree = "<group>"; };
 		9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
 		9CC0F5A7227629C4002683F8 /* BooleanValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooleanValue.swift; sourceTree = "<group>"; };
+		9CC41CD4229CA61700E92A66 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9CC78E682283565E00640477 /* DisplayPrefs.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DisplayPrefs.storyboard; sourceTree = "<group>"; };
 		9CC78E6B2283587300640477 /* DisplayPrefsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefsWindowController.swift; sourceTree = "<group>"; };
 		9CC78E6E228358A400640477 /* DisplayPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefsViewController.swift; sourceTree = "<group>"; };
@@ -568,6 +570,7 @@
 		9C60E6D021F64B3B00C332ED /* Notenik */ = {
 			isa = PBXGroup;
 			children = (
+				9CC41CD4229CA61700E92A66 /* Credits.rtf */,
 				9C60E6D721F64B3C00C332ED /* Main.storyboard */,
 				9C60E6D121F64B3B00C332ED /* AppDelegate.swift */,
 				9C9094C42249A664002207EB /* NoteDocumentController.swift */,
@@ -945,6 +948,7 @@
 				9C09E1762248601D0046D50D /* notenik.iconset in Resources */,
 				9C21749F22024E2900B4BF48 /* notenik-swift-intro in Resources */,
 				9CF11937225821670015AE91 /* CollectionPrefs.storyboard in Resources */,
+				9CC41CD5229CA61700E92A66 /* Credits.rtf in Resources */,
 				9CE32504224D48180051CA1F /* Preferences.storyboard in Resources */,
 				9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */,
 				9C58BCF9225EF11B008E57D1 /* Notenik.help in Resources */,
