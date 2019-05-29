@@ -4,9 +4,9 @@ Seq:    9
 
 Tags:   +, -, edit, minus sign, ok, plus sign
 
-Body:   
- 
-The Display tab shows you what your Note looks like. Your note is formatted as a web page, and displayed within Notenik using a built-in web browser. If you click on a hyperlink within the display, then the linked page will replace your Note. If you wish to get back to your Note, then click on the Reload button in the Toolbar. If your Note has a Link value, then click on the Launch button to see the linked page within your default web browser, instead of Notenik's internal browser. 
+Date Added: 2017-04-10 22:08:59 +0000
+
+Body:   The Display tab shows you what your Note looks like. Your note is formatted as a web page, and displayed within Notenik using a built-in web browser. If you click on a hyperlink within the display, then the linked page will replace your Note. If you wish to get back to your Note, then click on the Refresh button in the Toolbar. If your Note has a Link value, then click on the Launch Link button in the Toolbar to see the linked page within your default web browser, instead of Notenik's internal browser. 
 
 The Edit tab lets you make changes to the Field Values of a Note. 
 
@@ -17,5 +17,4 @@ Use the '-' (minus) sign on the Toolbar to delete the currently selected Note.
 Click on the OK button on the Toolbar, or click on the Display tab, to complete and save your latest entries on the Edit tab. 
 
 The Note Menu also has equivalent commands, with keyboard shortcuts, to add a New Note or Delete a Note. 
-
 

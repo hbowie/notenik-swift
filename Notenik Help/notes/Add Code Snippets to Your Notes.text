@@ -4,12 +4,8 @@ Seq:    25
 
 Date Added: 2017-10-27 13:02:56
 
-Body:   
- 
-Add a Code field to a Collection in order to store a code snippet as part of each Note in that Collection. 
+Body:   Add a Code field to a Collection in order to store a code snippet as part of each Note in that Collection. 
 
 The code block you enter in a Code field will be formatted on the Display tab enclosed in pre and code tags, so that line breaks will be honored, and the code will be displayed using a monospaced font. 
-
-You may use the Copy Code command on the Note menu to copy the code block for a selected Note to the System Clipboard. 
 
 

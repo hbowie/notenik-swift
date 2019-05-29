@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 3/28/19.
-//  Copyright © 2019 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Cocoa
@@ -15,5 +18,7 @@ class PrefsWindowController: NSWindowController {
     
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
+    
+
 
 }

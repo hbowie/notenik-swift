@@ -19,7 +19,10 @@ class AppPrefs {
     
     let defaults = UserDefaults.standard
     
-    let fontSizeKey = "font-size"
+    let quickDeletesKey = "quick-deletes"
+    let fontSizeKey     = "font-size"
+    
+    var _qd: Bool = false
     
     var _edFS:   Float   = 13.0
     var _edFSCG: CGFloat = 13.0
@@ -32,6 +35,9 @@ class AppPrefs {
     
     /// Private initializer to enforce usage of the singleton instance
     private init() {
+        
+        _qd = defaults.bool(forKey: quickDeletesKey)
+        
         let defaultFontSize = defaults.float(forKey: fontSizeKey)
         if defaultFontSize == 0.0 {
             defaults.set(_edFS, forKey: fontSizeKey)
@@ -39,6 +45,16 @@ class AppPrefs {
             _edFS = defaultFontSize
         }
         deriveRelatedFontFields()
+    }
+    
+    var confirmDeletes: Bool {
+        get {
+            return !_qd
+        }
+        set {
+            _qd = !newValue
+            defaults.set(_qd, forKey: quickDeletesKey)
+        }
     }
     
     var editFontSize: Float {

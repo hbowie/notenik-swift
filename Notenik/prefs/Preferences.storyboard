@@ -29,10 +29,9 @@
         <!--Tab View Controller-->
         <scene sceneID="pqd-gK-cR3">
             <objects>
-                <tabViewController id="QcO-UB-82s" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="0" id="QcO-UB-82s" sceneMemberID="viewController">
                     <tabViewItems>
-                        <tabViewItem label="Files" identifier="" id="jFi-DJ-6Nk"/>
-                        <tabViewItem identifier="" id="LYn-6D-v3b"/>
+                        <tabViewItem label="General" identifier="" id="jFi-DJ-6Nk"/>
                     </tabViewItems>
                     <tabView key="tabView" type="noTabsNoBorder" id="1MM-le-9ts">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
@@ -45,77 +44,86 @@
                     <connections>
                         <outlet property="tabView" destination="1MM-le-9ts" id="zd0-TF-c9g"/>
                         <segue destination="i5j-TU-ObT" kind="relationship" relationship="tabItems" id="bCy-27-nZ3"/>
-                        <segue destination="ZHj-JA-fjk" kind="relationship" relationship="tabItems" id="TQi-zG-b73"/>
                     </connections>
                 </tabViewController>
                 <customObject id="N6Y-LZ-f69" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-447" y="711"/>
         </scene>
-        <!--View Controller-->
+        <!--General Prefs View Controller-->
         <scene sceneID="UK2-Aj-LgG">
             <objects>
-                <viewController id="i5j-TU-ObT" sceneMemberID="viewController">
+                <viewController id="i5j-TU-ObT" customClass="GeneralPrefsViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="SVv-OQ-5hv">
                         <rect key="frame" x="0.0" y="0.0" width="504" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <gridView xPlacement="leading" yPlacement="bottom" rowAlignment="none" translatesAutoresizingMaskIntoConstraints="NO" id="6Fg-gc-hvN">
-                                <rect key="frame" x="0.0" y="211" width="371" height="89"/>
-                                <rows>
-                                    <gridRow id="pzB-ZA-DN7"/>
-                                    <gridRow id="q0u-hx-Fei"/>
-                                    <gridRow id="O6V-kF-frb"/>
-                                </rows>
-                                <columns>
-                                    <gridColumn width="159" id="CtC-T0-1OV"/>
-                                    <gridColumn id="HJn-NQ-J0r"/>
-                                    <gridColumn id="lbK-Qm-XWb"/>
-                                </columns>
-                                <gridCells>
-                                    <gridCell row="pzB-ZA-DN7" column="CtC-T0-1OV" id="Yws-Rj-0dS"/>
-                                    <gridCell row="pzB-ZA-DN7" column="HJn-NQ-J0r" id="aP9-yH-XVP"/>
-                                    <gridCell row="pzB-ZA-DN7" column="lbK-Qm-XWb" id="zxi-Zr-3fr"/>
-                                    <gridCell row="q0u-hx-Fei" column="CtC-T0-1OV" id="exS-Qr-DQO"/>
-                                    <gridCell row="q0u-hx-Fei" column="HJn-NQ-J0r" id="D3s-aZ-EGO"/>
-                                    <gridCell row="q0u-hx-Fei" column="lbK-Qm-XWb" id="A3K-MV-gbf"/>
-                                    <gridCell row="O6V-kF-frb" column="CtC-T0-1OV" id="PNP-2y-85l">
-                                        <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eqy-sv-PMo">
-                                            <rect key="frame" x="-2" y="0.0" width="150" height="17"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="left" title="Number of Recent Files:" id="jgK-CC-hdc">
-                                                <font key="font" usesAppearanceFont="YES"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                    </gridCell>
-                                    <gridCell row="O6V-kF-frb" column="HJn-NQ-J0r" id="GgX-gN-rvz"/>
-                                    <gridCell row="O6V-kF-frb" column="lbK-Qm-XWb" id="u9n-3K-fyJ"/>
-                                </gridCells>
-                            </gridView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jfX-v3-CeP">
+                                <rect key="frame" x="18" y="263" width="109" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="Fyx-5J-vlk"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Confirm Deletes?" id="eJa-1h-07S">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u03-TY-6ei">
+                                <rect key="frame" x="136" y="263" width="350" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Yes - Ask User to Confirm Each Removal of a Note" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="xcr-bf-rhO">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="appPrefsConfirmDeletes:" target="i5j-TU-ObT" id="N48-y3-moe"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zS6-1Z-Jui">
+                                <rect key="frame" x="136" y="241" width="209" height="18"/>
+                                <buttonCell key="cell" type="radio" title="No - Delete Notes Immediately" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="CLw-qO-faG">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="appPrefsConfirmDeletes:" target="i5j-TU-ObT" id="CRA-Jc-Nxh"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n0J-Up-LPW">
+                                <rect key="frame" x="431" y="13" width="59" height="32"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Csu-v2-k3W">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="appPrefsOK:" target="i5j-TU-ObT" id="C3y-YL-Aql"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="6Fg-gc-hvN" firstAttribute="leading" secondItem="SVv-OQ-5hv" secondAttribute="leading" id="642-LY-8mI"/>
-                            <constraint firstItem="6Fg-gc-hvN" firstAttribute="top" secondItem="SVv-OQ-5hv" secondAttribute="top" id="b7T-ra-srK"/>
+                            <constraint firstItem="zS6-1Z-Jui" firstAttribute="top" secondItem="u03-TY-6ei" secondAttribute="bottom" constant="6" symbolic="YES" id="Bg8-Jp-GiH"/>
+                            <constraint firstAttribute="bottom" secondItem="n0J-Up-LPW" secondAttribute="bottom" constant="20" symbolic="YES" id="D8H-UE-yj4"/>
+                            <constraint firstItem="jfX-v3-CeP" firstAttribute="top" secondItem="SVv-OQ-5hv" secondAttribute="top" constant="20" symbolic="YES" id="KqA-SI-JGc"/>
+                            <constraint firstItem="jfX-v3-CeP" firstAttribute="top" secondItem="u03-TY-6ei" secondAttribute="top" id="Q37-fj-GQt"/>
+                            <constraint firstItem="u03-TY-6ei" firstAttribute="leading" secondItem="zS6-1Z-Jui" secondAttribute="leading" id="S4U-at-PAj"/>
+                            <constraint firstItem="u03-TY-6ei" firstAttribute="leading" secondItem="jfX-v3-CeP" secondAttribute="trailing" constant="12" id="WM6-Rh-3TH"/>
+                            <constraint firstAttribute="trailing" secondItem="u03-TY-6ei" secondAttribute="trailing" constant="20" symbolic="YES" id="cSc-II-yca"/>
+                            <constraint firstItem="jfX-v3-CeP" firstAttribute="centerY" secondItem="u03-TY-6ei" secondAttribute="centerY" id="gR8-wH-8Kb"/>
+                            <constraint firstItem="u03-TY-6ei" firstAttribute="trailing" secondItem="n0J-Up-LPW" secondAttribute="trailing" id="nsx-0i-ygx"/>
+                            <constraint firstItem="jfX-v3-CeP" firstAttribute="leading" secondItem="SVv-OQ-5hv" secondAttribute="leading" constant="20" symbolic="YES" id="oW1-cC-YLA"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="confirmDeletesNo" destination="zS6-1Z-Jui" id="tp9-Ba-Dz8"/>
+                        <outlet property="confirmDeletesYes" destination="u03-TY-6ei" id="YtU-Qn-N0Z"/>
+                    </connections>
                 </viewController>
                 <customObject id="tyM-SV-eCN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="250" y="525"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="cc2-rL-Wox">
-            <objects>
-                <viewController id="ZHj-JA-fjk" sceneMemberID="viewController">
-                    <view key="view" id="qIu-Ew-gyd">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
-                <customObject id="3TE-PW-mwI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="223" y="897"/>
         </scene>
     </scenes>
 </document>

@@ -1,0 +1,18 @@
+Title:  Rights
+
+Seq:    42
+
+Tags:   author, copyright, license, open source, rights, dba, mit, github
+
+Date Added: 2017-10-27 12:55:15
+
+Body:   Copyright © 2009 - 2019  by [Herb Bowie](http:/www.herbbowie.com/) doing business as [PowerSurge Publishing](https://www.powersurgepub.com).
+
+The Notenik application is published as  [open source](http://opensource.org/osd) software under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+Notenik source code is available on [GitHub](https://github.com/hbowie/notenik-swift).
+
+Notenik makes use of [Down](https://github.com/iwasrobbed/Down) and [cmark](https://github.com/commonmark/cmark), both of which are separately licensed. 
+
+
+

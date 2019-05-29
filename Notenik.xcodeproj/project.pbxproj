@@ -240,6 +240,8 @@
 		9C97C1B12278F46100A43913 /* CollectionRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */; };
 		9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025121F65AF00027F364 /* NoteListViewController.swift */; };
 		9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
+		9CA80797229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */; };
+		9CA80798229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */; };
 		9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CB60BBF226509B2003B5655 /* Share.storyboard */; };
 		9CB60BC1226509B2003B5655 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CB60BBF226509B2003B5655 /* Share.storyboard */; };
 		9CB60BC322650A89003B5655 /* ShareWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB60BC222650A89003B5655 /* ShareWindowController.swift */; };
@@ -474,6 +476,7 @@
 		9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionRequestType.swift; sourceTree = "<group>"; };
 		9C9A025121F65AF00027F364 /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
+		9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewController.swift; sourceTree = "<group>"; };
 		9CAF2B2622664237009E19E2 /* Project Index */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Project Index"; sourceTree = "<group>"; };
 		9CB60BBF226509B2003B5655 /* Share.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
 		9CB60BC222650A89003B5655 /* ShareWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareWindowController.swift; sourceTree = "<group>"; };
@@ -765,6 +768,7 @@
 				9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */,
 				9CE32503224D48180051CA1F /* Preferences.storyboard */,
 				9CE32506224D561E0051CA1F /* PrefsWindowController.swift */,
+				9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */,
 			);
 			path = prefs;
 			sourceTree = "<group>";
@@ -1114,6 +1118,7 @@
 				9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
 				9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */,
 				9C60E74721F651E500C332ED /* ProviderType.swift in Sources */,
+				9CA80797229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
 				9CB60BC622651074003B5655 /* ShareViewController.swift in Sources */,
 				9C60E78621F651E500C332ED /* BigStringReader.swift in Sources */,
 				9CCFEE752270F52200F472C5 /* RowConsumer.swift in Sources */,
@@ -1256,6 +1261,7 @@
 				9C2AE523220A34B300AE8BEE /* AppDelegate.swift in Sources */,
 				9C2AE520220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9CE32511224D5E180051CA1F /* LogViewController.swift in Sources */,
+				9CA80798229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
 				9C60E77921F651E500C332ED /* StatusValue.swift in Sources */,
 				9C60E79A21F651E500C332ED /* FieldType.swift in Sources */,
 				9C60E77C21F651E500C332ED /* FieldDefinition.swift in Sources */,

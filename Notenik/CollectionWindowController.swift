@@ -17,8 +17,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     
     @IBOutlet var searchField: NSSearchField!
     
-    let juggler:             CollectionJuggler = CollectionJuggler.shared
-    let osdir = OpenSaveDirectory.shared
+    let juggler  = CollectionJuggler.shared
+    let appPrefs = AppPrefs.shared
+    let osdir    = OpenSaveDirectory.shared
     
     var notenikIO:           NotenikIO?
     var windowNumber         = 0
@@ -621,16 +622,19 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         let (selectedNote, _) = notenikIO!.getSelectedNote()
         guard selectedNote != nil else { return }
         
-        let alert = NSAlert()
-        alert.alertStyle = .warning
-        alert.messageText = "Really delete the Note titled '\(selectedNote!.title)'?"
-        // alert.informativeText = "Informative Text"
-        
-        alert.addButton(withTitle: "OK")
-        alert.addButton(withTitle: "Cancel")
-        // alert.showsSuppressionButton = true
-        let response = alert.runModal()
-        if response == .alertFirstButtonReturn {
+        var proceed = true
+        if appPrefs.confirmDeletes {
+            let alert = NSAlert()
+            alert.alertStyle = .warning
+            alert.messageText = "Really delete the Note titled '\(selectedNote!.title)'?"
+            alert.addButton(withTitle: "OK")
+            alert.addButton(withTitle: "Cancel")
+            let response = alert.runModal()
+            if response != .alertFirstButtonReturn {
+                proceed = false
+            }
+        }
+        if proceed {
             let (nextNote, nextPosition) = notenikIO!.deleteSelectedNote()
             reloadViews()
             if nextNote != nil {

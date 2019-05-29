@@ -1,0 +1,12 @@
+Title:  Introduction to Notenik
+
+Seq:    1
+
+Tags:   intro
+
+Date Added: 2018-03-22 12:59:50
+
+Body:   Hi, I'm [Herb Bowie](https://herbbowie.com), and I'm responsible for the concepts and code behind [Notenik](https://notenik.net), a simple but powerful system for taking, collecting and referencing notes. On the following pages I'll provide a gradual introduction to the version of [Notenik](http://notenik.net) written in [Swift](https://developer.apple.com/swift/) specifically for [macOS](https://www.apple.com/macos/).
+
+
+
