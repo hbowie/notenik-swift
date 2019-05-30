@@ -315,35 +315,47 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     ///   - note: The note prior to being incremented.
     ///   - modNote: A copy of the note being incremented.
     func incrementSeq(noteIO: NotenikIO, note: Note, modNote: Note) {
-        let incSeq = note.seq
-        if incSeq.count > 0 {
-            incSeq.increment(onLeft: false)
-            modNote.setSeq(String(describing: incSeq))
-            recordMods(noteIO: noteIO, note: note, modNote: modNote)
-            var lastSeq = incSeq
-            if let sortParm = noteIO.collection?.sortParm {
-                if sortParm == .seqPlusTitle || sortParm == .tasksBySeq {
-                    var (nextNote, position) = noteIO.getSelectedNote()
-                    if position.valid {
-                        (nextNote, position) = noteIO.nextNote(position)
-                        while nextNote != nil && position.valid && lastSeq.sortKey >= nextNote!.seq.sortKey {
-                            let oldSeq = nextNote!.seq.value
-                            nextNote!.seq.increment(onLeft: false)
-                            lastSeq = nextNote!.seq
-                            let writeOK = noteIO.writeNote(nextNote!)
-                            if !writeOK {
-                                Logger.shared.log(skip: false, indent: 0, level: .concerning,
-                                                  message: "Trouble writing updated Note back to disk")
-                            }
-                            (nextNote, position) = noteIO.nextNote(position)
-                        } // end while more note sequences to increment
-                        reloadViews()
-                    } // end if we can determine the position of the selected note
-                } // end if we have a sort parm based on seq
-            } // end if we have a good sort parm
-            select(note: modNote, position: nil, source: .action)
-        } // end if we have a non-blank seq to start with
+        guard note.seq.value.count > 0 else { return }
+        let incSeq = SeqValue(note.seq.value)
+        incSeq.increment(onLeft: false)
+        if noteIO.collection!.sortParm == .seqPlusTitle || noteIO.collection!.sortParm == .tasksBySeq {
+            let position = noteIO.positionOfNote(note)
+            let (nextNote, _) = noteIO.nextNote(position)
+            if nextNote != nil {
+                incrementSeq(noteIO: noteIO, lastSeq: incSeq, nextNote: nextNote!)
+            }
+        }
+        _ = noteIO.positionOfNote(modNote)
+        _ = modNote.setSeq(String(describing: incSeq))
+        _ = recordMods(noteIO: noteIO, note: note, modNote: modNote)
+        select(note: modNote, position: nil, source: .action)
     }
+    
+    /// See if the next Note needs to be incremented, and increment it and following
+    /// Notes if so. This function is called recursively.
+    ///
+    /// - Parameters:
+    ///   - noteIO: The Notenik Input/Output module to use.
+    ///   - lastSeq: The incremented sequence value for the Note just prior to this one.
+    ///   - nextNote: The next Note following the previous one.
+    func incrementSeq(noteIO: NotenikIO, lastSeq: SeqValue, nextNote: Note) {
+        if lastSeq.sortKey == nextNote.seq.sortKey {
+            let incSeq = SeqValue(nextNote.seq.value)
+            incSeq.increment(onLeft: false)
+            var position = noteIO.positionOfNote(nextNote)
+            let (followingNote, _) = noteIO.nextNote(position)
+            if followingNote != nil {
+                incrementSeq(noteIO: noteIO, lastSeq: incSeq, nextNote: followingNote!)
+            }
+            position = noteIO.positionOfNote(nextNote)
+            _ = nextNote.setSeq(incSeq.value)
+            let writeOK = noteIO.writeNote(nextNote)
+            if !writeOK {
+                Logger.shared.log(skip: false, indent: 0, level: .concerning,
+                                  message: "Trouble writing updates for Note titled '\(nextNote.title.value)'")
+            }
+        } // End if we have another note that needs incrementing
+    } // end of func
     
     /// Record modifications made to the Selected Note
     ///
@@ -353,8 +365,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     ///   - modNote: The note with modifications.
     /// - Returns: True if changes were recorded successfully; false otherwise.
     func recordMods (noteIO: NotenikIO, note: Note, modNote: Note) -> Bool {
-        let (nextNote, nextPosition) = noteIO.deleteSelectedNote()
-        let (addedNote, addedPosition) = noteIO.addNote(newNote: modNote)
+        let (_, _) = noteIO.deleteSelectedNote()
+        let (addedNote, _) = noteIO.addNote(newNote: modNote)
         if addedNote == nil {
             Logger.shared.log(skip: true, indent: 0, level: .severe,
                               message: "Problems adding note titled \(modNote.title)")
@@ -370,7 +382,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     
     @IBAction func shareClicked(_ sender: NSView) {
         guard io != nil && io!.collectionOpen else { return }
-        let (noteToShare, notePosition) = io!.getSelectedNote()
+        let (noteToShare, _) = io!.getSelectedNote()
         guard noteToShare != nil else { return }
         let writer = BigStringWriter()
         let maker = NoteLineMaker(writer)
