@@ -3,12 +3,14 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/27/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2018 - 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
-import Foundation
-
-enum LogDestination : Int {
+enum LogDestination: Int {
     case print = 0
     case window = 1
+    case unified = 2
 }

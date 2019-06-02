@@ -52,7 +52,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
             Logger.shared.logDest = .window
         } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionJuggler",
+                              level: .error,
                               message: "Couldn't get a Log Window Controller! when loading initial collection")
         }
         loadInitialCollection()
@@ -101,7 +103,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     func openParentRealm(parentURL: URL) {
         let io = RealmIO.shared.openRealm(path: parentURL.path)
         guard io != nil else {
-            Logger.shared.log(skip: false, indent: 0, level: .moderate,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionJuggler",
+                              level: .error,
                               message: "Could not open Parent Realm at \(parentURL.path)")
             return
         }
@@ -111,7 +115,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             self.registerWindow(window: windowController)
             windowController.showWindow(self)
         } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionJuggler",
+                              level: .error,
                               message: "Couldn't get a Window Controller!")
         }
     }
@@ -148,7 +154,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             try FileManager.default.removeItem(at: newURL)
             try FileManager.default.copyItem(at: oldURL, to: newURL)
         } catch {
-            Logger.shared.log(skip: true, indent: 0, level: .severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionJuggler",
+                              level: .error,
                               message: "Could not Save current Collection as a new folder")
             return false
         }
@@ -168,7 +176,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                 do {
                     try FileManager.default.trashItem(at: oldURL, resultingItemURL: nil)
                 } catch {
-                    Logger.shared.log(skip: false, indent: 0, level: .severe,
+                    Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                      category: "CollectionJuggler",
+                                      level: .error,
                                       message: "Could not trash the Collection located at \(oldURL.path)")
                 }
             }
@@ -229,7 +239,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             collectionPrefsController.showWindow(self)
             collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io.collection!)
         } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionJuggler",
+                              level: .error,
                               message: "Couldn't get a Collection Prefs Window Controller!")
         }
         
@@ -279,14 +291,17 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         realm.path = ""
         var ok = io.newCollection(collection: collection)
         guard ok else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.moderate,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "MergeInput",
+                              level: .error,
                               message: "Problems initializing the new collection at " + collection.collectionFullPath)
             return
         }
         
-
-        Logger.shared.log(skip: true, indent: 0, level: LogLevel.normal,
-                              message: "New Collection successfully initialized at \(collection.collectionFullPath)")
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionJuggler",
+                          level: .info,
+                          message: "New Collection successfully initialized at \(collection.collectionFullPath)")
         
         saveCollectionInfo(collection)
 
@@ -297,7 +312,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             windowController.showWindow(self)
             ok = true
         } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionJuggler",
+                              level: .error,
                               message: "Couldn't get a Window Controller!")
         }
     }
@@ -379,10 +396,14 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
         let collection = io.openCollection(realm: realm, collectionPath: collectionURL.path)
         if collection == nil {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.moderate,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionJuggler",
+                              level: .error,
                               message: "Problems opening the collection at " + collectionURL.path)
         } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.normal,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionJuggler",
+                              level: .info,
                               message: "Collection successfully opened: \(collection!.title)")
             collection!.readOnly = readOnly
             saveCollectionInfo(collection!)
@@ -393,7 +414,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                 windowController.showWindow(self)
                 openOK = true
             } else {
-                Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionJuggler",
+                                  level: .error,
                                   message: "Couldn't get a Window Controller!")
             }
         }

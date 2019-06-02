@@ -172,7 +172,9 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         let html = String(describing: code)
         let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
         if nav == nil {
-            Logger.shared.log(skip: false, indent: 0, level: LogLevel.moderate,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "DisplayPrefsViewController",
+                              level: .error,
                               message: "load html String returned nil")
         }
     }

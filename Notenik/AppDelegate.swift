@@ -38,7 +38,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let prefsController = self.prefsStoryboard.instantiateController(withIdentifier: "prefsWC") as? PrefsWindowController {
             prefsController.showWindow(self)
         } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "AppDelegate",
+                              level: .error,
                               message: "Couldn't get a Prefs Window Controller!")
         }
     }
@@ -79,7 +81,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
             logController.showWindow(self)
         } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "AppDelegate",
+                              level: .fault,
                               message: "Couldn't get a Log Window Controller!")
         }
     }

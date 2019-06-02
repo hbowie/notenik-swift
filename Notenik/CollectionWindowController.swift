@@ -74,7 +74,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             }
             
             if self.window == nil {
-                Logger.shared.log(skip: false, indent: 0, level: .severe,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .fault,
                                   message: "Collection Window is nil!")
             } else {
                 let window = self.window as? CollectionWindow
@@ -82,21 +84,27 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             }
             
             if listVC == nil {
-                Logger.shared.log(skip: false, indent: 0, level: LogLevel.severe,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .fault,
                                   message: "NoteListViewController is nil!")
             } else {
                 listVC!.io = newValue
             }
             
             if tagsVC == nil {
-                Logger.shared.log(skip: false, indent: 0, level: LogLevel.severe,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .fault,
                                   message:"NoteTagsView Controller is nil!")
             } else {
                 tagsVC!.io = newValue
             }
             
             if editVC == nil {
-                Logger.shared.log(skip: false, indent: 0, level: LogLevel.severe,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .fault,
                                   message: "NoteEditViewController is nil")
             } else {
                 editVC!.io = newValue
@@ -149,7 +157,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             collectionPrefsController.showWindow(self)
             collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io!.collection!)
         } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
                               message: "Couldn't get a Collection Prefs Window Controller!")
         }
     }
@@ -259,7 +269,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             let (nextNote, nextPosition) = io!.deleteSelectedNote()
             let (addedNote, addedPosition) = io!.addNote(newNote: modNote)
             if addedNote == nil {
-                Logger.shared.log(skip: true, indent: 0, level: .severe,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .fault,
                                   message: "Problems adding note titled \(modNote.title)")
             } else {
                 noteModified(updatedNote: addedNote!)
@@ -351,7 +363,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             _ = nextNote.setSeq(incSeq.value)
             let writeOK = noteIO.writeNote(nextNote)
             if !writeOK {
-                Logger.shared.log(skip: false, indent: 0, level: .concerning,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .error,
                                   message: "Trouble writing updates for Note titled '\(nextNote.title.value)'")
             }
         } // End if we have another note that needs incrementing
@@ -368,7 +382,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         let (_, _) = noteIO.deleteSelectedNote()
         let (addedNote, _) = noteIO.addNote(newNote: modNote)
         if addedNote == nil {
-            Logger.shared.log(skip: true, indent: 0, level: .severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .error,
                               message: "Problems adding note titled \(modNote.title)")
             return false
         } else {
@@ -404,7 +420,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             vc.window = shareController
             vc.note = note
         } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
                               message: "Couldn't get a Share Window Controller!")
         }
     }
@@ -796,7 +814,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             displayPrefsController.showWindow(self)
             // displayPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io!.collection!)
         } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
                               message: "Couldn't get a Display Prefs Window Controller!")
         }
     }
@@ -867,8 +887,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             }
         }
         let purgeCount = io!.purgeClosed(archiveIO: archiveIO)
-        
-        Logger.shared.log(skip: false, indent: 0, level: .routine,
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionWindowController",
+                          level: .info,
                           message: "\(purgeCount) Notes purged from Collection at \(io!.collection!.collectionFullPath)")
         reloadViews()
         let (note, position) = io!.firstNote()
@@ -906,7 +927,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         openPanel.begin { (result) -> Void  in
             if result == .OK {
                 let imports = self.io!.importDelimited(fileURL: openPanel.url!)
-                Logger.shared.log(skip: false, indent: 0, level: .routine,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .info,
                                   message: "Imported \(imports) notes from \(openPanel.url!.path)")
                 let alert = NSAlert()
                 alert.alertStyle = .informational
@@ -954,7 +977,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             let (importedNote, _) = noteIO.addNote(newNote: noteCopy)
             if importedNote == nil {
                 rejected += 1
-                Logger.shared.log(skip: false, indent: 0, level: .severe,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .error,
                                   message: "Could not import note titled '\(importNote!.title.value)'")
             } else {
                 imported += 1
@@ -1047,7 +1072,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             try FileManager.default.copyItem(at: collectionURL, to: exportURL)
             numberOfNotes = noteIO.notesCount
         } catch {
-            Logger.shared.log(skip: true, indent: 0, level: .severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
                               message: "Could not Export current Collection to selected folder")
             ok = false
         }
@@ -1133,7 +1160,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     }
     
     func logUnlikelyProblem(_ msg: String) {
-        Logger.shared.log(skip: false, indent: 0, level: .concerning, message: msg)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionWindowController",
+                          level: .error,
+                          message: msg)
     }
     
     /// Finish up batch operations by reloading the lists and selecting the first note

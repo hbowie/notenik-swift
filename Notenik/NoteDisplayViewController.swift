@@ -44,7 +44,9 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate {
         let html = noteDisplay.display(note!)
         let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
         if nav == nil {
-            Logger.shared.log(skip: false, indent: 0, level: LogLevel.moderate,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "NoteDisplayViewController",
+                              level: .error,
                               message: "load html String returned nil")
         }
     }

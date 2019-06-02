@@ -35,14 +35,18 @@ class RealmIO {
             collection!.readOnly = true
             collection!.isRealmCollection = true
         } else {
-            Logger.shared.log(skip: false, indent: 2, level: .moderate,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "RealmIO",
+                              level: .error,
                               message: "Unable to the realm collection for \(path)")
         }
         
         if collection != nil && io.notesCount > 0 {
             return io
         } else {
-            Logger.shared.log(skip: false, indent: 2, level: .moderate,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "RealmIO",
+                              level: .info,
                               message: "No Notenik Collections found within \(path)")
             return nil
         }
@@ -68,29 +72,41 @@ class RealmIO {
                                 let realmNote = Note(collection: io.collection!)
                                 let titleOK = realmNote.setTitle(infoNote!.title.value)
                                 if !titleOK {
-                                    Logger.shared.log(skip: false, indent: 2, level: .moderate,
+                                    Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                                      category: "RealmIO",
+                                                      level: .error,
                                                       message: "Unable to find a Title for Collection located at \(folderPath)")
                                 }
                                 let linkOK = realmNote.setLink(folderURL.absoluteString)
                                 if !linkOK {
-                                    Logger.shared.log(skip: false, indent: 2, level: .moderate,
+                                    Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                                      category: "RealmIO",
+                                                      level: .error,
                                                       message: "Unable to record a Link for Collection located at \(folderPath)")
                                 }
                                 let (addedNote, position) = io.addNote(newNote: realmNote)
                                 if addedNote == nil {
-                                    Logger.shared.log(skip: false, indent: 2, level: .moderate,
+                                    Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                                      category: "RealmIO",
+                                                      level: .error,
                                                       message: "Unable to record the Collection located at \(folderPath)")
                                 }
                             } else {
-                                Logger.shared.log(skip: false, indent: 2, level: .moderate,
+                                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                                  category: "RealmIO",
+                                                  level: .error,
                                                   message: "Couldn't read the INFO file for Collection located at \(folderPath)")
                             }
                         } else {
-                            Logger.shared.log(skip: false, indent: 2, level: .moderate,
+                            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                              category: "RealmIO",
+                                              level: .error,
                                               message: "Unable to initialize Collection located at \(folderPath)")
                         }
                     } else {
-                        Logger.shared.log(skip: false, indent: 2, level: .moderate,
+                        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                          category: "RealmIO",
+                                          level: .error,
                                           message: "Unable to initialize Collection located at \(folderPath)")
                     }
                 } else if itemPath.hasPrefix(".") {
@@ -106,8 +122,10 @@ class RealmIO {
                 }
             }
         } catch {
-            Logger.shared.log (skip: false, indent: 0, level: .moderate,
-                               message: "Failed reading contents of folder at '\(folderPath)'")
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "RealmIO",
+                              level: .error,
+                              message: "Failed reading contents of folder at '\(folderPath)'")
         }
     }
 }

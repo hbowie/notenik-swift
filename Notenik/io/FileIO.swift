@@ -180,10 +180,15 @@ class FileIO: NotenikIO, RowConsumer {
                         if noteAdded {
                             notesRead += 1
                         } else {
-                            Logger.shared.log(skip: false, indent: 1, level: .severe, message: "Note with title of \(note!.title) appears to be a duplicate and could not be accessed")
+                            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                              category: "FileIO",
+                                              level: .error,
+                                              message: "Note titled '\(note!.title.value)' appears to be a duplicate and could not be accessed")
                         }
                     } else {
-                        Logger.shared.log(skip: false, indent: 1, level: .concerning,
+                        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                          category: "FileIO",
+                                          level: .error,
                                           message: "No title for Note read from \(itemURL)")
                     }
                 } else {
@@ -192,16 +197,22 @@ class FileIO: NotenikIO, RowConsumer {
                 
             }
         } catch let error {
-            Logger.shared.log (skip: false, indent: 1, level: .moderate,
-                               message: "Failed reading contents of directory: \(error)")
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
+                              message: "Failed reading contents of directory: \(error)")
             return nil
         }
         if (notesRead == 0 && !infoFound && !templateFound) {
-            Logger.shared.log(skip: false, indent: 1, level: .concerning,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
                               message: "This folder does not seem to contain a valid Collection")
             return nil
         } else {
-            Logger.shared.log(skip: false, indent: 1, level: .normal,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .info,
                               message: "\(notesRead) Notes loaded for the Collection")
             collectionOpen = true
             bunch!.sortParm = collection!.sortParm
@@ -216,11 +227,20 @@ class FileIO: NotenikIO, RowConsumer {
     /// - Returns: True if successful, false otherwise.
     func initCollection(realm: Realm, collectionPath: String) -> Bool {
         closeCollection()
-        Logger.shared.log(skip: true, indent: 0, level: .normal, message: "Initializing Collection")
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "FileIO",
+                          level: .info,
+                          message: "Initializing Collection")
         self.realm = realm
         self.provider = realm.provider
-        Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Realm:      " + realm.path)
-        Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Collection: " + collectionPath)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "FileIO",
+                          level: .info,
+                          message: "Realm:      " + realm.path)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "FileIO",
+                          level: .info,
+                          message: "Collection: " + collectionPath)
         
         // Let's see if we have an actual path to a usable directory
         var collectionURL: URL
@@ -236,12 +256,16 @@ class FileIO: NotenikIO, RowConsumer {
         }
         collectionFullPath = collectionURL.path
         if !fileManager.fileExists(atPath: collectionFullPath!) {
-            Logger.shared.log(skip: false, indent: 1, level: .moderate,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
                               message: "Collection folder does not exist")
             return false
         }
         if !collectionURL.hasDirectoryPath {
-            Logger.shared.log(skip: false, indent: 1, level: .moderate,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
                               message: "Collection path does not point to a directory")
             return false
         }
@@ -281,7 +305,9 @@ class FileIO: NotenikIO, RowConsumer {
         let collectionURL = collection.collectionFullPathURL
         guard collectionURL != nil else { return false }
         if !fileManager.fileExists(atPath: collection.collectionFullPath) {
-            Logger.shared.log(skip: false, indent: 1, level: .moderate,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
                               message: "Collection folder does not exist")
             return false
         }
@@ -304,9 +330,9 @@ class FileIO: NotenikIO, RowConsumer {
         bunch = BunchOfNotes(collection: collection)
         let added = bunch!.add(note: firstNote)
         guard added else {
-            Logger.shared.log(skip: false,
-                              indent: 0,
-                              level: .severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
                               message: "Couldn't add first note to internal storage")
             return false
         }
@@ -315,9 +341,9 @@ class FileIO: NotenikIO, RowConsumer {
         collectionOpen = true
         ok = writeNote(firstNote)
         guard ok else {
-            Logger.shared.log(skip: false,
-                              indent: 0,
-                              level: .severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
                               message: "Couldn't write first note to disk!")
             collectionOpen = false
             return ok
@@ -425,7 +451,9 @@ class FileIO: NotenikIO, RowConsumer {
                     let (archiveNote, archivePosition) = archiveIO!.addNote(newNote: noteCopy)
                     if archiveNote == nil {
                         okToDelete = false
-                        Logger.shared.log(skip: false, indent: 0, level: .severe,
+                        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                          category: "FileIO",
+                                          level: .error,
                                           message: "Could not add note titled '\(note.title.value)' to archive")
                     }
                 } // end of optional archive operation
@@ -460,9 +488,9 @@ class FileIO: NotenikIO, RowConsumer {
         do {
             try str.write(toFile: filePath, atomically: true, encoding: String.Encoding.utf8)
         } catch {
-            Logger.shared.log(skip: false,
-                              indent: 0,
-                              level: .severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
                               message: "Problem writing README to disk!")
             return false
         }
@@ -481,9 +509,9 @@ class FileIO: NotenikIO, RowConsumer {
         do {
             try str.write(toFile: filePath, atomically: true, encoding: String.Encoding.utf8)
         } catch {
-            Logger.shared.log(skip: false,
-                              indent: 0,
-                              level: .severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
                               message: "Problem writing INFO file to disk!")
             return false
         }
@@ -501,9 +529,9 @@ class FileIO: NotenikIO, RowConsumer {
         do {
             try str.write(toFile: filePath, atomically: true, encoding: String.Encoding.utf8)
         } catch {
-            Logger.shared.log(skip: false,
-                              indent: 0,
-                              level: .severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
                               message: "Problem writing template file to disk!")
             return false
         }
@@ -574,7 +602,9 @@ class FileIO: NotenikIO, RowConsumer {
             do {
                 try fileManager.trashItem(at: noteURL!, resultingItemURL: nil)
             } catch {
-                Logger.shared.log(skip: true, indent: 0, level: .concerning,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                  category: "FileIO",
+                                  level: .error,
                                   message: "Could not delete note file at '\(noteURL!.path)'")
                 deleted = false
             }
@@ -605,9 +635,9 @@ class FileIO: NotenikIO, RowConsumer {
                 let noteURL = URL(fileURLWithPath: note.fullPath!)
                 updateEnvDates(note: note, noteURL: noteURL)
             } catch {
-                Logger.shared.log(skip: false,
-                                  indent: 0,
-                                  level: .severe,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                  category: "FileIO",
+                                  level: .error,
                                   message: "Problem writing Note to disk at \(note.fullPath!)")
                 return false
             }
@@ -637,7 +667,9 @@ class FileIO: NotenikIO, RowConsumer {
             updateEnvDates(note: note, noteURL: noteURL)
             return note
         } catch {
-            Logger.shared.log(skip: false, indent: 1, level: .severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
                               message: "Error reading Note from \(noteURL)")
             return nil
         }
@@ -653,19 +685,25 @@ class FileIO: NotenikIO, RowConsumer {
                 let creationDateStr = String(describing: creationDate!)
                 note.envCreateDate = creationDateStr
             } else {
-                Logger.shared.log(skip: false, indent: 0, level: .concerning,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                  category: "FileIO",
+                                  level: .error,
                                   message: "Inscrutable creation date for note at \(noteURL.path)")
             }
             if (lastModDate != nil) {
                 let lastModDateStr = String(describing: lastModDate!)
                 note.envModDate = lastModDateStr
             } else {
-                Logger.shared.log(skip: false, indent: 0, level: .concerning,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                  category: "FileIO",
+                                  level: .error,
                                   message: "Inscrutable modification date for note at \(noteURL.path)")
             }
         }
         catch let error as NSError {
-            Logger.shared.log(skip: false, indent: 0, level: .concerning,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
                               message: "Unable to obtain file attributes for for note at \(noteURL.path)")
         }
     }
@@ -811,7 +849,9 @@ class FileIO: NotenikIO, RowConsumer {
             do {
                 try fileManager.trashItem(at: noteURL!, resultingItemURL: nil)
             } catch {
-                Logger.shared.log(skip: true, indent: 0, level: .concerning,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                  category: "FileIO",
+                                  level: .error,
                                   message: "Could not delete note file at '\(noteURL!.path)'")
             }
         }

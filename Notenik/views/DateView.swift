@@ -114,7 +114,9 @@ class DateView: CocoaEditView {
             // vc!.recursString = 
             
         } else {
-            Logger.shared.log(skip: true, indent: 0, level: LogLevel.severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "DateView",
+                              level: .fault,
                               message: "Couldn't get a Calendar Window Controller!")
         }
     }

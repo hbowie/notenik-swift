@@ -141,7 +141,10 @@ class ShareViewController: NSViewController {
                 do {
                     try stringToShare.write(to: url!, atomically: true, encoding: .utf8)
                 } catch {
-                    Logger.shared.log(skip: false, indent: 0, level: .severe, message: "Problems writing shared text to disk")
+                    Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                      category: "ShareViewController",
+                                      level: .fault,
+                                      message: "Problems writing shared text to disk")
                 }
             }
         }

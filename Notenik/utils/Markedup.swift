@@ -159,7 +159,10 @@ class Markedup: CustomStringConvertible {
                 html = try down.toHTML()
                 code.append(html)
             } catch {
-                Logger.shared.log(skip: false, indent: 0, level: .concerning, message: "Markdown parser threw an error")
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                  category: "Markedup",
+                                  level: .error,
+                                  message: "Markdown parser threw an error")
                 code.append(markdown)
             }
         case.markdown:

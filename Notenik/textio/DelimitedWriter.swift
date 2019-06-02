@@ -85,9 +85,9 @@ class DelimitedWriter {
         do {
             try bigString.bigString.write(to: destination, atomically: true, encoding: .utf8)
         } catch {
-            Logger.shared.log(skip: false,
-                              indent: 0,
-                              level: .severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "DelimitedWriter",
+                              level: .error,
                               message: "Problem writing delimited file to disk!")
             return false
         }

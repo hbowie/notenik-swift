@@ -57,7 +57,9 @@ class DelimitedReader {
             scanString()
             ok = rowsReturned > 0
         } catch {
-            Logger.shared.log(skip: false, indent: 0, level: .severe,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "MergeInput",
+                              level: .error,
                               message: "Error reading Delimited Text File from \(fileURL)")
         }
         return rowsReturned
@@ -172,6 +174,7 @@ class DelimitedReader {
             endField()
             if lineCount > 0 {
                 consumer.consumeRow(labels: labels, fields: fields)
+                rowsReturned += 1
             }
             lineCount += 1
         }

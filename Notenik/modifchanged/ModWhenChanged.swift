@@ -133,7 +133,9 @@ class ModWhenChanged {
             if addedNote != nil {
                 return (outcome, addedNote)
             } else {
-                Logger.shared.log(skip: true, indent: 0, level: .severe,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                  category: "ModWhenChanged",
+                                  level: .error,
                                   message: "Problems adding note titled \(modNote.title)")
                 return (.tryAgain, nil)
             }
@@ -143,7 +145,9 @@ class ModWhenChanged {
             if addedNote != nil {
                 return (outcome, addedNote)
             } else {
-                Logger.shared.log(skip: true, indent: 0, level: .severe,
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                  category: "ModWhenChanged",
+                                  level: .error,
                                   message: "Problems adding note titled \(modNote.title)")
                 return (.tryAgain, nil)
             }

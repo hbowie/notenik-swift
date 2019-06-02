@@ -110,7 +110,9 @@ class BunchIO: NotenikIO, RowConsumer  {
                     let (archiveNote, _) = archiveIO!.addNote(newNote: note)
                     if archiveNote == nil {
                         okToDelete = false
-                        Logger.shared.log(skip: false, indent: 0, level: .severe,
+                        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                          category: "BunchIO",
+                                          level: .error,
                                           message: "Could not add note titled '\(note.title.value)' to archive")
                     }
                 } // end of optional archive operation
@@ -153,11 +155,20 @@ class BunchIO: NotenikIO, RowConsumer  {
     /// - Returns: True if successful, false otherwise.
     func initCollection(realm: Realm, collectionPath: String) -> Bool {
         closeCollection()
-        Logger.shared.log(skip: true, indent: 0, level: .normal, message: "Initializing Collection")
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "BunchIO",
+                          level: .info,
+                          message: "Initializing Collection")
         self.realm = realm
         self.provider = realm.provider
-        Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Realm:      " + realm.path)
-        Logger.shared.log(skip: false, indent: 1, level: .normal, message: "Collection: " + collectionPath)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "BunchIO",
+                          level: .info,
+                          message: "Realm:      " + realm.path)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "BunchIO",
+                          level: .info,
+                          message: "Collection: " + collectionPath)
         
         // Let's see if we have an actual path to a usable directory
         var collectionURL : URL
