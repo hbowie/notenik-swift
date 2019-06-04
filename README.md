@@ -1,6 +1,6 @@
 Notenik for Swift
 -----------------
 
-This project is an attempt to port the Notenik application from Java to Swift. Initial target deployment is macOS. Still very much a work in progress. 
+This project is a redevelopment of the Notenik application in Swift. Initial target deployment is macOS. Still very much a work in progress, but version 1.0.0 was released to the Mac App Store on June 3, 2019. 
 
-See [Notenik.net](https://notenik.net) for further info on the current Java app. 
+See [Notenik.net](https://notenik.net) for further info. 

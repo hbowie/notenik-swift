@@ -323,6 +323,12 @@
 		9CE3250E224D5A4D0051CA1F /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */; };
 		9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
 		9CE32511224D5E180051CA1F /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
+		9CE9C98222A6134A008D2B0A /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98122A6134A008D2B0A /* Template.swift */; };
+		9CE9C98322A6134A008D2B0A /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98122A6134A008D2B0A /* Template.swift */; };
+		9CE9C98422A6134A008D2B0A /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98122A6134A008D2B0A /* Template.swift */; };
+		9CE9C98622A61499008D2B0A /* TemplateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98522A61499008D2B0A /* TemplateUtil.swift */; };
+		9CE9C98722A61499008D2B0A /* TemplateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98522A61499008D2B0A /* TemplateUtil.swift */; };
+		9CE9C98822A61499008D2B0A /* TemplateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98522A61499008D2B0A /* TemplateUtil.swift */; };
 		9CED2810224EB39900798621 /* LongTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED280F224EB39900798621 /* LongTextView.swift */; };
 		9CED2811224EB39900798621 /* LongTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED280F224EB39900798621 /* LongTextView.swift */; };
 		9CF1192E2257FDD50015AE91 /* ModWhenChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF1192D2257FDD50015AE91 /* ModWhenChanged.swift */; };
@@ -546,6 +552,8 @@
 		9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
 		9CE3250F224D5E180051CA1F /* LogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
 		9CE715B0225E887300025C00 /* Notenik Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Notenik Help"; sourceTree = "<group>"; };
+		9CE9C98122A6134A008D2B0A /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
+		9CE9C98522A61499008D2B0A /* TemplateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateUtil.swift; sourceTree = "<group>"; };
 		9CED280F224EB39900798621 /* LongTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextView.swift; sourceTree = "<group>"; };
 		9CF1192D2257FDD50015AE91 /* ModWhenChanged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModWhenChanged.swift; sourceTree = "<group>"; };
 		9CF11931225802AA0015AE91 /* ModView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModView.swift; sourceTree = "<group>"; };
@@ -676,6 +684,7 @@
 				9C832A00224ABDBD007DA6FC /* prefs */,
 				9CB60BBE22650975003B5655 /* share */,
 				9CD82F612211E29E002314E4 /* textio */,
+				9CE9C97D22A612D3008D2B0A /* template */,
 				9C60E6FD21F650B800C332ED /* utils */,
 				9C60E72421F651E500C332ED /* values */,
 				9CD3261E2233063100D06B77 /* views */,
@@ -892,6 +901,15 @@
 				9CDE92BE22A322A800043AE5 /* libNotenikUtils.dylib */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9CE9C97D22A612D3008D2B0A /* template */ = {
+			isa = PBXGroup;
+			children = (
+				9CE9C98122A6134A008D2B0A /* Template.swift */,
+				9CE9C98522A61499008D2B0A /* TemplateUtil.swift */,
+			);
+			path = template;
 			sourceTree = "<group>";
 		};
 		9CF1192C2257FD170015AE91 /* modifchanged */ = {
@@ -1183,12 +1201,14 @@
 				9C60E71221F6518400C332ED /* Logger.swift in Sources */,
 				9C60E79521F651E500C332ED /* NoteIDRule.swift in Sources */,
 				9C2AE51E220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
+				9CE9C98222A6134A008D2B0A /* Template.swift in Sources */,
 				9C60E77121F651E500C332ED /* LinkValue.swift in Sources */,
 				9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */,
 				9C2A35BD22A1CC80009C868E /* MergeActionVerb.swift in Sources */,
 				9C2AE51A220A044800AE8BEE /* TagsNodeType.swift in Sources */,
 				9C96BAA0227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9C60E78921F651E500C332ED /* NoteLineParser.swift in Sources */,
+				9CE9C98622A61499008D2B0A /* TemplateUtil.swift in Sources */,
 				9CF1193E225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
 				9C2A35C122A1D164009C868E /* MergeActionModifier.swift in Sources */,
 				9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */,
@@ -1297,6 +1317,7 @@
 				9C60E75D21F651E500C332ED /* RecursValue.swift in Sources */,
 				9C2A35BE22A1CC80009C868E /* MergeActionVerb.swift in Sources */,
 				9C60E7CA21F6525F00C332ED /* FieldLabelTests.swift in Sources */,
+				9CE9C98322A6134A008D2B0A /* Template.swift in Sources */,
 				9C78888721FB826100452D74 /* MarkedupFormat.swift in Sources */,
 				9C60E74E21F651E500C332ED /* ValueFactory.swift in Sources */,
 				9C2A35BA22A19D6E009C868E /* MergeActionModule.swift in Sources */,
@@ -1310,6 +1331,7 @@
 				9C832A03224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
 				9C60E75A21F651E500C332ED /* SeqValue.swift in Sources */,
 				9CCFEE722270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
+				9CE9C98722A61499008D2B0A /* TemplateUtil.swift in Sources */,
 				9CF11933225802AA0015AE91 /* ModView.swift in Sources */,
 				9C2A35B722A19A0B009C868E /* MergeScripterTests.swift in Sources */,
 				9C60E79621F651E500C332ED /* NoteIDRule.swift in Sources */,
@@ -1403,6 +1425,7 @@
 				9CC78E70228358A400640477 /* DisplayPrefsViewController.swift in Sources */,
 				9CF11934225802AA0015AE91 /* ModView.swift in Sources */,
 				9C60E71721F6518400C332ED /* LogLevel.swift in Sources */,
+				9CE9C98822A61499008D2B0A /* TemplateUtil.swift in Sources */,
 				9C60E79121F651E500C332ED /* Note.swift in Sources */,
 				9C553C622266A0D50008D176 /* StatusView.swift in Sources */,
 				9C2AE51C220A044800AE8BEE /* TagsNodeType.swift in Sources */,
@@ -1425,6 +1448,7 @@
 				9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */,
 				9C60E7A221F6520100C332ED /* FileIO.swift in Sources */,
 				9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */,
+				9CE9C98422A6134A008D2B0A /* Template.swift in Sources */,
 				9C2A35B522A19715009C868E /* MergeScripter.swift in Sources */,
 				9C60E75821F651E500C332ED /* StringValue.swift in Sources */,
 				9C60E75B21F651E500C332ED /* SeqValue.swift in Sources */,
