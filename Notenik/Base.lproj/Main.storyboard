@@ -756,6 +756,26 @@ CA
                                         </buttonCell>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="235825DF-62CE-415D-9E37-BB1B331BFDED" label="Reports" paletteLabel="Reports" image="NSActionTemplate" sizingBehavior="auto" id="2Vv-Jk-PYc">
+                                    <nil key="toolTip"/>
+                                    <popUpButton key="view" verticalHuggingPriority="750" id="H5N-5T-GaK">
+                                        <rect key="frame" x="0.0" y="14" width="100" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSActionTemplate" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="rmD-ov-eYo" id="393-D3-gTY">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" title="Reports" id="UKb-dT-4VF">
+                                                <items>
+                                                    <menuItem state="on" image="NSActionTemplate" hidden="YES" id="rmD-ov-eYo">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Item 2" id="bX8-6F-Nzw"/>
+                                                    <menuItem title="Item 3" id="lyM-2n-RNX"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                    </popUpButton>
+                                </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="07F85546-608D-4983-8ACD-E334EA136275" label="Refresh" paletteLabel="Refresh" toolTip="Refresh the Note Display after clicking on a Link" tag="-1" image="NSRefreshTemplate" id="kwJ-9j-ppu" userLabel="Refresh">
                                     <size key="minSize" width="11" height="15"/>
                                     <size key="maxSize" width="11" height="15"/>
@@ -796,6 +816,7 @@ CA
                                 <toolbarItem reference="kwJ-9j-ppu"/>
                                 <toolbarItem reference="z6q-Rn-8x2"/>
                                 <toolbarItem reference="kQO-NK-gn9"/>
+                                <toolbarItem reference="2Vv-Jk-PYc"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -803,6 +824,7 @@ CA
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="actionMenu" destination="UKb-dT-4VF" id="8yf-hy-pUk"/>
                         <outlet property="searchField" destination="7V6-9K-EEY" id="KqQ-uS-wc7"/>
                         <outlet property="shareButton" destination="UHS-eX-f3H" id="4vI-lQ-GXa"/>
                         <segue destination="ysx-uj-1Qh" kind="relationship" relationship="window.shadowedContentViewController" id="Yt8-Lj-4g6"/>
@@ -1257,6 +1279,7 @@ CA
         </scene>
     </scenes>
     <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSFollowLinkFreestandingTemplate" width="14" height="14"/>
         <image name="NSFontPanel" width="32" height="32"/>

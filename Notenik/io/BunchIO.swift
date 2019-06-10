@@ -21,6 +21,9 @@ class BunchIO: NotenikIO, RowConsumer  {
     var collectionFullPath: String?
     var collectionOpen = false
     
+    var reports: [MergeReport] = []
+    var reportsFullPath: String? = nil
+    
     var bunch          : BunchOfNotes?
     
     var notePosition   = NotePosition(index: -1)

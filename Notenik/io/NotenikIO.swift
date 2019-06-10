@@ -22,6 +22,11 @@ protocol NotenikIO {
     /// An indicator of the status of the Collection: open or closed
     var collectionOpen: Bool { get }
     
+    /// A list of reports available for the currently open Collection. 
+    var reports: [MergeReport] { get }
+    
+    var reportsFullPath: String? { get }
+    
     /// Get information about the provider.
     func getProvider() -> Provider
     

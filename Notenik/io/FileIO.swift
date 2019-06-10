@@ -12,7 +12,11 @@
 import Foundation
 
 class FileIO: NotenikIO, RowConsumer {
-
+    
+    let reportsFolderName = "reports"
+    let scriptExt = ".tcz"
+    let templateID = "template"
+    
     let fileManager = FileManager.default
     
     static let infoFileName = "- INFO.nnk"
@@ -22,6 +26,16 @@ class FileIO: NotenikIO, RowConsumer {
     var collection     : NoteCollection?
     var collectionFullPath: String?
     var collectionOpen = false
+    
+    var reports: [MergeReport] = []
+    
+    var reportsFullPath: String? {
+        if collectionFullPath == nil {
+            return nil
+        } else {
+            return FileUtils.joinPaths(path1: collectionFullPath!, path2: reportsFolderName)
+        }
+    }
     
     var bunch          : BunchOfNotes?
     var templateFound  = false
@@ -162,7 +176,9 @@ class FileIO: NotenikIO, RowConsumer {
                 let fileName = FileName(itemFullPath)
                 let itemURL = URL(fileURLWithPath: itemFullPath)
                 if FileUtils.isDir(itemFullPath) {
-                    // Skip directories
+                    if itemPath == reportsFolderName {
+                        loadReports()
+                    }
                 } else if fileName.readme {
                     // Skip the readme file
                 } else if fileName.infofile {
@@ -217,6 +233,45 @@ class FileIO: NotenikIO, RowConsumer {
             collectionOpen = true
             bunch!.sortParm = collection!.sortParm
             return collection
+        }
+    }
+    
+    func loadReports() {
+        reports = []
+        let reportsPath = FileUtils.joinPaths(path1: collectionFullPath!,
+                                               path2: reportsFolderName)
+        do {
+            let reportsDirContents = try fileManager.contentsOfDirectory(atPath: reportsPath)
+            
+            var scriptsFound = false
+            for itemPath in reportsDirContents {
+                if itemPath.hasSuffix(scriptExt) {
+                    scriptsFound = true
+                    print("Script file found!")
+                }
+            }
+            
+            for itemPath in reportsDirContents {
+                let itemFullPath = FileUtils.joinPaths(path1: reportsPath,
+                                                       path2: itemPath)
+                let fileName = FileName(itemFullPath)
+                if itemPath.hasSuffix(scriptExt) {
+                    let report = MergeReport()
+                    report.reportName = fileName.base
+                    report.reportType = fileName.ext
+                    reports.append(report)
+                } else if !scriptsFound && fileName.baseLower.contains(templateID) {
+                    let report = MergeReport()
+                    report.reportName = fileName.base
+                    report.reportType = fileName.ext
+                    reports.append(report)
+                }
+            }
+        } catch let error {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
+                              message: "Failed reading contents of directory: \(error)")
         }
     }
     
@@ -547,6 +602,7 @@ class FileIO: NotenikIO, RowConsumer {
         }
         templateFound = false
         infoFound = false
+        reports = []
     }
     
     /// Register modifications to the old note to make the new note.

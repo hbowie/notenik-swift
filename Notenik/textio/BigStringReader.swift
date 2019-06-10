@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// Breaks a string down into lines
 class BigStringReader: LineReader {
     
     var bigString : String = ""
@@ -26,7 +27,7 @@ class BigStringReader: LineReader {
         lastIndex = bigString.startIndex
     }
     
-    convenience init(_ bigString : String) {
+    convenience init(_ bigString: String) {
         self.init()
         set(bigString)
     }

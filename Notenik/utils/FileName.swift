@@ -23,6 +23,16 @@ class FileName: CustomStringConvertible {
     
     var base = ""
     var baseLower = ""
+    
+    /// The path leading up to, but not including, any file name.
+    var path = ""
+    
+    /// The lowest level folder in the supplied file name path.
+    var folder = ""
+    
+    var folders: [Substring] = []
+    
+    
     var fileOrDir : FileOrDirectory = .unknown
     var readme = false
     var dotfile = false
@@ -34,6 +44,15 @@ class FileName: CustomStringConvertible {
     
     var description: String {
         return fileNameStr
+    }
+    
+    /// The file name, excluding the path to the folders containing the file. 
+    var fileName: String {
+        if base.count == 0 {
+            return ""
+        } else {
+            return base + "." + ext
+        }
     }
     
     /// Initialize with no initial value
@@ -63,12 +82,14 @@ class FileName: CustomStringConvertible {
         fileNameStr = value
         var slashCount = 0
         var dotCount = 0
-        var i = fileNameStr.count - 1
         var index = fileNameStr.index(before: fileNameStr.endIndex)
         var lastIndex = fileNameStr.endIndex
         var dotIndex = fileNameStr.endIndex
-        var c : Character = " "
-        var lastC : Character = " "
+        var c: Character = " "
+        var lastC: Character = " "
+        var i = fileNameStr.count - 1
+        var pathEndIndex = fileNameStr.endIndex
+        var folderStartIndex = fileNameStr.endIndex
         while i >= 0 {
             lastC = c
             c = StringUtils.charAt(index: i, str: fileNameStr)
@@ -86,6 +107,12 @@ class FileName: CustomStringConvertible {
                 if slashCount == 0 && dotCount > 0 {
                     setBase(String(fileNameStr[lastIndex..<dotIndex])) 
                 }
+                if slashCount == 0 {
+                    pathEndIndex = lastIndex
+                }
+                if slashCount == 1 {
+                    folderStartIndex = lastIndex
+                }
                 slashCount += 1
             } else if i == 0 && slashCount == 0 && dotCount > 0 {
                 setBase(String(fileNameStr[fileNameStr.startIndex..<dotIndex]))
@@ -97,7 +124,11 @@ class FileName: CustomStringConvertible {
                 index = fileNameStr.index(before: index)
             }
         }
-
+        path = String(fileNameStr[fileNameStr.startIndex..<pathEndIndex])
+        folders = path.split(separator: "/")
+        if folderStartIndex < pathEndIndex {
+            folder = String(fileNameStr[folderStartIndex..<pathEndIndex])
+        }
     }
     
     func setExt(_ ext: String) {
@@ -165,7 +196,66 @@ class FileName: CustomStringConvertible {
         }
     }
     
+    /// Determine whether this file/folder is beneath/within the passed folder.
+    ///
+    /// - Parameter fn2: The possible parent to this file/folder.
+    /// - Returns: True if this file is beneath fn2, otherwise false. 
+    func isBeneath(_ fn2: FileName) -> Bool {
+        guard folders.count > fn2.folders.count else { return false }
+        var i = 0
+        var matched = true
+        while i < folders.count && i < fn2.folders.count && matched {
+            let folder = String(folders[i])
+            let folder2 = String(fn2.folders[i])
+            if folder == folder2 {
+                i += 1
+            } else {
+                matched = false
+            }
+        }
+        return matched
+    }
+    
+    /// Resolve a possible relative path relative to the path
+    /// for this file name.
+    ///
+    /// - Parameter path: A possible relative path.
+    /// - Returns: An absolute path.
+    func resolveRelative(path: String) -> String {
+        
+        // If this is an absolute path, then don't mess with it
+        guard !path.hasPrefix("/") else { return path }
+        
+        var resolved = ""
+        var foldersToCopy = folders.count
+        var looking = true
+        var i = path.startIndex
+        while i < path.endIndex && looking {
+            let j = path.index(i, offsetBy: 3)
+            if j <= path.endIndex {
+                let nextThree = path[i..<j]
+                if nextThree == "../" {
+                    foldersToCopy -= 1
+                    i = j
+                } else {
+                    looking = false
+                }
+            }
+        }
+        resolved.append("/")
+        var folderIndex = 0
+        while folderIndex < foldersToCopy {
+            resolved.append(String(folders[folderIndex]))
+            resolved.append("/")
+            folderIndex += 1
+        }
+        resolved.append(String(path[i..<path.endIndex]))
+        return resolved
+    }
+    
 }
+
+
 
 enum FileOrDirectory {
     case unknown

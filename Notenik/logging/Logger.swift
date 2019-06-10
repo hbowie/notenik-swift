@@ -16,7 +16,12 @@ class Logger {
     
     static let shared = Logger()
     
-    var logDest: LogDestination = .print
+    var dateFormatter: DateFormatter
+    var dateFormat: String
+    
+    var logDestPrint   = false
+    var logDestWindow  = false
+    var logDestUnified = true
     
     var logThreshold: LogLevel = .info
     
@@ -25,40 +30,74 @@ class Logger {
     var oslogs = [String:OSLog]()
     
     init() {
-        
+        dateFormatter = DateFormatter()
+        dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = dateFormat
     }
     
     /// Process a loggable event
     func log (subsystem: String, category: String, level: LogLevel, message: String) {
         if level.rawValue >= logThreshold.rawValue {
-            switch logDest {
-            case .print:
-                print(message)
-            case .window:
+            
+            if logDestUnified {
+                logToUnified(subsystem: subsystem, category: category, level: level, message: message)
+            }
+            guard logDestPrint || logDestWindow else { return }
+            
+            var logLine = ""
+            let date = Date()
+            logLine.append(dateFormatter.string(from: date) + " ")
+            if subsystem.count > 0 {
+                logLine.append(subsystem)
+            }
+            if category.count > 0 {
+                logLine.append("/" + category)
+            }
+            logLine.append(" " )
+            switch level  {
+            case .info:
+                logLine.append("Info: ")
+            case .debug:
+                logLine.append("DEBUG: ")
+            case .error:
+                logLine.append("Error! ")
+            case .fault:
+                logLine.append("FAULT!! ")
+            }
+            logLine.append(message)
+
+            if logDestPrint {
+                print(logLine)
+            }
+            
+            if logDestWindow {
                 log.append(message)
                 log.append("\n")
-            case .unified:
-                let logKey = subsystem + "/" + category
-                var oslog = oslogs[logKey]
-                if oslog == nil {
-                    oslog = OSLog(subsystem: subsystem, category: category)
-                    oslogs[logKey] = oslog
-                }
-                var logType: OSLogType = .info
-                switch level {
-                case .info:
-                    logType = .info
-                case .debug:
-                    logType = .debug
-                case .error:
-                    logType = .error
-                case .fault:
-                    logType = .fault
-                }
-                os_log("%{PUBLIC}@", log: oslog!, type: logType, message)
             }
         }
     }
+    
+    func logToUnified (subsystem: String, category: String, level: LogLevel, message: String) {
+        let logKey = subsystem + "/" + category
+        var oslog = oslogs[logKey]
+        if oslog == nil {
+            oslog = OSLog(subsystem: subsystem, category: category)
+            oslogs[logKey] = oslog
+        }
+        var logType: OSLogType = .info
+        switch level {
+        case .info:
+            logType = .info
+        case .debug:
+            logType = .debug
+        case .error:
+            logType = .error
+        case .fault:
+            logType = .fault
+        }
+        os_log("%{PUBLIC}@", log: oslog!, type: logType, message)
+    }
+        
     
     /// Write one line to the indicated destination
     func writeLine (_ line : String) {

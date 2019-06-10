@@ -17,6 +17,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     
     @IBOutlet var searchField: NSSearchField!
     
+    @IBOutlet var actionMenu: NSMenu!
+    
     let juggler  = CollectionJuggler.shared
     let appPrefs = AppPrefs.shared
     let osdir    = OpenSaveDirectory.shared
@@ -111,7 +113,47 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
             }
             let (selected, position) = notenikIO!.firstNote()
             select(note: selected, position: position, source: .nav)
+            
+            var i = actionMenu.numberOfItems - 1
+            while i > 0 {
+                actionMenu.removeItem(at: i)
+                i -= 1
+            }
+
+            for report in notenikIO!.reports {
+                let title = String(describing: report)
+                let reportItem = NSMenuItem(title: title, action: #selector(runReport), keyEquivalent: "")
+                actionMenu.addItem(reportItem)
+            }
         }
+    }
+    
+    @objc func runReport(_ sender: NSMenuItem) {
+        
+        // See if we're ready to take action
+        let nio = guardForCollectionAction()
+        guard let noteIO = nio else { return }
+        
+        var found = false
+        var i = 0
+        while i < io!.reports.count && !found {
+            let reportTitle = String(describing: noteIO.reports[i])
+            found = (sender.title == reportTitle)
+            if found {
+                let template = Template()
+                if noteIO.reportsFullPath != nil {
+                    let templateURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
+                    var ok = template.openTemplate(templateURL: templateURL!)
+                    if ok {
+                        template.supplyData(io: noteIO)
+                        ok = template.generateOutput()
+                    }
+                }
+            } else {
+                i += 1
+            }
+        }
+        
     }
 
     override func windowDidLoad() {

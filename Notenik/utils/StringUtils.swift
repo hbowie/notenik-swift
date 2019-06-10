@@ -179,7 +179,7 @@ class StringUtils {
     }
     
     /// Remove white spaces from front and back of string
-    static func trim(_ inStr : String) -> String {
+    static func trim(_ inStr: String) -> String {
         return inStr.trimmingCharacters(in: .whitespaces)
     }
     

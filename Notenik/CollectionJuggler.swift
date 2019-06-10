@@ -50,7 +50,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Startup called by AppDelegate
     func startup() {
         if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
-            Logger.shared.logDest = .window
+            Logger.shared.logDestWindow = true
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionJuggler",

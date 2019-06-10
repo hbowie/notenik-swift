@@ -24,7 +24,7 @@ class Note: Comparable, NSCopying {
     var _envModDate    = ""
     
     /// Initialize with a Collection
-    init (collection : NoteCollection) {
+    init (collection: NoteCollection) {
         // self.init()
         self.collection = collection
     }

@@ -15,6 +15,8 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     let juggler : CollectionJuggler = CollectionJuggler.shared
+    let logger = Logger.shared
+    
     var docController: NoteDocumentController!
     var recentDocumentURLs: [URL] = []
     
@@ -28,6 +30,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        
+        // ONLY FOR TESTING!!!
+        logger.logDestPrint = true
+        logger.logDestUnified = false
+        
         juggler.docController = docController
         recentDocumentURLs = docController.recentDocumentURLs
         let maxRecent = docController.maximumRecentDocumentCount
