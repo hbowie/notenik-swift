@@ -1,0 +1,36 @@
+<?output "Test A.html"?>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Notenik Test Collection - Variables 1</title>
+</head>
+<body>
+<?nextrec?>
+<h3>=$seq$= - =$title$=</h3>
+
+<p>Body before modification: </p>
+
+<pre><code>
+=$body$=
+</code></pre>
+
+<p>Body after conversion from Markdown to HTML:</p>
+
+<code>
+=$body&o$=
+</code>
+
+<p>Body after summarization:</p>
+
+<code>
+=$body&s$=
+</code>
+
+<p>Body after link conversion:</p>
+
+<code>
+=$body&j$=
+</code>
+<?loop?>
+</body>
+</html>

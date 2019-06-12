@@ -44,6 +44,153 @@ class StringUtils {
         return common
     }
     
+    /// Convert a string to a conventional, universal file name, changing spaces
+    /// to dashes, removing any odd characters, making all letters lower-case, and
+    /// converting white space to hyphens.
+    ///
+    /// - Parameter from: The file name to be converted.
+    /// - Returns: The converted file name.
+    static func toCommonFileName(_ from: String) -> String {
+        var out = ""
+        var whiteSpace = true
+        var index = from.startIndex
+        var nextIndex = from.startIndex
+        for char in from {
+            var nextChar: Character = " "
+            if index < from.endIndex {
+                nextIndex = from.index(after: index)
+                if nextIndex < from.endIndex {
+                    nextChar = from[nextIndex]
+                }
+            }
+            if isAlpha(char) {
+                out.append(char.lowercased())
+                whiteSpace = false
+            } else if isDigit(char) {
+                out.append(char)
+                whiteSpace = false
+            } else if char == "." {
+                if nextIndex >= from.endIndex || nextChar != " " {
+                    out.append(char)
+                    whiteSpace = false
+                }
+            } else if isWhitespace(char) || char == "_" || char == "/" || char == "-" {
+                if !whiteSpace && nextIndex < from.endIndex {
+                    out.append("-")
+                    whiteSpace = true
+                }
+            }
+            index = from.index(after: index)
+        }
+        return out
+    }
+    
+    /// Scan for an link starting with http:// or https:// and then, if found,
+    /// surround the URL with anchor start and end tags, with the href value
+    /// pointing to the URL that was found. Leave any preceding or trailing
+    /// characters in place. 
+    static func convertLinks(_ from: String) -> String {
+        var out = ""
+        var index = from.startIndex
+        var priorChar: Character = " "
+        var priorIndex = from.startIndex
+        var linkStartFound = false
+        var linkStartIndex = from.startIndex
+        var linkEndFound = false
+        var linkEndIndex = from.endIndex
+        while index < from.endIndex {
+            let char = from[index]
+            if !linkStartFound && (StringUtils.strEqual(str: from, index: index, str2: "http://") || StringUtils.strEqual(str: from, index: index, str2: "https://")) {
+                linkStartFound = true
+                linkStartIndex = index
+            } else if linkStartFound && !linkEndFound && (char.isWhitespace || char == "<") {
+                linkEndFound = true
+                if priorChar == "." {
+                    linkEndIndex = priorIndex
+                } else {
+                    linkEndIndex = index
+                }
+            } else if !linkStartFound {
+                out.append(char)
+            }
+            priorChar = char
+            priorIndex = index
+            index = from.index(after: index)
+        }
+        if linkStartFound {
+            if !linkEndFound && priorChar == "." {
+                linkEndIndex = priorIndex
+            }
+            let url = String(from[linkStartIndex..<linkEndIndex])
+            var postURL = ""
+            if linkEndIndex < from.endIndex {
+                postURL = String(from[linkEndIndex..<from.endIndex])
+            }
+            out.append("<a href=\"" + url + "\" target=\"ref\">")
+            out.append(url)
+            out.append("</a>")
+            out.append(postURL)
+        }
+        return out
+    }
+    
+    /// See if the next few characters in the first string are equal to
+    /// the entire contents of the second string.
+    ///
+    /// - Parameters:
+    ///   - str: The string being indexed.
+    ///   - index: An index into the first string.
+    ///   - str2: The second string.
+    /// - Returns: True if equal, false otherwise.
+    static func strEqual(str: String, index: String.Index, str2: String) -> Bool {
+        guard str[index] == str2[str2.startIndex] else { return false }
+        var strIndex = str.index(index, offsetBy: 1)
+        var str2Index = str2.index(str2.startIndex, offsetBy: 1)
+        while strIndex < str.endIndex && str2Index < str2.endIndex {
+            if str[strIndex] != str2[str2Index] {
+                return false
+            }
+            strIndex = str.index(strIndex, offsetBy: 1)
+            str2Index = str2.index(str2Index, offsetBy: 1)
+        }
+        if str2Index < str2.endIndex {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    /// Extract the beginning of a long piece of text, trying to end with
+    /// a complete sentence. 
+    static func summarize(_ str: String, max: Int = 250) -> String {
+        guard str.count > max else { return str }
+        var sentenceCount = 0
+        var index = str.startIndex
+        var lastSentenceEnd = str.startIndex
+        var lastSpace = str.startIndex
+        var i = 0
+        while i < max {
+            var nextChar: Character = " "
+            if i < (max - 1) {
+                let nextIndex = str.index(after: index)
+                nextChar = str[nextIndex]
+            }
+            if str[index] == "." && nextChar == " " {
+                lastSentenceEnd = str.index(after: index)
+                sentenceCount += 1
+            } else if str[index] == " " {
+                lastSpace = index
+            }
+            index = str.index(after: index)
+            i += 1
+        }
+        if sentenceCount > 0 {
+            return String(str[str.startIndex..<lastSentenceEnd])
+        } else {
+            return String(str[str.startIndex..<lastSpace]) + "...."
+        }
+    }
+    
     // Take a String and make a readable file name (without path or extension) from it
     static func toReadableFilename(_ from: String) -> String {
         var str = from
@@ -156,6 +303,16 @@ class StringUtils {
             }
         }
         return nextChar
+    }
+    
+    /// Change the leading character to lower case
+    static func toLowerFirstChar(_ str: String) -> String {
+        return str.prefix(1).lowercased() + str.dropFirst()
+    }
+    
+    /// Change the leading character to upper case
+    static func toUpperFirstChar(_ str: String) -> String {
+        return str.prefix(1).uppercased() + str.dropFirst()
     }
     
     /// Is this character a digit in the range 0 - 9?

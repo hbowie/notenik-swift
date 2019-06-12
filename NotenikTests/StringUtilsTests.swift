@@ -86,6 +86,30 @@ class StringUtilsTests: XCTestCase {
     func testToReadableFilename () {
         XCTAssertTrue(StringUtils.toReadableFilename("This is a file name") == "This is a file name")
     }
+    
+    func testLowerCaseFirst() {
+        XCTAssertTrue(StringUtils.toLowerFirstChar("ALPHABET") == "aLPHABET")
+    }
+    
+    func testUpperCaseFirst() {
+        XCTAssertTrue(StringUtils.toUpperFirstChar("alphabet") == "Alphabet")
+    }
+    
+    func testToCommonFileName() {
+        XCTAssertTrue(StringUtils.toCommonFileName("File Name2 _Before") == "file-name2-before")
+    }
+    
+    func testSummarize() {
+        let startingText = "For progressives in the US -- and, indeed, in many parts of the world -- recent events have called into question our faith in the goodness of people, and in our continued march forward towards a better tomorrow. It's only been roughly a decade since those of us in the US were [celebrating in amazement the election of Barack Obama][obama] as our president, an event that seemed to usher in a new era of progressive values."
+        let endingText = "For progressives in the US -- and, indeed, in many parts of the world -- recent events have called into question our faith in the goodness of people, and in our continued march forward towards a better tomorrow."
+        XCTAssertTrue(StringUtils.summarize(startingText) == endingText)
+    }
+    
+    func testConvertLinks() {
+        let in1 = "Jump to https://www.amazon.com."
+        let expected1 = "Jump to <a href=\"https://www.amazon.com\" target=\"ref\">https://www.amazon.com</a>."
+        XCTAssertTrue(StringUtils.convertLinks(in1) == expected1)
+    }
 
     func testPerformanceExample() {
         // This is an example of a performance test case.

@@ -11,7 +11,7 @@
 
 import Foundation
 
-/// Persistent data and utility methods. 
+/// Persistent data along with utility methods.
 class TemplateUtil {
     
     var debug = false
@@ -50,9 +50,19 @@ class TemplateUtil {
     
     var skippingData = false
     
+    let xmlConverter = StringConverter()
+    let emailSingleQuoteConverter = StringConverter()
+    let noBreakConverter = StringConverter()
+    let markedup = Markedup(format: .htmlFragment)
+    
+    
+    /// Initialize things.
     init() {
         let globalsCollection = NoteCollection()
         globals = Note(collection: globalsCollection)
+        xmlConverter.addXML()
+        emailSingleQuoteConverter.addEmailQuotes()
+        noBreakConverter.addNoBreaks()
     }
     
     /// Open a new template file.
@@ -237,22 +247,83 @@ class TemplateUtil {
         return true
     }
     
+    
+    /// Given a variable name, and possibly some modifiers, look for a corresponding value
+    /// and then append it, with any requested modifications, to the output     line being built.
+    ///
+    /// - Parameters:
+    ///   - toLine: The output line we're working on.
+    ///   - varName: The name of the variable we're looking for.
+    ///   - mods: Any modifier characters supplied by the user.
+    ///   - note: A set of fields supplying values to be used.
     func appendVar(toLine: LineWithBreak, varName: String, mods: String, note: Note) {
+        
         let varNameCommon = StringUtils.toCommon(varName)
-        
         var replacementValue: String?
-        
         replacementValue = replaceVarWithValue(inLine: toLine, varName: varNameCommon, note: note)
         
-        // See what modifiers we have
-        for char in mods {
-            
-        }
-        
         if replacementValue != nil {
+            replacementValue = applyModifiers(replacementValue: replacementValue!, mods: mods)
             toLine.line.append(replacementValue!)
         }
         
+    }
+    
+    func applyModifiers(replacementValue: String, mods: String) -> String {
+        
+        var modifiedValue = replacementValue
+        
+        // See what modifiers we have
+        var i = mods.startIndex
+        
+        while i < mods.endIndex {
+            let char = mods[i]
+            let charLower = char.lowercased()
+            var nextChar: Character = " "
+            let j = mods.index(after: i)
+            if j < mods.endIndex {
+                nextChar = mods[j]
+            }
+            let nextCharLower = nextChar.lowercased()
+            
+            var inc = 1
+            
+            if charLower == "l" && nextCharLower != "i" {
+                modifiedValue = modifiedValue.lowercased()
+            } else if charLower == "j" {
+                modifiedValue = StringUtils.convertLinks(modifiedValue)
+            } else if charLower == "l" && nextCharLower == "i" {
+                modifiedValue = StringUtils.toLowerFirstChar(modifiedValue)
+                inc = 2
+            } else if charLower == "n" {
+                modifiedValue = noBreakConverter.convert(from: modifiedValue)
+            } else if charLower == "o" {
+                modifiedValue = convertMarkdownToHTML(modifiedValue)
+            } else if charLower == "s" {
+                modifiedValue = StringUtils.summarize(modifiedValue)
+            } else if charLower == "u" && nextCharLower != "i" {
+                modifiedValue = modifiedValue.uppercased()
+            } else if charLower == "u" && nextCharLower == "i" {
+                modifiedValue = StringUtils.toUpperFirstChar(modifiedValue)
+                inc = 2
+            } else if charLower == "x" {
+                modifiedValue = xmlConverter.convert(from: modifiedValue)
+            } else if charLower == "'" {
+                modifiedValue = emailSingleQuoteConverter.convert(from: modifiedValue)
+            }
+            
+            i = mods.index(i, offsetBy: inc)
+        }
+        
+        return modifiedValue
+    }
+    
+    /// Convert Markdown to HTML
+    func convertMarkdownToHTML(_ markdown: String) -> String {
+        markedup.startDoc(withTitle: nil, withCSS: nil)
+        markedup.append(markdown: markdown)
+        markedup.finishDoc()
+        return markedup.code
     }
     
     func replaceVarWithValue(inLine: LineWithBreak, varName: String, note: Note) -> String? {

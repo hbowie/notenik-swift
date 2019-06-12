@@ -280,6 +280,13 @@
 		9CCC5E9E228F0B5500FA6B5C /* BunchIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCC5E9D228F0B5500FA6B5C /* BunchIO.swift */; };
 		9CCC5E9F228F0B5500FA6B5C /* BunchIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCC5E9D228F0B5500FA6B5C /* BunchIO.swift */; };
 		9CCC5EA0228F0B5500FA6B5C /* BunchIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCC5E9D228F0B5500FA6B5C /* BunchIO.swift */; };
+		9CCFD62122AED9FA00C64D37 /* StringFromTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFD62022AED9FA00C64D37 /* StringFromTo.swift */; };
+		9CCFD62222AED9FA00C64D37 /* StringFromTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFD62022AED9FA00C64D37 /* StringFromTo.swift */; };
+		9CCFD62322AED9FA00C64D37 /* StringFromTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFD62022AED9FA00C64D37 /* StringFromTo.swift */; };
+		9CCFD62822AEDA5C00C64D37 /* StringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFD62722AEDA5C00C64D37 /* StringConverter.swift */; };
+		9CCFD62922AEDA5C00C64D37 /* StringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFD62722AEDA5C00C64D37 /* StringConverter.swift */; };
+		9CCFD62A22AEDA5C00C64D37 /* StringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFD62722AEDA5C00C64D37 /* StringConverter.swift */; };
+		9CCFD62C22AEE0DD00C64D37 /* StringConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFD62B22AEE0DD00C64D37 /* StringConverterTests.swift */; };
 		9CCFEE712270DD5C00F472C5 /* DelimitedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */; };
 		9CCFEE722270DD5C00F472C5 /* DelimitedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */; };
 		9CCFEE732270DD5C00F472C5 /* DelimitedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */; };
@@ -541,6 +548,9 @@
 		9CC78E6B2283587300640477 /* DisplayPrefsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefsWindowController.swift; sourceTree = "<group>"; };
 		9CC78E6E228358A400640477 /* DisplayPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefsViewController.swift; sourceTree = "<group>"; };
 		9CCC5E9D228F0B5500FA6B5C /* BunchIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunchIO.swift; sourceTree = "<group>"; };
+		9CCFD62022AED9FA00C64D37 /* StringFromTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFromTo.swift; sourceTree = "<group>"; };
+		9CCFD62722AEDA5C00C64D37 /* StringConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConverter.swift; sourceTree = "<group>"; };
+		9CCFD62B22AEE0DD00C64D37 /* StringConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConverterTests.swift; sourceTree = "<group>"; };
 		9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelimitedReader.swift; sourceTree = "<group>"; };
 		9CCFEE742270F52200F472C5 /* RowConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowConsumer.swift; sourceTree = "<group>"; };
 		9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModIfChangedOutcome.swift; sourceTree = "<group>"; };
@@ -727,6 +737,7 @@
 				9C60E7AE21F6525E00C332ED /* SeqValueTests.swift */,
 				9C60E7AB21F6525E00C332ED /* StatusValueConfigTests.swift */,
 				9C60E7AC21F6525E00C332ED /* StatusValueTests.swift */,
+				9CCFD62B22AEE0DD00C64D37 /* StringConverterTests.swift */,
 				9C60E7B121F6525E00C332ED /* StringUtilsTests.swift */,
 				9C60E7B421F6525F00C332ED /* StringValueTests.swift */,
 				9C60E7AA21F6525E00C332ED /* TagsValueTests.swift */,
@@ -753,6 +764,8 @@
 				9C78888921FB950900452D74 /* Markedup.swift */,
 				9C78888521FB826100452D74 /* MarkedupFormat.swift */,
 				9CFCB048226BCE1700443FFA /* SimpleDate.swift */,
+				9CCFD62722AEDA5C00C64D37 /* StringConverter.swift */,
+				9CCFD62022AED9FA00C64D37 /* StringFromTo.swift */,
 				9C60E6FE21F650B800C332ED /* StringUtils.swift */,
 			);
 			path = utils;
@@ -1176,6 +1189,7 @@
 				9CF256CD21FD175E00D9F06A /* CollectionWindowController.swift in Sources */,
 				9C60E76E21F651E500C332ED /* LongTextValue.swift in Sources */,
 				9C60E71521F6518400C332ED /* LogLevel.swift in Sources */,
+				9CCFD62822AEDA5C00C64D37 /* StringConverter.swift in Sources */,
 				9CD82F632211E456002314E4 /* LineWriter.swift in Sources */,
 				9C60E70B21F650B800C332ED /* FileUtils.swift in Sources */,
 				9C60E76821F651E500C332ED /* AuthorValue.swift in Sources */,
@@ -1189,6 +1203,7 @@
 				9C60E77421F651E500C332ED /* TagsValue.swift in Sources */,
 				9CF3DE4C22A6F5330078A6B0 /* MergeReport.swift in Sources */,
 				9C60E79221F651E500C332ED /* NoteCollection.swift in Sources */,
+				9CCFD62122AED9FA00C64D37 /* StringFromTo.swift in Sources */,
 				9C9094C52249A664002207EB /* NoteDocumentController.swift in Sources */,
 				9CD32624223308C400D06B77 /* StringView.swift in Sources */,
 				9C96BAA422766A68008635B3 /* DelimitedSeparator.swift in Sources */,
@@ -1299,6 +1314,7 @@
 				9C60E74221F651E500C332ED /* NoteField.swift in Sources */,
 				9C2AE515220A033300AE8BEE /* TagsNode.swift in Sources */,
 				9C60E75421F651E500C332ED /* Provider.swift in Sources */,
+				9CCFD62C22AEE0DD00C64D37 /* StringConverterTests.swift in Sources */,
 				9C60E70621F650B800C332ED /* DateUtils.swift in Sources */,
 				9C60E7C321F6525F00C332ED /* LineParserTests.swift in Sources */,
 				9C60E73F21F651E500C332ED /* FieldLabel.swift in Sources */,
@@ -1337,6 +1353,7 @@
 				9C60E76F21F651E500C332ED /* LongTextValue.swift in Sources */,
 				9C60E75D21F651E500C332ED /* RecursValue.swift in Sources */,
 				9C2A35BE22A1CC80009C868E /* MergeActionVerb.swift in Sources */,
+				9CCFD62922AEDA5C00C64D37 /* StringConverter.swift in Sources */,
 				9C60E7CA21F6525F00C332ED /* FieldLabelTests.swift in Sources */,
 				9CE9C98322A6134A008D2B0A /* Template.swift in Sources */,
 				9C78888721FB826100452D74 /* MarkedupFormat.swift in Sources */,
@@ -1345,6 +1362,7 @@
 				9CDE92A222A2E9CB00043AE5 /* MergeInput.swift in Sources */,
 				9C0B25E6224D654E003AAF21 /* LogViewController.swift in Sources */,
 				9C60E76021F651E500C332ED /* TitleValue.swift in Sources */,
+				9CCFD62222AED9FA00C64D37 /* StringFromTo.swift in Sources */,
 				9C60E79C21F651E500C332ED /* NotePosition.swift in Sources */,
 				9C60E6E521F64B3C00C332ED /* NotenikTests.swift in Sources */,
 				9C60E7A121F6520100C332ED /* FileIO.swift in Sources */,
@@ -1475,6 +1493,7 @@
 				9C2A35B522A19715009C868E /* MergeScripter.swift in Sources */,
 				9C60E75821F651E500C332ED /* StringValue.swift in Sources */,
 				9CE2171022A9BC6000EE656C /* LineWithBreak.swift in Sources */,
+				9CCFD62322AED9FA00C64D37 /* StringFromTo.swift in Sources */,
 				9C60E75B21F651E500C332ED /* SeqValue.swift in Sources */,
 				9CCFEE772270F52200F472C5 /* RowConsumer.swift in Sources */,
 				9C60E79721F651E500C332ED /* NoteIDRule.swift in Sources */,
@@ -1487,6 +1506,7 @@
 				9C60E70D21F650B800C332ED /* FileUtils.swift in Sources */,
 				9C96BAA2227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9C8329FF224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */,
+				9CCFD62A22AEDA5C00C64D37 /* StringConverter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

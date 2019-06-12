@@ -1,0 +1,5 @@
+Title:  Summarization
+
+Seq:    S
+
+Body:   For progressives in the US -- and, indeed, in many parts of the world -- recent events have called into question our faith in the goodness of people, and in our continued march forward towards a better tomorrow. It's only been roughly a decade since those of us in the US were [celebrating in amazement the election of Barack Obama][obama] as our president, an event that seemed to usher in a new era of progressive values.

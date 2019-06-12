@@ -21,7 +21,7 @@ class DateUtilsTests: XCTestCase {
 
     func testDateUtils() {
         let utils = DateUtils.shared
-        XCTAssertTrue(utils.ymdToday == "2019-05-31")
+        XCTAssertTrue(utils.ymdToday == "2019-06-12")
         XCTAssertTrue(utils.matchMonthName("Feb") == 2)
         XCTAssertTrue(utils.matchMonthName("Tue") < 0)
     }

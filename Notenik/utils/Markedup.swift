@@ -29,6 +29,7 @@ class Markedup: CustomStringConvertible {
     }
     
     func startDoc(withTitle title: String?, withCSS css: String?) {
+        code = ""
         switch format {
         case .htmlDoc:
             code.append("<html>")
@@ -44,7 +45,7 @@ class Markedup: CustomStringConvertible {
             code.append("</head>")
             code.append("<body>")
         default:
-            let x = 0
+            break
         }
     }
     
@@ -172,11 +173,11 @@ class Markedup: CustomStringConvertible {
     
     func finishDoc() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlDoc:
             code.append("</body>")
             code.append("</html>")
-        case .markdown:
-            let x = 0
+        case .htmlFragment, .markdown:
+            break
         }
     }
 }

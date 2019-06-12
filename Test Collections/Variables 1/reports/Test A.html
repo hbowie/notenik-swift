@@ -1,0 +1,110 @@
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Notenik Test Collection - Variables 1</title>
+</head>
+<body>
+<h3>J - Link Conversion</h3>
+
+<p>Body before modification: </p>
+
+<pre><code>
+Jump to https://www.amazon.com.
+</code></pre>
+
+<p>Body after conversion from Markdown to HTML:</p>
+
+<code>
+<p>Jump to https://www.amazon.com.</p>
+
+</code>
+
+<p>Body after summarization:</p>
+
+<code>
+Jump to https://www.amazon.com.
+</code>
+
+<p>Body after link conversion:</p>
+
+<code>
+Jump to <a href="https://www.amazon.com" target="ref">https://www.amazon.com</a>.
+</code>
+<h3>O - Markdown to HTML</h3>
+
+<p>Body before modification: </p>
+
+<pre><code>
+This is a test
+- List Item 1
+- List Item 2
+- List Item 3
+
+Another paragraph. 
+
+</code></pre>
+
+<p>Body after conversion from Markdown to HTML:</p>
+
+<code>
+<p>This is a test</p>
+<ul>
+<li>List Item 1</li>
+<li>List Item 2</li>
+<li>List Item 3</li>
+</ul>
+<p>Another paragraph.</p>
+
+</code>
+
+<p>Body after summarization:</p>
+
+<code>
+This is a test
+- List Item 1
+- List Item 2
+- List Item 3
+
+Another paragraph. 
+
+</code>
+
+<p>Body after link conversion:</p>
+
+<code>
+This is a test
+- List Item 1
+- List Item 2
+- List Item 3
+
+Another paragraph. 
+
+</code>
+<h3>S - Summarization</h3>
+
+<p>Body before modification: </p>
+
+<pre><code>
+For progressives in the US -- and, indeed, in many parts of the world -- recent events have called into question our faith in the goodness of people, and in our continued march forward towards a better tomorrow. It's only been roughly a decade since those of us in the US were [celebrating in amazement the election of Barack Obama][obama] as our president, an event that seemed to usher in a new era of progressive values.
+</code></pre>
+
+<p>Body after conversion from Markdown to HTML:</p>
+
+<code>
+<p>For progressives in the US -- and, indeed, in many parts of the world -- recent events have called into question our faith in the goodness of people, and in our continued march forward towards a better tomorrow. It's only been roughly a decade since those of us in the US were [celebrating in amazement the election of Barack Obama][obama] as our president, an event that seemed to usher in a new era of progressive values.</p>
+
+</code>
+
+<p>Body after summarization:</p>
+
+<code>
+For progressives in the US -- and, indeed, in many parts of the world -- recent events have called into question our faith in the goodness of people, and in our continued march forward towards a better tomorrow.
+</code>
+
+<p>Body after link conversion:</p>
+
+<code>
+For progressives in the US -- and, indeed, in many parts of the world -- recent events have called into question our faith in the goodness of people, and in our continued march forward towards a better tomorrow. It's only been roughly a decade since those of us in the US were [celebrating in amazement the election of Barack Obama][obama] as our president, an event that seemed to usher in a new era of progressive values.
+</code>
+</body>
+</html>

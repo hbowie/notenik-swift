@@ -49,6 +49,8 @@ class SeqValue : StringValue {
                 // Drop spaces and other white space
             } else if c == "$" {
                 newValue.append(c)
+            } else if c == "'" {
+                newValue.append(c)
             } else if StringUtils.isAlpha(c) {
                 newValue.append(c)
                 letters = true
