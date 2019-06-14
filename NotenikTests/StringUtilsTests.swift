@@ -110,6 +110,27 @@ class StringUtilsTests: XCTestCase {
         let expected1 = "Jump to <a href=\"https://www.amazon.com\" target=\"ref\">https://www.amazon.com</a>."
         XCTAssertTrue(StringUtils.convertLinks(in1) == expected1)
     }
+    
+    func testTruncateOrPad() {
+        let in1 = "1"
+        let out1 = "0001"
+        XCTAssertTrue(StringUtils.truncateOrPad(in1, toLength: 4) == out1)
+        let in2 = "0001"
+        let out2 = "1"
+        XCTAssertTrue(StringUtils.truncateOrPad(in2, toLength: 1, keepOnRight: true) == out2)
+        let out3 = "0"
+        XCTAssertTrue(StringUtils.truncateOrPad(in2, toLength: 1) == out3)
+    }
+    
+    func testWordDemarcation() {
+        let in1 = "herbert_hughes_bowie_jr"
+        let out1 = StringUtils.wordDemarcation(in1, caseMods: ["u", "u", "l"], delimiter: " ")
+        XCTAssertTrue(out1 == "Herbert Hughes Bowie Jr")
+        
+        let in2 = "CamelCase"
+        let out2 = StringUtils.wordDemarcation(in2, caseMods: ["u", "l", "l"], delimiter: "_")
+        XCTAssertTrue(out2 == "Camel_case")
+    }
 
     func testPerformanceExample() {
         // This is an example of a performance test case.

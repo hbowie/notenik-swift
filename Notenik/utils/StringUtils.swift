@@ -134,6 +134,116 @@ class StringUtils {
         return out
     }
     
+    /// Remove punctuation from the string, replacing with spaces,
+    /// but don't allow consecutive or trailing spaces.
+    ///
+    /// - Parameter from: The string to be purified.
+    /// - Returns: The purified string.
+    ///
+    static func purifyPunctuation(_ from: String) -> String {
+        var out = ""
+        
+        var pendingSpaces = 0
+        for char in from {
+            if char.isWhitespace || char.isPunctuation {
+                pendingSpaces += 1
+            } else {
+                if pendingSpaces > 0 {
+                    out.append(" ")
+                    pendingSpaces = 0
+                }
+                out.append(char)
+            }
+
+        }
+        return out
+    }
+    
+    static func truncateOrPad(_ from: String, toLength: Int, keepOnRight: Bool = false) -> String {
+        var out = ""
+        if toLength == from.count {
+            return from
+        } else if toLength < from.count {
+            if keepOnRight {
+                return String(from.suffix(toLength))
+            } else {
+                return String(from.prefix(toLength))
+            }
+        } else {
+            var zeroCount = toLength - from.count
+            var zeros = ""
+            while zeroCount > 0 {
+                zeros.append("0")
+                zeroCount -= 1
+            }
+            return zeros + from
+        }
+    }
+    
+    static func wordDemarcation(_ from: String, caseMods: [String], delimiter: String) -> String {
+        var out = ""
+        var demarcationPending = false
+        var lastChar: Character = " "
+        var positionInVariable = 0
+        var positionInWord = 0
+        for char in from {
+            if char.isWhitespace || char.isPunctuation {
+                demarcationPending = true
+            } else {
+                
+                if positionInVariable > 0 && char.isUppercase && !lastChar.isUppercase {
+                    demarcationPending = true
+                }
+                
+                if demarcationPending {
+                    out.append(delimiter)
+                    positionInWord = 0
+                    demarcationPending = false
+                }
+                
+                var caseModsIndex = 2
+                if positionInVariable == 0 {
+                    caseModsIndex = 0
+                } else if positionInWord == 0 {
+                    caseModsIndex = 1
+                }
+                
+                if caseMods[caseModsIndex] == "u" {
+                    out.append(char.uppercased())
+                } else if caseMods[caseModsIndex] == "l" {
+                    out.append(char.lowercased())
+                } else {
+                    out.append(char)
+                }
+                
+                lastChar = char
+                positionInWord += 1
+                positionInVariable += 1
+                
+            }
+        }
+        return out
+    }
+    
+    static func underscoresForSpaces(_ from: String) -> String {
+        var out = ""
+        var pendingSpaces = 0
+        for char in from {
+            if char.isWhitespace || char == "_" {
+                pendingSpaces += 1
+            } else {
+                if pendingSpaces > 0 {
+                    if out.count > 0 {
+                        out.append("_")
+                    }
+                    pendingSpaces = 0
+                }
+                out.append(char)
+            }
+        }
+        return out
+    }
+    
     /// See if the next few characters in the first string are equal to
     /// the entire contents of the second string.
     ///

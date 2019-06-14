@@ -40,6 +40,12 @@ sample
 <p>Body after conversion to HTML:</p>
 
 <p>sample.txt</p>
+
+<p>Body after punctuation purification:</p>
+
+<code>
+sample txt
+</code>
 <h3>C - HTML</h3>
 
 <p>Body before modification: </p>
@@ -76,6 +82,12 @@ This isn't a **great** "test", but it's a _decent_ one
 <p>Body after conversion to HTML:</p>
 
 <p>This isn&#146;t a <strong>great</strong> &#8220;test&#8221;, but it&#146;s a <em>decent</em> one.</p>
+
+<p>Body after punctuation purification:</p>
+
+<code>
+This isn t a great test but it s a decent one
+</code>
 <h3>J - Link Conversion</h3>
 
 <p>Body before modification: </p>
@@ -112,6 +124,12 @@ www
 <p>Body after conversion to HTML:</p>
 
 <p>Jump to https://www.amazon.com.</p>
+
+<p>Body after punctuation purification:</p>
+
+<code>
+Jump to https www amazon com
+</code>
 <h3>O - Markdown to HTML</h3>
 
 <p>Body before modification: </p>
@@ -172,6 +190,12 @@ Another paragraph
 <p>Body after conversion to HTML:</p>
 
 <p>This is a test- List Item 1 &#8211; List Item 2 &#8211; List Item 3 Another paragraph. </p>
+
+<p>Body after punctuation purification:</p>
+
+<code>
+This is a test List Item 1 List Item 2 List Item 3 Another paragraph
+</code>
 <h3>S - Summarization</h3>
 
 <p>Body before modification: </p>
@@ -208,5 +232,11 @@ For progressives in the US -- and, indeed, in many parts of the world -- recent 
 <p>Body after conversion to HTML:</p>
 
 <p>For progressives in the US &#8212; and, indeed, in many parts of the world &#8212; recent events have called into question our faith in the goodness of people, and in our continued march forward towards a better tomorrow. It&#146;s only been roughly a decade since those of us in the US were [celebrating in amazement the election of Barack Obama][obama] as our president, an event that seemed to usher in a new era of progressive values.</p>
+
+<p>Body after punctuation purification:</p>
+
+<code>
+For progressives in the US and indeed in many parts of the world recent events have called into question our faith in the goodness of people and in our continued march forward towards a better tomorrow It s only been roughly a decade since those of us in the US were celebrating in amazement the election of Barack Obama obama as our president an event that seemed to usher in a new era of progressive values
+</code>
 </body>
 </html>

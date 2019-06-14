@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/5/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -50,6 +53,10 @@ class SeqValue : StringValue {
             } else if c == "$" {
                 newValue.append(c)
             } else if c == "'" {
+                newValue.append(c)
+            } else if c == "_" {
+                newValue.append(c)
+            } else if c == "," {
                 newValue.append(c)
             } else if StringUtils.isAlpha(c) {
                 newValue.append(c)

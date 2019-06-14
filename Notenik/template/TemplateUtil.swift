@@ -49,6 +49,8 @@ class TemplateUtil {
     var outputStage = OutputStage.front
     
     var skippingData = false
+    var lastSeparator: Character = " "
+    var separatorPending = false
     
     let xmlConverter = StringConverter()
     let emailSingleQuoteConverter = StringConverter()
@@ -114,9 +116,7 @@ class TemplateUtil {
     /// - Parameter filePath: The complete path to the desired output file.
     func openOutput(filePath: String) {
         closeOutput()
-        print("Open Output at \(filePath)")
         let absFilePath = templateFileName.resolveRelative(path: filePath)
-        print("Open Output at \(absFilePath)")
         textOutURL = URL(fileURLWithPath: absFilePath)
         textOutFileName = FileName(filePath)
         
@@ -269,9 +269,23 @@ class TemplateUtil {
         
     }
     
+    /// Apply the modifers to the string.
+    ///
+    /// - Parameters:
+    ///   - replacementValue: The value to be modified.
+    ///   - mods: A string containing zero or more modifiers.
+    /// - Returns: The modified value.
     func applyModifiers(replacementValue: String, mods: String) -> String {
         
         var modifiedValue = replacementValue
+        
+        var number = 0
+        var keepCharsOnRight = false
+        
+        var wordCaseMods = ["u", "u", "l"]
+        var wordCaseIndex = 0
+        var wordDelimiter = ""
+        var wordDemarcationPending = false
         
         // See what modifiers we have
         var i = mods.startIndex
@@ -279,21 +293,27 @@ class TemplateUtil {
         while i < mods.endIndex {
             let char = mods[i]
             let charLower = char.lowercased()
-            var nextChar: Character = " "
-            let j = mods.index(after: i)
-            if j < mods.endIndex {
-                nextChar = mods[j]
-            }
+            let nextChar = mods.charAtOffset(index: i, offsetBy: 1)
             let nextCharLower = nextChar.lowercased()
+            var separator: Character = " "
             
             var inc = 1
-            
-            if charLower == "b" {
-                print("Base File Name Modifier found")
-                print("  - Original Value = \(modifiedValue)")
+            if char == "_" {
+                modifiedValue = StringUtils.underscoresForSpaces(modifiedValue)
+            } else if charLower == "b" {
                 let fileName = FileName(modifiedValue)
-                print("  - Base File Name  \(fileName.base)")
                 modifiedValue = fileName.base
+            } else if charLower == "c" {
+                wordDemarcationPending = true
+            } else if wordDemarcationPending {
+                if charLower == "u" || charLower == "l" || charLower == "a" {
+                    if wordCaseIndex < 3 {
+                        wordCaseMods[wordCaseIndex] = charLower
+                        wordCaseIndex += 1
+                    }
+                } else {
+                    wordDelimiter.append(char)
+                }
             } else if charLower == "h" {
                 let markedUp = Markedup(format: .htmlFragment)
                 markedUp.parse(text: modifiedValue, startingLastCharWasWhiteSpace: true)
@@ -309,6 +329,10 @@ class TemplateUtil {
                 modifiedValue = noBreakConverter.convert(from: modifiedValue)
             } else if charLower == "o" {
                 modifiedValue = convertMarkdownToHTML(modifiedValue)
+            } else if charLower == "p" {
+                modifiedValue = StringUtils.purifyPunctuation(modifiedValue)
+            } else if charLower == "r" {
+                keepCharsOnRight = true
             } else if charLower == "s" {
                 modifiedValue = StringUtils.summarize(modifiedValue)
             } else if charLower == "u" && nextCharLower != "i" {
@@ -320,12 +344,44 @@ class TemplateUtil {
                 modifiedValue = xmlConverter.convert(from: modifiedValue)
             } else if charLower == "'" {
                 modifiedValue = emailSingleQuoteConverter.convert(from: modifiedValue)
+            } else if char.isWholeNumber {
+                number = (number * 10) + char.wholeNumberValue!
+                if !nextChar.isWholeNumber {
+                    modifiedValue = StringUtils.truncateOrPad(modifiedValue, toLength: number, keepOnRight: keepCharsOnRight)
+                }
+            } else if char.isPunctuation {
+                separator = char
+                modifiedValue = separateVariables(from: modifiedValue, separator: char)
+            }
+            
+            if wordDemarcationPending {
+                modifiedValue = StringUtils.wordDemarcation(modifiedValue, caseMods: wordCaseMods, delimiter: wordDelimiter)
+            }
+            
+            if separator == " " {
+                lastSeparator = " "
+                separatorPending = false
             }
             
             i = mods.index(i, offsetBy: inc)
         }
         
         return modifiedValue
+    }
+    
+    func separateVariables(from: String, separator: Character) -> String {
+        guard from.count > 0 else { return from }
+        var out = ""
+        if separatorPending && separator == lastSeparator {
+            out.append(separator)
+            if separator != "/" && separator != "\\" {
+                out.append(" ")
+            }
+        }
+        out.append(from)
+        separatorPending = true
+        lastSeparator = separator
+        return out
     }
     
     /// Convert Markdown to HTML
