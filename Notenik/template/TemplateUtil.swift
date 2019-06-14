@@ -288,7 +288,17 @@ class TemplateUtil {
             
             var inc = 1
             
-            if charLower == "l" && nextCharLower != "i" {
+            if charLower == "b" {
+                print("Base File Name Modifier found")
+                print("  - Original Value = \(modifiedValue)")
+                let fileName = FileName(modifiedValue)
+                print("  - Base File Name  \(fileName.base)")
+                modifiedValue = fileName.base
+            } else if charLower == "h" {
+                let markedUp = Markedup(format: .htmlFragment)
+                markedUp.parse(text: modifiedValue, startingLastCharWasWhiteSpace: true)
+                modifiedValue = String(describing: markedUp)
+            } else if charLower == "l" && nextCharLower != "i" {
                 modifiedValue = modifiedValue.lowercased()
             } else if charLower == "j" {
                 modifiedValue = StringUtils.convertLinks(modifiedValue)

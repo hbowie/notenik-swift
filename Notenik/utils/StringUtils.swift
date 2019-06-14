@@ -390,3 +390,68 @@ class StringUtils {
         return within.range(of: target) != nil
     }
 }
+
+/// See if the next few characters in the first string are equal to
+/// the entire contents of the second string.
+///
+/// - Parameters:
+///   - str: The string being indexed.
+///   - index: An index into the first string.
+///   - str2: The second string.
+/// - Returns: True if equal, false otherwise.
+extension String {
+    
+    
+    /// Determines whether the passed string is equal to the
+    /// equivalent portion of this string, as indexed by the
+    /// given index.
+    ///
+    /// - Parameters:
+    ///   - index: An index pointing to a location within the string.
+    ///   - str2: A second string to compare to a portion of this one.
+    /// - Returns: True if the next several characters of this string match
+    ///            the characters of the passed string; false if characters
+    ///            don't match, or if the matching takes us beyond the end
+    ///            of this string.
+    ///
+    func indexedEquals(index: String.Index, str2: String) -> Bool {
+        guard self[index] == str2[str2.startIndex] else { return false }
+        var strIndex = self.index(index, offsetBy: 1)
+        var str2Index = str2.index(str2.startIndex, offsetBy: 1)
+        while strIndex < self.endIndex && str2Index < str2.endIndex {
+            if self[strIndex] != str2[str2Index] {
+                return false
+            }
+            strIndex = self.index(strIndex, offsetBy: 1)
+            str2Index = str2.index(str2Index, offsetBy: 1)
+        }
+        if str2Index < str2.endIndex {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    /// Return the character at the given offset from the given index, or space.
+    ///
+    /// - Parameters:
+    ///   - index: An index pointing to a position within the string.
+    ///   - offsetBy: An offset from that index.
+    /// - Returns: The character at the offset location, or a space, if the
+    ///            offset plus the index takes us beyond the end of the string.
+    ///
+    func charAtOffset(index: String.Index, offsetBy: Int) -> Character {
+        var ix = index
+        var offset = offsetBy
+        var char: Character = " "
+        while ix < self.endIndex && offset > 0 {
+            ix = self.index(after: ix)
+            offset -= 1
+        }
+        if offset == 0 && ix < self.endIndex {
+            char = self[ix]
+        }
+        
+        return char
+    }
+}

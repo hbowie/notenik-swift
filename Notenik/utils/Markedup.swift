@@ -18,6 +18,14 @@ class Markedup: CustomStringConvertible {
     var format: MarkedupFormat = .htmlFragment
     var code = ""
     
+    var lastCharWasWhiteSpace = true
+    var lastCharWasEmDash = false
+    var startingQuote = true
+    var whiteSpacePending = false
+    var lastCharWasEmphasis = false
+    var emphasisPending = 0
+    var lastEmphasisChar: Character = " "
+    
     convenience init (format: MarkedupFormat) {
         self.init()
         self.format = format
@@ -26,6 +34,112 @@ class Markedup: CustomStringConvertible {
     /// Return the description, used as the String value for the object
     var description: String {
         return code
+    }
+    
+    
+    /// Parse the passed text line, using a subset of Markdown syntax, and convert it
+    /// to the desired output format.
+    ///
+    /// - Parameters:
+    ///   - text: The text to be parsed.
+    ///   - startingLastCharWasWhiteSpace: An indicator of whether the last character
+    ///                                    was some sort of white space. 
+    func parse(text: String, startingLastCharWasWhiteSpace: Bool) {
+        startDoc(withTitle: nil, withCSS: nil)
+        lastCharWasWhiteSpace = startingLastCharWasWhiteSpace
+        whiteSpacePending = true
+        if lastCharWasWhiteSpace {
+            whiteSpacePending = false
+        }
+        emphasisPending = 0
+        lastCharWasEmDash = false
+        if whiteSpacePending {
+            writeSpace()
+        }
+        
+        var index = text.startIndex
+        for char in text {
+            
+            // If this is the second char in the -- sequence, then just
+            // let it go by, since we already wrote out the em dash.
+            if lastCharWasEmDash {
+                lastCharWasEmDash = false
+                lastCharWasWhiteSpace = false
+            }
+            
+            // If we have white space, write out only one space
+            else if char.isWhitespace {
+                writeSpace()
+            }
+            
+            // If we have an en dash, replace it with an appropriate entity
+            else if (char == "-" && lastCharWasWhiteSpace
+                && text.charAtOffset(index: index, offsetBy: 1).isWhitespace) {
+                writeEnDash()
+            }
+            
+            // If we have two dashes, replace them witn an em dash
+            else if char == "-" && text.charAtOffset(index: index, offsetBy: 1) == "-" {
+                writeEmDash()
+            }
+            
+            // If we have a double quotion mark, replace it with a smart quote
+            else if char == "\"" {
+                writeDoubleQuote()
+            }
+            
+            // If we have a single quotation mark, replace it with the appropriate entity
+            else if char == "'" {
+                if text.charAtOffset(index: index, offsetBy: 1).isLetter {
+                    writeApostrophe()
+                } else {
+                    writeSingleQuote()
+                }
+            }
+            
+            // If an isolated ampersand, replace it with an appropriate entity
+            else if char == "&" && text.charAtOffset(index: index, offsetBy: 1).isWhitespace {
+                writeAmpersand()
+            }
+            
+            // Check for emphasis
+            else if char == "*" || char == "_" {
+                if lastCharWasEmphasis {
+                    // If this is the second char in the emphasis sequence, then just let
+                    // it go by, since we already wrote out the appropriate html.
+                    lastCharWasEmphasis = false
+                } else if (emphasisPending == 1
+                    && char == lastEmphasisChar
+                    && !lastCharWasWhiteSpace) {
+                    finishEmphasis()
+                } else if (emphasisPending == 2
+                    && char == lastEmphasisChar
+                    && text.charAtOffset(index: index, offsetBy: 1) == lastEmphasisChar
+                    && !lastCharWasWhiteSpace) {
+                    finishStrong()
+                    lastCharWasEmphasis = true
+                } else if (emphasisPending == 0
+                    && text.charAtOffset(index: index, offsetBy: 1) == char
+                    && !text.charAtOffset(index: index, offsetBy: 2).isWhitespace) {
+                    startStrong()
+                    lastEmphasisChar = char
+                } else if (emphasisPending == 0
+                    && !text.charAtOffset(index: index, offsetBy: 1).isWhitespace) {
+                    startEmphasis()
+                    lastEmphasisChar = char
+                } else {
+                    lastCharWasWhiteSpace = false
+                    lastCharWasEmDash  = false
+                    code.append(char)
+                }
+            } else {
+                lastCharWasWhiteSpace = false
+                lastCharWasEmDash = false
+                code.append(char)
+            }
+            index = text.index(after: index)
+        }
+        finishDoc()
     }
     
     func startDoc(withTitle title: String?, withCSS css: String?) {
@@ -49,6 +163,93 @@ class Markedup: CustomStringConvertible {
         }
     }
     
+    /// Write out a space, but don't write more than one in a row
+    func writeSpace() {
+        lastCharWasEmDash = false
+        whiteSpacePending = false
+        if !lastCharWasWhiteSpace {
+            code.append(" ")
+            lastCharWasWhiteSpace = true
+        }
+    }
+    
+    /// Write out an en dash
+    func writeEnDash() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("&#8211;")
+        case .markdown:
+            code.append("-")
+        }
+        lastCharWasWhiteSpace = false
+        lastCharWasEmDash = false
+    }
+    
+    func writeEmDash() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("&#8212;")
+        case .markdown:
+            code.append("--")
+        }
+        lastCharWasWhiteSpace = false
+        lastCharWasEmDash = true
+    }
+    
+    func writeDoubleQuote() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            if startingQuote {
+                code.append("&#8220;")
+                startingQuote = false
+            } else {
+                code.append("&#8221;")
+                startingQuote = true
+            }
+        case .markdown:
+            code.append("\"")
+        }
+        lastCharWasWhiteSpace = false
+        lastCharWasEmDash = false
+    }
+    
+    func writeApostrophe() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("&#146;")
+        case .markdown:
+            code.append("'")
+        }
+    }
+    
+    func writeSingleQuote() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            if startingQuote {
+                code.append("&#8216;")
+                startingQuote = false
+            } else {
+                code.append("&#8217;")
+                startingQuote = true
+            }
+        case .markdown:
+            code.append("'")
+        }
+        lastCharWasWhiteSpace = false
+        lastCharWasEmDash = false
+    }
+    
+    func writeAmpersand() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("&amp;")
+        case .markdown:
+            code.append("&")
+        }
+        lastCharWasWhiteSpace = false
+        lastCharWasEmDash = false
+    }
+    
     func startParagraph() {
         switch format {
         case .htmlFragment, .htmlDoc:
@@ -67,6 +268,8 @@ class Markedup: CustomStringConvertible {
         case .markdown:
             code.append("**")
         }
+        emphasisPending = 2
+        lastCharWasEmphasis = true
     }
     
     func finishStrong() {
@@ -76,6 +279,7 @@ class Markedup: CustomStringConvertible {
         case .markdown:
             code.append("**")
         }
+        emphasisPending = 0
     }
     
     func startEmphasis() {
@@ -85,6 +289,7 @@ class Markedup: CustomStringConvertible {
         case .markdown:
             code.append("*")
         }
+        emphasisPending = 1
     }
     
     func finishEmphasis() {
@@ -94,6 +299,7 @@ class Markedup: CustomStringConvertible {
         case .markdown:
             code.append("*")
         }
+        emphasisPending = 0
     }
     
     func link(text: String, path: String) {

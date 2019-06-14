@@ -1,15 +1,14 @@
 //
-//  DateUtilsTests.swift
-//  notenikTests
+//  MarkedupTests.swift
+//  NotenikTests
 //
-//  Created by Herb Bowie on 11/28/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Created by Herb Bowie on 6/14/19.
+//  Copyright © 2019 PowerSurge Publishing. All rights reserved.
 //
 
 import XCTest
-@testable import Notenik
 
-class DateUtilsTests: XCTestCase {
+class MarkedupTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -19,11 +18,11 @@ class DateUtilsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testDateUtils() {
-        let utils = DateUtils.shared
-        XCTAssertTrue(utils.ymdToday == "2019-06-14")
-        XCTAssertTrue(utils.matchMonthName("Feb") == 2)
-        XCTAssertTrue(utils.matchMonthName("Tue") < 0)
+    func parseTest() {
+        let markedup1 = Markedup(format: .htmlFragment)
+        let text1 = "This isn't a **great** \"test\", but it's a _decent_ one."
+        markedup1.parse(text: text1, startingLastCharWasWhiteSpace: true)
+        print("Parsing result is: '\(markedup1)'")
     }
 
     func testPerformanceExample() {

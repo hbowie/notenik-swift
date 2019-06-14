@@ -4,6 +4,78 @@
 <title>Notenik Test Collection - Variables 1</title>
 </head>
 <body>
+<h3>B - Base File Name Conversion</h3>
+
+<p>Body before modification: </p>
+
+<pre><code>
+sample.txt
+</code></pre>
+
+<p>Body after conversion from Markdown to HTML:</p>
+
+<code>
+<p>sample.txt</p>
+
+</code>
+
+<p>Body after summarization:</p>
+
+<code>
+sample.txt
+</code>
+
+<p>Body after link conversion:</p>
+
+<code>
+sample.txt
+</code>
+
+<p>Body after base file name extraction:</p>
+
+<code>
+sample
+</code>
+
+<p>Body after conversion to HTML:</p>
+
+<p>sample.txt</p>
+<h3>C - HTML</h3>
+
+<p>Body before modification: </p>
+
+<pre><code>
+This isn't a **great** "test", but it's a _decent_ one.
+</code></pre>
+
+<p>Body after conversion from Markdown to HTML:</p>
+
+<code>
+<p>This isn't a <strong>great</strong> &quot;test&quot;, but it's a <em>decent</em> one.</p>
+
+</code>
+
+<p>Body after summarization:</p>
+
+<code>
+This isn't a **great** "test", but it's a _decent_ one.
+</code>
+
+<p>Body after link conversion:</p>
+
+<code>
+This isn't a **great** "test", but it's a _decent_ one.
+</code>
+
+<p>Body after base file name extraction:</p>
+
+<code>
+This isn't a **great** "test", but it's a _decent_ one
+</code>
+
+<p>Body after conversion to HTML:</p>
+
+<p>This isn&#146;t a <strong>great</strong> &#8220;test&#8221;, but it&#146;s a <em>decent</em> one.</p>
 <h3>J - Link Conversion</h3>
 
 <p>Body before modification: </p>
@@ -30,13 +102,22 @@ Jump to https://www.amazon.com.
 <code>
 Jump to <a href="https://www.amazon.com" target="ref">https://www.amazon.com</a>.
 </code>
+
+<p>Body after base file name extraction:</p>
+
+<code>
+www
+</code>
+
+<p>Body after conversion to HTML:</p>
+
+<p>Jump to https://www.amazon.com.</p>
 <h3>O - Markdown to HTML</h3>
 
 <p>Body before modification: </p>
 
 <pre><code>
-This is a test
-- List Item 1
+This is a test- List Item 1
 - List Item 2
 - List Item 3
 
@@ -47,9 +128,8 @@ Another paragraph.
 <p>Body after conversion from Markdown to HTML:</p>
 
 <code>
-<p>This is a test</p>
+<p>This is a test- List Item 1</p>
 <ul>
-<li>List Item 1</li>
 <li>List Item 2</li>
 <li>List Item 3</li>
 </ul>
@@ -60,8 +140,7 @@ Another paragraph.
 <p>Body after summarization:</p>
 
 <code>
-This is a test
-- List Item 1
+This is a test- List Item 1
 - List Item 2
 - List Item 3
 
@@ -72,14 +151,27 @@ Another paragraph.
 <p>Body after link conversion:</p>
 
 <code>
-This is a test
-- List Item 1
+This is a test- List Item 1
 - List Item 2
 - List Item 3
 
 Another paragraph. 
 
 </code>
+
+<p>Body after base file name extraction:</p>
+
+<code>
+This is a test- List Item 1
+- List Item 2
+- List Item 3
+
+Another paragraph
+</code>
+
+<p>Body after conversion to HTML:</p>
+
+<p>This is a test- List Item 1 &#8211; List Item 2 &#8211; List Item 3 Another paragraph. </p>
 <h3>S - Summarization</h3>
 
 <p>Body before modification: </p>
@@ -106,5 +198,15 @@ For progressives in the US -- and, indeed, in many parts of the world -- recent 
 <code>
 For progressives in the US -- and, indeed, in many parts of the world -- recent events have called into question our faith in the goodness of people, and in our continued march forward towards a better tomorrow. It's only been roughly a decade since those of us in the US were [celebrating in amazement the election of Barack Obama][obama] as our president, an event that seemed to usher in a new era of progressive values.
 </code>
+
+<p>Body after base file name extraction:</p>
+
+<code>
+For progressives in the US -- and, indeed, in many parts of the world -- recent events have called into question our faith in the goodness of people, and in our continued march forward towards a better tomorrow
+</code>
+
+<p>Body after conversion to HTML:</p>
+
+<p>For progressives in the US &#8212; and, indeed, in many parts of the world &#8212; recent events have called into question our faith in the goodness of people, and in our continued march forward towards a better tomorrow. It&#146;s only been roughly a decade since those of us in the US were [celebrating in amazement the election of Barack Obama][obama] as our president, an event that seemed to usher in a new era of progressive values.</p>
 </body>
 </html>
