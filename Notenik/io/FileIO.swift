@@ -189,6 +189,8 @@ class FileIO: NotenikIO, RowConsumer {
                     // Skip the template file
                 } else if fileName.licenseFile {
                     // Skip a LICENSE file
+                } else if fileName.collectionParms {
+                    // Skip a Collection Parms file
                 } else if fileName.noteExt {
                     let note = readNote(collection: collection!, noteURL: itemURL)
                     if note != nil && note!.hasTitle() {

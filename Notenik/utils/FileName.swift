@@ -41,6 +41,7 @@ class FileName: CustomStringConvertible {
     var infofile = false
     var licenseFile = false
     var conflictedCopy = false
+    var collectionParms = false
     
     var description: String {
         return fileNameStr
@@ -148,6 +149,7 @@ class FileName: CustomStringConvertible {
     func setBase(_ base: String) {
         self.base = base
         licenseFile = (base == "LICENSE")
+        collectionParms = (base == "Collection Parms")
         baseLower = base.lowercased()
         
         if base.count == 0 || base.hasPrefix(".") {
