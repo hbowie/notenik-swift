@@ -713,14 +713,15 @@ class FileIO: NotenikIO, RowConsumer {
             let itemContents = try String(contentsOf: noteURL, encoding: .utf8)
             let lineReader = BigStringReader(itemContents)
             let parser = NoteLineParser(collection: collection, lineReader: lineReader)
-            let note = parser.getNote()
             let fileName = noteURL.lastPathComponent
+            var defaultTitle = ""
+            if fileName.count > 0 {
+                let fileNameUtil = FileName(noteURL)
+                defaultTitle = fileNameUtil.base
+            }
+            let note = parser.getNote(defaultTitle: defaultTitle)
             if fileName.count > 0 {
                 note.fileName = fileName
-                if !note.hasTitle() {
-                    let fileNameUtil = FileName(noteURL)
-                    _ = note.setTitle(fileNameUtil.base) 
-                }
             }
             updateEnvDates(note: note, noteURL: noteURL)
             return note

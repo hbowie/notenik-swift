@@ -14,8 +14,10 @@ import Foundation
 /// Read lines in the Notenik format, and create a Note from their content.
 class NoteLineParser {
     
-    var lineReader   : LineReader
-    var note         : Note
+    var collection:     NoteCollection
+    var lineReader:     LineReader
+    
+    var note:           Note
     
     var possibleLine : String?
     var line         = ""
@@ -27,12 +29,12 @@ class NoteLineParser {
     var colonIndex   : String.Index
     var colonFound   = false
     
-    var possibleLabel: FieldLabel
-    var possibleDef  : FieldDefinition?
+    var possibleLabel = FieldLabel()
+    var possibleDef:    FieldDefinition?
     var nextValue    = ""
     
-    var label        : FieldLabel
-    var def          : FieldDefinition
+    var label        = FieldLabel()
+    var def          = FieldDefinition()
     var value        = ""
     var pendingBlankLines = 0
     
@@ -46,46 +48,63 @@ class NoteLineParser {
     
     /// Initialize with a functioning Line Reader
     init (collection: NoteCollection, lineReader: LineReader) {
-        note       = Note(collection: collection)
-        line       = ""
+        
+        self.collection = collection
+        self.lineReader = lineReader
+        
+        note = Note(collection: collection)
+        
+        firstIndex = line.startIndex
+        lastIndex = line.endIndex
+        nextIndex = line.startIndex
+        colonIndex = line.startIndex
+        index = line.startIndex
+        
+        initVars()
+    }
+    
+    /// Initialize key variables before beginning the parsing of another note.
+    func initVars() {
+        note = Note(collection: collection)
+        note.collection = collection
+        line = ""
         possibleLine = ""
         firstIndex = line.startIndex
         lastIndex = line.endIndex
-        index = line.startIndex
         nextIndex = line.startIndex
         colonIndex = line.startIndex
+        index = line.startIndex
         possibleLabel = FieldLabel()
         label = FieldLabel()
         def = FieldDefinition()
-        note.collection = collection
-        self.lineReader = lineReader
-    }
-    
-    /// Get the Note from the input lines
-    func getNote() -> Note {
         lineNumber = 0
         fileSize   = 0
         bodyStarted = false
-        possibleLabel = FieldLabel()
-        label = FieldLabel()
         pendingBlankLines = 0
-        bodyStarted = false
+    }
+    
+    /// Get the Note from the input lines
+    func getNote(defaultTitle: String) -> Note {
+        initVars()
         lineReader.open()
         repeat {
+            
             readLine()
+            
             // If we've reached the end of the file, or the label for a new field,
             // then finish up the last field we were working on.
-            if possibleLine == nil || possibleLabel.isValid() {
-                if label.isValid() && value.count > 0 {
-                    let field = NoteField(def: def, value: value, statusConfig: note.collection.statusConfig)
+            if possibleLine == nil || possibleLabel.validLabel {
+                if label.validLabel && value.count > 0 {
+                    let field = NoteField(def: def, value: value, statusConfig: collection.statusConfig)
                     note.setField(field)
                 }
                 pendingBlankLines = 0
             }
             
+            // Now figure out what to do with this line.
             if possibleLine == nil {
                 // We're done
-            } else if possibleLabel.isValid() {
+            } else if possibleLabel.validLabel {
                 label = possibleLabel
                 def   = possibleDef!
                 value = nextValue
@@ -96,7 +115,7 @@ class NoteLineParser {
                 if value.count > 0 {
                     pendingBlankLines += 1
                 }
-            } else if label.isValid() {
+            } else if label.validLabel {
                 appendNonBlankLine()
             // } else if note.containsTitle() {
             } else {
@@ -110,6 +129,15 @@ class NoteLineParser {
                                            value: StringUtils.trimHeading(line))
                 note.setField(titleField)
             } */
+            
+            // Don't allow the title field to consume multiple lines. 
+            if label.isTitle && value.count > 0 {
+                let titleField = NoteField(def: def, value: value, statusConfig: collection.statusConfig)
+                note.setField(titleField)
+                pendingBlankLines = 0
+                label = FieldLabel()
+                value = ""
+            }
         } while possibleLine != nil
         lineReader.close()
         return note
@@ -169,7 +197,7 @@ class NoteLineParser {
                     colonIndex = index
                     possibleLabel.set(StringUtils.trim(String(line[line.startIndex..<index])))
                     possibleDef = note.collection.getDef(label: &possibleLabel)
-                    validLabel = possibleLabel.isValid()
+                    validLabel = possibleLabel.validLabel
                     if validLabel && index < line.endIndex {
                         nextValue = StringUtils.trim(String(line[nextIndex..<line.endIndex]))
                     }

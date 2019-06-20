@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 11/30/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2018 - 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -27,10 +30,6 @@ class FieldLabel : CustomStringConvertible {
     func set(_ label: String) {
         properForm = label
         commonForm = StringUtils.toCommon(label)
-    }
-    
-    func isValid() -> Bool {
-        return validLabel
     }
     
     var isAuthor : Bool {
