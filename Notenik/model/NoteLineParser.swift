@@ -140,6 +140,9 @@ class NoteLineParser {
             }
         } while possibleLine != nil
         lineReader.close()
+        if !note.hasTitle() {
+            note.setTitle(defaultTitle)
+        }
         return note
     }
     
