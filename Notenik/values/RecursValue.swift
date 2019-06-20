@@ -108,8 +108,13 @@ class RecursValue : StringValue {
         interval = 0
         unit = -1
         weekdays = false
+        dayOfWeek = 0
+        dayOfMonth = 0
+        weekOfMonth = 0
+        sequence = 0
         
         var word = RecursWord()
+        word.precedingSeps = 1
         
         for c in value {
             if StringUtils.isDigit(c) {
@@ -126,9 +131,13 @@ class RecursValue : StringValue {
                 }
                 word.letters += 1
                 word.append(c)
-            } else if word.hasData {
-                processWord(word: word)
-                word = RecursWord()
+            } else {
+                // Neither alpha nor numeric -- must be whitespace or punctuation
+                if word.hasData {
+                    processWord(word: word)
+                    word = RecursWord()
+                }
+                word.precedingSeps += 1
             } // end if c is some miscellaneous punctuation
             if word.lowercased() == "every" ||
                 word.lowercased() == "semi" ||
@@ -157,7 +166,12 @@ class RecursValue : StringValue {
         }
     }
     
+    /// Perform appropriate processing for something other than a number
     func processAlpha(word: RecursWord) {
+        if word.precedingSeps == 0 &&
+            (word.lower == "nd" || word.lower == "th" || word.lower == "st" || word.lower == "rd") {
+            return
+        }
         switch word.lower {
         case "of":
             sequence = interval
@@ -196,6 +210,16 @@ class RecursValue : StringValue {
         interval = word.number
     }
     
+    func display() {
+        print("  - unit          = \(unit)")
+        print("  - interval      = \(interval)")
+        print("  - weekdays?       \(weekdays)")
+        print("  - day of week   = \(dayOfWeek)")
+        print("  - day of month  = \(dayOfMonth)")
+        print("  - week of month = \(weekOfMonth)")
+        print("  - sequence      = \(sequence)")
+    }
+    
     /// One word parsed from the recurs value
     class RecursWord {
         
@@ -205,6 +229,7 @@ class RecursValue : StringValue {
         
         var digits = 0
         var letters = 0
+        var precedingSeps = 0
         
         var alphaWord = false
         var numberWord = false
