@@ -54,6 +54,21 @@ class DateValue: StringValue {
         set(ymdDate)
     }
     
+    /// Use the provided format string to format the date.
+    ///
+    /// - Parameter with: The format string to be used.
+    /// - Returns: The formatted date. 
+    func format(with: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = with
+        let possibleDate = date
+        if possibleDate == nil {
+            return ymdDate
+        } else {
+            return formatter.string(from: possibleDate!)
+        }
+    }
+    
     /// Return an optional Date object based on the user's text input
     var date : Date? {
         return DateUtils.shared.dateFromYMD(ymdDate)

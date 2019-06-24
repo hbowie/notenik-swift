@@ -140,7 +140,7 @@ class TemplateLine {
     func processCommand(note: Note) {
         switch command! {
         case .delims:
-            processDelims()
+            processDelimsCommand()
         case .debug:
             processDebug()
         case .loop:
@@ -150,16 +150,16 @@ class TemplateLine {
         case .outer:
             break
         case .output:
-            if !util.skippingData {
-                processOutput(note: note)
-            }
+            processOutputCommand(note: note)
+        case .set:
+            processSetCommand(note: note)
         default:
             processDefault()
         }
     }
     
     /// Process a Delims (delimiters) Command
-    func processDelims() {
+    func processDelimsCommand() {
         var i = 0
         for token in tokens {
             switch i {
@@ -194,8 +194,35 @@ class TemplateLine {
     }
     
     /// Process an Output Command
-    func processOutput(note: Note) {
+    func processOutputCommand(note: Note) {
+        guard !util.skippingData else { return }
+        guard tokens.count >= 2 else { return }
         util.openOutput(filePath: util.replaceVariables(str: String(tokens[1]), note: note).line)
+    }
+    
+    /// Process a Set Command
+    func processSetCommand(note: Note) {
+        guard !util.skippingData else { return }
+        guard tokens.count >= 3 else { return }
+        let globalName = String(tokens[1])
+        let opcode = String(tokens[2])
+        
+        var operand1 = ""
+        if tokens.count >= 4 {
+            operand1 = util.replaceVariables(str: String(tokens[3]), note: note).line
+            
+        }
+        
+        var globalField = util.globals.getField(label: globalName)
+        if globalField == nil {
+            let def = FieldDefinition(globalName)
+            let val = ValueFactory.getValue(value: operand1)
+            globalField = NoteField(def: def, value: val)
+            _ = util.globals.setField(globalField!)
+        }
+        
+        globalField!.value.operate(opcode: opcode, operand1: operand1)
+        
     }
     
     func processDefault() {

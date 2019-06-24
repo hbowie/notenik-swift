@@ -18,7 +18,7 @@ class Template {
     var util = TemplateUtil()
     var io: NotenikIO = BunchIO()
     
-    var recLines         = [TemplateLine]()
+    var loopLines        = [TemplateLine]()
     var outerLinesBefore = [TemplateLine]()
     var outerLinesAfter  = [TemplateLine]()
     var endGroupLines    = [TemplateLine]()
@@ -54,7 +54,7 @@ class Template {
         guard util.templateOK else { return false }
         guard io.collectionOpen else { return false }
         
-        recLines = []
+        loopLines = []
         outerLinesBefore = []
         outerLinesAfter = []
         endGroupLines = []
@@ -71,11 +71,11 @@ class Template {
                 if line!.command != nil && line!.command! == .nextrec {
                     // Don't need to store the nextrec command line
                 } else {
-                    recLines.append(line!)
+                    loopLines.append(line!)
                 }
             } else if util.outputStage == .postLoop {
                 if line!.command != nil && line!.command! == .loop {
-                    processData()
+                    processLoop()
                 } else {
                     line!.generateOutput(note: emptyNote)
                 }
@@ -88,11 +88,11 @@ class Template {
     
     /// Merge that data in the Notes collection with the template lines
     /// between the nextrec and loop commands. 
-    func processData() {
+    func processLoop() {
         
         var (note, position) = io.firstNote()
         while note != nil {
-            for line in recLines {
+            for line in loopLines {
                 line.generateOutput(note: note!)
             }
             (note, position) = io.nextNote(position)

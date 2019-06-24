@@ -55,4 +55,18 @@ class ValueFactory {
             return StringValue(value)
         }
     }
+    
+    /// Given just a data value, return value type that is the best fit. 
+    static func getValue(value: String) -> StringValue {
+        if value.count == 0 {
+            return StringValue(value)
+        } else {
+            let possibleInt = Int(value)
+            if possibleInt != nil {
+                return IntValue(value)
+            } else {
+                return StringValue(value)
+            }
+        }
+    }
 }

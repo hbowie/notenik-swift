@@ -77,7 +77,7 @@ class NoteLineMaker {
         let proper = def.fieldLabel.properForm
         writer.write(proper)
         writer.write(": ")
-        if def.fieldType == .longText || def.fieldType == .code {
+        if def.fieldType == .body || def.fieldType == .longText || def.fieldType == .code {
             writer.endLine()
             writer.endLine()
         } else {

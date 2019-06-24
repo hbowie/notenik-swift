@@ -21,6 +21,12 @@ class NoteField {
         value = StringValue()
     }
     
+    convenience init(def: FieldDefinition, value: StringValue) {
+        self.init()
+        self.def = def
+        self.value = value
+    }
+    
     convenience init(def: FieldDefinition, statusConfig: StatusValueConfig) {
         self.init()
         self.def = def

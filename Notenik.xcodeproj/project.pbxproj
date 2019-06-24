@@ -242,6 +242,9 @@
 		9C832A02224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */; };
 		9C832A03224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */; };
 		9C832A04224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */; };
+		9C86CF0222C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
+		9C86CF0322C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
+		9C86CF0422C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
 		9C8FD8D82216302900F16669 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9C8FD8D72216302900F16669 /* README.md */; };
 		9C8FD8DA2216303F00F16669 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9C8FD8D92216303F00F16669 /* LICENSE.txt */; };
 		9C9094C52249A664002207EB /* NoteDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9094C42249A664002207EB /* NoteDocumentController.swift */; };
@@ -528,6 +531,7 @@
 		9C79BDAF226E368800796E93 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDiskLocation.swift; sourceTree = "<group>"; };
 		9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSaveDirectory.swift; sourceTree = "<group>"; };
+		9C86CF0122C15A660035A8FA /* IntValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntValue.swift; sourceTree = "<group>"; };
 		9C8FD8D72216302900F16669 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9C8FD8D92216303F00F16669 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		9C9094C42249A664002207EB /* NoteDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDocumentController.swift; sourceTree = "<group>"; };
@@ -820,6 +824,7 @@
 				9C60E72B21F651E500C332ED /* AuthorValue.swift */,
 				9CC0F5A7227629C4002683F8 /* BooleanValue.swift */,
 				9C60E72921F651E500C332ED /* DateValue.swift */,
+				9C86CF0122C15A660035A8FA /* IntValue.swift */,
 				9C60E72E21F651E500C332ED /* LinkValue.swift */,
 				9C60E72D21F651E500C332ED /* LongTextValue.swift */,
 				9C60E72A21F651E500C332ED /* RatingValue.swift */,
@@ -1163,6 +1168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C60E75F21F651E500C332ED /* TitleValue.swift in Sources */,
+				9C86CF0222C15A660035A8FA /* IntValue.swift in Sources */,
 				9C60E78021F651E500C332ED /* NoteType.swift in Sources */,
 				9C60E75921F651E500C332ED /* SeqValue.swift in Sources */,
 				9C60E7A021F6520100C332ED /* FileIO.swift in Sources */,
@@ -1369,6 +1375,7 @@
 				9CCFD62222AED9FA00C64D37 /* StringFromTo.swift in Sources */,
 				9C60E79C21F651E500C332ED /* NotePosition.swift in Sources */,
 				9C60E6E521F64B3C00C332ED /* NotenikTests.swift in Sources */,
+				9C86CF0322C15A660035A8FA /* IntValue.swift in Sources */,
 				9C60E7A121F6520100C332ED /* FileIO.swift in Sources */,
 				9C60E75721F651E500C332ED /* StringValue.swift in Sources */,
 				9C832A03224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
@@ -1477,6 +1484,7 @@
 				9CFCB04B226BE71500443FFA /* SimpleDate.swift in Sources */,
 				9C60E76421F651E500C332ED /* DateValue.swift in Sources */,
 				9C60E76A21F651E500C332ED /* AuthorValue.swift in Sources */,
+				9C86CF0422C15A660035A8FA /* IntValue.swift in Sources */,
 				9C60E77021F651E500C332ED /* LongTextValue.swift in Sources */,
 				9C9094C62249A664002207EB /* NoteDocumentController.swift in Sources */,
 				9C60E75E21F651E500C332ED /* RecursValue.swift in Sources */,

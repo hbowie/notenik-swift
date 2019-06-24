@@ -67,4 +67,17 @@ class StringValue: CustomStringConvertible, Equatable, Comparable {
       return lhs.sortKey < rhs.sortKey
     }
     
+    /// Perform the requested operation with a possible value.
+    func operate(opcode: String, operand1: String) {
+        switch opcode {
+        case "=":
+            set(operand1)
+        case "+=", "+":
+            value += operand1
+        default:
+            Logger.shared.log(subsystem: "values", category: "StringValue", level: .error,
+                              message: "Invalid operator of \(opcode) for a String value")
+        }
+    }
+    
 }

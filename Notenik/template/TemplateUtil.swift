@@ -188,7 +188,7 @@ class TemplateUtil {
         var i = str.startIndex
         while i < str.endIndex {
             let char = str[i]
-            if lookingForStartVar && strEqual(str: str, index: i, str2: startVar) {
+            if lookingForStartVar && str.indexedEquals(index: i, str2: startVar) {
                 startWithDelim = i
                 startPastDelim = str.index(i, offsetBy: startVar.count)
                 i = startPastDelim
@@ -197,12 +197,12 @@ class TemplateUtil {
                 lookingForEndVar = true
                 varName = ""
                 mods = ""
-            } else if lookingForStartMods && strEqual(str: str, index: i, str2: startMods) {
+            } else if lookingForStartMods && str.indexedEquals(index: i, str2: startMods) {
                 mods = ""
                 i = str.index(i, offsetBy: startMods.count)
                 lookingForStartMods = false
             } else if lookingForEndVar {
-                if strEqual(str: str, index: i, str2: endVar) {
+                if str.indexedEquals(index: i, str2: endVar) {
                     endAtDelim = i
                     endPastDelim = str.index(i, offsetBy: endVar.count)
                     appendVar(toLine: out, varName: varName, mods: mods, note: note)
@@ -224,29 +224,6 @@ class TemplateUtil {
         }
         return out
     }
-    
-    /// See if the next few characters in the first string are equal to
-    /// the entire contents of the second string.
-    ///
-    /// - Parameters:
-    ///   - str: The string being indexed.
-    ///   - index: An index into the first string.
-    ///   - str2: The second string.
-    /// - Returns: True if equal, false otherwise.
-    func strEqual(str: String, index: String.Index, str2: String) -> Bool {
-        guard str[index] == str2[str2.startIndex] else { return false }
-        var strIndex = str.index(index, offsetBy: 1)
-        var str2Index = str2.index(str2.startIndex, offsetBy: 1)
-        while strIndex < str.endIndex && str2Index < str2.endIndex {
-            if str[strIndex] != str2[str2Index] {
-                return false
-            }
-            strIndex = str.index(strIndex, offsetBy: 1)
-            str2Index = str2.index(str2Index, offsetBy: 1)
-        }
-        return true
-    }
-    
     
     /// Given a variable name, and possibly some modifiers, look for a corresponding value
     /// and then append it, with any requested modifications, to the output     line being built.
@@ -287,6 +264,16 @@ class TemplateUtil {
         var wordDelimiter = ""
         var wordDemarcationPending = false
         
+        var varyStage = 0
+        var varyDelim: Character = " "
+        var varyFrom = ""
+        var varyTo = ""
+        
+        var linkedTags = false
+        var linkedTagsPath = ""
+        
+        var formatString = ""
+        
         // See what modifiers we have
         var i = mods.startIndex
         
@@ -298,13 +285,23 @@ class TemplateUtil {
             var separator: Character = " "
             
             var inc = 1
-            if char == "_" {
-                modifiedValue = StringUtils.underscoresForSpaces(modifiedValue)
-            } else if charLower == "b" {
-                let fileName = FileName(modifiedValue)
-                modifiedValue = fileName.base
-            } else if charLower == "c" {
-                wordDemarcationPending = true
+            if formatString.count > 0 {
+                formatString.append(char)
+            } else if varyStage > 0 && varyStage < 4 {
+                if varyStage == 1 {
+                    varyDelim = char
+                    varyStage = 2
+                } else if varyStage == 2 && char != varyDelim {
+                    varyFrom.append(char)
+                } else if varyStage == 2 && char == varyDelim {
+                    varyStage = 3
+                } else if varyStage == 3 && char != varyDelim {
+                    varyTo.append(char)
+                } else if varyStage == 3 && char == varyDelim {
+                    varyStage = 4
+                }
+            } else if linkedTags {
+                linkedTagsPath.append(char)
             } else if wordDemarcationPending {
                 if charLower == "u" || charLower == "l" || charLower == "a" {
                     if wordCaseIndex < 3 {
@@ -314,10 +311,29 @@ class TemplateUtil {
                 } else {
                     wordDelimiter.append(char)
                 }
+            } else if char == "_" {
+                modifiedValue = StringUtils.underscoresForSpaces(modifiedValue)
+            } else if char == "a" {
+                formatString.append(char)
+            } else if charLower == "b" {
+                let fileName = FileName(modifiedValue)
+                modifiedValue = fileName.base
+            } else if charLower == "c" {
+                wordDemarcationPending = true
+            } else if char == "d" {
+                formatString.append(char)
+            } else if char == "E" {
+                formatString.append(char)
+            } else if charLower == "g" {
+                linkedTags = true
             } else if charLower == "h" {
                 let markedUp = Markedup(format: .htmlFragment)
                 markedUp.parse(text: modifiedValue, startingLastCharWasWhiteSpace: true)
                 modifiedValue = String(describing: markedUp)
+            } else if char == "k" {
+                formatString.append("h")
+            } else if char == "K" {
+                formatString.append("H")
             } else if charLower == "l" && nextCharLower != "i" {
                 modifiedValue = modifiedValue.lowercased()
             } else if charLower == "j" {
@@ -325,6 +341,8 @@ class TemplateUtil {
             } else if charLower == "l" && nextCharLower == "i" {
                 modifiedValue = StringUtils.toLowerFirstChar(modifiedValue)
                 inc = 2
+            } else if charLower == "m" {
+                formatString.append(char)
             } else if charLower == "n" {
                 modifiedValue = noBreakConverter.convert(from: modifiedValue)
             } else if charLower == "o" {
@@ -340,8 +358,12 @@ class TemplateUtil {
             } else if charLower == "u" && nextCharLower == "i" {
                 modifiedValue = StringUtils.toUpperFirstChar(modifiedValue)
                 inc = 2
+            } else if charLower == "v" {
+                varyStage = 1
             } else if charLower == "x" {
                 modifiedValue = xmlConverter.convert(from: modifiedValue)
+            } else if char == "y" {
+                formatString.append(char)
             } else if charLower == "'" {
                 modifiedValue = emailSingleQuoteConverter.convert(from: modifiedValue)
             } else if char.isWholeNumber {
@@ -364,6 +386,29 @@ class TemplateUtil {
             }
             
             i = mods.index(i, offsetBy: inc)
+        }
+        
+        if varyStage > 0 && varyFrom.count > 0 {
+            modifiedValue = modifiedValue.replacingOccurrences(of: varyFrom, with: varyTo)
+        }
+        
+        if linkedTags {
+            var relative = ""
+            if relativePathToRoot != nil {
+                relative = relativePathToRoot!
+            }
+            let tags = TagsValue(modifiedValue)
+            if (linkedTagsPath.count > 0
+                && !linkedTagsPath.hasSuffix("/")
+                && !linkedTagsPath.hasSuffix(endVar)) {
+                linkedTagsPath.append("/")
+            }
+            modifiedValue = tags.getLinkedTags(parent: relative + linkedTagsPath)
+        }
+        
+        if formatString.count > 0 {
+            let date = DateValue(modifiedValue)
+            modifiedValue = date.format(with: formatString)
         }
         
         return modifiedValue
