@@ -129,8 +129,10 @@ class TemplateLine {
     /// - Parameter note: The current Note being processed.
     func generateOutput(note: Note) {
         if command == nil {
-            let lineWithBreak = util.replaceVariables(str: text, note: note)
-            util.writeOutput(lineWithBreak: lineWithBreak)
+            if !util.skippingData {
+                let lineWithBreak = util.replaceVariables(str: text, note: note)
+                util.writeOutput(lineWithBreak: lineWithBreak)
+            }
         } else {
             processCommand(note: note)
         }
@@ -143,6 +145,12 @@ class TemplateLine {
             processDelimsCommand()
         case .debug:
             processDebug()
+        case .elseCmd:
+            util.anElse()
+        case .endif:
+            util.anotherEndIf()
+        case .ifCmd:
+            processIfCommand(note: note)
         case .loop:
             break
         case .nextrec:
@@ -191,6 +199,57 @@ class TemplateLine {
     /// Process a Debug Command
     func processDebug() {
         util.debug = true
+    }
+    
+    /// Process an If Command
+    func processIfCommand(note: Note) {
+        
+        if util.skippingData {
+            util.anotherIf()
+            return
+        }
+        
+        if tokens.count < 2 {
+            // If we have an if command with nothing following, then the result is false.
+            util.skippingData = true
+            return
+        }
+        
+        
+        // We have two or more operands
+        let operand1 = util.replaceVariables(str: String(tokens[1]), note: note).line
+        
+        if tokens.count < 3 {
+            // We're just testing for the presence of a variable
+            if operand1 == "" {
+                util.skippingData = true
+            }
+            return
+        }
+        
+        // We have three or more operands
+        var value1 = ""
+        var value2 = ""
+        var value2Index = 2
+        let operand2 = util.replaceVariables(str: String(tokens[2]), note: note).line
+        var compOp = TemplateComparisonOperator(operand1)
+        if compOp.op == .undefined {
+            compOp = TemplateComparisonOperator(operand2)
+            value1 = operand1
+            value2Index = 3
+        }
+        if compOp.op == .undefined {
+            Logger.shared.log(subsystem: "template", category: "TemplateLine", level: .error,
+                              message: "\(operand2) is not a valid comparison operator")
+            return
+        }
+        
+        if tokens.count > 3 {
+            value2 = util.replaceVariables(str: String(tokens[value2Index]), note: note).line
+        }
+        
+        let compareResult = compOp.compare(value1, value2)
+        util.skippingData = !compareResult
     }
     
     /// Process an Output Command

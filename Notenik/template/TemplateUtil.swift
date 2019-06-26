@@ -49,6 +49,7 @@ class TemplateUtil {
     var outputStage = OutputStage.front
     
     var skippingData = false
+    var ifBypassDepth = 0
     var lastSeparator: Character = " "
     var separatorPending = false
     
@@ -163,6 +164,28 @@ class TemplateUtil {
         outputLines = ""
         outputLineCount = 0
         outputOpen = false
+    }
+    
+    func anotherIf() {
+        ifBypassDepth += 1
+    }
+    
+    func anElse() {
+        if skippingData && ifBypassDepth > 0 {
+            // If we bypassed the If, then bypass the Else as well,
+            // But we're still looking for an EndIf
+        } else {
+            let skippingBeforeElse = skippingData
+            skippingData = !skippingBeforeElse
+        }
+    }
+    
+    func anotherEndIf() {
+        if ifBypassDepth > 0 {
+            ifBypassDepth -= 1
+        } else {
+            skippingData = false
+        }
     }
     
     /// Replace any variables in the passed string with their current Note values.

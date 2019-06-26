@@ -1,0 +1,20 @@
+<?output "set-command-test.html"?>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Testing the Set Command</title>
+</head>
+<body>
+<?set line-count = 0 ?>
+<?nextrec?>
+<?set line-count += 1 ?>
+<ul>
+<li>Seq: =$seq$=</li>
+<li>Line count: =$line-count$=</li>
+<li>Title: =$title$=</li>
+<li>Last Title: =$last-title$=</li>
+</ul>
+<?set last-title = =$title$= ?>
+<?loop?>
+</body>
+</html>

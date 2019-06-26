@@ -1,0 +1,9 @@
+Title:  Second Note
+
+Tags:   tag2
+
+Seq:    2
+
+Body: 
+
+The body for the second note. 

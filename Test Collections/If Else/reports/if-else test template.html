@@ -1,0 +1,28 @@
+<?output "if-else test.html"?>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>If Else Test</title>
+</head>
+<body>
+<?set global = 0?>
+<?nextrec?>
+<?if =$seq$= ?>
+<p>Seq has a value of =$seq$= </p>
+<?else?>
+<p>Seq (=$seq$=) is blank</p>
+<?endif?>
+<p>Body = =$body$= </p>
+<?if "=$body$=" contains body ?>
+<p>Body contains body.</p>
+<?else?>
+<p>Body does not contain body.</p>
+<?endif?>
+<?if 20 gt =$seq$= ?>
+<p>20 greater than =$seq$= </p>
+<?else?>
+<p>20 not greater than =$seq$= </p>
+<?endif?>
+<?loop?>
+</body>
+</html>

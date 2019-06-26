@@ -259,6 +259,9 @@
 		9C97C1B12278F46100A43913 /* CollectionRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */; };
 		9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025121F65AF00027F364 /* NoteListViewController.swift */; };
 		9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
+		9CA420F622C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* TemplateComparisonOperator.swift */; };
+		9CA420F722C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* TemplateComparisonOperator.swift */; };
+		9CA420F822C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* TemplateComparisonOperator.swift */; };
 		9CA80797229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */; };
 		9CA80798229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */; };
 		9CA8079B229F1FB800C5D673 /* Down.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3BDF46229D9A5200E0DA89 /* Down.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -540,6 +543,7 @@
 		9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionRequestType.swift; sourceTree = "<group>"; };
 		9C9A025121F65AF00027F364 /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
+		9CA420F522C2A67D00EEE065 /* TemplateComparisonOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateComparisonOperator.swift; sourceTree = "<group>"; };
 		9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewController.swift; sourceTree = "<group>"; };
 		9CAF2B2622664237009E19E2 /* Project Index */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Project Index"; sourceTree = "<group>"; };
 		9CB60BBF226509B2003B5655 /* Share.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
@@ -943,6 +947,7 @@
 				9CE9C98522A61499008D2B0A /* TemplateUtil.swift */,
 				9CF3DE4422A6BAA00078A6B0 /* TemplateLine.swift */,
 				9CE2170622A95EB300EE656C /* TemplateCommand.swift */,
+				9CA420F522C2A67D00EEE065 /* TemplateComparisonOperator.swift */,
 				9CE2170D22A9BC6000EE656C /* LineWithBreak.swift */,
 			);
 			path = template;
@@ -1222,6 +1227,7 @@
 				9C21DB8021F82D9800A5A08C /* NoteDisplay.swift in Sources */,
 				9C2AE512220A030800AE8BEE /* TagsTree.swift in Sources */,
 				9CC78E6C2283587300640477 /* DisplayPrefsWindowController.swift in Sources */,
+				9CA420F622C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */,
 				9CD326202233068F00D06B77 /* CocoaEditView.swift in Sources */,
 				9CFCB049226BCE1700443FFA /* SimpleDate.swift in Sources */,
 				9CE3250D224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
@@ -1300,6 +1306,7 @@
 				9CF3DE4622A6BAA00078A6B0 /* TemplateLine.swift in Sources */,
 				9C2AE51B220A044800AE8BEE /* TagsNodeType.swift in Sources */,
 				9C60E79321F651E500C332ED /* NoteCollection.swift in Sources */,
+				9CA420F722C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */,
 				9C60E7C121F6525F00C332ED /* TitleValueTests.swift in Sources */,
 				9C60E7BB21F6525F00C332ED /* LongTextValueTests.swift in Sources */,
 				9C2A35C222A1D164009C868E /* MergeActionModifier.swift in Sources */,
@@ -1500,6 +1507,7 @@
 				9C60E6F021F64B3C00C332ED /* NotenikUITests.swift in Sources */,
 				9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */,
 				9C60E7A221F6520100C332ED /* FileIO.swift in Sources */,
+				9CA420F822C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */,
 				9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9CE9C98422A6134A008D2B0A /* Template.swift in Sources */,
 				9C2A35B522A19715009C868E /* MergeScripter.swift in Sources */,
