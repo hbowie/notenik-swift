@@ -151,6 +151,8 @@ class TemplateLine {
             util.anotherEndIf()
         case .ifCmd:
             processIfCommand(note: note)
+        case .include:
+            processIncludeCommand(note: note)
         case .loop:
             break
         case .nextrec:
@@ -250,6 +252,13 @@ class TemplateLine {
         
         let compareResult = compOp.compare(value1, value2)
         util.skippingData = !compareResult
+    }
+    
+    func processIncludeCommand(note: Note) {
+        guard !util.skippingData else { return }
+        guard tokens.count > 1 else { return }
+        let includeFilePath = util.replaceVariables(str: String(tokens[1]), note: note).line
+        util.includeFile(filePath: includeFilePath, note: note)
     }
     
     /// Process an Output Command

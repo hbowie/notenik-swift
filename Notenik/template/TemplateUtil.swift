@@ -14,6 +14,8 @@ import Foundation
 /// Persistent data along with utility methods.
 class TemplateUtil {
     
+    let fileManager = FileManager.default
+    
     var debug = false
     
     var templateURL: URL?
@@ -134,6 +136,53 @@ class TemplateUtil {
             relativePathToRoot = nil
         }
         outputOpen = true
+    }
+    
+    /// Include another file into this one.
+    ///
+    /// - Parameter filePath: The complete path to the file to be included.
+    func includeFile(filePath: String, note: Note) {
+        
+        let absFilePath = templateFileName.resolveRelative(path: filePath)
+        
+        guard fileManager.fileExists(atPath: absFilePath) else {
+            Logger.shared.log(subsystem: "template", category: "TemplateUtil", level: .error,
+                              message: "Could not find an include file at \(absFilePath)")
+            return
+        }
+        
+        guard fileManager.isReadableFile(atPath: absFilePath) else {
+            Logger.shared.log(subsystem: "template", category: "TemplateUtil", level: .error,
+                              message: "Could not read the include file at \(absFilePath)")
+            return
+        }
+        
+        let includeURL = URL(fileURLWithPath: absFilePath)
+        var includeReader = BigStringReader("")
+        
+        do {
+            let includeContents = try String(contentsOf: includeURL, encoding: .utf8)
+            includeReader = BigStringReader(includeContents)
+            includeReader.open()
+        } catch {
+            Logger.shared.log(subsystem: "template",
+                              category: "TemplateUtil",
+                              level: .error,
+                              message: "Error reading Include file from \(includeURL)")
+            return
+        }
+        
+        Logger.shared.log(subsystem: "template", category: "TemplateUtil", level: .info,
+                          message: "Including file \(absFilePath)")
+        
+        var includeLine = includeReader.readLine()
+        while includeLine != nil {
+            let includeLineWithBreak = replaceVariables(str: includeLine!, note: note)
+            writeOutput(lineWithBreak: includeLineWithBreak)
+            includeLine = includeReader.readLine()
+        }
+        includeReader.close()
+
     }
     
     /// Write one output line, with an optional trailing line break.
