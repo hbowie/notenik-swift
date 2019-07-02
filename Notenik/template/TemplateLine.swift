@@ -145,12 +145,22 @@ class TemplateLine {
             processDelimsCommand()
         case .debug:
             processDebug()
+        case .definegroup:
+            processDefineGroupCommand(note: note)
         case .elseCmd:
             util.anElse()
         case .endif:
             util.anotherEndIf()
         case .ifCmd:
             processIfCommand(note: note)
+        case .ifendgroup:
+            processIfEndGroupCommand()
+        case .ifendlist:
+            processIfEndListCommand()
+        case .ifnewgroup:
+            processIfNewGroupCommaNd()
+        case .ifnewlist:
+            processIfNewListCommand()
         case .include:
             processIncludeCommand(note: note)
         case .loop:
@@ -201,6 +211,48 @@ class TemplateLine {
     /// Process a Debug Command
     func processDebug() {
         util.debug = true
+    }
+    
+    /// Process a Define Group Command
+    func processDefineGroupCommand(note: Note) {
+        util.clearIfs()
+        guard tokens.count > 2 else { return }
+        guard let groupNumber = validGroupNumber() else { return }
+        let groupValue = util.replaceVariables(str: String(tokens[2]), note: note).line
+        util.setGroup(groupNumber: groupNumber, nextValue: groupValue)
+    }
+    
+    func processIfEndGroupCommand() {
+        util.clearIfs()
+        guard let groupNumber = validGroupNumber() else { return }
+        util.setIfEndGroup(groupNumber)
+    }
+    
+    func processIfNewGroupCommaNd() {
+        util.clearIfs()
+        guard let groupNumber = validGroupNumber() else { return }
+        util.setIfNewGroup(groupNumber)
+    }
+    
+    func processIfEndListCommand() {
+        util.clearIfs()
+        guard let groupNumber = validGroupNumber() else { return }
+        util.setIfEndList(groupNumber)
+    }
+    
+    func processIfNewListCommand() {
+        util.clearIfs()
+        guard let groupNumber = validGroupNumber() else { return }
+        util.setIfNewList(groupNumber)
+    }
+    
+    /// Convert the second token to a valid group number or a nil value.
+    func validGroupNumber() -> Int? {
+        guard tokens.count > 1 else { return nil }
+        let possibleGroupNumber = Int(String(tokens[1]))
+        guard let groupNumber = possibleGroupNumber else { return nil }
+        guard groupNumber >= 1 && groupNumber <= 10 else { return nil }
+        return groupNumber - 1
     }
     
     /// Process an If Command

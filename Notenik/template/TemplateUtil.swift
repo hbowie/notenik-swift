@@ -52,6 +52,14 @@ class TemplateUtil {
     
     var skippingData = false
     var ifBypassDepth = 0
+    
+    var minorGroup = -1
+    var groupValue: [String] = []
+    var endGroup:   [Bool]   = []
+    var newGroup:   [Bool]   = []
+    var endList:    [Bool]   = []
+    var newList:    [Bool]   = []
+    
     var lastSeparator: Character = " "
     var separatorPending = false
     
@@ -68,6 +76,8 @@ class TemplateUtil {
         xmlConverter.addXML()
         emailSingleQuoteConverter.addEmailQuotes()
         noBreakConverter.addNoBreaks()
+        resetGroupValues()
+        resetGroupBreaks()
     }
     
     /// Open a new template file.
@@ -75,6 +85,9 @@ class TemplateUtil {
     /// - Parameter templateURL: The location of the template file.
     /// - Returns: True if opened ok, false if errors. 
     func openTemplate(templateURL: URL) -> Bool {
+        
+        resetGroupValues()
+        resetGroupBreaks()
         
         self.templateURL = templateURL
         templateFileName = FileName(templateURL)
@@ -215,6 +228,14 @@ class TemplateUtil {
         outputOpen = false
     }
     
+    /// Clear all pending conditionals. This method should be called for
+    /// commands that should never be found within the scope of a
+    /// conditional block.
+    func clearIfs() {
+        ifBypassDepth = 0
+        skippingData = false
+    }
+    
     func anotherIf() {
         ifBypassDepth += 1
     }
@@ -235,6 +256,101 @@ class TemplateUtil {
         } else {
             skippingData = false
         }
+    }
+    
+    /// Blank out all ten possible group values.
+    func resetGroupValues() {
+        var index = 0
+        while index < 10 {
+            if index < groupValue.count {
+                groupValue[index] = ""
+            } else {
+                groupValue.append("")
+            }
+            index += 1
+        }
+    }
+    
+    /// Reset all the group breaks.
+    func resetGroupBreaks() {
+        var index = 0
+        while index < 10 {
+            if index < endGroup.count {
+                endGroup[index] = false
+                newGroup[index] = false
+                endList[index] = false
+                newList[index] = false
+            } else {
+                endGroup.append(false)
+                newGroup.append(false)
+                endList.append(false)
+                newList.append(false)
+            }
+            index += 1
+        }
+    }
+    
+    /// We have another value for a defined group we're watching.
+    func setGroup(groupNumber: Int, nextValue: String) {
+        
+        if groupNumber > minorGroup {
+            minorGroup = groupNumber
+        }
+        
+        guard nextValue != groupValue[groupNumber] else { return }
+        
+        setEndGroupsTrue(majorGroup: groupNumber)
+        
+        if nextValue.count > 0 {
+            newGroup[groupNumber] = true
+            if groupValue[groupNumber].count == 0 {
+                newList[groupNumber] = true
+            }
+        } else {
+            endList[groupNumber] = true
+        }
+        
+        var index = groupNumber + 1
+        while index <= minorGroup {
+            if groupValue[index].count > 0 {
+                endList[index] = true
+                groupValue[index] = ""
+            }
+            index += 1
+        }
+        
+        groupValue[groupNumber] = nextValue
+    }
+    
+    /// Indicate the end of a group (and its sub-groups)
+    func setEndGroupsTrue(majorGroup: Int) {
+        var index = majorGroup
+        while index <= minorGroup {
+            if groupValue[index].count > 0 {
+                endGroup[index] = true
+            }
+            index += 1
+        }
+    }
+    
+    /// Has the group ended?
+    func setIfEndGroup(_ groupNumber: Int) {
+        skippingData = !endGroup[groupNumber]
+    }
+    
+    /// Has a new group started?
+    func setIfNewGroup(_ groupNumber: Int) {
+        skippingData = !newGroup[groupNumber]
+    }
+    
+    /// Has the list ended?
+    func setIfEndList(_ groupNumber: Int) {
+        skippingData = !endList[groupNumber]
+    }
+    
+    /// Is a new list starting?
+    func setIfNewList(_ groupNumber: Int) {
+        skippingData = !newList[groupNumber]
     }
     
     /// Replace any variables in the passed string with their current Note values.
