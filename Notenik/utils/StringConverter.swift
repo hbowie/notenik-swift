@@ -20,7 +20,12 @@ class StringConverter {
     }
     
     func addHTML() {
-        
+        add(from: "\"",  to: "&quot;")
+        add(from: "'",   to: "&apos;")
+        add(from: "&",   to: "&amp;")
+        add(from: "<",   to: "&lt;")
+        add(from: ">",   to: "&gt;")
+        add(from: "...", to: "&hellip;")
     }
     
     /// Add standard XML conversions to the from/to list.

@@ -461,6 +461,11 @@ class BunchIO: NotenikIO, RowConsumer  {
         return bunch!.notesTree.root
     }
     
+    /// Create an iterator for the tags nodes.
+    func makeTagsNodeIterator() -> TagsNodeIterator {
+        return TagsNodeIterator(noteIO: self)
+    }
+    
     /// Close the current collection, if one is open.
     func closeCollection() {
         collection = nil

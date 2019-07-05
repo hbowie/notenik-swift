@@ -28,6 +28,9 @@
 		9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49022134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49122134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
+		9C1CB85B22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */; };
+		9C1CB85C22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */; };
+		9C1CB85D22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */; };
 		9C21749F22024E2900B4BF48 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C21749E22024E2900B4BF48 /* notenik-swift-intro */; };
 		9C2174A022024E2900B4BF48 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C21749E22024E2900B4BF48 /* notenik-swift-intro */; };
 		9C2174A122024E2900B4BF48 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C21749E22024E2900B4BF48 /* notenik-swift-intro */; };
@@ -265,6 +268,9 @@
 		9CA80797229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */; };
 		9CA80798229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */; };
 		9CA8079B229F1FB800C5D673 /* Down.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3BDF46229D9A5200E0DA89 /* Down.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9CB06CBA22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */; };
+		9CB06CBB22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */; };
+		9CB06CBC22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */; };
 		9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CB60BBF226509B2003B5655 /* Share.storyboard */; };
 		9CB60BC1226509B2003B5655 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CB60BBF226509B2003B5655 /* Share.storyboard */; };
 		9CB60BC322650A89003B5655 /* ShareWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB60BC222650A89003B5655 /* ShareWindowController.swift */; };
@@ -438,6 +444,7 @@
 		9C09E1752248601D0046D50D /* notenik.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = notenik.iconset; sourceTree = "<group>"; };
 		9C10311C229A134E009CCE3B /* AppPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrefs.swift; sourceTree = "<group>"; };
 		9C12D48E22134970003136B2 /* NoteSelectionSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSelectionSource.swift; sourceTree = "<group>"; };
+		9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesToHTML.swift; sourceTree = "<group>"; };
 		9C21749E22024E2900B4BF48 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../notenik-swift-intro"; sourceTree = "<group>"; };
 		9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplay.swift; sourceTree = "<group>"; };
 		9C29DD28226286A100928180 /* CollectionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindow.swift; sourceTree = "<group>"; };
@@ -546,6 +553,7 @@
 		9CA420F522C2A67D00EEE065 /* TemplateComparisonOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateComparisonOperator.swift; sourceTree = "<group>"; };
 		9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewController.swift; sourceTree = "<group>"; };
 		9CAF2B2622664237009E19E2 /* Project Index */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Project Index"; sourceTree = "<group>"; };
+		9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNodeIterator.swift; sourceTree = "<group>"; };
 		9CB60BBF226509B2003B5655 /* Share.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
 		9CB60BC222650A89003B5655 /* ShareWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareWindowController.swift; sourceTree = "<group>"; };
 		9CB60BC522651074003B5655 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -641,9 +649,6 @@
 		9C2AE510220A028000AE8BEE /* bunch */ = {
 			isa = PBXGroup;
 			children = (
-				9C2AE511220A030800AE8BEE /* TagsTree.swift */,
-				9C2AE513220A033300AE8BEE /* TagsNode.swift */,
-				9C2AE519220A044800AE8BEE /* TagsNodeType.swift */,
 				9C2AE51D220A1ED700AE8BEE /* BunchOfNotes.swift */,
 			);
 			path = bunch;
@@ -716,6 +721,7 @@
 				9CF1192C2257FD170015AE91 /* modifchanged */,
 				9C832A00224ABDBD007DA6FC /* prefs */,
 				9CB60BBE22650975003B5655 /* share */,
+				9CB06CB522CCF4A200887778 /* tags */,
 				9CD82F612211E29E002314E4 /* textio */,
 				9CE9C97D22A612D3008D2B0A /* template */,
 				9C60E6FD21F650B800C332ED /* utils */,
@@ -850,6 +856,7 @@
 				9C60E79F21F6520100C332ED /* FileIO.swift */,
 				9C60E71E21F651E500C332ED /* NotenikIO.swift */,
 				9C060686228E0A9300CB8C10 /* RealmIO.swift */,
+				9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */,
 			);
 			path = io;
 			sourceTree = "<group>";
@@ -874,6 +881,17 @@
 				9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */,
 			);
 			path = prefs;
+			sourceTree = "<group>";
+		};
+		9CB06CB522CCF4A200887778 /* tags */ = {
+			isa = PBXGroup;
+			children = (
+				9C2AE511220A030800AE8BEE /* TagsTree.swift */,
+				9C2AE513220A033300AE8BEE /* TagsNode.swift */,
+				9C2AE519220A044800AE8BEE /* TagsNodeType.swift */,
+				9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */,
+			);
+			path = tags;
 			sourceTree = "<group>";
 		};
 		9CB60BBE22650975003B5655 /* share */ = {
@@ -1243,6 +1261,7 @@
 				9C60E76221F651E500C332ED /* DateValue.swift in Sources */,
 				9C60E74421F651E500C332ED /* NotenikIO.swift in Sources */,
 				9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */,
+				9C1CB85B22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */,
 				9C60E74121F651E500C332ED /* NoteField.swift in Sources */,
 				9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */,
 				9C60E77D21F651E500C332ED /* LabelConstants.swift in Sources */,
@@ -1250,6 +1269,7 @@
 				9C60E79521F651E500C332ED /* NoteIDRule.swift in Sources */,
 				9C2AE51E220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9CE9C98222A6134A008D2B0A /* Template.swift in Sources */,
+				9CB06CBA22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */,
 				9C60E77121F651E500C332ED /* LinkValue.swift in Sources */,
 				9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */,
 				9C2A35BD22A1CC80009C868E /* MergeActionVerb.swift in Sources */,
@@ -1306,6 +1326,7 @@
 				9CF3DE4622A6BAA00078A6B0 /* TemplateLine.swift in Sources */,
 				9C2AE51B220A044800AE8BEE /* TagsNodeType.swift in Sources */,
 				9C60E79321F651E500C332ED /* NoteCollection.swift in Sources */,
+				9C1CB85C22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */,
 				9CA420F722C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */,
 				9C60E7C121F6525F00C332ED /* TitleValueTests.swift in Sources */,
 				9C60E7BB21F6525F00C332ED /* LongTextValueTests.swift in Sources */,
@@ -1392,6 +1413,7 @@
 				9CF11933225802AA0015AE91 /* ModView.swift in Sources */,
 				9C2A35B722A19A0B009C868E /* MergeScripterTests.swift in Sources */,
 				9C60E79621F651E500C332ED /* NoteIDRule.swift in Sources */,
+				9CB06CBB22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */,
 				9C2A35B422A19715009C868E /* MergeScripter.swift in Sources */,
 				9C60E77521F651E500C332ED /* TagsValue.swift in Sources */,
 				9C60E74821F651E500C332ED /* ProviderType.swift in Sources */,
@@ -1437,6 +1459,7 @@
 				9CA80798229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
 				9C60E77921F651E500C332ED /* StatusValue.swift in Sources */,
 				9C60E79A21F651E500C332ED /* FieldType.swift in Sources */,
+				9C1CB85D22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */,
 				9C60E77C21F651E500C332ED /* FieldDefinition.swift in Sources */,
 				9C2A35BB22A19D6E009C868E /* MergeActionModule.swift in Sources */,
 				9CE3250E224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
@@ -1493,6 +1516,7 @@
 				9C60E76A21F651E500C332ED /* AuthorValue.swift in Sources */,
 				9C86CF0422C15A660035A8FA /* IntValue.swift in Sources */,
 				9C60E77021F651E500C332ED /* LongTextValue.swift in Sources */,
+				9CB06CBC22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */,
 				9C9094C62249A664002207EB /* NoteDocumentController.swift in Sources */,
 				9C60E75E21F651E500C332ED /* RecursValue.swift in Sources */,
 				9C60E74F21F651E500C332ED /* ValueFactory.swift in Sources */,

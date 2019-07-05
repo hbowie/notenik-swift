@@ -166,7 +166,7 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         if cssText.string != displayPrefs.css {
             displayPrefs.css = cssText.string
         }
-        code.startDoc(withTitle: nil, withCSS: displayPrefs.css)
+        code.startDoc(withTitle: nil, withCSS: displayPrefs.bodyCSS)
         code.append(markdown: "There is nothing worse than a brilliant image of a fuzzy concept.")
         code.finishDoc()
         let html = String(describing: code)

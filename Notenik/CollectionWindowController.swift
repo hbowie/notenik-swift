@@ -1060,8 +1060,19 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         exportDelimited(fileURL: fileURL, sep: .tab)
     }
     
+    @IBAction func favoritesToHTML(_ sender: Any) {
+        print("Favorites to HTML")
+        // See if we're ready to take action
+        let nio = guardForCollectionAction()
+        guard let noteIO = nio else { return }
+        
+        guard let fileURL = getExportURL(fileExt: "html", fileName: "favorites") else { return }
+        let favsToHTML = FavoritesToHTML(noteIO: noteIO, outURL: fileURL)
+        favsToHTML.generate()
+    }
+    
     /// Ask the user where to save the export file
-    func getExportURL(fileExt: String) -> URL? {
+    func getExportURL(fileExt: String, fileName: String = "export") -> URL? {
         guard io != nil && io!.collectionOpen else { return nil }
         
         let outcome = modIfChanged()
@@ -1076,7 +1087,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         savePanel.showsResizeIndicator = true
         savePanel.showsHiddenFiles = false
         savePanel.canCreateDirectories = true
-        savePanel.nameFieldStringValue = "export." + fileExt
+        savePanel.nameFieldStringValue = fileName + "." + fileExt
         let userChoice = savePanel.runModal()
         if userChoice == .OK {
             return savePanel.url

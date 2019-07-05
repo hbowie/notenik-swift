@@ -200,4 +200,7 @@ protocol NotenikIO {
     
     /// Return the root of the Tags tree
     func getTagsNodeRoot() -> TagsNode?
+    
+    /// Create an iterator for the tags nodes.
+    func makeTagsNodeIterator() -> TagsNodeIterator
 }

@@ -923,4 +923,10 @@ class FileIO: NotenikIO, RowConsumer {
         return bunch!.notesTree.root
     }
     
+    /// Create an iterator for the tags nodes.
+    func makeTagsNodeIterator() -> TagsNodeIterator {
+        return TagsNodeIterator(noteIO: self)
+    }
+
+    
 }

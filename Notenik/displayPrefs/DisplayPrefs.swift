@@ -78,6 +78,14 @@ class DisplayPrefs {
         }
     }
     
+    var sizePlusUnit: String? {
+        if _displaySize == nil {
+            return nil
+        } else {
+            return _displaySize! + "pt"
+        }
+    }
+    
     var size: String? {
         get {
             return _displaySize
@@ -101,8 +109,18 @@ class DisplayPrefs {
         if size == nil {
             setDefaultSize()
         }
-        tempCSS += size! + "pt;"
+        tempCSS += sizePlusUnit!
         css = tempCSS
+    }
+    
+    /// Apply the CSS to the entire body. 
+    var bodyCSS: String? {
+        var tempCSS = "body { "
+        if css != nil {
+            tempCSS.append(css!)
+        }
+        tempCSS.append(" }")
+        return tempCSS
     }
     
     var css: String? {

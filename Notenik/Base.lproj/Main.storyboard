@@ -170,6 +170,12 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
+                                        <menuItem title="Favorites to HTML..." id="eJv-R5-0H2">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="favoritesToHTML:" target="Ady-hI-5gd" id="sJ4-2u-JcD"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Purge..." id="EEu-OA-BXX">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>

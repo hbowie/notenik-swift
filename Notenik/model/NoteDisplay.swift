@@ -26,7 +26,7 @@ class NoteDisplay: NSObject {
         let collection = note.collection
         let dict = collection.dict
         let code = Markedup(format: format)
-        code.startDoc(withTitle: note.title.value, withCSS: displayPrefs.css)
+        code.startDoc(withTitle: note.title.value, withCSS: displayPrefs.bodyCSS)
         var i = 0
         if note.hasTags() {
             let tagsField = note.getField(label: LabelConstants.tags)
