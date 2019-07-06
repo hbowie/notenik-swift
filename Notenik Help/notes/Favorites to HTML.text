@@ -1,0 +1,9 @@
+Title:  Favorites to HTML
+
+Seq:    36
+
+Date Added: 2019-07-05 03:36:51 +0000
+
+Body: 
+
+If you have a Collection of Notes representing Web Bookmarks, then you may wish to use the 'Favorites' tag to identify the bookmarks you reference most often. You may then use a sub-tag within the 'Favorites' tag to organize your favorite bookmarks into categories. Once you've identified your Favorites, then you may use the Favorites to HTML command under the File menu to create a Web page containing all your favorite bookmarks, organized under headings representing the categories you have chosen. Notenik will display your favorites in four columns, with a maximum of 32 lines per column. Assuming a reasonable number of favorite bookmarks, these will typically display all of your favorites within a single Web page on your Mac. You may then wish to identify the resuling page as the homepage within all of your Web browsers (Safari, Chrome, etc.). 

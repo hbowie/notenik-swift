@@ -92,6 +92,7 @@ class Template {
         
         var (note, position) = io.firstNote()
         while note != nil {
+            util.resetGroupBreaks()
             for line in loopLines {
                 line.generateOutput(note: note!)
             }

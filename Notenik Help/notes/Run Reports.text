@@ -1,0 +1,21 @@
+Title:  Run Reports
+
+Seq:    28
+
+Date Added: 2019-07-05 16:39:30 +0000
+
+Body: 
+
+Notenik provides a function for merging data from Notes into a template file in order to create one or more output text files. 
+
+The text files created may be of any type, but certainly one of the most useful formats is html, allowing users to generate one or more Web pages from their notes. 
+
+See the [Merge Template File Spec](merge-template.html) for complete information on the expected format of a Merge Template file. 
+
+Template files should be placed in a folder named 'reports' within the Collection folder where the reports are to be used. Each template file should include the word 'template' somewhere within its file name. 
+
+Once a template file is created, suitably named and placed, it will become available as a report that can be selected from a drop-down (identified with a gear icon) on the Collection's toolbar. 
+
+Selecting a report will then cause the Collection's notes to be merged into the corresponding template file, creating whatever ouput is identified in the template file. 
+
+

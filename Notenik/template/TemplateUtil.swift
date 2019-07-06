@@ -159,13 +159,17 @@ class TemplateUtil {
         let absFilePath = templateFileName.resolveRelative(path: filePath)
         
         guard fileManager.fileExists(atPath: absFilePath) else {
-            Logger.shared.log(subsystem: "template", category: "TemplateUtil", level: .error,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "TemplateUtil",
+                              level: .error,
                               message: "Could not find an include file at \(absFilePath)")
             return
         }
         
         guard fileManager.isReadableFile(atPath: absFilePath) else {
-            Logger.shared.log(subsystem: "template", category: "TemplateUtil", level: .error,
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "TemplateUtil",
+                              level: .error,
                               message: "Could not read the include file at \(absFilePath)")
             return
         }
@@ -178,14 +182,16 @@ class TemplateUtil {
             includeReader = BigStringReader(includeContents)
             includeReader.open()
         } catch {
-            Logger.shared.log(subsystem: "template",
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
                               category: "TemplateUtil",
                               level: .error,
                               message: "Error reading Include file from \(includeURL)")
             return
         }
         
-        Logger.shared.log(subsystem: "template", category: "TemplateUtil", level: .info,
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "TemplateUtil",
+                          level: .info,
                           message: "Including file \(absFilePath)")
         
         var includeLine = includeReader.readLine()
@@ -296,7 +302,6 @@ class TemplateUtil {
         if groupNumber > minorGroup {
             minorGroup = groupNumber
         }
-        
         guard nextValue != groupValue[groupNumber] else { return }
         
         setEndGroupsTrue(majorGroup: groupNumber)

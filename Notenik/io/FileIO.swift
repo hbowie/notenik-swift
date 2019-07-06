@@ -238,10 +238,11 @@ class FileIO: NotenikIO, RowConsumer {
         }
     }
     
+    /// Load A list of available reports from the reports folder.
     func loadReports() {
         reports = []
         let reportsPath = FileUtils.joinPaths(path1: collectionFullPath!,
-                                               path2: reportsFolderName)
+                                              path2: reportsFolderName)
         do {
             let reportsDirContents = try fileManager.contentsOfDirectory(atPath: reportsPath)
             

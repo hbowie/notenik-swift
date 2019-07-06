@@ -809,14 +809,27 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         guard let noteIO = notenikIO else { return }
         let (note, _) = noteIO.getSelectedNote()
         guard let noteToUse = note else { return }
-        let url = noteToUse.linkAsURL
-        if url != nil {
-            if noteIO.collection!.isRealmCollection {
-                juggler.openFileWithNewWindow(fileURL: url!, readOnly: false)
-            } else {
-                NSWorkspace.shared.open(url!)
+        let possibleURL = noteToUse.linkAsURL
+        guard let url = possibleURL else { return }
+        var urlPointsToCollection = false
+        if url.isFileURL && url.hasDirectoryPath {
+            let folderPath = url.path
+            let infoPath = FileUtils.joinPaths(path1: folderPath, path2: FileIO.infoFileName)
+            let infoURL = URL(fileURLWithPath: infoPath)
+            do {
+                let reachable = try infoURL.checkResourceIsReachable()
+                urlPointsToCollection = reachable
+            } catch {
+                urlPointsToCollection = false
             }
         }
+        
+        if noteIO.collection!.isRealmCollection || urlPointsToCollection {
+            juggler.openFileWithNewWindow(fileURL: url, readOnly: false)
+        } else {
+            NSWorkspace.shared.open(url)
+        }
+
     }
     
     @IBAction func reloadDisplayView(_ sender: Any) {

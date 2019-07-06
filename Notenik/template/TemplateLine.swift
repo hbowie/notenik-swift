@@ -158,7 +158,7 @@ class TemplateLine {
         case .ifendlist:
             processIfEndListCommand()
         case .ifnewgroup:
-            processIfNewGroupCommaNd()
+            processIfNewGroupCommand()
         case .ifnewlist:
             processIfNewListCommand()
         case .include:
@@ -228,7 +228,7 @@ class TemplateLine {
         util.setIfEndGroup(groupNumber)
     }
     
-    func processIfNewGroupCommaNd() {
+    func processIfNewGroupCommand() {
         util.clearIfs()
         guard let groupNumber = validGroupNumber() else { return }
         util.setIfNewGroup(groupNumber)

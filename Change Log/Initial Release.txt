@@ -1,9 +1,0 @@
-Title:  Initial Release
-
-Seq:    1.0.0
-
-Date:   03 Jun 2019
-
-Link:   https://itunes.apple.com/us/app/notenik/id1465997984?mt=12
-
-Body:   The new version of Notenik written in Swift was released to the Mac App Store today!
