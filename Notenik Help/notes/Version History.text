@@ -1,0 +1,32 @@
+Title:  Version History
+
+Seq:    44
+
+Tags:   changes, history, log
+
+Body:
+
+### Version 1.0.0 | 03 Jun 2019
+
+#### 1. Initial Release
+
+This is the initial release of Notenik written in Swift.
+
+
+### Version 1.1.0 | 05 Jul 2019
+
+#### 1. Added Favorites to HTML Function
+
+The File Menu now has a new command to export Favorites to HTML. This allows the user to identify favorite bookmarks using the 'Favorites' tag and then export those favorites to a four-column Web page. 
+
+
+#### 2. Added Reports Function
+
+Merge Templates may now be created, stored in a reports folder, and then run from a Collection's Toolbar. 
+
+
+#### 3. Various Bug Fixes and Improvements
+
+Miscellaneous bug fixes and improvements. 
+
+

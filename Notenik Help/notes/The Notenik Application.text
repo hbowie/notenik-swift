@@ -6,7 +6,9 @@ Tags:   application, software
 
 Date Added: 2017-11-12 08:44:24
 
-Body:   This version of Notenik is written in [Swift](https://swift.org) using the [Xcode IDE](https://developer.apple.com/xcode/). Source can be found on [GitHub](https://github.com/hbowie/notenik-swift). The executable application can be found on the Mac App Store. 
+Body: 
+
+This version of Notenik is written in [Swift](https://swift.org) using the [Xcode IDE](https://developer.apple.com/xcode/). Source can be found on [GitHub](https://github.com/hbowie/notenik-swift). The executable application can be found on the [Mac App Store](https://apps.apple.com/us/app/notenik/id1465997984?mt=12).
 
 From this point on, I'll introduce one concept at a time. 
 

@@ -25,6 +25,12 @@ class SeqValueTests: XCTestCase {
         let seq2 = SeqValue("123.5")
         let pad2 = seq2.pad(leftChar: "0", leftNumber: 5, rightChar: "0", rightNumber: 2)
         XCTAssertEqual(pad2, "00123.50")
+        let seq3 = SeqValue("9")
+        seq3.increment(onLeft: true)
+        XCTAssertEqual(seq3.value, "10")
+        let seq4 = SeqValue("8")
+        seq4.increment(onLeft: true)
+        XCTAssertEqual(seq4.value, "9")
     }
 
     func testPerformanceExample() {

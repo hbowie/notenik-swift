@@ -31,9 +31,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
-        // ONLY FOR TESTING!!!
-        logger.logDestPrint = true
-        logger.logDestUnified = false
+        logger.logDestPrint = false
+        logger.logDestUnified = true
         
         juggler.docController = docController
         recentDocumentURLs = docController.recentDocumentURLs

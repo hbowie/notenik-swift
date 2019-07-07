@@ -38,7 +38,6 @@ class Logger {
     /// Process a loggable event
     func log (subsystem: String, category: String, level: LogLevel, message: String) {
         if level.rawValue >= logThreshold.rawValue {
-            
             if logDestUnified {
                 logToUnified(subsystem: subsystem, category: category, level: level, message: message)
             }
@@ -97,10 +96,5 @@ class Logger {
         }
         os_log("%{PUBLIC}@", log: oslog!, type: logType, message)
     }
-        
     
-    /// Write one line to the indicated destination
-    func writeLine (_ line : String) {
-
-    }
 }

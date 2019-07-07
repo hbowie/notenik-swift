@@ -87,8 +87,9 @@ class SeqValue : StringValue {
     } // end set function
     
     /// Increment the sequence value by 1
-    func increment (onLeft : Bool) {
-        
+    func increment (onLeft: Bool) {
+        print(" ")
+        print("increment \(value)")
         // Determine where to begin incrementing
         var i = value.count - 1
         if onLeft && positionOfFirstDecimal >= 0 {
@@ -98,11 +99,11 @@ class SeqValue : StringValue {
         if hasData {
             
             var carryon = true
-            var c : Character = " "
+            var c: Character = " "
             
             // Keep incrementing as long as we have 1 to carry to the next column to the left
             while carryon {
-                
+                print("  - i = \(i)")
                 // Get the character to be incremented on this pass
                 if i < 0 {
                     if digits {
@@ -123,16 +124,21 @@ class SeqValue : StringValue {
                     c = StringUtils.charAt(index: i, str: value)
                 }
                 
+                print("    - Character to increment = \(c)")
+                
                 // Now try to increment it
                 let newChar = StringUtils.increment(c)
+                print("    - Character after incrementing = \(newChar)")
                 if newChar == c {
                     carryon = false
                 } else {
                     StringUtils.replaceChar(i: i, str: &value, newChar: newChar)
                     carryon = newChar < c
                 }
+                print("    - Resulting value = \(value)")
+                i -= 1
             } // end while carrying on
-            
+            print("Done incrementing")
         } // if we have any data to increment
     } // end function increment
     
@@ -149,7 +155,7 @@ class SeqValue : StringValue {
     ///   - rightChar:   Character to use to pad out to the right of the decimal point.
     ///   - rightNumber: Number of positions to pad to the right of the decimal point.
     /// - Returns: A string reflecting the desired padding characteristics.
-    func pad(leftChar : String, leftNumber : Int, rightChar : String, rightNumber : Int) -> String {
+    func pad(leftChar: String, leftNumber: Int, rightChar: String, rightNumber: Int) -> String {
         var padded = ""
         
         // Pad on the left
