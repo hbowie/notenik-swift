@@ -983,7 +983,7 @@ CA
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn width="20" minWidth="12" maxWidth="50" id="s7D-0C-4Gi">
+                                                <tableColumn identifier="x-column" width="20" minWidth="12" maxWidth="50" id="s7D-0C-4Gi">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="X">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

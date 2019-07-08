@@ -225,7 +225,7 @@ class Markedup: CustomStringConvertible {
             let down = Down(markdownString: markdown)
             var html = ""
             do {
-                html = try down.toHTML()
+                html = try down.toHTML(DownOptions.smartUnsafe)
                 code.append(html)
             } catch {
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik",

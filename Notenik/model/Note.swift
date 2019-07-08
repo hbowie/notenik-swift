@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// A single Note. 
 class Note: Comparable, NSCopying {
     
     var collection:  NoteCollection
