@@ -91,6 +91,10 @@ protocol NotenikIO {
     /// - Returns: The number of notes exported, or -1 in the event of an error. 
     func exportDelimited(fileURL: URL, sep: DelimitedSeparator) -> Int
     
+    /// Export the current set of notes, writing out each note once for
+    /// each of its tags.
+    func splitDelimited(fileURL: URL, sep: DelimitedSeparator) -> Int
+    
     /// Close the currently collection, if one is open
     func closeCollection()
     

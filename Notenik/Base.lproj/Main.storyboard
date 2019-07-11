@@ -170,6 +170,25 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
+                                        <menuItem title="Split Tags..." id="4nR-5c-0Xf">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Split Tags..." id="oG0-LR-0qS">
+                                                <items>
+                                                    <menuItem title="CSV" id="4QW-Lg-u9U">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="splitTagsCSV:" target="Ady-hI-5gd" id="V2q-ij-SG1"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Tab-Delimited" id="8hi-Kb-GEt">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="splitTagsTabDelim:" target="Ady-hI-5gd" id="97w-p7-yig"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
                                         <menuItem title="Favorites to HTML..." id="eJv-R5-0H2">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -198,6 +217,12 @@
                                         <menuItem title="Catch Up Daily Tasks" keyEquivalent="u" id="3Ch-CE-cpI" userLabel="Catch Up Daily Tasks">
                                             <connections>
                                                 <action selector="menuCatchUpDailyTasks:" target="Ady-hI-5gd" id="ifG-WZ-FUI"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Stanardize Dates to YMD" id="y53-JF-3bc">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="standardizeDatesToYMD:" target="Ady-hI-5gd" id="rMb-5r-b31"/>
                                             </connections>
                                         </menuItem>
                                     </items>

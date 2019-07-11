@@ -1,0 +1,9 @@
+Title:  Added Split Tags Export to the File Menu
+
+Seq:    1.2.0
+
+Date:   10 Jul 2019
+
+Body: 
+
+The Split Tags command under the File menu will split the tags for each Note, and write one output row for each Tag for each Note. Notes without tags will be written out only once; Notes with multiple tags will be written out once for each Tag. In addition to the Tags column, a Tag (singular) column will be added to the front of each row, containing one particular Tag for the Note. This export file can be used, for example, to create an index page for each Tag. 

@@ -239,6 +239,9 @@
 		9C78888C21FB950900452D74 /* Markedup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78888921FB950900452D74 /* Markedup.swift */; };
 		9C79BDB0226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
 		9C79BDB1226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
+		9C822B9622D63A11008EF106 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9522D63A11008EF106 /* TagValue.swift */; };
+		9C822B9722D63A11008EF106 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9522D63A11008EF106 /* TagValue.swift */; };
+		9C822B9822D63A11008EF106 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9522D63A11008EF106 /* TagValue.swift */; };
 		9C8329FD224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */; };
 		9C8329FE224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */; };
 		9C8329FF224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */; };
@@ -539,6 +542,7 @@
 		9C78888521FB826100452D74 /* MarkedupFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedupFormat.swift; sourceTree = "<group>"; };
 		9C78888921FB950900452D74 /* Markedup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markedup.swift; sourceTree = "<group>"; };
 		9C79BDAF226E368800796E93 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
+		9C822B9522D63A11008EF106 /* TagValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValue.swift; sourceTree = "<group>"; };
 		9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDiskLocation.swift; sourceTree = "<group>"; };
 		9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSaveDirectory.swift; sourceTree = "<group>"; };
 		9C86CF0122C15A660035A8FA /* IntValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntValue.swift; sourceTree = "<group>"; };
@@ -844,6 +848,7 @@
 				9C60E72C21F651E500C332ED /* StatusValueConfig.swift */,
 				9C60E72521F651E500C332ED /* StringValue.swift */,
 				9C60E72F21F651E500C332ED /* TagsValue.swift */,
+				9C822B9522D63A11008EF106 /* TagValue.swift */,
 				9C60E72821F651E500C332ED /* TitleValue.swift */,
 			);
 			path = values;
@@ -1296,6 +1301,7 @@
 				9CC78E6F228358A400640477 /* DisplayPrefsViewController.swift in Sources */,
 				9C60E79B21F651E500C332ED /* NotePosition.swift in Sources */,
 				9C78888A21FB950900452D74 /* Markedup.swift in Sources */,
+				9C822B9622D63A11008EF106 /* TagValue.swift in Sources */,
 				9CCC5E9E228F0B5500FA6B5C /* BunchIO.swift in Sources */,
 				9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */,
 				9C02D2B62267F5E700587EDF /* CalendarViewController.swift in Sources */,
@@ -1318,6 +1324,7 @@
 			files = (
 				9C60E77E21F651E500C332ED /* LabelConstants.swift in Sources */,
 				9C60E7BA21F6525F00C332ED /* FileIOTests.swift in Sources */,
+				9C822B9722D63A11008EF106 /* TagValue.swift in Sources */,
 				9C60E7C621F6525F00C332ED /* FileNameTests.swift in Sources */,
 				9C60E70321F650B800C332ED /* StringUtils.swift in Sources */,
 				9C60E77221F651E500C332ED /* LinkValue.swift in Sources */,
@@ -1458,6 +1465,7 @@
 				9CE32511224D5E180051CA1F /* LogViewController.swift in Sources */,
 				9CA80798229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
 				9C60E77921F651E500C332ED /* StatusValue.swift in Sources */,
+				9C822B9822D63A11008EF106 /* TagValue.swift in Sources */,
 				9C60E79A21F651E500C332ED /* FieldType.swift in Sources */,
 				9C1CB85D22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */,
 				9C60E77C21F651E500C332ED /* FieldDefinition.swift in Sources */,

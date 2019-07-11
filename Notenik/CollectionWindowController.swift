@@ -249,6 +249,37 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         select(note: note, position: position, source: .nav)
     }
     
+    @IBAction func standardizeDatesToYMD(_ sender: Any) {
+        
+        // See if we're ready to take action
+        guard let noteIO = guardForCollectionAction() else { return }
+        var (note, position) = noteIO.firstNote()
+        var updated = 0
+        while note != nil {
+            if note!.hasDate() {
+                let ymdDate = note!.date.ymdDate
+                let dateSet = note!.setDate(ymdDate)
+                let written = noteIO.writeNote(note!)
+                if !written {
+                    print("Problems saving the note to disk")
+                    Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                      category: "CollectionWindowController",
+                                      level: .error,
+                                      message: "Problems saving note titled \(note!.title)")
+                } else {
+                    updated += 1
+                }
+            }
+            (note, position) = noteIO.nextNote(position)
+        }
+        finishBatchOperation()
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "\(updated) Notes were updated"
+        alert.addButton(withTitle: "OK")
+        let _ = alert.runModal()
+    }
+    
     /// Ask the user to pick a file or folder and set the link field to the local URL
     @IBAction func setLocalLink(_ sender: Any) {
 
@@ -1053,24 +1084,28 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     
     /// Export Notes to a Comma-Separated Values File
     @IBAction func exportCSV(_ sender: Any) {
-        
-        // See if we're ready to take action
-        let nio = guardForCollectionAction()
-        guard nio != nil else { return }
-        
+        guard let noteIO = guardForCollectionAction() else { return }
         guard let fileURL = getExportURL(fileExt: "csv") else { return }
-        exportDelimited(fileURL: fileURL, sep: .comma)
+        exportDelimited(noteIO: noteIO, fileURL: fileURL, sep: .comma)
     }
     
     /// Export Notes to a Tab-Delimited File
     @IBAction func exportTabDelim(_ sender: Any) {
-        
-        // See if we're ready to take action
-        let nio = guardForCollectionAction()
-        guard nio != nil else { return }
-        
+        guard let noteIO = guardForCollectionAction() else { return }
         guard let fileURL = getExportURL(fileExt: "tab") else { return }
-        exportDelimited(fileURL: fileURL, sep: .tab)
+        exportDelimited(noteIO: noteIO, fileURL: fileURL, sep: .tab)
+    }
+    
+    @IBAction func splitTagsTabDelim(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let fileURL = getExportURL(fileExt: "tab") else { return }
+        splitDelimited(noteIO: noteIO, fileURL: fileURL, sep: .tab)
+    }
+    
+    @IBAction func splitTagsCSV(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let fileURL = getExportURL(fileExt: "csv") else { return }
+        splitDelimited(noteIO: noteIO, fileURL: fileURL, sep: .comma)
     }
     
     @IBAction func favoritesToHTML(_ sender: Any) {
@@ -1110,10 +1145,23 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     }
     
     /// Export a text file with fields separated by something-or-other
-    func exportDelimited(fileURL: URL, sep: DelimitedSeparator) {
-        let notesExported = io!.exportDelimited(fileURL: fileURL, sep: sep)
+    func exportDelimited(noteIO: NotenikIO, fileURL: URL, sep: DelimitedSeparator) {
+        let notesExported = noteIO.exportDelimited(fileURL: fileURL, sep: sep)
         let ok = notesExported > 0
-        informUserOfImportExportResults(operation: "export", ok: ok, numberOfNotes: notesExported, path: fileURL.path)
+        informUserOfImportExportResults(operation: "export",
+                                        ok: ok,
+                                        numberOfNotes: notesExported,
+                                        path: fileURL.path)
+    }
+    
+    /// Export a text file, with one note for each tag.
+    func splitDelimited(noteIO: NotenikIO, fileURL: URL, sep: DelimitedSeparator) {
+        let notesExported = noteIO.splitDelimited(fileURL: fileURL, sep: sep)
+        let ok = notesExported > 0
+        informUserOfImportExportResults(operation: "split tags",
+                                        ok: ok,
+                                        numberOfNotes: notesExported,
+                                        path: fileURL.path)
     }
     
     /// Export the current collection in Notenik format.
@@ -1158,7 +1206,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         let alert = NSAlert()
         if ok {
             alert.alertStyle = .informational
-            alert.messageText = "\(numberOfNotes) Notes \(operation)ed"
+            alert.messageText = "\(StringUtils.toUpperFirstChar(operation)) operation was performed on \(numberOfNotes) Notes"
             if operation == "import" {
                 alert.informativeText = "Notes imported from '\(path)'"
             } else {
