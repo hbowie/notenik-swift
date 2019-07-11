@@ -37,6 +37,13 @@
 		9C21DB8021F82D9800A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
 		9C21DB8121F82DB500A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
 		9C21DB8221F82DB600A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
+		9C25DFFC22D7824B0062E282 /* ValuePickLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */; };
+		9C25DFFD22D7824B0062E282 /* ValuePickLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */; };
+		9C25E00122D786770062E282 /* ValuePickLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */; };
+		9C25E00322D787260062E282 /* TagsPickList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25E00222D787260062E282 /* TagsPickList.swift */; };
+		9C25E00422D787260062E282 /* TagsPickList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25E00222D787260062E282 /* TagsPickList.swift */; };
+		9C25E00622D787980062E282 /* PickList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25E00522D787980062E282 /* PickList.swift */; };
+		9C25E00722D787980062E282 /* PickList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25E00522D787980062E282 /* PickList.swift */; };
 		9C29DD29226286A100928180 /* CollectionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29DD28226286A100928180 /* CollectionWindow.swift */; };
 		9C29DD2A226286A100928180 /* CollectionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29DD28226286A100928180 /* CollectionWindow.swift */; };
 		9C2A35AF22A17226009C868E /* MergeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A35AE22A17226009C868E /* MergeAction.swift */; };
@@ -242,6 +249,10 @@
 		9C822B9622D63A11008EF106 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9522D63A11008EF106 /* TagValue.swift */; };
 		9C822B9722D63A11008EF106 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9522D63A11008EF106 /* TagValue.swift */; };
 		9C822B9822D63A11008EF106 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9522D63A11008EF106 /* TagValue.swift */; };
+		9C822B9D22D6D5D6008EF106 /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9C22D6D5D6008EF106 /* TagsView.swift */; };
+		9C822B9F22D6D5D6008EF106 /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9C22D6D5D6008EF106 /* TagsView.swift */; };
+		9C822BA222D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822BA122D6DC71008EF106 /* TagsTokenDelegate.swift */; };
+		9C822BA322D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822BA122D6DC71008EF106 /* TagsTokenDelegate.swift */; };
 		9C8329FD224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */; };
 		9C8329FE224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */; };
 		9C8329FF224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */; };
@@ -450,6 +461,9 @@
 		9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesToHTML.swift; sourceTree = "<group>"; };
 		9C21749E22024E2900B4BF48 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../notenik-swift-intro"; sourceTree = "<group>"; };
 		9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplay.swift; sourceTree = "<group>"; };
+		9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuePickLists.swift; sourceTree = "<group>"; };
+		9C25E00222D787260062E282 /* TagsPickList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsPickList.swift; sourceTree = "<group>"; };
+		9C25E00522D787980062E282 /* PickList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickList.swift; sourceTree = "<group>"; };
 		9C29DD28226286A100928180 /* CollectionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindow.swift; sourceTree = "<group>"; };
 		9C2A35AE22A17226009C868E /* MergeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeAction.swift; sourceTree = "<group>"; };
 		9C2A35B222A19715009C868E /* MergeScripter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeScripter.swift; sourceTree = "<group>"; };
@@ -543,6 +557,8 @@
 		9C78888921FB950900452D74 /* Markedup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markedup.swift; sourceTree = "<group>"; };
 		9C79BDAF226E368800796E93 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		9C822B9522D63A11008EF106 /* TagValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValue.swift; sourceTree = "<group>"; };
+		9C822B9C22D6D5D6008EF106 /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
+		9C822BA122D6DC71008EF106 /* TagsTokenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsTokenDelegate.swift; sourceTree = "<group>"; };
 		9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDiskLocation.swift; sourceTree = "<group>"; };
 		9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSaveDirectory.swift; sourceTree = "<group>"; };
 		9C86CF0122C15A660035A8FA /* IntValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntValue.swift; sourceTree = "<group>"; };
@@ -841,15 +857,18 @@
 				9C86CF0122C15A660035A8FA /* IntValue.swift */,
 				9C60E72E21F651E500C332ED /* LinkValue.swift */,
 				9C60E72D21F651E500C332ED /* LongTextValue.swift */,
+				9C25E00522D787980062E282 /* PickList.swift */,
 				9C60E72A21F651E500C332ED /* RatingValue.swift */,
 				9C60E72721F651E500C332ED /* RecursValue.swift */,
 				9C60E72621F651E500C332ED /* SeqValue.swift */,
 				9C60E73021F651E500C332ED /* StatusValue.swift */,
 				9C60E72C21F651E500C332ED /* StatusValueConfig.swift */,
 				9C60E72521F651E500C332ED /* StringValue.swift */,
+				9C25E00222D787260062E282 /* TagsPickList.swift */,
 				9C60E72F21F651E500C332ED /* TagsValue.swift */,
 				9C822B9522D63A11008EF106 /* TagValue.swift */,
 				9C60E72821F651E500C332ED /* TitleValue.swift */,
+				9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */,
 			);
 			path = values;
 			sourceTree = "<group>";
@@ -935,6 +954,8 @@
 				9CED280F224EB39900798621 /* LongTextView.swift */,
 				9C553C602266A0D50008D176 /* StatusView.swift */,
 				9CD32623223308C400D06B77 /* StringView.swift */,
+				9C822BA122D6DC71008EF106 /* TagsTokenDelegate.swift */,
+				9C822B9C22D6D5D6008EF106 /* TagsView.swift */,
 				9CD3262722330C8A00D06B77 /* ViewFactory.swift */,
 			);
 			path = views;
@@ -1220,12 +1241,14 @@
 				9C060687228E0A9300CB8C10 /* RealmIO.swift in Sources */,
 				9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
 				9C60E75321F651E500C332ED /* Provider.swift in Sources */,
+				9C25E00622D787980062E282 /* PickList.swift in Sources */,
 				9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */,
 				9C60E75C21F651E500C332ED /* RecursValue.swift in Sources */,
 				9C60E74A21F651E500C332ED /* Realm.swift in Sources */,
 				9CF256CD21FD175E00D9F06A /* CollectionWindowController.swift in Sources */,
 				9C60E76E21F651E500C332ED /* LongTextValue.swift in Sources */,
 				9C60E71521F6518400C332ED /* LogLevel.swift in Sources */,
+				9C822BA222D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */,
 				9CCFD62822AEDA5C00C64D37 /* StringConverter.swift in Sources */,
 				9CD82F632211E456002314E4 /* LineWriter.swift in Sources */,
 				9C60E70B21F650B800C332ED /* FileUtils.swift in Sources */,
@@ -1238,6 +1261,7 @@
 				9C60E79821F651E500C332ED /* FieldType.swift in Sources */,
 				9CD3262822330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9C60E77421F651E500C332ED /* TagsValue.swift in Sources */,
+				9C25DFFC22D7824B0062E282 /* ValuePickLists.swift in Sources */,
 				9CF3DE4C22A6F5330078A6B0 /* MergeReport.swift in Sources */,
 				9C60E79221F651E500C332ED /* NoteCollection.swift in Sources */,
 				9CCFD62122AED9FA00C64D37 /* StringFromTo.swift in Sources */,
@@ -1276,6 +1300,7 @@
 				9CE9C98222A6134A008D2B0A /* Template.swift in Sources */,
 				9CB06CBA22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */,
 				9C60E77121F651E500C332ED /* LinkValue.swift in Sources */,
+				9C25E00322D787260062E282 /* TagsPickList.swift in Sources */,
 				9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */,
 				9C2A35BD22A1CC80009C868E /* MergeActionVerb.swift in Sources */,
 				9C2AE51A220A044800AE8BEE /* TagsNodeType.swift in Sources */,
@@ -1303,6 +1328,7 @@
 				9C78888A21FB950900452D74 /* Markedup.swift in Sources */,
 				9C822B9622D63A11008EF106 /* TagValue.swift in Sources */,
 				9CCC5E9E228F0B5500FA6B5C /* BunchIO.swift in Sources */,
+				9C822B9D22D6D5D6008EF106 /* TagsView.swift in Sources */,
 				9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */,
 				9C02D2B62267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9C832A02224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
@@ -1359,12 +1385,14 @@
 				9C2AE515220A033300AE8BEE /* TagsNode.swift in Sources */,
 				9C60E75421F651E500C332ED /* Provider.swift in Sources */,
 				9CCFD62C22AEE0DD00C64D37 /* StringConverterTests.swift in Sources */,
+				9C25E00722D787980062E282 /* PickList.swift in Sources */,
 				9C60E70621F650B800C332ED /* DateUtils.swift in Sources */,
 				9C60E7C321F6525F00C332ED /* LineParserTests.swift in Sources */,
 				9C60E73F21F651E500C332ED /* FieldLabel.swift in Sources */,
 				9C60E7B721F6525F00C332ED /* FileUtilsTests.swift in Sources */,
 				9CCC5E9F228F0B5500FA6B5C /* BunchIO.swift in Sources */,
 				9C60E75121F651E500C332ED /* NoteSortParm.swift in Sources */,
+				9C25E00122D786770062E282 /* ValuePickLists.swift in Sources */,
 				9C60E7BC21F6525F00C332ED /* AuthorValueTests.swift in Sources */,
 				9C96BAA1227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9CD82F682211E4BA002314E4 /* BigStringWriter.swift in Sources */,
@@ -1417,6 +1445,7 @@
 				9C60E75A21F651E500C332ED /* SeqValue.swift in Sources */,
 				9CCFEE722270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
 				9CE9C98722A61499008D2B0A /* TemplateUtil.swift in Sources */,
+				9C25E00422D787260062E282 /* TagsPickList.swift in Sources */,
 				9CF11933225802AA0015AE91 /* ModView.swift in Sources */,
 				9C2A35B722A19A0B009C868E /* MergeScripterTests.swift in Sources */,
 				9C60E79621F651E500C332ED /* NoteIDRule.swift in Sources */,
@@ -1501,6 +1530,8 @@
 				9CD82F692211E4BA002314E4 /* BigStringWriter.swift in Sources */,
 				9C60E75221F651E500C332ED /* NoteSortParm.swift in Sources */,
 				9C4018A522838F4F002C2B3D /* DisplayPrefs.swift in Sources */,
+				9C25DFFD22D7824B0062E282 /* ValuePickLists.swift in Sources */,
+				9C822BA322D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */,
 				9C60E74C21F651E500C332ED /* Realm.swift in Sources */,
 				9CF119302257FDD50015AE91 /* ModWhenChanged.swift in Sources */,
 				9C78888821FB826100452D74 /* MarkedupFormat.swift in Sources */,
@@ -1541,6 +1572,7 @@
 				9C60E7A221F6520100C332ED /* FileIO.swift in Sources */,
 				9CA420F822C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */,
 				9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */,
+				9C822B9F22D6D5D6008EF106 /* TagsView.swift in Sources */,
 				9CE9C98422A6134A008D2B0A /* Template.swift in Sources */,
 				9C2A35B522A19715009C868E /* MergeScripter.swift in Sources */,
 				9C60E75821F651E500C332ED /* StringValue.swift in Sources */,

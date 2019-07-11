@@ -24,6 +24,8 @@ class BunchIO: NotenikIO, RowConsumer  {
     var reports: [MergeReport] = []
     var reportsFullPath: String? = nil
     
+    var pickLists = ValuePickLists()
+    
     var bunch          : BunchOfNotes?
     
     var notePosition   = NotePosition(index: -1)
@@ -372,7 +374,7 @@ class BunchIO: NotenikIO, RowConsumer  {
         
         let added = bunch!.add(note: newNote)
         guard added else { return (nil, NotePosition(index: -1)) }
-        
+        pickLists.registerNote(note: newNote)
         let (_, position) = bunch!.selectNote(newNote)
         return (newNote, position)
     }

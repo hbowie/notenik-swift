@@ -11,7 +11,7 @@
 
 import Foundation
 
-/// Representing a collection of Notes.
+/// Information about a collection of Notes.
 class NoteCollection {
     
     var path  = ""

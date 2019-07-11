@@ -37,6 +37,8 @@ class FileIO: NotenikIO, RowConsumer {
         }
     }
     
+    var pickLists = ValuePickLists()
+    
     var bunch          : BunchOfNotes?
     var templateFound  = false
     var infoFound      = false
@@ -60,6 +62,7 @@ class FileIO: NotenikIO, RowConsumer {
         provider.providerType = .file
         realm = Realm(provider: provider)
         collection = NoteCollection(realm: realm)
+        pickLists.statusConfig = collection!.statusConfig
         realm.name = NSUserName()
         realm.path = NSHomeDirectory()
         // let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -170,6 +173,7 @@ class FileIO: NotenikIO, RowConsumer {
             }
             
             // Second pass through directory contents -- look for Notes
+            pickLists.statusConfig = collection!.statusConfig
             for itemPath in dirContents {
                 let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath!,
                                                        path2: itemPath)
@@ -194,6 +198,7 @@ class FileIO: NotenikIO, RowConsumer {
                 } else if fileName.noteExt {
                     let note = readNote(collection: collection!, noteURL: itemURL)
                     if note != nil && note!.hasTitle() {
+                        pickLists.registerNote(note: note!)
                         let noteAdded = bunch!.add(note: note!)
                         if noteAdded {
                             notesRead += 1
@@ -663,7 +668,7 @@ class FileIO: NotenikIO, RowConsumer {
     ///   - newNote: The new version of the note.
     /// - Returns: The modified note and its position.
     func modNote(oldNote: Note, newNote: Note) -> (Note?, NotePosition) {
-        var modOK = deleteNote(oldNote)
+        let modOK = deleteNote(oldNote)
         guard modOK else { return (nil, NotePosition(index: -1)) }
         return addNote(newNote: newNote)
     }
@@ -730,6 +735,7 @@ class FileIO: NotenikIO, RowConsumer {
         guard collection != nil && collectionOpen else { return false }
         guard note.hasFileName() else { return false }
         
+        pickLists.registerNote(note: note)
         let writer = BigStringWriter()
         let maker = NoteLineMaker(writer)
         let fieldsWritten = maker.putNote(note)

@@ -27,6 +27,8 @@ protocol NotenikIO {
     
     var reportsFullPath: String? { get }
     
+    var pickLists: ValuePickLists { get }
+    
     /// Get information about the provider.
     func getProvider() -> Provider
     

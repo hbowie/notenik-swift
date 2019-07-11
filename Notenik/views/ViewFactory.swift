@@ -11,9 +11,11 @@
 
 import Cocoa
 
+/// A factory for making UI Views that can be used to edit the values of the
+/// corresponding fields. 
 class ViewFactory {
     
-    static func getEditView(collection: NoteCollection, def: FieldDefinition) -> CocoaEditView {
+    static func getEditView(pickLists: ValuePickLists, def: FieldDefinition) -> CocoaEditView {
         if def.fieldType == .body {
             return BodyView()
         } else if def.fieldType == .code {
@@ -23,9 +25,11 @@ class ViewFactory {
         } else if def.fieldType == .link {
             return LinkView()
         } else if def.fieldType == .status {
-            return StatusView(config: collection.statusConfig)
+            return StatusView(config: pickLists.statusConfig)
         } else if def.fieldType == .date {
             return DateView()
+        } else if def.fieldType == .tags {
+            return TagsView(pickList: pickLists.tagsPickList)
         } else if def.fieldType == .label  || def.fieldType == .dateAdded {
             return LabelView()
         } else {
