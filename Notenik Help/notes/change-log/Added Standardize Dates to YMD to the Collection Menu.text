@@ -1,0 +1,9 @@
+Title:  Added Standardize Dates to YMD to the Collection Menu
+
+Seq:    1.2.0
+
+Date:   10 Jul 2019
+
+Body: 
+
+Execution of this command will change all the dates in all the Notes for the current Collection so that they are stored in yyyy-mm-dd format, which can be useful to ensure than an export file sorts correctly on date. 
