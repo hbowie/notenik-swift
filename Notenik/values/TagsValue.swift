@@ -66,6 +66,7 @@ class TagsValue: StringValue {
         if tag.count > 0 {
             tags.append(tag)
         }
+        sort()
     }
     
     /// Sort the tags alphabetically
