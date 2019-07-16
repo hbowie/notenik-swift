@@ -11,10 +11,10 @@
 
 import Foundation
 
-/// Inner class representing one Tag (with possibly multiple levels)
+/// Class representing one Tag (with possibly multiple levels)
 class TagValue: CustomStringConvertible, Equatable, Comparable {
     
-    var levels : [String] = []
+    var levels: [String] = []
     
     var description: String {
         var str = ""

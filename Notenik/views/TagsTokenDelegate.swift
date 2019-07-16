@@ -11,7 +11,8 @@
 
 import Cocoa
 
-class TagsTokenDelegate: NSObject, NSTokenFieldDelegate {
+/// Implement delegate functions for the Tags field on the Edit screen.
+class TagsTokenDelegate: NSObject, NSTokenFieldDelegate, NSTokenFieldCellDelegate {
     
     var tagsPickList = TagsPickList()
     var selIx = 0
@@ -26,24 +27,36 @@ class TagsTokenDelegate: NSObject, NSTokenFieldDelegate {
     }
     
     func tokenField(_ tokenField: NSTokenField,
-                    completionsForSubstring substring: String,
-                    indexOfToken tokenIndex: Int,
-                    indexOfSelectedItem selectedIndex: UnsafeMutablePointer<Int>?) -> [Any]? {
+                             completionsForSubstring substring: String,
+                             indexOfToken tokenIndex: Int,
+                             indexOfSelectedItem selectedIndex: UnsafeMutablePointer<Int>?) -> [Any]? {
+        return completionsForSubstring(substring)
+    }
+    
+    func tokenFieldCell(_ tokenFieldCell: NSTokenFieldCell,
+                        completionsForSubstring substring: String,
+                        indexOfToken tokenIndex: Int,
+                        indexOfSelectedItem selectedIndex: UnsafeMutablePointer<Int>) -> [Any] {
+        return completionsForSubstring(substring)
+    }
+    
+    func completionsForSubstring(_ substring: String) -> [Any] {
         var possibilities: [String] = []
-        let allTags = tagsPickList.values
         var i = 0
         var looking = true
-        while looking {
-            if allTags[i].hasPrefix(substring) {
-                possibilities.append(allTags[i])
-            } else if allTags[i] > substring {
+        while looking && i < tagsPickList.values.count {
+            if tagsPickList.values[i].hasPrefix(substring) {
+                possibilities.append(tagsPickList.values[i])
+            } else if tagsPickList.values[i] > substring {
                 looking = false
             }
             i += 1
         }
+        
         if possibilities.count > 0 {
             selIx = 0
-            
+        } else {
+            selIx = -1
         }
         return possibilities
     }

@@ -12,7 +12,7 @@
 import Foundation
 
 /// One or more tags, each consisting of one or more levels
-class TagsValue : StringValue {
+class TagsValue: StringValue {
     
     var tags: [TagValue] = []
     

@@ -14,6 +14,7 @@ import Cocoa
 class TagsView: CocoaEditView {
     
     var tagsField: NSTokenField!
+    var tagsTokenDelegate: TagsTokenDelegate!
     
     var view: NSView {
         return tagsField
@@ -36,7 +37,9 @@ class TagsView: CocoaEditView {
         tagsField = NSTokenField(string: "")
         AppPrefs.shared.setRegularFont(object: tagsField)
         tagsField.tokenizingCharacterSet = CharacterSet([",",";"])
-        let tagsTokenDelegate = TagsTokenDelegate(tagsPickList: pickList)
+        tagsTokenDelegate = TagsTokenDelegate(tagsPickList: pickList)
         tagsField.delegate = tagsTokenDelegate
+
     }
+    
 }
