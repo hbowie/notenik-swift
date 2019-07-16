@@ -2,10 +2,12 @@ Title:  Each Note has a Title and a Body
 
 Seq:    6
 
-Tags:   body, fields, title
+Tags:   body, body, fields, fields, title, title
 
-Body:   
- 
+Date Added: 2017-04-08 22:42:12 +0000
+
+Body: 
+
 In its most basic form, a Note consists of a Title and a Body. 
 
 A Title consists of a few words telling you what the Note is about. 
@@ -13,5 +15,4 @@ A Title consists of a few words telling you what the Note is about.
 The Body consists of the text of the Note, containing as many words as you like.
 
 If no Title is specified within a Note file, then the file name (without the extension) will be used as the Title of the Note. 
-
 

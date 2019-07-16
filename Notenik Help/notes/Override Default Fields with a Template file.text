@@ -2,12 +2,13 @@ Title:  Override Default Fields with a Template file
 
 Seq:    16
 
-Tags:   default, fields, template
+Tags:   default, default, fields, fields, template, template
 
 Date Added: 2017-04-10 22:35:43 +0000
 
-Body:   By default, Notenik shows only four Fields for a Note: Title, Link, Tags and Body. However, this default may be altered by placing a file named 'template.txt' or 'template.md' within a Collection's folder. Such a file should be in the normal Notenik format, although the Field Labels specified need not have any accompanying values. When such a template file is found, the field names found in this file will be used as the fields to be displayed and maintained for that Collection, overriding the default four. 
+Body: 
 
+By default, Notenik shows only four Fields for a Note: Title, Link, Tags and Body. However, this default may be altered by placing a file named 'template.txt' or 'template.md' within a Collection's folder. Such a file should be in the normal Notenik format, although the Field Labels specified need not have any accompanying values. When such a template file is found, the field names found in this file will be used as the fields to be displayed and maintained for that Collection, overriding the default four.
 You may use the Preferences command under the Collection menu to modify the template for the current Collection. Just put a check mark next to whichever fields you'd like to use for that particular Collection. Then click on the OK button to save your template with the indicated fields. 
 
 You can also use any text editor to modify the sample template file to reflect the fields you desire for that Collection. 

@@ -2,12 +2,15 @@ Title:  Date Your Notes
 
 Seq:    20
 
-Tags:   calendar, date, recurs, today
+Tags:   calendar, calendar, date, date, recurs, recurs, today, today
 
-Body:   
- 
+Date Added: 2017-05-03 00:46:21 +0000
+
+Body: 
+
 Add a Date field to a Collection in order to track the date each note was officially published, or a due date for each note. A date may be expressed in any of a number of common formats. It may also be a partial date, such as a year, or a year and a month. It may or may not contain a specific time of day.
 
 Note that the Date field has several helpful editing tools. You can enter a free-form date yourself, or you can use a Calendar widget to pick dates from a Calendar. You can use the Today button to set the date to Today's date, and you can use the Recurs button to apply the Recurs rule, if one has been supplied. 
 
+If you need to export a Collection in a format suitable for sorting by Date, then you may wish to use the Standardize Dates to YMD command under the Collection menu to make sure that all dates are stored in a yyyy-mm-dd format suitable for sorting. 
 

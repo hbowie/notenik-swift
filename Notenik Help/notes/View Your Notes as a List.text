@@ -2,12 +2,13 @@ Title:  View Your Notes as a List
 
 Seq:    10
 
-Tags:   collection, list, notes, title
+Tags:   collection, collection, list, list, notes, notes, title, title
 
 Date Added: 2017-09-28 16:08:47
 
-Body:   The first half of the Notenik display shows all the Notes in your current Collection as a simple list, initially sorted by Title. 
+Body: 
 
+The first half of the Notenik display shows all the Notes in your current Collection as a simple list, initially sorted by Title.
 You can navigate through this list using some of the buttons on the Toolbar:
 
 - The Home button takes you to the first Note.

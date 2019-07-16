@@ -2,12 +2,13 @@ Title:  Import and Export Your Notes
 
 Seq:    35
 
-Tags:   export, import, tab-delimited, comma-separated
+Tags:   comma-separated, comma-separated, export, export, import, import, tab-delimited, tab-delimited
 
 Date Added: 2017-10-27 12:55:15
 
-Body:   You can import and export a Collection in a variety of formats, using commands found under the File menu. 
+Body: 
 
+You can import and export a Collection in a variety of formats, using commands found under the File menu.
 Following are the supported formats.
 
 * Import/Export in Notenik Format  
@@ -21,4 +22,6 @@ Following are the supported formats.
 * Import/Export in CSV Format
 
 	Each Note will be represented as one row/line, and each field will be represented in a separate column. Commas are used to separate columns. This format is suitable for import into MS Excel, for example.
+
+Note that the File menu also contains a command to Split Tags. This will result in a special export in which each Note may be written multiple times, once for each Tag in the Note's Tags field. Notes without any Tags will be written only once, with a blank Tag field. In other cases, the Tag field will contain a single Tag, even if the Tags field contains multiple Tags. 
 

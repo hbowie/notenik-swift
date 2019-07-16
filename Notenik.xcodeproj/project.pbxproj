@@ -44,6 +44,8 @@
 		9C25E00422D787260062E282 /* TagsPickList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25E00222D787260062E282 /* TagsPickList.swift */; };
 		9C25E00622D787980062E282 /* PickList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25E00522D787980062E282 /* PickList.swift */; };
 		9C25E00722D787980062E282 /* PickList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25E00522D787980062E282 /* PickList.swift */; };
+		9C27293822DE359700E21E73 /* TagsPickList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25E00222D787260062E282 /* TagsPickList.swift */; };
+		9C27293922DE35C300E21E73 /* PickList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25E00522D787980062E282 /* PickList.swift */; };
 		9C29DD29226286A100928180 /* CollectionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29DD28226286A100928180 /* CollectionWindow.swift */; };
 		9C29DD2A226286A100928180 /* CollectionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29DD28226286A100928180 /* CollectionWindow.swift */; };
 		9C2A35AF22A17226009C868E /* MergeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A35AE22A17226009C868E /* MergeAction.swift */; };
@@ -1479,6 +1481,7 @@
 				9C60E79421F651E500C332ED /* NoteCollection.swift in Sources */,
 				9C60E74621F651E500C332ED /* NotenikIO.swift in Sources */,
 				9C2AE526220A34C700AE8BEE /* CollectionWindowController.swift in Sources */,
+				9C27293922DE35C300E21E73 /* PickList.swift in Sources */,
 				9C60E76721F651E500C332ED /* RatingValue.swift in Sources */,
 				9C60E78B21F651E500C332ED /* NoteLineParser.swift in Sources */,
 				9C02D2B42267F41200587EDF /* CalendarWindowController.swift in Sources */,
@@ -1585,6 +1588,7 @@
 				9CD82F652211E456002314E4 /* LineWriter.swift in Sources */,
 				9C60E77621F651E500C332ED /* TagsValue.swift in Sources */,
 				9C60E74921F651E500C332ED /* ProviderType.swift in Sources */,
+				9C27293822DE359700E21E73 /* TagsPickList.swift in Sources */,
 				9CE32508224D561E0051CA1F /* PrefsWindowController.swift in Sources */,
 				9C2AE52A220A34D800AE8BEE /* NoteEditViewController.swift in Sources */,
 				9C60E70D21F650B800C332ED /* FileUtils.swift in Sources */,

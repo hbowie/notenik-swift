@@ -1,0 +1,28 @@
+Title:  Disk Access Permissions
+
+Seq:    38
+
+Date Added: 2019-07-09 15:18:19 +0000
+
+Body: 
+
+Notenik is a modern, well-mannered Mac application, which means that it does not presume to have free run of your hard drive, roaming wantonly wherever it will. 
+
+In other words, to use Apple's terminology, Notenik is sandboxed. 
+
+At the same time, Notenik does not take all the data you have given it and stash it away in some secret location that only Notenik can access because — well, it's your data. You can store it wherever you like. It's stored in plain sight. You can see it whenever you want. And if you want to open that data using your favorite text editor, then more power to you. Have at it. Knock yourself out. 
+
+These two Notenik traits can sometimes come into conflict, however. If you store your Notenik data in lots of different Collections, and store those Collections in different places, then Notenik may sometimes have trouble getting access to them. 
+
+Here's how this works. 
+
+1. Any Collection folder that you explicitly select through the Open command under the File menu will always be available to you, because you have explicitly selected it for use by Notenik. 
+
+2. Any Collection folder that you select using the Open Recent command under the File menu will be available to you, because macOS remembers that you previously gave Notenik permission to access that Collection. 
+
+3. If you use the Open Parent Realm command under the File menu to have Notenik search for its Collections within a parent folder, then those collections will be available to be opened, because you have explicitly given Notenik permission to access everything within that parent folder. 
+
+In general, the rules above will be enough to cover most situations. If they prove too restrictive, though, you can always grant Notenik full disk access in the Security & Privacy pane of System Preferences. 
+
+
+ 

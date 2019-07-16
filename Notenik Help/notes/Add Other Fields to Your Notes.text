@@ -2,10 +2,12 @@ Title:  Add Other Fields to Your Notes
 
 Seq:    13
 
-Tags:   colon, fields, keys, labels, multimarkdown, values, YAML
+Tags:   YAML, YAML, colon, colon, fields, fields, keys, keys, labels, labels, multimarkdown, multimarkdown, values, values
 
-Body:   
- 
+Date Added: 2017-04-10 22:18:17 +0000
+
+Body: 
+
 I've said that, at their most basic, each Note consists of a Title Field and a Body Field. But each Note can actually contain any number of fields.
 
 Each Field in a Note consists of the Field's Label, followed by a colon and one or more spaces, followed by the Field's Value.
@@ -23,5 +25,4 @@ The Body Field, if present, will always be the last Field in a Note, since all f
 Each Field Label may be considered to have a *proper form* (including capitalization, spaces and punctuation), and a *common form* (the proper form without capitalization, whitespace or punctuation). The common form is considered to be the key identifier for the Field, so that any variations of the Label that include the same letters and digits in the same sequence will be considered equivalent.
 
 The Notenik approach to identifying fields within a Note is very similar to the [Multimarkdown metadata syntax](http://fletcher.github.io/MultiMarkdown-4/metadata.html), and also similar to [YAML](https://en.wikipedia.org/wiki/YAML). 
-
 

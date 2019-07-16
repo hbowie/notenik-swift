@@ -2,10 +2,12 @@ Title:  Track Your Tasks
 
 Seq:    22
 
-Tags:   date, GTD, recurs, sort, status, tasks, template
+Tags:   GTD, GTD, date, date, recurs, recurs, sort, sort, status, status, tasks, tasks, template, template
 
-Body:   
- 
+Date Added: 2017-05-03 01:00:59 +0000
+
+Body: 
+
 Add a Status field, a Seq field, a Date field and a Recurs field to a Collection, and you have all the elements of a personal task management system. 
 
 A Collection such as this can use the Date field to track due dates, and/or the Seq field to track priorities. If desired, use the Tags field to group tasks by context and/or by project. 
@@ -15,5 +17,4 @@ If you use the Close Note option under the Note menu, then you can cause the Due
 The Sort menu contains two options specific to task tracking. The first option sorts all the Notes in a list by Date and then Seq, while the second option sorts all tasks by Seq and then Date. In both cases, completed tasks sort to the bottom of the list. 
 
 And don't forget the Purge Option under the File menu, which will allow you to purge Cancelled and Completed Notes from a Collection. 
-
 

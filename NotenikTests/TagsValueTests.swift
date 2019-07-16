@@ -20,11 +20,9 @@ class TagsValueTests: XCTestCase {
 
     func testTagsValue() {
         let tags1 = TagsValue("Practopians.publish; For Herb")
-        XCTAssertTrue(tags1.getTag(0) == "Practopians.publish")
-        XCTAssertTrue(tags1.getLevel(tagIndex: 0, levelIndex: 1) == "publish")
-        XCTAssertTrue(tags1.getTag(1) == "For Herb") 
-        tags1.sort()
-        XCTAssertTrue(tags1.getTag(0) == "For Herb")
+        XCTAssertTrue(tags1.getTag(0)! == "For Herb")
+        XCTAssertTrue(tags1.getLevel(tagIndex: 1, levelIndex: 1) == "publish")
+        XCTAssertTrue(tags1.getTag(1)! == "Practopians.publish")
     }
 
     func testPerformanceExample() {

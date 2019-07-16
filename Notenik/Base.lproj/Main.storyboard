@@ -93,6 +93,13 @@
                                                 <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="30S-KW-yDc"/>
+                                        <menuItem title="Open Parent Realm..." id="qGi-li-dJF">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuFileOpenParentRealm:" target="Voe-Tx-rLC" id="mXe-2Q-4cT"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="uYG-Vh-z53"/>
                                         <menuItem title="Open Essential Collection" keyEquivalent="e" id="hPO-tj-xYR" userLabel="Open Essential Collection">
                                             <connections>
@@ -116,13 +123,6 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="reloadCollection:" target="Ady-hI-5gd" id="hPS-9D-cBK"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="30S-KW-yDc"/>
-                                        <menuItem title="Open Parent Realm..." id="qGi-li-dJF">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="menuFileOpenParentRealm:" target="Voe-Tx-rLC" id="mXe-2Q-4cT"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>

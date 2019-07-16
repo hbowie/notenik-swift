@@ -2,10 +2,12 @@ Title:  Track the Status of Your Notes
 
 Seq:    19
 
-Tags:   completed, fields, purge, status, template
+Tags:   completed, completed, fields, fields, purge, purge, status, status, template, template
 
-Body:   
- 
+Date Added: 2017-04-12 02:49:11 +0000
+
+Body: 
+
 Add an optional Status Field to your Collection, indicating each Note's degree of completion, and you have a basic To Do List. 
 
 Status values are usually selected from the following standard list. Note that each status may be represented by a single digit and/or an associated label. The digits serve to place the values into an approximate life cycle sequence.
@@ -26,5 +28,4 @@ The labels may be modified by placing a series of integer + label pairs in the V
 	Status: 1 - Idea; 4 - In Work; 9 - Published;
 
 Look under the File menu for an option to Purge Notes that have been Canceled or Completed. You'll be given the option of discarding the purged Notes, or of copying them to another location.
-
 
