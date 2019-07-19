@@ -202,6 +202,23 @@ class Markedup: CustomStringConvertible {
         }
     }
     
+    /// Enclose a value in a span tag, with a class.
+    ///
+    /// - Parameters:
+    ///   - value: The value to be enclosed between starting and ending span tags.
+    ///   - klass: The class to be embedded in the starting span tag.
+    ///   - prefix: A prefix to precede the span.
+    ///   - suffix: A suffix to follow the span. 
+    func spanConditional(value: String, klass: String, prefix: String, suffix: String, tag: String = "span") {
+        if value.count > 0 && value.lowercased() != "unknown" {
+            code.append(prefix)
+            code.append("<\(tag) class=\'\(klass)\'>")
+            code.append(value)
+            code.append("</\(tag)>")
+            code.append(suffix)
+        }
+    }
+    
     func writeLine(_ text: String) {
         write(text)
         newLine()

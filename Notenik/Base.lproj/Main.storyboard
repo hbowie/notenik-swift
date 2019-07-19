@@ -145,49 +145,11 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
-                                        <menuItem title="Export" id="ZvS-ZH-J6W" userLabel="Export...">
+                                        <menuItem title="Export..." id="eDp-FI-BOG">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Export" id="fHo-4C-Wed">
-                                                <items>
-                                                    <menuItem title="CSV" id="Hb9-Re-g2M">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="exportCSV:" target="Ady-hI-5gd" id="wW2-zM-gxb"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Notenik" id="XCX-rd-6ov">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="exportNotenik:" target="Ady-hI-5gd" id="NLP-Gh-cGv"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Tab-Delimited" id="iGe-UX-72e" userLabel="Tab-Delimited">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="exportTabDelim:" target="Ady-hI-5gd" id="fzA-QH-nnx"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </menuItem>
-                                        <menuItem title="Split Tags..." id="4nR-5c-0Xf">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Split Tags..." id="oG0-LR-0qS">
-                                                <items>
-                                                    <menuItem title="CSV" id="4QW-Lg-u9U">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="splitTagsCSV:" target="Ady-hI-5gd" id="V2q-ij-SG1"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Tab-Delimited" id="8hi-Kb-GEt">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="splitTagsTabDelim:" target="Ady-hI-5gd" id="97w-p7-yig"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
+                                            <connections>
+                                                <action selector="menuExport:" target="Ady-hI-5gd" id="2Fe-q6-Xgw"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Favorites to HTML..." id="eJv-R5-0H2">
                                             <modifierMask key="keyEquivalentModifierMask"/>

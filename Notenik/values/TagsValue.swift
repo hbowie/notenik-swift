@@ -72,6 +72,16 @@ class TagsValue: StringValue {
     /// Sort the tags alphabetically
     func sort() {
         tags.sort { $0.description < $1.description }
+        var i = 0
+        var j = 1
+        while j < tags.count {
+            if tags[i] == tags[j] {
+                tags.remove(at: i)
+            } else {
+                i += 1
+                j += 1
+            }
+        }
         value = ""
         var x = 0
         for tag in tags {

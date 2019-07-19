@@ -21,6 +21,8 @@ class AppPrefs {
     
     let quickDeletesKey = "quick-deletes"
     let fontSizeKey     = "font-size"
+    let tagsSelectKey   = "tags-to-select"
+    let tagsSuppressKey = "tags-to-suppress"
     
     var _qd: Bool = false
     
@@ -32,6 +34,11 @@ class AppPrefs {
     
     var userFontAttrs       = [NSAttributedString.Key.font: NSFont.userFont(ofSize: 13.0)]
     var fixedPitchFontAttrs = [NSAttributedString.Key.font: NSFont.userFixedPitchFont(ofSize: 13.0)]
+    
+    var pickLists = ValuePickLists()
+    
+    var _tsel = ""
+    var _tsup = ""
     
     /// Private initializer to enforce usage of the singleton instance
     private init() {
@@ -45,6 +52,15 @@ class AppPrefs {
             _edFS = defaultFontSize
         }
         deriveRelatedFontFields()
+        
+        let tsel = defaults.string(forKey: tagsSelectKey)
+        if tsel != nil {
+            _tsel = tsel!
+        }
+        let tsup = defaults.string(forKey: tagsSuppressKey)
+        if tsup != nil {
+            _tsup = tsup!
+        }
     }
     
     var confirmDeletes: Bool {
@@ -125,5 +141,25 @@ class AppPrefs {
     /// Number of lines to show. 
     func getViewHeight(lines: Float) -> CGFloat {
         return CGFloat(editFontSize * 1.20 * lines)
+    }
+    
+    var tagsToSelect: String {
+        get {
+            return _tsel
+        }
+        set {
+            _tsel = newValue
+            defaults.set(_tsel, forKey: tagsSelectKey)
+        }
+    }
+    
+    var tagsToSuppress: String {
+        get {
+            return _tsup
+        }
+        set {
+            _tsup = newValue
+            defaults.set(_tsup, forKey: tagsSuppressKey)
+        }
     }
 }

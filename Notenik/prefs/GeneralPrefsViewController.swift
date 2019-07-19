@@ -11,7 +11,7 @@
 
 import Cocoa
 
-class GeneralPrefsViewController: NSViewController {
+class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     
     let appPrefs = AppPrefs.shared
 
@@ -38,6 +38,11 @@ class GeneralPrefsViewController: NSViewController {
     
     @IBAction func appPrefsOK(_ sender: Any) {
         self.view.window!.close()
+    }
+    
+    /// Called when the user is leaving this tab for another one.
+    func leavingTab() {
+        
     }
     
 }

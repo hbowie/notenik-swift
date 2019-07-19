@@ -26,12 +26,13 @@
             </objects>
             <point key="canvasLocation" x="-451" y="219"/>
         </scene>
-        <!--Tab View Controller-->
+        <!--Prefs Tab View Controller-->
         <scene sceneID="pqd-gK-cR3">
             <objects>
-                <tabViewController selectedTabViewItemIndex="0" id="QcO-UB-82s" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="1" id="QcO-UB-82s" customClass="PrefsTabViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="General" identifier="" id="jFi-DJ-6Nk"/>
+                        <tabViewItem label="Tags Export" id="ksR-rh-eYj"/>
                     </tabViewItems>
                     <tabView key="tabView" type="noTabsNoBorder" id="1MM-le-9ts">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
@@ -44,6 +45,7 @@
                     <connections>
                         <outlet property="tabView" destination="1MM-le-9ts" id="zd0-TF-c9g"/>
                         <segue destination="i5j-TU-ObT" kind="relationship" relationship="tabItems" id="bCy-27-nZ3"/>
+                        <segue destination="tET-7t-Lpv" kind="relationship" relationship="tabItems" id="c1e-wq-R8E"/>
                     </connections>
                 </tabViewController>
                 <customObject id="N6Y-LZ-f69" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -124,6 +126,93 @@ DQ
                 <customObject id="tyM-SV-eCN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="250" y="525"/>
+        </scene>
+        <!--Tags Export View Controller-->
+        <scene sceneID="vqj-wB-gjn">
+            <objects>
+                <viewController id="tET-7t-Lpv" customClass="TagsExportViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="UYm-pV-VUz">
+                        <rect key="frame" x="0.0" y="0.0" width="504" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f2f-sp-8DO">
+                                <rect key="frame" x="18" y="263" width="94" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Tags to Select:" id="PQI-uM-ceX">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Az4-iy-I9R">
+                                <rect key="frame" x="20" y="238" width="113" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Tags to Suppress:" id="o4z-g6-Ff7">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <tokenField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eN2-Ga-FP3">
+                                <rect key="frame" x="139" y="183" width="345" height="72"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="72" id="D94-i4-5OH"/>
+                                </constraints>
+                                <tokenFieldCell key="cell" selectable="YES" editable="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" allowsEditingTextAttributes="YES" usesSingleLineMode="YES" id="Hc9-N5-iq6">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <connections>
+                                        <action selector="tagsToSuppressAction:" target="tET-7t-Lpv" id="1JL-k2-pzy"/>
+                                    </connections>
+                                </tokenFieldCell>
+                            </tokenField>
+                            <tokenField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SfU-vt-iTW">
+                                <rect key="frame" x="139" y="260" width="345" height="22"/>
+                                <tokenFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" allowsEditingTextAttributes="YES" usesSingleLineMode="YES" id="G8W-Lw-0A5">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <connections>
+                                        <action selector="tagsToSelectAction:" target="tET-7t-Lpv" id="M4Q-wh-z9E"/>
+                                    </connections>
+                                </tokenFieldCell>
+                            </tokenField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dHw-Ja-5wH">
+                                <rect key="frame" x="431" y="13" width="59" height="32"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="d51-Vt-bWk">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="tagsExportOK:" target="tET-7t-Lpv" id="xjt-Mu-atv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="f2f-sp-8DO" firstAttribute="leading" secondItem="UYm-pV-VUz" secondAttribute="leading" constant="20" symbolic="YES" id="Gos-zu-S27"/>
+                            <constraint firstItem="SfU-vt-iTW" firstAttribute="leading" secondItem="eN2-Ga-FP3" secondAttribute="leading" id="N0s-fG-O6c"/>
+                            <constraint firstItem="SfU-vt-iTW" firstAttribute="trailing" secondItem="eN2-Ga-FP3" secondAttribute="trailing" id="O0f-1b-DNX"/>
+                            <constraint firstItem="Az4-iy-I9R" firstAttribute="top" secondItem="eN2-Ga-FP3" secondAttribute="top" id="PeI-Wi-pfW"/>
+                            <constraint firstItem="eN2-Ga-FP3" firstAttribute="leading" secondItem="Az4-iy-I9R" secondAttribute="trailing" constant="8" symbolic="YES" id="dae-y3-3q8"/>
+                            <constraint firstItem="Az4-iy-I9R" firstAttribute="top" secondItem="f2f-sp-8DO" secondAttribute="bottom" constant="8" symbolic="YES" id="gUm-ho-dSB"/>
+                            <constraint firstItem="f2f-sp-8DO" firstAttribute="top" secondItem="UYm-pV-VUz" secondAttribute="top" constant="20" symbolic="YES" id="iFC-wh-vZm"/>
+                            <constraint firstItem="eN2-Ga-FP3" firstAttribute="trailing" secondItem="dHw-Ja-5wH" secondAttribute="trailing" id="kmS-5v-VjI"/>
+                            <constraint firstAttribute="bottom" secondItem="dHw-Ja-5wH" secondAttribute="bottom" constant="20" symbolic="YES" id="nKq-pk-s8h"/>
+                            <constraint firstItem="f2f-sp-8DO" firstAttribute="baseline" secondItem="SfU-vt-iTW" secondAttribute="baseline" id="q8B-EU-YMK"/>
+                            <constraint firstItem="SfU-vt-iTW" firstAttribute="leading" secondItem="f2f-sp-8DO" secondAttribute="trailing" constant="29" id="uXP-6c-cHg"/>
+                            <constraint firstAttribute="trailing" secondItem="SfU-vt-iTW" secondAttribute="trailing" constant="20" symbolic="YES" id="zcx-5N-bhy"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tagsToSelect" destination="SfU-vt-iTW" id="v4H-Dk-MGP"/>
+                        <outlet property="tagsToSuppress" destination="eN2-Ga-FP3" id="tfv-wL-chF"/>
+                    </connections>
+                </viewController>
+                <customObject id="Bp2-co-Dlh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="250" y="929"/>
         </scene>
     </scenes>
 </document>

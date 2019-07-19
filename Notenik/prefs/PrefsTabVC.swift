@@ -1,8 +1,8 @@
 //
-//  DelimitedSeparator.swift
+//  PrefsTabVC.swift
 //  Notenik
 //
-//  Created by Herb Bowie on 4/28/19.
+//  Created by Herb Bowie on 7/17/19.
 //  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
@@ -11,8 +11,8 @@
 
 import Foundation
 
-/// And indicator of which sort of separator should be used between fields
-enum DelimitedSeparator {
-    case comma
-    case tab
+protocol PrefsTabVC {
+    
+    /// Called when the user is leaving this tab for another one. 
+    func leavingTab()
 }

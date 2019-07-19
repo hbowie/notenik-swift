@@ -29,6 +29,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
     let shareStoryboard:           NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
     let displayPrefsStoryboard:    NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
+    let exportStoryboard:          NSStoryboard = NSStoryboard(name: "Export", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -203,6 +204,22 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
                               category: "CollectionWindowController",
                               level: .fault,
                               message: "Couldn't get a Collection Prefs Window Controller!")
+        }
+    }
+    
+    /// The user has requested an export of this Collection. 
+    @IBAction func menuExport(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        if let exportController = self.exportStoryboard.instantiateController(withIdentifier: "exportWC") as? ExportWindowController {
+            exportController.io = noteIO
+            exportController.showWindow(self)
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get an Export Window Controller!")
         }
     }
     
@@ -1082,32 +1099,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         finishBatchOperation()
     }
     
-    /// Export Notes to a Comma-Separated Values File
-    @IBAction func exportCSV(_ sender: Any) {
-        guard let noteIO = guardForCollectionAction() else { return }
-        guard let fileURL = getExportURL(fileExt: "csv") else { return }
-        exportDelimited(noteIO: noteIO, fileURL: fileURL, sep: .comma)
-    }
-    
-    /// Export Notes to a Tab-Delimited File
-    @IBAction func exportTabDelim(_ sender: Any) {
-        guard let noteIO = guardForCollectionAction() else { return }
-        guard let fileURL = getExportURL(fileExt: "tab") else { return }
-        exportDelimited(noteIO: noteIO, fileURL: fileURL, sep: .tab)
-    }
-    
-    @IBAction func splitTagsTabDelim(_ sender: Any) {
-        guard let noteIO = guardForCollectionAction() else { return }
-        guard let fileURL = getExportURL(fileExt: "tab") else { return }
-        splitDelimited(noteIO: noteIO, fileURL: fileURL, sep: .tab)
-    }
-    
-    @IBAction func splitTagsCSV(_ sender: Any) {
-        guard let noteIO = guardForCollectionAction() else { return }
-        guard let fileURL = getExportURL(fileExt: "csv") else { return }
-        splitDelimited(noteIO: noteIO, fileURL: fileURL, sep: .comma)
-    }
-    
     @IBAction func favoritesToHTML(_ sender: Any) {
         print("Favorites to HTML")
         // See if we're ready to take action
@@ -1144,25 +1135,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         }
     }
     
-    /// Export a text file with fields separated by something-or-other
-    func exportDelimited(noteIO: NotenikIO, fileURL: URL, sep: DelimitedSeparator) {
-        let notesExported = noteIO.exportDelimited(fileURL: fileURL, sep: sep)
-        let ok = notesExported > 0
-        informUserOfImportExportResults(operation: "export",
-                                        ok: ok,
-                                        numberOfNotes: notesExported,
-                                        path: fileURL.path)
-    }
-    
-    /// Export a text file, with one note for each tag.
-    func splitDelimited(noteIO: NotenikIO, fileURL: URL, sep: DelimitedSeparator) {
-        let notesExported = noteIO.splitDelimited(fileURL: fileURL, sep: sep)
-        let ok = notesExported > 0
-        informUserOfImportExportResults(operation: "split tags",
-                                        ok: ok,
-                                        numberOfNotes: notesExported,
-                                        path: fileURL.path)
-    }
+
     
     /// Export the current collection in Notenik format.
     @IBAction func exportNotenik(_ sender: Any) {

@@ -3,7 +3,10 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/5/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2018 - 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
@@ -14,7 +17,7 @@ class AuthorValue : StringValue {
     var lastName = ""
     var firstName = ""
     var suffix = ""
-    var authors : [AuthorValue] = []
+    var authors: [AuthorValue] = []
     
     /// Default initialization
     override init() {
@@ -44,8 +47,36 @@ class AuthorValue : StringValue {
         return lastNameFirst
     }
     
+    /// Return the first name first
+    var firstNameFirst: String {
+        var fnf = ""
+        var i = 0
+        if authors.count > 0 {
+            for author in authors {
+                fnf.append(author.firstNameFirst)
+                if i < (authors.count - 2) {
+                    fnf.append(", ")
+                } else if i == (authors.count - 2) {
+                    fnf.append(" and ")
+                }
+                i += 1
+            }
+        } else {
+            fnf.append(firstName)
+            if fnf.count > 0 && lastName.count > 0 {
+                fnf.append(" ")
+            }
+            fnf.append(lastName)
+            if fnf.count > 0 && suffix.count > 0 {
+                fnf.append(" ")
+            }
+            fnf.append(suffix)
+        }
+        return fnf
+    }
+    
     /// Return the last name followed by a comma, then the first name and suffix
-    var lastNameFirst : String {
+    var lastNameFirst: String {
         var lnf = ""
         var i = 0
         if authors.count > 0 {

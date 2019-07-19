@@ -15,7 +15,7 @@ import Foundation
 class DelimitedWriter {
     
     var destination: URL
-    var sep = DelimitedSeparator.tab
+    var format = NoteFormat.tabDelimited
     var sepChar: Character = "\t"
     var sepStr = "\t"
     var lineStarted = false
@@ -23,16 +23,18 @@ class DelimitedWriter {
     var bigString = BigStringWriter()
     
     /// Must give us a destination url and the desired separator character upon initialization.
-    init(destination: URL, sep: DelimitedSeparator) {
-        self.sep = sep
+    init(destination: URL, format: NoteFormat) {
+        self.format = format
         self.destination = destination
-        switch sep {
-        case .comma:
+        switch format {
+        case .commaSeparated:
             sepChar = ","
             sepStr = ","
-        case .tab:
+        case .tabDelimited:
             sepChar = "\t"
             sepStr = "\t"
+        default:
+            break
         }
     }
     

@@ -239,6 +239,9 @@ class FileIO: NotenikIO, RowConsumer {
                               message: "\(notesRead) Notes loaded for the Collection")
             collectionOpen = true
             bunch!.sortParm = collection!.sortParm
+            if pickLists.tagsPickList.values.count > 0 {
+                AppPrefs.shared.pickLists = pickLists
+            }
             return collection
         }
     }
@@ -440,7 +443,6 @@ class FileIO: NotenikIO, RowConsumer {
         noteToImport!.setField(label: label, value: value)
     }
     
-    
     /// Do something with a completed row.
     ///
     /// - Parameters:
@@ -452,92 +454,6 @@ class FileIO: NotenikIO, RowConsumer {
             notesImported += 1
         }
         noteToImport = Note(collection: collection!)
-    }
-    
-    /// Export the current set of notes to a comma-separated or tab-delimited file.
-    ///
-    /// - Parameters:
-    ///   - fileURL: The destination folder and file name.
-    ///   - sep: An indicator of the type of delimiter requested.
-    /// - Returns: The number of notes exported, or -1 in the event of an error.
-    func exportDelimited(fileURL: URL, sep: DelimitedSeparator) -> Int {
-        guard collection != nil && collectionOpen else { return -1 }
-        guard let dict = collection?.dict else { return -1 }
-        guard let notes = bunch?.notesList else { return -1 }
-        let writer = DelimitedWriter(destination: fileURL, sep: sep)
-        writer.open()
-        var notesExported = 0
-        
-        // Write out column headers
-        for def in dict.list {
-            writer.write(value: def.fieldLabel.properForm)
-        }
-        writer.endLine()
-        
-        // Now write out data rows
-        for note in notes {
-            for def in dict.list {
-                writer.write(value: note.getFieldAsString(label: def.fieldLabel.commonForm))
-            }
-            writer.endLine()
-            notesExported += 1
-        }
-        
-        // Now close the writer, which is when the write to disk happens
-        let ok = writer.close()
-        if ok {
-            return notesExported
-        } else {
-            return -1
-        }
-    }
-    
-    /// Export the current set of notes, writing out each note once for
-    /// each of its tags.
-    func splitDelimited(fileURL: URL, sep: DelimitedSeparator) -> Int {
-        guard collection != nil && collectionOpen else { return -1 }
-        guard let dict = collection?.dict else { return -1 }
-        guard let notes = bunch?.notesList else { return -1 }
-        let writer = DelimitedWriter(destination: fileURL, sep: sep)
-        writer.open()
-        var notesExported = 0
-        
-        // Write out column headers
-        writer.write(value: "Tag")
-        for def in dict.list {
-            writer.write(value: def.fieldLabel.properForm)
-        }
-        writer.endLine()
-        
-        // Now write out data rows
-        for note in notes {
-            var tagsWritten = 0
-            for tag in note.tags.tags {
-                writer.write(value: String(describing: tag))
-                for def in dict.list {
-                    writer.write(value: note.getFieldAsString(label: def.fieldLabel.commonForm))
-                }
-                writer.endLine()
-                tagsWritten += 1
-                notesExported += 1
-            }
-            if notesExported == 0 {
-                writer.write(value: "")
-                for def in dict.list {
-                    writer.write(value: note.getFieldAsString(label: def.fieldLabel.commonForm))
-                }
-                writer.endLine()
-                notesExported += 1
-            }
-        }
-        
-        // Now close the writer, which is when the write to disk happens
-        let ok = writer.close()
-        if ok {
-            return notesExported
-        } else {
-            return -1
-        }
     }
     
     /// Purge closed notes from the collection, optionally writing them

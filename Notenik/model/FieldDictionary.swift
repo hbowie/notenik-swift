@@ -129,13 +129,6 @@ class FieldDictionary {
                     list.insert(def, at: 0)
                 }
             } else if common == LabelConstants.bodyCommon {
-                if insertPositionFromEnd <= 1 {
-                    list.append(def)
-                } else {
-                    list.insert(def, at: list.count - insertPositionFromEnd)
-                }
-                insertPositionFromEnd += 1
-            } else if common == LabelConstants.dateAddedCommon {
                 list.append(def)
                 insertPositionFromEnd += 1
             } else if insertPositionFromEnd <= 1 {

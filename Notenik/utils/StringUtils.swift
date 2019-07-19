@@ -244,6 +244,30 @@ class StringUtils {
         return out
     }
     
+    /// Turn this string into a likely WikiMedia page name.
+    static func wikiMediaPage(_ from: String) -> String {
+        var out = ""
+        var pendingSpaces = 0
+        for char in from {
+            if char.isWhitespace || char == "_" {
+                pendingSpaces += 1
+            } else {
+                if pendingSpaces > 0 {
+                    if out.count > 0 {
+                        out.append("_")
+                    }
+                    pendingSpaces = 0
+                }
+                if char == "," {
+                    out.append("%2C")
+                } else {
+                    out.append(char)
+                }
+            }
+        }
+        return out
+    }
+    
     /// See if the next few characters in the first string are equal to
     /// the entire contents of the second string.
     ///
