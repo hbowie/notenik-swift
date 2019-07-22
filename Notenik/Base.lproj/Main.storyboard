@@ -798,6 +798,25 @@ CA
                                         <action selector="searchNow:" target="B8D-0N-5wS" id="BY9-wS-fUM"/>
                                     </connections>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="4E1A6904-9894-48EC-92D9-176C140AD28D" label="Attachments" paletteLabel="Attachments" sizingBehavior="auto" id="f6I-c6-rBh" userLabel="Attachments">
+                                    <nil key="toolTip"/>
+                                    <popUpButton key="view" verticalHuggingPriority="750" id="L3h-8b-Jqt">
+                                        <rect key="frame" x="0.0" y="14" width="100" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="roundTextured" title="files..." bezelStyle="texturedRounded" image="NSAdvanced" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="OoK-b7-aod" id="ETi-ku-HDh">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="IDM-a0-awn">
+                                                <items>
+                                                    <menuItem title="files..." state="on" id="OoK-b7-aod">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Add Attachment..." id="XE0-4v-qSP"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                    </popUpButton>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="nQC-YT-8yD"/>
@@ -810,6 +829,7 @@ CA
                                 <toolbarItem reference="z6q-Rn-8x2"/>
                                 <toolbarItem reference="kQO-NK-gn9"/>
                                 <toolbarItem reference="2Vv-Jk-PYc"/>
+                                <toolbarItem reference="f6I-c6-rBh"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -818,6 +838,7 @@ CA
                     </window>
                     <connections>
                         <outlet property="actionMenu" destination="UKb-dT-4VF" id="8yf-hy-pUk"/>
+                        <outlet property="attachmentsMenu" destination="IDM-a0-awn" id="ah3-dL-UkV"/>
                         <outlet property="searchField" destination="7V6-9K-EEY" id="KqQ-uS-wc7"/>
                         <outlet property="shareButton" destination="UHS-eX-f3H" id="4vI-lQ-GXa"/>
                         <segue destination="ysx-uj-1Qh" kind="relationship" relationship="window.shadowedContentViewController" id="Yt8-Lj-4g6"/>
@@ -1274,6 +1295,7 @@ CA
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSAdvanced" width="32" height="32"/>
         <image name="NSFollowLinkFreestandingTemplate" width="14" height="14"/>
         <image name="NSFontPanel" width="32" height="32"/>
         <image name="NSGoLeftTemplate" width="9" height="12"/>

@@ -452,4 +452,25 @@ class BunchIO: NotenikIO, RowConsumer  {
         // Does nothing for this particular implementation of NotenikIO
         return false
     }
+    
+    /// Add the specified attachment to the given note.
+    ///
+    /// - Parameters:
+    ///   - from: The location of the file to be attached.
+    ///   - to: The Note to which the file is to be attached.
+    ///   - with: The unique identifier for this attachment for this note.
+    /// - Returns: True if attachment added successfully, false if any sort of failure.
+    func addAttachment(from: URL, to: Note, with: String) -> Bool {
+        return false
+    }
+    
+    /// If possible, return a URL to locate the indicated attachment.
+    func getURLforAttachment(fileName: String) -> URL? {
+        return nil
+    }
+    
+    /// Return a path to the storage location for attachments.
+    func getAttachmentsLocation() -> String? {
+        return nil
+    }
 }

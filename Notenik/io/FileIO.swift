@@ -13,11 +13,14 @@ import Foundation
 
 class FileIO: NotenikIO, RowConsumer {
     
+    let filesFolderName = "files"
     let reportsFolderName = "reports"
     let scriptExt = ".tcz"
     let templateID = "template"
     
     let fileManager = FileManager.default
+    
+    var attachments: [String]?
     
     static let infoFileName = "- INFO.nnk"
     
@@ -122,6 +125,8 @@ class FileIO: NotenikIO, RowConsumer {
         // Let's read the directory contents
         bunch = BunchOfNotes(collection: collection!)
         
+        loadAttachments()
+        
         var notesRead = 0
         
         do {
@@ -198,6 +203,7 @@ class FileIO: NotenikIO, RowConsumer {
                 } else if fileName.noteExt {
                     let note = readNote(collection: collection!, noteURL: itemURL)
                     if note != nil && note!.hasTitle() {
+                        addAttachments(to: note!)
                         pickLists.registerNote(note: note!)
                         let noteAdded = bunch!.add(note: note!)
                         if noteAdded {
@@ -244,6 +250,74 @@ class FileIO: NotenikIO, RowConsumer {
             }
             return collection
         }
+        attachments = nil
+    }
+    
+    /// Load attachments from the files folder.
+    func loadAttachments() {
+        guard let filesPath = getAttachmentsLocation() else { return }
+        do {
+            attachments = try fileManager.contentsOfDirectory(atPath: filesPath)
+            attachments!.sort()
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .info,
+                              message: "\(attachments!.count) Attachments loaded for the Collection")
+        } catch {
+            // If no files folder, then just move on.
+        }
+    }
+    
+    /// Add matching attachments to a Note. 
+    func addAttachments(to note: Note) {
+        guard let base = note.fileNameBase else { return }
+        guard attachments != nil else { return }
+        var i = 0
+        var looking = true
+        while i < attachments!.count && looking {
+            if attachments![i].hasPrefix(base) {
+                note.attachments.append(attachments![i])
+                attachments!.remove(at: i)
+            } else if base < attachments![i] {
+                looking = false
+            } else {
+                i += 1
+            }
+        }
+    }
+    
+    /// Add the specified attachment to the given note.
+    ///
+    /// - Parameters:
+    ///   - from: The location of the file to be attached.
+    ///   - to: The Note to which the file is to be attached.
+    ///   - with: The unique identifier for this attachment for this note.
+    /// - Returns: True if attachment added successfully, false if any sort of failure.
+    func addAttachment(from: URL, to: Note, with: String) -> Bool {
+        let fileName = to.fileNameBase! + " | " + with
+        guard let attachmentURL = getURLforAttachment(fileName: fileName) else { return false }
+        let exists = fileManager.fileExists(atPath: attachmentURL.path)
+        guard !exists else { return false }
+        do {
+            try fileManager.copyItem(at: from, to: attachmentURL)
+        } catch {
+            return false
+        }
+        to.attachments.append(fileName)
+        return true
+    }
+    
+    /// If possible, return a URL to locate the indicated attachment.
+    func getURLforAttachment(fileName: String) -> URL? {
+        guard let folderPath = getAttachmentsLocation() else { return nil }
+        let attachmentPath = FileUtils.joinPaths(path1: folderPath, path2: fileName)
+        return URL(fileURLWithPath: attachmentPath)
+    }
+    
+    /// Return a path to the storage location for attachments.
+    func getAttachmentsLocation() -> String? {
+        return FileUtils.joinPaths(path1: collectionFullPath!,
+                                   path2: filesFolderName)
     }
     
     /// Load A list of available reports from the reports folder.
@@ -898,6 +972,4 @@ class FileIO: NotenikIO, RowConsumer {
     func makeTagsNodeIterator() -> TagsNodeIterator {
         return TagsNodeIterator(noteIO: self)
     }
-
-    
 }

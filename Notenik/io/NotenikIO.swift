@@ -192,6 +192,21 @@ protocol NotenikIO {
     /// - Returns: The new Note on which the collection should be positioned.
     func deleteSelectedNote() -> (Note?, NotePosition)
     
+    /// Add the specified attachment to the given note.
+    ///
+    /// - Parameters:
+    ///   - from: The location of the file to be attached.
+    ///   - to: The Note to which the file is to be attached.
+    ///   - with: The unique identifier for this attachment for this note.
+    /// - Returns: True if attachment added successfully, false if any sort of failure.
+    func addAttachment(from: URL, to: Note, with: String) -> Bool
+    
+    /// If possible, return a URL to locate the indicated attachment.
+    func getURLforAttachment(fileName: String) -> URL?
+    
+    /// Return a path to the storage location for attachments.
+    func getAttachmentsLocation() -> String?
+    
     /// Return the root of the Tags tree
     func getTagsNodeRoot() -> TagsNode?
     

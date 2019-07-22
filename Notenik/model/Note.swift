@@ -16,13 +16,49 @@ class Note: Comparable, NSCopying {
     
     var collection:  NoteCollection
     
-    /// This should contain the file name (without the path) plus the file extension
-    var fileName:    String?
-    
     var fields = [:] as [String: NoteField]
+    var attachments: [String] = []
     
     var _envCreateDate = ""
     var _envModDate    = ""
+    
+    /// This should contain the file name (without the path) plus the file extension
+    var fileNameBase: String?
+    var fileNameExt:  String?
+    
+    var fileName: String? {
+        get {
+            if fileNameBase == nil || fileNameExt == nil {
+                return nil
+            } else {
+                return fileNameBase! + "." + fileNameExt!
+            }
+        }
+        set {
+            if newValue == nil {
+                fileNameBase = nil
+                fileNameExt = nil
+            } else {
+                fileNameBase = ""
+                fileNameExt = ""
+                var dotFound = false
+                for char in newValue! {
+                    if char == "." {
+                        dotFound = true
+                        if fileNameExt!.count > 0 {
+                            fileNameBase!.append(".")
+                            fileNameBase!.append(fileNameExt!)
+                            fileNameExt = ""
+                        }
+                    } else if dotFound {
+                        fileNameExt!.append(char)
+                    } else {
+                        fileNameBase!.append(char)
+                    }
+                }
+            }
+        }
+    }
     
     /// Initialize with a Collection
     init (collection: NoteCollection) {

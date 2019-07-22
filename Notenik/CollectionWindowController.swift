@@ -11,7 +11,7 @@
 
 import Cocoa
 
-class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
+class CollectionWindowController: NSWindowController, CollectionPrefsOwner, AttachmentMasterController {
     
     @IBOutlet var shareButton: NSButton!
     
@@ -19,9 +19,14 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     
     @IBOutlet var actionMenu: NSMenu!
     
+    @IBOutlet var attachmentsMenu: NSMenu!
+    
     let juggler  = CollectionJuggler.shared
     let appPrefs = AppPrefs.shared
     let osdir    = OpenSaveDirectory.shared
+    
+    let filesTitle = "files..."
+    let addAttachmentTitle = "Add Attachment..."
     
     var notenikIO:           NotenikIO?
     var windowNumber         = 0
@@ -30,6 +35,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     let shareStoryboard:           NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
     let displayPrefsStoryboard:    NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
     let exportStoryboard:          NSStoryboard = NSStoryboard(name: "Export", bundle: nil)
+    let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -331,12 +337,12 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         } else {
             let setOK = selNote.setLink(localLink)
             if !setOK {
-                logUnlikelyProblem("Attempt to set link value for selected note failed!")
+                communicateError("Attempt to set link value for selected note failed!")
             }
             editVC!.populateFields(with: selNote)
             let writeOK = noteIO.writeNote(selNote)
             if !writeOK {
-                logUnlikelyProblem("Attempted write of updated note failed!")
+                communicateError("Attempted write of updated note failed!")
             }
             noteModified(updatedNote: selNote)
             reloadViews()
@@ -585,9 +591,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         let searchString = searchField.stringValue
         let searchFor = searchString
         guard searchString.count > 0 else { return }
-        guard let noteIO = notenikIO else { return }
-        let outcome = modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        guard let noteIO = guardForCollectionAction() else { return }
         var found = false
         var (note, position) = noteIO.firstNote()
         while !found && note != nil {
@@ -638,16 +642,17 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
     }
     
     func searchNote(_ note: Note, for searchFor: String) -> Bool {
-        if note.title.value.lowercased().contains(searchFor) {
+        let searchForLower = searchFor.lowercased()
+        if note.title.value.lowercased().contains(searchForLower) {
             return true
         }
-        if note.link.value.lowercased().contains(searchFor) {
+        if note.link.value.lowercased().contains(searchForLower) {
             return true
         }
-        if note.tags.value.lowercased().contains(searchFor) {
+        if note.tags.value.lowercased().contains(searchForLower) {
             return true
         }
-        if note.body.value.lowercased().contains(searchFor) {
+        if note.body.value.lowercased().contains(searchForLower) {
             return true
         }
         return false
@@ -683,6 +688,113 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         }
         if editVC != nil && noteToUse != nil {
             editVC!.select(note: noteToUse!)
+        }
+        if noteToUse != nil {
+            adjustAttachmentsMenu(noteToUse!)
+        }
+    }
+    
+    /// Adjust the Attachments menu based on the attachments found in the passed note.
+    func adjustAttachmentsMenu(_ note: Note) {
+        
+        let topItem = attachmentsMenu.item(at: 0)
+        if note.attachments.count > 0 {
+            topItem!.title = "files: "
+        } else {
+            topItem!.title = "attach..."
+        }
+        var i = attachmentsMenu.numberOfItems - 1
+        while i > 0 {
+            attachmentsMenu.removeItem(at: i)
+            i -= 1
+        }
+        
+        let addMenuItem = NSMenuItem(title: addAttachmentTitle, action: #selector(openOrAddAttachment), keyEquivalent: "")
+        attachmentsMenu.addItem(addMenuItem)
+        
+        for attachment in note.attachments {
+            let title = attachment
+            let menuItem = NSMenuItem(title: title, action: #selector(openOrAddAttachment), keyEquivalent: "")
+            attachmentsMenu.addItem(menuItem)
+        }
+    }
+
+    /// Open an existing attachment or add a new one.
+    @objc func openOrAddAttachment(_ sender: NSMenuItem) {
+        
+        // See if we're ready to take action
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        if sender.title == addAttachmentTitle {
+            addAttachment()
+        } else {
+            let attachmentURL = noteIO.getURLforAttachment(fileName: sender.title)
+            
+            if attachmentURL != nil {
+                let goodOpen = NSWorkspace.shared.open(attachmentURL!)
+                if !goodOpen {
+                    communicateError("Trouble opening attachment at \(attachmentURL!.absoluteString)", alert: true)
+                }
+            } else {
+                communicateError("Trouble opening selected attachment", alert: true)
+            }
+        }
+        attachmentsMenu.performActionForItem(at: 0)
+    }
+    
+    /// Prompt the user for an attachment to add and then copy it to the files folder.
+    func addAttachment() {
+        print("Add Attachment")
+        let (nio, sel) = guardForNoteAction()
+        guard let noteIO = nio, let selNote = sel else { return }
+        guard let filesFolderPath = noteIO.getAttachmentsLocation() else { return }
+        guard selNote.fileNameBase != nil else { return }
+        
+        // Ask the user for a location on disk
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Select an attachment for this Note"
+        let parent = io!.collection!.collectionFullPathURL!.deletingLastPathComponent()
+        openPanel.directoryURL = parent
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.allowsMultipleSelection = false
+        let response = openPanel.runModal()
+        print("Response = \(response)")
+        guard response == .OK else { return }
+        guard let urlToAttach = openPanel.url else { return }
+        
+        if let attachmentController = self.attachmentStoryboard.instantiateController(withIdentifier: "attachmentWC") as? AttachmentWindowController {
+            // attachmentController.io = noteIO
+            attachmentController.vc.master = self
+            attachmentController.vc.setFileToCopy(urlToAttach)
+            attachmentController.vc.setStorageFolder(filesFolderPath)
+            attachmentController.vc.setNote(selNote)
+            attachmentController.showWindow(self)
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get an Attachment Window Controller!")
+        }
+    }
+    
+    /// The user has responded OK to proceed with adding an attachment.
+    ///
+    /// - Parameters:
+    ///   - note: The note to which the attachment should be added.
+    ///   - file: A URL pointing to the file to become attached.
+    ///   - suffix: The unique identifier for this particular attachment to this note.
+    ///
+    func okToAddAttachment(note: Note, file: URL, suffix: String) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let added = noteIO.addAttachment(from: file, to: note, with: suffix)
+        if added {
+            adjustAttachmentsMenu(note)
+        } else {
+            communicateError("Attachment could not be added - possible duplicate", alert: true)
         }
     }
     
@@ -1246,11 +1358,21 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner {
         _ = alert.runModal()
     }
     
-    func logUnlikelyProblem(_ msg: String) {
+    /// Log an error message and optionally display an alert message.
+    func communicateError(_ msg: String, alert: Bool=false) {
+        
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionWindowController",
                           level: .error,
                           message: msg)
+        
+        if alert {
+            let dialog = NSAlert()
+            dialog.alertStyle = .warning
+            dialog.messageText = msg
+            dialog.addButton(withTitle: "OK")
+            let _ = dialog.runModal()
+        }
     }
     
     /// Finish up batch operations by reloading the lists and selecting the first note
