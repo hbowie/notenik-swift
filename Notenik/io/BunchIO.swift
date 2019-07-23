@@ -464,6 +464,18 @@ class BunchIO: NotenikIO, RowConsumer  {
         return false
     }
     
+    /// Reattach the attachments for this note to make sure they are attached
+    /// to the new note.
+    ///
+    /// - Parameters:
+    ///   - note1: The Note to which the files were previously attached.
+    ///   - note2: The Note to wich the files should now be attached.
+    /// - Returns: True if successful, false otherwise.
+    func reattach(from: Note, to: Note) -> Bool {
+        if from.attachments.count == 0 { return true}
+        return false
+    }
+    
     /// If possible, return a URL to locate the indicated attachment.
     func getURLforAttachment(fileName: String) -> URL? {
         return nil

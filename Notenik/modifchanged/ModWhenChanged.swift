@@ -140,6 +140,13 @@ class ModWhenChanged {
                 return (.tryAgain, nil)
             }
         case .deleteAndAdd:
+            let attachmentsOK = io.reattach(from: startingNote, to: modNote)
+            if !attachmentsOK {
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                                  category: "ModWhenChanged",
+                                  level: .error,
+                                  message: "Problems renaming attachments for \(modNote.title)")
+            }
             let (nextNote, nextPosition) = io.deleteSelectedNote()
             let (addedNote, addedPosition) = io.addNote(newNote: modNote)
             if addedNote != nil {

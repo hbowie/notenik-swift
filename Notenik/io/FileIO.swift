@@ -276,7 +276,9 @@ class FileIO: NotenikIO, RowConsumer {
         var looking = true
         while i < attachments!.count && looking {
             if attachments![i].hasPrefix(base) {
-                note.attachments.append(attachments![i])
+                let attachmentName = AttachmentName()
+                attachmentName.setName(note: note, fullName: attachments![i])
+                note.attachments.append(attachmentName)
                 attachments!.remove(at: i)
             } else if base < attachments![i] {
                 looking = false
@@ -294,8 +296,11 @@ class FileIO: NotenikIO, RowConsumer {
     ///   - with: The unique identifier for this attachment for this note.
     /// - Returns: True if attachment added successfully, false if any sort of failure.
     func addAttachment(from: URL, to: Note, with: String) -> Bool {
-        let fileName = to.fileNameBase! + " | " + with
-        guard let attachmentURL = getURLforAttachment(fileName: fileName) else { return false }
+        let attachmentName = AttachmentName()
+        attachmentName.setName(fromFile: from, note: to, suffix: with)
+        guard let attachmentURL = getURLforAttachment(fileName: attachmentName.fullName) else {
+            return false
+        }
         let exists = fileManager.fileExists(atPath: attachmentURL.path)
         guard !exists else { return false }
         do {
@@ -303,8 +308,44 @@ class FileIO: NotenikIO, RowConsumer {
         } catch {
             return false
         }
-        to.attachments.append(fileName)
+        to.attachments.append(attachmentName)
         return true
+    }
+    
+    /// Reattach the attachments for this note to make sure they are attached
+    /// to the new note.
+    ///
+    /// - Parameters:
+    ///   - note1: The Note to which the files were previously attached.
+    ///   - note2: The Note to wich the files should now be attached.
+    /// - Returns: True if successful, false otherwise.
+    func reattach(from: Note, to: Note) -> Bool {
+        if from.attachments.count == 0 { return true}
+        guard let fromNoteName = from.fileNameBase else { return false }
+        guard let toNoteName = to.fileNameBase else { return false }
+        if fromNoteName == toNoteName { return true }
+        to.attachments = []
+        var allOK = true
+        for attachment in from.attachments {
+            var ok = false
+            let newAttachmentName = attachment.copy() as! AttachmentName
+            newAttachmentName.changeNote(note: to)
+            if let fromURL = getURLforAttachment(fileName: attachment.fullName) {
+                if let toURL = getURLforAttachment(fileName: newAttachmentName.fullName) {
+                    do {
+                        try fileManager.moveItem(at: fromURL, to: toURL)
+                        to.attachments.append(newAttachmentName)
+                        ok = true
+                    } catch {
+                        //
+                    }
+                }
+            }
+            if !ok {
+                allOK = false
+            }
+        }
+        return allOK
     }
     
     /// If possible, return a URL to locate the indicated attachment.
@@ -345,7 +386,8 @@ class FileIO: NotenikIO, RowConsumer {
                     report.reportName = fileName.base
                     report.reportType = fileName.ext
                     reports.append(report)
-                } else if !scriptsFound && fileName.baseLower.contains(templateID) {
+                // } else if !scriptsFound && fileName.baseLower.contains(templateID) {
+                } else if fileName.baseLower.contains(templateID) {
                     let report = MergeReport()
                     report.reportName = fileName.base
                     report.reportType = fileName.ext

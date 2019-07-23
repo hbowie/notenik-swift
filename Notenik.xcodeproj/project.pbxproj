@@ -108,6 +108,9 @@
 		9C5556D822E11E3B0099414E /* ExportWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5556D622E11E3B0099414E /* ExportWindowController.swift */; };
 		9C5556DA22E132EC0099414E /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5556D922E132EC0099414E /* ExportViewController.swift */; };
 		9C5556DB22E132EC0099414E /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5556D922E132EC0099414E /* ExportViewController.swift */; };
+		9C559D7022E67F940014019C /* AttachmentName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C559D6F22E67F940014019C /* AttachmentName.swift */; };
+		9C559D7122E67F940014019C /* AttachmentName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C559D6F22E67F940014019C /* AttachmentName.swift */; };
+		9C559D7222E67F940014019C /* AttachmentName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C559D6F22E67F940014019C /* AttachmentName.swift */; };
 		9C58BCF9225EF11B008E57D1 /* Notenik.help in Resources */ = {isa = PBXBuildFile; fileRef = 9C58BCF8225EF11B008E57D1 /* Notenik.help */; };
 		9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6D121F64B3B00C332ED /* AppDelegate.swift */; };
 		9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C60E6D521F64B3C00C332ED /* Assets.xcassets */; };
@@ -511,6 +514,7 @@
 		9C5556D122E115960099414E /* Export.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Export.storyboard; sourceTree = "<group>"; };
 		9C5556D622E11E3B0099414E /* ExportWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportWindowController.swift; sourceTree = "<group>"; };
 		9C5556D922E132EC0099414E /* ExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
+		9C559D6F22E67F940014019C /* AttachmentName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentName.swift; sourceTree = "<group>"; };
 		9C58BCF8225EF11B008E57D1 /* Notenik.help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Notenik.help; path = "Notenik Help/Notenik.help"; sourceTree = SOURCE_ROOT; };
 		9C60E6CE21F64B3B00C332ED /* Notenik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notenik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C60E6D121F64B3B00C332ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -872,6 +876,7 @@
 		9C60E71B21F651E500C332ED /* model */ = {
 			isa = PBXGroup;
 			children = (
+				9C559D6F22E67F940014019C /* AttachmentName.swift */,
 				9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */,
 				9C60E73121F651E500C332ED /* FieldDefinition.swift */,
 				9C60E73821F651E500C332ED /* FieldDictionary.swift */,
@@ -1341,6 +1346,7 @@
 				9C2A35B922A19D6E009C868E /* MergeActionModule.swift in Sources */,
 				9CE32507224D561E0051CA1F /* PrefsWindowController.swift in Sources */,
 				9CD82F672211E4BA002314E4 /* BigStringWriter.swift in Sources */,
+				9C559D7022E67F940014019C /* AttachmentName.swift in Sources */,
 				9C21DB8021F82D9800A5A08C /* NoteDisplay.swift in Sources */,
 				9C2AE512220A030800AE8BEE /* TagsTree.swift in Sources */,
 				9CC78E6C2283587300640477 /* DisplayPrefsWindowController.swift in Sources */,
@@ -1485,6 +1491,7 @@
 				9C10311E229A134E009CCE3B /* AppPrefs.swift in Sources */,
 				9C4018A62283B68B002C2B3D /* DisplayPrefs.swift in Sources */,
 				9C60E7B921F6525F00C332ED /* LinkValueTests.swift in Sources */,
+				9C559D7122E67F940014019C /* AttachmentName.swift in Sources */,
 				9C2A35B022A17226009C868E /* MergeAction.swift in Sources */,
 				9CC8336E22B3F65B0006AAE0 /* MarkedupTests.swift in Sources */,
 				9C60E78D21F651E500C332ED /* FieldDictionary.swift in Sources */,
@@ -1615,6 +1622,7 @@
 				9C822BA322D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */,
 				9C60E74C21F651E500C332ED /* Realm.swift in Sources */,
 				9CF119302257FDD50015AE91 /* ModWhenChanged.swift in Sources */,
+				9C559D7222E67F940014019C /* AttachmentName.swift in Sources */,
 				9C78888821FB826100452D74 /* MarkedupFormat.swift in Sources */,
 				9CD32626223308C400D06B77 /* StringView.swift in Sources */,
 				9C60E70A21F650B800C332ED /* FileName.swift in Sources */,

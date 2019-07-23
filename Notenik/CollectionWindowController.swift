@@ -713,7 +713,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         attachmentsMenu.addItem(addMenuItem)
         
         for attachment in note.attachments {
-            let title = attachment
+            let title = attachment.fullName
             let menuItem = NSMenuItem(title: title, action: #selector(openOrAddAttachment), keyEquivalent: "")
             attachmentsMenu.addItem(menuItem)
         }

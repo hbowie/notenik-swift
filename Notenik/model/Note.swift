@@ -17,7 +17,7 @@ class Note: Comparable, NSCopying {
     var collection:  NoteCollection
     
     var fields = [:] as [String: NoteField]
-    var attachments: [String] = []
+    var attachments: [AttachmentName] = []
     
     var _envCreateDate = ""
     var _envModDate    = ""
@@ -135,6 +135,7 @@ class Note: Comparable, NSCopying {
             newNote.fileName = String(fileName!)
         }
         copyFields(to: newNote)
+        copyAttachments(to: newNote)
         return newNote
     }
     
@@ -158,6 +159,14 @@ class Note: Comparable, NSCopying {
             } else {
                 field2!.value.set(field!.value.value)
             }
+        }
+    }
+    
+    /// Copy attachment file names from this note to another one. 
+    func copyAttachments(to note2: Note) {
+        for attachment in attachments {
+            let attachment2 = attachment
+            note2.attachments.append(attachment2)
         }
     }
     
