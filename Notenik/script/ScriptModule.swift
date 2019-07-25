@@ -12,7 +12,8 @@
 import Foundation
 
 enum ScriptModule: String {
-    case blank = ""
+    case blank   = ""
     case comment = "<!--"
-    case input = "input"
+    case input   = "input"
+    case filter  = "filter"
 }

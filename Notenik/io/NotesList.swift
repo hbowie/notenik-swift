@@ -64,8 +64,9 @@ class NotesList: Sequence {
             if index < 0 || index >= list.count {
                 return nil
             } else {
-                return list[index]
+                let currIndex = index
                 index += 1
+                return list[currIndex]
             }
         }
         

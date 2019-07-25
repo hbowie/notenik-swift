@@ -286,9 +286,9 @@ class TemplateLine {
         var value2 = ""
         var value2Index = 2
         let operand2 = util.replaceVariables(str: String(tokens[2]), note: note).line
-        var compOp = TemplateComparisonOperator(operand1)
+        var compOp = FieldComparisonOperator(operand1)
         if compOp.op == .undefined {
-            compOp = TemplateComparisonOperator(operand2)
+            compOp = FieldComparisonOperator(operand2)
             value1 = operand1
             value2Index = 3
         }

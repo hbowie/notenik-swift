@@ -17,14 +17,13 @@ class InputModule: RowConsumer {
     var workspace = ScriptWorkspace()
     var command = ScriptCommand()
     var openURL = URL(fileURLWithPath: "")
-    var collection = NoteCollection()
     var note: Note!
     var notesInput = 0
     var normalization = "0"
     var explodeTags = false
     
     init() {
-        note = Note(collection: collection)
+
     }
     
     func playCommand(workspace: ScriptWorkspace, command: ScriptCommand) {
@@ -55,11 +54,12 @@ class InputModule: RowConsumer {
     
     func openFile() {
         notesInput = 0
-        collection = NoteCollection()
-        note = Note(collection: collection)
+        workspace.collection = NoteCollection()
+        note = Note(collection: workspace.collection)
         let reader = DelimitedReader(consumer: self)
         reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
+        workspace.fullList = workspace.list
     }
     
     /// Do something with the next field produced.
@@ -79,6 +79,7 @@ class InputModule: RowConsumer {
     func consumeRow(labels: [String], fields: [String]) {
         workspace.list.append(note)
         notesInput += 1
+        note = Note(collection: workspace.collection)
     }
     
     /// Send an informative message to the log.

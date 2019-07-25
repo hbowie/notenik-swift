@@ -85,6 +85,9 @@ class ScriptEngine: RowConsumer {
         case .input:
             let input = InputModule()
             input.playCommand(workspace: workspace, command: command)
+        case .filter:
+            let filter = FilterModule()
+            filter.playCommand(workspace: workspace, command: command)
         default:
             break
         }

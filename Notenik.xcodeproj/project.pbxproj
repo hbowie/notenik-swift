@@ -257,6 +257,12 @@
 		9C60E7C821F6525F00C332ED /* StringValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E7B421F6525F00C332ED /* StringValueTests.swift */; };
 		9C60E7C921F6525F00C332ED /* RecursValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E7B521F6525F00C332ED /* RecursValueTests.swift */; };
 		9C60E7CA21F6525F00C332ED /* FieldLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E7B621F6525F00C332ED /* FieldLabelTests.swift */; };
+		9C67248522EA1B2D00CB7D39 /* FilterModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C67248422EA1B2D00CB7D39 /* FilterModule.swift */; };
+		9C67248622EA1B2D00CB7D39 /* FilterModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C67248422EA1B2D00CB7D39 /* FilterModule.swift */; };
+		9C67248722EA1B2D00CB7D39 /* FilterModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C67248422EA1B2D00CB7D39 /* FilterModule.swift */; };
+		9C67248C22EA205800CB7D39 /* FilterRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C67248B22EA205800CB7D39 /* FilterRule.swift */; };
+		9C67248D22EA205800CB7D39 /* FilterRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C67248B22EA205800CB7D39 /* FilterRule.swift */; };
+		9C67248E22EA205800CB7D39 /* FilterRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C67248B22EA205800CB7D39 /* FilterRule.swift */; };
 		9C78888621FB826100452D74 /* MarkedupFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78888521FB826100452D74 /* MarkedupFormat.swift */; };
 		9C78888721FB826100452D74 /* MarkedupFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78888521FB826100452D74 /* MarkedupFormat.swift */; };
 		9C78888821FB826100452D74 /* MarkedupFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78888521FB826100452D74 /* MarkedupFormat.swift */; };
@@ -312,9 +318,9 @@
 		9C97C1B12278F46100A43913 /* CollectionRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */; };
 		9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025121F65AF00027F364 /* NoteListViewController.swift */; };
 		9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
-		9CA420F622C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* TemplateComparisonOperator.swift */; };
-		9CA420F722C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* TemplateComparisonOperator.swift */; };
-		9CA420F822C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* TemplateComparisonOperator.swift */; };
+		9CA420F622C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */; };
+		9CA420F722C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */; };
+		9CA420F822C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */; };
 		9CA80797229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */; };
 		9CA80798229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */; };
 		9CA8079B229F1FB800C5D673 /* Down.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3BDF46229D9A5200E0DA89 /* Down.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -609,6 +615,8 @@
 		9C60E7B421F6525F00C332ED /* StringValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringValueTests.swift; sourceTree = "<group>"; };
 		9C60E7B521F6525F00C332ED /* RecursValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursValueTests.swift; sourceTree = "<group>"; };
 		9C60E7B621F6525F00C332ED /* FieldLabelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldLabelTests.swift; sourceTree = "<group>"; };
+		9C67248422EA1B2D00CB7D39 /* FilterModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModule.swift; sourceTree = "<group>"; };
+		9C67248B22EA205800CB7D39 /* FilterRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRule.swift; sourceTree = "<group>"; };
 		9C78888521FB826100452D74 /* MarkedupFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedupFormat.swift; sourceTree = "<group>"; };
 		9C78888921FB950900452D74 /* Markedup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markedup.swift; sourceTree = "<group>"; };
 		9C79BDAF226E368800796E93 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
@@ -632,7 +640,7 @@
 		9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionRequestType.swift; sourceTree = "<group>"; };
 		9C9A025121F65AF00027F364 /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
-		9CA420F522C2A67D00EEE065 /* TemplateComparisonOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateComparisonOperator.swift; sourceTree = "<group>"; };
+		9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldComparisonOperator.swift; sourceTree = "<group>"; };
 		9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewController.swift; sourceTree = "<group>"; };
 		9CAD6A4822DF806800531D90 /* TagsExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsExportViewController.swift; sourceTree = "<group>"; };
 		9CAD6A4E22DF9ACD00531D90 /* PrefsTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsTabViewController.swift; sourceTree = "<group>"; };
@@ -756,6 +764,8 @@
 		9C4C1BAE22E7EE0A005997DF /* script */ = {
 			isa = PBXGroup;
 			children = (
+				9C67248422EA1B2D00CB7D39 /* FilterModule.swift */,
+				9C67248B22EA205800CB7D39 /* FilterRule.swift */,
 				9C8540B922E8F3660074E349 /* InputModule.swift */,
 				9C8540C122E8F9F20074E349 /* ScriptAction.swift */,
 				9C8540B122E8F0330074E349 /* ScriptCommand.swift */,
@@ -911,6 +921,7 @@
 			children = (
 				9C559D6F22E67F940014019C /* AttachmentName.swift */,
 				9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */,
+				9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */,
 				9C60E73121F651E500C332ED /* FieldDefinition.swift */,
 				9C60E73821F651E500C332ED /* FieldDictionary.swift */,
 				9C60E71C21F651E500C332ED /* FieldLabel.swift */,
@@ -1093,7 +1104,6 @@
 				9CE9C98522A61499008D2B0A /* TemplateUtil.swift */,
 				9CF3DE4422A6BAA00078A6B0 /* TemplateLine.swift */,
 				9CE2170622A95EB300EE656C /* TemplateCommand.swift */,
-				9CA420F522C2A67D00EEE065 /* TemplateComparisonOperator.swift */,
 				9CE2170D22A9BC6000EE656C /* LineWithBreak.swift */,
 			);
 			path = template;
@@ -1346,6 +1356,7 @@
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C060687228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
+				9C67248C22EA205800CB7D39 /* FilterRule.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
 				9C60E75321F651E500C332ED /* Provider.swift in Sources */,
@@ -1387,7 +1398,7 @@
 				9C21DB8021F82D9800A5A08C /* NoteDisplay.swift in Sources */,
 				9C2AE512220A030800AE8BEE /* TagsTree.swift in Sources */,
 				9CC78E6C2283587300640477 /* DisplayPrefsWindowController.swift in Sources */,
-				9CA420F622C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */,
+				9CA420F622C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */,
 				9CD326202233068F00D06B77 /* CocoaEditView.swift in Sources */,
 				9CFCB049226BCE1700443FFA /* SimpleDate.swift in Sources */,
 				9CE3250D224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
@@ -1450,6 +1461,7 @@
 				9CCC5E9E228F0B5500FA6B5C /* BunchIO.swift in Sources */,
 				9C822B9D22D6D5D6008EF106 /* TagsView.swift in Sources */,
 				9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */,
+				9C67248522EA1B2D00CB7D39 /* FilterModule.swift in Sources */,
 				9C02D2B62267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9C5556DA22E132EC0099414E /* ExportViewController.swift in Sources */,
 				9C832A02224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
@@ -1484,7 +1496,7 @@
 				9CAD6A5722DFA9C200531D90 /* NotesExporter.swift in Sources */,
 				9C1CB85C22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */,
 				9C8540B322E8F0330074E349 /* ScriptCommand.swift in Sources */,
-				9CA420F722C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */,
+				9CA420F722C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */,
 				9C60E7C121F6525F00C332ED /* TitleValueTests.swift in Sources */,
 				9C8540AF22E8D78B0074E349 /* NotesList.swift in Sources */,
 				9C60E7BB21F6525F00C332ED /* LongTextValueTests.swift in Sources */,
@@ -1531,6 +1543,7 @@
 				9CE2170822A95EB300EE656C /* TemplateCommand.swift in Sources */,
 				9C78888B21FB950900452D74 /* Markedup.swift in Sources */,
 				9C60E7B821F6525F00C332ED /* BigStringReaderTests.swift in Sources */,
+				9C67248D22EA205800CB7D39 /* FilterRule.swift in Sources */,
 				9C8329FE224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */,
 				9C60E70921F650B800C332ED /* FileName.swift in Sources */,
 				9C60E7C421F6525F00C332ED /* DateValueTests.swift in Sources */,
@@ -1583,6 +1596,7 @@
 				9CB06CBB22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */,
 				9C2A35B422A19715009C868E /* MergeScripter.swift in Sources */,
 				9C60E77521F651E500C332ED /* TagsValue.swift in Sources */,
+				9C67248622EA1B2D00CB7D39 /* FilterModule.swift in Sources */,
 				9C60E74821F651E500C332ED /* ProviderType.swift in Sources */,
 				9C060688228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
 				9C60E7C221F6525F00C332ED /* SeqValueTests.swift in Sources */,
@@ -1623,6 +1637,7 @@
 				9C78888C21FB950900452D74 /* Markedup.swift in Sources */,
 				9CF1193F225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
 				9C2AE523220A34B300AE8BEE /* AppDelegate.swift in Sources */,
+				9C67248722EA1B2D00CB7D39 /* FilterModule.swift in Sources */,
 				9C2AE520220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9CF3DE4E22A6F5330078A6B0 /* MergeReport.swift in Sources */,
 				9C551C9022A3459C009BA329 /* LogEvent.swift in Sources */,
@@ -1689,6 +1704,7 @@
 				9CF11934225802AA0015AE91 /* ModView.swift in Sources */,
 				9C60E71721F6518400C332ED /* LogLevel.swift in Sources */,
 				9CE9C98822A61499008D2B0A /* TemplateUtil.swift in Sources */,
+				9C67248E22EA205800CB7D39 /* FilterRule.swift in Sources */,
 				9C60E79121F651E500C332ED /* Note.swift in Sources */,
 				9C553C622266A0D50008D176 /* StatusView.swift in Sources */,
 				9C2AE51C220A044800AE8BEE /* TagsNodeType.swift in Sources */,
@@ -1717,7 +1733,7 @@
 				9C60E6F021F64B3C00C332ED /* NotenikUITests.swift in Sources */,
 				9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */,
 				9C60E7A221F6520100C332ED /* FileIO.swift in Sources */,
-				9CA420F822C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */,
+				9CA420F822C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */,
 				9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9C822B9F22D6D5D6008EF106 /* TagsView.swift in Sources */,
 				9CE9C98422A6134A008D2B0A /* Template.swift in Sources */,

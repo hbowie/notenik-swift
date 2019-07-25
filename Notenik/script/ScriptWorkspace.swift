@@ -14,8 +14,10 @@ import Foundation
 /// A workspace to be shared between the Script Engine and its various modules. 
 class ScriptWorkspace {
     
-    var scriptIn: URL?
-    var list = NotesList()
-    
-    
+    var scriptIn:     URL?
+    var collection  = NoteCollection()
+    var list        = NotesList()
+    var fullList    = NotesList()
+    var pendingRules: [FilterRule] = []
+    var currentRules: [FilterRule] = []
 }
