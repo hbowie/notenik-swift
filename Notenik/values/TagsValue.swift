@@ -141,4 +141,19 @@ class TagsValue: StringValue {
             }
         }
     }
+    
+    /// Remove any characters that have a special meaning within a tag,
+    /// to ensure that the string returned can itself be used as
+    /// a single, single-level tag.
+    static func tagify(_ str: String) -> String {
+        var tag = ""
+        for char in str {
+            if char == "," || char == ";" || char == "/" || char == "." {
+                // drop it
+            } else {
+                tag.append(char)
+            }
+        }
+        return tag
+    }
 }

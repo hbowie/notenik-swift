@@ -101,7 +101,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     }
     
     func openParentRealm(parentURL: URL) {
-        let io = RealmIO.shared.openRealm(path: parentURL.path)
+        let realmScanner = RealmScanner()
+        realmScanner.openRealm(path: parentURL.path)
+        let io = realmScanner.realmIO
         guard io != nil else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionJuggler",

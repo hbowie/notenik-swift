@@ -86,7 +86,11 @@ class NoteDisplay: NSObject {
             code.startParagraph()
             code.append(field.def.fieldLabel.properForm)
             code.append(": ")
-            code.link(text: field.value.value, path: field.value.value)
+            var pathDisplay = field.value.value.removingPercentEncoding
+            if pathDisplay == nil {
+                pathDisplay = field.value.value
+            }
+            code.link(text: pathDisplay!, path: field.value.value)
             code.finishParagraph()
         } else if field.def.fieldLabel.commonForm == LabelConstants.codeCommon {
             code.startParagraph()

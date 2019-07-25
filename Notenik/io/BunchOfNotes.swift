@@ -16,7 +16,7 @@ class BunchOfNotes {
     
     var collection: NoteCollection
     var notesDict = [String : Note]()
-    var notesList = [Note]()
+    var notesList = NotesList()
     var notesTree = TagsTree()
     var listIndex = 0
     
@@ -261,7 +261,7 @@ class BunchOfNotes {
     /// Close the currently open collection (if any).
     func close() {
         notesDict = [String : Note]()
-        notesList = [Note]()
+        notesList = NotesList()
         notesTree = TagsTree()
     }
 }

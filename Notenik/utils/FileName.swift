@@ -257,8 +257,6 @@ class FileName: CustomStringConvertible {
     
 }
 
-
-
 enum FileOrDirectory {
     case unknown
     case file

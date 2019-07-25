@@ -803,7 +803,7 @@ CA
                                     <popUpButton key="view" verticalHuggingPriority="750" id="L3h-8b-Jqt">
                                         <rect key="frame" x="0.0" y="14" width="100" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="roundTextured" title="files..." bezelStyle="texturedRounded" image="NSAdvanced" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="OoK-b7-aod" id="ETi-ku-HDh">
+                                        <popUpButtonCell key="cell" type="roundTextured" title="files..." bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="OoK-b7-aod" id="ETi-ku-HDh">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="IDM-a0-awn">
@@ -1295,7 +1295,6 @@ CA
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>
-        <image name="NSAdvanced" width="32" height="32"/>
         <image name="NSFollowLinkFreestandingTemplate" width="14" height="14"/>
         <image name="NSFontPanel" width="32" height="32"/>
         <image name="NSGoLeftTemplate" width="9" height="12"/>

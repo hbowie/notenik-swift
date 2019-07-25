@@ -26,6 +26,8 @@ class BooleanValue: StringValue {
             return false
         } else if lower == "on" {
             return true
+        } else if lower == "1" {
+            return true
         } else {
             return false
         }

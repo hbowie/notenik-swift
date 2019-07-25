@@ -562,7 +562,7 @@ class Note: Comparable, NSCopying {
     ///
     /// - Parameter field: The Note field we want to set.
     /// - Returns: True if the field was set, false otherwise.
-    func setField(_ field : NoteField) -> Bool {
+    func setField(_ field: NoteField) -> Bool {
         if (field.def.fieldType == .status
             && field.value.value.count > 0
             && field.value is StatusValue) {

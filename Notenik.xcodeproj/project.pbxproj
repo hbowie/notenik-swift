@@ -16,9 +16,9 @@
 		9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2B52267F5E700587EDF /* CalendarViewController.swift */; };
 		9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
 		9C055D4F2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
-		9C060687228E0A9300CB8C10 /* RealmIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C060686228E0A9300CB8C10 /* RealmIO.swift */; };
-		9C060688228E0A9300CB8C10 /* RealmIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C060686228E0A9300CB8C10 /* RealmIO.swift */; };
-		9C060689228E0A9300CB8C10 /* RealmIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C060686228E0A9300CB8C10 /* RealmIO.swift */; };
+		9C060687228E0A9300CB8C10 /* RealmScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C060686228E0A9300CB8C10 /* RealmScanner.swift */; };
+		9C060688228E0A9300CB8C10 /* RealmScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C060686228E0A9300CB8C10 /* RealmScanner.swift */; };
+		9C060689228E0A9300CB8C10 /* RealmScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C060686228E0A9300CB8C10 /* RealmScanner.swift */; };
 		9C09E1762248601D0046D50D /* notenik.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 9C09E1752248601D0046D50D /* notenik.iconset */; };
 		9C0B25E5224D6548003AAF21 /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */; };
 		9C0B25E6224D654E003AAF21 /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
@@ -98,6 +98,9 @@
 		9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BA2298B87C003F6589 /* BodyView.swift */; };
 		9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BD2298BC87003F6589 /* CodeView.swift */; };
 		9C45E8BF2298BC87003F6589 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BD2298BC87003F6589 /* CodeView.swift */; };
+		9C4C1BB022E7EE61005997DF /* ScriptEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */; };
+		9C4C1BB122E7EE61005997DF /* ScriptEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */; };
+		9C4C1BB222E7EE61005997DF /* ScriptEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */; };
 		9C551C8E22A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
 		9C551C8F22A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
 		9C551C9022A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
@@ -275,6 +278,24 @@
 		9C832A02224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */; };
 		9C832A03224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */; };
 		9C832A04224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */; };
+		9C8540AE22E8D78B0074E349 /* NotesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540AD22E8D78B0074E349 /* NotesList.swift */; };
+		9C8540AF22E8D78B0074E349 /* NotesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540AD22E8D78B0074E349 /* NotesList.swift */; };
+		9C8540B022E8D78B0074E349 /* NotesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540AD22E8D78B0074E349 /* NotesList.swift */; };
+		9C8540B222E8F0330074E349 /* ScriptCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540B122E8F0330074E349 /* ScriptCommand.swift */; };
+		9C8540B322E8F0330074E349 /* ScriptCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540B122E8F0330074E349 /* ScriptCommand.swift */; };
+		9C8540B422E8F0330074E349 /* ScriptCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540B122E8F0330074E349 /* ScriptCommand.swift */; };
+		9C8540B622E8F0790074E349 /* ScriptModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540B522E8F0790074E349 /* ScriptModule.swift */; };
+		9C8540B722E8F0790074E349 /* ScriptModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540B522E8F0790074E349 /* ScriptModule.swift */; };
+		9C8540B822E8F0790074E349 /* ScriptModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540B522E8F0790074E349 /* ScriptModule.swift */; };
+		9C8540BA22E8F3660074E349 /* InputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540B922E8F3660074E349 /* InputModule.swift */; };
+		9C8540BB22E8F3660074E349 /* InputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540B922E8F3660074E349 /* InputModule.swift */; };
+		9C8540BC22E8F3660074E349 /* InputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540B922E8F3660074E349 /* InputModule.swift */; };
+		9C8540BE22E8F4310074E349 /* ScriptWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540BD22E8F4310074E349 /* ScriptWorkspace.swift */; };
+		9C8540BF22E8F4310074E349 /* ScriptWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540BD22E8F4310074E349 /* ScriptWorkspace.swift */; };
+		9C8540C022E8F4310074E349 /* ScriptWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540BD22E8F4310074E349 /* ScriptWorkspace.swift */; };
+		9C8540C222E8F9F20074E349 /* ScriptAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540C122E8F9F20074E349 /* ScriptAction.swift */; };
+		9C8540C322E8F9F20074E349 /* ScriptAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540C122E8F9F20074E349 /* ScriptAction.swift */; };
+		9C8540C422E8F9F20074E349 /* ScriptAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540C122E8F9F20074E349 /* ScriptAction.swift */; };
 		9C86CF0222C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
 		9C86CF0322C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
 		9C86CF0422C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
@@ -481,7 +502,7 @@
 		9C02D2B22267F41200587EDF /* CalendarWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWindowController.swift; sourceTree = "<group>"; };
 		9C02D2B52267F5E700587EDF /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTabsViewController.swift; sourceTree = "<group>"; };
-		9C060686228E0A9300CB8C10 /* RealmIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmIO.swift; sourceTree = "<group>"; };
+		9C060686228E0A9300CB8C10 /* RealmScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmScanner.swift; sourceTree = "<group>"; };
 		9C09E1752248601D0046D50D /* notenik.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = notenik.iconset; sourceTree = "<group>"; };
 		9C10311C229A134E009CCE3B /* AppPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrefs.swift; sourceTree = "<group>"; };
 		9C12D48E22134970003136B2 /* NoteSelectionSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSelectionSource.swift; sourceTree = "<group>"; };
@@ -509,6 +530,7 @@
 		9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefs.swift; sourceTree = "<group>"; };
 		9C45E8BA2298B87C003F6589 /* BodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyView.swift; sourceTree = "<group>"; };
 		9C45E8BD2298BC87003F6589 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
+		9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptEngine.swift; sourceTree = "<group>"; };
 		9C551C8D22A3459C009BA329 /* LogEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEvent.swift; sourceTree = "<group>"; };
 		9C553C602266A0D50008D176 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		9C5556D122E115960099414E /* Export.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Export.storyboard; sourceTree = "<group>"; };
@@ -595,6 +617,12 @@
 		9C822BA122D6DC71008EF106 /* TagsTokenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsTokenDelegate.swift; sourceTree = "<group>"; };
 		9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDiskLocation.swift; sourceTree = "<group>"; };
 		9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSaveDirectory.swift; sourceTree = "<group>"; };
+		9C8540AD22E8D78B0074E349 /* NotesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesList.swift; sourceTree = "<group>"; };
+		9C8540B122E8F0330074E349 /* ScriptCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptCommand.swift; sourceTree = "<group>"; };
+		9C8540B522E8F0790074E349 /* ScriptModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptModule.swift; sourceTree = "<group>"; };
+		9C8540B922E8F3660074E349 /* InputModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputModule.swift; sourceTree = "<group>"; };
+		9C8540BD22E8F4310074E349 /* ScriptWorkspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptWorkspace.swift; sourceTree = "<group>"; };
+		9C8540C122E8F9F20074E349 /* ScriptAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptAction.swift; sourceTree = "<group>"; };
 		9C86CF0122C15A660035A8FA /* IntValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntValue.swift; sourceTree = "<group>"; };
 		9C8DD75622E3EEC400FF56C1 /* Attachment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Attachment.storyboard; sourceTree = "<group>"; };
 		9C8FD8D72216302900F16669 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -716,14 +744,6 @@
 			path = merge;
 			sourceTree = "<group>";
 		};
-		9C2AE510220A028000AE8BEE /* bunch */ = {
-			isa = PBXGroup;
-			children = (
-				9C2AE51D220A1ED700AE8BEE /* BunchOfNotes.swift */,
-			);
-			path = bunch;
-			sourceTree = "<group>";
-		};
 		9C3BDF41229D9A5200E0DA89 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -731,6 +751,19 @@
 				9C3BDF48229D9A5200E0DA89 /* DownTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9C4C1BAE22E7EE0A005997DF /* script */ = {
+			isa = PBXGroup;
+			children = (
+				9C8540B922E8F3660074E349 /* InputModule.swift */,
+				9C8540C122E8F9F20074E349 /* ScriptAction.swift */,
+				9C8540B122E8F0330074E349 /* ScriptCommand.swift */,
+				9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */,
+				9C8540B522E8F0790074E349 /* ScriptModule.swift */,
+				9C8540BD22E8F4310074E349 /* ScriptWorkspace.swift */,
+			);
+			path = script;
 			sourceTree = "<group>";
 		};
 		9C60E6C521F64B3B00C332ED = {
@@ -782,7 +815,6 @@
 				9C09E1752248601D0046D50D /* notenik.iconset */,
 				9C60E6DB21F64B3C00C332ED /* Notenik.entitlements */,
 				9C1E0C8D22E4F7780025C99C /* attachments */,
-				9C2AE510220A028000AE8BEE /* bunch */,
 				9CF1193522581ABE0015AE91 /* collectionPrefs */,
 				9CC78E672283560F00640477 /* displayPrefs */,
 				9CAD6A5422DFA95D00531D90 /* export */,
@@ -792,6 +824,7 @@
 				9C60E71B21F651E500C332ED /* model */,
 				9CF1192C2257FD170015AE91 /* modifchanged */,
 				9C832A00224ABDBD007DA6FC /* prefs */,
+				9C4C1BAE22E7EE0A005997DF /* script */,
 				9CB60BBE22650975003B5655 /* share */,
 				9CB06CB522CCF4A200887778 /* tags */,
 				9CD82F612211E29E002314E4 /* textio */,
@@ -883,11 +916,11 @@
 				9C60E71C21F651E500C332ED /* FieldLabel.swift */,
 				9C60E73C21F651E500C332ED /* FieldType.swift */,
 				9C60E73221F651E500C332ED /* LabelConstants.swift */,
+				9C60E73921F651E500C332ED /* Note.swift */,
 				9C60E73A21F651E500C332ED /* NoteCollection.swift */,
 				9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */,
 				9C60E73B21F651E500C332ED /* NoteIDRule.swift */,
 				9C60E71D21F651E500C332ED /* NoteField.swift */,
-				9C60E73921F651E500C332ED /* Note.swift */,
 				9CD82F6A2211EDC2002314E4 /* NoteLineMaker.swift */,
 				9C60E73721F651E500C332ED /* NoteLineParser.swift */,
 				9C60E73D21F651E500C332ED /* NotePosition.swift */,
@@ -930,10 +963,12 @@
 			isa = PBXGroup;
 			children = (
 				9CCC5E9D228F0B5500FA6B5C /* BunchIO.swift */,
+				9C2AE51D220A1ED700AE8BEE /* BunchOfNotes.swift */,
+				9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */,
 				9C60E79F21F6520100C332ED /* FileIO.swift */,
 				9C60E71E21F651E500C332ED /* NotenikIO.swift */,
-				9C060686228E0A9300CB8C10 /* RealmIO.swift */,
-				9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */,
+				9C8540AD22E8D78B0074E349 /* NotesList.swift */,
+				9C060686228E0A9300CB8C10 /* RealmScanner.swift */,
 			);
 			path = io;
 			sourceTree = "<group>";
@@ -1300,6 +1335,7 @@
 				9C97C1B02278F46100A43913 /* CollectionRequestType.swift in Sources */,
 				9C60E70521F650B800C332ED /* DateUtils.swift in Sources */,
 				9C60E76521F651E500C332ED /* RatingValue.swift in Sources */,
+				9C8540BA22E8F3660074E349 /* InputModule.swift in Sources */,
 				9C60E78C21F651E500C332ED /* FieldDictionary.swift in Sources */,
 				9C551C8E22A3459C009BA329 /* LogEvent.swift in Sources */,
 				9C79BDB0226E368800796E93 /* LabelView.swift in Sources */,
@@ -1309,7 +1345,7 @@
 				9C1E0C9222E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
-				9C060687228E0A9300CB8C10 /* RealmIO.swift in Sources */,
+				9C060687228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
 				9C60E75321F651E500C332ED /* Provider.swift in Sources */,
@@ -1323,6 +1359,7 @@
 				9C60E76E21F651E500C332ED /* LongTextValue.swift in Sources */,
 				9C60E71521F6518400C332ED /* LogLevel.swift in Sources */,
 				9C822BA222D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */,
+				9C8540C222E8F9F20074E349 /* ScriptAction.swift in Sources */,
 				9CCFD62822AEDA5C00C64D37 /* StringConverter.swift in Sources */,
 				9CD82F632211E456002314E4 /* LineWriter.swift in Sources */,
 				9CAD6A4F22DF9ACD00531D90 /* PrefsTabViewController.swift in Sources */,
@@ -1367,6 +1404,7 @@
 				9C60E74421F651E500C332ED /* NotenikIO.swift in Sources */,
 				9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */,
 				9C1CB85B22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */,
+				9C8540BE22E8F4310074E349 /* ScriptWorkspace.swift in Sources */,
 				9C60E74121F651E500C332ED /* NoteField.swift in Sources */,
 				9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */,
 				9C60E77D21F651E500C332ED /* LabelConstants.swift in Sources */,
@@ -1374,6 +1412,8 @@
 				9C60E79521F651E500C332ED /* NoteIDRule.swift in Sources */,
 				9C2AE51E220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9CE9C98222A6134A008D2B0A /* Template.swift in Sources */,
+				9C8540B222E8F0330074E349 /* ScriptCommand.swift in Sources */,
+				9C4C1BB022E7EE61005997DF /* ScriptEngine.swift in Sources */,
 				9CB06CBA22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */,
 				9C60E77121F651E500C332ED /* LinkValue.swift in Sources */,
 				9C25E00322D787260062E282 /* TagsPickList.swift in Sources */,
@@ -1398,6 +1438,8 @@
 				9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */,
 				9C60E74721F651E500C332ED /* ProviderType.swift in Sources */,
 				9CA80797229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
+				9C8540B622E8F0790074E349 /* ScriptModule.swift in Sources */,
+				9C8540AE22E8D78B0074E349 /* NotesList.swift in Sources */,
 				9CB60BC622651074003B5655 /* ShareViewController.swift in Sources */,
 				9C60E78621F651E500C332ED /* BigStringReader.swift in Sources */,
 				9CCFEE752270F52200F472C5 /* RowConsumer.swift in Sources */,
@@ -1441,8 +1483,10 @@
 				9C60E79321F651E500C332ED /* NoteCollection.swift in Sources */,
 				9CAD6A5722DFA9C200531D90 /* NotesExporter.swift in Sources */,
 				9C1CB85C22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */,
+				9C8540B322E8F0330074E349 /* ScriptCommand.swift in Sources */,
 				9CA420F722C2A67D00EEE065 /* TemplateComparisonOperator.swift in Sources */,
 				9C60E7C121F6525F00C332ED /* TitleValueTests.swift in Sources */,
+				9C8540AF22E8D78B0074E349 /* NotesList.swift in Sources */,
 				9C60E7BB21F6525F00C332ED /* LongTextValueTests.swift in Sources */,
 				9C2A35C222A1D164009C868E /* MergeActionModifier.swift in Sources */,
 				9C60E74521F651E500C332ED /* NotenikIO.swift in Sources */,
@@ -1460,6 +1504,7 @@
 				9C60E77B21F651E500C332ED /* FieldDefinition.swift in Sources */,
 				9C60E71321F6518400C332ED /* Logger.swift in Sources */,
 				9C60E78121F651E500C332ED /* NoteType.swift in Sources */,
+				9C8540B722E8F0790074E349 /* ScriptModule.swift in Sources */,
 				9C60E7BD21F6525F00C332ED /* DateUtilsTests.swift in Sources */,
 				9CF3DE4D22A6F5330078A6B0 /* MergeReport.swift in Sources */,
 				9C60E74221F651E500C332ED /* NoteField.swift in Sources */,
@@ -1471,9 +1516,11 @@
 				9C60E7C321F6525F00C332ED /* LineParserTests.swift in Sources */,
 				9C60E73F21F651E500C332ED /* FieldLabel.swift in Sources */,
 				9C60E7B721F6525F00C332ED /* FileUtilsTests.swift in Sources */,
+				9C8540C322E8F9F20074E349 /* ScriptAction.swift in Sources */,
 				9CCC5E9F228F0B5500FA6B5C /* BunchIO.swift in Sources */,
 				9C60E75121F651E500C332ED /* NoteSortParm.swift in Sources */,
 				9C25E00122D786770062E282 /* ValuePickLists.swift in Sources */,
+				9C8540BB22E8F3660074E349 /* InputModule.swift in Sources */,
 				9C60E7BC21F6525F00C332ED /* AuthorValueTests.swift in Sources */,
 				9C96BAA1227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9CD82F682211E4BA002314E4 /* BigStringWriter.swift in Sources */,
@@ -1500,6 +1547,7 @@
 				9CE2170F22A9BC6000EE656C /* LineWithBreak.swift in Sources */,
 				9C60E79021F651E500C332ED /* Note.swift in Sources */,
 				9C12D49022134970003136B2 /* NoteSelectionSource.swift in Sources */,
+				9C8540BF22E8F4310074E349 /* ScriptWorkspace.swift in Sources */,
 				9C60E7C021F6525F00C332ED /* StatusValueTests.swift in Sources */,
 				9C60E76321F651E500C332ED /* DateValue.swift in Sources */,
 				9C551C8F22A3459C009BA329 /* LogEvent.swift in Sources */,
@@ -1531,11 +1579,12 @@
 				9CF11933225802AA0015AE91 /* ModView.swift in Sources */,
 				9C2A35B722A19A0B009C868E /* MergeScripterTests.swift in Sources */,
 				9C60E79621F651E500C332ED /* NoteIDRule.swift in Sources */,
+				9C4C1BB122E7EE61005997DF /* ScriptEngine.swift in Sources */,
 				9CB06CBB22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */,
 				9C2A35B422A19715009C868E /* MergeScripter.swift in Sources */,
 				9C60E77521F651E500C332ED /* TagsValue.swift in Sources */,
 				9C60E74821F651E500C332ED /* ProviderType.swift in Sources */,
-				9C060688228E0A9300CB8C10 /* RealmIO.swift in Sources */,
+				9C060688228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
 				9C60E7C221F6525F00C332ED /* SeqValueTests.swift in Sources */,
 				9C60E7C521F6525F00C332ED /* StringUtilsTests.swift in Sources */,
 				9C60E7BF21F6525F00C332ED /* StatusValueConfigTests.swift in Sources */,
@@ -1569,6 +1618,7 @@
 				9C5556D822E11E3B0099414E /* ExportWindowController.swift in Sources */,
 				9C60E78521F651E500C332ED /* LineReader.swift in Sources */,
 				9C97C1B12278F46100A43913 /* CollectionRequestType.swift in Sources */,
+				9C8540B822E8F0790074E349 /* ScriptModule.swift in Sources */,
 				9C60E78821F651E500C332ED /* BigStringReader.swift in Sources */,
 				9C78888C21FB950900452D74 /* Markedup.swift in Sources */,
 				9CF1193F225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
@@ -1598,6 +1648,8 @@
 				9C2A35B122A17226009C868E /* MergeAction.swift in Sources */,
 				9CC0F5AA227629C4002683F8 /* BooleanValue.swift in Sources */,
 				9C2AE527220A34CC00AE8BEE /* NoteListViewController.swift in Sources */,
+				9C8540BC22E8F3660074E349 /* InputModule.swift in Sources */,
+				9C8540B022E8D78B0074E349 /* NotesList.swift in Sources */,
 				9C832A04224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
 				9CFCB047226BC7FF00443FFA /* DateView.swift in Sources */,
 				9C60E74321F651E500C332ED /* NoteField.swift in Sources */,
@@ -1621,6 +1673,7 @@
 				9C25DFFD22D7824B0062E282 /* ValuePickLists.swift in Sources */,
 				9C822BA322D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */,
 				9C60E74C21F651E500C332ED /* Realm.swift in Sources */,
+				9C8540B422E8F0330074E349 /* ScriptCommand.swift in Sources */,
 				9CF119302257FDD50015AE91 /* ModWhenChanged.swift in Sources */,
 				9C559D7222E67F940014019C /* AttachmentName.swift in Sources */,
 				9C78888821FB826100452D74 /* MarkedupFormat.swift in Sources */,
@@ -1639,6 +1692,7 @@
 				9C60E79121F651E500C332ED /* Note.swift in Sources */,
 				9C553C622266A0D50008D176 /* StatusView.swift in Sources */,
 				9C2AE51C220A044800AE8BEE /* TagsNodeType.swift in Sources */,
+				9C8540C022E8F4310074E349 /* ScriptWorkspace.swift in Sources */,
 				9CCFEE732270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
 				9CFCB04B226BE71500443FFA /* SimpleDate.swift in Sources */,
 				9C60E76421F651E500C332ED /* DateValue.swift in Sources */,
@@ -1654,6 +1708,7 @@
 				9C29DD2A226286A100928180 /* CollectionWindow.swift in Sources */,
 				9CE2170922A95EB300EE656C /* TemplateCommand.swift in Sources */,
 				9C60E79D21F651E500C332ED /* NotePosition.swift in Sources */,
+				9C4C1BB222E7EE61005997DF /* ScriptEngine.swift in Sources */,
 				9C2A35BF22A1CC80009C868E /* MergeActionVerb.swift in Sources */,
 				9CAD6A5C22DFBEEB00531D90 /* NoteFormat.swift in Sources */,
 				9CB60BC422650A89003B5655 /* ShareWindowController.swift in Sources */,
@@ -1674,9 +1729,10 @@
 				9CCFEE772270F52200F472C5 /* RowConsumer.swift in Sources */,
 				9CAD6A4A22DF806800531D90 /* TagsExportViewController.swift in Sources */,
 				9C60E79721F651E500C332ED /* NoteIDRule.swift in Sources */,
-				9C060689228E0A9300CB8C10 /* RealmIO.swift in Sources */,
+				9C060689228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
 				9CD82F652211E456002314E4 /* LineWriter.swift in Sources */,
 				9C60E77621F651E500C332ED /* TagsValue.swift in Sources */,
+				9C8540C422E8F9F20074E349 /* ScriptAction.swift in Sources */,
 				9C60E74921F651E500C332ED /* ProviderType.swift in Sources */,
 				9C27293822DE359700E21E73 /* TagsPickList.swift in Sources */,
 				9CE32508224D561E0051CA1F /* PrefsWindowController.swift in Sources */,

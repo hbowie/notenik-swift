@@ -984,8 +984,11 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             }
         }
         
-        if noteIO.collection!.isRealmCollection || urlPointsToCollection {
+        if urlPointsToCollection {
             juggler.openFileWithNewWindow(fileURL: url, readOnly: false)
+        } else if url.isFileURL && url.lastPathComponent.hasSuffix(ScriptEngine.scriptExt){
+            let scripter = ScriptEngine()
+            scripter.playScript(fileURL: url)
         } else {
             NSWorkspace.shared.open(url)
         }
