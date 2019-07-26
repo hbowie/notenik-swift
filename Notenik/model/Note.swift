@@ -119,11 +119,47 @@ class Note: Comparable, NSCopying {
     }
     
     static func < (lhs: Note, rhs: Note) -> Bool {
-        return lhs.sortKey < rhs.sortKey
+        if lhs.collection.sortParm == .custom {
+            return compareCustomFields(lhs: lhs, rhs: rhs) < 0
+        } else {
+            return lhs.sortKey < rhs.sortKey
+        }
     }
     
     static func == (lhs: Note, rhs: Note) -> Bool {
-        return lhs.sortKey == rhs.sortKey
+        if lhs.collection.sortParm == .custom {
+            return compareCustomFields(lhs: lhs, rhs: rhs) == 0
+        } else {
+            return lhs.sortKey == rhs.sortKey
+        }
+    }
+    
+    static func compareCustomFields(lhs: Note, rhs: Note) -> Int {
+        var result = 0
+        var index = 0
+        while index < lhs.collection.customFields.count && result == 0 {
+            let sortField = lhs.collection.customFields[index]
+            let def = sortField.field
+            let field1 = lhs.getField(def: def)
+            var value1 = StringValue()
+            if field1 != nil {
+                value1 = field1!.value
+            }
+            let field2 = rhs.getField(def: def)
+            var value2 = StringValue()
+            if field2 != nil {
+                value2 = field2!.value
+            }
+            if value1 < value2 {
+                result = sortField.ascending ? -1 :  1
+            } else if value1 > value2 {
+                result = sortField.ascending ?  1 : -1
+            } else {
+                index += 1
+            }
+        }
+
+        return result
     }
     
     /// Make a copy of this Note
@@ -404,6 +440,17 @@ class Note: Comparable, NSCopying {
             return (author.sortKey
                 + date.sortKey
                 + title.sortKey)
+        case .custom:
+            var key = ""
+            for sortField in collection.customFields {
+                let def = sortField.field
+                let field = getField(def: def)
+                if field != nil {
+                    let value = field!.value
+                    key.append(value.sortKey)
+                }
+            }
+            return key
         }
     }
     

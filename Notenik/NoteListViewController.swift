@@ -135,6 +135,9 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
             addAuthorColumn(at: 0)
             addTitleColumn(at: 1)
             trimColumns(to: 2)
+        case .custom:
+            addTitleColumn(at: 0)
+            trimColumns(to: 1)
         }
         tableView.reloadData()
     }

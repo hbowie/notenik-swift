@@ -16,4 +16,5 @@ enum ScriptModule: String {
     case comment = "<!--"
     case input   = "input"
     case filter  = "filter"
+    case sort    = "sort"
 }

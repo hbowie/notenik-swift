@@ -20,6 +20,9 @@ class ScriptEngine: RowConsumer {
     var reader: DelimitedReader!
     var rowsRead = 0
     var command = ScriptCommand()
+    var logLine = ""
+    var pendingErrors = ""
+    var consumingFields = true
     
     /// Play a Script from a CSV or tab-delimited file
     ///
@@ -29,6 +32,7 @@ class ScriptEngine: RowConsumer {
         logInfo("Starting to play script located at \(fileURL.path)")
         workspace = ScriptWorkspace()
         workspace.scriptIn = fileURL
+        workspace.writeLineToLog("Starting to play script located at \(fileURL.path)")
         rowsRead = 0
         reader = DelimitedReader(consumer: self)
         reader.read(fileURL: fileURL)
@@ -46,20 +50,29 @@ class ScriptEngine: RowConsumer {
         let valueLower = value.lowercased()
         switch labelLower {
         case "module":
+            logLine.append(value)
             let module = ScriptModule(rawValue: valueLower)
             if module != nil {
                 command.module = module!
+            } else {
+                logError("Module value of '\(value)' is not recognized")
             }
         case "action":
+            logLine.append("," + value)
             let action = ScriptAction(rawValue: valueLower)
             if action != nil {
                 command.action = action!
+            } else {
+                logError("Action value of '\(value)' is not recognized")
             }
         case "modifier":
+            logLine.append("," + value)
             command.modifier = value
         case "object":
+            logLine.append("," + value)
             command.object = value
         case "value":
+            logLine.append("," + value)
             command.value = value
             if value.hasPrefix("#PATH#") {
                 let scriptFileName = FileName(workspace.scriptIn!)
@@ -70,7 +83,7 @@ class ScriptEngine: RowConsumer {
                 command.valueWithPathResolved = value
             }
         default:
-            logError("Column heading of \(label) not recognized as valid within a script file")
+            logError("Column heading of '\(label)' not recognized as valid within a script file")
         }
     }
     
@@ -81,6 +94,10 @@ class ScriptEngine: RowConsumer {
     ///   - fields: A corresponding array of field values.
     func consumeRow(labels: [String], fields: [String]) {
         rowsRead += 1
+        workspace.writeLineToLog(logLine)
+        workspace.scriptLog.append(pendingErrors)
+        pendingErrors = ""
+        consumingFields = false
         switch command.module {
         case .input:
             let input = InputModule()
@@ -88,11 +105,15 @@ class ScriptEngine: RowConsumer {
         case .filter:
             let filter = FilterModule()
             filter.playCommand(workspace: workspace, command: command)
+        case .sort:
+            let sorter = SortModule()
+            sorter.playCommand(workspace: workspace, command: command)
         default:
             break
         }
         command = ScriptCommand()
-        print(" ")
+        logLine = ""
+        consumingFields = true
     }
     
     /// Send an informative message to the log.
@@ -109,7 +130,11 @@ class ScriptEngine: RowConsumer {
                           category: "ScriptEngine",
                           level: .error,
                           message: msg)
-        
+        if consumingFields {
+            pendingErrors.append(workspace.formatError(msg) + "\n")
+        } else {
+            workspace.writeErrorToLog(msg)
+        }
     }
 
 }

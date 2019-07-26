@@ -26,6 +26,7 @@ class NoteCollection {
     var preferredExt : String = "txt"
     var otherFields  = false
     var readOnly     : Bool = false
+    var customFields : [SortField] = []
     
     ///Is this collection a collection of collections within a parent realm?
     var isRealmCollection = false

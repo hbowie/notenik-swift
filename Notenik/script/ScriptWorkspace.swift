@@ -16,8 +16,26 @@ class ScriptWorkspace {
     
     var scriptIn:     URL?
     var collection  = NoteCollection()
+    
     var list        = NotesList()
     var fullList    = NotesList()
+    
     var pendingRules: [FilterRule] = []
     var currentRules: [FilterRule] = []
+    
+    var pendingFields: [SortField] = []
+    
+    var scriptLog   = ""
+    
+    func writeErrorToLog(_ msg: String) {
+        writeLineToLog(formatError(msg))
+    }
+    
+    func formatError(_ msg: String) -> String {
+        return "  ## ERROR: " + msg
+    }
+    
+    func writeLineToLog(_ line: String) {
+        scriptLog.append(line + "\n")
+    }
 }
