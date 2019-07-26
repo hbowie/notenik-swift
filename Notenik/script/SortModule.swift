@@ -29,6 +29,8 @@ class SortModule {
         case .set:
             if command.object == "params" {
                 setParams()
+            } else {
+                logError("Object value of '\(command.object)' not valid for Sort Set command")
             }
         default:
             break
@@ -55,4 +57,21 @@ class SortModule {
         workspace.list.sort()
     }
 
+    /// Send an informative message to the log.
+    func logInfo(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "SortModule",
+                          level: .info,
+                          message: msg)
+        workspace.writeLineToLog(msg)
+    }
+    
+    /// Send an error message to the log.
+    func logError(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "SortModule",
+                          level: .error,
+                          message: msg)
+        workspace.writeErrorToLog(msg)
+    }
 }
