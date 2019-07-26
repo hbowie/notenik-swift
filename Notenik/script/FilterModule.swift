@@ -30,6 +30,8 @@ class FilterModule {
         case .set:
             if command.object == "params" {
                 setParams()
+            } else {
+                workspace.writeErrorToLog("Object value of '\(command.object)' is not valid for filter set command")
             }
         default:
             break
@@ -73,6 +75,7 @@ class FilterModule {
                           category: "FilterModule",
                           level: .info,
                           message: msg)
+        workspace.writeLineToLog(msg)
     }
     
     /// Send an error message to the log.
@@ -81,6 +84,6 @@ class FilterModule {
                           category: "FilterModule",
                           level: .error,
                           message: msg)
-        
+        workspace.writeErrorToLog(msg)
     }
 }

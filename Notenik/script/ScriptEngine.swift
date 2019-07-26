@@ -94,7 +94,7 @@ class ScriptEngine: RowConsumer {
     ///   - fields: A corresponding array of field values.
     func consumeRow(labels: [String], fields: [String]) {
         rowsRead += 1
-        workspace.writeLineToLog(logLine)
+        workspace.writeLineToLog("Playing Script Command: " + logLine)
         workspace.scriptLog.append(pendingErrors)
         pendingErrors = ""
         consumingFields = false

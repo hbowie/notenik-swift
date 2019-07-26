@@ -88,6 +88,7 @@ class InputModule: RowConsumer {
                           category: "InputModule",
                           level: .info,
                           message: msg)
+        workspace.writeLineToLog(msg)
     }
     
     /// Send an error message to the log.
@@ -96,6 +97,6 @@ class InputModule: RowConsumer {
                           category: "InputModule",
                           level: .error,
                           message: msg)
-        
+        workspace.writeErrorToLog(msg)
     }
 }
