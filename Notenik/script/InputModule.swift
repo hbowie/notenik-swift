@@ -16,7 +16,6 @@ class InputModule: RowConsumer {
     
     var workspace = ScriptWorkspace()
     var command = ScriptCommand()
-    var openURL = URL(fileURLWithPath: "")
     var note: Note!
     var notesInput = 0
     var normalization = "0"
@@ -31,7 +30,7 @@ class InputModule: RowConsumer {
         self.command = command
         switch command.action {
         case .open:
-            openURL = URL(fileURLWithPath: command.valueWithPathResolved)
+            workspace.inputURL = URL(fileURLWithPath: command.valueWithPathResolved)
             openFile()
         case .set:
             set()
@@ -57,8 +56,8 @@ class InputModule: RowConsumer {
         workspace.collection = NoteCollection()
         note = Note(collection: workspace.collection)
         let reader = DelimitedReader(consumer: self)
-        reader.read(fileURL: openURL)
-        logInfo("\(notesInput) rows read from \(openURL.path)")
+        reader.read(fileURL: workspace.inputURL!)
+        logInfo("\(notesInput) rows read from \(workspace.inputURL!.path)")
         workspace.fullList = workspace.list
     }
     

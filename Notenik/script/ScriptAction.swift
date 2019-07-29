@@ -12,9 +12,9 @@
 import Foundation
 
 enum ScriptAction: String {
-    case blank = ""
-    case add   = "add"
-    case open  = "open"
-    case set   = "set"
-    
+    case blank    = ""
+    case add      = "add"
+    case generate = "generate"
+    case open     = "open"
+    case set      = "set"
 }

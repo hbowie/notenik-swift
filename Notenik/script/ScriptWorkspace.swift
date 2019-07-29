@@ -17,6 +17,8 @@ class ScriptWorkspace {
     var scriptIn:     URL?
     var collection  = NoteCollection()
     
+    var inputURL:     URL?
+    
     var list        = NotesList()
     var fullList    = NotesList()
     
@@ -24,6 +26,8 @@ class ScriptWorkspace {
     var currentRules: [FilterRule] = []
     
     var pendingFields: [SortField] = []
+    
+    var template = Template()
     
     var scriptLog   = ""
     

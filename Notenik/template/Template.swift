@@ -16,7 +16,8 @@ import Foundation
 class Template {
     
     var util = TemplateUtil()
-    var io: NotenikIO = BunchIO()
+    var notesList = NotesList()
+    var collection = NoteCollection()
     
     var loopLines        = [TemplateLine]()
     var outerLinesBefore = [TemplateLine]()
@@ -39,11 +40,12 @@ class Template {
     
     /// Supply the Notenik data to be used with the template.
     ///
-    /// - Parameter io: The NotenikIO module to be used, providing access to the data.
-    func supplyData(io: NotenikIO) {
-        self.io = io
-        guard io.collection != nil && io.collectionOpen else { return }
-        util.dataFileName = FileName(io.collection!.collectionFullPath)
+    /// - Parameters:
+    ///   - notesList: The list of Notes to be used.
+    ///   - dataSource: A path identifying the source of the notes.
+    func supplyData(notesList: NotesList, dataSource: String) {
+        self.notesList = notesList
+        util.dataFileName = FileName(dataSource)
     }
     
     /// Merge the supplied data with the template to generate output.
@@ -52,7 +54,11 @@ class Template {
     func generateOutput() -> Bool {
         
         guard util.templateOK else { return false }
-        guard io.collectionOpen else { return false }
+        if notesList.count > 0 {
+            collection = notesList[0].collection
+        } else {
+            collection = NoteCollection()
+        }
         
         loopLines = []
         outerLinesBefore = []
@@ -63,7 +69,7 @@ class Template {
         util.skippingData = false
         util.outputStage = .front
         var line = util.nextTemplateLine()
-        let emptyNote = Note(collection: io.collection!)
+        let emptyNote = Note(collection: collection)
         while line != nil {
             if util.outputStage == .front {
                 line!.generateOutput(note: emptyNote)
@@ -90,13 +96,11 @@ class Template {
     /// between the nextrec and loop commands. 
     func processLoop() {
         
-        var (note, position) = io.firstNote()
-        while note != nil {
+        for note in notesList {
             util.resetGroupBreaks()
             for line in loopLines {
-                line.generateOutput(note: note!)
+                line.generateOutput(note: note)
             }
-            (note, position) = io.nextNote(position)
         }
     }
 }

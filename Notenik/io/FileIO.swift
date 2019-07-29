@@ -50,6 +50,14 @@ class FileIO: NotenikIO, RowConsumer {
     var notesImported  = 0
     var noteToImport:    Note?
     
+    var notesList: NotesList {
+        if bunch != nil {
+            return bunch!.notesList
+        } else {
+            return NotesList()
+        }
+    }
+    
     /// The position of the selected note, if any, in the current collection
     var position:   NotePosition? {
         if !collectionOpen || collection == nil || bunch == nil {

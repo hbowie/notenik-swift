@@ -34,6 +34,9 @@
 		9C1BE27222EB940E006FDFEC /* ScriptWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1BE27022EB940E006FDFEC /* ScriptWindowController.swift */; };
 		9C1BE27422EB9444006FDFEC /* ScriptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1BE27322EB9444006FDFEC /* ScriptViewController.swift */; };
 		9C1BE27522EB9444006FDFEC /* ScriptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1BE27322EB9444006FDFEC /* ScriptViewController.swift */; };
+		9C1C761222EDE1A8002B97DA /* TemplateModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C761122EDE1A8002B97DA /* TemplateModule.swift */; };
+		9C1C761322EDE1A8002B97DA /* TemplateModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C761122EDE1A8002B97DA /* TemplateModule.swift */; };
+		9C1C761422EDE1A8002B97DA /* TemplateModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1C761122EDE1A8002B97DA /* TemplateModule.swift */; };
 		9C1CB85B22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */; };
 		9C1CB85C22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */; };
 		9C1CB85D22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */; };
@@ -527,6 +530,7 @@
 		9C1BE26A22EB9164006FDFEC /* Script.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Script.storyboard; sourceTree = "<group>"; };
 		9C1BE27022EB940E006FDFEC /* ScriptWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptWindowController.swift; sourceTree = "<group>"; };
 		9C1BE27322EB9444006FDFEC /* ScriptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptViewController.swift; sourceTree = "<group>"; };
+		9C1C761122EDE1A8002B97DA /* TemplateModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateModule.swift; sourceTree = "<group>"; };
 		9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesToHTML.swift; sourceTree = "<group>"; };
 		9C1E0C9122E4F7D00025C99C /* AttachmentWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentWindowController.swift; sourceTree = "<group>"; };
 		9C1E0C9422E4F7FA0025C99C /* AttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentViewController.swift; sourceTree = "<group>"; };
@@ -794,6 +798,7 @@
 				9C8540BD22E8F4310074E349 /* ScriptWorkspace.swift */,
 				9C9A6BAD22EA5FBC00E1F127 /* SortField.swift */,
 				9C9A6BB422EA603700E1F127 /* SortModule.swift */,
+				9C1C761122EDE1A8002B97DA /* TemplateModule.swift */,
 			);
 			path = script;
 			sourceTree = "<group>";
@@ -1489,6 +1494,7 @@
 				9C822B9D22D6D5D6008EF106 /* TagsView.swift in Sources */,
 				9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */,
 				9C67248522EA1B2D00CB7D39 /* FilterModule.swift in Sources */,
+				9C1C761222EDE1A8002B97DA /* TemplateModule.swift in Sources */,
 				9C02D2B62267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9C5556DA22E132EC0099414E /* ExportViewController.swift in Sources */,
 				9C832A02224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
@@ -1613,6 +1619,7 @@
 				9C86CF0322C15A660035A8FA /* IntValue.swift in Sources */,
 				9C60E7A121F6520100C332ED /* FileIO.swift in Sources */,
 				9C60E75721F651E500C332ED /* StringValue.swift in Sources */,
+				9C1C761322EDE1A8002B97DA /* TemplateModule.swift in Sources */,
 				9C832A03224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
 				9C60E75A21F651E500C332ED /* SeqValue.swift in Sources */,
 				9CCFEE722270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
@@ -1721,6 +1728,7 @@
 				9C822BA322D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */,
 				9C60E74C21F651E500C332ED /* Realm.swift in Sources */,
 				9C8540B422E8F0330074E349 /* ScriptCommand.swift in Sources */,
+				9C1C761422EDE1A8002B97DA /* TemplateModule.swift in Sources */,
 				9CF119302257FDD50015AE91 /* ModWhenChanged.swift in Sources */,
 				9C559D7222E67F940014019C /* AttachmentName.swift in Sources */,
 				9C1BE27222EB940E006FDFEC /* ScriptWindowController.swift in Sources */,

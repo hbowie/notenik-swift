@@ -28,6 +28,14 @@ class BunchIO: NotenikIO, RowConsumer  {
     
     var bunch          : BunchOfNotes?
     
+    var notesList: NotesList {
+        if bunch != nil {
+            return bunch!.notesList
+        } else {
+            return NotesList()
+        }
+    }
+    
     var notePosition   = NotePosition(index: -1)
     
     var notesImported  = 0

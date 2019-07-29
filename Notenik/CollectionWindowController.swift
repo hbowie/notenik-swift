@@ -153,7 +153,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                     let templateURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
                     var ok = template.openTemplate(templateURL: templateURL!)
                     if ok {
-                        template.supplyData(io: noteIO)
+                        template.supplyData(notesList: noteIO.notesList, 
+                                            dataSource: noteIO.collection!.collectionFullPath)
                         ok = template.generateOutput()
                     }
                 }

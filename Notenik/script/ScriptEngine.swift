@@ -108,6 +108,9 @@ class ScriptEngine: RowConsumer {
         case .sort:
             let sorter = SortModule()
             sorter.playCommand(workspace: workspace, command: command)
+        case .template:
+            let template = TemplateModule()
+            template.playCommand(workspace: workspace, command: command)
         default:
             break
         }

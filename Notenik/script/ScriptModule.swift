@@ -12,9 +12,10 @@
 import Foundation
 
 enum ScriptModule: String {
-    case blank   = ""
-    case comment = "<!--"
-    case input   = "input"
-    case filter  = "filter"
-    case sort    = "sort"
+    case blank    = ""
+    case comment  = "<!--"
+    case input    = "input"
+    case filter   = "filter"
+    case sort     = "sort"
+    case template = "template"
 }
