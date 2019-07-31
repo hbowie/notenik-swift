@@ -27,6 +27,8 @@ class FilterModule {
         switch command.action {
         case .add:
             addFilter()
+        case .clear:
+            clear()
         case .set:
             if command.object == "params" {
                 setParams()
@@ -45,6 +47,10 @@ class FilterModule {
                                    to: command.value)
         workspace.pendingRules.append(newRule)
         newRule.logRule()
+    }
+    
+    func clear() {
+        workspace.pendingRules = []
     }
     
     func setParams() {

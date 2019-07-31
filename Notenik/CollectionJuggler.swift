@@ -27,6 +27,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     let logStoryboard:   NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
     
+    let scriptStoryboard: NSStoryboard = NSStoryboard(name: "Script", bundle: nil)
+    var scriptController: ScriptWindowController?
+    
     let osdir = OpenSaveDirectory.shared
     let essentialURLKey = "essential-collection"
     var essentialURL: URL?
@@ -492,6 +495,54 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
         defaults.set(collectionURL, forKey: lastURLKey)
         self.osdir.lastParentFolder = collectionURL.deletingLastPathComponent()
+    }
+    
+    func scriptOpen() {
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Select a Script File to be Played"
+        openPanel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.allowsMultipleSelection = false
+        openPanel.begin { (result) -> Void  in
+            if result == .OK {
+                self.launchScript(fileURL: openPanel.url!)
+            }
+        }
+    }
+    
+    func launchScript(fileURL: URL) {
+        ensureScriptController()
+        guard scriptController != nil else { return }
+        scriptController!.setScriptURL(fileURL)
+        scriptController!.showWindow(self)
+    }
+    
+    func ensureScriptController() {
+        scriptController = self.scriptStoryboard.instantiateController(withIdentifier: "scriptWC") as? ScriptWindowController
+        if scriptController == nil {
+            communicateError("Couldn't get a Script Window Controller")
+        }
+    }
+    
+    /// Log an error message and optionally display an alert message.
+    func communicateError(_ msg: String, alert: Bool=false) {
+        
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionJuggler",
+                          level: .error,
+                          message: msg)
+        
+        if alert {
+            let dialog = NSAlert()
+            dialog.alertStyle = .warning
+            dialog.messageText = msg
+            dialog.addButton(withTitle: "OK")
+            let _ = dialog.runModal()
+        }
     }
 
 }

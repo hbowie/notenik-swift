@@ -67,6 +67,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         juggler.openParentRealm()
     }
     
+    @IBAction func scriptPlay(_ sender: Any) {
+        juggler.scriptOpen()
+    }
+    
     @IBAction func viewIncreaseEditFontSize(_ sender: Any) {
         juggler.viewIncreaseEditFontSize()
     }

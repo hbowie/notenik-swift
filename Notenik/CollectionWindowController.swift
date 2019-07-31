@@ -36,7 +36,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     let displayPrefsStoryboard:    NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
     let exportStoryboard:          NSStoryboard = NSStoryboard(name: "Export", bundle: nil)
     let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
-    let scriptStoryboard:          NSStoryboard = NSStoryboard(name: "Script", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -997,18 +996,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     }
     
     func launchScript(fileURL: URL) {
-                
-        if let scriptController = self.scriptStoryboard.instantiateController(withIdentifier: "scriptWC") as? ScriptWindowController {
-            scriptController.setScriptURL(fileURL)
-            // attachmentController.io = noteIO
-            // attachmentController.vc.master = self
-            // attachmentController.vc.setFileToCopy(urlToAttach)
-            // attachmentController.vc.setStorageFolder(filesFolderPath)
-            // attachmentController.vc.setNote(selNote)
-            scriptController.showWindow(self)
-        } else {
-            communicateError("Couldn't get a Script Window Controller")
-        }
+        juggler.launchScript(fileURL: fileURL)
     }
     
     @IBAction func reloadDisplayView(_ sender: Any) {

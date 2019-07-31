@@ -14,6 +14,7 @@ import Foundation
 enum ScriptAction: String {
     case blank    = ""
     case add      = "add"
+    case clear    = "clear"
     case generate = "generate"
     case open     = "open"
     case set      = "set"
