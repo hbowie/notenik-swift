@@ -59,12 +59,16 @@ class FilterModule {
         for note in workspace.fullList {
             var selected = true
             for rule in workspace.currentRules {
-                let field = note.getField(def: rule.field)
+                var field = note.getField(def: rule.field)
+                if field == nil {
+                    field = NoteField(def: rule.field, value: "", statusConfig: workspace.collection.statusConfig)
+                }
+                var passed = false
                 if field != nil {
-                    let passed = rule.op.compare(field!.value, rule.to)
-                    if !passed {
-                        selected = false
-                    }
+                    passed = rule.op.compare(field!.value, rule.to)
+                }
+                if !passed {
+                    selected = false
                 }
             }
             if selected {

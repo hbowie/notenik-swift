@@ -51,7 +51,10 @@ class ScriptEngine: RowConsumer {
         switch labelLower {
         case "module":
             logLine.append(value)
-            let module = ScriptModule(rawValue: valueLower)
+            var module = ScriptModule(rawValue: valueLower)
+            if module == nil && value.hasPrefix("<!-- ") {
+                module = .comment
+            } else
             if module != nil {
                 command.module = module!
             } else {

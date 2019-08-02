@@ -31,7 +31,7 @@ class InputModule: RowConsumer {
         switch command.action {
         case .open:
             workspace.inputURL = URL(fileURLWithPath: command.valueWithPathResolved)
-            openFile()
+            open()
         case .set:
             set()
         default:
@@ -51,14 +51,50 @@ class InputModule: RowConsumer {
         }
     }
     
-    func openFile() {
+    func open() {
+        guard let openURL = workspace.inputURL else {
+            logError("Input Open couldn't make sense of the location '\(command.valueWithPathResolved)'")
+            return
+        }
+        switch command.modifier {
+        case "file":
+            openDelimited(openURL: openURL)
+        case "notenik-defined":
+            openNotenik(openURL: openURL)
+        default:
+            logError("Input Open modifier of \(command.modifier) not recognized")
+        }
+    }
+    
+    func openDelimited(openURL: URL) {
         notesInput = 0
         workspace.collection = NoteCollection()
         note = Note(collection: workspace.collection)
         let reader = DelimitedReader(consumer: self)
-        reader.read(fileURL: workspace.inputURL!)
-        logInfo("\(notesInput) rows read from \(workspace.inputURL!.path)")
+        reader.read(fileURL: openURL)
+        logInfo("\(notesInput) rows read from \(openURL.path)")
         workspace.fullList = workspace.list
+    }
+    
+    func openNotenik(openURL: URL) {
+        let io: NotenikIO = FileIO()
+        let realm = io.getDefaultRealm()
+        realm.path = ""
+        var collectionURL: URL
+        if FileUtils.isDir(command.valueWithPathResolved) {
+            collectionURL = openURL
+        } else {
+            collectionURL = openURL.deletingLastPathComponent()
+        }
+        guard let collection = io.openCollection(realm: realm, collectionPath: collectionURL.path) else {
+            logError("Problems opening the collection at " + collectionURL.path)
+            return
+        }
+        collection.readOnly = true
+        workspace.collection = collection
+        workspace.list = io.notesList
+        workspace.fullList = workspace.list
+        logInfo("\(workspace.list.count) rows read from \(openURL.path)")
     }
     
     /// Do something with the next field produced.
