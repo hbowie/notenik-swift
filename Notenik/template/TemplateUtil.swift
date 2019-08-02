@@ -419,7 +419,7 @@ class TemplateUtil {
     }
     
     /// Given a variable name, and possibly some modifiers, look for a corresponding value
-    /// and then append it, with any requested modifications, to the output     line being built.
+    /// and then append it, with any requested modifications, to the output line being built.
     ///
     /// - Parameters:
     ///   - toLine: The output line we're working on.
@@ -464,6 +464,9 @@ class TemplateUtil {
         
         var linkedTags = false
         var linkedTagsPath = ""
+        
+        var formatFileName = false
+        var readableFileName = false
         
         var formatString = ""
         
@@ -517,6 +520,8 @@ class TemplateUtil {
                 formatString.append(char)
             } else if char == "E" {
                 formatString.append(char)
+            } else if charLower == "f" {
+                formatFileName = true
             } else if charLower == "g" {
                 linkedTags = true
             } else if charLower == "h" {
@@ -543,7 +548,11 @@ class TemplateUtil {
             } else if charLower == "p" {
                 modifiedValue = StringUtils.purifyPunctuation(modifiedValue)
             } else if charLower == "r" {
-                keepCharsOnRight = true
+                if formatFileName {
+                    readableFileName = true
+                } else {
+                    keepCharsOnRight = true
+                }
             } else if charLower == "s" {
                 modifiedValue = StringUtils.summarize(modifiedValue)
             } else if charLower == "u" && nextCharLower != "i" {
@@ -579,6 +588,12 @@ class TemplateUtil {
             }
             
             i = mods.index(i, offsetBy: inc)
+        }
+        
+        if readableFileName {
+            modifiedValue = StringUtils.toReadableFilename(modifiedValue)
+        } else if formatFileName {
+            modifiedValue = StringUtils.toCommonFileName(modifiedValue)
         }
         
         if varyStage > 0 && varyFrom.count > 0 {
