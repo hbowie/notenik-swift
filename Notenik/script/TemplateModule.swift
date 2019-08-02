@@ -28,6 +28,8 @@ class TemplateModule {
             generate()
         case .open:
             open()
+        case .webroot:
+            webroot()
         default:
             break
         }
@@ -35,6 +37,7 @@ class TemplateModule {
     
     func open() {
         workspace.template = Template()
+        workspace.template.setWebRoot(filePath: workspace.webRootPath)
         let templateURL = URL(fileURLWithPath: command.valueWithPathResolved)
         workspace.template.openTemplate(templateURL: templateURL)
     }
@@ -42,5 +45,9 @@ class TemplateModule {
     func generate() {
         workspace.template.supplyData(notesList: workspace.list, dataSource: workspace.inputURL!.path)
         workspace.template.generateOutput()
+    }
+    
+    func webroot() {
+        workspace.webRootPath = command.valueWithPathResolved
     }
 }

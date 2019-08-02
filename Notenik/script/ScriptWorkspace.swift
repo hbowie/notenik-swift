@@ -29,6 +29,8 @@ class ScriptWorkspace {
     
     var template = Template()
     
+    var webRootPath  = ""
+    
     var scriptLog   = ""
     
     func writeErrorToLog(_ msg: String) {

@@ -1127,11 +1127,11 @@
 		9CE9C97D22A612D3008D2B0A /* template */ = {
 			isa = PBXGroup;
 			children = (
-				9CE9C98122A6134A008D2B0A /* Template.swift */,
-				9CE9C98522A61499008D2B0A /* TemplateUtil.swift */,
-				9CF3DE4422A6BAA00078A6B0 /* TemplateLine.swift */,
-				9CE2170622A95EB300EE656C /* TemplateCommand.swift */,
 				9CE2170D22A9BC6000EE656C /* LineWithBreak.swift */,
+				9CE9C98122A6134A008D2B0A /* Template.swift */,
+				9CE2170622A95EB300EE656C /* TemplateCommand.swift */,
+				9CF3DE4422A6BAA00078A6B0 /* TemplateLine.swift */,
+				9CE9C98522A61499008D2B0A /* TemplateUtil.swift */,
 			);
 			path = template;
 			sourceTree = "<group>";

@@ -80,6 +80,13 @@ class TemplateUtil {
         resetGroupBreaks()
     }
     
+    func setWebRoot(filePath: String) {
+        if filePath.count > 0 {
+            webRootURL = URL(fileURLWithPath: filePath)
+            webRootFileName = FileName(filePath)
+        }
+    }
+    
     /// Open a new template file.
     ///
     /// - Parameter templateURL: The location of the template file.
@@ -217,16 +224,18 @@ class TemplateUtil {
     func closeOutput() {
         if outputOpen && textOutURL != nil {
             do {
+                let textOutFolder = textOutURL!.deletingLastPathComponent()
+                if !fileManager.fileExists(atPath: textOutFolder.path) {
+                    try fileManager.createDirectory(at: textOutFolder, withIntermediateDirectories: true, attributes: nil)
+                }
                 try outputLines.write(to: textOutURL!, atomically: false, encoding: .utf8)
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik",
                                   category: "TemplateUtil",
                                   level: .info,
                                   message: "\(outputLineCount) lines written to \(textOutURL!.path)")
-            } catch {
-                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                                  category: "TemplateUtil",
-                                  level: .fault,
-                                  message: "Problems writing to output file at \(textOutURL!.path)")
+            } catch let error {
+                logError("Problems writing to output file at \(textOutURL!.path)")
+                logError("Error is \(error)")
             }
         }
         outputLines = ""
@@ -705,6 +714,14 @@ class TemplateUtil {
         } else {
             return field!.value.value
         }
+    }
+    
+    /// Send an error message to the log.
+    func logError(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "TemplateUtil",
+                          level: .error,
+                          message: msg)
     }
 }
 

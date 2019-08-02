@@ -256,6 +256,9 @@ class FileIO: NotenikIO, RowConsumer {
             if pickLists.tagsPickList.values.count > 0 {
                 AppPrefs.shared.pickLists = pickLists
             }
+            if !infoFound {
+                saveInfoFile()
+            }
             return collection
         }
         attachments = nil

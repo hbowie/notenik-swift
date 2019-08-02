@@ -30,6 +30,10 @@ class Template {
         
     }
     
+    func setWebRoot(filePath: String) {
+        util.setWebRoot(filePath: filePath)
+    }
+    
     /// Open a new template file.
     ///
     /// - Parameter templateURL: The location of the template file.

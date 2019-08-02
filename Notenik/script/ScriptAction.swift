@@ -18,4 +18,5 @@ enum ScriptAction: String {
     case generate = "generate"
     case open     = "open"
     case set      = "set"
+    case webroot  = "webroot"
 }

@@ -45,7 +45,6 @@ class ScriptEngine: RowConsumer {
     ///   - label: A string containing the column heading for the field.
     ///   - value: The actual value for the field.
     func consumeField(label: String, value: String) {
-        print("\(label): \(value)")
         let labelLower = label.lowercased()
         let valueLower = value.lowercased()
         switch labelLower {
@@ -81,7 +80,6 @@ class ScriptEngine: RowConsumer {
                 let scriptFileName = FileName(workspace.scriptIn!)
                 let scriptFolderName = FileName(scriptFileName.path)
                 command.valueWithPathResolved = scriptFolderName.resolveRelative(path: String(value.dropFirst(ScriptEngine.pathPrefix.count)))
-                print("  - Value with path resolved = \(command.valueWithPathResolved)")
             } else {
                 command.valueWithPathResolved = value
             }

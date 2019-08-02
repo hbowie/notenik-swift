@@ -59,7 +59,7 @@ class InputModule: RowConsumer {
         switch command.modifier {
         case "file":
             openDelimited(openURL: openURL)
-        case "notenik-defined":
+        case "notenik-defined", "notenik+":
             openNotenik(openURL: openURL)
         default:
             logError("Input Open modifier of \(command.modifier) not recognized")
