@@ -83,9 +83,10 @@ protocol NotenikIO {
     
     /// Import Notes from a CSV or tab-delimited file
     ///
+    /// - Parameter importer: A Row importer that will return rows and columns.
     /// - Parameter fileURL: The URL of the file to be imported.
-    /// - Returns: The number of notes imported. 
-    func importDelimited(fileURL: URL) -> Int
+    /// - Returns: The number of rows imported.
+    func importRows(importer: RowImporter, fileURL: URL) -> Int
     
     /// Close the currently collection, if one is open
     func closeCollection()

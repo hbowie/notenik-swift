@@ -34,7 +34,8 @@ class ScriptEngine: RowConsumer {
         workspace.scriptIn = fileURL
         workspace.writeLineToLog("Starting to play script located at \(fileURL.path)")
         rowsRead = 0
-        reader = DelimitedReader(consumer: self)
+        reader = DelimitedReader()
+        reader.setContext(consumer: self, workspace: workspace)
         reader.read(fileURL: fileURL)
         return rowsRead
     }

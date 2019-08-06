@@ -37,7 +37,8 @@ class MergeScripter: RowConsumer {
         scriptPath = scriptFolder.path
         actions = []
         action = MergeAction()
-        let reader = DelimitedReader(consumer: self)
+        let reader = DelimitedReader()
+        reader.setContext(consumer: self, workspace: nil)
         let actionsRead = reader.read(fileURL: scriptURL)
         print("\(actionsRead) Actions Read")
         

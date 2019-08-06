@@ -1,0 +1,28 @@
+PODS:
+  - CoreXLSX (0.8.0):
+    - XMLCoder (~> 0.7.0)
+    - ZIPFoundation (~> 0.9.9)
+  - Down (0.8.6)
+  - XMLCoder (0.7.0)
+  - ZIPFoundation (0.9.9)
+
+DEPENDENCIES:
+  - CoreXLSX (~> 0.8.0)
+  - Down
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - CoreXLSX
+    - Down
+    - XMLCoder
+    - ZIPFoundation
+
+SPEC CHECKSUMS:
+  CoreXLSX: 8d8aef0341b145d8dd7c5c2b2ca6aac912dabae7
+  Down: 3c758f2388fa739663023f400e742a988fa1e21d
+  XMLCoder: 6c31ac37631628912c5afe51adce692b5748841f
+  ZIPFoundation: 89df685c971926b0323087952320bdfee9f0b6ef
+
+PODFILE CHECKSUM: 92f3e4189cde1629b0224387c0d125323e6c159f
+
+COCOAPODS: 1.7.5

@@ -26,6 +26,8 @@ class TemplateUtil {
     var webRootURL: URL?
     var webRootFileName = FileName()
     
+    var workspace: ScriptWorkspace?
+    
     var textOutURL: URL?
     var textOutFileName = FileName()
     var outputLines = ""
@@ -87,6 +89,10 @@ class TemplateUtil {
         }
     }
     
+    func setWorkspace(_ workspace: ScriptWorkspace) {
+        self.workspace = workspace
+    }
+    
     /// Open a new template file.
     ///
     /// - Parameter templateURL: The location of the template file.
@@ -106,10 +112,7 @@ class TemplateUtil {
             lineReader.open()
             templateOK = true
         } catch {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                              category: "TemplateUtil",
-                              level: .error,
-                              message: "Error reading Template from \(templateURL)")
+            logError("Error reading Template from \(templateURL)")
             templateOK = false
         }
         return templateOK
@@ -166,18 +169,12 @@ class TemplateUtil {
         let absFilePath = templateFileName.resolveRelative(path: filePath)
         
         guard fileManager.fileExists(atPath: absFilePath) else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                              category: "TemplateUtil",
-                              level: .error,
-                              message: "Could not find an include file at \(absFilePath)")
+            logError("Could not find an include file at \(absFilePath)")
             return
         }
         
         guard fileManager.isReadableFile(atPath: absFilePath) else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                              category: "TemplateUtil",
-                              level: .error,
-                              message: "Could not read the include file at \(absFilePath)")
+            logError("Could not read the include file at \(absFilePath)")
             return
         }
         
@@ -189,10 +186,7 @@ class TemplateUtil {
             includeReader = BigStringReader(includeContents)
             includeReader.open()
         } catch {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                              category: "TemplateUtil",
-                              level: .error,
-                              message: "Error reading Include file from \(includeURL)")
+            logError("Error reading Include file from \(includeURL)")
             return
         }
         
@@ -722,6 +716,9 @@ class TemplateUtil {
                           category: "TemplateUtil",
                           level: .error,
                           message: msg)
+        if workspace != nil {
+            workspace!.writeErrorToLog(msg)
+        }
     }
 }
 

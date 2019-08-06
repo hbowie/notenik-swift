@@ -1148,21 +1148,68 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         openPanel.allowsMultipleSelection = false
         openPanel.begin { (result) -> Void  in
             if result == .OK {
-                let imports = self.io!.importDelimited(fileURL: openPanel.url!)
-                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                                  category: "CollectionWindowController",
-                                  level: .info,
-                                  message: "Imported \(imports) notes from \(openPanel.url!.path)")
-                let alert = NSAlert()
-                alert.alertStyle = .informational
-                alert.messageText = "Imported \(imports) notes from \(openPanel.url!.path)"
-                alert.addButton(withTitle: "OK")
-                _ = alert.runModal()
+                self.importDelimitedFromURL(openPanel.url!)
             }
         }
-        reloadViews()
-        let (note, position) = io!.firstNote()
-        select(note: note, position: position, source: .nav)
+    }
+    
+    func importDelimitedFromURL(_ fileURL: URL) {
+        let importer = DelimitedReader()
+        let imports = self.io!.importRows(importer: importer, fileURL: fileURL)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionWindowController",
+                          level: .info,
+                          message: "Imported \(imports) notes from \(fileURL.path)")
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "Imported \(imports) notes from \(fileURL.path)"
+        alert.addButton(withTitle: "OK")
+        _ = alert.runModal()
+        self.reloadViews()
+        let (note, position) = self.io!.firstNote()
+        self.select(note: note, position: position, source: .nav)
+    }
+    
+    @IBAction func importXLSX(_ sender: Any) {
+        
+        // See if we're ready to take action
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        // Ask the user for a location on disk
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Open an input XLSX file"
+        let parent = noteIO.collection!.collectionFullPathURL!.deletingLastPathComponent()
+        openPanel.directoryURL = parent
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.allowsMultipleSelection = false
+        openPanel.begin { (result) -> Void  in
+            if result == .OK {
+                self.importXSLXFromURL(openPanel.url!)
+            }
+        }
+
+    }
+    
+    func importXSLXFromURL(_ fileURL: URL) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let importer = XLSXReader()
+        let imports = noteIO.importRows(importer: importer, fileURL: fileURL)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionWindowController",
+                          level: .info,
+                          message: "Imported \(imports) notes from \(fileURL.path)")
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "Imported \(imports) notes from \(fileURL.path)"
+        alert.addButton(withTitle: "OK")
+        _ = alert.runModal()
+        self.reloadViews()
+        let (note, position) = self.io!.firstNote()
+        self.select(note: note, position: position, source: .nav)
     }
     
     /// Import the notes from another Notenik Collection

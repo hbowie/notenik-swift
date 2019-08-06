@@ -18,6 +18,7 @@ class Template {
     var util = TemplateUtil()
     var notesList = NotesList()
     var collection = NoteCollection()
+    var workspace: ScriptWorkspace?
     
     var loopLines        = [TemplateLine]()
     var outerLinesBefore = [TemplateLine]()
@@ -32,6 +33,11 @@ class Template {
     
     func setWebRoot(filePath: String) {
         util.setWebRoot(filePath: filePath)
+    }
+    
+    func setWorkspace(_ workspace: ScriptWorkspace) {
+        self.workspace = workspace
+        util.setWorkspace(workspace)
     }
     
     /// Open a new template file.

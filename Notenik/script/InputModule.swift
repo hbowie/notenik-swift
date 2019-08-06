@@ -59,8 +59,10 @@ class InputModule: RowConsumer {
         switch command.modifier {
         case "file":
             openDelimited(openURL: openURL)
-        case "notenik-defined", "notenik+":
+        case "notenik-defined", "notenik+", "notenik-general":
             openNotenik(openURL: openURL)
+        case "xlsx":
+            openXLSX(openURL: openURL)
         default:
             logError("Input Open modifier of \(command.modifier) not recognized")
         }
@@ -70,7 +72,19 @@ class InputModule: RowConsumer {
         notesInput = 0
         workspace.collection = NoteCollection()
         note = Note(collection: workspace.collection)
-        let reader = DelimitedReader(consumer: self)
+        let reader = DelimitedReader()
+        reader.setContext(consumer: self, workspace: workspace)
+        reader.read(fileURL: openURL)
+        logInfo("\(notesInput) rows read from \(openURL.path)")
+        workspace.fullList = workspace.list
+    }
+    
+    func openXLSX(openURL: URL) {
+        notesInput = 0
+        workspace.collection = NoteCollection()
+        note = Note(collection: workspace.collection)
+        let reader = XLSXReader()
+        reader.setContext(consumer: self, workspace: workspace)
         reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
         workspace.fullList = workspace.list

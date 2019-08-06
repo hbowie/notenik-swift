@@ -241,12 +241,12 @@ class BunchIO: NotenikIO, RowConsumer  {
     ///
     /// - Parameter fileURL: The URL of the file to be imported.
     /// - Returns: The number of notes imported.
-    func importDelimited(fileURL: URL) -> Int {
+    func importRows(importer: RowImporter, fileURL: URL) -> Int {
         notesImported = 0
         guard collection != nil && collectionOpen else { return 0 }
-        let reader = DelimitedReader(consumer: self)
+        importer.setContext(consumer: self, workspace: nil)
         noteToImport = Note(collection: collection!)
-        _ = reader.read(fileURL: fileURL)
+        _ = importer.read(fileURL: fileURL)
         return notesImported
     }
     

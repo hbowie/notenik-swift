@@ -518,6 +518,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         ensureScriptController()
         guard scriptController != nil else { return }
         scriptController!.setScriptURL(fileURL)
+        scriptController!.selectScriptTab()
         scriptController!.showWindow(self)
     }
     

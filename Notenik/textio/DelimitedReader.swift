@@ -11,13 +11,14 @@
 
 import Foundation
 
-/// A class to read a comma-delimited or tab-delimited file and return column headings and row values.
+/// A class to read a comma-delimited or tab-delimited file and
+/// return column headings and row values.
 ///
 /// The file must have UTF-8 encoding. 
 /// The first line of the file must contain column headings.
-class DelimitedReader {
+class DelimitedReader: RowImporter {
     
-    var consumer:           RowConsumer
+    var consumer:           RowConsumer!
     
     var ok =                false
     var rowsReturned =      0
@@ -39,9 +40,9 @@ class DelimitedReader {
     var openQuote =         false
     var openQuoteChar:      Character = " "
     
-    /// Initialize the class with a Row Consumer
-    init (consumer: RowConsumer) {
-        
+    /// Initialize the class with a Row Consumer and an optional
+    /// Script Workspace.
+    func setContext(consumer: RowConsumer, workspace: ScriptWorkspace?) {
         self.consumer = consumer
     }
     

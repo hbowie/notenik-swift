@@ -65,8 +65,10 @@ class ExportViewController: NSViewController {
         }
         
         var format = NoteFormat.commaSeparated
-        if formatPopup.stringValue == tabDelim {
-            format = .tabDelimited
+        if formatPopup.selectedItem != nil {
+            if formatPopup.selectedItem!.title == tabDelim {
+                format = .tabDelimited
+            }
         }
         
         let exporter = NotesExporter()

@@ -38,6 +38,7 @@ class TemplateModule {
     func open() {
         workspace.template = Template()
         workspace.template.setWebRoot(filePath: workspace.webRootPath)
+        workspace.template.setWorkspace(workspace)
         let templateURL = URL(fileURLWithPath: command.valueWithPathResolved)
         workspace.template.openTemplate(templateURL: templateURL)
     }

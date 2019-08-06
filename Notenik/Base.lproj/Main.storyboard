@@ -142,6 +142,12 @@
                                                             <action selector="importNotenik:" target="Ady-hI-5gd" id="Aaw-Dm-0eU"/>
                                                         </connections>
                                                     </menuItem>
+                                                    <menuItem title="XSLX" id="5Gi-ga-5Cg">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="importXLSX:" target="Ady-hI-5gd" id="wpM-Vx-Zwf"/>
+                                                        </connections>
+                                                    </menuItem>
                                                 </items>
                                             </menu>
                                         </menuItem>
