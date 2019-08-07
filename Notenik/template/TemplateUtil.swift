@@ -70,7 +70,6 @@ class TemplateUtil {
     let noBreakConverter = StringConverter()
     let markedup = Markedup(format: .htmlFragment)
     
-    
     /// Initialize things.
     init() {
         let globalsCollection = NoteCollection()
@@ -190,10 +189,7 @@ class TemplateUtil {
             return
         }
         
-        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                          category: "TemplateUtil",
-                          level: .info,
-                          message: "Including file \(absFilePath)")
+        logInfo("Including file \(absFilePath)")
         
         var includeLine = includeReader.readLine()
         while includeLine != nil {
@@ -223,10 +219,7 @@ class TemplateUtil {
                     try fileManager.createDirectory(at: textOutFolder, withIntermediateDirectories: true, attributes: nil)
                 }
                 try outputLines.write(to: textOutURL!, atomically: false, encoding: .utf8)
-                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                                  category: "TemplateUtil",
-                                  level: .info,
-                                  message: "\(outputLineCount) lines written to \(textOutURL!.path)")
+                logInfo("\(outputLineCount) lines written to \(textOutURL!.path)")
             } catch let error {
                 logError("Problems writing to output file at \(textOutURL!.path)")
                 logError("Error is \(error)")
@@ -707,6 +700,17 @@ class TemplateUtil {
             return nil
         } else {
             return field!.value.value
+        }
+    }
+    
+    /// Send an informative message to the log.
+    func logInfo(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "TemplateUtil",
+                          level: .info,
+                          message: msg)
+        if workspace != nil {
+            workspace!.writeLineToLog(msg)
         }
     }
     

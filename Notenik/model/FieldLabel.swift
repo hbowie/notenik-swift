@@ -30,6 +30,25 @@ class FieldLabel : CustomStringConvertible {
     func set(_ label: String) {
         properForm = label
         commonForm = StringUtils.toCommon(label)
+        if isAuthor && commonForm != LabelConstants.authorCommon {
+            properForm = LabelConstants.author
+            commonForm = LabelConstants.authorCommon
+        } else if isLink && commonForm != LabelConstants.linkCommon {
+            properForm = LabelConstants.link
+            commonForm = LabelConstants.linkCommon
+        } else if isRating && commonForm != LabelConstants.ratingCommon {
+            properForm = LabelConstants.rating
+            commonForm = LabelConstants.ratingCommon
+        } else if isRecurs && commonForm != LabelConstants.recursCommon {
+            properForm = LabelConstants.recurs
+            commonForm = LabelConstants.recursCommon
+        } else if isSeq && commonForm != LabelConstants.seqCommon {
+            properForm = LabelConstants.seq
+            commonForm = LabelConstants.seqCommon
+        } else if isTags && commonForm != LabelConstants.tagsCommon {
+            properForm = LabelConstants.tags
+            commonForm = LabelConstants.tagsCommon
+        }
     }
     
     var isAuthor : Bool {

@@ -26,6 +26,8 @@ class SortModule {
         switch command.action {
         case .add:
             addField()
+        case .clear:
+            clear()
         case .set:
             if command.object == "params" {
                 setParams()
@@ -33,7 +35,7 @@ class SortModule {
                 logError("Object value of '\(command.object)' not valid for Sort Set command")
             }
         default:
-            break
+            logError("Sort Module does not recognize \(command.action) as a valid action")
         }
     }
     
@@ -50,8 +52,11 @@ class SortModule {
         newField.logField()
     }
     
+    func clear() {
+        workspace.pendingFields = []
+    }
+    
     func setParams() {
-
         workspace.collection.customFields = workspace.pendingFields
         workspace.collection.sortParm = .custom
         workspace.list.sort()
