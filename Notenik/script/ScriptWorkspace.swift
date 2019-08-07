@@ -33,6 +33,11 @@ class ScriptWorkspace {
     
     var scriptLog   = ""
     
+    func newList() {
+        list = NotesList()
+        fullList = NotesList()
+    }
+    
     func writeErrorToLog(_ msg: String) {
         writeLineToLog(formatError(msg))
     }

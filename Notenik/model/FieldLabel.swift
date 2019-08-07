@@ -74,7 +74,7 @@ class FieldLabel : CustomStringConvertible {
     }
     
     var isIndex : Bool {
-        return commonForm == LabelConstants.index
+        return commonForm == LabelConstants.indexCommon
     }
     
     var isLink : Bool {

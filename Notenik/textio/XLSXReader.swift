@@ -44,6 +44,7 @@ class XLSXReader: RowImporter {
     /// to the consumer, one at a time.
     ///
     /// - Parameter fileURL: The URL of the file to be read.
+    /// - Returns: The number of rows returned. 
     func read(fileURL: URL) -> Int {
         guard consumer != nil else { return 0 }
         rowsReturned = 0

@@ -56,11 +56,14 @@ class InputModule: RowConsumer {
             logError("Input Open couldn't make sense of the location '\(command.valueWithPathResolved)'")
             return
         }
+        workspace.newList()
         switch command.modifier {
         case "file":
             openDelimited(openURL: openURL)
         case "notenik-defined", "notenik+", "notenik-general":
             openNotenik(openURL: openURL)
+        case "notenik-index":
+            openNotenikIndex(openURL: openURL)
         case "xlsx":
             openXLSX(openURL: openURL)
         default:
@@ -109,6 +112,17 @@ class InputModule: RowConsumer {
         workspace.list = io.notesList
         workspace.fullList = workspace.list
         logInfo("\(workspace.list.count) rows read from \(openURL.path)")
+    }
+    
+    func openNotenikIndex(openURL: URL) {
+        notesInput = 0
+        workspace.collection = NoteCollection()
+        note = Note(collection: workspace.collection)
+        let reader = NoteIndexReader()
+        reader.setContext(consumer: self, workspace: workspace)
+        reader.read(fileURL: openURL)
+        logInfo("\(notesInput) rows read from \(openURL.path)")
+        workspace.fullList = workspace.list
     }
     
     /// Do something with the next field produced.

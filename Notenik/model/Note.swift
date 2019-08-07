@@ -260,6 +260,25 @@ class Note: Comparable, NSCopying {
         return setField(label: LabelConstants.seq, value: seq)
     }
     
+    /// Set the Note's Index value
+    func setIndex(_ index: String) -> Bool {
+        return setField(label: LabelConstants.index, value: index)
+    }
+    
+    /// Append additional data to the Index Value
+    func appendToIndex(_ index: String) {
+        let field = getField(label: LabelConstants.index)
+        if field == nil {
+            setIndex(index)
+        } else {
+            let val = field!.value
+            if val is IndexValue {
+                let indexVal = val as! IndexValue
+                indexVal.append(index)
+            }
+        }
+    }
+    
     /// Set the Note's Code value
     func setCode(_ code: String) -> Bool {
         return setField(label: LabelConstants.code, value: code)
@@ -349,6 +368,16 @@ class Note: Comparable, NSCopying {
             return val as! SeqValue
         } else {
             return SeqValue(val.value)
+        }
+    }
+    
+    /// Return the Note's Index Value
+    var index: IndexValue {
+        let val = getFieldAsValue(label: LabelConstants.index)
+        if val is IndexValue {
+            return val as! IndexValue
+        } else {
+            return IndexValue(val.value)
         }
     }
     
@@ -472,6 +501,11 @@ class Note: Comparable, NSCopying {
     // Does this note have a non-blank Sequence field?
     func hasSeq() -> Bool {
         return seq.count > 0
+    }
+    
+    /// Does this note have a non-blank Index field?
+    func hasIndex() -> Bool {
+        return index.count > 0
     }
     
     /// Does this note have a non-blank date field?

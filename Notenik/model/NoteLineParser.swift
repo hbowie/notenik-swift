@@ -42,6 +42,7 @@ class NoteLineParser {
     var blankLine    = true
     var oneChar      = true
     var bodyStarted  = false
+    var indexStarted = false
     
     var lineNumber   = 0
     var fileSize     = 0
@@ -80,6 +81,7 @@ class NoteLineParser {
         lineNumber = 0
         fileSize   = 0
         bodyStarted = false
+        indexStarted = false
         pendingBlankLines = 0
     }
     
@@ -96,7 +98,16 @@ class NoteLineParser {
             if possibleLine == nil || possibleLabel.validLabel {
                 if label.validLabel && value.count > 0 {
                     let field = NoteField(def: def, value: value, statusConfig: collection.statusConfig)
-                    note.setField(field)
+                    if field.def.fieldLabel.isIndex {
+                        if indexStarted {
+                            note.appendToIndex(value)
+                        } else {
+                            note.setIndex(value)
+                            indexStarted = true
+                        }
+                    } else {
+                        note.setField(field)
+                    }
                 }
                 pendingBlankLines = 0
             }

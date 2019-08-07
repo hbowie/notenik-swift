@@ -40,7 +40,7 @@ class ValueFactory {
         case .seq:
             return SeqValue(value)
         case .index:
-            return StringValue(value)
+            return IndexValue(value)
         case .recurs:
             return RecursValue(value)
         case .code:
