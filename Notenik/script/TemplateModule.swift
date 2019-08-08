@@ -50,5 +50,15 @@ class TemplateModule {
     
     func webroot() {
         workspace.webRootPath = command.valueWithPathResolved
+        logInfo("Webroot set to \(workspace.webRootPath)")
+    }
+    
+    /// Send an informative message to the log.
+    func logInfo(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "TemplateModule",
+                          level: .info,
+                          message: msg)
+        workspace.writeLineToLog(msg)
     }
 }

@@ -23,11 +23,14 @@ class AppPrefs {
     let fontSizeKey     = "font-size"
     let tagsSelectKey   = "tags-to-select"
     let tagsSuppressKey = "tags-to-suppress"
+    let parentRealmParentKey = "parent-realm-parent"
     
     var _qd: Bool = false
     
     var _edFS:   Float   = 13.0
     var _edFSCG: CGFloat = 13.0
+    
+    var _prp = ""
     
     var userFont       = NSFont.userFont(ofSize: 13.0)
     var fixedPitchFont = NSFont.userFixedPitchFont(ofSize: 13.0)
@@ -61,6 +64,11 @@ class AppPrefs {
         if tsup != nil {
             _tsup = tsup!
         }
+        
+        let defaultprp = defaults.string(forKey: parentRealmParentKey)
+        if defaultprp != nil {
+            _prp = defaultprp!
+        }
     }
     
     var confirmDeletes: Bool {
@@ -82,6 +90,32 @@ class AppPrefs {
                 _edFS = newValue
                 defaults.set(_edFS, forKey: fontSizeKey)
                 deriveRelatedFontFields()
+            }
+        }
+    }
+    
+    var parentRealmParent: String {
+        get {
+            return _prp
+        }
+        set {
+            _prp = newValue
+            defaults.set(_prp, forKey: parentRealmParentKey)
+        }
+    }
+    
+    var parentRealmParentURL: URL? {
+        get {
+            if _prp.count > 0 {
+                return URL(fileURLWithPath: _prp)
+            } else {
+                return nil
+            }
+        }
+        set {
+            if newValue != nil {
+                _prp = newValue!.path
+                defaults.set(_prp, forKey: parentRealmParentKey)
             }
         }
     }

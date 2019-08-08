@@ -22,6 +22,7 @@ class DateUtils {
     var mmFormatter   : DateFormatter
     var ddFormatter   : DateFormatter
     var gregCalendar  : Calendar
+    var dateTimeFormatter: DateFormatter
     
     static let monthNames = [
         "n/a",
@@ -72,6 +73,9 @@ class DateUtils {
         ddFormatter = DateFormatter()
         ddFormatter.dateFormat = "dd"
         gregCalendar = Calendar(identifier: .gregorian)
+        dateTimeFormatter = DateFormatter()
+        dateTimeFormatter.dateStyle = .medium
+        dateTimeFormatter.timeStyle = .medium
     }
     
     /// Return today's date in yyyy-MM-dd format
@@ -92,6 +96,11 @@ class DateUtils {
     /// Return today's day of month in dd format
     var ddToday: String {
         return ddFormatter.string(from: now)
+    }
+    
+    var dateTimeToday: String {
+        now = Date()
+        return dateTimeFormatter.string(from: now)
     }
     
     /// Return an optional date object when passed a string in "yyyy-mm-dd" format

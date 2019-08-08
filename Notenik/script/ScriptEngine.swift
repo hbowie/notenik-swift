@@ -29,14 +29,14 @@ class ScriptEngine: RowConsumer {
     /// - Parameter fileURL: The URL of the script to be played.
     /// - Returns: The number of rows read.
     func playScript(fileURL: URL) -> Int {
-        logInfo("Starting to play script located at \(fileURL.path)")
         workspace = ScriptWorkspace()
         workspace.scriptIn = fileURL
-        workspace.writeLineToLog("Starting to play script located at \(fileURL.path)")
+        logInfo("Starting to play script located at \(fileURL.path) on \(DateUtils.shared.dateTimeToday)")
         rowsRead = 0
         reader = DelimitedReader()
         reader.setContext(consumer: self, workspace: workspace)
         reader.read(fileURL: fileURL)
+        logInfo("Script execution complete on \(DateUtils.shared.dateTimeToday)")
         return rowsRead
     }
     
@@ -127,6 +127,7 @@ class ScriptEngine: RowConsumer {
                           category: "ScriptEngine",
                           level: .info,
                           message: msg)
+        workspace.writeLineToLog(msg)
     }
     
     /// Send an error message to the log. 

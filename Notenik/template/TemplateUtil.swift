@@ -143,11 +143,15 @@ class TemplateUtil {
         closeOutput()
         let absFilePath = templateFileName.resolveRelative(path: filePath)
         textOutURL = URL(fileURLWithPath: absFilePath)
-        textOutFileName = FileName(filePath)
+        textOutFileName = FileName(absFilePath)
         
         // If we have a web root, then figure out the relative path up to it
         // for possible later use.
         relativePathToRoot = ""
+        if workspace != nil && workspace!.webRootPath.count > 0 {
+            webRootURL = URL(fileURLWithPath: workspace!.webRootPath)
+            webRootFileName = FileName(workspace!.webRootPath)
+        }
         if webRootURL != nil && textOutFileName.isBeneath(webRootFileName) {
             var folderCount = textOutFileName.folders.count
             while folderCount > webRootFileName.folders.count {

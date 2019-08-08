@@ -89,7 +89,11 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     func openParentRealm() {
         let openPanel = NSOpenPanel();
         openPanel.title = "Select a Parent Folder containing one or more Collections"
-        openPanel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
+        if appPrefs.parentRealmParentURL != nil {
+            openPanel.directoryURL = appPrefs.parentRealmParentURL!
+        } else {
+            openPanel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
+        }
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
         openPanel.canChooseDirectories = true
@@ -104,6 +108,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     }
     
     func openParentRealm(parentURL: URL) {
+        appPrefs.parentRealmParentURL = parentURL.deletingLastPathComponent()
         let realmScanner = RealmScanner()
         realmScanner.openRealm(path: parentURL.path)
         let io = realmScanner.realmIO

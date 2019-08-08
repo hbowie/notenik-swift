@@ -94,8 +94,8 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="30S-KW-yDc"/>
-                                        <menuItem title="Open Parent Realm..." id="qGi-li-dJF">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Open Parent Realm..." keyEquivalent="o" id="qGi-li-dJF">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuFileOpenParentRealm:" target="Voe-Tx-rLC" id="mXe-2Q-4cT"/>
                                             </connections>
