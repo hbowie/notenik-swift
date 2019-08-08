@@ -39,6 +39,8 @@ struct LabelConstants {
     static let sortParmCommon = "sortparm"
     static let status       = "Status"
     static let statusCommon = "status"
+    static let tag          = "Tag"
+    static let tagCommon    = "tag"
     static let tags         = "Tags"
     static let tagsCommon   = "tags"
     static let teaser       = "Teaser"

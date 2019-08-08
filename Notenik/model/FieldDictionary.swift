@@ -13,7 +13,7 @@ class FieldDictionary {
     
     var dict = [:] as [String: FieldDefinition]
     var list: [FieldDefinition] = []
-    var insertPositionFromEnd = 1
+    var insertPositionFromEnd = 0
     var locked = false
     
     /// Default initializer
@@ -131,7 +131,7 @@ class FieldDictionary {
             } else if common == LabelConstants.bodyCommon {
                 list.append(def)
                 insertPositionFromEnd += 1
-            } else if insertPositionFromEnd <= 1 {
+            } else if insertPositionFromEnd <= 0 {
                 list.append(def)
             } else {
                 list.insert(def, at: list.count - insertPositionFromEnd)

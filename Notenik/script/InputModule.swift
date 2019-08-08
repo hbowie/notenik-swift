@@ -17,9 +17,9 @@ class InputModule: RowConsumer {
     var workspace = ScriptWorkspace()
     var command = ScriptCommand()
     var note: Note!
+    
     var notesInput = 0
     var normalization = "0"
-    var explodeTags = false
     
     init() {
 
@@ -45,7 +45,7 @@ class InputModule: RowConsumer {
             normalization = command.value
         case "xpltags":
             let xpltags = BooleanValue(command.value)
-            explodeTags = xpltags.isTrue
+            workspace.explodeTags = xpltags.isTrue
         default:
             break
         }
@@ -56,7 +56,13 @@ class InputModule: RowConsumer {
             logError("Input Open couldn't make sense of the location '\(command.valueWithPathResolved)'")
             return
         }
+        workspace.collection = NoteCollection()
+        if workspace.explodeTags {
+            workspace.collection.dict.addDef(LabelConstants.tag)
+        }
         workspace.newList()
+        notesInput = 0
+        note = Note(collection: workspace.collection)
         switch command.modifier {
         case "file":
             openDelimited(openURL: openURL)
@@ -69,60 +75,35 @@ class InputModule: RowConsumer {
         default:
             logError("Input Open modifier of \(command.modifier) not recognized")
         }
+        workspace.fullList = workspace.list
     }
     
     func openDelimited(openURL: URL) {
-        notesInput = 0
-        workspace.collection = NoteCollection()
-        note = Note(collection: workspace.collection)
         let reader = DelimitedReader()
         reader.setContext(consumer: self, workspace: workspace)
         reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
-        workspace.fullList = workspace.list
     }
     
     func openXLSX(openURL: URL) {
-        notesInput = 0
-        workspace.collection = NoteCollection()
-        note = Note(collection: workspace.collection)
         let reader = XLSXReader()
         reader.setContext(consumer: self, workspace: workspace)
         reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
-        workspace.fullList = workspace.list
     }
     
     func openNotenik(openURL: URL) {
-        let io: NotenikIO = FileIO()
-        let realm = io.getDefaultRealm()
-        realm.path = ""
-        var collectionURL: URL
-        if FileUtils.isDir(command.valueWithPathResolved) {
-            collectionURL = openURL
-        } else {
-            collectionURL = openURL.deletingLastPathComponent()
-        }
-        guard let collection = io.openCollection(realm: realm, collectionPath: collectionURL.path) else {
-            logError("Problems opening the collection at " + collectionURL.path)
-            return
-        }
-        collection.readOnly = true
-        workspace.collection = collection
-        workspace.list = io.notesList
-        workspace.fullList = workspace.list
-        logInfo("\(workspace.list.count) rows read from \(openURL.path)")
+        let reader = NoteReader()
+        reader.setContext(consumer: self, workspace: workspace)
+        reader.read(fileURL: openURL)
+        logInfo("\(notesInput) rows read from \(openURL.path)")
     }
     
     func openNotenikIndex(openURL: URL) {
-        notesInput = 0
-        workspace.collection = NoteCollection()
-        note = Note(collection: workspace.collection)
         let reader = NoteIndexReader()
         reader.setContext(consumer: self, workspace: workspace)
         reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
-        workspace.fullList = workspace.list
     }
     
     /// Do something with the next field produced.
@@ -140,8 +121,30 @@ class InputModule: RowConsumer {
     ///   - labels: An array of column headings.
     ///   - fields: A corresponding array of field values.
     func consumeRow(labels: [String], fields: [String]) {
-        workspace.list.append(note)
-        notesInput += 1
+        if workspace.explodeTags {
+            let tags = note.tags
+            var xplNotes = 0
+            for tag in tags.tags {
+                let tagNote = Note(collection: workspace.collection)
+                tagNote.setField(label: LabelConstants.tag, value: String(describing: tag))
+                note.copyFields(to: tagNote)
+                tagNote.setField(label: LabelConstants.tag, value: String(describing: tag))
+                workspace.list.append(tagNote)
+                notesInput += 1
+                xplNotes += 1
+            }
+            if xplNotes == 0 {
+                let tagNote = Note(collection: workspace.collection)
+                note.copyFields(to: tagNote)
+                tagNote.setField(label: LabelConstants.tag, value: "")
+                workspace.list.append(tagNote)
+                notesInput += 1
+            }
+        } else {
+            workspace.list.append(note)
+            notesInput += 1
+        }
+
         note = Note(collection: workspace.collection)
     }
     

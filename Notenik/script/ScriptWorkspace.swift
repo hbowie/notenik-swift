@@ -18,6 +18,7 @@ class ScriptWorkspace {
     var collection  = NoteCollection()
     
     var inputURL:     URL?
+    var explodeTags = false
     
     var list        = NotesList()
     var fullList    = NotesList()

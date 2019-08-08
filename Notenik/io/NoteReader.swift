@@ -1,8 +1,8 @@
 //
-//  NoteIndexReader.swift
+//  NoteReader.swift
 //  Notenik
 //
-//  Created by Herb Bowie on 8/7/19.
+//  Created by Herb Bowie on 8/8/19.
 //  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
@@ -11,21 +11,17 @@
 
 import Foundation
 
-class NoteIndexReader: RowImporter {
+class NoteReader: RowImporter {
     
     var consumer:           RowConsumer?
     var workspace:          ScriptWorkspace?
     
     var collection:         NoteCollection?
     
-    var indexCollection     = IndexCollection()
-    
-    var ok =                false
-    var rowsReturned        = 0
-    var rowCount            = 0
-
     var labels:             [String] = []
     var fields:             [String] = []
+    
+    var rowsReturned        = 0
     
     init() {
         
@@ -36,13 +32,14 @@ class NoteIndexReader: RowImporter {
         self.consumer = consumer
         self.workspace = workspace
     }
-    
+
     /// Read the Collection and break it down into fields and rows, returning each
     /// to the consumer, one at a time.
     ///
     /// - Parameter fileURL: The URL of the Notenik Collection to be read.
     /// - Returns: The number of rows returned.
     func read(fileURL: URL) -> Int {
+        
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
         realm.path = ""
@@ -58,58 +55,31 @@ class NoteIndexReader: RowImporter {
             return 0
         }
         
-        labels.append("Initial Letter")
-        labels.append("Term")
-        labels.append("Lower Case Term")
-        labels.append("Term Link")
-        labels.append("Page")
-        labels.append("Anchor")
+        for def in collection!.dict.dict {
+            labels.append(def.value.fieldLabel.properForm)
+        }
         
         rowsReturned = 0
         var (note, position) = io.firstNote()
         while note != nil {
-            if note!.hasTitle() && note!.hasIndex() {
-                indexCollection.add(page: note!.title.value, index: note!.index)
+            fields = []
+            for label in labels {
+                let value = note!.getFieldAsString(label: label)
+                consumer!.consumeField(label: label, value: value)
+                fields.append(value)
             }
+            consumer!.consumeRow(labels: labels, fields: fields)
+            rowsReturned += 1
             (note, position) = io.nextNote(position)
         }
         io.closeCollection()
-        
-        for term in indexCollection.list {
-            let initialLetter = term.term.prefix(1).uppercased()
-            let lowerTerm = term.term.lowercased()
-            for ref in term.refs {
-                fields = []
-                
-                consumer!.consumeField(label: labels[0], value: initialLetter)
-                fields.append(initialLetter)
-                
-                consumer!.consumeField(label: labels[1], value: term.term)
-                fields.append(term.term)
-                
-                consumer!.consumeField(label: labels[2], value: lowerTerm)
-                fields.append(lowerTerm)
-                
-                consumer!.consumeField(label: labels[3], value: term.link)
-                fields.append(term.link)
-                
-                consumer!.consumeField(label: labels[4], value: ref.page)
-                fields.append(ref.page)
-                
-                consumer!.consumeField(label: labels[5], value: ref.anchor)
-                fields.append(ref.anchor)
-                
-                consumer!.consumeRow(labels: labels, fields: fields)
-                rowsReturned += 1
-            }
-        }
         return rowsReturned
     }
     
     /// Send an error message to the log.
     func logError(_ msg: String) {
         Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                          category: "NoteIndexReader",
+                          category: "NoteReader",
                           level: .error,
                           message: msg)
         if workspace != nil {

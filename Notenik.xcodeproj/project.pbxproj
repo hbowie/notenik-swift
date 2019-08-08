@@ -126,6 +126,9 @@
 		9C4018A422838F4F002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
 		9C4018A522838F4F002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
 		9C4018A62283B68B002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
+		9C44539222FCC80200560F72 /* NoteReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C44539122FCC80200560F72 /* NoteReader.swift */; };
+		9C44539322FCC80200560F72 /* NoteReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C44539122FCC80200560F72 /* NoteReader.swift */; };
+		9C44539422FCC80200560F72 /* NoteReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C44539122FCC80200560F72 /* NoteReader.swift */; };
 		9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BA2298B87C003F6589 /* BodyView.swift */; };
 		9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BA2298B87C003F6589 /* BodyView.swift */; };
 		9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BD2298BC87003F6589 /* CodeView.swift */; };
@@ -573,6 +576,7 @@
 		9C2D40B922F8C94C0074FCCE /* RowImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowImporter.swift; sourceTree = "<group>"; };
 		9C3BDF40229D9A5200E0DA89 /* Down.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Down.xcodeproj; path = ../Down/Down.xcodeproj; sourceTree = "<group>"; };
 		9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefs.swift; sourceTree = "<group>"; };
+		9C44539122FCC80200560F72 /* NoteReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteReader.swift; sourceTree = "<group>"; };
 		9C45E8BA2298B87C003F6589 /* BodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyView.swift; sourceTree = "<group>"; };
 		9C45E8BD2298BC87003F6589 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptEngine.swift; sourceTree = "<group>"; };
@@ -1049,6 +1053,7 @@
 				9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */,
 				9C60E79F21F6520100C332ED /* FileIO.swift */,
 				9C27D9F122FB3758008EE0A1 /* NoteIndexReader.swift */,
+				9C44539122FCC80200560F72 /* NoteReader.swift */,
 				9C60E71E21F651E500C332ED /* NotenikIO.swift */,
 				9C8540AD22E8D78B0074E349 /* NotesList.swift */,
 				9C060686228E0A9300CB8C10 /* RealmScanner.swift */,
@@ -1547,6 +1552,7 @@
 				9C60E70B21F650B800C332ED /* FileUtils.swift in Sources */,
 				9C60E76821F651E500C332ED /* AuthorValue.swift in Sources */,
 				9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */,
+				9C44539222FCC80200560F72 /* NoteReader.swift in Sources */,
 				9CCFEE712270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
 				9C29DD29226286A100928180 /* CollectionWindow.swift in Sources */,
 				9CED2810224EB39900798621 /* LongTextView.swift in Sources */,
@@ -1768,6 +1774,7 @@
 				9C60E76021F651E500C332ED /* TitleValue.swift in Sources */,
 				9CCFD62222AED9FA00C64D37 /* StringFromTo.swift in Sources */,
 				9C60E79C21F651E500C332ED /* NotePosition.swift in Sources */,
+				9C44539322FCC80200560F72 /* NoteReader.swift in Sources */,
 				9C60E6E521F64B3C00C332ED /* NotenikTests.swift in Sources */,
 				9C86CF0322C15A660035A8FA /* IntValue.swift in Sources */,
 				9C60E7A121F6520100C332ED /* FileIO.swift in Sources */,
@@ -1834,6 +1841,7 @@
 				9CF3DE4E22A6F5330078A6B0 /* MergeReport.swift in Sources */,
 				9C551C9022A3459C009BA329 /* LogEvent.swift in Sources */,
 				9CE32511224D5E180051CA1F /* LogViewController.swift in Sources */,
+				9C44539422FCC80200560F72 /* NoteReader.swift in Sources */,
 				9CA80798229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
 				9CAD6A5322DFA0B000531D90 /* PrefsTabVC.swift in Sources */,
 				9C60E77921F651E500C332ED /* StatusValue.swift in Sources */,
