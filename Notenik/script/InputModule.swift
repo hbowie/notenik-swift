@@ -35,7 +35,7 @@ class InputModule: RowConsumer {
         case .set:
             set()
         default:
-            break
+            logError("Input Module does not recognize an action of '\(command.action)")
         }
     }
     
@@ -56,11 +56,18 @@ class InputModule: RowConsumer {
             logError("Input Open couldn't make sense of the location '\(command.valueWithPathResolved)'")
             return
         }
-        workspace.collection = NoteCollection()
-        if workspace.explodeTags {
-            workspace.collection.dict.addDef(LabelConstants.tag)
+        if command.object.lowercased() == "merge" {
+            workspace.list = workspace.fullList
+        } else if command.object.count == 0 {
+            workspace.collection = NoteCollection()
+            if workspace.explodeTags {
+                _ = workspace.collection.dict.addDef(LabelConstants.tag)
+            }
+            workspace.newList()
+        } else {
+            logError("Input Open command with unrecognized object of '\(command.object)'")
         }
-        workspace.newList()
+
         notesInput = 0
         note = Note(collection: workspace.collection)
         switch command.modifier {
@@ -81,28 +88,28 @@ class InputModule: RowConsumer {
     func openDelimited(openURL: URL) {
         let reader = DelimitedReader()
         reader.setContext(consumer: self, workspace: workspace)
-        reader.read(fileURL: openURL)
+        _ = reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
     }
     
     func openXLSX(openURL: URL) {
         let reader = XLSXReader()
         reader.setContext(consumer: self, workspace: workspace)
-        reader.read(fileURL: openURL)
+        _ = reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
     }
     
     func openNotenik(openURL: URL) {
         let reader = NoteReader()
         reader.setContext(consumer: self, workspace: workspace)
-        reader.read(fileURL: openURL)
+        _ = reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
     }
     
     func openNotenikIndex(openURL: URL) {
         let reader = NoteIndexReader()
         reader.setContext(consumer: self, workspace: workspace)
-        reader.read(fileURL: openURL)
+        _ = reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
     }
     
@@ -112,7 +119,7 @@ class InputModule: RowConsumer {
     ///   - label: A string containing the column heading for the field.
     ///   - value: The actual value for the field.
     func consumeField(label: String, value: String) {
-        note.setField(label: label, value: value)
+        _ = note.setField(label: label, value: value)
     }
     
     /// Do something with a completed row.
@@ -126,9 +133,9 @@ class InputModule: RowConsumer {
             var xplNotes = 0
             for tag in tags.tags {
                 let tagNote = Note(collection: workspace.collection)
-                tagNote.setField(label: LabelConstants.tag, value: String(describing: tag))
+                _ = tagNote.setField(label: LabelConstants.tag, value: String(describing: tag))
                 note.copyFields(to: tagNote)
-                tagNote.setField(label: LabelConstants.tag, value: String(describing: tag))
+                _ = tagNote.setField(label: LabelConstants.tag, value: String(describing: tag))
                 workspace.list.append(tagNote)
                 notesInput += 1
                 xplNotes += 1
@@ -136,7 +143,7 @@ class InputModule: RowConsumer {
             if xplNotes == 0 {
                 let tagNote = Note(collection: workspace.collection)
                 note.copyFields(to: tagNote)
-                tagNote.setField(label: LabelConstants.tag, value: "")
+                _ = tagNote.setField(label: LabelConstants.tag, value: "")
                 workspace.list.append(tagNote)
                 notesInput += 1
             }

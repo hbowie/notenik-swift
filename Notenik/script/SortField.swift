@@ -41,7 +41,7 @@ class SortField {
     
     func logError(_ msg: String) {
         Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                          category: "FilterRule",
+                          category: "SortField",
                           level: .error,
                           message: msg)
     }

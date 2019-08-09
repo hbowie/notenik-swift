@@ -113,6 +113,9 @@ class ScriptEngine: RowConsumer {
         case .template:
             let template = TemplateModule()
             template.playCommand(workspace: workspace, command: command)
+        case .output:
+            let output = OutputModule()
+            output.playCommand(workspace: workspace, command: command)
         default:
             break
         }

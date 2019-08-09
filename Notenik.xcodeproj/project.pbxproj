@@ -438,6 +438,9 @@
 		9CDE92A122A2E9CB00043AE5 /* MergeInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDE92A022A2E9CB00043AE5 /* MergeInput.swift */; };
 		9CDE92A222A2E9CB00043AE5 /* MergeInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDE92A022A2E9CB00043AE5 /* MergeInput.swift */; };
 		9CDE92A322A2E9CB00043AE5 /* MergeInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDE92A022A2E9CB00043AE5 /* MergeInput.swift */; };
+		9CDEE7C222FDDBDA0000E3C1 /* OutputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */; };
+		9CDEE7C322FDDBDA0000E3C1 /* OutputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */; };
+		9CDEE7C422FDDBDA0000E3C1 /* OutputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */; };
 		9CE2170722A95EB300EE656C /* TemplateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2170622A95EB300EE656C /* TemplateCommand.swift */; };
 		9CE2170822A95EB300EE656C /* TemplateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2170622A95EB300EE656C /* TemplateCommand.swift */; };
 		9CE2170922A95EB300EE656C /* TemplateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2170622A95EB300EE656C /* TemplateCommand.swift */; };
@@ -722,6 +725,7 @@
 		9CD82F6A2211EDC2002314E4 /* NoteLineMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteLineMaker.swift; sourceTree = "<group>"; };
 		9CDE92A022A2E9CB00043AE5 /* MergeInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeInput.swift; sourceTree = "<group>"; };
 		9CDE92B922A322A700043AE5 /* NotenikUtils.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NotenikUtils.xcodeproj; path = NotenikUtils/NotenikUtils.xcodeproj; sourceTree = "<group>"; };
+		9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputModule.swift; sourceTree = "<group>"; };
 		9CE2170622A95EB300EE656C /* TemplateCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCommand.swift; sourceTree = "<group>"; };
 		9CE2170D22A9BC6000EE656C /* LineWithBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineWithBreak.swift; sourceTree = "<group>"; };
 		9CE32503224D48180051CA1F /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
@@ -834,6 +838,7 @@
 				9C67248422EA1B2D00CB7D39 /* FilterModule.swift */,
 				9C67248B22EA205800CB7D39 /* FilterRule.swift */,
 				9C8540B922E8F3660074E349 /* InputModule.swift */,
+				9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */,
 				9C8540C122E8F9F20074E349 /* ScriptAction.swift */,
 				9C8540B122E8F0330074E349 /* ScriptCommand.swift */,
 				9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */,
@@ -1534,6 +1539,7 @@
 				9C67248C22EA205800CB7D39 /* FilterRule.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
+				9CDEE7C222FDDBDA0000E3C1 /* OutputModule.swift in Sources */,
 				9C60E75321F651E500C332ED /* Provider.swift in Sources */,
 				9C25E00622D787980062E282 /* PickList.swift in Sources */,
 				9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */,
@@ -1691,6 +1697,7 @@
 				9C2D40BB22F8C94C0074FCCE /* RowImporter.swift in Sources */,
 				9C9A6BB622EA603700E1F127 /* SortModule.swift in Sources */,
 				9C60E74521F651E500C332ED /* NotenikIO.swift in Sources */,
+				9CDEE7C322FDDBDA0000E3C1 /* OutputModule.swift in Sources */,
 				9CD82F6C2211EDC2002314E4 /* NoteLineMaker.swift in Sources */,
 				9C60E76621F651E500C332ED /* RatingValue.swift in Sources */,
 				9C60E7C721F6525F00C332ED /* FieldDefinitionTests.swift in Sources */,
@@ -1928,6 +1935,7 @@
 				9C9094C62249A664002207EB /* NoteDocumentController.swift in Sources */,
 				9C60E75E21F651E500C332ED /* RecursValue.swift in Sources */,
 				9C60E74F21F651E500C332ED /* ValueFactory.swift in Sources */,
+				9CDEE7C422FDDBDA0000E3C1 /* OutputModule.swift in Sources */,
 				9C60E76121F651E500C332ED /* TitleValue.swift in Sources */,
 				9C29DD2A226286A100928180 /* CollectionWindow.swift in Sources */,
 				9CE2170922A95EB300EE656C /* TemplateCommand.swift in Sources */,

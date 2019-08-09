@@ -18,4 +18,5 @@ enum ScriptModule: String {
     case filter   = "filter"
     case sort     = "sort"
     case template = "template"
+    case output   = "output"
 }
