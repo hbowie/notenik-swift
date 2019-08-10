@@ -52,7 +52,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     /// Startup called by AppDelegate
     func startup() {
-        if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
+        if self.logStoryboard.instantiateController(withIdentifier: "logWC") is LogWindowController {
             Logger.shared.logDestWindow = true
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
@@ -81,7 +81,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Proceed with the user request, now that we have a URL
     func proceedWithSelectedURL(requestType: CollectionRequestType, fileURL: URL) {
         if requestType == .new {
-            newCollection(fileURL: fileURL)
+            _ = newCollection(fileURL: fileURL)
         }
     }
     
@@ -112,13 +112,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         let realmScanner = RealmScanner()
         realmScanner.openRealm(path: parentURL.path)
         let io = realmScanner.realmIO
-        guard io != nil else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "CollectionJuggler",
-                              level: .error,
-                              message: "Could not open Parent Realm at \(parentURL.path)")
-            return
-        }
         if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
             windowController.shouldCascadeWindows = true
             windowController.io = io
@@ -151,7 +144,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         openPanel.allowsMultipleSelection = false
         openPanel.begin { (result) -> Void  in
             if result == .OK {
-                self.saveCollectionAs(currentIO: currentIO, currentWindow: currentWindow, newURL: openPanel.url!)
+                _ = self.saveCollectionAs(currentIO: currentIO, currentWindow: currentWindow, newURL: openPanel.url!)
             }
         }
     }
@@ -226,8 +219,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     func newCollection(fileURL: URL) -> Bool {
         
         // Create and populate a starting NoteCollection object
-        var openOK = false
-        
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
         realm.path = ""
@@ -253,9 +244,10 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                               category: "CollectionJuggler",
                               level: .error,
                               message: "Couldn't get a Collection Prefs Window Controller!")
+            return false
         }
         
-        return openOK
+        return true
     }
     
     
@@ -345,14 +337,14 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Open the Essential Collection, if we have one
     func openEssentialCollection() {
         if essentialURL != nil {
-            openFileWithNewWindow(fileURL: essentialURL!, readOnly: false)
+            _ = openFileWithNewWindow(fileURL: essentialURL!, readOnly: false)
         }
     }
     
     /// Open the Application's Internal Collection of Help Notes
     func openHelpNotes() {
         let path = Bundle.main.resourcePath! + "/notenik-swift-intro"
-        openFileWithNewWindow(folderPath: path, readOnly: true)
+        _ = openFileWithNewWindow(folderPath: path, readOnly: true)
     }
     
     /// Respond to a user request to open another Collection. Present the user
@@ -373,7 +365,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         openPanel.allowsMultipleSelection = false
         openPanel.begin { (result) -> Void  in
             if result == .OK {
-                self.openFileWithNewWindow(fileURL: openPanel.url!, readOnly: false)
+                _ = self.openFileWithNewWindow(fileURL: openPanel.url!, readOnly: false)
             }
         }
     }
@@ -464,19 +456,16 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     func loadInitialCollection() {
         
         // Figure out a good collection to open
-        var io: NotenikIO = FileIO()
+        let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
         realm.path = ""
         var collection: NoteCollection?
-        var collectionURL: URL?
 
         if essentialURL != nil {
-            collectionURL = essentialURL
             collection = io.openCollection(realm: realm, collectionPath: essentialURL!.path)
         }
 
         if collection == nil && lastURL != nil {
-            collectionURL = lastURL
             collection = io.openCollection(realm: realm, collectionPath: lastURL!.path)
         }
         

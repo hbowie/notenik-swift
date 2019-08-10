@@ -266,7 +266,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             while modNote.date < today {
                 modNote.recur()
             }
-            io!.modNote(oldNote: noteToUpdate, newNote: modNote)
+            _ = io!.modNote(oldNote: noteToUpdate, newNote: modNote)
         }
         reloadViews()
         (note, position) = io!.firstNote()
@@ -281,8 +281,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         var updated = 0
         while note != nil {
             if note!.hasDate() {
-                let ymdDate = note!.date.ymdDate
-                let dateSet = note!.setDate(ymdDate)
                 let written = noteIO.writeNote(note!)
                 if !written {
                     print("Problems saving the note to disk")
@@ -354,7 +352,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     /// Close the note, either by applying the recurs rule, or changing the status to 9
     @IBAction func menuNoteClose(_ sender: Any) {
         guard io != nil && io!.collectionOpen else { return }
-        let (note, notePosition) = io!.getSelectedNote()
+        let (note, _) = io!.getSelectedNote()
         guard note != nil else { return }
         
         // if (pendingMod || newNoteRequested) && noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
@@ -363,8 +361,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         } else {
             let modNote = note!.copy() as! Note
             modNote.close()
-            let (nextNote, nextPosition) = io!.deleteSelectedNote()
-            let (addedNote, addedPosition) = io!.addNote(newNote: modNote)
+            let (_, _) = io!.deleteSelectedNote()
+            let (addedNote, _) = io!.addNote(newNote: modNote)
             if addedNote == nil {
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                                   category: "CollectionWindowController",
@@ -412,8 +410,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         if incDate.goodDate {
             incDate.addDays(1)
             let strDate = String(describing: incDate)
-            modNote.setDate(strDate)
-            recordMods(noteIO: noteIO, note: note, modNote: modNote)
+            let _ = modNote.setDate(strDate)
+            let _ = recordMods(noteIO: noteIO, note: note, modNote: modNote)
         }
     }
     
@@ -509,7 +507,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     @IBAction func menuNoteShare(_ sender: Any) {
         guard io != nil && io!.collectionOpen else { return }
-        let (note, notePosition) = io!.getSelectedNote()
+        let (note, _) = io!.getSelectedNote()
         guard note != nil else { return }
         if let shareController = self.shareStoryboard.instantiateController(withIdentifier: "shareWC") as? ShareWindowController {
             guard let vc = shareController.contentViewController as? ShareViewController else { return }
@@ -543,7 +541,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             // Go to next note
             goToNextNote(sender)
         default:
-            let startingPosition = noteIO.position
+            let _ = noteIO.position
         }
     }
     
@@ -610,7 +608,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             alert.informativeText = "Searched for case-insensitve match on title, link, tags and body fields"
             
             alert.addButton(withTitle: "OK")
-            let response = alert.runModal()
+            let _ = alert.runModal()
         }
     }
     
@@ -638,7 +636,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             alert.messageText = "No more notes found containing search string '\(searchFor)'"
             alert.informativeText = "Searched for case-insensitve match on title, link, tags and body fields"
             alert.addButton(withTitle: "OK")
-            let response = alert.runModal()
+            let _ = alert.runModal()
         }
     }
     
@@ -827,7 +825,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         if selection != nil && selection!.hasSeq() {
             let incSeq = SeqValue(selection!.seq.value)
             incSeq.increment(onLeft: false)
-            newNote!.setSeq(incSeq.value)
+            let _ = newNote!.setSeq(incSeq.value)
         }
         
         editVC!.populateFields(with: newNote!)
@@ -884,7 +882,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     @IBAction func saveEdits(_ sender: Any) {
         if !pendingMod {
-            modIfChanged()
+            let _ = modIfChanged()
         }
     }
     
@@ -950,7 +948,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let newIO: NotenikIO = FileIO()
         let realm = newIO.getDefaultRealm()
         realm.path = ""
-        let collection = newIO.openCollection(realm: realm, collectionPath: url!.path)
+        let _ = newIO.openCollection(realm: realm, collectionPath: url!.path)
         self.io = newIO
     }
     
@@ -986,7 +984,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
         
         if urlPointsToCollection {
-            juggler.openFileWithNewWindow(fileURL: url, readOnly: false)
+            let _ = juggler.openFileWithNewWindow(fileURL: url, readOnly: false)
         } else if url.isFileURL && url.lastPathComponent.hasSuffix(ScriptEngine.scriptExt){
             launchScript(fileURL: url)
         } else {

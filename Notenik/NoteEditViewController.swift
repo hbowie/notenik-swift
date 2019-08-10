@@ -156,7 +156,8 @@ class NoteEditViewController: NSViewController {
     /// Update appropriate stuff when a new note has been selected
     func select(note: Note) {
         
-        guard let collection = io?.collection else { return }
+        guard io != nil else { return }
+        guard io!.collection != nil else { return }
         guard io!.collectionOpen else { return }
         guard initialViewLoaded && containerViewBuilt else { return }
         

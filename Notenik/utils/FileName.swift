@@ -87,12 +87,10 @@ class FileName: CustomStringConvertible {
         var lastIndex = fileNameStr.endIndex
         var dotIndex = fileNameStr.endIndex
         var c: Character = " "
-        var lastC: Character = " "
         var i = fileNameStr.count - 1
         var pathEndIndex = fileNameStr.endIndex
         var folderStartIndex = fileNameStr.endIndex
         while i >= 0 {
-            lastC = c
             c = StringUtils.charAt(index: i, str: fileNameStr)
             
             if c == "." {

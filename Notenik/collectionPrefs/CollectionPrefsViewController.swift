@@ -186,7 +186,7 @@ class CollectionPrefsViewController: NSViewController {
             }
         }
         if !found {
-            fileExtComboBox.addItem(withObjectValue: ext)
+            fileExtComboBox.addItem(withObjectValue: ext!)
             fileExtComboBox.selectItem(at: i)
         }
     }
@@ -249,12 +249,12 @@ class CollectionPrefsViewController: NSViewController {
                 // No definition found or requested
             } else if def == nil && checkBox.state == NSControl.StateValue.on {
                 // Add a new definition
-                dict.addDef(checkBox.title)
+                _ = dict.addDef(checkBox.title)
             } else if def != nil && checkBox.state == NSControl.StateValue.on {
                 // Definition already in dictionary and requested
             } else if def != nil && checkBox.state == NSControl.StateValue.off {
                 // Removing definition
-                dict.removeDef(def!)
+                _ = dict.removeDef(def!)
             }
         }
         owner!.collectionPrefsModified(ok: true, collection: collection!, window: windowController!)

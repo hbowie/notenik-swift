@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// A Note Reader that conformes to RowImporter. 
 class NoteReader: RowImporter {
     
     var consumer:           RowConsumer?
@@ -20,8 +21,6 @@ class NoteReader: RowImporter {
     
     var labels:             [String] = []
     var fields:             [String] = []
-    
-    var rowsReturned        = 0
     
     init() {
         
@@ -38,7 +37,7 @@ class NoteReader: RowImporter {
     ///
     /// - Parameter fileURL: The URL of the Notenik Collection to be read.
     /// - Returns: The number of rows returned.
-    func read(fileURL: URL) -> Int {
+    func read(fileURL: URL) {
         
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
@@ -52,14 +51,12 @@ class NoteReader: RowImporter {
         collection = io.openCollection(realm: realm, collectionPath: collectionURL.path)
         if collection == nil {
             logError("Problems opening the collection at " + collectionURL.path)
-            return 0
         }
         
         for def in collection!.dict.dict {
             labels.append(def.value.fieldLabel.properForm)
         }
         
-        rowsReturned = 0
         var (note, position) = io.firstNote()
         while note != nil {
             fields = []
@@ -69,11 +66,9 @@ class NoteReader: RowImporter {
                 fields.append(value)
             }
             consumer!.consumeRow(labels: labels, fields: fields)
-            rowsReturned += 1
             (note, position) = io.nextNote(position)
         }
         io.closeCollection()
-        return rowsReturned
     }
     
     /// Send an error message to the log.

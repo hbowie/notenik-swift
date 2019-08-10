@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// Retrieve and save Notes from and to files stored locally.
 class FileIO: NotenikIO, RowConsumer {
     
     let filesFolderName = "files"
@@ -257,11 +258,10 @@ class FileIO: NotenikIO, RowConsumer {
                 AppPrefs.shared.pickLists = pickLists
             }
             if !infoFound {
-                saveInfoFile()
+                _ = saveInfoFile()
             }
             return collection
         }
-        attachments = nil
     }
     
     /// Load attachments from the files folder.
@@ -568,7 +568,7 @@ class FileIO: NotenikIO, RowConsumer {
     ///   - label: A string containing the column heading for the field.
     ///   - value: The actual value for the field.
     func consumeField(label: String, value: String) {
-        noteToImport!.setField(label: label, value: value)
+        _ = noteToImport!.setField(label: label, value: value)
     }
     
     /// Do something with a completed row.
@@ -603,7 +603,7 @@ class FileIO: NotenikIO, RowConsumer {
                 if archiveIO != nil {
                     let noteCopy = note.copy() as! Note
                     noteCopy.collection = archiveIO!.collection!
-                    let (archiveNote, archivePosition) = archiveIO!.addNote(newNote: noteCopy)
+                    let (archiveNote, _) = archiveIO!.addNote(newNote: noteCopy)
                     if archiveNote == nil {
                         okToDelete = false
                         Logger.shared.log(subsystem: "com.powersurgepub.notenik",
@@ -620,7 +620,7 @@ class FileIO: NotenikIO, RowConsumer {
         
         // Now do the actual deletes
         for note in notesToDelete {
-            let deleted = deleteNote(note)
+            _ = deleteNote(note)
         }
         
         return notesToDelete.count
@@ -628,8 +628,8 @@ class FileIO: NotenikIO, RowConsumer {
     
     /// Save some of the collection info to make it persistent
     func persistCollectionInfo() {
-        saveInfoFile()
-        saveTemplateFile()
+        _ = saveInfoFile()
+        _ = saveTemplateFile()
     }
     
     /// Save a README file into the current collection
@@ -752,7 +752,7 @@ class FileIO: NotenikIO, RowConsumer {
         
         guard deleted else { return false }
 
-        let notePath = noteToDelete.fullPath
+        _ = noteToDelete.fullPath
         let noteURL = noteToDelete.url
         if noteURL != nil {
             do {
@@ -858,7 +858,7 @@ class FileIO: NotenikIO, RowConsumer {
                                   message: "Inscrutable modification date for note at \(noteURL.path)")
             }
         }
-        catch let error as NSError {
+        catch {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik",
                               category: "FileIO",
                               level: .error,
@@ -875,7 +875,7 @@ class FileIO: NotenikIO, RowConsumer {
             if newValue != collection!.sortParm {
                 collection!.sortParm = newValue
                 bunch!.sortParm = newValue
-                saveInfoFile()
+                _ = saveInfoFile()
             }
         }
     }
@@ -989,7 +989,7 @@ class FileIO: NotenikIO, RowConsumer {
         var nextNote = priorNote
         var nextPosition = priorPosition
  
-        bunch!.delete(note: noteToDelete!)
+        _ = bunch!.delete(note: noteToDelete!)
         var positioned = false
         if priorNote != nil {
             (nextNote, nextPosition) = bunch!.nextNote(priorPosition)
@@ -998,10 +998,10 @@ class FileIO: NotenikIO, RowConsumer {
             }
         }
         if !positioned {
-            bunch!.firstNote()
+            _ = bunch!.firstNote()
         }
         
-        let notePath = noteToDelete!.fullPath
+        _ = noteToDelete!.fullPath
         let noteURL = noteToDelete!.url
         if noteURL != nil {
             do {

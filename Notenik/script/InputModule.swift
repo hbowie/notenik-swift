@@ -46,8 +46,16 @@ class InputModule: RowConsumer {
         case "xpltags":
             let xpltags = BooleanValue(command.value)
             workspace.explodeTags = xpltags.isTrue
-        default:
+        case "dirdepth":
+            let maxDirDepth = Int(command.value)
+            if maxDirDepth != nil {
+                workspace.maxDirDepth = maxDirDepth!
+                logInfo("Setting maximum directory depth to \(maxDirDepth!)")
+            }
+        case "":
             break
+        default:
+            logError("Input Set object of '\(command.object)' is not recognized")
         }
     }
     
@@ -71,6 +79,8 @@ class InputModule: RowConsumer {
         notesInput = 0
         note = Note(collection: workspace.collection)
         switch command.modifier {
+        case "dir":
+            openDir(openURL: openURL)
         case "file":
             openDelimited(openURL: openURL)
         case "notenik-defined", "notenik+", "notenik-general":
@@ -88,6 +98,14 @@ class InputModule: RowConsumer {
     func openDelimited(openURL: URL) {
         let reader = DelimitedReader()
         reader.setContext(consumer: self, workspace: workspace)
+        _ = reader.read(fileURL: openURL)
+        logInfo("\(notesInput) rows read from \(openURL.path)")
+    }
+    
+    func openDir(openURL: URL) {
+        let reader = DirReader()
+        reader.setContext(consumer: self, workspace: workspace)
+        reader.maxDirDepth = workspace.maxDirDepth
         _ = reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
     }

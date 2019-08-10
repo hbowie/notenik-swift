@@ -20,8 +20,6 @@ class NoteIndexReader: RowImporter {
     
     var indexCollection     = IndexCollection()
     
-    var ok =                false
-    var rowsReturned        = 0
     var rowCount            = 0
 
     var labels:             [String] = []
@@ -42,7 +40,7 @@ class NoteIndexReader: RowImporter {
     ///
     /// - Parameter fileURL: The URL of the Notenik Collection to be read.
     /// - Returns: The number of rows returned.
-    func read(fileURL: URL) -> Int {
+    func read(fileURL: URL) {
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
         realm.path = ""
@@ -55,7 +53,7 @@ class NoteIndexReader: RowImporter {
         collection = io.openCollection(realm: realm, collectionPath: collectionURL.path)
         if collection == nil {
             logError("Problems opening the collection at " + collectionURL.path)
-            return 0
+            return
         }
         
         labels.append("Initial Letter")
@@ -65,7 +63,6 @@ class NoteIndexReader: RowImporter {
         labels.append("Page")
         labels.append("Anchor")
         
-        rowsReturned = 0
         var (note, position) = io.firstNote()
         while note != nil {
             if note!.hasTitle() && note!.hasIndex() {
@@ -100,10 +97,8 @@ class NoteIndexReader: RowImporter {
                 fields.append(ref.anchor)
                 
                 consumer!.consumeRow(labels: labels, fields: fields)
-                rowsReturned += 1
             }
         }
-        return rowsReturned
     }
     
     /// Send an error message to the log.

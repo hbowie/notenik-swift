@@ -75,8 +75,8 @@ class Note: Comparable, NSCopying {
             let dateAddedDef = collection.dict.getDef(LabelConstants.dateAdded)
             if dateAddedDef != nil {
                 let dateAddedValue = dateAdded
-                if dateAddedValue == nil || dateAddedValue.value.count == 0 {
-                    setDateAdded(newValue)
+                if dateAddedValue.value.count == 0 {
+                    _ = setDateAdded(newValue)
                 }
             }
         }
@@ -191,7 +191,7 @@ class Note: Comparable, NSCopying {
             } else if field == nil && field2 != nil {
                 field2!.value.set("")
             } else if field != nil && field2 == nil {
-                note2.addField(def: definition, strValue: field!.value.value)
+                _ = note2.addField(def: definition, strValue: field!.value.value)
             } else {
                 field2!.value.set(field!.value.value)
             }
@@ -269,7 +269,7 @@ class Note: Comparable, NSCopying {
     func appendToIndex(_ index: String) {
         let field = getField(label: LabelConstants.index)
         if field == nil {
-            setIndex(index)
+            _ = setIndex(index)
         } else {
             let val = field!.value
             if val is IndexValue {

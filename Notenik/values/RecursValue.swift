@@ -49,7 +49,7 @@ class RecursValue : StringValue {
      */
     func recur(_ strDate: DateValue) -> String {
         let possibleDate = strDate.date
-        var newDate = SimpleDate(dateValue: strDate)
+        let newDate = SimpleDate(dateValue: strDate)
         if possibleDate == nil {
             return String(describing: strDate)
         } else {

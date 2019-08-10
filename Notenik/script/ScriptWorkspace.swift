@@ -19,6 +19,7 @@ class ScriptWorkspace {
     
     var inputURL:     URL?
     var explodeTags = false
+    var maxDirDepth = 1
     
     var list        = NotesList()
     var fullList    = NotesList()

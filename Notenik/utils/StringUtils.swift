@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// A collection of utility methods for working with Strings.
 class StringUtils {
     
     private init() {
@@ -20,6 +21,31 @@ class StringUtils {
     static let lowerChars = "a"..."z"
     static let upperChars = "A"..."Z"
     static let digits     = "0"..."9"
+    
+    /// Write a single column's worth of data. The writer will enclose in quotation marks
+    /// and encode embedded quotation marks as needed (with two quote chars representing one).
+    static func encaseInQuotesAsNeeded(_ value: String, sepChar: Character = "\t") -> String {
+        var v = value
+        var quotesNeeded = false
+        var i = v.startIndex
+        for c in v {
+            if c == sepChar {
+                quotesNeeded = true
+            } else if c.isNewline {
+                quotesNeeded = true
+            } else if c == "\"" {
+                quotesNeeded = true
+                v.insert("\"", at: i)
+                i = v.index(after: i)
+            }
+            i = v.index(after: i)
+        }
+        if quotesNeeded {
+            return("\"" + v + "\"")
+        } else {
+            return(v)
+        }
+    }
     
     /// Convert a string to its lowest common denominator, dropping white space and punctuation,
     /// converting all letters to lowercase, and dropping leading articles (a, an, the).
@@ -160,7 +186,6 @@ class StringUtils {
     }
     
     static func truncateOrPad(_ from: String, toLength: Int, keepOnRight: Bool = false) -> String {
-        var out = ""
         if toLength == from.count {
             return from
         } else if toLength < from.count {

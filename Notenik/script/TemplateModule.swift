@@ -40,12 +40,12 @@ class TemplateModule {
         workspace.template.setWebRoot(filePath: workspace.webRootPath)
         workspace.template.setWorkspace(workspace)
         let templateURL = URL(fileURLWithPath: command.valueWithPathResolved)
-        workspace.template.openTemplate(templateURL: templateURL)
+        _ = workspace.template.openTemplate(templateURL: templateURL)
     }
     
     func generate() {
         workspace.template.supplyData(notesList: workspace.list, dataSource: workspace.inputURL!.path)
-        workspace.template.generateOutput()
+        _ = workspace.template.generateOutput()
     }
     
     func webroot() {

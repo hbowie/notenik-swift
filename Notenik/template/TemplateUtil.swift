@@ -372,9 +372,7 @@ class TemplateUtil {
         var lookingForStartMods = false
         var lookingForEndVar = false
         
-        var startWithDelim = str.startIndex
         var startPastDelim = str.startIndex
-        var endAtDelim = str.startIndex
         var endPastDelim = str.startIndex
         var varName = ""
         var mods = ""
@@ -382,7 +380,6 @@ class TemplateUtil {
         while i < str.endIndex {
             let char = str[i]
             if lookingForStartVar && str.indexedEquals(index: i, str2: startVar) {
-                startWithDelim = i
                 startPastDelim = str.index(i, offsetBy: startVar.count)
                 i = startPastDelim
                 lookingForStartVar = false
@@ -396,7 +393,6 @@ class TemplateUtil {
                 lookingForStartMods = false
             } else if lookingForEndVar {
                 if str.indexedEquals(index: i, str2: endVar) {
-                    endAtDelim = i
                     endPastDelim = str.index(i, offsetBy: endVar.count)
                     appendVar(toLine: out, varName: varName, mods: mods, note: note)
                     i = endPastDelim
@@ -547,6 +543,8 @@ class TemplateUtil {
                 modifiedValue = convertMarkdownToHTML(modifiedValue)
             } else if charLower == "p" {
                 modifiedValue = StringUtils.purifyPunctuation(modifiedValue)
+            } else if charLower == "q" {
+                modifiedValue = StringUtils.encaseInQuotesAsNeeded(modifiedValue)
             } else if charLower == "r" {
                 if formatFileName {
                     readableFileName = true

@@ -129,7 +129,7 @@ class ModWhenChanged {
         case .discard:
             return (outcome, nil)
         case .add:
-            let (addedNote, addedPosition) = io.addNote(newNote: modNote)
+            let (addedNote, _) = io.addNote(newNote: modNote)
             if addedNote != nil {
                 return (outcome, addedNote)
             } else {
@@ -147,8 +147,8 @@ class ModWhenChanged {
                                   level: .error,
                                   message: "Problems renaming attachments for \(modNote.title)")
             }
-            let (nextNote, nextPosition) = io.deleteSelectedNote()
-            let (addedNote, addedPosition) = io.addNote(newNote: modNote)
+            let (_, _) = io.deleteSelectedNote()
+            let (addedNote, _) = io.addNote(newNote: modNote)
             if addedNote != nil {
                 return (outcome, addedNote)
             } else {

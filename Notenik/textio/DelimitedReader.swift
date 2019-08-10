@@ -20,9 +20,6 @@ class DelimitedReader: RowImporter {
     
     var consumer:           RowConsumer!
     
-    var ok =                false
-    var rowsReturned =      0
-    
     var labels:             [String] = []
     var fields:             [String] = []
     
@@ -51,19 +48,16 @@ class DelimitedReader: RowImporter {
     /// to the consumer, one at a time.
     ///
     /// - Parameter fileURL: The URL of the file to be read.
-    func read(fileURL: URL) -> Int {
-        rowsReturned = 0
+    func read(fileURL: URL) {
         do {
             bigString = try String(contentsOf: fileURL, encoding: .utf8)
             scanString()
-            ok = rowsReturned > 0
         } catch {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik",
                               category: "MergeInput",
                               level: .error,
                               message: "Error reading Delimited Text File from \(fileURL)")
         }
-        return rowsReturned
     }
     
     /// Parse the string into rows/lines and fields
@@ -175,7 +169,6 @@ class DelimitedReader: RowImporter {
             endField()
             if lineCount > 0 {
                 consumer.consumeRow(labels: labels, fields: fields)
-                rowsReturned += 1
             }
             lineCount += 1
         }

@@ -441,6 +441,9 @@
 		9CDEE7C222FDDBDA0000E3C1 /* OutputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */; };
 		9CDEE7C322FDDBDA0000E3C1 /* OutputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */; };
 		9CDEE7C422FDDBDA0000E3C1 /* OutputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */; };
+		9CDEE7C722FE36E30000E3C1 /* DirReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C622FE36E30000E3C1 /* DirReader.swift */; };
+		9CDEE7C822FE36E30000E3C1 /* DirReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C622FE36E30000E3C1 /* DirReader.swift */; };
+		9CDEE7C922FE36E30000E3C1 /* DirReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C622FE36E30000E3C1 /* DirReader.swift */; };
 		9CE2170722A95EB300EE656C /* TemplateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2170622A95EB300EE656C /* TemplateCommand.swift */; };
 		9CE2170822A95EB300EE656C /* TemplateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2170622A95EB300EE656C /* TemplateCommand.swift */; };
 		9CE2170922A95EB300EE656C /* TemplateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2170622A95EB300EE656C /* TemplateCommand.swift */; };
@@ -726,6 +729,7 @@
 		9CDE92A022A2E9CB00043AE5 /* MergeInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeInput.swift; sourceTree = "<group>"; };
 		9CDE92B922A322A700043AE5 /* NotenikUtils.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NotenikUtils.xcodeproj; path = NotenikUtils/NotenikUtils.xcodeproj; sourceTree = "<group>"; };
 		9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputModule.swift; sourceTree = "<group>"; };
+		9CDEE7C622FE36E30000E3C1 /* DirReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirReader.swift; sourceTree = "<group>"; };
 		9CE2170622A95EB300EE656C /* TemplateCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCommand.swift; sourceTree = "<group>"; };
 		9CE2170D22A9BC6000EE656C /* LineWithBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineWithBreak.swift; sourceTree = "<group>"; };
 		9CE32503224D48180051CA1F /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
@@ -1167,6 +1171,7 @@
 				9CD82F662211E4BA002314E4 /* BigStringWriter.swift */,
 				9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */,
 				9C96BA9F227669D7008635B3 /* DelimitedWriter.swift */,
+				9CDEE7C622FE36E30000E3C1 /* DirReader.swift */,
 				9C60E73521F651E500C332ED /* LineReader.swift */,
 				9CD82F622211E456002314E4 /* LineWriter.swift */,
 				9CCFEE742270F52200F472C5 /* RowConsumer.swift */,
@@ -1626,6 +1631,7 @@
 				9CF1193E225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
 				9C27D9FB22FB3FA6008EE0A1 /* IndexTerm.swift in Sources */,
 				9C2A35C122A1D164009C868E /* MergeActionModifier.swift in Sources */,
+				9CDEE7C722FE36E30000E3C1 /* DirReader.swift in Sources */,
 				9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */,
 				9C2AE514220A033300AE8BEE /* TagsNode.swift in Sources */,
 				9CF1193B225822870015AE91 /* CollectionPrefsWindowController.swift in Sources */,
@@ -1702,6 +1708,7 @@
 				9C60E76621F651E500C332ED /* RatingValue.swift in Sources */,
 				9C60E7C721F6525F00C332ED /* FieldDefinitionTests.swift in Sources */,
 				9C60E78A21F651E500C332ED /* NoteLineParser.swift in Sources */,
+				9CDEE7C822FE36E30000E3C1 /* DirReader.swift in Sources */,
 				9C60E78421F651E500C332ED /* LineReader.swift in Sources */,
 				9C60E78721F651E500C332ED /* BigStringReader.swift in Sources */,
 				9C60E77821F651E500C332ED /* StatusValue.swift in Sources */,
@@ -1972,6 +1979,7 @@
 				9C2AE52A220A34D800AE8BEE /* NoteEditViewController.swift in Sources */,
 				9C60E70D21F650B800C332ED /* FileUtils.swift in Sources */,
 				9C9A6BB022EA5FBC00E1F127 /* SortField.swift in Sources */,
+				9CDEE7C922FE36E30000E3C1 /* DirReader.swift in Sources */,
 				9C96BAA2227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9C8329FF224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */,
 				9CCFD62A22AEDA5C00C64D37 /* StringConverter.swift in Sources */,

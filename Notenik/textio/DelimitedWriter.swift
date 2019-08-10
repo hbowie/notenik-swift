@@ -48,29 +48,10 @@ class DelimitedWriter {
     /// Write a single column's worth of data. The writer will enclose in quotation marks
     /// and encode embedded quotation marks as needed (with two quote chars representing one).
     func write(value: String) {
-        var v = value
         if lineStarted {
             bigString.write(sepStr)
         }
-        var quotesNeeded = false
-        var i = v.startIndex
-        for c in v {
-            if c == sepChar {
-                quotesNeeded = true
-            } else if c.isNewline {
-                quotesNeeded = true
-            } else if c == "\"" {
-                quotesNeeded = true
-                v.insert("\"", at: i)
-                i = v.index(after: i)
-            }
-            i = v.index(after: i)
-        }
-        if quotesNeeded {
-            bigString.write("\"" + v + "\"")
-        } else {
-            bigString.write(v)
-        }
+        bigString.write(StringUtils.encaseInQuotesAsNeeded(value, sepChar: sepChar))
         lineStarted = true
     }
     

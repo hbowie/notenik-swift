@@ -18,9 +18,9 @@ protocol RowImporter {
     func setContext(consumer: RowConsumer, workspace: ScriptWorkspace?)
     
     /// Read the file and break it down into fields and rows, returning each
-    /// to the consumer, one at a time.
+    /// to the consumer, one at a time. Any errors encountered should be
+    /// logged.
     ///
     /// - Parameter fileURL: The URL of the file to be read.
-    /// - Returns: The number of rows returned.
-    func read(fileURL: URL) -> Int
+    func read(fileURL: URL)
 }

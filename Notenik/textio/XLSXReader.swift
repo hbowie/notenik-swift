@@ -23,8 +23,6 @@ class XLSXReader: RowImporter {
     var worksheet:          Worksheet?
     var sharedStrings:      SharedStrings?
     
-    var ok =                false
-    var rowsReturned        = 0
     var rowCount            = 0
     var columns:            [String] = []
     var labels:             [String] = []
@@ -45,42 +43,40 @@ class XLSXReader: RowImporter {
     ///
     /// - Parameter fileURL: The URL of the file to be read.
     /// - Returns: The number of rows returned. 
-    func read(fileURL: URL) -> Int {
-        guard consumer != nil else { return 0 }
-        rowsReturned = 0
+    func read(fileURL: URL) {
+        guard consumer != nil else { return }
         rowCount = 0
-        ok = false
         labels = []
         columns = []
         
         excelFile = XLSXFile(filepath: fileURL.path)
         if excelFile == nil {
             logError("XLSX file corrupted or does not exist")
-            return 0
+            return
         }
         
         do {
             let paths = try excelFile!.parseWorksheetPaths()
             if paths.count < 1 {
                 logError("XLSX file contains no worksheets")
-                return 0
+                return
             }
             worksheetPath = paths[0]
         } catch {
             logError("Could not obtain worksheet paths")
-            return 0
+            return
         }
         
         do {
             worksheet = try excelFile?.parseWorksheet(at: worksheetPath)
         } catch {
             logError("Error parsing worksheet at path \(worksheetPath)")
-            return 0
+            return
         }
         
         if worksheet!.data == nil {
             logError("No data in worksheet at path \(worksheetPath)")
-            return 0
+            return
         }
         
         do {
@@ -127,13 +123,9 @@ class XLSXReader: RowImporter {
             }
             if rowCount > 0 {
                 consumer!.consumeRow(labels: labels, fields: fields)
-                rowsReturned += 1
             }
             rowCount += 1
         }
-        
-        ok = rowsReturned > 0
-        return rowsReturned
     }
     
     /// Send an error message to the log.

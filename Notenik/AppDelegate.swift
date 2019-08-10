@@ -36,7 +36,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         juggler.docController = docController
         recentDocumentURLs = docController.recentDocumentURLs
-        let maxRecent = docController.maximumRecentDocumentCount
         juggler.startup()
     }
     
@@ -123,7 +122,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Attempt to open the passed file
     func application(_ sender: NSApplication,
                      openFile filename: String) -> Bool {
-        juggler.openFileWithNewWindow(folderPath: filename, readOnly: false)
+        _ = juggler.openFileWithNewWindow(folderPath: filename, readOnly: false)
         return true
     }
     

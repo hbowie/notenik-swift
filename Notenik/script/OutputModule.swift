@@ -43,13 +43,13 @@ class OutputModule {
         writer.open()
         var rowsWritten = 0
         let dict = workspace.collection.dict
-        for def in dict.dict {
-            writer.write(value: def.value.fieldLabel.properForm)
+        for def in dict.list {
+            writer.write(value: def.fieldLabel.properForm)
         }
         writer.endLine()
         for note in workspace.list {
-            for entry in dict.dict {
-                let def = entry.value
+            for entry in dict.list {
+                let def = entry
                 let field = note.getField(def: def)
                 var value = ""
                 if field != nil {
