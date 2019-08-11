@@ -106,7 +106,7 @@ class NoteLineParser {
                             indexStarted = true
                         }
                     } else {
-                        note.setField(field)
+                        _ = note.setField(field)
                     }
                 }
                 pendingBlankLines = 0
@@ -144,7 +144,7 @@ class NoteLineParser {
             // Don't allow the title field to consume multiple lines. 
             if label.isTitle && value.count > 0 {
                 let titleField = NoteField(def: def, value: value, statusConfig: collection.statusConfig)
-                note.setField(titleField)
+                _ = note.setField(titleField)
                 pendingBlankLines = 0
                 label = FieldLabel()
                 value = ""
@@ -152,7 +152,7 @@ class NoteLineParser {
         } while possibleLine != nil
         lineReader.close()
         if !note.hasTitle() {
-            note.setTitle(defaultTitle)
+            _ = note.setTitle(defaultTitle)
         }
         return note
     }

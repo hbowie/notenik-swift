@@ -15,6 +15,8 @@ enum ScriptAction: String {
     case blank    = ""
     case add      = "add"
     case clear    = "clear"
+    case epubin   = "epubin"
+    case epubout  = "epubout"
     case generate = "generate"
     case open     = "open"
     case set      = "set"

@@ -60,6 +60,10 @@ class InputModule: RowConsumer {
     }
     
     func open() {
+        
+        // Clear the pending filter rules whenever we input a new file
+        workspace.pendingRules = []
+        
         guard let openURL = workspace.inputURL else {
             logError("Input Open couldn't make sense of the location '\(command.valueWithPathResolved)'")
             return

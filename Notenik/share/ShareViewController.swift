@@ -101,7 +101,7 @@ class ShareViewController: NSViewController {
             if contentBodyOnlyButton.state == .on {
                 noteLineMaker.putField(note!.getBodyAsField())
             } else {
-                noteLineMaker.putNote(note!)
+                _ = noteLineMaker.putNote(note!)
             }
             if noteLineMaker.fieldsWritten > 0 {
                 stringToShare = writer.bigString
@@ -116,7 +116,7 @@ class ShareViewController: NSViewController {
         if destinationClipboardButton.state == .on {
             let pb = NSPasteboard.general
             pb.clearContents()
-            let ok = pb.setString(stringToShare, forType: .string)
+            _ = pb.setString(stringToShare, forType: .string)
         }
         
         if destinationFileButton.state == .on {

@@ -11,13 +11,12 @@
 
 import Foundation
 
+/// One command to be executed by the Scripting Engine.
 class ScriptCommand {
-    
-    var module: ScriptModule = .blank
-    var action: ScriptAction = .blank
-    var modifier = ""
-    var object = ""
-    var value = ""
+    var module:   ScriptModule = .blank
+    var action:   ScriptAction = .blank
+    var modifier  = ""
+    var object    = ""
+    var value     = ""
     var valueWithPathResolved = ""
-    
 }
