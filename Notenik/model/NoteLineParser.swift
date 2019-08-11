@@ -102,7 +102,7 @@ class NoteLineParser {
                         if indexStarted {
                             note.appendToIndex(value)
                         } else {
-                            note.setIndex(value)
+                            _ = note.setIndex(value)
                             indexStarted = true
                         }
                     } else {

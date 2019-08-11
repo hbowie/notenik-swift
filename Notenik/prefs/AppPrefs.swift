@@ -168,7 +168,7 @@ class AppPrefs {
     
     /// Make an attributed string using latest font size
     func makeUserAttributedString(text: String) -> NSAttributedString {
-        return NSAttributedString(string: text, attributes: userFontAttrs)
+        return NSAttributedString(string: text, attributes: userFontAttrs as [NSAttributedString.Key: Any])
     }
     
     /// Determine the appropriate height constraint for a text view based on the desired

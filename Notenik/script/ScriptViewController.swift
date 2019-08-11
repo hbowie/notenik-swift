@@ -34,7 +34,7 @@ class ScriptViewController: NSViewController {
     @IBAction func playAction(_ sender: Any) {
         if scriptURL != nil {
             let scripter = ScriptEngine()
-            scripter.playScript(fileURL: scriptURL!)
+            _ = scripter.playScript(fileURL: scriptURL!)
             self.scriptLog.string = scripter.workspace.scriptLog
         }
     }

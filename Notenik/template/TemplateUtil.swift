@@ -464,6 +464,8 @@ class TemplateUtil {
         var formatFileName = false
         var readableFileName = false
         
+        var summarizePending = false
+        
         var formatString = ""
         
         // See what modifiers we have
@@ -552,7 +554,11 @@ class TemplateUtil {
                     keepCharsOnRight = true
                 }
             } else if charLower == "s" {
-                modifiedValue = StringUtils.summarize(modifiedValue)
+                if nextChar.isWholeNumber {
+                    summarizePending = true
+                } else {
+                    modifiedValue = StringUtils.summarize(modifiedValue)
+                }
             } else if charLower == "u" && nextCharLower != "i" {
                 modifiedValue = modifiedValue.uppercased()
             } else if charLower == "u" && nextCharLower == "i" {
@@ -569,7 +575,12 @@ class TemplateUtil {
             } else if char.isWholeNumber {
                 number = (number * 10) + char.wholeNumberValue!
                 if !nextChar.isWholeNumber {
-                    modifiedValue = StringUtils.truncateOrPad(modifiedValue, toLength: number, keepOnRight: keepCharsOnRight)
+                    if summarizePending {
+                        modifiedValue = StringUtils.summarize(modifiedValue, max: number)
+                        summarizePending = false
+                    } else {
+                        modifiedValue = StringUtils.truncateOrPad(modifiedValue, toLength: number, keepOnRight: keepCharsOnRight)
+                    }
                 }
             } else if char.isPunctuation {
                 separator = char
