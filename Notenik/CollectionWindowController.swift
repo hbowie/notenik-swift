@@ -11,6 +11,7 @@
 
 import Cocoa
 
+/// Controls a window showing a particular Collection of Notes.
 class CollectionWindowController: NSWindowController, CollectionPrefsOwner, AttachmentMasterController {
     
     @IBOutlet var shareButton: NSButton!
@@ -138,23 +139,27 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     @objc func runReport(_ sender: NSMenuItem) {
         
         // See if we're ready to take action
-        let nio = guardForCollectionAction()
-        guard let noteIO = nio else { return }
+        guard let noteIO = guardForCollectionAction() else { return }
         
         var found = false
         var i = 0
-        while i < io!.reports.count && !found {
-            let reportTitle = String(describing: noteIO.reports[i])
+        while i < noteIO.reports.count && !found {
+            let report = noteIO.reports[i]
+            let reportTitle = String(describing: report)
             found = (sender.title == reportTitle)
             if found {
-                let template = Template()
-                if noteIO.reportsFullPath != nil {
-                    let templateURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
-                    var ok = template.openTemplate(templateURL: templateURL!)
-                    if ok {
-                        template.supplyData(notesList: noteIO.notesList, 
-                                            dataSource: noteIO.collection!.collectionFullPath)
-                        ok = template.generateOutput()
+                if report.reportType == "tcz" {
+                    
+                } else {
+                    let template = Template()
+                    if noteIO.reportsFullPath != nil {
+                        let templateURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
+                        var ok = template.openTemplate(templateURL: templateURL!)
+                        if ok {
+                            template.supplyData(notesList: noteIO.notesList,
+                                                dataSource: noteIO.collection!.collectionFullPath)
+                            ok = template.generateOutput()
+                        }
                     }
                 }
             } else {
@@ -201,17 +206,34 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     /// The user has requested a chance to review and possibly modify the Collection Preferences. 
     @IBAction func menuCollectionPreferences(_ sender: Any) {
         
-        guard io != nil && io!.collectionOpen else { return }
+        guard let noteIO = guardForCollectionAction() else { return }
         
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
             collectionPrefsController.showWindow(self)
-            collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io!.collection!)
+            collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: noteIO.collection!)
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionWindowController",
                               level: .fault,
                               message: "Couldn't get a Collection Prefs Window Controller!")
         }
+    }
+    
+    /// Let the calling class know that the user has completed modifications
+    /// of the Collection Preferences.
+    ///
+    /// - Parameters:
+    ///   - ok: True if they clicked on OK, false if they clicked Cancel.
+    ///   - collection: The Collection whose prefs are being modified.
+    ///   - window: The Collection Prefs window.
+    func collectionPrefsModified(ok: Bool,
+                                 collection: NoteCollection,
+                                 window: CollectionPrefsWindowController) {
+        window.close()
+        guard ok else { return }
+        guard let noteIO = guardForCollectionAction() else { return }
+        noteIO.persistCollectionInfo()
+        reloadCollection(self)
     }
     
     /// The user has requested an export of this Collection. 
@@ -228,20 +250,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                               level: .fault,
                               message: "Couldn't get an Export Window Controller!")
         }
-    }
-    
-    /// Let the calling class know that the user has completed modifications
-    /// of the Collection Preferences.
-    ///
-    /// - Parameters:
-    ///   - ok: True if they clicked on OK, false if they clicked Cancel.
-    ///   - collection: The Collection whose prefs are being modified.
-    ///   - window: The Collection Prefs window.
-    func collectionPrefsModified(ok: Bool, collection: NoteCollection, window: CollectionPrefsWindowController) {
-        window.close()
-        guard ok else { return }
-        guard io != nil && io!.collectionOpen else { return }
-        io!.persistCollectionInfo()
     }
     
     /// If we have past due daily tasks, then update the dates to make them current
@@ -937,11 +945,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// Reload the current collection from disk
     @IBAction func reloadCollection(_ sender: Any) {
-        guard notenikIO != nil && notenikIO!.collection != nil && notenikIO!.collectionOpen else { return }
-        let outcome = modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return }
-        let url = notenikIO!.collection!.collectionFullPathURL
-        notenikIO!.closeCollection()
+        guard let noteIO = guardForCollectionAction() else { return }
+        let url = noteIO.collection!.collectionFullPathURL
+        noteIO.closeCollection()
         newNoteRequested = false
         pendingMod = false
         pendingEdits = false

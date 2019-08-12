@@ -384,7 +384,6 @@ class FileIO: NotenikIO, RowConsumer {
             for itemPath in reportsDirContents {
                 if itemPath.hasSuffix(scriptExt) {
                     scriptsFound = true
-                    print("Script file found!")
                 }
             }
             
@@ -397,8 +396,7 @@ class FileIO: NotenikIO, RowConsumer {
                     report.reportName = fileName.base
                     report.reportType = fileName.ext
                     reports.append(report)
-                // } else if !scriptsFound && fileName.baseLower.contains(templateID) {
-                } else if fileName.baseLower.contains(templateID) {
+                } else if !scriptsFound && fileName.baseLower.contains(templateID) {
                     let report = MergeReport()
                     report.reportName = fileName.base
                     report.reportType = fileName.ext
