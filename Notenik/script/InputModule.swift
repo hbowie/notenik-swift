@@ -76,6 +76,8 @@ class InputModule: RowConsumer {
                 _ = workspace.collection.dict.addDef(LabelConstants.tag)
             }
             workspace.newList()
+            // Clear pending sort fields if we're not merging
+            workspace.pendingFields = []
         } else {
             logError("Input Open command with unrecognized object of '\(command.object)'")
         }

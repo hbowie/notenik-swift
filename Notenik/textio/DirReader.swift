@@ -154,7 +154,6 @@ class DirReader: RowImporter {
                             }
                         }
                         if fileSize != nil {
-                            print("File size for \(itemPath) = \(fileSize!)")
                             putField("\(fileSize!)")
                         } else {
                             putField("")
