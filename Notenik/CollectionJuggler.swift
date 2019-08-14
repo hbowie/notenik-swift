@@ -491,6 +491,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         self.osdir.lastParentFolder = collectionURL.deletingLastPathComponent()
     }
     
+    /// Allow the user to select a script file to be played.
     func scriptOpen() {
         let openPanel = NSOpenPanel();
         openPanel.title = "Select a Script File to be Played"
@@ -508,6 +509,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
     }
     
+    /// Launch a script to be played.
     func launchScript(fileURL: URL) {
         ensureScriptController()
         guard scriptController != nil else { return }
@@ -517,7 +519,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     }
     
     func ensureScriptController() {
-        scriptController = self.scriptStoryboard.instantiateController(withIdentifier: "scriptWC") as? ScriptWindowController
+        if scriptController == nil {
+            scriptController = scriptStoryboard.instantiateController(withIdentifier: "scriptWC") as? ScriptWindowController
+        }
         if scriptController == nil {
             communicateError("Couldn't get a Script Window Controller")
         }

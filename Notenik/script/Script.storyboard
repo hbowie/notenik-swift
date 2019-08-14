@@ -12,7 +12,7 @@
                     <window key="window" title="Scripter" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="i7V-6M-sD0">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="425" y="461" width="480" height="270"/>
+                        <rect key="contentRect" x="425" y="461" width="640" height="420"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
                         <connections>
                             <outlet property="delegate" destination="XSP-t0-Nvo" id="xt7-m5-x3D"/>
@@ -38,12 +38,6 @@
                                 <rect key="frame" x="-8" y="-10" width="496" height="286"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
-                                    <tabViewItem label="Tab" identifier="" id="mH0-sH-tOo">
-                                        <view key="view" id="fCo-o9-dcc">
-                                            <rect key="frame" x="10" y="33" width="476" height="240"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </view>
-                                    </tabViewItem>
                                     <tabViewItem label="Script" identifier="" id="SN8-8p-TDb">
                                         <view key="view" id="fio-yL-9VH">
                                             <rect key="frame" x="10" y="33" width="476" height="240"/>

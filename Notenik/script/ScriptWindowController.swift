@@ -64,7 +64,7 @@ class ScriptWindowController: NSWindowController {
     func selectScriptTab() {
         if tabView != nil {
             // tabView!.selectTabViewItem(withIdentifier: "script")
-            tabView!.selectTabViewItem(at: 1)
+            tabView!.selectTabViewItem(at: 0)
         }
     }
 
