@@ -485,6 +485,11 @@ class BunchIO: NotenikIO, RowConsumer  {
     }
     
     /// If possible, return a URL to locate the indicated attachment.
+    func getURLforAttachment(attachmentName: AttachmentName) -> URL? {
+        return getURLforAttachment(fileName: attachmentName.fullName)
+    }
+    
+    /// If possible, return a URL to locate the indicated attachment.
     func getURLforAttachment(fileName: String) -> URL? {
         return nil
     }

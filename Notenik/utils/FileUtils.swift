@@ -13,7 +13,6 @@ import Foundation
 
 class FileUtils {
     
-    
     /// See if a path points to a directory / folder.
     ///
     /// - Parameter path: A string containing a path pointing to a file system object.
@@ -42,6 +41,49 @@ class FileUtils {
         }
         let sub2 = path2[s2..<path2.endIndex]
         return sub1 + "/" + sub2
+    }
+    
+    /// Check to see if the given folder already exists.
+    /// If it does not, then try to create it.
+    ///
+    /// - Parameter dirPath: The path to the directory to be ensured.
+    /// - Returns: True if folder now exists, false if it didn't already
+    ///            exist and couldn't be created.
+    static func ensureFolder(forDir dirPath: String) -> Bool {
+        let folderURL = URL(fileURLWithPath: dirPath)
+        if FileManager.default.fileExists(atPath: folderURL.path) { return true }
+        do {
+            try FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            Logger.shared.log(subsystem: "com.",
+                              category: "com.powersurgepub.notenik",
+                              level: .error,
+                              message: "Could not create a new directory at \(folderURL.path)")
+            return false
+        }
+        return true
+    }
+    
+    /// Check to see if the folder enclosing this file already exists.
+    /// If it does not, then try to create it.
+    ///
+    /// - Parameter filePath: The path to the file whose folder is to be ensured.
+    /// - Returns: True if folder now exists, false if it didn't already
+    ///            exist and couldn't be created.
+    static func ensureFolder(forFile filePath: String) -> Bool {
+        let fileURL = URL(fileURLWithPath: filePath)
+        let folderURL = fileURL.deletingLastPathComponent()
+        if FileManager.default.fileExists(atPath: folderURL.path) { return true }
+        do {
+            try FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            Logger.shared.log(subsystem: "com.",
+                              category: "com.powersurgepub.notenik",
+                              level: .error,
+                              message: "Could not create a new directory at \(folderURL.path)")
+            return false
+        }
+        return true
     }
     
 }

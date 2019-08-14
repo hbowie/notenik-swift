@@ -309,14 +309,21 @@ class FileIO: NotenikIO, RowConsumer {
     func addAttachment(from: URL, to: Note, with: String) -> Bool {
         let attachmentName = AttachmentName()
         attachmentName.setName(fromFile: from, note: to, suffix: with)
-        guard let attachmentURL = getURLforAttachment(fileName: attachmentName.fullName) else {
+        guard let attachmentURL = getURLforAttachment(attachmentName: attachmentName) else {
+            logError("Couldn't get a URL for the attachment named '\(attachmentName.fullName)'")
             return false
         }
         let exists = fileManager.fileExists(atPath: attachmentURL.path)
-        guard !exists else { return false }
+        if exists {
+            logError("Attachment already exists at \(attachmentURL.path)")
+            return false
+        }
+        let folderOK = FileUtils.ensureFolder(forFile: attachmentURL.path)
+        guard folderOK else { return false }
         do {
             try fileManager.copyItem(at: from, to: attachmentURL)
         } catch {
+            logError("Couldn't copy the attachment to \(attachmentURL.path)")
             return false
         }
         to.attachments.append(attachmentName)
@@ -357,6 +364,11 @@ class FileIO: NotenikIO, RowConsumer {
             }
         }
         return allOK
+    }
+    
+    /// If possible, return a URL to locate the indicated attachment.
+    func getURLforAttachment(attachmentName: AttachmentName) -> URL? {
+        return getURLforAttachment(fileName: attachmentName.fullName)
     }
     
     /// If possible, return a URL to locate the indicated attachment.
@@ -496,12 +508,10 @@ class FileIO: NotenikIO, RowConsumer {
         let collectionURL = collection.collectionFullPathURL
         guard collectionURL != nil else { return false }
         if !fileManager.fileExists(atPath: collection.collectionFullPath) {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                              category: "FileIO",
-                              level: .error,
-                              message: "Collection folder does not exist")
+            logError("Collection folder does not exist")
             return false
         }
+        collectionFullPath = collectionURL!.path
         
         ok = saveReadMe()
         guard ok else { return ok }
@@ -971,7 +981,7 @@ class FileIO: NotenikIO, RowConsumer {
         return bunch!.getSelectedNote()
     }
     
-    /// Delete the currently selected Note
+    /// Delete the currently selected Note, plus any attachments it might have. 
     ///
     /// - Returns: The new Note on which the collection should be positioned.
     func deleteSelectedNote() -> (Note?, NotePosition) {
@@ -1002,13 +1012,20 @@ class FileIO: NotenikIO, RowConsumer {
         _ = noteToDelete!.fullPath
         let noteURL = noteToDelete!.url
         if noteURL != nil {
+            for attachment in noteToDelete!.attachments {
+                let attachmentURL = getURLforAttachment(attachmentName: attachment)
+                if attachmentURL != nil {
+                    do {
+                        try fileManager.trashItem(at: attachmentURL!, resultingItemURL: nil)
+                    } catch {
+                        logError("Unable to delete attachment at \(attachmentURL!.path)")
+                    }
+                }
+            }
             do {
                 try fileManager.trashItem(at: noteURL!, resultingItemURL: nil)
             } catch {
-                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                                  category: "FileIO",
-                                  level: .error,
-                                  message: "Could not delete note file at '\(noteURL!.path)'")
+                logError("Could not delete note file at '\(noteURL!.path)'")
             }
         }
         
@@ -1023,5 +1040,21 @@ class FileIO: NotenikIO, RowConsumer {
     /// Create an iterator for the tags nodes.
     func makeTagsNodeIterator() -> TagsNodeIterator {
         return TagsNodeIterator(noteIO: self)
+    }
+    
+    /// Send an informative message to the log.
+    func logInfo(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "FileIO",
+                          level: .info,
+                          message: msg)
+    }
+    
+    /// Send an error message to the log.
+    func logError(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "FileIO",
+                          level: .error,
+                          message: msg)
     }
 }

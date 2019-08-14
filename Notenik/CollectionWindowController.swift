@@ -751,7 +751,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// Prompt the user for an attachment to add and then copy it to the files folder.
     func addAttachment() {
-        print("Add Attachment")
         let (nio, sel) = guardForNoteAction()
         guard let noteIO = nio, let selNote = sel else { return }
         guard let filesFolderPath = noteIO.getAttachmentsLocation() else { return }
@@ -769,7 +768,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         openPanel.canChooseFiles = true
         openPanel.allowsMultipleSelection = false
         let response = openPanel.runModal()
-        print("Response = \(response)")
         guard response == .OK else { return }
         guard let urlToAttach = openPanel.url else { return }
         
@@ -781,10 +779,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             attachmentController.vc.setNote(selNote)
             attachmentController.showWindow(self)
         } else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "CollectionWindowController",
-                              level: .fault,
-                              message: "Couldn't get an Attachment Window Controller!")
+            communicateError("Couldn't get an Attachment Window Controller!")
         }
     }
     
@@ -857,15 +852,22 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// Delete the Note
     @IBAction func deleteNote(_ sender: Any) {
-        guard notenikIO != nil && notenikIO!.collectionOpen else { return }
-        let (selectedNote, _) = notenikIO!.getSelectedNote()
-        guard selectedNote != nil else { return }
+        
+        let (nio, sel) = guardForNoteAction()
+        guard let noteIO = nio, let selectedNote = sel else { return }
         
         var proceed = true
         if appPrefs.confirmDeletes {
             let alert = NSAlert()
             alert.alertStyle = .warning
-            alert.messageText = "Really delete the Note titled '\(selectedNote!.title)'?"
+            var attachMsg = ""
+            if selectedNote.attachments.count > 0 {
+                attachMsg = " and its \(selectedNote.attachments.count) attachment"
+                if selectedNote.attachments.count > 1 {
+                    attachMsg.append("s")
+                }
+            }
+            alert.messageText = "Really delete the Note titled '\(selectedNote.title)'\(attachMsg)?"
             alert.addButton(withTitle: "OK")
             alert.addButton(withTitle: "Cancel")
             let response = alert.runModal()
@@ -874,7 +876,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             }
         }
         if proceed {
-            let (nextNote, nextPosition) = notenikIO!.deleteSelectedNote()
+            let (nextNote, nextPosition) = noteIO.deleteSelectedNote()
             reloadViews()
             if nextNote != nil {
                 select(note: nextNote, position: nextPosition, source: .action)

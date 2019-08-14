@@ -190,7 +190,7 @@ protocol NotenikIO {
     /// If no note is selected, return a nil Note and an index posiiton of -1.
     func getSelectedNote() -> (Note?, NotePosition)
     
-    /// Delete the currently selected Note
+    /// Delete the currently selected Note, plus any attachments it might have. 
     ///
     /// - Returns: The new Note on which the collection should be positioned.
     func deleteSelectedNote() -> (Note?, NotePosition)
@@ -213,6 +213,9 @@ protocol NotenikIO {
     ///   - note2: The Note to wich the files should now be attached.
     /// - Returns: True if successful, false otherwise.
     func reattach(from: Note, to: Note) -> Bool
+    
+    /// If possible, return a URL to locate the indicated attachment.
+    func getURLforAttachment(attachmentName: AttachmentName) -> URL?
     
     /// If possible, return a URL to locate the indicated attachment.
     func getURLforAttachment(fileName: String) -> URL?
