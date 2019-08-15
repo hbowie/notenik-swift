@@ -81,7 +81,6 @@
 		9C27DA0522FB581D008EE0A1 /* IndexPageRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C27DA0222FB581D008EE0A1 /* IndexPageRef.swift */; };
 		9C29DD29226286A100928180 /* CollectionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29DD28226286A100928180 /* CollectionWindow.swift */; };
 		9C29DD2A226286A100928180 /* CollectionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29DD28226286A100928180 /* CollectionWindow.swift */; };
-		9C2A35B722A19A0B009C868E /* MergeScripterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A35B622A19A0B009C868E /* MergeScripterTests.swift */; };
 		9C2AE512220A030800AE8BEE /* TagsTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2AE511220A030800AE8BEE /* TagsTree.swift */; };
 		9C2AE514220A033300AE8BEE /* TagsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2AE513220A033300AE8BEE /* TagsNode.swift */; };
 		9C2AE515220A033300AE8BEE /* TagsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2AE513220A033300AE8BEE /* TagsNode.swift */; };
@@ -550,7 +549,6 @@
 		9C27D9FE22FB55B4008EE0A1 /* IndexCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexCollection.swift; sourceTree = "<group>"; };
 		9C27DA0222FB581D008EE0A1 /* IndexPageRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPageRef.swift; sourceTree = "<group>"; };
 		9C29DD28226286A100928180 /* CollectionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindow.swift; sourceTree = "<group>"; };
-		9C2A35B622A19A0B009C868E /* MergeScripterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeScripterTests.swift; sourceTree = "<group>"; };
 		9C2AE511220A030800AE8BEE /* TagsTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsTree.swift; sourceTree = "<group>"; };
 		9C2AE513220A033300AE8BEE /* TagsNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNode.swift; sourceTree = "<group>"; };
 		9C2AE519220A044800AE8BEE /* TagsNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNodeType.swift; sourceTree = "<group>"; };
@@ -904,7 +902,6 @@
 				9C60E7A521F6525D00C332ED /* LinkValueTests.swift */,
 				9C60E7A721F6525E00C332ED /* LongTextValueTests.swift */,
 				9CC8336D22B3F65B0006AAE0 /* MarkedupTests.swift */,
-				9C2A35B622A19A0B009C868E /* MergeScripterTests.swift */,
 				9C60E6E421F64B3C00C332ED /* NotenikTests.swift */,
 				9C60E7B521F6525F00C332ED /* RecursValueTests.swift */,
 				9C60E7AE21F6525E00C332ED /* SeqValueTests.swift */,
@@ -1751,7 +1748,6 @@
 				9CE9C98722A61499008D2B0A /* TemplateUtil.swift in Sources */,
 				9C25E00422D787260062E282 /* TagsPickList.swift in Sources */,
 				9CF11933225802AA0015AE91 /* ModView.swift in Sources */,
-				9C2A35B722A19A0B009C868E /* MergeScripterTests.swift in Sources */,
 				9C60E79621F651E500C332ED /* NoteIDRule.swift in Sources */,
 				9C9A6BAF22EA5FBC00E1F127 /* SortField.swift in Sources */,
 				9C4C1BB122E7EE61005997DF /* ScriptEngine.swift in Sources */,

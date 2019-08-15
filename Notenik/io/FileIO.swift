@@ -355,7 +355,7 @@ class FileIO: NotenikIO, RowConsumer {
                         to.attachments.append(newAttachmentName)
                         ok = true
                     } catch {
-                        //
+                        logError("Trouble moving attachments along with modified Title")
                     }
                 }
             }
