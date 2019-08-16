@@ -39,6 +39,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         juggler.startup()
     }
     
+    // func application(_ application: NSApplication, open urls: [URL]) {
+    //     print("AppDelegate open urls")
+    // }
+    
     @IBAction func menuAppPreferences(_ sender: NSMenuItem) {
         if let prefsController = self.prefsStoryboard.instantiateController(withIdentifier: "prefsWC") as? PrefsWindowController {
             prefsController.showWindow(self)

@@ -2,7 +2,7 @@ Title:  Files and Folders
 
 Seq:    41
 
-Tags:   files, files, folders, folders, info, info, nnk, nnk, readme, readme, template, template, template, template
+Tags:   files, folders, info, nnk, readme, template
 
 Date Added: 2018-12-21 10:47:08
 
@@ -18,4 +18,8 @@ In addition to the Note files, the following special files and folders may be fo
 * Each Collection folder will also contain a special file named '- README.txt'. This file simply identifies the folder as a Notenik Collection. 
 
 * Each Collection folder will normally also contain a 'template.txt' or 'template.md' file identifying the fields used within the Collection. 
+
+* A 'files' folder will contain any Attachments for the Collection. 
+
+* A 'reports' sub-folder may contain a number of Template files and/or Script files. 
 

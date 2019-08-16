@@ -6,11 +6,49 @@ Tags:   changes, history, log
 
 Body:
 
-### Version 1.0.0 | 03 Jun 2019
+### Version 1.3.0 | 13 Aug 2019
 
-#### 1. Initial Release
+#### 1. Added Script File Playback
 
-This is the initial release of Notenik written in Swift.
+Users can now play a Script file that will run a series of data transformations. 
+
+
+#### 2. Added Attachments Function
+
+Each Note can have one or more Attachments. 
+
+
+#### 3. Added Tags Export Preferences
+
+This new Notenik Preferences tab allows the user to specify tags to select and tags to suppress. 
+
+
+#### 4. Bug Fixes and Minor Improvements
+
+
+
+### Version 1.2.0 | 11 Jul 2019
+
+#### 1. Tokenized the Tags Field on the Edit Screen
+
+Users can now pick from previously identified tags when entering a new one. 
+
+
+#### 2. Added Split Tags Export to the File Menu
+
+The Split Tags command under the File menu will split the tags for each Note, and write one output row for each Tag for each Note. Notes without tags will be written out only once; Notes with multiple tags will be written out once for each Tag. In addition to the Tags column, a Tag (singular) column will be added to the front of each row, containing one particular Tag for the Note. This export file can be used, for example, to create an index page for each Tag. 
+
+
+#### 3. Added Standardize Dates to YMD to the Collection Menu
+
+Execution of this command will change all the dates in all the Notes for the current Collection so that they are stored in yyyy-mm-dd format, which can be useful to ensure than an export file sorts correctly on date. 
+
+
+#### 4. Bug Fixes and Improvements
+
+Markdown conversion now renders embedded HTML and does a smart typographic conversion.
+
+Occasional problem with erroneous blanks in the ‘X’ column (indicating done or not) is now fixed.
 
 
 ### Version 1.1.0 | 05 Jul 2019
@@ -30,27 +68,10 @@ Merge Templates may now be created, stored in a reports folder, and then run fro
 Miscellaneous bug fixes and improvements. 
 
 
-### Version 1.2.0 | 10 Jul 2019
+### Version 1.0.0 | 03 Jun 2019
 
-#### 1. Added Split Tags Export to the File Menu
+#### 1. Initial Release
 
-The Split Tags command under the File menu will split the tags for each Note, and write one output row for each Tag for each Note. Notes without tags will be written out only once; Notes with multiple tags will be written out once for each Tag. In addition to the Tags column, a Tag (singular) column will be added to the front of each row, containing one particular Tag for the Note. This export file can be used, for example, to create an index page for each Tag. 
-
-
-#### 2. Added Standardize Dates to YMD to the Collection Menu
-
-Execution of this command will change all the dates in all the Notes for the current Collection so that they are stored in yyyy-mm-dd format, which can be useful to ensure than an export file sorts correctly on date. 
-
-
-#### 3. Bug Fixes and Improvements
-
-Markdown conversion now renders embedded HTML and does a smart typographic conversion.
-
-Occasional problem with erroneous blanks in the ‘X’ column (indicating done or not) is now fixed.
-
-
-#### 4. Tokenized the Tags Field on the Edit Screen
-
-Users can now pick from previously identified tags when entering a new one. 
+This is the initial release of Notenik written in Swift.
 
 

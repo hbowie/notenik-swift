@@ -2,7 +2,7 @@ Title:  Rights
 
 Seq:    42
 
-Tags:   author, author, copyright, copyright, dba, dba, github, github, license, license, mit, mit, open source, open source, rights, rights
+Tags:   author, copyright, dba, github, license, mit, open source, rights
 
 Date Added: 2017-10-27 12:55:15
 
@@ -14,4 +14,6 @@ The Notenik application is published as  [open source](http://opensource.org/osd
 Notenik source code is available on [GitHub](https://github.com/hbowie/notenik-swift).
 
 Notenik makes use of [Down](https://github.com/iwasrobbed/Down) and [cmark](https://github.com/commonmark/cmark), both of which are separately licensed. 
+
+Notenik also makes use of [CoreXLSX](https://github.com/MaxDesiatov/CoreXLSX) to read XLSX files. CoreXLSX is also separately licensed. 
 
