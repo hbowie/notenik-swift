@@ -518,6 +518,13 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         scriptController!.showWindow(self)
     }
     
+    func showScriptWindow() {
+        ensureScriptController()
+        guard scriptController != nil else { return }
+        // scriptController!.selectScriptTab()
+        scriptController!.showWindow(self)
+    }
+    
     func ensureScriptController() {
         if scriptController == nil {
             scriptController = scriptStoryboard.instantiateController(withIdentifier: "scriptWC") as? ScriptWindowController

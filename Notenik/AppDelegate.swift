@@ -101,6 +101,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    @IBAction func menuWindowScripter(_ sender: Any) {
+        juggler.showScriptWindow()
+    }
+    
     @IBAction func menuHelpNotenikDotNet(_ sender: NSMenuItem) {
         let url = URL(string: "https://notenik.net")
         if url != nil {
