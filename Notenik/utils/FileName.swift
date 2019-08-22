@@ -253,6 +253,44 @@ class FileName: CustomStringConvertible {
         return resolved
     }
     
+    /// Take an absolute path and return a path relative
+    /// to the path for this file name.
+    func makeRelative(path: String) -> String {
+        
+        // If this is already a relative path, then don't mess with it
+        guard path.hasPrefix("/") else { return path }
+        
+        let fileName2 = FileName(path)
+        
+        var folderIndex = 0
+        while (folderIndex < folders.count
+            && folderIndex < fileName2.folders.count
+            && folder(at: folderIndex) == fileName2.folder(at: folderIndex)) {
+            folderIndex += 1
+        }
+        let matchedFolders = folderIndex
+        var relPath = ""
+        while folderIndex < folders.count {
+            relPath.append("../")
+            folderIndex += 1
+        }
+        folderIndex = matchedFolders
+        while folderIndex < fileName2.folders.count {
+            relPath.append(folder(at: folderIndex))
+            relPath.append("/")
+        }
+        relPath.append(fileName)
+        return relPath
+    }
+    
+    func folder(at: Int) -> String {
+        if at < 0 || at >= folders.count {
+            return ""
+        } else {
+            return String(folders[at])
+        }
+    }
+    
 }
 
 enum FileOrDirectory {
