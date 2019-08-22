@@ -14,7 +14,9 @@ import Foundation
 /// A workspace to be shared between the Script Engine and its various modules. 
 class ScriptWorkspace {
     
-    var scriptIn:     URL?
+    var parentPath = ""
+    
+    var scriptURL:     URL?
     var collection  = NoteCollection()
     
     var inputURL:     URL?
@@ -33,15 +35,41 @@ class ScriptWorkspace {
     
     var webRootPath  = ""
     
+    var pendingErrors = ""
+    var holdingErrors = false
+    
     var scriptLog   = ""
+    
+    init() {
+        let home = FileManager.default.homeDirectoryForCurrentUser
+        parentPath = home.path
+    }
+    
+    var parentURL: URL {
+        return URL(fileURLWithPath: parentPath)
+    }
     
     func newList() {
         list = NotesList()
         fullList = NotesList()
     }
     
+    func holdErrors() {
+        holdingErrors = true
+    }
+    
+    func releaseErrors() {
+        scriptLog.append(pendingErrors)
+        holdingErrors = false
+        pendingErrors = ""
+    }
+    
     func writeErrorToLog(_ msg: String) {
-        writeLineToLog(formatError(msg))
+        if holdingErrors {
+            pendingErrors.append(formatError(msg) + "\n")
+        } else {
+            writeLineToLog(formatError(msg))
+        }
     }
     
     func formatError(_ msg: String) -> String {

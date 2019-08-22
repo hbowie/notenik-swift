@@ -11,12 +11,12 @@
 
 import Cocoa
 
+/// Controls the Scripter Window. 
 class ScriptWindowController: NSWindowController {
     
     var scriptViewController: ScriptViewController?
     
     var scriptView: NSView?
-    var tabView:    NSTabView?
     
     var splitViewController: NoteSplitViewController?
     
@@ -44,27 +44,11 @@ class ScriptWindowController: NSWindowController {
         if scriptViewController != nil {
             scriptView = scriptViewController!.view
         }
-        if scriptView != nil && scriptView!.subviews.count > 0 {
-            tabView = scriptView!.subviews[0] as? NSTabView
-        }
-        if tabView == nil {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "ScriptWindowController",
-                              level: .error,
-                              message: "Problems loading Script Window Components")
-        }
     }
     
-    func setScriptURL(_ scriptURL: URL) {
+    func scriptOpenInput(_ scriptURL: URL) {
         if scriptViewController != nil {
-            scriptViewController!.setScriptURL(scriptURL)
-        }
-    }
-    
-    func selectScriptTab() {
-        if tabView != nil {
-            // tabView!.selectTabViewItem(withIdentifier: "script")
-            tabView!.selectTabViewItem(at: 0)
+            scriptViewController!.scriptOpenInput(scriptURL)
         }
     }
 

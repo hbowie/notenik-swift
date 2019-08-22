@@ -638,8 +638,7 @@ CA
                                                 <action selector="menuWindowLog:" target="Voe-Tx-rLC" id="QBC-7s-vkk"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Scripter Window" id="N23-Bb-L8w">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Scripter Window" keyEquivalent="r" id="N23-Bb-L8w">
                                             <connections>
                                                 <action selector="menuWindowScripter:" target="Voe-Tx-rLC" id="Q1A-Gx-zea"/>
                                             </connections>

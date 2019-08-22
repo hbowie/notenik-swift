@@ -28,7 +28,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
     
     let scriptStoryboard: NSStoryboard = NSStoryboard(name: "Script", bundle: nil)
-    var scriptController: ScriptWindowController?
+    var scriptWindowController: ScriptWindowController?
     
     let osdir = OpenSaveDirectory.shared
     let essentialURLKey = "essential-collection"
@@ -512,24 +512,23 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Launch a script to be played.
     func launchScript(fileURL: URL) {
         ensureScriptController()
-        guard scriptController != nil else { return }
-        scriptController!.setScriptURL(fileURL)
-        scriptController!.selectScriptTab()
-        scriptController!.showWindow(self)
+        guard scriptWindowController != nil else { return }
+        scriptWindowController!.showWindow(self)
+        scriptWindowController!.scriptOpenInput(fileURL)
     }
     
     func showScriptWindow() {
         ensureScriptController()
-        guard scriptController != nil else { return }
+        guard scriptWindowController != nil else { return }
         // scriptController!.selectScriptTab()
-        scriptController!.showWindow(self)
+        scriptWindowController!.showWindow(self)
     }
     
     func ensureScriptController() {
-        if scriptController == nil {
-            scriptController = scriptStoryboard.instantiateController(withIdentifier: "scriptWC") as? ScriptWindowController
+        if scriptWindowController == nil {
+            scriptWindowController = scriptStoryboard.instantiateController(withIdentifier: "scriptWC") as? ScriptWindowController
         }
-        if scriptController == nil {
+        if scriptWindowController == nil {
             communicateError("Couldn't get a Script Window Controller")
         }
     }

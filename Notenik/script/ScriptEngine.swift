@@ -11,33 +11,24 @@
 
 import Foundation
 
+/// The core module for playing and recording scripts, and
+/// executing script commands.
 class ScriptEngine: RowConsumer {
     
-    static let scriptExt = ".tcz"
-    static let pathPrefix = "#PATH#"
+    var lastCommandModuleStr = "script"
     
     var workspace = ScriptWorkspace()
-    var reader: DelimitedReader!
-    var rowsRead = 0
-    var command = ScriptCommand()
-    var logLine = ""
-    var pendingErrors = ""
-    var consumingFields = true
     
-    /// Play a Script from a CSV or tab-delimited file
-    ///
-    /// - Parameter fileURL: The URL of the script to be played.
-    /// - Returns: The number of rows read.
-    func playScript(fileURL: URL) -> Int {
-        workspace = ScriptWorkspace()
-        workspace.scriptIn = fileURL
-        logInfo("Starting to play script located at \(fileURL.path) on \(DateUtils.shared.dateTimeToday)")
-        rowsRead = 0
-        reader = DelimitedReader()
-        reader.setContext(consumer: self, workspace: workspace)
-        reader.read(fileURL: fileURL)
-        logInfo("Script execution complete on \(DateUtils.shared.dateTimeToday)")
-        return rowsRead
+    var command   = ScriptCommand()
+    
+    var reader:     DelimitedReader!
+    var rowsRead  = 0
+    
+    static let scriptExt = ".tcz"
+    static let pathPlaceHolder = "#PATH#"
+    
+    init() {
+ 
     }
     
     /// Do something with the next field produced.
@@ -46,41 +37,27 @@ class ScriptEngine: RowConsumer {
     ///   - label: A string containing the column heading for the field.
     ///   - value: The actual value for the field.
     func consumeField(label: String, value: String) {
+        workspace.holdErrors()
         let labelLower = label.lowercased()
         let valueLower = value.lowercased()
         switch labelLower {
         case "module":
-            logLine.append(value)
-            var module = ScriptModule(rawValue: valueLower)
-            if module == nil && value.hasPrefix("<!-- ") {
-                module = .comment
-            } else
-            if module != nil {
-                command.module = module!
-            } else {
-                logError("Module value of '\(value)' is not recognized")
+            let possibleCommand = getCommand(moduleStr: value)
+            if possibleCommand != nil {
+                command = possibleCommand!
             }
         case "action":
-            logLine.append("," + value)
-            let action = ScriptAction(rawValue: valueLower)
-            if action != nil {
-                command.action = action!
-            } else {
-                logError("Action value of '\(value)' is not recognized")
-            }
+            command.setAction(value: valueLower)
         case "modifier":
-            logLine.append("," + value)
             command.modifier = value
         case "object":
-            logLine.append("," + value)
             command.object = value
         case "value":
-            logLine.append("," + value)
             command.value = value
             if value.hasPrefix("#PATH#") {
-                let scriptFileName = FileName(workspace.scriptIn!)
+                let scriptFileName = FileName(workspace.scriptURL!)
                 let scriptFolderName = FileName(scriptFileName.path)
-                command.valueWithPathResolved = scriptFolderName.resolveRelative(path: String(value.dropFirst(ScriptEngine.pathPrefix.count)))
+                command.valueWithPathResolved = scriptFolderName.resolveRelative(path: String(value.dropFirst(ScriptEngine.pathPlaceHolder.count)))
             } else {
                 command.valueWithPathResolved = value
             }
@@ -96,11 +73,16 @@ class ScriptEngine: RowConsumer {
     ///   - fields: A corresponding array of field values.
     func consumeRow(labels: [String], fields: [String]) {
         rowsRead += 1
-        workspace.writeLineToLog("Playing Script Command: " + logLine)
-        workspace.scriptLog.append(pendingErrors)
-        pendingErrors = ""
-        consumingFields = false
+        playCommand(command)
+        command = ScriptCommand(workspace: workspace)
+    }
+    
+    func playCommand(_ command: ScriptCommand) {
+        workspace.writeLineToLog("Playing Script Command: " + String(describing: command))
+        workspace.releaseErrors()
         switch command.module {
+        case .script:
+            playScriptCommand(command)
         case .input:
             let input = InputModule()
             input.playCommand(workspace: workspace, command: command)
@@ -119,9 +101,53 @@ class ScriptEngine: RowConsumer {
         default:
             break
         }
-        command = ScriptCommand()
-        logLine = ""
-        consumingFields = true
+    }
+    
+    func playScriptCommand(_ command: ScriptCommand) {
+        if command.action == .open && command.modifier == "input" {
+            scriptOpenInput(command)
+        } else if command.action == .play {
+            scriptPlay(command)
+        }
+    }
+    
+    func scriptOpenInput(_ command: ScriptCommand) {
+        workspace.scriptURL = command.valueURL
+    }
+    
+    func scriptPlay(_ command: ScriptCommand) {
+        guard let scriptURL = workspace.scriptURL else {
+            logError("Script Play command encountered with no preceding Script Open Input")
+            return
+        }
+        logInfo("Starting to play script located at \(scriptURL.path) on \(DateUtils.shared.dateTimeToday)")
+        rowsRead = 0
+        reader = DelimitedReader()
+        reader.setContext(consumer: self, workspace: workspace)
+        reader.read(fileURL: scriptURL)
+        logInfo("Script execution complete on \(DateUtils.shared.dateTimeToday)")
+    }
+    
+    /// Factory method to create a command populated with the given module.
+    ///
+    /// - Parameter moduleStr: A string naming the desired module.
+    /// - Returns: Either the command with the specified module, or
+    ///            nil if the module name was invalid.
+    func getCommand(moduleStr: String) -> ScriptCommand? {
+        if moduleStr != lastCommandModuleStr && moduleStr == "script" {
+            newWorkspace()
+        }
+        let command = ScriptCommand(workspace: workspace)
+        let ok = command.setModule(value: moduleStr)
+        if ok {
+            lastCommandModuleStr = moduleStr
+            return command
+        }
+        return nil
+    }
+    
+    func newWorkspace() {
+        workspace = ScriptWorkspace()
     }
     
     /// Send an informative message to the log.
@@ -139,11 +165,7 @@ class ScriptEngine: RowConsumer {
                           category: "ScriptEngine",
                           level: .error,
                           message: msg)
-        if consumingFields {
-            pendingErrors.append(workspace.formatError(msg) + "\n")
-        } else {
-            workspace.writeErrorToLog(msg)
-        }
+        workspace.writeErrorToLog(msg)
     }
 
 }

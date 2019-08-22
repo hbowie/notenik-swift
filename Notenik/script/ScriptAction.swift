@@ -19,6 +19,8 @@ enum ScriptAction: String {
     case epubout  = "epubout"
     case generate = "generate"
     case open     = "open"
+    case play     = "play"
+    case record   = "record"
     case set      = "set"
     case webroot  = "webroot"
 }

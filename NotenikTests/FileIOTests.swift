@@ -20,7 +20,6 @@ class FileIOTests: XCTestCase {
 
     func testInit() {
         let io : NotenikIO = FileIO()
-        let provider = io.getProvider()
         let realm = io.getDefaultRealm()
         print ("Realm name = " + realm.name)
         print ("Realm path = " + realm.path)
@@ -29,7 +28,6 @@ class FileIOTests: XCTestCase {
     
     func testOpenCollection() {
         let io : NotenikIO = FileIO()
-        let provider = io.getProvider()
         let realm = io.getDefaultRealm()
         realm.name = "Herb Bowie"
         realm.path = "/Users/hbowie/"
@@ -49,7 +47,6 @@ class FileIOTests: XCTestCase {
     
     func testSortParm() {
         let io : NotenikIO = FileIO()
-        let provider = io.getProvider()
         let realm = io.getDefaultRealm()
         realm.name = "Herb Bowie"
         realm.path = "/Users/hbowie/"

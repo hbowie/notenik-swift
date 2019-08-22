@@ -11,9 +11,11 @@
 
 import Foundation
 
+/// An enum identifying the module intended to receive a command. 
 enum ScriptModule: String {
     case blank    = ""
     case comment  = "<!--"
+    case script   = "script"
     case input    = "input"
     case filter   = "filter"
     case sort     = "sort"
