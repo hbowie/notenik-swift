@@ -22,5 +22,6 @@ enum ScriptAction: String {
     case play     = "play"
     case record   = "record"
     case set      = "set"
+    case stop     = "stop"
     case webroot  = "webroot"
 }

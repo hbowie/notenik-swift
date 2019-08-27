@@ -15,6 +15,8 @@ import Foundation
 /// executing script commands.
 class ScriptEngine: RowConsumer {
     
+    var lastScriptURL: URL?
+    
     var lastCommandModuleStr = "script"
     
     var workspace = ScriptWorkspace()
@@ -26,6 +28,12 @@ class ScriptEngine: RowConsumer {
     
     static let scriptExt = ".tcz"
     static let pathPlaceHolder = "#PATH#"
+    
+    let input    = InputModule()
+    let filter   = FilterModule()
+    let sorter   = SortModule()
+    let template = TemplateModule()
+    let output   = OutputModule()
     
     init() {
  
@@ -77,55 +85,112 @@ class ScriptEngine: RowConsumer {
         command = ScriptCommand(workspace: workspace)
     }
     
+    /// Play a script command -- all script commands should be executed
+    /// through this method.
     func playCommand(_ command: ScriptCommand) {
-        workspace.writeLineToLog("Playing Script Command: " + String(describing: command))
+        
+        var verb = "Executing"
+        if workspace.scriptingStage == .playing {
+            verb = "Playing"
+        }
+        workspace.writeLineToLog("\(verb) Script Command: " + String(describing: command))
         workspace.releaseErrors()
+        if workspace.scriptingStage == .recording && command.module != .script {
+            workspace.writeCommandToScriptWriter(command)
+        }
         switch command.module {
         case .script:
             playScriptCommand(command)
         case .input:
-            let input = InputModule()
             input.playCommand(workspace: workspace, command: command)
         case .filter:
-            let filter = FilterModule()
             filter.playCommand(workspace: workspace, command: command)
         case .sort:
-            let sorter = SortModule()
             sorter.playCommand(workspace: workspace, command: command)
         case .template:
-            let template = TemplateModule()
             template.playCommand(workspace: workspace, command: command)
         case .output:
-            let output = OutputModule()
             output.playCommand(workspace: workspace, command: command)
         default:
             break
         }
     }
     
+    /// Play a command to be executed by the Scripting Engine itself.
     func playScriptCommand(_ command: ScriptCommand) {
         if command.action == .open && command.modifier == "input" {
             scriptOpenInput(command)
         } else if command.action == .play {
             scriptPlay(command)
+        } else if command.action == .open && command.modifier == "output" {
+            scriptOpenOutput(command)
+        } else if command.action == .record {
+            scriptRecord(command)
+        } else if command.action == .stop {
+            scriptStopRecording(command)
         }
     }
     
+    /// Open a script file as input.
     func scriptOpenInput(_ command: ScriptCommand) {
         workspace.scriptURL = command.valueURL
+        workspace.scriptingStage = .inputSupplied
     }
     
+    /// Play a script file that has previously been opened.
     func scriptPlay(_ command: ScriptCommand) {
-        guard let scriptURL = workspace.scriptURL else {
+        if workspace.scriptingStage != .inputSupplied && lastScriptURL != nil {
+            workspace.scriptingStage = .inputSupplied
+            if workspace.scriptURL == nil {
+                workspace.scriptURL = lastScriptURL
+            }
+        }
+        guard workspace.scriptingStage == .inputSupplied else {
             logError("Script Play command encountered with no preceding Script Open Input")
             return
         }
+        guard let scriptURL = workspace.scriptURL else {
+            logError("Script Play command encountered but no valid script file specified")
+            return
+        }
         logInfo("Starting to play script located at \(scriptURL.path) on \(DateUtils.shared.dateTimeToday)")
+        workspace.scriptingStage = .playing
         rowsRead = 0
         reader = DelimitedReader()
         reader.setContext(consumer: self, workspace: workspace)
         reader.read(fileURL: scriptURL)
         logInfo("Script execution complete on \(DateUtils.shared.dateTimeToday)")
+        lastScriptURL = workspace.scriptURL
+    }
+    
+    /// Open an output script file.
+    func scriptOpenOutput(_ command: ScriptCommand) {
+        workspace.scriptURL = command.valueURL
+        workspace.scriptingStage = .outputSupplied
+    }
+    
+    /// Start recording a script to an output file that has already
+    /// been opened.
+    func scriptRecord(_ command: ScriptCommand) {
+        guard workspace.scriptingStage == .outputSupplied else {
+            logError("Script Record command encountered with no preceding Script Open Output")
+            return
+        }
+        guard let scriptURL = workspace.scriptURL else {
+            logError("Script Record command encountered but no valid script file specified")
+            return
+        }
+        logInfo("Starting to record script located at \(scriptURL.path) on \(DateUtils.shared.dateTimeToday)")
+        workspace.openScriptWriter(fileURL: scriptURL)
+    }
+    
+    func scriptStopRecording(_ command: ScriptCommand) {
+        guard workspace.scriptingStage == .recording else {
+            logError("Cannot Stop Script Recording since None is in Progress")
+            return
+        }
+        lastScriptURL = workspace.scriptURL
+        workspace.closeScriptWriter()
     }
     
     /// Factory method to create a command populated with the given module.

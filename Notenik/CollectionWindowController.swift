@@ -149,7 +149,12 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             found = (sender.title == reportTitle)
             if found {
                 if report.reportType == "tcz" {
-                    
+                    if noteIO.reportsFullPath != nil {
+                        let scriptURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
+                        if scriptURL != nil {
+                            launchScript(fileURL: scriptURL!)
+                        }
+                    }
                 } else {
                     let template = Template()
                     if noteIO.reportsFullPath != nil {

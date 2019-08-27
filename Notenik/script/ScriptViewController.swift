@@ -90,6 +90,7 @@ class ScriptViewController: NSViewController {
             actionPopUp.addItem(withTitle: "open")
             actionPopUp.addItem(withTitle: "play")
             actionPopUp.addItem(withTitle: "record")
+            actionPopUp.addItem(withTitle: "stop")
         case .input:
             actionPopUp.addItem(withTitle: "set")
             actionPopUp.addItem(withTitle: "open")

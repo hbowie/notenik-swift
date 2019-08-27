@@ -17,6 +17,11 @@ class ScriptWorkspace {
     var parentPath = ""
     
     var scriptURL:     URL?
+    
+    var scriptWriter: DelimitedWriter?
+    
+    var scriptingStage: ScriptingStage = .none
+    
     var collection  = NoteCollection()
     
     var inputURL:     URL?
@@ -54,6 +59,38 @@ class ScriptWorkspace {
         fullList = NotesList()
     }
     
+    func openScriptWriter(fileURL: URL) {
+        scriptURL = fileURL
+        scriptWriter = DelimitedWriter(destination: fileURL, format: .tabDelimited)
+        scriptWriter!.open()
+        scriptingStage = .recording
+        
+        scriptWriter!.write(value: "module")
+        scriptWriter!.write(value: "action")
+        scriptWriter!.write(value: "modifier")
+        scriptWriter!.write(value: "object")
+        scriptWriter!.write(value: "value")
+        scriptWriter!.endLine()
+    }
+    
+    func writeCommandToScriptWriter(_ command: ScriptCommand) {
+        scriptWriter!.write(value: "\(command.module)")
+        scriptWriter!.write(value: "\(command.action)")
+        scriptWriter!.write(value: command.modifier)
+        scriptWriter!.write(value: command.object)
+        scriptWriter!.write(value: command.value)
+        scriptWriter!.endLine()
+    }
+    
+    func closeScriptWriter() {
+        guard let writer = scriptWriter else { return }
+        let ok = writer.close()
+        if !ok {
+            writeErrorToLog("Problems writing script file")
+        }
+        scriptingStage = .none
+    }
+    
     func holdErrors() {
         holdingErrors = true
     }
@@ -78,5 +115,13 @@ class ScriptWorkspace {
     
     func writeLineToLog(_ line: String) {
         scriptLog.append(line + "\n")
+    }
+    
+    enum ScriptingStage {
+        case none
+        case inputSupplied
+        case playing
+        case outputSupplied
+        case recording
     }
 }
