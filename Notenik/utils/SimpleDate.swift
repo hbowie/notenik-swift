@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  SimpleDate.swift
 //  Notenik
 //
 //  Created by Herb Bowie on 4/20/19.
@@ -132,7 +132,6 @@ class SimpleDate: CustomStringConvertible {
             month = 1
         }
         calcDaysInMonth()
-        adjustInvalidDay()
     }
     
     func bumpMonthDown() {

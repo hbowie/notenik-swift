@@ -11,7 +11,8 @@
 
 import Foundation
 
-class RecursValue : StringValue {
+/// A value specifying a rule about how often a note should recur.
+class RecursValue: StringValue {
     
     var interval     = 0
     let intervalHalf = -1
