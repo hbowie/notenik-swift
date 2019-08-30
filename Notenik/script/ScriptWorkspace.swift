@@ -46,8 +46,13 @@ class ScriptWorkspace {
     var scriptLog   = ""
     
     init() {
-        let home = FileManager.default.homeDirectoryForCurrentUser
-        parentPath = home.path
+        let parentRealmPath = AppPrefs.shared.parentRealmPath
+        if parentRealmPath.count > 0 {
+            parentPath = parentRealmPath
+        } else {
+            let home = FileManager.default.homeDirectoryForCurrentUser
+            parentPath = home.path
+        }
     }
     
     var parentURL: URL {

@@ -26,7 +26,9 @@ class ScriptViewController: NSViewController {
     @IBOutlet var actionPopUp:    NSPopUpButton!
     @IBOutlet var modifierPopUp:  NSPopUpButton!
     @IBOutlet var objectComboBox: NSComboBox!
-    @IBOutlet var valueText:      NSTextField!
+    @IBOutlet var valueComboBox:  NSComboBox!
+    
+    var pathNeededForValue = false
     
     var command = ScriptCommand()
     
@@ -105,7 +107,7 @@ class ScriptViewController: NSViewController {
         case .output:
             actionPopUp.addItem(withTitle: "open")
         default:
-            actionPopUp.addItem(withTitle: " ")
+            actionPopUp.addItem(withTitle: "")
         }
         actionPopUp.selectItem(at: 0)
         actionPopUpSelected(self)
@@ -146,7 +148,7 @@ class ScriptViewController: NSViewController {
             modifierPopUp.addItem(withTitle: "ascending")
             modifierPopUp.addItem(withTitle: "descending")
         } else {
-            modifierPopUp.addItem(withTitle: " ")
+            modifierPopUp.addItem(withTitle: "")
         }
         modifierPopUp.selectItem(at: 0)
         modifierPopUpSelected(self)
@@ -164,16 +166,20 @@ class ScriptViewController: NSViewController {
             objectComboBox.addItem(withObjectValue: "xpltags")
             objectComboBox.addItem(withObjectValue: "dirdepth")
         } else if command.module == .input && command.action == .open {
-            objectComboBox.addItem(withObjectValue: " ")
+            objectComboBox.addItem(withObjectValue: "")
             objectComboBox.addItem(withObjectValue: "merge")
         } else if ((command.module == .filter && command.action == .add)
             || (command.module == .sort && command.action == .add)) {
             loadFieldNames()
+        } else if command.action == .set
+            && (command.module == .filter || command.module == .sort) {
+            objectComboBox.addItem(withObjectValue: "params")
         }
         if objectComboBox.numberOfItems == 0 {
-            objectComboBox.addItem(withObjectValue: " ")
+            objectComboBox.addItem(withObjectValue: "")
         }
         objectComboBox.selectItem(at: 0)
+        objectComboBoxSelected(self)
     }
     
     func loadFieldNames() {
@@ -188,7 +194,35 @@ class ScriptViewController: NSViewController {
     
     @IBAction func objectComboBoxSelected(_ sender: Any) {
         command.object = objectComboBox.stringValue
-        valueText.stringValue = ""
+        setValueOptions()
+    }
+    
+    func setValueOptions() {
+        valueComboBox.removeAllItems()
+        pathNeededForValue = false
+        if command.module == .input && command.action == .set {
+            if command.object == "xpltags" {
+                valueComboBox.addItem(withObjectValue: "false")
+                valueComboBox.addItem(withObjectValue: "true")
+            } else if command.object == "dirdepth" {
+                valueComboBox.addItem(withObjectValue: "1")
+                valueComboBox.addItem(withObjectValue: "2")
+                valueComboBox.addItem(withObjectValue: "3")
+                valueComboBox.addItem(withObjectValue: "4")
+                valueComboBox.addItem(withObjectValue: "5")
+                valueComboBox.addItem(withObjectValue: "6")
+                valueComboBox.addItem(withObjectValue: "7")
+                valueComboBox.addItem(withObjectValue: "8")
+                valueComboBox.addItem(withObjectValue: "9")
+                valueComboBox.addItem(withObjectValue: "10")
+            }
+        } else if command.action == .open {
+            pathNeededForValue = true
+        }
+        if valueComboBox.numberOfItems == 0 {
+            valueComboBox.addItem(withObjectValue: "")
+        }
+        valueComboBox.selectItem(at: 0)
     }
     
     @IBAction func selectFileAction(_ sender: Any) {
@@ -210,7 +244,7 @@ class ScriptViewController: NSViewController {
             let userChoice = savePanel.runModal()
             if userChoice == .OK {
                 command.setValue(fileURL: savePanel.url!)
-                valueText.stringValue = command.value
+                valueComboBox.stringValue = command.value
             }
         } else {
             let openPanel = NSOpenPanel();
@@ -218,26 +252,52 @@ class ScriptViewController: NSViewController {
             openPanel.directoryURL = scripter.workspace.parentURL
             openPanel.showsResizeIndicator = true
             openPanel.showsHiddenFiles = false
-            openPanel.canChooseDirectories = false
+            if command.modifier == "dir" || command.modifier.hasPrefix("notenik") {
+                openPanel.canChooseFiles = false
+                openPanel.canChooseDirectories = true
+            } else {
+                openPanel.canChooseDirectories = false
+                openPanel.canChooseFiles = true
+            }
             openPanel.canCreateDirectories = false
-            openPanel.canChooseFiles = true
             openPanel.allowsMultipleSelection = false
             let userChoice = openPanel.runModal()
             if userChoice == .OK {
                 command.setValue(fileURL: openPanel.url!)
-                valueText.stringValue = command.value
+                valueComboBox.stringValue = command.value
+            } else {
+                command.value = ""
+                valueComboBox.stringValue = ""
             }
         }
     }
     
-    @IBAction func plusAction(_ sender: Any) {
+    @IBAction func valueComboBoxSelected(_ sender: Any) {
+    }
+    
+    @IBAction func goAction(_ sender: Any) {
+        if pathNeededForValue &&
+            (valueComboBox.stringValue == "" || valueComboBox.stringValue == " ") {
+            selectFileAction(sender)
+        }
         command = scripter.getCommand(moduleStr: modulePopUp.titleOfSelectedItem!)!
         command.setAction(value: actionPopUp.titleOfSelectedItem!)
         command.modifier = modifierPopUp.titleOfSelectedItem!
         command.object = objectComboBox.stringValue
-        command.value = valueText.stringValue
+        command.value = valueComboBox.stringValue
         scripter.playCommand(command)
         updateLogView()
+        if command.module == .script {
+            if command.action == .open {
+                if command.modifier == "input" {
+                    actionPopUp.selectItem(at: 1)
+                    actionPopUpSelected(sender)
+                } else if command.modifier == "output" {
+                    actionPopUp.selectItem(at: 2)
+                    actionPopUpSelected(sender)
+                }
+            }
+        }
     }
     
     func updateLogView() {

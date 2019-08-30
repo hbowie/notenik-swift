@@ -17,7 +17,8 @@ class ScriptEngine: RowConsumer {
     
     var lastScriptURL: URL?
     
-    var lastCommandModuleStr = "script"
+    var lastCommandModule: ScriptModule = .script
+    var lastCommandAction: ScriptAction = .blank
     
     var workspace = ScriptWorkspace()
     
@@ -86,9 +87,20 @@ class ScriptEngine: RowConsumer {
     }
     
     /// Play a script command -- all script commands should be executed
-    /// through this method.
+    /// through this method, whether they come from a script being played
+    /// or from the Scripter window.
     func playCommand(_ command: ScriptCommand) {
-        
+        if command.module == .script {
+            if command.action != .stop {
+                stopIfRecording()
+                if command.module != lastCommandModule || lastCommandAction == .play || command.action == .open {
+                    let holdURL = workspace.scriptURL
+                    workspace = ScriptWorkspace()
+                    workspace.scriptURL = holdURL
+                    command.workspace = workspace
+                }
+            }
+        }
         var verb = "Executing"
         if workspace.scriptingStage == .playing {
             verb = "Playing"
@@ -114,6 +126,8 @@ class ScriptEngine: RowConsumer {
         default:
             break
         }
+        lastCommandModule = command.module
+        lastCommandAction = command.action
     }
     
     /// Play a command to be executed by the Scripting Engine itself.
@@ -139,6 +153,7 @@ class ScriptEngine: RowConsumer {
     
     /// Play a script file that has previously been opened.
     func scriptPlay(_ command: ScriptCommand) {
+        
         if workspace.scriptingStage != .inputSupplied && lastScriptURL != nil {
             workspace.scriptingStage = .inputSupplied
             if workspace.scriptURL == nil {
@@ -184,13 +199,24 @@ class ScriptEngine: RowConsumer {
         workspace.openScriptWriter(fileURL: scriptURL)
     }
     
+    func stopIfRecording() {
+        if workspace.scriptingStage == .recording {
+            stopRecording()
+        }
+    }
+    
     func scriptStopRecording(_ command: ScriptCommand) {
         guard workspace.scriptingStage == .recording else {
             logError("Cannot Stop Script Recording since None is in Progress")
             return
         }
+        stopRecording()
+    }
+    
+    func stopRecording() {
         lastScriptURL = workspace.scriptURL
         workspace.closeScriptWriter()
+        logInfo("Stopped recording of script located at \(workspace.scriptURL!)")
     }
     
     /// Factory method to create a command populated with the given module.
@@ -199,13 +225,9 @@ class ScriptEngine: RowConsumer {
     /// - Returns: Either the command with the specified module, or
     ///            nil if the module name was invalid.
     func getCommand(moduleStr: String) -> ScriptCommand? {
-        if moduleStr != lastCommandModuleStr && moduleStr == "script" {
-            newWorkspace()
-        }
         let command = ScriptCommand(workspace: workspace)
         let ok = command.setModule(value: moduleStr)
         if ok {
-            lastCommandModuleStr = moduleStr
             return command
         }
         return nil

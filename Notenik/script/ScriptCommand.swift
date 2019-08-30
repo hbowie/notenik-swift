@@ -21,8 +21,8 @@ class ScriptCommand: CustomStringConvertible {
     var module:   ScriptModule = .blank
     var action:   ScriptAction = .blank
     var modifier  = ""
-    var object    = ""
-    var value     = ""
+    var _object   = ""
+    var _value    = ""
     var valueWithPathResolved = ""
     
     init() {
@@ -32,6 +32,29 @@ class ScriptCommand: CustomStringConvertible {
     convenience init(workspace: ScriptWorkspace?) {
         self.init()
         self.workspace = workspace
+    }
+    
+    var object: String {
+        get {
+            return _object
+        }
+        set {
+            if newValue == " " {
+                _object = ""
+            } else {
+                _object = newValue
+            }
+        }
+    }
+    
+    var value: String {
+        get {
+            return _value
+        }
+        set {
+            _value = newValue
+            valueWithPathResolved = newValue
+        }
     }
     
     var description: String {
@@ -91,5 +114,15 @@ class ScriptCommand: CustomStringConvertible {
         if workspace != nil {
             workspace!.writeErrorToLog(msg)
         }
+    }
+    
+    func display() {
+        print("Displaying ScriptCommand data")
+        print("  - Module   = \(module)")
+        print("  - Action   = \(action)")
+        print("  - Modifier = \(modifier)")
+        print("  - Object   = \(object)")
+        print("  - Value    = \(value)")
+        print("  - Resolved = \(valueWithPathResolved)")
     }
 }

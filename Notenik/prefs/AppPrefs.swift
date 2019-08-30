@@ -31,6 +31,7 @@ class AppPrefs {
     var _edFSCG: CGFloat = 13.0
     
     var _prp = ""
+    var parentRealmPath = ""
     
     var userFont       = NSFont.userFont(ofSize: 13.0)
     var fixedPitchFont = NSFont.userFixedPitchFont(ofSize: 13.0)

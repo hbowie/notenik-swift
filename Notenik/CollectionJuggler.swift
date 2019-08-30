@@ -108,6 +108,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     }
     
     func openParentRealm(parentURL: URL) {
+        AppPrefs.shared.parentRealmPath = parentURL.path
         appPrefs.parentRealmParentURL = parentURL.deletingLastPathComponent()
         let realmScanner = RealmScanner()
         realmScanner.openRealm(path: parentURL.path)

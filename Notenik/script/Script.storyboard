@@ -35,7 +35,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <gridView fixedFrame="YES" xPlacement="leading" yPlacement="bottom" rowAlignment="none" translatesAutoresizingMaskIntoConstraints="NO" id="5gP-Zh-eaP">
-                                <rect key="frame" x="20" y="357" width="603" height="45"/>
+                                <rect key="frame" x="20" y="358" width="613" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <rows>
                                     <gridRow id="sov-LG-FP5"/>
@@ -44,8 +44,8 @@
                                 <columns>
                                     <gridColumn width="90" id="Hdy-BX-SxW"/>
                                     <gridColumn width="90" id="DbW-8b-UwG"/>
-                                    <gridColumn width="110" id="LTj-si-RgQ"/>
-                                    <gridColumn id="oUm-Ay-xOD"/>
+                                    <gridColumn width="120" id="LTj-si-RgQ"/>
+                                    <gridColumn width="100" id="oUm-Ay-xOD"/>
                                     <gridColumn id="yf2-77-mhM"/>
                                     <gridColumn width="40" id="0wy-AN-7DD"/>
                                     <gridColumn width="37" id="PXO-7I-tir"/>
@@ -53,7 +53,7 @@
                                 <gridCells>
                                     <gridCell row="sov-LG-FP5" column="Hdy-BX-SxW" id="Hmn-Gu-KV2">
                                         <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ib5-sX-3VN">
-                                            <rect key="frame" x="-2" y="28" width="53" height="17"/>
+                                            <rect key="frame" x="-2" y="27" width="53" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Module" id="Ihw-EH-xad">
                                                 <font key="font" usesAppearanceFont="YES"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -63,7 +63,7 @@
                                     </gridCell>
                                     <gridCell row="sov-LG-FP5" column="DbW-8b-UwG" id="h48-jb-ZgJ">
                                         <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K5l-P9-3fO">
-                                            <rect key="frame" x="94" y="28" width="47" height="17"/>
+                                            <rect key="frame" x="94" y="27" width="47" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Action" id="l92-Wz-0eQ">
                                                 <font key="font" usesAppearanceFont="YES"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -73,7 +73,7 @@
                                     </gridCell>
                                     <gridCell row="sov-LG-FP5" column="LTj-si-RgQ" id="LYu-mc-MCK">
                                         <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WJx-Bv-T5k">
-                                            <rect key="frame" x="190" y="28" width="54" height="17"/>
+                                            <rect key="frame" x="190" y="27" width="54" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Modifier" id="uTU-gj-cF3">
                                                 <font key="font" usesAppearanceFont="YES"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -83,7 +83,7 @@
                                     </gridCell>
                                     <gridCell row="sov-LG-FP5" column="oUm-Ay-xOD" id="5mQ-fA-Bud">
                                         <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hCO-Xr-MaQ">
-                                            <rect key="frame" x="306" y="28" width="45" height="17"/>
+                                            <rect key="frame" x="316" y="27" width="45" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Object" id="xvX-vm-lEF">
                                                 <font key="font" usesAppearanceFont="YES"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -93,7 +93,7 @@
                                     </gridCell>
                                     <gridCell row="sov-LG-FP5" column="yf2-77-mhM" id="vJY-8F-ual">
                                         <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OQy-iZ-DrS">
-                                            <rect key="frame" x="412" y="28" width="38" height="17"/>
+                                            <rect key="frame" x="422" y="27" width="38" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Value" id="lmK-09-apc">
                                                 <font key="font" usesAppearanceFont="YES"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -103,7 +103,7 @@
                                     </gridCell>
                                     <gridCell row="sov-LG-FP5" column="0wy-AN-7DD" id="TSi-5m-rbZ">
                                         <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8W0-nd-8MM">
-                                            <rect key="frame" x="518" y="28" width="12" height="17"/>
+                                            <rect key="frame" x="528" y="27" width="12" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="  " id="KkB-aA-VO8">
                                                 <font key="font" usesAppearanceFont="YES"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -170,8 +170,8 @@
                                         </popUpButton>
                                     </gridCell>
                                     <gridCell row="w5Z-lG-NdE" column="oUm-Ay-xOD" id="9ut-Ku-9kO">
-                                        <comboBox key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IIa-1e-6GB">
-                                            <rect key="frame" x="308" y="-4" width="103" height="26"/>
+                                        <comboBox key="contentView" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IIa-1e-6GB">
+                                            <rect key="frame" x="318" y="-4" width="103" height="26"/>
                                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="2Sy-dO-Bux">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -188,18 +188,26 @@
                                         </comboBox>
                                     </gridCell>
                                     <gridCell row="w5Z-lG-NdE" column="yf2-77-mhM" id="ntE-HV-mwR">
-                                        <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="h7z-AE-bRE">
-                                            <rect key="frame" x="414" y="0.0" width="100" height="22"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="NUG-Yw-11H">
-                                                <font key="font" usesAppearanceFont="YES"/>
+                                        <comboBox key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8PD-38-haB">
+                                            <rect key="frame" x="424" y="-4" width="103" height="26"/>
+                                            <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="HWg-Hj-REI">
+                                                <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
+                                                <objectValues>
+                                                    <string>Item 1</string>
+                                                    <string>Item 2</string>
+                                                    <string>Item 3</string>
+                                                </objectValues>
+                                            </comboBoxCell>
+                                            <connections>
+                                                <action selector="valueComboBoxSelected:" target="2il-i0-ztz" id="PXs-RA-P4y"/>
+                                            </connections>
+                                        </comboBox>
                                     </gridCell>
                                     <gridCell row="w5Z-lG-NdE" column="0wy-AN-7DD" id="9bB-gv-IUI">
                                         <button key="contentView" toolTip="Select a File" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YFt-wx-67j">
-                                            <rect key="frame" x="514" y="-7" width="52" height="32"/>
+                                            <rect key="frame" x="524" y="-7" width="52" height="32"/>
                                             <buttonCell key="cell" type="push" title="@" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2B8-Wl-AnF">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -211,13 +219,13 @@
                                     </gridCell>
                                     <gridCell row="w5Z-lG-NdE" column="PXO-7I-tir" id="5Rq-yG-zzu">
                                         <button key="contentView" toolTip="Execute the Command Line" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z2S-kY-jcQ">
-                                            <rect key="frame" x="560" y="-7" width="49" height="32"/>
-                                            <buttonCell key="cell" type="push" title="+" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dNd-Yc-SnT">
+                                            <rect key="frame" x="570" y="-7" width="49" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Go" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dNd-Yc-SnT">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="plusAction:" target="2il-i0-ztz" id="v3s-xU-luo"/>
+                                                <action selector="goAction:" target="2il-i0-ztz" id="v3s-xU-luo"/>
                                             </connections>
                                         </button>
                                     </gridCell>
@@ -261,7 +269,7 @@
                         <outlet property="parentView" destination="FwF-R6-HEg" id="wZU-DQ-FOG"/>
                         <outlet property="scriptLog" destination="nDj-q9-yWf" id="zne-F4-0Cw"/>
                         <outlet property="scrollingTextView" destination="hLH-CE-pmH" id="7F0-fV-3dP"/>
-                        <outlet property="valueText" destination="h7z-AE-bRE" id="ES2-lE-l5U"/>
+                        <outlet property="valueComboBox" destination="8PD-38-haB" id="I0Y-NY-MTf"/>
                     </connections>
                 </viewController>
                 <customObject id="Uf2-VW-a4G" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
