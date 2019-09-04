@@ -78,7 +78,7 @@ class FieldDefinition {
         case "work", "work title":
             fieldType = FieldType.work
         case "worktype":
-            fieldType = FieldType.pickFromList
+            fieldType = FieldType.workType
         default:
             if fieldLabel.commonForm.range(of: "date") != nil {
                 fieldType = FieldType.date

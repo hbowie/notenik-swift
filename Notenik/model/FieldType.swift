@@ -3,11 +3,15 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 11/30/18.
-//  Copyright © 2018 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
 
+/// Indicates how this field is to be handled.
 enum FieldType: Int {
     case defaultType    = 0
     case string         = 1
@@ -27,6 +31,7 @@ enum FieldType: Int {
     case code           = 15
     case dateAdded      = 16
     case work           = 17
-    case pickFromList   = 18
+    case workType       = 18
+    case pickFromList   = 19
 }
 

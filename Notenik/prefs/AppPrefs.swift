@@ -147,7 +147,9 @@ class AppPrefs {
     
     func setRegularFont(object: NSObject) {
         if userFont != nil {
-            if let textView = object as? NSTextView {
+            if let cb = object as? NSComboBox {
+                cb.font = userFont
+            } else if let textView = object as? NSTextView {
                 textView.font = userFont
             } else if let textField = object as? NSTextField {
                 textField.font = userFont

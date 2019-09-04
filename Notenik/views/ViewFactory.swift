@@ -32,6 +32,8 @@ class ViewFactory {
             return TagsView(pickList: pickLists.tagsPickList)
         } else if def.fieldType == .label  || def.fieldType == .dateAdded {
             return LabelView()
+        } else if def.fieldType == .workType {
+            return WorkTypeView()
         } else {
             return StringView()
         }

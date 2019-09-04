@@ -51,6 +51,8 @@ class ValueFactory {
             return StringValue(value)
         case .pickFromList:
             return StringValue(value)
+        case .workType:
+            return WorkTypeValue(value)
         default:
             return StringValue(value)
         }

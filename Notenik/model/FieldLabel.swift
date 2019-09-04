@@ -12,7 +12,7 @@
 import Foundation
 
 /// A label used to identify a particular field within a collection of items.
-class FieldLabel : CustomStringConvertible {
+class FieldLabel: CustomStringConvertible {
     
     var properForm = ""
     var commonForm = ""
@@ -51,50 +51,50 @@ class FieldLabel : CustomStringConvertible {
         }
     }
     
-    var isAuthor : Bool {
+    var isAuthor: Bool {
         return (commonForm == LabelConstants.authorCommon
             || commonForm == "by"
             || commonForm == "creator")
     }
     
-    var isBody : Bool {
+    var isBody: Bool {
         return commonForm == LabelConstants.bodyCommon
     }
     
-    var isCode : Bool {
+    var isCode: Bool {
         return commonForm == LabelConstants.codeCommon
     }
     
-    var isDate : Bool {
+    var isDate: Bool {
         return commonForm == LabelConstants.dateCommon
     }
     
-    var isDateAdded : Bool {
+    var isDateAdded: Bool {
         return commonForm == LabelConstants.dateAddedCommon
     }
     
-    var isIndex : Bool {
+    var isIndex: Bool {
         return commonForm == LabelConstants.indexCommon
     }
     
-    var isLink : Bool {
+    var isLink: Bool {
         return (commonForm == LabelConstants.linkCommon
             || commonForm == "url")
     }
     
-    var isRating : Bool {
+    var isRating: Bool {
         return (commonForm == LabelConstants.ratingCommon
             || commonForm == "priority")
     }
     
-    var isRecurs : Bool {
+    var isRecurs: Bool {
         return (commonForm == LabelConstants.recursCommon
             || commonForm == "every"
             || (commonForm.hasPrefix(LabelConstants.recursCommon)
                 && commonForm.hasSuffix("every")))
     }
     
-    var isSeq : Bool {
+    var isSeq: Bool {
         return (commonForm == LabelConstants.seqCommon
             || commonForm == "sequence"
             || commonForm == "rev"
@@ -102,32 +102,36 @@ class FieldLabel : CustomStringConvertible {
             || commonForm == "version")
     }
     
-    var isStatus : Bool {
+    var isStatus: Bool {
         return (commonForm == LabelConstants.statusCommon)
     }
     
-    var isTags : Bool {
+    var isTags: Bool {
         return (commonForm == LabelConstants.tagsCommon
             || commonForm == "keywords"
             || commonForm == "category"
             || commonForm == "categories")
     }
     
-    var isTeaser : Bool {
+    var isTeaser: Bool {
         return (commonForm == LabelConstants.teaserCommon)
     }
     
-    var isTitle : Bool {
+    var isTitle: Bool {
         return commonForm == LabelConstants.titleCommon
         
     }
     
-    var isType : Bool {
+    var isType: Bool {
         return commonForm == LabelConstants.typeCommon
     }
     
-    var isWorkTitle : Bool {
+    var isWorkTitle: Bool {
         return commonForm == LabelConstants.workTitleCommon
+    }
+    
+    var isWorkType: Bool {
+        return commonForm == LabelConstants.workTypeCommon
     }
     
     var count: Int {
