@@ -43,10 +43,10 @@ class NotesList: Sequence {
         var top = list.count - 1
         var done = false
         while !done {
-            if bottom >= top {
+            if bottom > top {
                 done = true
                 index = bottom
-            } else if top == (bottom + 1) {
+            } else if top == bottom || top == (bottom + 1) {
                 done = true
                 if note > list[top] {
                     index = top + 1

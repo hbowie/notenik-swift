@@ -45,7 +45,6 @@ class TagsTree {
                 i += 1
             }
         } else {
-            
             // If no tags for this note, then just add the note to the root node. 
             _ = root.addChild(note: note)
         }

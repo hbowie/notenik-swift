@@ -12,7 +12,7 @@
 import Foundation
 
 /// A single node in the Tags Tree.
-class TagsNode: Comparable {
+class TagsNode: Comparable, CustomStringConvertible {
     
     static let thisLessThanThat = -1
     static let thisGreaterThanThat = 1
@@ -46,6 +46,17 @@ class TagsNode: Comparable {
         self.init()
         type = .note
         self.note = note
+    }
+    
+    var description: String {
+        switch type {
+        case .root:
+            return "root"
+        case .tag:
+            return tag!
+        case .note:
+            return note!.title.value
+        }
     }
     
     /// Compare this Tags Node to another one and determine which is greater.
@@ -88,16 +99,17 @@ class TagsNode: Comparable {
     /// - Returns: The node that was added, or the equal one that already existed. 
     func addChild(node: TagsNode) -> TagsNode {
         
-        // Use binary search to look for match or insertion point
+        // Use binary search to look for a match or the
+        // first item greater than the desired key.
         var index = 0
         var bottom = 0
         var top = children.count - 1
         var done = false
         while !done {
-            if bottom >= top {
+            if bottom > top {
                 done = true
                 index = bottom
-            } else if top == (bottom + 1) {
+            } else if top == bottom || top == (bottom + 1) {
                 done = true
                 if node > children[top] {
                     index = top + 1
