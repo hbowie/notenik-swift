@@ -3,11 +3,15 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 2/5/19.
-//  Copyright © 2019 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import Foundation
 
+/// A tree structure listing notes in a collection by their tags.
 class TagsTree {
     
     let root = TagsNode()
@@ -17,20 +21,32 @@ class TagsTree {
         if note.hasTags() {
             let tags = note.tags
             var i = 0
+            
+            // Process each tag separately
             while i < tags.tags.count {
                 let tag = tags.tags[i]
                 var node = root
                 var j = 0
                 while j < tag.levels.count {
+                    // Now let's work our way up through the tag's levels,
+                    // adding (or locating) one tag level at a time, working
+                    // our way deeper into the tree structure as we go.
                     let level = tag.levels[j]
                     let nextNode = node.addChild(tagLevel: level)
                     node = nextNode
                     j += 1
                 }
+                
+                // Now that we've worked our way through the tags,
+                // Add the note itself to the tree.
                 _ = node.addChild(note: note)
+                
+                // And on to the next tag for this note
                 i += 1
             }
         } else {
+            
+            // If no tags for this note, then just add the note to the root node. 
             _ = root.addChild(note: note)
         }
     }

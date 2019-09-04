@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// A single node in the Tags Tree.
 class TagsNode: Comparable {
     
     static let thisLessThanThat = -1
@@ -47,6 +48,7 @@ class TagsNode: Comparable {
         self.note = note
     }
     
+    /// Compare this Tags Node to another one and determine which is greater.
     func compareTo(node2: TagsNode) -> Int {
         if self.type.rawValue < node2.type.rawValue {
             return TagsNode.thisLessThanThat
@@ -59,6 +61,10 @@ class TagsNode: Comparable {
         } else if self.type == .note && self.note! < node2.note! {
             return TagsNode.thisLessThanThat
         } else if self.type == .note && self.note! > node2.note! {
+            return TagsNode.thisGreaterThanThat
+        } else if self.type == .note && self.note!.noteID < node2.note!.noteID {
+            return TagsNode.thisLessThanThat
+        } else if self.type == .note && self.note!.noteID > node2.note!.noteID {
             return TagsNode.thisGreaterThanThat
         } else {
             return TagsNode.thisEqualsThat
@@ -75,21 +81,61 @@ class TagsNode: Comparable {
         return addChild(node: noteNode)
     }
     
+    /// Either add the supplied node to this node at the proper insertion point,
+    /// or determine that a node with an identical key already exists.
+    ///
+    /// - Parameter node: The node to be added, if it's not already there.
+    /// - Returns: The node that was added, or the equal one that already existed. 
     func addChild(node: TagsNode) -> TagsNode {
-        var i = 0
-        while i < children.count && node > children[i] {
-            i += 1
+        
+        // Use binary search to look for match or insertion point
+        var index = 0
+        var bottom = 0
+        var top = children.count - 1
+        var done = false
+        while !done {
+            if bottom >= top {
+                done = true
+                index = bottom
+            } else if top == (bottom + 1) {
+                done = true
+                if node > children[top] {
+                    index = top + 1
+                } else if node == children[top] {
+                    return children[top]
+                } else if node == children[bottom] {
+                    return children[bottom]
+                } else if node > children[bottom] {
+                    index = top
+                } else {
+                    index = bottom
+                }
+            } else {
+                let middle = bottom + ((top - bottom) / 2)
+                if node == children[middle] {
+                    return children[middle]
+                } else if node > children[middle] {
+                    bottom = middle + 1
+                } else {
+                    top = middle
+                }
+            }
         }
-        if i >= children.count {
+        
+        if index >= children.count {
             node.parent = self
             children.append(node)
             return node
-        } else if node < children[i] {
+        } else if index < 0 {
             node.parent = self
-            children.insert(node, at: i)
+            children.insert(node, at: 0)
+            return node
+        } else if node < children[index] {
+            node.parent = self
+            children.insert(node, at: index)
             return node
         } else {
-            return children[i]
+            return children[index]
         }
     }
     

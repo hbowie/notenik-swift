@@ -40,7 +40,7 @@ class BunchOfNotes {
             if notesList.count == 0 {
                 listIndex = -1
             } else if listIndex > 0 && selectedNote != nil {
-                (listIndex, _) = searchList(selectedNote!.sortKey) 
+                (listIndex, _) = searchList(selectedNote!) 
             }
         }
     }
@@ -61,7 +61,7 @@ class BunchOfNotes {
             return false
         } else {
             notesDict[noteID] = note
-            let (index, _) = searchList(note.sortKey)
+            let (index, _) = searchList(note)
             if index < 0 {
                 notesList.insert(note, at: 0)
                 listIndex = 0
@@ -86,7 +86,7 @@ class BunchOfNotes {
         notesDict.removeValue(forKey: noteID)
         
         // Remove the note from sorted list of notes
-        let (index, found) = searchList(note.sortKey)
+        let (index, found) = searchList(note)
         if found {
             notesList.remove(at: index)
         }
@@ -103,7 +103,7 @@ class BunchOfNotes {
     /// - Returns: The note as it was found in the list, along with its position.
     ///            If not found, return nil and -1. 
     func selectNote(_ note: Note) -> (Note?, NotePosition) {
-        let (index, exact) = searchList(note.sortKey)
+        let (index, exact) = searchList(note)
         if exact {
             listIndex = index
             return selectNote(at: index)
@@ -119,30 +119,8 @@ class BunchOfNotes {
     /// - Returns: A tuple containing the index position, and a boolean to indicate whether
     ///            an exact match was found. The index will either point at the first
     ///            exact match, or the first row beyond the desired key.
-    func searchList(_ sortKey : String) -> (Int, Bool) {
-        var index = 0
-        var exactMatch = false
-        if notesList.count == 0 {
-            index = -1
-            exactMatch = false
-        } else if sortKey < notesList[0].sortKey {
-            index = -1
-            exactMatch = false
-        } else if sortKey > notesList[notesList.count - 1].sortKey {
-            index = notesList.count
-            exactMatch = false
-        } else {
-            index = 0
-            while sortKey > notesList[index].sortKey && index < notesList.count {
-                index += 1
-            }
-            if index < 0 || index >= notesList.count {
-                exactMatch = false
-            } else {
-                exactMatch = sortKey == notesList[index].sortKey
-            }
-        }
-        return (index, exactMatch)
+    func searchList(_ note: Note) -> (Int, Bool) {
+        return notesList.searchList(note)
     }
     
     /// Select the note at the given position in the sorted list.

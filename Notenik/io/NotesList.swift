@@ -29,6 +29,57 @@ class NotesList: Sequence {
         }
     }
     
+    /// Search the list to position the index at a matching entry, or the
+    /// last entry with a lower key.
+    ///
+    /// - Parameter sortKey: The sort key we are trying to position.
+    /// - Returns: A tuple containing the index position, and a boolean to indicate whether
+    ///            an exact match was found. The index will either point at the first
+    ///            exact match, or the first row greater than the desired key.
+    func searchList(_ note: Note) -> (Int, Bool) {
+        var index = 0
+        var exactMatch = false
+        var bottom = 0
+        var top = list.count - 1
+        var done = false
+        while !done {
+            if bottom >= top {
+                done = true
+                index = bottom
+            } else if top == (bottom + 1) {
+                done = true
+                if note > list[top] {
+                    index = top + 1
+                } else if note == list[top] {
+                    exactMatch = true
+                    index = top
+                } else if note == list[bottom] {
+                    exactMatch = true
+                    index = bottom
+                } else if note > list[bottom] {
+                    index = top
+                } else {
+                    index = bottom
+                }
+            } else {
+                let middle = bottom + ((top - bottom) / 2)
+                if note == list[middle] {
+                    exactMatch = true
+                    done = true
+                    index = middle
+                } else if note > list[middle] {
+                    bottom = middle + 1
+                } else {
+                    top = middle
+                }
+            }
+        }
+        while exactMatch && index > 0 && note == list[index - 1] {
+            index -= 1
+        }
+        return (index, exactMatch)
+    }
+    
     func append(_ note: Note) {
         list.append(note)
     }
