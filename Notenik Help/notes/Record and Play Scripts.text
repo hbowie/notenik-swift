@@ -1,0 +1,46 @@
+Title:  Record and Play Scripts
+
+Seq:    30
+
+Tags:   realm, script, template
+
+Date Added: 2019-08-14 02:21:40 +0000
+
+Body: 
+
+Notenik can record and play a script file that will execute a series of data transformations. Data can be input from one or more Notenik Collections and/or from tab-delimited or comma-separated files. The input data can be sorted and filtered using any of the fields contained within the data. The data can then be used as input to a Template file, or output to a new tab-delimited or comma-separated file. 
+
+See the [Merge Script File Spec][script] for a complete description of a Script file. 
+
+Place one or more script files within the reports folder for a Collection, and these files will then become available as Reports. 
+
+Scripts will be executed within a separate Scripter window. You can open this window directly by selecting it from the Window menu. 
+
+The Scripter window can be used for a number of different functions. 
+
+1. Play a script file that already exists. 
+
+2. Start and stop recording of a new script file. 
+
+3. Direct execution of actions to be recorded within a new script file. 
+
+In all of these cases, the scripting actions and results will be displayed within the lower portion of the window. 
+
+The first five fields at the top of the Scripter window — Module, Action, Modifier, Object and Value — correspond directly to the columns in a [Script][] file. These fields should generally be entered from left to right, since earlier selections will modify the options available in later fields. 
+
+The next column, identified with the '@' symbol, allows you to select a local file whose path is to be entered in the Value field. 
+
+The final column, labeled "Go" will cause Notenik to try to execute the command that has been entered into the first five fields, and will record the command, if you are currently recording a Script. 
+
+Note that there are Script commands that can be entered here that will not be found within the Script file spec, since these commands are provided to allow the recording and playing of Script files, but cannot be recursively executed from within a Script file. For these commands, the Module field is 'script'. The available Actions are as follows.
+
+* open — Use the Modifier field to specify either an input or an output file, and use the Value field to specify the location of the script file to be read or written. 
+
+* play — After opening an input file, you can execute the play command to play the Script file previously specified. 
+
+* record — Use this command to begin recording a new Script file after previously opening that file as output. 
+
+* stop — Use this command to stop recording a script. It is at this point that the executed and recorded commands will be written to disk. 
+
+[script]: https://www.notenik.net/merge-script.html
+

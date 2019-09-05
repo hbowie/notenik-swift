@@ -6,6 +6,28 @@ Tags:   changes, history, log
 
 Body:
 
+### Version 1.4.0 | 03 Sep 2019
+
+#### 1. Improved Collection Load Speed
+
+Improved the speed of opening a new Collection by optimizing the sorting of Notes as they are loaded into memory. 
+
+
+#### 2. Work Type now uses a Combo Box
+
+When a Collection (typically, of quotations) has a 'Work Type' field, then Notenik will now present a standard, selectable list of options to choose from using what is known as a "Combo Box" control for editing. 
+
+
+#### 3. Added Script File Recording
+
+Notenik can now be used to record script files, as well as play them back. 
+
+
+#### 4. Miscellaneous Improvements
+
+A few minor bug fixes and minor improvements. 
+
+
 ### Version 1.3.0 | 13 Aug 2019
 
 #### 1. Added Script File Playback

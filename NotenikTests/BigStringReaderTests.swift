@@ -50,11 +50,6 @@ class BigStringReaderTests: XCTestCase {
         var line : String? = ""
         line = reader2.readLine()
         XCTAssertTrue(line == "Title:  2018-09 Chicago")
-        line = reader2.readLine()
-        XCTAssertTrue(line == "")
-        line = reader2.readLine()
-        XCTAssertTrue(line == "Date Added: 2018-04-08 13:31:50")
-        print ("Printing line-by-line contents of " + filePath)
     }
 
     func testPerformanceExample() {

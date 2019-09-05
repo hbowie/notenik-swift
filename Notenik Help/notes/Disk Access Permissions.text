@@ -2,6 +2,8 @@ Title:  Disk Access Permissions
 
 Seq:    38
 
+Tags:   collection, permissions, realm, script, security
+
 Date Added: 2019-07-09 15:18:19 +0000
 
 Body: 
@@ -20,7 +22,7 @@ Here's how this works.
 
 2. Any Collection folder that you select using the Open Recent command under the File menu will be available to you, because macOS remembers that you previously gave Notenik permission to access that Collection. 
 
-3. If you use the Open Parent Realm command under the File menu to have Notenik search for its Collections within a parent folder, then those collections will be available to be opened, because you have explicitly given Notenik permission to access everything within that parent folder. 
+3. If you use the Open Parent Realm command under the File menu to have Notenik search for its Collections and Scripts within a parent folder, then those Collections and Scripts will be available to be opened, because you have explicitly given Notenik permission to access everything within that parent folder. 
 
 In general, the rules above will be enough to cover most situations. If they prove too restrictive, though, you can always grant Notenik full disk access in the Security & Privacy pane of System Preferences. 
 

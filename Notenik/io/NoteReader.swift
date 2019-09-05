@@ -51,6 +51,7 @@ class NoteReader: RowImporter {
         collection = io.openCollection(realm: realm, collectionPath: collectionURL.path)
         if collection == nil {
             logError("Problems opening the collection at " + collectionURL.path)
+            return
         }
         
         for def in collection!.dict.dict {

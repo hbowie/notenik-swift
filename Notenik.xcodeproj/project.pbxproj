@@ -280,7 +280,6 @@
 		9C619A34231B30A7003CFFBE /* WorkTypeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C619A32231B30A7003CFFBE /* WorkTypeValue.swift */; };
 		9C619A35231B30A7003CFFBE /* WorkTypeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C619A32231B30A7003CFFBE /* WorkTypeValue.swift */; };
 		9C619A38231B323B003CFFBE /* WorkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C619A37231B323B003CFFBE /* WorkTypeView.swift */; };
-		9C619A39231B323B003CFFBE /* WorkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C619A37231B323B003CFFBE /* WorkTypeView.swift */; };
 		9C619A3A231B323B003CFFBE /* WorkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C619A37231B323B003CFFBE /* WorkTypeView.swift */; };
 		9C67248522EA1B2D00CB7D39 /* FilterModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C67248422EA1B2D00CB7D39 /* FilterModule.swift */; };
 		9C67248622EA1B2D00CB7D39 /* FilterModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C67248422EA1B2D00CB7D39 /* FilterModule.swift */; };
@@ -1711,7 +1710,6 @@
 				9C2AE51F220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9C2AE517220A033C00AE8BEE /* TagsTree.swift in Sources */,
 				9CE2170822A95EB300EE656C /* TemplateCommand.swift in Sources */,
-				9C619A39231B323B003CFFBE /* WorkTypeView.swift in Sources */,
 				9C78888B21FB950900452D74 /* Markedup.swift in Sources */,
 				9C60E7B821F6525F00C332ED /* BigStringReaderTests.swift in Sources */,
 				9C67248D22EA205800CB7D39 /* FilterRule.swift in Sources */,

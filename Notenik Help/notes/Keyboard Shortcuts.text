@@ -1,6 +1,6 @@
 Title:  Keyboard Shortcuts
 
-Seq:    40
+Seq:    41
 
 Tags:   keys, shortcuts
 
@@ -21,6 +21,7 @@ Following are the keyboard shortcuts available within the app. When combined wit
 * N - New Note
 * O - Open
 * Q - Quit Notenik
+* R - View Scripter Window
 * S - Save Note
 * T - Text Edit Note
 * U - Catch Up Daily Tasks
