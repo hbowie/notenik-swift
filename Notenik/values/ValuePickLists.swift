@@ -15,11 +15,19 @@ class ValuePickLists {
     
     var statusConfig = StatusValueConfig()
     var tagsPickList = TagsPickList()
+    var authorPickList = AuthorPickList()
+    var workTitlePickList = WorkTitlePickList()
     
     /// Register the relevant values from another Note. 
     func registerNote(note: Note) {
+        if note.hasAuthor() {
+            authorPickList.registerAuthor(note.author)
+        }
         if note.hasTags() {
             tagsPickList.registerTags(note.tags)
+        }
+        if note.hasWorkTitle() {
+            workTitlePickList.registerWork(note.workTitle)
         }
     }
 }

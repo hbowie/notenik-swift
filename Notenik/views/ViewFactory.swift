@@ -15,8 +15,10 @@ import Cocoa
 /// corresponding fields. 
 class ViewFactory {
     
-    static func getEditView(pickLists: ValuePickLists, def: FieldDefinition) -> CocoaEditView {
-        if def.fieldType == .body {
+    static func getEditView(pickLists: ValuePickLists, def: FieldDefinition) -> MacEditView {
+        if def.fieldType == .author {
+            return AuthorView(pickList: pickLists.authorPickList)
+        } else if def.fieldType == .body {
             return BodyView()
         } else if def.fieldType == .code {
             return CodeView()
@@ -34,6 +36,8 @@ class ViewFactory {
             return LabelView()
         } else if def.fieldType == .workType {
             return WorkTypeView()
+        } else if def.fieldType == .work {
+            return WorkTitleView(pickList: pickLists.workTitlePickList)
         } else {
             return StringView()
         }

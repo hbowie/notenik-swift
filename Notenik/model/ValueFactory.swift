@@ -48,7 +48,7 @@ class ValueFactory {
         case .dateAdded:
             return DateValue(value)
         case .work:
-            return StringValue(value)
+            return WorkTitleValue(value)
         case .pickFromList:
             return StringValue(value)
         case .workType:

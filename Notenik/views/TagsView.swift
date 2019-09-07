@@ -11,7 +11,7 @@
 
 import Cocoa
 
-class TagsView: CocoaEditView {
+class TagsView: MacEditView {
     
     var tagsField: NSTokenField!
     var tagsTokenDelegate: TagsTokenDelegate!

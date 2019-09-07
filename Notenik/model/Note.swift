@@ -418,6 +418,16 @@ class Note: Comparable, NSCopying {
         }
     }
     
+    /// Return the Note's Work Title Value
+    var workTitle: WorkTitleValue {
+        let val = getFieldAsValue(label: LabelConstants.workTitle)
+        if val is WorkTitleValue {
+            return val as! WorkTitleValue
+        } else {
+            return WorkTitleValue(val.value)
+        }
+    }
+    
     /// Return the Body of the Note
     var body: LongTextValue {
         let val = getFieldAsValue(label: LabelConstants.body)
@@ -521,6 +531,16 @@ class Note: Comparable, NSCopying {
     /// Does this note have a non-blank status field?
     func hasStatus() -> Bool {
         return status.count > 0
+    }
+    
+    /// Does this note have a non-blank author field?
+    func hasAuthor() -> Bool {
+        return author.count > 0
+    }
+    
+    /// Does this note have a non-blank work title field?
+    func hasWorkTitle() -> Bool {
+        return workTitle.count > 0
     }
     
     /// Does this note have a non-blank body?

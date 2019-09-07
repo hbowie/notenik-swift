@@ -18,19 +18,50 @@ class PickList {
     
     /// Register a new value. Add it if not already present in the list.
     func registerValue(_ value: String) {
-        var i = 0
-        var looking = true
-        while looking {
-            if i >= values.count {
-                values.append(value)
-                looking = false
-            } else if value == values[i] {
-                looking = false
-            } else if value < values[i] {
-                values.insert(value, at: i)
-                looking = false
+        
+        var index = 0
+        var bottom = 0
+        var top = values.count - 1
+        var done = false
+        while !done {
+            if bottom > top {
+                done = true
+                index = bottom
+            } else if value == values[top] {
+                return
+            } else if value == values[bottom] {
+                return
+            } else if value > values[top] {
+                done = true
+                index = top + 1
+            } else if value < values[bottom] {
+                done = true
+                index = bottom
+            } else if top == bottom || top == (bottom + 1) {
+                done = true
+                if value > values[bottom] {
+                    index = top
+                } else {
+                    index = bottom
+                }
+            } else {
+                let middle = bottom + ((top - bottom) / 2)
+                if value == values[middle] {
+                    return
+                } else if value > values[middle] {
+                    bottom = middle + 1
+                } else {
+                    top = middle - 1
+                }
             }
-            i += 1
+        }
+        
+        if index >= values.count {
+            values.append(value)
+        } else if index < 0 {
+            values.insert(value, at: 0)
+        } else {
+            values.insert(value, at: index)
         }
     }
 }

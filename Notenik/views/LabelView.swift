@@ -11,7 +11,7 @@
 
 import Cocoa
 
-class LabelView: CocoaEditView {
+class LabelView: MacEditView {
     
     var textField: NSTextField!
     

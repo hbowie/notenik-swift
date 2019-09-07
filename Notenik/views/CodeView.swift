@@ -11,7 +11,7 @@
 
 import Cocoa
 
-class CodeView: CocoaEditView {
+class CodeView: MacEditView {
     
     var scrollView: NSScrollView!
     var textView:   NSTextView!

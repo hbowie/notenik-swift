@@ -27,7 +27,7 @@ class NoteEditViewController: NSViewController {
     var initialViewLoaded  = false
     var containerViewBuilt = false
     
-    var editViews: [CocoaEditView] = []
+    var editViews: [MacEditView] = []
     var grid:      [[NSView]] = []
     var gridView:  NSGridView!
     
@@ -35,7 +35,7 @@ class NoteEditViewController: NSViewController {
     var bodyStorage: NSTextStorage!
     
     var dateView:   DateView?
-    var recursView: CocoaEditView?
+    var recursView: MacEditView?
     var statusView: StatusView?
     var linkView:   LinkView?
     

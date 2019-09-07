@@ -75,7 +75,7 @@ class FieldDefinition {
             fieldType = FieldType.title
         case "type":
             fieldType = FieldType.string
-        case "work", "work title":
+        case "work", "worktitle":
             fieldType = FieldType.work
         case "worktype":
             fieldType = FieldType.workType

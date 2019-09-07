@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class StatusView: CocoaEditView {
+class StatusView: MacEditView {
     
     var config: StatusValueConfig!
     var menu: NSPopUpButton!

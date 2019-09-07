@@ -11,7 +11,7 @@
 
 import Cocoa
 
-class LinkView: CocoaEditView {
+class LinkView: MacEditView {
     
     var scrollView: NSScrollView!
     var textView: NSTextView!

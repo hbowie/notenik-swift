@@ -9,42 +9,39 @@
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
-import Foundation
-
 import Cocoa
 
-class WorkTypeView: CocoaEditView {
+class WorkTypeView: MacEditView {
     
-    var comboBox: NSComboBox!
-    
-    let types = ["unknown", "Album", "Article", "Blog Post", "Book", "CD", "Comment", "Conference", "Essay", "Film", "Interview", "Lecture", "Letter", "Paper", "Play", "Poem", "Preface", "Presentation", "Remarks", "Sermon", "Song", "Speech", "Story", "Television Show", "Video"]
+    var workTypeField: NSComboBox!
+    let dataSource = WorkTypeDataSource()
     
     var view: NSView {
-        return comboBox
+        return workTypeField
     }
     
     var text: String {
         get {
-            if comboBox.indexOfSelectedItem >= 0 {
-                return types[comboBox.indexOfSelectedItem]
+            if workTypeField.indexOfSelectedItem >= 0 {
+                return dataSource.types[workTypeField.indexOfSelectedItem]
             } else {
-                return comboBox.stringValue
+                return workTypeField.stringValue
             }
         }
         set {
             var found = false
             var i = 0
             let newLower = newValue.lowercased()
-            while !found && i < types.count {
-                if newLower == types[i].lowercased() {
-                    comboBox.selectItem(at: i)
+            while !found && i < dataSource.types.count {
+                if newLower == dataSource.types[i].lowercased() {
+                    workTypeField.selectItem(at: i)
                     found = true
                 } else {
                     i += 1
                 }
             }
             if !found {
-                comboBox.stringValue = newValue
+                workTypeField.stringValue = newValue
             }
         }
     }
@@ -55,12 +52,13 @@ class WorkTypeView: CocoaEditView {
     
     /// Build the ComboBox allowing the user to select a type of work.
     func buildView() {
-        comboBox = NSComboBox()
-        for type in types {
-            comboBox.addItem(withObjectValue: AppPrefs.shared.makeUserAttributedString(text: type))
-        }
-        comboBox.selectItem(at: 0)
-        AppPrefs.shared.setRegularFont(object: comboBox)
+
+        workTypeField = NSComboBox(string: "")
+        workTypeField.usesDataSource = true
+        workTypeField.dataSource = dataSource
+        workTypeField.delegate = dataSource
+        workTypeField.completes = true
+        AppPrefs.shared.setRegularFont(object: workTypeField)
     }
 
 }

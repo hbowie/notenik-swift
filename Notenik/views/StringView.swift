@@ -10,7 +10,7 @@
 
 import Cocoa
 
-class StringView: CocoaEditView {
+class StringView: MacEditView {
     
     var textField: NSTextField!
     

@@ -12,7 +12,7 @@
 import Cocoa
 
 /// Custom Edit View for a Date
-class DateView: CocoaEditView {
+class DateView: MacEditView {
     
     let appPrefs = AppPrefs.shared
     
@@ -24,7 +24,7 @@ class DateView: CocoaEditView {
     
     let calendarStoryboard: NSStoryboard = NSStoryboard(name: "Calendar", bundle: nil)
     
-    var recursView: CocoaEditView?
+    var recursView: MacEditView?
     
     var view: NSView {
         return stack
