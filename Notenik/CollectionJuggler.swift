@@ -150,10 +150,27 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
     }
     
+    /// Save the User's Collection in a new location
     func saveCollectionAs(currentIO: NotenikIO, currentWindow: CollectionWindow, newURL: URL) -> Bool {
         guard currentIO.collectionOpen else { return false }
         guard let oldCollection = currentIO.collection else { return false }
         guard let oldURL = oldCollection.collectionFullPathURL else { return false }
+        let newFileName = FileName(newURL)
+        let newFolderNameLower = newFileName.folder.lowercased()
+        if newFolderNameLower == "desktop" || newFolderNameLower == "documents" {
+            communicateError("Please create a folder within the \(newFileName.folder) folder", alert: true)
+            return false
+        }
+        do {
+            let items = try  FileManager.default.contentsOfDirectory(atPath: newURL.path)
+            if items.count > 0 {
+                communicateError("New folder location at \(newURL.path) already contains other files", alert: true)
+                return false
+            }
+        } catch {
+            communicateError("Could not access contents of directory at \(newURL.path)")
+            return false
+        }
         do {
             try FileManager.default.removeItem(at: newURL)
             try FileManager.default.copyItem(at: oldURL, to: newURL)

@@ -1,0 +1,15 @@
+Title:  Steps for Adding a New Field
+
+Body: 
+
+1. Add Standard labels (proper and common) to LabelConstants class in the model group.
+1. Add a new case to the FieldType enum in the model group
+1. Create a new xxxValue class in the values group
+1. Add a new case to the guessFieldType method in the FieldDefinition class in the model group
+1. Add a new case to the ValueFactory class in the model group
+1. Add the appropriate hasXXX method to the Note class for the field to be edited. 
+1. Create a xxxPickList class in the values group, for a Tokenized field
+1. Add the xxxPickList class to the ValuePickLists class, in the values group
+1. Create a new xxxTokenDelegate class in the views group, for a Tokenized field
+1. Create a new xxxView class in the views Group
+1. Add new xxxView class to ViewFactory in the views group

@@ -33,6 +33,13 @@ class FileNameTests: XCTestCase {
         XCTAssertEqual(fn2.base, "iPhone")
         XCTAssertFalse(fn2.readme)
     }
+    
+    func testFolder() {
+        let fn1 = FileName("/Users/hbowie/Desktop/")
+        XCTAssertEqual(fn1.folder, "Desktop")
+        let fn2 = FileName("/Users/hbowie/Desktop")
+        XCTAssertEqual(fn2.folder, "Desktop")
+    }
 
     func testPerformanceExample() {
         // This is an example of a performance test case.

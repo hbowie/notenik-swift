@@ -11,8 +11,11 @@
 
 import Foundation
 
+/// A class offering easy access to the various components of
+/// a path to a file or directory.
 class FileName: CustomStringConvertible {
     
+    /// The complete path, including base file name and extension.
     var fileNameStr = ""
     
     /// File extension without a leading dot
@@ -21,7 +24,10 @@ class FileName: CustomStringConvertible {
     /// Lowercase file extension, without a leading dot
     var extLower = ""
     
+    /// Base file name, without preceding path or following extension.
     var base = ""
+    
+    /// Base file name converted to all lower-case.
     var baseLower = ""
     
     /// The path leading up to, but not including, any file name.
@@ -30,10 +36,12 @@ class FileName: CustomStringConvertible {
     /// The lowest level folder in the supplied file name path.
     var folder = ""
     
-    var folders: [Substring] = []
+    /// An array of all the folders found in the path.
+    var folders: [String] = []
     
+    /// Do we think this is a file or a directory?
+    var fileOrDir: FileOrDirectory = .unknown
     
-    var fileOrDir : FileOrDirectory = .unknown
     var readme = false
     var dotfile = false
     var template = false
@@ -78,58 +86,85 @@ class FileName: CustomStringConvertible {
         set(url.path)
     }
     
-    /// Set a new value with a path stored in a String
     func set(_ value: String) {
+        
         fileNameStr = value
-        var slashCount = 0
-        var dotCount = 0
-        var index = fileNameStr.index(before: fileNameStr.endIndex)
-        var lastIndex = fileNameStr.endIndex
-        var dotIndex = fileNameStr.endIndex
-        var c: Character = " "
-        var i = fileNameStr.count - 1
-        var pathEndIndex = fileNameStr.endIndex
-        var folderStartIndex = fileNameStr.endIndex
-        while i >= 0 {
-            c = StringUtils.charAt(index: i, str: fileNameStr)
-            
-            if c == "." {
-                if slashCount == 0 && dotCount == 0 {
-                    setExt(String(fileNameStr[lastIndex..<fileNameStr.endIndex]))
+        var remainingStartIndex = value.startIndex
+        var remainingEndIndex = value.endIndex
+        var lastDotIndex = value.endIndex
+        var possibleExtStart = value.startIndex
+        var index = value.startIndex
+        var lastCharWasSlash = false
+        var pathEnd = value.endIndex
+        for char in value {
+            if char == "/" {
+                if index > remainingStartIndex {
+                    let nextFolder = String(value[remainingStartIndex..<index])
+                    anotherFolder(nextFolder)
                 }
-                dotCount += 1
-                dotIndex = index
-            } else if c == "/" {
-                if dotCount == 0 {
-                    fileOrDir = .directory
-                }
-                if slashCount == 0 && dotCount > 0 {
-                    setBase(String(fileNameStr[lastIndex..<dotIndex])) 
-                }
-                if slashCount == 0 {
-                    pathEndIndex = lastIndex
-                }
-                if slashCount == 1 {
-                    folderStartIndex = lastIndex
-                }
-                slashCount += 1
-            } else if i == 0 && slashCount == 0 && dotCount > 0 {
-                setBase(String(fileNameStr[fileNameStr.startIndex..<dotIndex]))
+                remainingStartIndex = value.index(after: index)
+                lastDotIndex = value.endIndex
+                lastCharWasSlash = true
+                pathEnd = index
+            } else if char == "." {
+                lastDotIndex = index
+                possibleExtStart = value.index(after: lastDotIndex)
+                lastCharWasSlash = false
+            } else {
+                lastCharWasSlash = false
             }
-            
-            i -= 1
-            lastIndex = fileNameStr.index(before: lastIndex)
-            if i >= 0 {
-                index = fileNameStr.index(before: index)
+            index = value.index(after: index)
+        }
+        
+        if lastCharWasSlash {
+            fileOrDir = .directory
+            remainingEndIndex = value.index(before: value.endIndex)
+            pathEnd = value.index(before: value.endIndex)
+        }
+        
+        // See if we have a file extension
+        var possibleExt = ""
+        if lastDotIndex < value.endIndex && lastDotIndex > remainingStartIndex {
+            possibleExt = String(value[possibleExtStart..<value.endIndex])
+        }
+        if possibleExt.count > 0 && fileOrDir != .directory {
+            setExt(possibleExt)
+            remainingEndIndex = lastDotIndex
+        }
+        
+        // See if we have a file name base
+        var remaining = ""
+        if remainingStartIndex < remainingEndIndex {
+            remaining = String(value[remainingStartIndex..<remainingEndIndex])
+        }
+        if remaining.count > 0 {
+            if fileOrDir == .file {
+                setBase(remaining)
+                if remainingStartIndex > value.startIndex {
+                    pathEnd = value.index(before: remainingStartIndex)
+                } else {
+                    pathEnd = remainingStartIndex
+                }
+            } else {
+                anotherFolder(remaining)
+                pathEnd = remainingEndIndex
+                fileOrDir = .directory
             }
         }
-        path = String(fileNameStr[fileNameStr.startIndex..<pathEndIndex])
-        folders = path.split(separator: "/")
-        if folderStartIndex < pathEndIndex {
-            folder = String(fileNameStr[folderStartIndex..<pathEndIndex])
+        
+        // Capture the path
+        if value.startIndex < pathEnd {
+            path = String(value[value.startIndex..<pathEnd])
         }
     }
     
+    /// Save the next folder.
+    func anotherFolder(_ nextFolder: String) {
+        folders.append(nextFolder)
+        folder = nextFolder
+    }
+    
+    /// Set the file extension value
     func setExt(_ ext: String) {
         self.ext = ext
         extLower = ext.lowercased()
@@ -144,6 +179,8 @@ class FileName: CustomStringConvertible {
         }
     }
     
+    /// Set the value for the base part of the file name
+    /// (without path or extension).
     func setBase(_ base: String) {
         self.base = base
         licenseFile = (base == "LICENSE")
@@ -155,7 +192,6 @@ class FileName: CustomStringConvertible {
         } else if baseLower == "template" {
             template = true
         }
-        
         
         let readMeStr = "readme"
         let infoStr = "info"
@@ -193,6 +229,20 @@ class FileName: CustomStringConvertible {
         if !noteExt {
             readme = false
             infofile = false
+        }
+    }
+    
+    func display() {
+        print("FileName.display")
+        print("  - Complete file name string = \(fileNameStr)")
+        print("    - File or Directory? \(fileOrDir)")
+        print("    - Path = \(path)")
+        print("    - Folder = \(folder)")
+        print("    - Base File Name = \(base)")
+        print("    - File Ext = \(ext)")
+        print("    - Folders:")
+        for f in folders {
+            print("      - \(f)")
         }
     }
     
@@ -283,6 +333,9 @@ class FileName: CustomStringConvertible {
         return relPath
     }
     
+    /// Return a single folder (aka directory) in the path,
+    /// at a given index position, or a string with no length
+    /// if index out of range.
     func folder(at: Int) -> String {
         if at < 0 || at >= folders.count {
             return ""
@@ -293,6 +346,8 @@ class FileName: CustomStringConvertible {
     
 }
 
+/// Is this thing a file or a directory?
+/// (Or is a decision on that question still pending.)
 enum FileOrDirectory {
     case unknown
     case file
