@@ -12,6 +12,8 @@
 import Foundation
 
 struct LabelConstants {
+    static let artist       = "Artist"
+    static let artistCommon = "artist"
     static let author       = "Author"
     static let authorCommon = "author"
     static let body         = "Body"
@@ -54,6 +56,8 @@ struct LabelConstants {
     static let typeCommon   = "type"
     static let workID       = "Work ID"
     static let workIDcommon = "workid"
+    static let workLink        = "Work Link"
+    static let workLinkCommon  = "worklink"
     static let workPages       = "Work Pages"
     static let workPagesCommon = "workpages"
     static let workRights      = "Work Rights"

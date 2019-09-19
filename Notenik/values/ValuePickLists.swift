@@ -27,7 +27,7 @@ class ValuePickLists {
             tagsPickList.registerTags(note.tags)
         }
         if note.hasWorkTitle() {
-            workTitlePickList.registerWork(note.workTitle)
+            workTitlePickList.registerWork(note)
         }
     }
 }

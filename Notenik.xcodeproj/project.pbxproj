@@ -499,6 +499,9 @@
 		9CFCB049226BCE1700443FFA /* SimpleDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB048226BCE1700443FFA /* SimpleDate.swift */; };
 		9CFCB04A226BCE1700443FFA /* SimpleDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB048226BCE1700443FFA /* SimpleDate.swift */; };
 		9CFCB04B226BE71500443FFA /* SimpleDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB048226BCE1700443FFA /* SimpleDate.swift */; };
+		9CFD350023313D6D004ABA16 /* ArtistValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFD34FF23313D6D004ABA16 /* ArtistValue.swift */; };
+		9CFD350123313D6D004ABA16 /* ArtistValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFD34FF23313D6D004ABA16 /* ArtistValue.swift */; };
+		9CFD350223313D6D004ABA16 /* ArtistValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFD34FF23313D6D004ABA16 /* ArtistValue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -760,6 +763,7 @@
 		9CF3DE4B22A6F5330078A6B0 /* MergeReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeReport.swift; sourceTree = "<group>"; };
 		9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPrefsOwner.swift; sourceTree = "<group>"; };
 		9CFCB048226BCE1700443FFA /* SimpleDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleDate.swift; sourceTree = "<group>"; };
+		9CFD34FF23313D6D004ABA16 /* ArtistValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistValue.swift; sourceTree = "<group>"; };
 		AD717987FF01094DD809C349 /* Pods-NotenikTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotenikTests.debug.xcconfig"; path = "Target Support Files/Pods-NotenikTests/Pods-NotenikTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6EF8749B10F3962D960CD73 /* Pods_Notenik.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notenik.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF4F36B47436A833F7ACB059 /* Pods-NotenikUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotenikUITests.debug.xcconfig"; path = "Target Support Files/Pods-NotenikUITests/Pods-NotenikUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1023,6 +1027,7 @@
 		9C60E72421F651E500C332ED /* values */ = {
 			isa = PBXGroup;
 			children = (
+				9CFD34FF23313D6D004ABA16 /* ArtistValue.swift */,
 				9C568DD82322BA21005D6B0A /* AuthorPickList.swift */,
 				9C60E72B21F651E500C332ED /* AuthorValue.swift */,
 				9CC0F5A7227629C4002683F8 /* BooleanValue.swift */,
@@ -1677,6 +1682,7 @@
 				9CAD6A5622DFA9C200531D90 /* NotesExporter.swift in Sources */,
 				9C8329FD224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */,
 				9C02D2AE2267D46000587EDF /* DateView.swift in Sources */,
+				9CFD350023313D6D004ABA16 /* ArtistValue.swift in Sources */,
 				9C60E78F21F651E500C332ED /* Note.swift in Sources */,
 				9C60E77A21F651E500C332ED /* FieldDefinition.swift in Sources */,
 				9C27DA0322FB581D008EE0A1 /* IndexPageRef.swift in Sources */,
@@ -1801,6 +1807,7 @@
 				9C60E75721F651E500C332ED /* StringValue.swift in Sources */,
 				9C1C761322EDE1A8002B97DA /* TemplateModule.swift in Sources */,
 				9C832A03224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
+				9CFD350123313D6D004ABA16 /* ArtistValue.swift in Sources */,
 				9C60E75A21F651E500C332ED /* SeqValue.swift in Sources */,
 				9CCFEE722270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
 				9CE9C98722A61499008D2B0A /* TemplateUtil.swift in Sources */,
@@ -1827,6 +1834,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CFD350223313D6D004ABA16 /* ArtistValue.swift in Sources */,
 				9C60E77F21F651E500C332ED /* LabelConstants.swift in Sources */,
 				9C60E70421F650B800C332ED /* StringUtils.swift in Sources */,
 				9C10311F229A134E009CCE3B /* AppPrefs.swift in Sources */,

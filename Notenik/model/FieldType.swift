@@ -32,6 +32,7 @@ enum FieldType: Int {
     case dateAdded      = 16
     case work           = 17
     case workType       = 18
-    case pickFromList   = 19
+    case artist         = 19
+    case pickFromList   = 20
 }
 

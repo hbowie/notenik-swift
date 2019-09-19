@@ -252,7 +252,8 @@ class ScriptViewController: NSViewController {
             openPanel.directoryURL = scripter.workspace.parentURL
             openPanel.showsResizeIndicator = true
             openPanel.showsHiddenFiles = false
-            if command.modifier == "dir" || command.modifier.hasPrefix("notenik") {
+            if command.modifier == "dir" || command.modifier.hasPrefix("notenik")
+                    || (command.module == .template && command.action == .webroot) {
                 openPanel.canChooseFiles = false
                 openPanel.canChooseDirectories = true
             } else {

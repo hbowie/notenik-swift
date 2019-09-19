@@ -16,8 +16,7 @@ class TagsPickList: PickList {
     
     func registerTags(_ tags: TagsValue) {
         for tag in tags.tags {
-            let tagStr = String(describing: tag)
-            registerValue(tagStr)
+            registerValue(tags)
         } // end for each tag in the tags value
     } // end register tags
     

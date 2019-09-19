@@ -172,6 +172,12 @@ class FileIO: NotenikIO, RowConsumer {
                     let templateNote = readNote(collection: collection!, noteURL: itemURL)
                     if templateNote != nil && templateNote!.fields.count > 0 && collection!.dict.count > 0 {
                         templateFound = true
+                        for def in collection!.dict.list {
+                            let val = templateNote!.getFieldAsValue(label: def.fieldLabel.commonForm)
+                            if val.value == "<longtext>" {
+                                def.fieldType = .longText
+                            }
+                        }
                         collection!.dict.lock()
                         collection!.preferredExt = fileName.extLower
                         let templateStatusValue = templateNote!.status.value

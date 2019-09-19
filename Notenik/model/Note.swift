@@ -294,6 +294,16 @@ class Note: Comparable, NSCopying {
         return setField(label: LabelConstants.dateAdded, value: dateAdded)
     }
     
+    /// Return the Note's Artist Value
+    var artist: ArtistValue {
+        let val = getFieldAsValue(label: LabelConstants.artist)
+        if val is ArtistValue {
+            return val as! ArtistValue
+        } else {
+            return ArtistValue(val.value)
+        }
+    }
+    
     /// Return the Note's Author Value
     var author: AuthorValue {
         let val = getFieldAsValue(label: LabelConstants.author)
@@ -311,6 +321,17 @@ class Note: Comparable, NSCopying {
             return val as! LongTextValue
         } else {
             return LongTextValue(val.value)
+        }
+    }
+    
+    /// Return the Creator: either Author or Artist
+    var creatorValue: String {
+        if hasAuthor() {
+            return author.value
+        } else if hasArtist() {
+            return artist.value
+        } else {
+            return ""
         }
     }
     
@@ -428,6 +449,24 @@ class Note: Comparable, NSCopying {
         }
     }
     
+    var workLink: LinkValue {
+        let val = getFieldAsValue(label: LabelConstants.workLinkCommon)
+        if val is LinkValue {
+            return val as! LinkValue
+        } else {
+            return LinkValue(val.value)
+        }
+    }
+    
+    var workType: WorkTypeValue {
+        let val = getFieldAsValue(label: LabelConstants.workTypeCommon)
+        if val is WorkTypeValue {
+            return val as! WorkTypeValue
+        } else {
+            return WorkTypeValue(val.value)
+        }
+    }
+    
     /// Return the Body of the Note
     var body: LongTextValue {
         let val = getFieldAsValue(label: LabelConstants.body)
@@ -476,7 +515,13 @@ class Note: Comparable, NSCopying {
                 + date.sortKey
                 + title.sortKey)
         case .author:
-            return (author.sortKey
+            var creatorKey = ""
+            if hasAuthor() {
+                creatorKey = author.sortKey
+            } else if hasArtist() {
+                creatorKey = artist.sortKey
+            }
+            return (creatorKey
                 + date.sortKey
                 + title.sortKey)
         case .custom:
@@ -531,6 +576,10 @@ class Note: Comparable, NSCopying {
     /// Does this note have a non-blank status field?
     func hasStatus() -> Bool {
         return status.count > 0
+    }
+    
+    func hasArtist() -> Bool {
+        return artist.count > 0
     }
     
     /// Does this note have a non-blank author field?

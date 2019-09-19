@@ -14,7 +14,7 @@ import Foundation
 class AuthorPickList: PickList {
     
     func registerAuthor(_ author: AuthorValue) {
-        registerValue(author.firstNameFirst)
+        registerValue(author)
     } // end register tags
     
 }

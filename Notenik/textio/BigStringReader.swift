@@ -58,9 +58,10 @@ class BigStringReader: LineReader {
         var len = 0
         var line : String? = nil
         for c in bigString[startIndex...] {
-            if c == "\n" || c == "\r" {
+            if c == "\n" || c == "\r" || c.isNewline {
                 endCount += 1
-                if (lastChar == "\n" || lastChar == "\r") && c != lastChar && endCount <= 2 {
+                if (lastChar == "\n" || lastChar == "\r" || lastChar.isNewline)
+                    && c != lastChar && endCount <= 2 {
                     startIndex = bigString.index(startIndex, offsetBy: 1)
                 } else if len == 0 {
                     line = ""

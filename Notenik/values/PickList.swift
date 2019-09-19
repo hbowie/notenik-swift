@@ -14,10 +14,10 @@ import Foundation
 /// A list of values that can be picked from.
 class PickList {
     
-    var values: [String] = []
+    var values: [StringValue] = []
     
     /// Register a new value. Add it if not already present in the list.
-    func registerValue(_ value: String) {
+    func registerValue(_ value: StringValue) -> StringValue {
         
         var index = 0
         var bottom = 0
@@ -28,9 +28,9 @@ class PickList {
                 done = true
                 index = bottom
             } else if value == values[top] {
-                return
+                return values[top]
             } else if value == values[bottom] {
-                return
+                return values[bottom]
             } else if value > values[top] {
                 done = true
                 index = top + 1
@@ -47,7 +47,7 @@ class PickList {
             } else {
                 let middle = bottom + ((top - bottom) / 2)
                 if value == values[middle] {
-                    return
+                    return values[middle]
                 } else if value > values[middle] {
                     bottom = middle + 1
                 } else {
@@ -63,5 +63,6 @@ class PickList {
         } else {
             values.insert(value, at: index)
         }
+        return value
     }
 }

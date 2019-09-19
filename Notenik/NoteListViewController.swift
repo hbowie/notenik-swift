@@ -82,7 +82,7 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
             } else if tableColumn?.title == "Date" {
                 cellView.textField?.stringValue = note.date.dMyDate
             } else if tableColumn?.title == "Author" {
-                cellView.textField?.stringValue = note.author.value
+                cellView.textField?.stringValue = note.creatorValue
             }
         }
         

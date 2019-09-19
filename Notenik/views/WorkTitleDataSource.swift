@@ -29,7 +29,7 @@ class WorkTitleDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     }
     
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
-        return workTitlePickList.values[index]
+        return workTitlePickList.values[index].value
     }
     
     /// Returns the first item from the pop-up list that starts with
@@ -37,9 +37,9 @@ class WorkTitleDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
         var i = 0
         while i < workTitlePickList.values.count {
-            if workTitlePickList.values[i].hasPrefix(string) {
-                return workTitlePickList.values[i]
-            } else if workTitlePickList.values[i] > string {
+            if workTitlePickList.values[i].value.hasPrefix(string) {
+                return workTitlePickList.values[i].value
+            } else if workTitlePickList.values[i].value > string {
                 return nil
             }
             i += 1
@@ -52,9 +52,9 @@ class WorkTitleDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     func comboBox(_ comboBox: NSComboBox, indexOfItemWithStringValue string: String) -> Int {
         var i = 0
         while i < workTitlePickList.values.count {
-            if workTitlePickList.values[i] == string {
+            if workTitlePickList.values[i].value == string {
                 return i
-            } else if workTitlePickList.values[i] > string {
+            } else if workTitlePickList.values[i].value > string {
                 return NSNotFound
             }
             i += 1
@@ -62,5 +62,7 @@ class WorkTitleDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
         return NSNotFound
     }
     
-    
+    func comboBoxSelectionDidChange(_ notification: Notification) {
+        print("Work Title Selection Did Change!")
+    }
 }

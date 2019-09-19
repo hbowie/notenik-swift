@@ -29,7 +29,7 @@ class AuthorDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     }
     
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
-        return authorPickList.values[index]
+        return authorPickList.values[index].value
     }
     
     /// Returns the first item from the pop-up list that starts with
@@ -37,9 +37,9 @@ class AuthorDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
         var i = 0
         while i < authorPickList.values.count {
-            if authorPickList.values[i].hasPrefix(string) {
-                return authorPickList.values[i]
-            } else if authorPickList.values[i] > string {
+            if authorPickList.values[i].value.hasPrefix(string) {
+                return authorPickList.values[i].value
+            } else if authorPickList.values[i].value > string {
                 return nil
             }
             i += 1
@@ -52,9 +52,9 @@ class AuthorDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     func comboBox(_ comboBox: NSComboBox, indexOfItemWithStringValue string: String) -> Int {
         var i = 0
         while i < authorPickList.values.count {
-            if authorPickList.values[i] == string {
+            if authorPickList.values[i].value == string {
                 return i
-            } else if authorPickList.values[i] > string {
+            } else if authorPickList.values[i].value > string {
                 return NSNotFound
             }
             i += 1

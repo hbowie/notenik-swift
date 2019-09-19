@@ -53,6 +53,8 @@ class ValueFactory {
             return StringValue(value)
         case .workType:
             return WorkTypeValue(value)
+        case .artist:
+            return ArtistValue(value)
         default:
             return StringValue(value)
         }

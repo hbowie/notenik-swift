@@ -45,9 +45,9 @@ class TagsTokenDelegate: NSObject, NSTokenFieldDelegate, NSTokenFieldCellDelegat
         var i = 0
         var looking = true
         while looking && i < tagsPickList.values.count {
-            if tagsPickList.values[i].hasPrefix(substring) {
-                possibilities.append(tagsPickList.values[i])
-            } else if tagsPickList.values[i] > substring {
+            if tagsPickList.values[i].value.hasPrefix(substring) {
+                possibilities.append(tagsPickList.values[i].value)
+            } else if tagsPickList.values[i].value > substring {
                 looking = false
             }
             i += 1

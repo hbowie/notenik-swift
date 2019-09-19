@@ -45,6 +45,8 @@ class FieldDefinition {
     func guessFieldType() {
         fieldType = FieldType.defaultType
         switch fieldLabel.commonForm {
+        case "artist":
+            fieldType = FieldType.artist
         case "author", "by", "creator":
             fieldType = FieldType.author
         case "body":

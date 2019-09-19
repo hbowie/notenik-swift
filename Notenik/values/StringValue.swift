@@ -27,7 +27,7 @@ class StringValue: CustomStringConvertible, Equatable, Comparable {
         set(value)
     }
     
-    /// Set a new value for the objecct
+    /// Set a new value for the object
     func set(_ value: String) {
         self.value = value
     }
