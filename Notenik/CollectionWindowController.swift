@@ -389,7 +389,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
     }
     
-    /// Increment either the Seq field or the Date field
+    ///   either the Seq field or the Date field
     @IBAction func menuNoteIncrement(_ sender: Any) {
         
         let (nio, sel) = guardForNoteAction()
@@ -402,11 +402,11 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         if !selNote.hasSeq() && !selNote.hasDate() {
             return
         } else if selNote.hasSeq() && !selNote.hasDate() {
-            incrementSeq(noteIO: noteIO, note: selNote, modNote: modNote)
+            incSeq(noteIO: noteIO, note: selNote, modNote: modNote)
         } else if selNote.hasDate() && !selNote.hasDate() {
             incrementDate(noteIO: noteIO, note: selNote, modNote: modNote)
         } else if sortParm == .seqPlusTitle || sortParm == .tasksBySeq {
-            incrementSeq(noteIO: noteIO, note: selNote, modNote: modNote)
+            incSeq(noteIO: noteIO, note: selNote, modNote: modNote)
         } else {
             incrementDate(noteIO: noteIO, note: selNote, modNote: modNote)
         }
@@ -434,50 +434,14 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     ///   - noteIO: The NotenikIO module to use.
     ///   - note: The note prior to being incremented.
     ///   - modNote: A copy of the note being incremented.
-    func incrementSeq(noteIO: NotenikIO, note: Note, modNote: Note) {
-        guard note.seq.value.count > 0 else { return }
-        let incSeq = SeqValue(note.seq.value)
-        incSeq.increment(onLeft: false)
-        if noteIO.collection!.sortParm == .seqPlusTitle || noteIO.collection!.sortParm == .tasksBySeq {
-            let position = noteIO.positionOfNote(note)
-            let (nextNote, _) = noteIO.nextNote(position)
-            if nextNote != nil {
-                incrementSeq(noteIO: noteIO, lastSeq: incSeq, nextNote: nextNote!)
-            }
-        }
-        _ = noteIO.positionOfNote(modNote)
-        _ = modNote.setSeq(String(describing: incSeq))
-        _ = recordMods(noteIO: noteIO, note: note, modNote: modNote)
-        select(note: modNote, position: nil, source: .action)
+    func incSeq(noteIO: NotenikIO, note: Note, modNote: Note) {
+        let notesInced = Sequencer.incrementSeq(io: noteIO, startingNote: note)
+        logInfo(msg: "\(notesInced) Notes had their Seq values incremented")
+        noteModified(updatedNote: note)
+        editVC!.populateFields(with: note)
+        reloadViews()
+        select(note: note, position: nil, source: .action)
     }
-    
-    /// See if the next Note needs to be incremented, and increment it and following
-    /// Notes if so. This function is called recursively.
-    ///
-    /// - Parameters:
-    ///   - noteIO: The Notenik Input/Output module to use.
-    ///   - lastSeq: The incremented sequence value for the Note just prior to this one.
-    ///   - nextNote: The next Note following the previous one.
-    func incrementSeq(noteIO: NotenikIO, lastSeq: SeqValue, nextNote: Note) {
-        if lastSeq.sortKey == nextNote.seq.sortKey {
-            let incSeq = SeqValue(nextNote.seq.value)
-            incSeq.increment(onLeft: false)
-            var position = noteIO.positionOfNote(nextNote)
-            let (followingNote, _) = noteIO.nextNote(position)
-            if followingNote != nil {
-                incrementSeq(noteIO: noteIO, lastSeq: incSeq, nextNote: followingNote!)
-            }
-            position = noteIO.positionOfNote(nextNote)
-            _ = nextNote.setSeq(incSeq.value)
-            let writeOK = noteIO.writeNote(nextNote)
-            if !writeOK {
-                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                                  category: "CollectionWindowController",
-                                  level: .error,
-                                  message: "Trouble writing updates for Note titled '\(nextNote.title.value)'")
-            }
-        } // End if we have another note that needs incrementing
-    } // end of func
     
     /// Record modifications made to the Selected Note
     ///
@@ -1404,6 +1368,13 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let outcome = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return nil }
         return io
+    }
+    
+    func logInfo(msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionWindowController",
+                          level: .info,
+                          message: msg)
     }
     
     /// Notify the user via a modal alert box that something has gone wrong,

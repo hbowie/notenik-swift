@@ -14,7 +14,7 @@ import Foundation
 /// A String Value interpreted as a sequence number, or revision letter, or version number.
 ///
 /// Such a value may contain letters and digits and one or more periods or hyphens or dollar signs.
-class SeqValue : StringValue {
+class SeqValue: StringValue {
     
     var positionOfFirstDecimal = -1
     var positionOfLastDecimal = -1
@@ -25,6 +25,17 @@ class SeqValue : StringValue {
     var digits = false
     var letters = false
     var uppercase = true
+    
+    // Return portion of sequence string to the left of the first decimal point.
+    var left: String {
+        guard positionsToLeftOfDecimal > 0 else { return "" }
+        var decimalIndex = value.endIndex
+        if positionOfFirstDecimal >= 0 {
+            decimalIndex = value.index(value.startIndex, offsetBy: positionsToLeftOfDecimal)
+        }
+        let leftOfDec = String(value[value.startIndex..<decimalIndex])
+        return leftOfDec
+    }
     
     /// Set this sequence value to the provided string
     override func set (_ value : String) {

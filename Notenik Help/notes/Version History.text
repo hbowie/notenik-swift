@@ -6,6 +6,33 @@ Tags:   changes, history, log
 
 Body:
 
+### Version 1.5.0 | 20 Sep 2019
+
+#### 1. Enhanced Logic for Incrementing the Seq Field
+
+Made some improvements in the logic for incrementing the Seq field to properly increment following Notes to prevent overlap. 
+
+
+#### 2. Added a Dash as a New Variable Modifier
+
+A dash may now optionally follow the letter O, which will result in the html string produced by the Markdown conversion having opening and closing paragraph tags stripped from the resulting string. 
+
+
+#### 3. Additional Refinements
+
+Fixed a bug that sometimes caused newline characters to be ignored when trying to load a Note from disk. 
+
+
+#### 4. Added Special Treatment for Artist Field
+
+A field name of Artist will now be used as an alternate to Author when sorting by Author. A leading 'The' will be ignored, and values will be sorted as if they were all lower case. 
+
+
+#### 5. Added <longtext> option to Template file
+
+By specifying the value \<longtext\> as the value for a field in a template file, the user can now indicate that a field is to be a long text field, rather than a one-line text field. 
+
+
 ### Version 1.4.1 | 08 Sep 2019
 
 #### 1. Added Checks Before Completing Save As
