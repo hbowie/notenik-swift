@@ -56,7 +56,7 @@ class ModWhenChanged {
         var i = 0
         for def in defs {
             let field = modNote.getField(def: def)
-            var fieldView = modViews[i]
+            let fieldView = modViews[i]
             var noteValue = ""
             if field != nil {
                 noteValue = field!.value.value

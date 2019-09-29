@@ -654,7 +654,7 @@
 		9C60E73921F651E500C332ED /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		9C60E73A21F651E500C332ED /* NoteCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCollection.swift; sourceTree = "<group>"; };
 		9C60E73B21F651E500C332ED /* NoteIDRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteIDRule.swift; sourceTree = "<group>"; };
-		9C60E73C21F651E500C332ED /* FieldType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldType.swift; sourceTree = "<group>"; };
+		9C60E73C21F651E500C332ED /* FieldType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FieldType.swift; path = ../model/FieldType.swift; sourceTree = "<group>"; };
 		9C60E73D21F651E500C332ED /* NotePosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotePosition.swift; sourceTree = "<group>"; };
 		9C60E79F21F6520100C332ED /* FileIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileIO.swift; sourceTree = "<group>"; };
 		9C60E7A321F6525D00C332ED /* FileUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtilsTests.swift; sourceTree = "<group>"; };
@@ -910,6 +910,7 @@
 				9CF1193522581ABE0015AE91 /* collectionPrefs */,
 				9CC78E672283560F00640477 /* displayPrefs */,
 				9CAD6A5422DFA95D00531D90 /* export */,
+				9CA0F88823410D1F00D7061A /* fields */,
 				9C60E79E21F6520100C332ED /* io */,
 				9C60E70E21F6518400C332ED /* logging */,
 				9C60E71B21F651E500C332ED /* model */,
@@ -1001,15 +1002,9 @@
 			children = (
 				9C559D6F22E67F940014019C /* AttachmentName.swift */,
 				9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */,
-				9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */,
-				9C60E73121F651E500C332ED /* FieldDefinition.swift */,
-				9C60E73821F651E500C332ED /* FieldDictionary.swift */,
-				9C60E71C21F651E500C332ED /* FieldLabel.swift */,
-				9C60E73C21F651E500C332ED /* FieldType.swift */,
 				9C27D9FE22FB55B4008EE0A1 /* IndexCollection.swift */,
 				9C27DA0222FB581D008EE0A1 /* IndexPageRef.swift */,
 				9C27D9FA22FB3FA6008EE0A1 /* IndexTerm.swift */,
-				9C60E73221F651E500C332ED /* LabelConstants.swift */,
 				9C60E73921F651E500C332ED /* Note.swift */,
 				9C60E73A21F651E500C332ED /* NoteCollection.swift */,
 				9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */,
@@ -1023,7 +1018,6 @@
 				9C60E72321F651E500C332ED /* Provider.swift */,
 				9C60E71F21F651E500C332ED /* ProviderType.swift */,
 				9C60E72021F651E500C332ED /* Realm.swift */,
-				9C60E72121F651E500C332ED /* ValueFactory.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1051,6 +1045,7 @@
 				9C60E72F21F651E500C332ED /* TagsValue.swift */,
 				9C822B9522D63A11008EF106 /* TagValue.swift */,
 				9C60E72821F651E500C332ED /* TitleValue.swift */,
+				9C60E72121F651E500C332ED /* ValueFactory.swift */,
 				9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */,
 				9C568DE02322F3C6005D6B0A /* WorkTitlePickList.swift */,
 				9C568DDC2322F0D6005D6B0A /* WorkTitleValue.swift */,
@@ -1103,6 +1098,19 @@
 				9CAD6A4822DF806800531D90 /* TagsExportViewController.swift */,
 			);
 			path = prefs;
+			sourceTree = "<group>";
+		};
+		9CA0F88823410D1F00D7061A /* fields */ = {
+			isa = PBXGroup;
+			children = (
+				9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */,
+				9C60E73121F651E500C332ED /* FieldDefinition.swift */,
+				9C60E73821F651E500C332ED /* FieldDictionary.swift */,
+				9C60E71C21F651E500C332ED /* FieldLabel.swift */,
+				9C60E73C21F651E500C332ED /* FieldType.swift */,
+				9C60E73221F651E500C332ED /* LabelConstants.swift */,
+			);
+			path = fields;
 			sourceTree = "<group>";
 		};
 		9CAD6A5422DFA95D00531D90 /* export */ = {
@@ -1302,7 +1310,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "PowerSurge Publishing";
 				TargetAttributes = {
 					9C60E6CD21F64B3B00C332ED = {
@@ -2158,6 +2166,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Notenik/Notenik.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
@@ -2182,6 +2191,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Notenik/Notenik.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;

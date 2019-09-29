@@ -17,6 +17,10 @@ class PickList {
     var values: [StringValue] = []
     
     /// Register a new value. Add it if not already present in the list.
+    
+    
+    /// Register a new value. Add if not already present in the list.
+    /// - Parameter value: Return the matching StringValue found or added.
     func registerValue(_ value: StringValue) -> StringValue {
         
         var index = 0

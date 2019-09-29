@@ -35,7 +35,7 @@ class FieldDefinition {
     }
     
     /// Initialize with a string label and an integer type
-    convenience init (label: String, type: Int) {
+    convenience init (label: String, type: String) {
         self.init()
         fieldLabel.set(label)
         fieldType = FieldType(rawValue: type)!

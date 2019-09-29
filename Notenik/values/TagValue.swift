@@ -12,29 +12,22 @@
 import Foundation
 
 /// Class representing one Tag (with possibly multiple levels)
-class TagValue: CustomStringConvertible, Equatable, Comparable {
+class TagValue: StringValue {
     
     var levels: [String] = []
     
-    var description: String {
-        var str = ""
-        for level in levels {
-            if str.count > 0 {
-                str.append(".")
-            }
-            str.append(level)
-        }
-        return str
-    }
-    
     /// The number of levels in the tag
-    var count: Int {
+    override var count: Int {
         return levels.count
     }
     
     /// Add another level to this tag.
     func addLevel(_ level : String) {
         levels.append(level)
+        if value.count > 0 {
+            value.append(".")
+        }
+        value.append(level)
     }
     
     /// See if this tag is equal to another one.
