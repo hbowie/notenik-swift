@@ -25,6 +25,7 @@ class Markedup: CustomStringConvertible {
     var lastCharWasEmphasis = false
     var emphasisPending = 0
     var lastEmphasisChar: Character = " "
+    var listInProgress: Character = " "
     
     convenience init (format: MarkedupFormat) {
         self.init()
@@ -89,6 +90,91 @@ class Markedup: CustomStringConvertible {
         }
     }
     
+    func startBlockQuote() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            writeLine("<blockquote>")
+        default:
+            break
+        }
+    }
+    
+    func finishBlockQuote() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            writeLine("</blockquote>")
+        default:
+            break
+        }
+    }
+    
+    func startOrderedList() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            writeLine("<ol>")
+        default:
+            break
+        }
+        listInProgress = "o"
+    }
+    
+    func finishOrderedList() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            writeLine("</ol>")
+        default:
+            break
+        }
+        listInProgress = " "
+    }
+    
+    func startUnorderedList() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            writeLine("<ul>")
+        default:
+            break
+        }
+        listInProgress = "u"
+    }
+    
+    func finishUnorderedList() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            writeLine("</ul>")
+        default:
+            break
+        }
+        listInProgress = " "
+    }
+    
+    func startListItem() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            if code.count > 0 {
+                newLine()
+            }
+            code.append("<li>")
+        case .markdown:
+            switch listInProgress {
+            case "u":
+                code.append("* ")
+            case "o":
+                code.append("1. ")
+            default:
+                break
+            }
+        }
+    }
+    
+    func finishListItem() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("</li>")
+        case .markdown:
+            break
+        }
+    }
     
     func startParagraph() {
         switch format {
@@ -101,6 +187,35 @@ class Markedup: CustomStringConvertible {
             if code.count > 0 {
                 newLine()
             }
+        }
+    }
+    
+    func startParagraph(klass: String?) {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            if code.count > 0 {
+                newLine()
+            }
+            code.append("<p")
+            if klass != nil && klass!.count > 0 {
+                self.code.append(" class=\"\(klass!)\"")
+            }
+            code.append(">")
+        case .markdown:
+            if code.count > 0 {
+                newLine()
+            }
+        }
+    }
+    
+    func lineBreak() {
+        switch format {
+        case .htmlDoc, .htmlFragment:
+            code.append("<br />")
+            newLine()
+        case .markdown:
+            append("  ")
+            newLine()
         }
     }
     
@@ -155,6 +270,44 @@ class Markedup: CustomStringConvertible {
         emphasisPending = 0
     }
     
+    func startItalics() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("<i>")
+        case .markdown:
+            code.append("*")
+        }
+        emphasisPending = 1
+    }
+    
+    func finishItalics() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("</i>")
+        case .markdown:
+            code.append("*")
+        }
+        emphasisPending = 0
+    }
+    
+    func startCite() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("<cite>")
+        case .markdown:
+            code.append("*")
+        }
+    }
+    
+    func finishCite() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("</cite>")
+        case .markdown:
+            code.append("*")
+        }
+    }
+    
     func heading(level: Int, text: String) {
         switch format {
         case .htmlFragment, .htmlDoc:
@@ -164,12 +317,48 @@ class Markedup: CustomStringConvertible {
         }
     }
     
+    func startHeading(level: Int) {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            write("<h\(level)>")
+        case .markdown:
+            write(String(repeating: "#", count: level) + " ")
+        }
+    }
+    
+    func finishHeading(level: Int) {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            writeLine("</h\(level)>")
+        case .markdown:
+            newLine()
+        }
+    }
+    
     func link(text: String, path: String) {
         switch format {
         case .htmlFragment, .htmlDoc:
             code.append("<a href=\"" + path + "\">" + text + "</a>")
         case .markdown:
             code.append("[" + text + "](" + path + ")")
+        }
+    }
+    
+    func startLink(path: String) {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("<a href=\"" + path + "\">")
+        case .markdown:
+            code.append("[")
+        }
+    }
+    
+    func finishLink() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("</a>")
+        case .markdown:
+            break
         }
     }
     
@@ -219,6 +408,50 @@ class Markedup: CustomStringConvertible {
         }
     }
     
+    func leftDoubleQuote() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("&#8220;")
+        case .markdown:
+            code.append("\"")
+        }
+    }
+    
+    func rightDoubleQuote() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("&#8221;")
+        case .markdown:
+            code.append("\"")
+        }
+    }
+    
+    func leftSingleQuote() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("&#8216;")
+        case .markdown:
+            code.append("'")
+        }
+    }
+    
+    func rightSingleQuote() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("&#8217;")
+        case .markdown:
+            code.append("'")
+        }
+    }
+    
+    func shortDash() {
+        writeEnDash()
+    }
+    
+    func longDash() {
+        writeEmDash()
+    }
+    
     func writeLine(_ text: String) {
         write(text)
         newLine()
@@ -234,6 +467,10 @@ class Markedup: CustomStringConvertible {
     
     func append(_ more: String) {
         code.append(more)
+    }
+    
+    func append(_ char: Character) {
+        code.append(char)
     }
     
     func append(markdown: String) {
@@ -394,6 +631,15 @@ class Markedup: CustomStringConvertible {
         lastCharWasEmDash = true
     }
     
+    func ellipsis() {
+        switch format {
+        case .htmlDoc, .htmlFragment:
+            code.append("&#8230;")
+        case .markdown:
+            code.append("...")
+        }
+    }
+    
     func writeDoubleQuote() {
         switch format {
         case .htmlFragment, .htmlDoc:
@@ -414,7 +660,7 @@ class Markedup: CustomStringConvertible {
     func writeApostrophe() {
         switch format {
         case .htmlFragment, .htmlDoc:
-            code.append("&#146;")
+            code.append("&#8217;")
         case .markdown:
             code.append("'")
         }

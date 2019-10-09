@@ -310,7 +310,11 @@ class TemplateLine {
         guard !util.skippingData else { return }
         guard tokens.count > 1 else { return }
         let includeFilePath = util.replaceVariables(str: String(tokens[1]), note: note).line
-        util.includeFile(filePath: includeFilePath, note: note)
+        var copyParm = ""
+        if tokens.count > 2 {
+            copyParm = String(tokens[2]).lowercased()
+        }
+        util.includeFile(filePath: includeFilePath, copyParm: copyParm, note: note)
     }
     
     /// Process an Output Command

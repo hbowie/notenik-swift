@@ -120,6 +120,9 @@
 		9C4C1BB022E7EE61005997DF /* ScriptEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */; };
 		9C4C1BB122E7EE61005997DF /* ScriptEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */; };
 		9C4C1BB222E7EE61005997DF /* ScriptEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */; };
+		9C52B5882346B0D800CD7517 /* TextileSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C52B5872346B0D800CD7517 /* TextileSignature.swift */; };
+		9C52B5892346B0D800CD7517 /* TextileSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C52B5872346B0D800CD7517 /* TextileSignature.swift */; };
+		9C52B58A2346B0D800CD7517 /* TextileSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C52B5872346B0D800CD7517 /* TextileSignature.swift */; };
 		9C551C8E22A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
 		9C551C8F22A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
 		9C551C9022A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
@@ -387,6 +390,9 @@
 		9CB06CBA22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */; };
 		9CB06CBB22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */; };
 		9CB06CBC22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */; };
+		9CB337542347BA4A006767A4 /* TextileCharDisposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB337532347BA4A006767A4 /* TextileCharDisposition.swift */; };
+		9CB337552347BA4A006767A4 /* TextileCharDisposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB337532347BA4A006767A4 /* TextileCharDisposition.swift */; };
+		9CB337562347BA4A006767A4 /* TextileCharDisposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB337532347BA4A006767A4 /* TextileCharDisposition.swift */; };
 		9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CB60BBF226509B2003B5655 /* Share.storyboard */; };
 		9CB60BC1226509B2003B5655 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CB60BBF226509B2003B5655 /* Share.storyboard */; };
 		9CB60BC322650A89003B5655 /* ShareWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB60BC222650A89003B5655 /* ShareWindowController.swift */; };
@@ -449,6 +455,24 @@
 		9CDEE7C722FE36E30000E3C1 /* DirReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C622FE36E30000E3C1 /* DirReader.swift */; };
 		9CDEE7C822FE36E30000E3C1 /* DirReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C622FE36E30000E3C1 /* DirReader.swift */; };
 		9CDEE7C922FE36E30000E3C1 /* DirReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C622FE36E30000E3C1 /* DirReader.swift */; };
+		9CDF578223469A47004417FA /* TextileBlockPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578123469A47004417FA /* TextileBlockPhase.swift */; };
+		9CDF578323469A47004417FA /* TextileBlockPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578123469A47004417FA /* TextileBlockPhase.swift */; };
+		9CDF578423469A47004417FA /* TextileBlockPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578123469A47004417FA /* TextileBlockPhase.swift */; };
+		9CDF578623469AD0004417FA /* TextileOpeningClosing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578523469AD0004417FA /* TextileOpeningClosing.swift */; };
+		9CDF578723469AD0004417FA /* TextileOpeningClosing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578523469AD0004417FA /* TextileOpeningClosing.swift */; };
+		9CDF578823469AD0004417FA /* TextileOpeningClosing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578523469AD0004417FA /* TextileOpeningClosing.swift */; };
+		9CDF578A23469B4B004417FA /* TextileChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578923469B4B004417FA /* TextileChunk.swift */; };
+		9CDF578B23469B4B004417FA /* TextileChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578923469B4B004417FA /* TextileChunk.swift */; };
+		9CDF578C23469B4B004417FA /* TextileChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578923469B4B004417FA /* TextileChunk.swift */; };
+		9CDF578E23469BBE004417FA /* TextileBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578D23469BBE004417FA /* TextileBlock.swift */; };
+		9CDF578F23469BBE004417FA /* TextileBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578D23469BBE004417FA /* TextileBlock.swift */; };
+		9CDF579023469BBE004417FA /* TextileBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578D23469BBE004417FA /* TextileBlock.swift */; };
+		9CDF57922346A077004417FA /* TextileLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF57912346A077004417FA /* TextileLine.swift */; };
+		9CDF57932346A077004417FA /* TextileLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF57912346A077004417FA /* TextileLine.swift */; };
+		9CDF57942346A077004417FA /* TextileLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF57912346A077004417FA /* TextileLine.swift */; };
+		9CDF57962346A22B004417FA /* TextileLineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF57952346A22B004417FA /* TextileLineType.swift */; };
+		9CDF57972346A22B004417FA /* TextileLineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF57952346A22B004417FA /* TextileLineType.swift */; };
+		9CDF57982346A22B004417FA /* TextileLineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF57952346A22B004417FA /* TextileLineType.swift */; };
 		9CE2170722A95EB300EE656C /* TemplateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2170622A95EB300EE656C /* TemplateCommand.swift */; };
 		9CE2170822A95EB300EE656C /* TemplateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2170622A95EB300EE656C /* TemplateCommand.swift */; };
 		9CE2170922A95EB300EE656C /* TemplateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE2170622A95EB300EE656C /* TemplateCommand.swift */; };
@@ -465,6 +489,9 @@
 		9CE3250E224D5A4D0051CA1F /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */; };
 		9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
 		9CE32511224D5E180051CA1F /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
+		9CE60322234558FA000B45E6 /* Textiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE60321234558FA000B45E6 /* Textiler.swift */; };
+		9CE60323234558FA000B45E6 /* Textiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE60321234558FA000B45E6 /* Textiler.swift */; };
+		9CE60324234558FA000B45E6 /* Textiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE60321234558FA000B45E6 /* Textiler.swift */; };
 		9CE9C98222A6134A008D2B0A /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98122A6134A008D2B0A /* Template.swift */; };
 		9CE9C98322A6134A008D2B0A /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98122A6134A008D2B0A /* Template.swift */; };
 		9CE9C98422A6134A008D2B0A /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98122A6134A008D2B0A /* Template.swift */; };
@@ -591,6 +618,7 @@
 		9C45E8BA2298B87C003F6589 /* BodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyView.swift; sourceTree = "<group>"; };
 		9C45E8BD2298BC87003F6589 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptEngine.swift; sourceTree = "<group>"; };
+		9C52B5872346B0D800CD7517 /* TextileSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileSignature.swift; sourceTree = "<group>"; };
 		9C551C8D22A3459C009BA329 /* LogEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEvent.swift; sourceTree = "<group>"; };
 		9C553C602266A0D50008D176 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		9C5556D122E115960099414E /* Export.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Export.storyboard; sourceTree = "<group>"; };
@@ -715,6 +743,7 @@
 		9CAD6A5922DFBEEB00531D90 /* NoteFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFormat.swift; sourceTree = "<group>"; };
 		9CAF2B2622664237009E19E2 /* Project Index */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Project Index"; sourceTree = "<group>"; };
 		9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNodeIterator.swift; sourceTree = "<group>"; };
+		9CB337532347BA4A006767A4 /* TextileCharDisposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileCharDisposition.swift; sourceTree = "<group>"; };
 		9CB60BBF226509B2003B5655 /* Share.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
 		9CB60BC222650A89003B5655 /* ShareWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareWindowController.swift; sourceTree = "<group>"; };
 		9CB60BC522651074003B5655 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -744,6 +773,12 @@
 		9CDE92B922A322A700043AE5 /* NotenikUtils.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NotenikUtils.xcodeproj; path = NotenikUtils/NotenikUtils.xcodeproj; sourceTree = "<group>"; };
 		9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputModule.swift; sourceTree = "<group>"; };
 		9CDEE7C622FE36E30000E3C1 /* DirReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirReader.swift; sourceTree = "<group>"; };
+		9CDF578123469A47004417FA /* TextileBlockPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileBlockPhase.swift; sourceTree = "<group>"; };
+		9CDF578523469AD0004417FA /* TextileOpeningClosing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileOpeningClosing.swift; sourceTree = "<group>"; };
+		9CDF578923469B4B004417FA /* TextileChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileChunk.swift; sourceTree = "<group>"; };
+		9CDF578D23469BBE004417FA /* TextileBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileBlock.swift; sourceTree = "<group>"; };
+		9CDF57912346A077004417FA /* TextileLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileLine.swift; sourceTree = "<group>"; };
+		9CDF57952346A22B004417FA /* TextileLineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileLineType.swift; sourceTree = "<group>"; };
 		9CE2170622A95EB300EE656C /* TemplateCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCommand.swift; sourceTree = "<group>"; };
 		9CE2170D22A9BC6000EE656C /* LineWithBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineWithBreak.swift; sourceTree = "<group>"; };
 		9CE32503224D48180051CA1F /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
@@ -751,6 +786,7 @@
 		9CE32509224D58360051CA1F /* Log.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Log.storyboard; sourceTree = "<group>"; };
 		9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
 		9CE3250F224D5E180051CA1F /* LogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
+		9CE60321234558FA000B45E6 /* Textiler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Textiler.swift; sourceTree = "<group>"; };
 		9CE715B0225E887300025C00 /* Notenik Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Notenik Help"; sourceTree = "<group>"; };
 		9CE9C98122A6134A008D2B0A /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		9CE9C98522A61499008D2B0A /* TemplateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateUtil.swift; sourceTree = "<group>"; };
@@ -919,8 +955,9 @@
 				9C4C1BAE22E7EE0A005997DF /* script */,
 				9CB60BBE22650975003B5655 /* share */,
 				9CB06CB522CCF4A200887778 /* tags */,
-				9CD82F612211E29E002314E4 /* textio */,
 				9CE9C97D22A612D3008D2B0A /* template */,
+				9CDF577F23469964004417FA /* textile */,
+				9CD82F612211E29E002314E4 /* textio */,
 				9C60E6FD21F650B800C332ED /* utils */,
 				9C60E72421F651E500C332ED /* values */,
 				9CD3261E2233063100D06B77 /* views */,
@@ -1208,6 +1245,22 @@
 				9CDE92BE22A322A800043AE5 /* libNotenikUtils.dylib */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9CDF577F23469964004417FA /* textile */ = {
+			isa = PBXGroup;
+			children = (
+				9CE60321234558FA000B45E6 /* Textiler.swift */,
+				9CDF578D23469BBE004417FA /* TextileBlock.swift */,
+				9CDF578123469A47004417FA /* TextileBlockPhase.swift */,
+				9CDF578923469B4B004417FA /* TextileChunk.swift */,
+				9CDF57912346A077004417FA /* TextileLine.swift */,
+				9CDF57952346A22B004417FA /* TextileLineType.swift */,
+				9CDF578523469AD0004417FA /* TextileOpeningClosing.swift */,
+				9C52B5872346B0D800CD7517 /* TextileSignature.swift */,
+				9CB337532347BA4A006767A4 /* TextileCharDisposition.swift */,
+			);
+			path = textile;
 			sourceTree = "<group>";
 		};
 		9CE9C97D22A612D3008D2B0A /* template */ = {
@@ -1555,6 +1608,7 @@
 				9C60E78C21F651E500C332ED /* FieldDictionary.swift in Sources */,
 				9C551C8E22A3459C009BA329 /* LogEvent.swift in Sources */,
 				9C79BDB0226E368800796E93 /* LabelView.swift in Sources */,
+				9CDF578623469AD0004417FA /* TextileOpeningClosing.swift in Sources */,
 				9CC0F5A8227629C4002683F8 /* BooleanValue.swift in Sources */,
 				9C60E75621F651E500C332ED /* StringValue.swift in Sources */,
 				9CF3DE4522A6BAA00078A6B0 /* TemplateLine.swift in Sources */,
@@ -1563,6 +1617,7 @@
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C568DE12322F3C6005D6B0A /* WorkTitlePickList.swift in Sources */,
 				9C060687228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
+				9CB337542347BA4A006767A4 /* TextileCharDisposition.swift in Sources */,
 				9C67248C22EA205800CB7D39 /* FilterRule.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
@@ -1572,12 +1627,15 @@
 				9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */,
 				9CAD6A5222DFA0B000531D90 /* PrefsTabVC.swift in Sources */,
 				9C60E75C21F651E500C332ED /* RecursValue.swift in Sources */,
+				9CDF578223469A47004417FA /* TextileBlockPhase.swift in Sources */,
 				9C60E74A21F651E500C332ED /* Realm.swift in Sources */,
 				9CF256CD21FD175E00D9F06A /* CollectionWindowController.swift in Sources */,
 				9C1E0C9522E4F7FA0025C99C /* AttachmentViewController.swift in Sources */,
 				9C60E76E21F651E500C332ED /* LongTextValue.swift in Sources */,
 				9C60E71521F6518400C332ED /* LogLevel.swift in Sources */,
 				9C822BA222D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */,
+				9CDF57962346A22B004417FA /* TextileLineType.swift in Sources */,
+				9CDF578E23469BBE004417FA /* TextileBlock.swift in Sources */,
 				9C8540C222E8F9F20074E349 /* ScriptAction.swift in Sources */,
 				9CCFD62822AEDA5C00C64D37 /* StringConverter.swift in Sources */,
 				9CD82F632211E456002314E4 /* LineWriter.swift in Sources */,
@@ -1653,6 +1711,7 @@
 				9C96BAA0227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9C2D40B622F8C1920074FCCE /* XLSXReader.swift in Sources */,
 				9C60E78921F651E500C332ED /* NoteLineParser.swift in Sources */,
+				9C52B5882346B0D800CD7517 /* TextileSignature.swift in Sources */,
 				9CE9C98622A61499008D2B0A /* TemplateUtil.swift in Sources */,
 				9CAD6A4922DF806800531D90 /* TagsExportViewController.swift in Sources */,
 				9CF1193E225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
@@ -1661,12 +1720,14 @@
 				9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */,
 				9C2AE514220A033300AE8BEE /* TagsNode.swift in Sources */,
 				9CF1193B225822870015AE91 /* CollectionPrefsWindowController.swift in Sources */,
+				9CDF57922346A077004417FA /* TextileLine.swift in Sources */,
 				9C60E78321F651E500C332ED /* LineReader.swift in Sources */,
 				9C60E75021F651E500C332ED /* NoteSortParm.swift in Sources */,
 				9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
 				9CE2170722A95EB300EE656C /* TemplateCommand.swift in Sources */,
 				9CAD6A5A22DFBEEB00531D90 /* NoteFormat.swift in Sources */,
 				9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */,
+				9CE60322234558FA000B45E6 /* Textiler.swift in Sources */,
 				9C60E74721F651E500C332ED /* ProviderType.swift in Sources */,
 				9C568DD92322BA21005D6B0A /* AuthorPickList.swift in Sources */,
 				9CA80797229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
@@ -1687,6 +1748,7 @@
 				9C1C761222EDE1A8002B97DA /* TemplateModule.swift in Sources */,
 				9C02D2B62267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9C5556DA22E132EC0099414E /* ExportViewController.swift in Sources */,
+				9CDF578A23469B4B004417FA /* TextileChunk.swift in Sources */,
 				9C832A02224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
 				9C1BE27422EB9444006FDFEC /* ScriptViewController.swift in Sources */,
 				9CB60BC322650A89003B5655 /* ShareWindowController.swift in Sources */,
@@ -1740,6 +1802,7 @@
 				9C60E78721F651E500C332ED /* BigStringReader.swift in Sources */,
 				9C60E77821F651E500C332ED /* StatusValue.swift in Sources */,
 				9C60E79921F651E500C332ED /* FieldType.swift in Sources */,
+				9CDF57972346A22B004417FA /* TextileLineType.swift in Sources */,
 				9CC0F5A9227629C4002683F8 /* BooleanValue.swift in Sources */,
 				9C60E7C921F6525F00C332ED /* RecursValueTests.swift in Sources */,
 				9C60E7C821F6525F00C332ED /* StringValueTests.swift in Sources */,
@@ -1748,6 +1811,7 @@
 				9C60E71321F6518400C332ED /* Logger.swift in Sources */,
 				9C60E78121F651E500C332ED /* NoteType.swift in Sources */,
 				9C8540B722E8F0790074E349 /* ScriptModule.swift in Sources */,
+				9C52B5892346B0D800CD7517 /* TextileSignature.swift in Sources */,
 				9C60E7BD21F6525F00C332ED /* DateUtilsTests.swift in Sources */,
 				9CF3DE4D22A6F5330078A6B0 /* MergeReport.swift in Sources */,
 				9C60E74221F651E500C332ED /* NoteField.swift in Sources */,
@@ -1772,6 +1836,7 @@
 				9CD82F642211E456002314E4 /* LineWriter.swift in Sources */,
 				9C60E74B21F651E500C332ED /* Realm.swift in Sources */,
 				9C2AE51F220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
+				9CDF578F23469BBE004417FA /* TextileBlock.swift in Sources */,
 				9C2AE517220A033C00AE8BEE /* TagsTree.swift in Sources */,
 				9CE2170822A95EB300EE656C /* TemplateCommand.swift in Sources */,
 				9C78888B21FB950900452D74 /* Markedup.swift in Sources */,
@@ -1805,6 +1870,8 @@
 				9CCFD62922AEDA5C00C64D37 /* StringConverter.swift in Sources */,
 				9C60E7CA21F6525F00C332ED /* FieldLabelTests.swift in Sources */,
 				9C27D9F822FB3ED1008EE0A1 /* IndexValue.swift in Sources */,
+				9CDF57932346A077004417FA /* TextileLine.swift in Sources */,
+				9CDF578723469AD0004417FA /* TextileOpeningClosing.swift in Sources */,
 				9CE9C98322A6134A008D2B0A /* Template.swift in Sources */,
 				9CAD6A5B22DFBEEB00531D90 /* NoteFormat.swift in Sources */,
 				9C78888721FB826100452D74 /* MarkedupFormat.swift in Sources */,
@@ -1821,6 +1888,7 @@
 				9C60E7A121F6520100C332ED /* FileIO.swift in Sources */,
 				9C60E75721F651E500C332ED /* StringValue.swift in Sources */,
 				9C1C761322EDE1A8002B97DA /* TemplateModule.swift in Sources */,
+				9CE60323234558FA000B45E6 /* Textiler.swift in Sources */,
 				9C832A03224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
 				9CFD350123313D6D004ABA16 /* ArtistValue.swift in Sources */,
 				9C60E75A21F651E500C332ED /* SeqValue.swift in Sources */,
@@ -1833,9 +1901,12 @@
 				9C4C1BB122E7EE61005997DF /* ScriptEngine.swift in Sources */,
 				9CB06CBB22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */,
 				9C60E77521F651E500C332ED /* TagsValue.swift in Sources */,
+				9CDF578B23469B4B004417FA /* TextileChunk.swift in Sources */,
+				9CDF578323469A47004417FA /* TextileBlockPhase.swift in Sources */,
 				9C67248622EA1B2D00CB7D39 /* FilterModule.swift in Sources */,
 				9C60E74821F651E500C332ED /* ProviderType.swift in Sources */,
 				9C060688228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
+				9CB337552347BA4A006767A4 /* TextileCharDisposition.swift in Sources */,
 				9C60E7C221F6525F00C332ED /* SeqValueTests.swift in Sources */,
 				9C60E7C521F6525F00C332ED /* StringUtilsTests.swift in Sources */,
 				9C60E7BF21F6525F00C332ED /* StatusValueConfigTests.swift in Sources */,
@@ -1864,6 +1935,7 @@
 				9C27D9F422FB3758008EE0A1 /* NoteIndexReader.swift in Sources */,
 				9C27293922DE35C300E21E73 /* PickList.swift in Sources */,
 				9C60E76721F651E500C332ED /* RatingValue.swift in Sources */,
+				9CDF57942346A077004417FA /* TextileLine.swift in Sources */,
 				9C5556DB22E132EC0099414E /* ExportViewController.swift in Sources */,
 				9C60E78B21F651E500C332ED /* NoteLineParser.swift in Sources */,
 				9C02D2B42267F41200587EDF /* CalendarWindowController.swift in Sources */,
@@ -1895,6 +1967,7 @@
 				9CB60BC722651074003B5655 /* ShareViewController.swift in Sources */,
 				9C60E71421F6518400C332ED /* Logger.swift in Sources */,
 				9CD3588B2293C42B00C9203F /* LinkView.swift in Sources */,
+				9CDF578823469AD0004417FA /* TextileOpeningClosing.swift in Sources */,
 				9CF96EE1225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */,
 				9CC78E6D2283587300640477 /* DisplayPrefsWindowController.swift in Sources */,
 				9C2AE529220A34D400AE8BEE /* NoteDisplayViewController.swift in Sources */,
@@ -1902,6 +1975,7 @@
 				9C2D40BC22F8C94C0074FCCE /* RowImporter.swift in Sources */,
 				9C1E0C9322E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
 				9C568DEB2322F701005D6B0A /* WorkTitleView.swift in Sources */,
+				9CDF578423469A47004417FA /* TextileBlockPhase.swift in Sources */,
 				9C568DDB2322BA21005D6B0A /* AuthorPickList.swift in Sources */,
 				9C27DA0522FB581D008EE0A1 /* IndexPageRef.swift in Sources */,
 				9C9A6BB722EA603700E1F127 /* SortModule.swift in Sources */,
@@ -1929,12 +2003,15 @@
 				9C60E74021F651E500C332ED /* FieldLabel.swift in Sources */,
 				9C2AE516220A033300AE8BEE /* TagsNode.swift in Sources */,
 				9CD82F692211E4BA002314E4 /* BigStringWriter.swift in Sources */,
+				9CE60324234558FA000B45E6 /* Textiler.swift in Sources */,
 				9C1E0C9622E4F7FA0025C99C /* AttachmentViewController.swift in Sources */,
+				9CDF57982346A22B004417FA /* TextileLineType.swift in Sources */,
 				9C60E75221F651E500C332ED /* NoteSortParm.swift in Sources */,
 				9C4018A522838F4F002C2B3D /* DisplayPrefs.swift in Sources */,
 				9C619A3A231B323B003CFFBE /* WorkTypeView.swift in Sources */,
 				9C568DEF2322FBF0005D6B0A /* AuthorDataSource.swift in Sources */,
 				9C25DFFD22D7824B0062E282 /* ValuePickLists.swift in Sources */,
+				9CDF578C23469B4B004417FA /* TextileChunk.swift in Sources */,
 				9C822BA322D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */,
 				9C60E74C21F651E500C332ED /* Realm.swift in Sources */,
 				9C8540B422E8F0330074E349 /* ScriptCommand.swift in Sources */,
@@ -1994,6 +2071,7 @@
 				9CE9C98422A6134A008D2B0A /* Template.swift in Sources */,
 				9C60E75821F651E500C332ED /* StringValue.swift in Sources */,
 				9CE2171022A9BC6000EE656C /* LineWithBreak.swift in Sources */,
+				9CB337562347BA4A006767A4 /* TextileCharDisposition.swift in Sources */,
 				9CCFD62322AED9FA00C64D37 /* StringFromTo.swift in Sources */,
 				9C60E75B21F651E500C332ED /* SeqValue.swift in Sources */,
 				9CCFEE772270F52200F472C5 /* RowConsumer.swift in Sources */,
@@ -2011,9 +2089,11 @@
 				9C619A35231B30A7003CFFBE /* WorkTypeValue.swift in Sources */,
 				9C60E70D21F650B800C332ED /* FileUtils.swift in Sources */,
 				9C9A6BB022EA5FBC00E1F127 /* SortField.swift in Sources */,
+				9C52B58A2346B0D800CD7517 /* TextileSignature.swift in Sources */,
 				9CDEE7C922FE36E30000E3C1 /* DirReader.swift in Sources */,
 				9C96BAA2227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9C8329FF224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */,
+				9CDF579023469BBE004417FA /* TextileBlock.swift in Sources */,
 				9CCFD62A22AEDA5C00C64D37 /* StringConverter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

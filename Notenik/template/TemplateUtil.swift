@@ -167,7 +167,7 @@ class TemplateUtil {
     /// Include another file into this one.
     ///
     /// - Parameter filePath: The complete path to the file to be included.
-    func includeFile(filePath: String, note: Note) {
+    func includeFile(filePath: String, copyParm: String, note: Note) {
         
         let absFilePath = templateFileName.resolveRelative(path: filePath)
         
@@ -182,12 +182,10 @@ class TemplateUtil {
         }
         
         let includeURL = URL(fileURLWithPath: absFilePath)
-        var includeReader = BigStringReader("")
+        var includeContents = ""
         
         do {
-            let includeContents = try String(contentsOf: includeURL, encoding: .utf8)
-            includeReader = BigStringReader(includeContents)
-            includeReader.open()
+            includeContents = try String(contentsOf: includeURL, encoding: .utf8)
         } catch {
             logError("Error reading Include file from \(includeURL)")
             return
@@ -195,6 +193,24 @@ class TemplateUtil {
         
         logInfo("Including file \(absFilePath)")
         
+        let inFileName = FileName(absFilePath)
+        let inType = idealizeExt(inFileName.ext)
+        let outType = idealizeExt(textOutFileName.ext)
+        
+        if inType == outType || copyParm == "copy" {
+            copyInclude(includeContents: includeContents, note: note)
+        } else if inType == "markdown" && outType == "html" {
+            copyMarkdownToHTML(includeContents: includeContents, note: note)
+        } else if inType == "textile" && outType == "html" {
+            copyTextileToHTML(includeContents: includeContents, note: note)
+        } else {
+            copyInclude(includeContents: includeContents, note: note)
+        }
+    }
+    
+    func copyInclude(includeContents: String, note: Note) {
+        let includeReader = BigStringReader(includeContents)
+        includeReader.open()
         var includeLine = includeReader.readLine()
         while includeLine != nil {
             let includeLineWithBreak = replaceVariables(str: includeLine!, note: note)
@@ -202,7 +218,43 @@ class TemplateUtil {
             includeLine = includeReader.readLine()
         }
         includeReader.close()
-
+    }
+    
+    func copyMarkdownToHTML(includeContents: String, note: Note) {
+        let html = convertMarkdownToHTML(includeContents)
+        let reader = BigStringReader(html)
+        reader.open()
+        var line = reader.readLine()
+        while line != nil {
+            let lineWithBreak = replaceVariables(str: line!, note: note)
+            writeOutput(lineWithBreak: lineWithBreak)
+            line = reader.readLine()
+        }
+    }
+    
+    func copyTextileToHTML(includeContents: String, note: Note) {
+        let html = convertTextileToHTML(includeContents)
+        let reader = BigStringReader(html)
+        reader.open()
+        var line = reader.readLine()
+        while line != nil {
+            let lineWithBreak = replaceVariables(str: line!, note: note)
+            writeOutput(lineWithBreak: lineWithBreak)
+            line = reader.readLine()
+        }
+    }
+    
+    func idealizeExt(_ extAny: String) -> String {
+        let ext = extAny.lowercased()
+        if ext == "md" || ext == "mkdown" || ext == "markdown" || ext == "txt" {
+            return "markdown"
+        } else if ext == "html" || ext == "htm" {
+            return "html"
+        } else if ext == "textile" {
+            return "textile"
+        } else {
+            return ext
+        }
     }
     
     /// Write one output line, with an optional trailing line break.
@@ -656,6 +708,12 @@ class TemplateUtil {
         markedup.append(markdown: markdown)
         markedup.finishDoc()
         return markedup.code
+    }
+    
+    /// Convert Textile to HTML
+    func convertTextileToHTML(_ textile: String) -> String {
+        let textiler = Textiler()
+        return textiler.toHTML(textile: textile)
     }
     
     /// Remove leading and trailing paragraph tags.

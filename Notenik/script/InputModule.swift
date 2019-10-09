@@ -30,6 +30,7 @@ class InputModule: RowConsumer {
         self.command = command
         switch command.action {
         case .open:
+            print("Setting WorkSpace inputURL to \(command.valueWithPathResolved)")
             workspace.inputURL = URL(fileURLWithPath: command.valueWithPathResolved)
             open()
         case .set:
@@ -89,7 +90,7 @@ class InputModule: RowConsumer {
             openDir(openURL: openURL)
         case "file":
             openDelimited(openURL: openURL)
-        case "notenik-defined", "notenik+", "notenik-general":
+        case "notenik", "notenik-defined", "notenik+", "notenik-general":
             openNotenik(openURL: openURL)
         case "notenik-index":
             openNotenikIndex(openURL: openURL)

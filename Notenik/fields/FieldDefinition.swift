@@ -86,6 +86,8 @@ class FieldDefinition {
                 fieldType = FieldType.date
             } else if fieldLabel.commonForm.range(of: "link") != nil {
                 fieldType = FieldType.link
+            } else if fieldLabel.commonForm.starts(with: "seq") {
+                fieldType = FieldType.seq
             } else {
                 fieldType = FieldType.defaultType
             }
