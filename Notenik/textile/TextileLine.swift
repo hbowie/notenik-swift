@@ -82,11 +82,11 @@ class TextileLine {
         var lastChar: Character = " "
         var index = line.startIndex
         for char in info {
-            
             var skipPeriod = false
-            
             if block.phase == .lookingForSignature {
-                if char == "." || TextileSignature.validModStart(char) {
+                if TextileSignature.validModStart(char) && (type == .ordered || type == .unordered) {
+                    block.phase = .mods
+                } else if char == "." || TextileSignature.validModStart(char) {
                     if block.validSig {
                         if char == "." {
                             block.phase = .periodFound
@@ -111,7 +111,9 @@ class TextileLine {
             }
             
             if block.phase == .mods {
-                if char == "." {
+                if char.isWhitespace && (type == .ordered || type == .unordered) {
+                    block.phase = .spacesStarted
+                } else if char == "." {
                     block.phase = .periodFound
                     skipPeriod = true
                 } else {
@@ -121,7 +123,6 @@ class TextileLine {
             
             if block.phase == .periodFound && !skipPeriod {
                 if char == "." {
-                    print("Extended Signature found in line = \(line)")
                     block.sig.extended = true
                     skipPeriod = true
                     block.phase = .spacesStarted
@@ -181,6 +182,8 @@ class TextileLine {
             if openingLink != nil {
                 if (char.isWhitespace
                     || char == "'" || char == "\"" || char == ")") {
+                    openingLink = nil
+                } else if char == "." && (nextChar == "_" || nextChar.isWhitespace) {
                     openingLink = nil
                 } else {
                     disp = .href
@@ -248,6 +251,7 @@ class TextileLine {
                     pendingChars = ""
                     disp = .special
                 } else if nextChar == "_" {
+                    flushPending()
                     disp = .pending
                 } else {
                     chunk.possibleOpening("_")
@@ -332,7 +336,7 @@ class TextileLine {
             }
         }
         
-        if !matchFound && chunk.special == "'" {
+        if chunk.special == "'" && !chunk.specialValid && !chunk.specialMatched {
             chunk.specialValid = true
             chunk.specialMatched = false
             chunk.oc = .singular

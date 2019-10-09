@@ -108,9 +108,9 @@ class Textiler {
             
             // Start any new lists
             if line.type == .ordered && markedup.listInProgress != "o" {
-                markedup.startOrderedList()
+                markedup.startOrderedList(klass: block.sig.klass)
             } else if line.type == .unordered && markedup.listInProgress != "u" {
-                markedup.startUnorderedList()
+                markedup.startUnorderedList(klass: block.sig.klass)
             }
             
             if line.type == .ordered || line.type == .unordered {
@@ -125,13 +125,13 @@ class Textiler {
                 chunkIndex += 1
             } // end of chunks in line
             
+            lineIndex += 1
             if line.type == .ordered || line.type == .unordered {
                 markedup.finishListItem()
             } else if lineIndex < block.lines.count && !block.sig.html && lastChunk.special != "html-line" {
                 markedup.lineBreak()
             }
-                
-            lineIndex += 1
+            
         } // end of lines in block
         
         // Finish up any lists still in progress

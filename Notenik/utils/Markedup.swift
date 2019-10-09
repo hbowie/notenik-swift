@@ -108,12 +108,19 @@ class Markedup: CustomStringConvertible {
         }
     }
     
-    func startOrderedList() {
+    func startOrderedList(klass: String?) {
         switch format {
         case .htmlFragment, .htmlDoc:
-            writeLine("<ol>")
-        default:
-            break
+            code.append("<ol")
+            if klass != nil && klass!.count > 0 {
+                code.append(" class=\"\(klass!)\"")
+            }
+            code.append(">")
+            newLine()
+        case .markdown:
+            if code.count > 0 {
+                newLine()
+            }
         }
         listInProgress = "o"
     }
@@ -128,12 +135,19 @@ class Markedup: CustomStringConvertible {
         listInProgress = " "
     }
     
-    func startUnorderedList() {
+    func startUnorderedList(klass: String?) {
         switch format {
         case .htmlFragment, .htmlDoc:
-            writeLine("<ul>")
-        default:
-            break
+            code.append("<ul")
+            if klass != nil && klass!.count > 0 {
+                code.append(" class=\"\(klass!)\"")
+            }
+            code.append(">")
+            newLine()
+        case .markdown:
+            if code.count > 0 {
+                newLine()
+            }
         }
         listInProgress = "u"
     }
