@@ -79,7 +79,6 @@ class TextileLine {
             block.phase = .blockStarted
             return
         }
-        var lastChar: Character = " "
         var index = line.startIndex
         for char in info {
             var skipPeriod = false
@@ -143,7 +142,6 @@ class TextileLine {
                 }
             }
             
-            lastChar = char
             index = line.index(after: index)
         } // end for each character in the line
     } // end scan func
@@ -152,28 +150,16 @@ class TextileLine {
         let info = String(line[startOfChunks...])
         startChunk()
         var lastChar: Character = " "
-        var priorLastChar: Character = " "
         var index = info.startIndex
         var nextIndex = index
         var nextChar: Character = " "
-        var nextNextChar: Character = " "
-        var nextNextIndex = index
-        if nextNextIndex < info.endIndex {
-            nextNextChar = info[nextNextIndex]
-        }
         for char in info {
             
             // Line up the next two characters to make them available
             nextChar = " "
             nextIndex = info.index(after: index)
-            nextNextIndex = nextIndex
             if nextIndex < info.endIndex {
                 nextChar = info[nextIndex]
-                nextNextIndex = info.index(after: nextIndex)
-            }
-            nextNextChar = " "
-            if nextNextIndex < info.endIndex {
-                nextNextChar = info[nextNextIndex]
             }
             var disp = TextileCharDisposition.text
             
@@ -274,7 +260,6 @@ class TextileLine {
             case .skip:
                 break
             }
-            priorLastChar = lastChar
             lastChar = char
             index = info.index(after: index)
         }
