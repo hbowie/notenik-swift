@@ -55,6 +55,10 @@ class FileName: CustomStringConvertible {
         return fileNameStr
     }
     
+    var url: URL? {
+        return StringUtils.urlFrom(str: fileNameStr)
+    }
+    
     /// The file name, excluding the path to the folders containing the file. 
     var fileName: String {
         if base.count == 0 {

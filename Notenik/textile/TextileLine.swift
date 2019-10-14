@@ -36,6 +36,7 @@ class TextileLine {
     var pendingChars = ""
     
     var openingLink: TextileChunk? = nil
+    var linkOpenParenCount = 0
     
     /// Initialize with the block of which this line is a part.
     init(line: String) {
@@ -167,10 +168,20 @@ class TextileLine {
             // then check for a delimiter to end the collection.
             if openingLink != nil {
                 if (char.isWhitespace
-                    || char == "'" || char == "\"" || char == ")") {
+                    || char == "'" || char == "\"" || char == ",") {
                     openingLink = nil
                 } else if char == "." && (nextChar == "_" || nextChar.isWhitespace) {
                     openingLink = nil
+                } else if char == "(" {
+                    linkOpenParenCount += 1
+                    disp = .href
+                } else if char == ")" {
+                    if linkOpenParenCount > 0 {
+                        linkOpenParenCount -= 1
+                        disp = .href
+                    } else {
+                        openingLink = nil
+                    }
                 } else {
                     disp = .href
                 }

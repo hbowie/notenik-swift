@@ -1241,7 +1241,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     }
     
     @IBAction func favoritesToHTML(_ sender: Any) {
-        print("Favorites to HTML")
         // See if we're ready to take action
         let nio = guardForCollectionAction()
         guard let noteIO = nio else { return }

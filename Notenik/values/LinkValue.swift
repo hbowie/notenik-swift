@@ -97,8 +97,7 @@ class LinkValue : StringValue {
     
     /// Return the link value as an optional URL
     var url: URL? {
-        let possibleURL = URL(string: value)
-        return possibleURL
+        return StringUtils.urlFrom(str: value)
     }
     
     /// Set the link value from an actual URL

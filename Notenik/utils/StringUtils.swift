@@ -548,6 +548,35 @@ class StringUtils {
     static func contains(_ target : String, within: String) -> Bool {
         return within.range(of: target) != nil
     }
+    
+    /// Let's try to convert a string into a URL, replacing any spaces with encoded ('%20') strings.
+    static func urlFrom(str: String) -> URL? {
+        var encoded = ""
+        var lookingForColon = true
+        var colonFound = false
+        for char in str {
+            if char.isWhitespace {
+                encoded.append("%20")
+                lookingForColon = false
+            } else {
+                encoded.append(char)
+                if lookingForColon {
+                    if char == ":" {
+                        colonFound = true
+                    } else if !char.isLetter {
+                        lookingForColon = false
+                    }
+                }
+            }
+        }
+        var possibleURL: URL? = nil
+        if colonFound {
+            possibleURL = URL(string: encoded)
+        } else {
+            possibleURL = URL(fileURLWithPath: encoded)
+        }
+        return possibleURL
+    }
 }
 
 /// See if the next few characters in the first string are equal to
