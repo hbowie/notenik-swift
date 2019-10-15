@@ -770,7 +770,10 @@ class FileIO: NotenikIO, RowConsumer {
         let noteURL = noteToDelete.url
         if noteURL != nil {
             do {
-                try fileManager.trashItem(at: noteURL!, resultingItemURL: nil)
+                try fileManager.removeItem(at: noteURL!)
+                // try fileManager.trashItem(at: noteURL!, resultingItemURL: nil)
+                // As of Oct 15, 2019, running on Catalina, trashing an item fails due
+                // to alleged permission errors, while removing an item works without complaint.
             } catch {
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik",
                                   category: "FileIO",
@@ -1022,16 +1025,22 @@ class FileIO: NotenikIO, RowConsumer {
                 let attachmentURL = getURLforAttachment(attachmentName: attachment)
                 if attachmentURL != nil {
                     do {
-                        try fileManager.trashItem(at: attachmentURL!, resultingItemURL: nil)
+                        try fileManager.removeItem(at: attachmentURL!)
+                        // try fileManager.trashItem(at: attachmentURL!, resultingItemURL: nil)
+                        // As of Oct 15, 2019, running on Catalina, trashing an item fails due
+                        // to alleged permission errors, while removing an item works without complaint.
                     } catch {
                         logError("Unable to delete attachment at \(attachmentURL!.path)")
                     }
                 }
             }
             do {
-                try fileManager.trashItem(at: noteURL!, resultingItemURL: nil)
+                try fileManager.removeItem(at: noteURL!)
+                // try fileManager.trashItem(at: noteURL!, resultingItemURL: nil)
+                // As of Oct 15, 2019, running on Catalina, trashing an item fails due
+                // to alleged permission errors, while removing an item works without complaint.
             } catch {
-                logError("Could not delete note file at '\(noteURL!.path)'")
+                logError("Could not delete selected note file at '\(noteURL!.path)'")
             }
         }
         
