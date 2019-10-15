@@ -35,6 +35,8 @@ class TextileLine {
     /// Characters whose disposition is as yet undecided.
     var pendingChars = ""
     
+    var skipSpaces = false
+    
     var openingLink: TextileChunk? = nil
     var linkOpenParenCount = 0
     
@@ -57,6 +59,10 @@ class TextileLine {
                 type = .ordered
             } else if char == "<" {
                 type = .html
+            } else if char == ";" {
+                type = .definitionTerm
+            } else if char == ":" {
+                type = .definitionDef
             } else if !char.isWhitespace {
                 if type == .blank {
                     type = .ordinary
@@ -190,6 +196,8 @@ class TextileLine {
             // Look for characters and character sequences with special meanings.
             if disp == .href {
                 // skip further evaluation
+            } else if char.isWhitespace && skipSpaces {
+                disp = .skip
             } else if char == "?" {
                 if pendingChars == "?" {
                     chunk.possibleOpening("??")
@@ -214,6 +222,10 @@ class TextileLine {
                 } else {
                     disp = .skip
                 }
+            } else if char == ":" && lastChar.isWhitespace && nextChar.isWhitespace {
+                chunk.singularValid(":")
+                disp = .special
+                skipSpaces = true
             } else if char == "'" {
                 if lastChar.isWhitespace {
                     chunk.possibleOpening("'")
@@ -256,6 +268,10 @@ class TextileLine {
                 }
             }
             
+            if disp != .skip {
+                skipSpaces = false
+            }
+            
             switch disp {
             case .pending:
                 pendingChars.append(char)
@@ -288,6 +304,7 @@ class TextileLine {
     func startChunk() {
         chunk = TextileChunk()
         pendingChars = ""
+        skipSpaces = false
         openingLink = nil
     }
     
@@ -304,20 +321,22 @@ class TextileLine {
     func checkForOpening() {
         
         var matchFound = false
-        chunk.specialValid = false
+        if chunk.special != "'" {
+            chunk.specialValid = false
+        }
         chunk.specialMatched = false
         block.startAtEnd()
         var priorChunk: TextileChunk? = block.priorChunk()
         while priorChunk != nil && !matchFound {
-            if priorChunk!.special == chunk.special {
+            if (priorChunk!.special == chunk.special
+                && !priorChunk!.specialMatched
+                && priorChunk!.oc == .opening) {
                 matchFound = true
-                if priorChunk!.oc == .opening {
-                    priorChunk!.specialValid = true
-                    priorChunk!.specialMatched = true
-                    chunk.oc = .closing
-                    chunk.specialValid = true
-                    chunk.specialMatched = true
-                }
+                priorChunk!.specialValid = true
+                priorChunk!.specialMatched = true
+                chunk.oc = .closing
+                chunk.specialValid = true
+                chunk.specialMatched = true
             } else if priorChunk!.special == "a" && priorChunk!.oc == .opening
                 && !priorChunk!.specialMatched && chunk.special == "\"" {
                 matchFound = true

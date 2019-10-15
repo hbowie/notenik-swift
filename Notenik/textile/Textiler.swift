@@ -104,6 +104,10 @@ class Textiler {
                 markedup.finishUnorderedList()
             } else if markedup.listInProgress == "o" && line.type != .ordered {
                 markedup.finishOrderedList()
+            } else if (markedup.listInProgress == "d"
+                && line.type != .definitionDef
+                && line.type != .definitionTerm) {
+                markedup.finishDefinitionList()
             }
             
             // Start any new lists
@@ -111,10 +115,17 @@ class Textiler {
                 markedup.startOrderedList(klass: block.sig.klass)
             } else if line.type == .unordered && markedup.listInProgress != "u" {
                 markedup.startUnorderedList(klass: block.sig.klass)
+            } else if ((line.type == .definitionTerm || line.type == .definitionDef)
+                && markedup.listInProgress != "d") {
+                markedup.startDefinitionList(klass: block.sig.klass)
             }
             
             if line.type == .ordered || line.type == .unordered {
                 markedup.startListItem()
+            } else if line.type == .definitionTerm {
+                markedup.startDefTerm()
+            } else if line.type == .definitionDef {
+                markedup.startDefDef()
             }
             
             var chunkIndex = 0
@@ -128,6 +139,16 @@ class Textiler {
             lineIndex += 1
             if line.type == .ordered || line.type == .unordered {
                 markedup.finishListItem()
+            } else if line.type == .definitionTerm {
+                if markedup.defInProgress == "t" {
+                    markedup.finishDefTerm()
+                } else if markedup.defInProgress == "d" {
+                    markedup.finishDefDef()
+                }
+            } else if line.type == .definitionDef {
+                if markedup.defInProgress == "d" {
+                    markedup.finishDefDef()
+                }
             } else if lineIndex < block.lines.count && !block.sig.html && lastChunk.special != "html-line" {
                 markedup.lineBreak()
             }

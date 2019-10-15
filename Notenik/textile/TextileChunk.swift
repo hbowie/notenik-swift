@@ -88,7 +88,7 @@ class TextileChunk {
                     markedup.rightDoubleQuote()
                 }
             case "'":
-                if oc == .opening {
+                if oc == .opening && specialMatched {
                     markedup.leftSingleQuote()
                 } else {
                     markedup.rightSingleQuote()
@@ -111,6 +111,9 @@ class TextileChunk {
                 } else {
                     markedup.finishEmphasis()
                 }
+            case ":":
+                markedup.finishDefTerm()
+                markedup.startDefDef()
             case "html-line":
                 markedup.newLine()
             default:

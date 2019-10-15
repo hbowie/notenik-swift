@@ -18,5 +18,7 @@ enum TextileLineType {
     case ordinary
     case unordered
     case ordered
+    case definitionTerm
+    case definitionDef
     case html
 }

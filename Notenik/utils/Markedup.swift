@@ -26,6 +26,7 @@ class Markedup: CustomStringConvertible {
     var emphasisPending = 0
     var lastEmphasisChar: Character = " "
     var listInProgress: Character = " "
+    var defInProgress: Character = " "
     
     convenience init (format: MarkedupFormat) {
         self.init()
@@ -156,6 +157,74 @@ class Markedup: CustomStringConvertible {
         switch format {
         case .htmlFragment, .htmlDoc:
             writeLine("</ul>")
+        default:
+            break
+        }
+        listInProgress = " "
+    }
+    
+    func startDefinitionList(klass: String?) {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("<dl")
+            if klass != nil && klass!.count > 0 {
+                code.append(" class=\"\(klass!)\"")
+            }
+            code.append(">")
+            newLine()
+        case .markdown:
+            if code.count > 0 {
+                newLine()
+            }
+        }
+        listInProgress = "d"
+        defInProgress = " "
+    }
+    
+    func startDefTerm() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            code.append("<dt>")
+        case .markdown:
+            break
+        }
+        defInProgress = "t"
+    }
+    
+    func finishDefTerm() {
+        switch format {
+        case .htmlDoc, .htmlFragment:
+            code.append("</dt>")
+        case .markdown:
+            break
+        }
+        defInProgress = " "
+    }
+    
+    func startDefDef() {
+        switch format {
+        case .htmlDoc, .htmlFragment:
+            code.append("<dd>")
+        case .markdown:
+            break
+        }
+        defInProgress = "d"
+    }
+    
+    func finishDefDef() {
+        switch format {
+        case .htmlDoc, .htmlFragment:
+            code.append("</dd>")
+        case .markdown:
+            break
+        }
+        defInProgress = " "
+    }
+    
+    func finishDefinitionList() {
+        switch format {
+        case .htmlFragment, .htmlDoc:
+            writeLine("</dl>")
         default:
             break
         }
