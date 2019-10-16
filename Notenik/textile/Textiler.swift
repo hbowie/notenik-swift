@@ -64,6 +64,13 @@ class Textiler {
         }
         finishBlock()
         
+        // Finish up any lists still in progress
+        if markedup.listInProgress == "u" {
+            markedup.finishUnorderedList()
+        } else if markedup.listInProgress == "o" {
+            markedup.finishOrderedList()
+        }
+        
         markedup.finishDoc()
         return markedup.code
     }
@@ -100,13 +107,14 @@ class Textiler {
         for line in block.lines {
             
             // Finish up any outstanding lists
-            if markedup.listInProgress == "u" && line.type != .unordered {
+            if markedup.listInProgress == "u" && line.type != .unordered && line.type != .blank {
                 markedup.finishUnorderedList()
-            } else if markedup.listInProgress == "o" && line.type != .ordered {
+            } else if markedup.listInProgress == "o" && line.type != .ordered && line.type != .blank {
                 markedup.finishOrderedList()
             } else if (markedup.listInProgress == "d"
                 && line.type != .definitionDef
-                && line.type != .definitionTerm) {
+                && line.type != .definitionTerm
+                && line.type != .blank) {
                 markedup.finishDefinitionList()
             }
             
@@ -154,13 +162,6 @@ class Textiler {
             }
             
         } // end of lines in block
-        
-        // Finish up any lists still in progress
-        if markedup.listInProgress == "u" {
-            markedup.finishUnorderedList()
-        } else if markedup.listInProgress == "o" {
-            markedup.finishOrderedList()
-        }
         
         block.sig.closeBlock(markedup: markedup)
     }

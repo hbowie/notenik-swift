@@ -12,7 +12,7 @@ Notenik provides a function for merging data from Notes (or other data sources) 
 
 The text files created may be of any type, but certainly one of the most useful formats is html, allowing users to generate one or more Web pages from their notes. 
 
-See the [Merge Template File Spec](https://www.notenik.net/merge-template.html) for complete information on the expected format of a Merge Template file. 
+See the [Merge Template File Spec](https://notenik.net/template-spec.html) for complete information on the expected format of a Merge Template file. 
 
 Template files can be placed in a folder named 'reports' within the Collection folder where the reports are to be used. Each template file should include the word 'template' somewhere within its file name. 
 

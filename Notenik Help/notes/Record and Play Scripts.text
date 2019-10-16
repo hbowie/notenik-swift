@@ -42,5 +42,5 @@ Note that there are Script commands that can be entered here that will not be fo
 
 * stop — Use this command to stop recording a script. It is at this point that the executed and recorded commands will be written to disk. 
 
-[script]: https://www.notenik.net/merge-script.html
+[script]: https://notenik.net/script-spec.html
 
