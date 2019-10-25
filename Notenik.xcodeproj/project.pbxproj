@@ -110,6 +110,12 @@
 		9C4018A422838F4F002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
 		9C4018A522838F4F002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
 		9C4018A62283B68B002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
+		9C4412682363478D00B3041F /* ArtistType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4412672363478D00B3041F /* ArtistType.swift */; };
+		9C4412692363478D00B3041F /* ArtistType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4412672363478D00B3041F /* ArtistType.swift */; };
+		9C44126A2363478D00B3041F /* ArtistType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4412672363478D00B3041F /* ArtistType.swift */; };
+		9C44126D23634B8A00B3041F /* AnyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C44126C23634B8A00B3041F /* AnyType.swift */; };
+		9C44126E23634B8A00B3041F /* AnyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C44126C23634B8A00B3041F /* AnyType.swift */; };
+		9C44126F23634B8A00B3041F /* AnyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C44126C23634B8A00B3041F /* AnyType.swift */; };
 		9C44539222FCC80200560F72 /* NoteReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C44539122FCC80200560F72 /* NoteReader.swift */; };
 		9C44539322FCC80200560F72 /* NoteReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C44539122FCC80200560F72 /* NoteReader.swift */; };
 		9C44539422FCC80200560F72 /* NoteReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C44539122FCC80200560F72 /* NoteReader.swift */; };
@@ -614,6 +620,8 @@
 		9C2D40B922F8C94C0074FCCE /* RowImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowImporter.swift; sourceTree = "<group>"; };
 		9C3BDF40229D9A5200E0DA89 /* Down.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Down.xcodeproj; path = ../Down/Down.xcodeproj; sourceTree = "<group>"; };
 		9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefs.swift; sourceTree = "<group>"; };
+		9C4412672363478D00B3041F /* ArtistType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistType.swift; sourceTree = "<group>"; };
+		9C44126C23634B8A00B3041F /* AnyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyType.swift; sourceTree = "<group>"; };
 		9C44539122FCC80200560F72 /* NoteReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteReader.swift; sourceTree = "<group>"; };
 		9C45E8BA2298B87C003F6589 /* BodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyView.swift; sourceTree = "<group>"; };
 		9C45E8BD2298BC87003F6589 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
@@ -1062,6 +1070,8 @@
 		9C60E72421F651E500C332ED /* values */ = {
 			isa = PBXGroup;
 			children = (
+				9C44126C23634B8A00B3041F /* AnyType.swift */,
+				9C4412672363478D00B3041F /* ArtistType.swift */,
 				9CFD34FF23313D6D004ABA16 /* ArtistValue.swift */,
 				9C568DD82322BA21005D6B0A /* AuthorPickList.swift */,
 				9C60E72B21F651E500C332ED /* AuthorValue.swift */,
@@ -1624,6 +1634,7 @@
 				9CDEE7C222FDDBDA0000E3C1 /* OutputModule.swift in Sources */,
 				9C60E75321F651E500C332ED /* Provider.swift in Sources */,
 				9C25E00622D787980062E282 /* PickList.swift in Sources */,
+				9C44126D23634B8A00B3041F /* AnyType.swift in Sources */,
 				9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */,
 				9CAD6A5222DFA0B000531D90 /* PrefsTabVC.swift in Sources */,
 				9C60E75C21F651E500C332ED /* RecursValue.swift in Sources */,
@@ -1632,6 +1643,7 @@
 				9CF256CD21FD175E00D9F06A /* CollectionWindowController.swift in Sources */,
 				9C1E0C9522E4F7FA0025C99C /* AttachmentViewController.swift in Sources */,
 				9C60E76E21F651E500C332ED /* LongTextValue.swift in Sources */,
+				9C4412682363478D00B3041F /* ArtistType.swift in Sources */,
 				9C60E71521F6518400C332ED /* LogLevel.swift in Sources */,
 				9C822BA222D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */,
 				9CDF57962346A22B004417FA /* TextileLineType.swift in Sources */,
@@ -1828,6 +1840,7 @@
 				9CCC5E9F228F0B5500FA6B5C /* BunchIO.swift in Sources */,
 				9C27D9F322FB3758008EE0A1 /* NoteIndexReader.swift in Sources */,
 				9C60E75121F651E500C332ED /* NoteSortParm.swift in Sources */,
+				9C4412692363478D00B3041F /* ArtistType.swift in Sources */,
 				9C25E00122D786770062E282 /* ValuePickLists.swift in Sources */,
 				9C8540BB22E8F3660074E349 /* InputModule.swift in Sources */,
 				9C60E7BC21F6525F00C332ED /* AuthorValueTests.swift in Sources */,
@@ -1854,6 +1867,7 @@
 				9C559D7122E67F940014019C /* AttachmentName.swift in Sources */,
 				9CC8336E22B3F65B0006AAE0 /* MarkedupTests.swift in Sources */,
 				9C60E78D21F651E500C332ED /* FieldDictionary.swift in Sources */,
+				9C44126E23634B8A00B3041F /* AnyType.swift in Sources */,
 				9CFCB04A226BCE1700443FFA /* SimpleDate.swift in Sources */,
 				9C60E71621F6518400C332ED /* LogLevel.swift in Sources */,
 				9CE2170F22A9BC6000EE656C /* LineWithBreak.swift in Sources */,
@@ -1980,6 +1994,7 @@
 				9C27DA0522FB581D008EE0A1 /* IndexPageRef.swift in Sources */,
 				9C9A6BB722EA603700E1F127 /* SortModule.swift in Sources */,
 				9CC0F5AA227629C4002683F8 /* BooleanValue.swift in Sources */,
+				9C44126F23634B8A00B3041F /* AnyType.swift in Sources */,
 				9C2AE527220A34CC00AE8BEE /* NoteListViewController.swift in Sources */,
 				9C8540BC22E8F3660074E349 /* InputModule.swift in Sources */,
 				9C8540B022E8D78B0074E349 /* NotesList.swift in Sources */,
@@ -2052,6 +2067,7 @@
 				9C60E75E21F651E500C332ED /* RecursValue.swift in Sources */,
 				9C60E74F21F651E500C332ED /* ValueFactory.swift in Sources */,
 				9CDEE7C422FDDBDA0000E3C1 /* OutputModule.swift in Sources */,
+				9C44126A2363478D00B3041F /* ArtistType.swift in Sources */,
 				9C60E76121F651E500C332ED /* TitleValue.swift in Sources */,
 				9C29DD2A226286A100928180 /* CollectionWindow.swift in Sources */,
 				9CE2170922A95EB300EE656C /* TemplateCommand.swift in Sources */,
