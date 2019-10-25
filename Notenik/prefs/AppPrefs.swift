@@ -24,6 +24,8 @@ class AppPrefs {
     let tagsSelectKey   = "tags-to-select"
     let tagsSuppressKey = "tags-to-suppress"
     let parentRealmParentKey = "parent-realm-parent"
+    let useCountKey     = "use-count"
+    let lastVersionPromptedForReviewKey = "last-version-prompted-for-review"
     
     var _qd: Bool = false
     
@@ -44,8 +46,36 @@ class AppPrefs {
     var _tsel = ""
     var _tsup = ""
     
+    var _uc = 0
+    
+    var _lvpfr = ""
+    var currentVersion = ""
+    
+    var newVersionForReview = false
+    
     /// Private initializer to enforce usage of the singleton instance
     private init() {
+        
+        // Retrieve and log info about the current app.
+        
+        if let infoDictionary = Bundle.main.infoDictionary {
+            let version = infoDictionary["CFBundleShortVersionString"] as? String
+            let build   = infoDictionary[kCFBundleVersionKey as String] as? String
+            let appName = infoDictionary[kCFBundleNameKey as String] as? String
+            
+            if appName != nil {
+                logInfo("Launching \(appName!)")
+            }
+            
+            if version != nil {
+                currentVersion = version!
+                logInfo("Version \(currentVersion)")
+            }
+            
+            if build != nil {
+                logInfo("Build # \(build!)")
+            }
+        }
         
         _qd = defaults.bool(forKey: quickDeletesKey)
         
@@ -70,6 +100,17 @@ class AppPrefs {
         if defaultprp != nil {
             _prp = defaultprp!
         }
+        
+        _uc = defaults.integer(forKey: useCountKey)
+        
+        // Get the Last Version Prompted for Review.
+        let lvpfr = defaults.string(forKey: lastVersionPromptedForReviewKey)
+        if lvpfr != nil {
+            _lvpfr = lvpfr!
+        }
+        
+        // Now see if we have a new version for review.
+        newVersionForReview = currentVersion > lastVersionPromptedForReview
     }
     
     var confirmDeletes: Bool {
@@ -198,5 +239,52 @@ class AppPrefs {
             _tsup = newValue
             defaults.set(_tsup, forKey: tagsSuppressKey)
         }
+    }
+    
+    /// Add one to the use counter.
+    func incrementUseCount() {
+        let newUseCount = useCount + 1
+        useCount = newUseCount
+    }
+    
+    /// Get and set the number of times the user has used the app. 
+    var useCount: Int {
+        get {
+            return _uc
+        }
+        set {
+            _uc = newValue
+            defaults.set(_uc, forKey: useCountKey)
+        }
+    }
+    
+    func userPromptedForReview() {
+        lastVersionPromptedForReview = currentVersion
+    }
+    
+    var lastVersionPromptedForReview: String {
+        get {
+            return _lvpfr
+        }
+        set {
+            _lvpfr = newValue
+            defaults.set(_lvpfr, forKey: lastVersionPromptedForReviewKey)
+        }
+    }
+    
+    /// Send an informative message to the log.
+    func logInfo(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "AppPrefs",
+                          level: .info,
+                          message: msg)
+    }
+    
+    /// Send an error message to the log.
+    func logError(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "AppPrefs",
+                          level: .error,
+                          message: msg)
     }
 }

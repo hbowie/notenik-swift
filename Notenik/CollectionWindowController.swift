@@ -10,6 +10,7 @@
 //
 
 import Cocoa
+import StoreKit
 
 /// Controls a window showing a particular Collection of Notes.
 class CollectionWindowController: NSWindowController, CollectionPrefsOwner, AttachmentMasterController {
@@ -867,7 +868,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// Modify the Note if the user changed anything on the Edit Screen
     func modIfChanged() -> modIfChangedOutcome {
-        // print("CollectionWindowController.modIfChanged")
         guard editVC != nil else { return .notReady }
         guard !pendingMod else { return .notReady }
         guard newNoteRequested || pendingEdits else { return .noChange }
@@ -878,7 +878,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
         if outcome != .tryAgain && outcome != .noChange {
             pendingEdits = false
-            // print("  - pendingEdits set to false")
         }
         if outcome == .add || outcome == .deleteAndAdd || outcome == .modify {
             editVC!.populateFields(with: note!)
@@ -894,6 +893,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             noteTabs!.tabView.selectFirstTabViewItem(nil)
         }
         pendingMod = false
+        if outcome == .add || outcome == .deleteAndAdd || outcome == .modify {
+            checkForReviewRequest()
+        }
         return outcome
     }
     
@@ -901,6 +903,17 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     func noteModified(updatedNote: Note) {
         if displayVC != nil {
             displayVC!.display(note: updatedNote)
+        }
+    }
+    
+    /// See if this is an appropriate time to ask the user for an app store review
+    func checkForReviewRequest() {
+        if appPrefs.newVersionForReview {
+            appPrefs.incrementUseCount()
+            if appPrefs.useCount > 20 {
+                appPrefs.userPromptedForReview()
+                SKStoreReviewController.requestReview()
+            }
         }
     }
     
