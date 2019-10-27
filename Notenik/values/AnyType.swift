@@ -28,7 +28,7 @@ protocol AnyType {
     
     /// A factory method to create a new value of this type with the given value.
     /// - Parameter str: The value to be used to populate the field with a value.
-    func createValue(_ str: String) -> ArtistValue
+    func createValue(_ str: String) -> StringValue
     
     /// Is this type suitable for a particular field, given its label and type (if any)?
     /// - Parameter label: The label.

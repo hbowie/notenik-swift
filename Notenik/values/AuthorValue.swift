@@ -12,7 +12,7 @@
 import Foundation
 
 /// An object representing an author, or authoring team, for one or more works
-class AuthorValue : StringValue {
+class AuthorValue: StringValue {
     
     var lastName = ""
     var firstName = ""
