@@ -17,13 +17,13 @@ class StatusValue: StringValue {
     var statusInt = 0
     
     /// Convenience initializer using an integer and a Status Value Config
-    convenience init (i : Int, config : StatusValueConfig) {
+    convenience init (i: Int, config: StatusValueConfig) {
         self.init()
         set(i: i, config: config)
     }
     
     /// Convenience initializer using a string and a Status Value Config
-    convenience init (str : String, config : StatusValueConfig) {
+    convenience init (str: String, config: StatusValueConfig) {
         self.init()
         set(str: str, config: config)
     }
@@ -42,12 +42,12 @@ class StatusValue: StringValue {
     }
     
     /// Set the status integer based on the current label value
-    func set(_ config : StatusValueConfig) {
+    func set(_ config: StatusValueConfig) {
         set (str: value, config: config)
     }
     
     /// Set the status using a string and the passed Status Value Config
-    func set(str: String, config : StatusValueConfig) {
+    func set(str: String, config: StatusValueConfig) {
         super.set(str)
         var i = config.get(str)
         if i >= 0 {
@@ -72,7 +72,7 @@ class StatusValue: StringValue {
     ///
     /// - Parameter config: The Status Value Configuration to use.
     /// - Returns: An 'X' if done, a space otherwise. 
-    func doneX(config : StatusValueConfig) -> String {
+    func doneX(config: StatusValueConfig) -> String {
         if isDone(config: config) {
             return "X"
         } else {
@@ -85,7 +85,7 @@ class StatusValue: StringValue {
     ///
     /// - Parameter config: The Status Value Configuration to use.
     /// - Returns: True if done; false otherwise.
-    func isDone(config : StatusValueConfig) -> Bool {
+    func isDone(config: StatusValueConfig) -> Bool {
         return statusInt >= config.doneThreshold
     }
     

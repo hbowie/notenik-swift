@@ -73,8 +73,10 @@ class InputModule: RowConsumer {
             workspace.list = workspace.fullList
         } else if command.object.count == 0 {
             workspace.collection = NoteCollection()
+            workspace.typeCatalog = workspace.collection.typeCatalog
             if workspace.explodeTags {
-                _ = workspace.collection.dict.addDef(LabelConstants.tag)
+                _ = workspace.collection.dict.addDef(typeCatalog: workspace.typeCatalog,
+                                                     label: LabelConstants.tag)
             }
             workspace.newList()
             // Clear pending sort fields if we're not merging

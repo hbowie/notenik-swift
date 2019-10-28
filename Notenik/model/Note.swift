@@ -134,6 +134,7 @@ class Note: Comparable, NSCopying {
         }
     }
     
+    /// Compare this note to another using a set of custom fields for comparison. 
     static func compareCustomFields(lhs: Note, rhs: Note) -> Int {
         var result = 0
         var index = 0
@@ -703,7 +704,10 @@ class Note: Comparable, NSCopying {
     
     /// Set a Note field given a label and a value
     func setField(label: String, value: String) -> Bool {
-        let field = NoteField(label: label, value: value, statusConfig: collection.statusConfig)
+        let field = NoteField(label: label,
+                              value: value,
+                              typeCatalog: collection.typeCatalog,
+                              statusConfig: collection.statusConfig)
         return setField(field)
         
     }
@@ -713,7 +717,7 @@ class Note: Comparable, NSCopying {
     /// - Parameter field: The Note field we want to set.
     /// - Returns: True if the field was set, false otherwise.
     func setField(_ field: NoteField) -> Bool {
-        if (field.def.fieldType == .status
+        if (field.def.fieldType.typeString == "status"
             && field.value.value.count > 0
             && field.value is StatusValue) {
             let statusVal = field.value as! StatusValue

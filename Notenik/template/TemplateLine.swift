@@ -339,8 +339,8 @@ class TemplateLine {
         
         var globalField = util.globals.getField(label: globalName)
         if globalField == nil {
-            let def = FieldDefinition(globalName)
-            let val = ValueFactory.getValue(value: operand1)
+            let def = FieldDefinition(typeCatalog: util.typeCatalog, label: globalName)
+            let val = def.fieldType.createValue(operand1)
             globalField = NoteField(def: def, value: val)
             _ = util.globals.setField(globalField!)
         }

@@ -24,6 +24,8 @@ class ScriptWorkspace {
     
     var collection  = NoteCollection()
     
+    var typeCatalog = AllTypes()
+    
     var inputURL:     URL?
     var explodeTags = false
     var maxDirDepth = 1

@@ -149,4 +149,8 @@ class FieldLabel: CustomStringConvertible {
     var hasData: Bool {
         return (properForm.count > 0)
     }
+    
+    func display() {
+        print("FieldLabel | Proper Form: \(properForm), Common Form: \(commonForm), Valid? \(validLabel)")
+    }
 }

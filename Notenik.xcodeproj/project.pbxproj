@@ -200,9 +200,6 @@
 		9C60E74A21F651E500C332ED /* Realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E72021F651E500C332ED /* Realm.swift */; };
 		9C60E74B21F651E500C332ED /* Realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E72021F651E500C332ED /* Realm.swift */; };
 		9C60E74C21F651E500C332ED /* Realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E72021F651E500C332ED /* Realm.swift */; };
-		9C60E74D21F651E500C332ED /* ValueFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E72121F651E500C332ED /* ValueFactory.swift */; };
-		9C60E74E21F651E500C332ED /* ValueFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E72121F651E500C332ED /* ValueFactory.swift */; };
-		9C60E74F21F651E500C332ED /* ValueFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E72121F651E500C332ED /* ValueFactory.swift */; };
 		9C60E75021F651E500C332ED /* NoteSortParm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E72221F651E500C332ED /* NoteSortParm.swift */; };
 		9C60E75121F651E500C332ED /* NoteSortParm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E72221F651E500C332ED /* NoteSortParm.swift */; };
 		9C60E75221F651E500C332ED /* NoteSortParm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E72221F651E500C332ED /* NoteSortParm.swift */; };
@@ -275,9 +272,6 @@
 		9C60E79521F651E500C332ED /* NoteIDRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73B21F651E500C332ED /* NoteIDRule.swift */; };
 		9C60E79621F651E500C332ED /* NoteIDRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73B21F651E500C332ED /* NoteIDRule.swift */; };
 		9C60E79721F651E500C332ED /* NoteIDRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73B21F651E500C332ED /* NoteIDRule.swift */; };
-		9C60E79821F651E500C332ED /* FieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73C21F651E500C332ED /* FieldType.swift */; };
-		9C60E79921F651E500C332ED /* FieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73C21F651E500C332ED /* FieldType.swift */; };
-		9C60E79A21F651E500C332ED /* FieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73C21F651E500C332ED /* FieldType.swift */; };
 		9C60E79B21F651E500C332ED /* NotePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73D21F651E500C332ED /* NotePosition.swift */; };
 		9C60E79C21F651E500C332ED /* NotePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73D21F651E500C332ED /* NotePosition.swift */; };
 		9C60E79D21F651E500C332ED /* NotePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73D21F651E500C332ED /* NotePosition.swift */; };
@@ -376,6 +370,9 @@
 		9C9A6BB522EA603700E1F127 /* SortModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A6BB422EA603700E1F127 /* SortModule.swift */; };
 		9C9A6BB622EA603700E1F127 /* SortModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A6BB422EA603700E1F127 /* SortModule.swift */; };
 		9C9A6BB722EA603700E1F127 /* SortModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A6BB422EA603700E1F127 /* SortModule.swift */; };
+		9CA0D1F523677CE100ACA52A /* DateAddedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA0D1F423677CE100ACA52A /* DateAddedType.swift */; };
+		9CA0D1F623677CE100ACA52A /* DateAddedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA0D1F423677CE100ACA52A /* DateAddedType.swift */; };
+		9CA0D1F723677CE100ACA52A /* DateAddedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA0D1F423677CE100ACA52A /* DateAddedType.swift */; };
 		9CA420F622C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */; };
 		9CA420F722C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */; };
 		9CA420F822C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */; };
@@ -716,7 +713,6 @@
 		9C60E71E21F651E500C332ED /* NotenikIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotenikIO.swift; sourceTree = "<group>"; };
 		9C60E71F21F651E500C332ED /* ProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderType.swift; sourceTree = "<group>"; };
 		9C60E72021F651E500C332ED /* Realm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Realm.swift; sourceTree = "<group>"; };
-		9C60E72121F651E500C332ED /* ValueFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueFactory.swift; sourceTree = "<group>"; };
 		9C60E72221F651E500C332ED /* NoteSortParm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteSortParm.swift; sourceTree = "<group>"; };
 		9C60E72321F651E500C332ED /* Provider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		9C60E72521F651E500C332ED /* StringValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringValue.swift; sourceTree = "<group>"; };
@@ -741,7 +737,6 @@
 		9C60E73921F651E500C332ED /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		9C60E73A21F651E500C332ED /* NoteCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCollection.swift; sourceTree = "<group>"; };
 		9C60E73B21F651E500C332ED /* NoteIDRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteIDRule.swift; sourceTree = "<group>"; };
-		9C60E73C21F651E500C332ED /* FieldType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FieldType.swift; path = ../model/FieldType.swift; sourceTree = "<group>"; };
 		9C60E73D21F651E500C332ED /* NotePosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotePosition.swift; sourceTree = "<group>"; };
 		9C60E79F21F6520100C332ED /* FileIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileIO.swift; sourceTree = "<group>"; };
 		9C60E7A321F6525D00C332ED /* FileUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtilsTests.swift; sourceTree = "<group>"; };
@@ -793,6 +788,7 @@
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
 		9C9A6BAD22EA5FBC00E1F127 /* SortField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortField.swift; sourceTree = "<group>"; };
 		9C9A6BB422EA603700E1F127 /* SortModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortModule.swift; sourceTree = "<group>"; };
+		9CA0D1F423677CE100ACA52A /* DateAddedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAddedType.swift; sourceTree = "<group>"; };
 		9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldComparisonOperator.swift; sourceTree = "<group>"; };
 		9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewController.swift; sourceTree = "<group>"; };
 		9CAD6A4822DF806800531D90 /* TagsExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsExportViewController.swift; sourceTree = "<group>"; };
@@ -1147,6 +1143,7 @@
 				9C60E72B21F651E500C332ED /* AuthorValue.swift */,
 				9CB6ECA12364B02D00951820 /* BooleanType.swift */,
 				9CC0F5A7227629C4002683F8 /* BooleanValue.swift */,
+				9CA0D1F423677CE100ACA52A /* DateAddedType.swift */,
 				9CB6ECA52364C25A00951820 /* DateType.swift */,
 				9C60E72921F651E500C332ED /* DateValue.swift */,
 				9CB6ECA92364F7DB00951820 /* IndexType.swift */,
@@ -1175,7 +1172,6 @@
 				9C822B9522D63A11008EF106 /* TagValue.swift */,
 				9CB6ECD12365DE3100951820 /* TitleType.swift */,
 				9C60E72821F651E500C332ED /* TitleValue.swift */,
-				9C60E72121F651E500C332ED /* ValueFactory.swift */,
 				9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */,
 				9C568DE02322F3C6005D6B0A /* WorkTitlePickList.swift */,
 				9CB6ECD52365E00C00951820 /* WorkTitleType.swift */,
@@ -1239,7 +1235,6 @@
 				9C60E73121F651E500C332ED /* FieldDefinition.swift */,
 				9C60E73821F651E500C332ED /* FieldDictionary.swift */,
 				9C60E71C21F651E500C332ED /* FieldLabel.swift */,
-				9C60E73C21F651E500C332ED /* FieldType.swift */,
 				9C60E73221F651E500C332ED /* LabelConstants.swift */,
 			);
 			path = fields;
@@ -1748,7 +1743,6 @@
 				9C5556D722E11E3B0099414E /* ExportWindowController.swift in Sources */,
 				9CF1192E2257FDD50015AE91 /* ModWhenChanged.swift in Sources */,
 				9C568DE92322F701005D6B0A /* WorkTitleView.swift in Sources */,
-				9C60E79821F651E500C332ED /* FieldType.swift in Sources */,
 				9CD3262822330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9C60E77421F651E500C332ED /* TagsValue.swift in Sources */,
 				9C25DFFC22D7824B0062E282 /* ValuePickLists.swift in Sources */,
@@ -1774,7 +1768,6 @@
 				9CF96EE0225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */,
 				9C60E76B21F651E500C332ED /* StatusValueConfig.swift in Sources */,
 				9CB6EC9E2364AE0100951820 /* AuthorType.swift in Sources */,
-				9C60E74D21F651E500C332ED /* ValueFactory.swift in Sources */,
 				9CB6ECAE2364FA0500951820 /* IntType.swift in Sources */,
 				9C60E73E21F651E500C332ED /* FieldLabel.swift in Sources */,
 				9CD82F6B2211EDC2002314E4 /* NoteLineMaker.swift in Sources */,
@@ -1845,6 +1838,7 @@
 				9C8540B622E8F0790074E349 /* ScriptModule.swift in Sources */,
 				9C8540AE22E8D78B0074E349 /* NotesList.swift in Sources */,
 				9CB60BC622651074003B5655 /* ShareViewController.swift in Sources */,
+				9CA0D1F523677CE100ACA52A /* DateAddedType.swift in Sources */,
 				9C568DF5232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */,
 				9CB6ECCA2365DAFE00951820 /* StringType.swift in Sources */,
 				9C60E78621F651E500C332ED /* BigStringReader.swift in Sources */,
@@ -1917,9 +1911,9 @@
 				9CDEE7C822FE36E30000E3C1 /* DirReader.swift in Sources */,
 				9C60E78421F651E500C332ED /* LineReader.swift in Sources */,
 				9C60E78721F651E500C332ED /* BigStringReader.swift in Sources */,
+				9CA0D1F623677CE100ACA52A /* DateAddedType.swift in Sources */,
 				9C60E77821F651E500C332ED /* StatusValue.swift in Sources */,
 				9CB6ECD32365DE3100951820 /* TitleType.swift in Sources */,
-				9C60E79921F651E500C332ED /* FieldType.swift in Sources */,
 				9CDF57972346A22B004417FA /* TextileLineType.swift in Sources */,
 				9CC0F5A9227629C4002683F8 /* BooleanValue.swift in Sources */,
 				9C60E7C921F6525F00C332ED /* RecursValueTests.swift in Sources */,
@@ -2004,7 +1998,6 @@
 				9CAD6A5B22DFBEEB00531D90 /* NoteFormat.swift in Sources */,
 				9C78888721FB826100452D74 /* MarkedupFormat.swift in Sources */,
 				9CB6ECA72364C25A00951820 /* DateType.swift in Sources */,
-				9C60E74E21F651E500C332ED /* ValueFactory.swift in Sources */,
 				9C27D9FC22FB3FA6008EE0A1 /* IndexTerm.swift in Sources */,
 				9C0B25E6224D654E003AAF21 /* LogViewController.swift in Sources */,
 				9C60E76021F651E500C332ED /* TitleValue.swift in Sources */,
@@ -2098,7 +2091,6 @@
 				9CAD6A5322DFA0B000531D90 /* PrefsTabVC.swift in Sources */,
 				9C60E77921F651E500C332ED /* StatusValue.swift in Sources */,
 				9C822B9822D63A11008EF106 /* TagValue.swift in Sources */,
-				9C60E79A21F651E500C332ED /* FieldType.swift in Sources */,
 				9CB6ECA42364B02D00951820 /* BooleanType.swift in Sources */,
 				9C1CB85D22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */,
 				9C1E0C9922E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
@@ -2194,7 +2186,6 @@
 				9CAD6A5822DFA9C200531D90 /* NotesExporter.swift in Sources */,
 				9C9094C62249A664002207EB /* NoteDocumentController.swift in Sources */,
 				9C60E75E21F651E500C332ED /* RecursValue.swift in Sources */,
-				9C60E74F21F651E500C332ED /* ValueFactory.swift in Sources */,
 				9CDEE7C422FDDBDA0000E3C1 /* OutputModule.swift in Sources */,
 				9C44126A2363478D00B3041F /* ArtistType.swift in Sources */,
 				9C60E76121F651E500C332ED /* TitleValue.swift in Sources */,
@@ -2214,6 +2205,7 @@
 				9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9CB6ECB82364FC7B00951820 /* LongTextType.swift in Sources */,
 				9C822B9F22D6D5D6008EF106 /* TagsView.swift in Sources */,
+				9CA0D1F723677CE100ACA52A /* DateAddedType.swift in Sources */,
 				9CED74FD23356657003F7F2C /* Sequencer.swift in Sources */,
 				9CB6ECDC2365E14700951820 /* WorkTypeType.swift in Sources */,
 				9CE9C98422A6134A008D2B0A /* Template.swift in Sources */,

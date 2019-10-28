@@ -249,7 +249,7 @@ class CollectionPrefsViewController: NSViewController {
                 // No definition found or requested
             } else if def == nil && checkBox.state == NSControl.StateValue.on {
                 // Add a new definition
-                _ = dict.addDef(checkBox.title)
+                _ = dict.addDef(typeCatalog: collection!.typeCatalog, label: checkBox.title)
             } else if def != nil && checkBox.state == NSControl.StateValue.on {
                 // Definition already in dictionary and requested
             } else if def != nil && checkBox.state == NSControl.StateValue.off {

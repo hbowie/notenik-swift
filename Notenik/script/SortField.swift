@@ -12,6 +12,7 @@
 import Foundation
 
 class SortField {
+    
     var field = FieldDefinition()
     var ascending = true
     

@@ -170,12 +170,20 @@ class FileIO: NotenikIO, RowConsumer {
                     
                 } else if fileName.template {
                     let templateNote = readNote(collection: collection!, noteURL: itemURL)
-                    if templateNote != nil && templateNote!.fields.count > 0 && collection!.dict.count > 0 {
+                    if (templateNote != nil
+                        && templateNote!.fields.count > 0
+                        && collection!.dict.count > 0) {
                         templateFound = true
                         for def in collection!.dict.list {
                             let val = templateNote!.getFieldAsValue(label: def.fieldLabel.commonForm)
-                            if val.value == "<longtext>" {
-                                def.fieldType = .longText
+                            if val.value.hasPrefix("<") && val.value.hasSuffix(">") {
+                                var typeStr = ""
+                                for char in val.value {
+                                    if char != "<" && char != ">" {
+                                        typeStr.append(char)
+                                    }
+                                }
+                                def.fieldType = collection!.typeCatalog.assignType(label: def.fieldLabel, type: typeStr)
                             }
                         }
                         collection!.dict.lock()
@@ -184,6 +192,7 @@ class FileIO: NotenikIO, RowConsumer {
                         if templateStatusValue.count > 1 {
                             let config = collection!.statusConfig
                             config.set(templateStatusValue)
+                            collection!.typeCatalog.statusValueConfig = config
                         }
                     }
                 }
@@ -494,10 +503,11 @@ class FileIO: NotenikIO, RowConsumer {
     func addDefaultDefinitions() {
         guard collection != nil else { return }
         let dict = collection!.dict
-        _ = dict.addDef(LabelConstants.title)
-        _ = dict.addDef(LabelConstants.tags)
-        _ = dict.addDef(LabelConstants.link)
-        _ = dict.addDef(LabelConstants.body)
+        let types = collection!.typeCatalog
+        _ = dict.addDef(typeCatalog: types, label: LabelConstants.title)
+        _ = dict.addDef(typeCatalog: types, label: LabelConstants.tags)
+        _ = dict.addDef(typeCatalog: types, label: LabelConstants.link)
+        _ = dict.addDef(typeCatalog: types, label: LabelConstants.body)
     }
     
     /// Open a New Collection.

@@ -11,10 +11,11 @@
 
 import Foundation
 
+/// A particular field, consisting of a definition and a value, belonging to a particular Note. 
 class NoteField {
     
-    var def   : FieldDefinition
-    var value : StringValue
+    var def:   FieldDefinition
+    var value: StringValue
     
     init() {
         def = FieldDefinition()
@@ -30,20 +31,22 @@ class NoteField {
     convenience init(def: FieldDefinition, statusConfig: StatusValueConfig) {
         self.init()
         self.def = def
-        value = ValueFactory.getValue(type: def.fieldType, value: "", statusConfig: statusConfig)
+        value = def.fieldType.createValue("")
     }
     
     convenience init(def: FieldDefinition, value: String, statusConfig: StatusValueConfig) {
         self.init()
         self.def = def
-        self.value = ValueFactory.getValue(type: def.fieldType, value: value, statusConfig: statusConfig)
+        self.value = def.fieldType.createValue(value)
     }
     
-    convenience init(label: String, value: String, statusConfig: StatusValueConfig) {
+    convenience init(label: String,
+                     value: String,
+                     typeCatalog: AllTypes,
+                     statusConfig: StatusValueConfig) {
         self.init()
-        let fieldLabel = FieldLabel(label)
-        self.def = FieldDefinition(label: fieldLabel)
-        self.value = ValueFactory.getValue(type: def.fieldType, value: value, statusConfig: statusConfig)
+        self.def = FieldDefinition(typeCatalog: typeCatalog, label: label)
+        self.value = def.fieldType.createValue(value)
     }
     
     func display() {

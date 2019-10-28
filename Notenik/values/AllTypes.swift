@@ -11,67 +11,99 @@
 
 import Foundation
 
+/// A catalog of all available field types. One of these should be created for each Collection.
 class AllTypes {
     
-    /// A catalog of all available field types. One of these should be created for each Collection.
+    let artistType  = ArtistType()
+    let authorType  = AuthorType()
+    let bodyType    = LongTextType()
+    let booleanType = BooleanType()
+    let codeType    = LongTextType()
+    let dateAddedType = DateAddedType()
+    let dateType    = DateType()
+    let indexType   = IndexType()
+    let intType     = IntType()
+    let labelType   = StringType()
+    let linkType    = LinkType()
+    let longTextType = LongTextType()
+    let ratingType  = RatingType()
+    let recursType  = RecursType()
+    let seqType     = SeqType()
+    let statusType  = StatusType()
+    let stringType  = StringType()
+    let tagsType    = TagsType()
+    let titleType   = TitleType()
+    let workTitleType = WorkTitleType()
+    let workTypeType = WorkTypeType()
+    
     var fieldTypes: [AnyType] = []
     
-    init() {
-        
-        let artistType = ArtistType()
-        fieldTypes.append(artistType)
-        
-        let authorType = AuthorType()
-        fieldTypes.append(authorType)
-        
-        let booleanType = BooleanType()
-        fieldTypes.append(booleanType)
-        
-        let dateType = DateType()
-        fieldTypes.append(dateType)
-        
-        let indexType = IndexType()
-        fieldTypes.append(indexType)
-        
-        let intType = IntType()
-        fieldTypes.append(intType)
-        
-        let linkType = LinkType()
-        fieldTypes.append(linkType)
-        
-        let longTextType = LongTextType()
-        fieldTypes.append(longTextType)
-        
-        let ratingType = RatingType()
-        fieldTypes.append(ratingType)
-        
-        let recursType = RecursType()
-        fieldTypes.append(recursType)
-        
-        let seqType = SeqType()
-        fieldTypes.append(seqType)
-        
-        let statusType = StatusType()
-        fieldTypes.append(statusType)
-        
-        let tagsType = TagsType()
-        fieldTypes.append(tagsType)
-        
-        let titleType = TitleType()
-        fieldTypes.append(titleType)
-        
-        let workTitleType = WorkTitleType()
-        fieldTypes.append(workTitleType)
-        
-        let workTypeType = WorkTypeType()
-        fieldTypes.append(workTypeType)
-        
-        // String Type is the default, so it should always be last. 
-        let stringType = StringType()
-        fieldTypes.append(stringType)
+    var statusValueConfig: StatusValueConfig {
+        get {
+            return statusType.statusValueConfig
+        }
+        set {
+            statusType.statusValueConfig = newValue
+        }
     }
     
-    /// Assign a field type based ona field label and, optionally, a type string. 
+    /// Initialize with all of the standard types. 
+    init() {
+        
+        // picklist type???
+        
+        fieldTypes.append(artistType)
+        
+        fieldTypes.append(authorType)
+        
+        fieldTypes.append(booleanType)
+        
+        fieldTypes.append(dateAddedType)
+        
+        fieldTypes.append(dateType)
+        
+        fieldTypes.append(indexType)
+        
+        fieldTypes.append(intType)
+        
+        labelType.typeString = "label"
+        fieldTypes.append(labelType)
+        
+        fieldTypes.append(linkType)
+        
+        fieldTypes.append(longTextType)
+        
+        bodyType.typeString = "body"
+        bodyType.properLabel = "Body"
+        bodyType.commonLabel = "body"
+        fieldTypes.append(bodyType)
+        
+        codeType.typeString = "code"
+        codeType.properLabel = "Code"
+        codeType.commonLabel = "code"
+        fieldTypes.append(codeType)
+        
+        fieldTypes.append(ratingType)
+        
+        fieldTypes.append(recursType)
+        
+        fieldTypes.append(seqType)
+        
+        fieldTypes.append(statusType)
+        
+        fieldTypes.append(stringType)
+        
+        fieldTypes.append(tagsType)
+        
+        fieldTypes.append(titleType)
+        
+        fieldTypes.append(workTitleType)
+        
+        fieldTypes.append(workTypeType)
+        
+    }
+    
+    /// Assign a field type based on a field label and, optionally, a type string. 
     func assignType(label: FieldLabel, type: String?) -> AnyType {
         
         for fieldType in fieldTypes {
@@ -79,7 +111,21 @@ class AllTypes {
                 return fieldType
             }
         }
-        return fieldTypes[fieldTypes.count - 1]
+        return stringType
+    }
+    
+    /// Given just a data value, return value type that is the best fit.
+    func assignType(value: String) -> AnyType {
+        if value.count == 0 {
+            return stringType
+        } else {
+            let possibleInt = Int(value)
+            if possibleInt != nil {
+                return intType
+            } else {
+                return stringType
+            }
+        }
     }
     
 }

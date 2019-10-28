@@ -231,10 +231,11 @@ class BunchIO: NotenikIO, RowConsumer  {
     func addDefaultDefinitions() {
         guard collection != nil else { return }
         let dict = collection!.dict
-        _ = dict.addDef(LabelConstants.title)
-        _ = dict.addDef(LabelConstants.tags)
-        _ = dict.addDef(LabelConstants.link)
-        _ = dict.addDef(LabelConstants.body)
+        let types = collection!.typeCatalog
+        _ = dict.addDef(typeCatalog: types, label: LabelConstants.title)
+        _ = dict.addDef(typeCatalog: types, label: LabelConstants.tags)
+        _ = dict.addDef(typeCatalog: types, label: LabelConstants.link)
+        _ = dict.addDef(typeCatalog: types, label: LabelConstants.body)
     }
     
     /// Import Notes from a CSV or tab-delimited file

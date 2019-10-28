@@ -13,7 +13,7 @@ import Foundation
 
 class FilterRule {
     
-    var field = FieldDefinition()
+    var field:  FieldDefinition!
     var op    = FieldComparisonOperator()
     var to    = ""
     

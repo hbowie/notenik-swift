@@ -66,7 +66,7 @@ class ModWhenChanged {
                 // print("\(def.fieldLabel) values unequal: ")
                 // print("  Note = \(noteValue)")
                 // print("  User = \(userValue)")
-                let newValue = ValueFactory.getValue(type: def.fieldType, value: userValue, statusConfig: statusConfig)
+                let newValue = def.fieldType.createValue(userValue)
                 if field == nil {
                     let newField = NoteField(def: def, statusConfig: statusConfig)
                     newField.value = newValue

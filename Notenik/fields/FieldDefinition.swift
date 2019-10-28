@@ -11,87 +11,49 @@
 
 import Foundation
 
+/// The label used to identify this field, along with the field type.
 class FieldDefinition {
     
-    var fieldLabel : FieldLabel = FieldLabel()
-    var fieldType  : FieldType  = .defaultType
+    var typeCatalog: AllTypes!
     
+    var fieldLabel:  FieldLabel = FieldLabel()
+    var fieldType:   AnyType = StringType()
+    
+    /// Initialize with no parameters, defaulting to a simple String type.
     init() {
         
     }
     
+    init(typeCatalog: AllTypes) {
+        self.typeCatalog = typeCatalog
+        fieldLabel.set("unknown")
+        fieldType = typeCatalog.assignType(label: fieldLabel, type: nil)
+    }
+    
     /// Initialize with a string label and guess the type
-    convenience init(_ label: String) {
-        self.init()
+    convenience init(typeCatalog: AllTypes, label: String) {
+        self.init(typeCatalog: typeCatalog)
         fieldLabel.set(label)
-        guessFieldType()
+        fieldType = typeCatalog.assignType(label: fieldLabel, type: nil)
     }
     
     /// Initialize with a FieldLabel object
-    convenience init (label: FieldLabel) {
-        self.init()
+    convenience init (typeCatalog: AllTypes, label: FieldLabel) {
+        self.init(typeCatalog: typeCatalog)
         self.fieldLabel = label
-        guessFieldType()
+        fieldType = typeCatalog.assignType(label: label, type: nil)
     }
     
     /// Initialize with a string label and an integer type
-    convenience init (label: String, type: String) {
-        self.init()
+    convenience init (typeCatalog: AllTypes, label: String, type: String) {
+        self.init(typeCatalog: typeCatalog)
         fieldLabel.set(label)
-        fieldType = FieldType(rawValue: type)!
+        fieldType = typeCatalog.assignType(label: fieldLabel, type: type)
     }
     
-    /// Derive field type from label
-    func guessFieldType() {
-        fieldType = FieldType.defaultType
-        switch fieldLabel.commonForm {
-        case "artist":
-            fieldType = FieldType.artist
-        case "author", "by", "creator":
-            fieldType = FieldType.author
-        case "body":
-            fieldType = FieldType.body
-        case "teaser":
-            fieldType = FieldType.longText
-        case "code":
-            fieldType = FieldType.code
-        case "date":
-            fieldType = FieldType.date
-        case "dateadded":
-            fieldType = FieldType.dateAdded
-        case "index":
-            fieldType = FieldType.index
-        case "link", "url":
-            fieldType = FieldType.link
-        case "rating", "priority":
-            fieldType = FieldType.rating
-        case "recurs", "every":
-            fieldType = FieldType.recurs
-        case "seq", "sequence", "rev", "revision", "version":
-            fieldType = FieldType.seq
-        case "status":
-            fieldType = FieldType.status
-        case "tags", "keywords", "category", "categories":
-            fieldType = FieldType.tags
-        case "title":
-            fieldType = FieldType.title
-        case "type":
-            fieldType = FieldType.string
-        case "work", "worktitle":
-            fieldType = FieldType.work
-        case "worktype":
-            fieldType = FieldType.workType
-        default:
-            if fieldLabel.commonForm.range(of: "date") != nil {
-                fieldType = FieldType.date
-            } else if fieldLabel.commonForm.range(of: "link") != nil {
-                fieldType = FieldType.link
-            } else if fieldLabel.commonForm.starts(with: "seq") {
-                fieldType = FieldType.seq
-            } else {
-                fieldType = FieldType.defaultType
-            }
-        }
+    func display() {
+        print("FieldDefinition")
+        fieldLabel.display()
+        print("Field Type String: \(fieldType.typeString)")
     }
-    
 }

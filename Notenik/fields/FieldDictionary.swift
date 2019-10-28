@@ -94,14 +94,14 @@ class FieldDictionary {
     }
     
     /// Add a new field definition to the dictionary, based on the passed field label string
-    func addDef (_ label : String) -> FieldDefinition? {
-        let def = FieldDefinition(label)
+    func addDef (typeCatalog: AllTypes, label: String) -> FieldDefinition? {
+        let def = FieldDefinition(typeCatalog: typeCatalog, label: label)
         return addDef(def)
     }
     
     /// Add a new field definition to the dictionary, based on the passed Field Label
-    func addDef (_ label : FieldLabel) -> FieldDefinition? {
-        let def = FieldDefinition(label: label)
+    func addDef (typeCatalog: AllTypes, label: FieldLabel) -> FieldDefinition? {
+        let def = FieldDefinition(typeCatalog: typeCatalog, label: label)
         return addDef(def)
         
     }
@@ -159,4 +159,5 @@ class FieldDictionary {
         }
         return removeOK
     }
+    
 }

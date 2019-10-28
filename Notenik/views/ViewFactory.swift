@@ -16,27 +16,28 @@ import Cocoa
 class ViewFactory {
     
     static func getEditView(pickLists: ValuePickLists, def: FieldDefinition) -> MacEditView {
-        if def.fieldType == .author {
+        if def.fieldType.typeString == "author" {
             return AuthorView(pickList: pickLists.authorPickList)
-        } else if def.fieldType == .body {
+        } else if def.fieldType.typeString == "body" {
             return BodyView()
-        } else if def.fieldType == .code {
+        } else if def.fieldType.typeString == "code" {
             return CodeView()
-        } else if def.fieldType == .longText {
+        } else if def.fieldType.typeString == "longtext" {
             return LongTextView()
-        } else if def.fieldType == .link {
+        } else if def.fieldType.typeString == "link" {
             return LinkView()
-        } else if def.fieldType == .status {
+        } else if def.fieldType.typeString == "status" {
             return StatusView(config: pickLists.statusConfig)
-        } else if def.fieldType == .date {
+        } else if def.fieldType.typeString == "date" {
             return DateView()
-        } else if def.fieldType == .tags {
+        } else if def.fieldType.typeString == "tags" {
             return TagsView(pickList: pickLists.tagsPickList)
-        } else if def.fieldType == .label  || def.fieldType == .dateAdded {
+        } else if def.fieldType.typeString == "label"
+            || def.fieldType.typeString == "dateadded" {
             return LabelView()
-        } else if def.fieldType == .workType {
+        } else if def.fieldType.typeString == "worktype" {
             return WorkTypeView()
-        } else if def.fieldType == .work {
+        } else if def.fieldType.typeString == "work" {
             return WorkTitleView(pickList: pickLists.workTitlePickList)
         } else {
             return StringView()

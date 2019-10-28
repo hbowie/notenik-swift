@@ -13,36 +13,30 @@ import Foundation
 
 class TitleType: AnyType {
     
-    /// A string identifying this particular field type.
-    var typeString  = "title"
-    
-    /// The proper label typically assigned to fields of this type.
-    var properLabel = "Title"
-    
-    /// The common label typically assigned to fields of this type.
-    var commonLabel = "title"
+    override init() {
+        
+        super.init()
+        
+        /// A string identifying this particular field type.
+        typeString  = "title"
+        
+        /// The proper label typically assigned to fields of this type.
+        properLabel = "Title"
+        
+        /// The common label typically assigned to fields of this type.
+        commonLabel = "title"
+    }
     
     /// A factory method to create a new value of this type with no initial value.
-    func createValue() -> StringValue {
+    override func createValue() -> StringValue {
         return TitleValue()
     }
     
     /// A factory method to create a new value of this type with the given value.
     /// - Parameter str: The value to be used to populate the field with a value.
-    func createValue(_ str: String) -> StringValue {
+    override func createValue(_ str: String) -> StringValue {
         let title = TitleValue(str)
         return title
-    }
-    
-    /// Is this type suitable for a particular field, given its label and type (if any)?
-    /// - Parameter label: The label.
-    /// - Parameter type: The type string (if one is available)
-    func appliesTo(label: FieldLabel, type: String?) -> Bool {
-        if type == nil || type!.count == 0 {
-           return (label.commonForm == commonLabel)
-        } else {
-            return (type! == typeString)
-        }
     }
     
 }

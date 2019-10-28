@@ -13,35 +13,30 @@ import Foundation
 
 class IndexType: AnyType {
     
-    /// A string identifying this particular field type.
-    var typeString  = "index"
-    
-    /// The proper label typically assigned to fields of this type.
-    var properLabel = "Index"
-    
-    /// The common label typically assigned to fields of this type.
-    var commonLabel = "index"
+    override init() {
+
+        super.init()
+        
+        /// A string identifying this particular field type.
+        typeString  = "index"
+        
+        /// The proper label typically assigned to fields of this type.
+        properLabel = "Index"
+        
+        /// The common label typically assigned to fields of this type.
+        commonLabel = "index"
+    }
     
     /// A factory method to create a new value of this type with no initial value.
-    func createValue() -> StringValue {
+    override func createValue() -> StringValue {
         return IndexValue()
     }
     
     /// A factory method to create a new value of this type with the given value.
     /// - Parameter str: The value to be used to populate the field with a value.
-    func createValue(_ str: String) -> StringValue {
+    override func createValue(_ str: String) -> StringValue {
         let index = IndexValue(str)
         return index
     }
     
-    /// Is this type suitable for a particular field, given its label and type (if any)?
-    /// - Parameter label: The label.
-    /// - Parameter type: The type string (if one is available)
-    func appliesTo(label: FieldLabel, type: String?) -> Bool {
-        if type == nil || type!.count == 0 {
-            return (label.commonForm == commonLabel)
-        } else {
-            return (type! == typeString)
-        }
-    }
 }

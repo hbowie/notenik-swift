@@ -26,6 +26,8 @@ class TemplateUtil {
     var webRootURL: URL?
     var webRootFileName = FileName()
     
+    var typeCatalog = AllTypes()
+    
     var workspace: ScriptWorkspace?
     
     var textOutURL: URL?
@@ -90,6 +92,7 @@ class TemplateUtil {
     
     func setWorkspace(_ workspace: ScriptWorkspace) {
         self.workspace = workspace
+        self.typeCatalog = workspace.typeCatalog
     }
     
     /// Open a new template file.

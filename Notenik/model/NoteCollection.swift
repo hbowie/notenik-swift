@@ -21,6 +21,7 @@ class NoteCollection {
     var dict         : FieldDictionary
     var idRule       : NoteIDRule
     var sortParm     : NoteSortParm
+    var typeCatalog =  AllTypes()
     var statusConfig : StatusValueConfig
     /// Preferred file extension for the current collection
     var preferredExt : String = "txt"
@@ -79,7 +80,7 @@ class NoteCollection {
     /// - Returns: A Field Definition for this Label, if the label is valid, otherwise nil.
     func getDef(label: inout FieldLabel) -> FieldDefinition? {
         label.validLabel = false
-        var def : FieldDefinition? = nil
+        var def: FieldDefinition? = nil
         if label.commonForm.count > 48 {
             // Too long
         } else if (label.commonForm == "http"
@@ -93,13 +94,13 @@ class NoteCollection {
         } else if dict.locked && label.commonForm == LabelConstants.dateAddedCommon {
             label.validLabel = true
             dict.unlock()
-            def = dict.addDef(label)
+            def = dict.addDef(typeCatalog: typeCatalog, label: label)
             dict.lock()
         } else if dict.locked {
             // Can't add any additional labels
         } else if label.isTitle || label.isTags || label.isLink || label.isBody || label.isDateAdded {
             label.validLabel = true
-            def = dict.addDef(label)
+            def = dict.addDef(typeCatalog: typeCatalog, label: label)
         } else if noteType == .simple {
             // No other labels allowed for simple notes
         } else if label.isAuthor
@@ -114,12 +115,12 @@ class NoteCollection {
                 || label.isType
                 || label.isWorkTitle {
             label.validLabel = true
-            def = dict.addDef(label)
+            def = dict.addDef(typeCatalog: typeCatalog, label: label)
         } else if noteType == .expanded {
             // No other labels allowed for expanded notes
         } else {
             label.validLabel = true
-            def = dict.addDef(label)
+            def = dict.addDef(typeCatalog: typeCatalog, label: label)
         }
         return def
     }
