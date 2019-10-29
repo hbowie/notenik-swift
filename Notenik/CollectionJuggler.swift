@@ -416,10 +416,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
         let collection = io.openCollection(realm: realm, collectionPath: collectionURL.path)
         if collection == nil {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "CollectionJuggler",
-                              level: .error,
-                              message: "Problems opening the collection at " + collectionURL.path)
+            communicateError("Problems opening the collection at " + collectionURL.path,
+                             alert: true)  
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionJuggler",

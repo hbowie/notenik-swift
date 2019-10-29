@@ -803,6 +803,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         
         editVC!.populateFields(with: newNote!)
         noteTabs!.tabView.selectTabViewItem(at: 1)
+        guard let window = self.window else { return }
+        guard let titleView = editVC?.titleView else { return }
+        window.makeFirstResponder(titleView.view)
     }
     
     /// Duplicate the Selected Note

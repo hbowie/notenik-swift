@@ -34,6 +34,7 @@ class NoteEditViewController: NSViewController {
     var bodyView:    NSTextView!
     var bodyStorage: NSTextStorage!
     
+    var titleView:  MacEditView?
     var dateView:   DateView?
     var recursView: MacEditView?
     var statusView: StatusView?
@@ -114,7 +115,9 @@ class NoteEditViewController: NSViewController {
         let row = [labelView, valueView]
         grid.append(row)
         
-        if label.commonForm == LabelConstants.dateCommon {
+        if label.commonForm == LabelConstants.titleCommon {
+            titleView = editView
+        } else if label.commonForm == LabelConstants.dateCommon {
             dateView = editView as? DateView
         } else if label.commonForm == LabelConstants.recursCommon {
             recursView = editView
