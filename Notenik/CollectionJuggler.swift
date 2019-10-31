@@ -414,6 +414,18 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         } else {
             collectionURL = fileURL.deletingLastPathComponent()
         }
+        
+        // If the collection is already open, then simply bring
+        // that window to the front.
+        for window in windows {
+            if let windowURL = window.io?.collection?.collectionFullPathURL {
+                if windowURL == collectionURL && window.window != nil {
+                    window.window!.makeKeyAndOrderFront(self)
+                    return true
+                }
+            }
+        }
+        
         let collection = io.openCollection(realm: realm, collectionPath: collectionURL.path)
         if collection == nil {
             communicateError("Problems opening the collection at " + collectionURL.path,
