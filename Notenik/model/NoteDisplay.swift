@@ -98,6 +98,12 @@ class NoteDisplay: NSObject {
             code.append(": ")
             code.finishParagraph()
             code.codeBlock(field.value.value)
+        } else if field.def.fieldType.typeString == "longtext" {
+            code.startParagraph()
+            code.append(field.def.fieldLabel.properForm)
+            code.append(": ")
+            code.finishParagraph()
+            code.append(markdown: field.value.value)
         } else {
             code.startParagraph()
             code.append(field.def.fieldLabel.properForm)

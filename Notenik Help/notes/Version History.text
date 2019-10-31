@@ -6,6 +6,28 @@ Tags:   changes, history, log
 
 Body:
 
+### Version 1.7.0 | 31 Oct 2019
+
+#### 1. Markdown Applied to all Long Text fields
+
+Markdown is now used to format all longtext fields as they appear on the Display tab.
+
+
+#### 2. Added Notenik Rate/Review Reminder
+
+Added code to remind users to rate and review Notenik on the Mac App Store. 
+
+
+#### 3. Additional Minor Improvements
+
+Made a few more minor improvements. 
+
+
+#### 4. Internal Refactoring
+
+Made some internal changes to handle field types in a way that will better lend itself to future growth. 
+
+
 ### Version 1.6.0 | 15 Oct 2019
 
 #### 1. Textile Parser Added

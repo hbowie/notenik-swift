@@ -17,5 +17,5 @@ When creating a new Collection, you will be presented with the Collection Prefer
 
 The file extension used for the template file will be used as the file extension for Notes subsequently created within the Collection. 
 
-By specifying the value '<longtext>' (without the quotation marks) as the value for a field in a template file, the user can indicate that a field is to be treated as a long text field, rather than a one-line text field. 
+By specifying the value `<longtext>` as the value for a field in a template file, the user can indicate that a field is to be treated as a long text field, rather than a one-line text field. A longtext field will provide the user with multiple lines for data entry on the Edit tab, and will honor Markdown syntax when formatting for display on the Display tab. 
 

@@ -73,7 +73,14 @@ class StringValue: CustomStringConvertible, Equatable, Comparable {
         case "=":
             set(operand1)
         case "+=", "+":
-            value += operand1
+            var int1 = Int(value)
+            let int2 = Int(operand1)
+            if int1 == nil || int2 == nil {
+                value += operand1
+            } else {
+                int1! += int2!
+                value = "\(int1!)"
+            }
         default:
             Logger.shared.log(subsystem: "values", category: "StringValue", level: .error,
                               message: "Invalid operator of \(opcode) for a String value")
