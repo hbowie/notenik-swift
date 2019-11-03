@@ -112,8 +112,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    @IBAction func menuHelpPowerSurgePubDotCom(_ sender: NSMenuItem) {
-        let url = URL(string: "https://powersurgepub.com")
+    @IBAction func menuHelpRateOnAppStore(_ sender: NSMenuItem) {
+        let url = URL(string: "https://itunes.apple.com/app/id1465997984?action=write-review")
         if url != nil {
             NSWorkspace.shared.open(url!)
         }

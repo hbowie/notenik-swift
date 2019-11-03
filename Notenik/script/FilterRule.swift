@@ -13,7 +13,7 @@ import Foundation
 
 class FilterRule {
     
-    var field:  FieldDefinition!
+    var field:  FieldDefinition?
     var op    = FieldComparisonOperator()
     var to    = ""
     
@@ -38,10 +38,12 @@ class FilterRule {
     }
     
     func logRule() {
-        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-            category: "FilterRule",
-            level: .info,
-            message: "Creating filter rule: \(field.fieldLabel.properForm) \(op) \(to)")
+        if field != nil {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                category: "FilterRule",
+                level: .info,
+                message: "Creating filter rule: \(field!.fieldLabel.properForm) \(op) \(to)")
+        }
     }
     
     func logError(_ msg: String) {

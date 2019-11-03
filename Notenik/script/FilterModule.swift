@@ -59,9 +59,9 @@ class FilterModule {
         for note in workspace.fullList {
             var selected = true
             for rule in workspace.currentRules {
-                var field = note.getField(def: rule.field)
+                var field = note.getField(def: rule.field!)
                 if field == nil {
-                    field = NoteField(def: rule.field, value: "", statusConfig: workspace.collection.statusConfig)
+                    field = NoteField(def: rule.field!, value: "", statusConfig: workspace.collection.statusConfig)
                 }
                 var passed = false
                 if field != nil {
