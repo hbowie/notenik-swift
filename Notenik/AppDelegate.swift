@@ -14,8 +14,10 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    let juggler : CollectionJuggler = CollectionJuggler.shared
+    let juggler: CollectionJuggler = CollectionJuggler.shared
     let logger = Logger.shared
+    var stage = "0"
+    var launchURLs: [URL] = []
     
     var docController: NoteDocumentController!
     var recentDocumentURLs: [URL] = []
@@ -27,27 +29,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationWillFinishLaunching(_ notification: Notification) {
         docController = NoteDocumentController()
+        stage = "1"
+        
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
-        logger.logDestPrint = false
-        logger.logDestUnified = true
-        
         juggler.docController = docController
         recentDocumentURLs = docController.recentDocumentURLs
+        stage = "2"
+        logger.logDestPrint = false
+        logger.logDestUnified = true
         juggler.startup()
+        var successfulOpens = 0
+        if launchURLs.count > 0 {
+            successfulOpens = juggler.open(urls: launchURLs)
+        }
+        if successfulOpens == 0 {
+            juggler.loadInitialCollection()
+        }
+        
     }
     
-    // func application(_ application: NSApplication, open urls: [URL]) {
-    //     print("AppDelegate open urls")
-    // }
+    func application(_ application: NSApplication, open urls: [URL]) {
+        if stage == "1" {
+            launchURLs = urls
+        } else {
+            _ = juggler.open(urls: urls)
+        }
+    }
     
     @IBAction func menuAppPreferences(_ sender: NSMenuItem) {
         if let prefsController = self.prefsStoryboard.instantiateController(withIdentifier: "prefsWC") as? PrefsWindowController {
             prefsController.showWindow(self)
         } else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+            logger.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "AppDelegate",
                               level: .error,
                               message: "Couldn't get a Prefs Window Controller!")
@@ -94,7 +110,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
             logController.showWindow(self)
         } else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+            logger.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "AppDelegate",
                               level: .fault,
                               message: "Couldn't get a Log Window Controller!")
@@ -124,13 +140,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return true
-    }
-
-    /// Attempt to open the passed file
-    func application(_ sender: NSApplication,
-                     openFile filename: String) -> Bool {
-        _ = juggler.openFileWithNewWindow(folderPath: filename, readOnly: false)
         return true
     }
     

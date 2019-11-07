@@ -92,6 +92,33 @@ class FileIO: NotenikIO, RowConsumer {
         return realm
     }
     
+    /// See what sort of path this might be.
+    func checkPathType(path: String) -> NotenikPathType {
+        if FileUtils.isDir(path) {
+            let infoPath = FileUtils.joinPaths(path1: path, path2: FileIO.infoFileName)
+            if fileManager.fileExists(atPath: infoPath)
+                && fileManager.isReadableFile(atPath: infoPath) {
+                return .existing
+            } else {
+                do {
+                    let contents = try fileManager.contentsOfDirectory(atPath: path)
+                    if contents.count == 0 {
+                        logInfo("Empty folder found at \(path)")
+                        return .empty
+                    } else {
+                        return .realm
+                    }
+                } catch {
+                    logInfo("Problems reading contents of folder at \(path)")
+                    return .hopeless
+                }
+            }
+        } else {
+            logInfo("Notenik cannot do anything with this path: \(path)")
+            return .hopeless
+        }
+    }
+    
     /// Open a Collection to be used as an archive for another Collection. This will
     /// be a normal open, if the archive has already been created, or will create
     /// a new Collection, if the Archive is being accessed for the first time.

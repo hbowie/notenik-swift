@@ -38,8 +38,11 @@ class Markedup: CustomStringConvertible {
         return code
     }
     
-    func startDoc(withTitle title: String?, withCSS css: String?) {
+    func flushCode() {
         code = ""
+    }
+    
+    func startDoc(withTitle title: String?, withCSS css: String?) {
         switch format {
         case .htmlDoc:
             writeLine("<!DOCTYPE html>")
@@ -257,6 +260,12 @@ class Markedup: CustomStringConvertible {
         case .markdown:
             break
         }
+    }
+    
+    func paragraph(text: String) {
+        startParagraph()
+        write(text)
+        finishParagraph()
     }
     
     func startParagraph() {
@@ -743,7 +752,7 @@ class Markedup: CustomStringConvertible {
     func writeApostrophe() {
         switch format {
         case .htmlFragment, .htmlDoc:
-            code.append("&#8217;")
+            code.append("&apos;")
         case .markdown:
             code.append("'")
         }

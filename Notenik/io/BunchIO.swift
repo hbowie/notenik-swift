@@ -51,6 +51,11 @@ class BunchIO: NotenikIO, RowConsumer  {
         closeCollection()
     }
     
+    /// See what sort of path this might be.
+    func checkPathType(path: String) -> NotenikPathType {
+        return .hopeless
+    }
+    
     /// Return the number of notes in the current collection.
     ///
     /// - Returns: The number of notes in the current collection

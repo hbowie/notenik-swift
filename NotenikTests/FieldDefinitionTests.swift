@@ -19,8 +19,9 @@ class FieldDefinitionTests: XCTestCase {
     }
 
     func testFieldDefinition() {
-        let def = FieldDefinition("Link")
-        XCTAssertTrue(def.fieldType == FieldType.link)
+        let types = AllTypes()
+        let def = FieldDefinition(typeCatalog: types, label: "Link")
+        XCTAssertTrue(def.fieldType.typeString == "link")
     }
 
     func testPerformanceExample() {

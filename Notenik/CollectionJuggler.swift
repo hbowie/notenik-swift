@@ -43,6 +43,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     var highestWindowNumber = -1
     
     var initialWindow: CollectionWindowController?
+    var initialWindowUsed = false
     
     override private init() {
         super.init()
@@ -58,9 +59,65 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionJuggler",
                               level: .error,
-                              message: "Couldn't get a Log Window Controller! when loading initial collection")
+                              message: "Couldn't get a Log Window Controller! at startup")
         }
-        loadInitialCollection()
+    }
+    
+    /// Find a collection to show in the initial window shown upon application launch.
+    func loadInitialCollection() {
+        
+        // Figure out a good collection to open
+        let io: NotenikIO = FileIO()
+        let realm = io.getDefaultRealm()
+        realm.path = ""
+        var collection: NoteCollection?
+
+        if essentialURL != nil {
+            collection = io.openCollection(realm: realm, collectionPath: essentialURL!.path)
+        }
+
+        if collection == nil && lastURL != nil {
+            collection = io.openCollection(realm: realm, collectionPath: lastURL!.path)
+        }
+        
+        if collection != nil {
+            saveCollectionInfo(collection!)
+        }
+
+        if collection == nil {
+            let path = Bundle.main.resourcePath! + "/notenik-swift-intro"
+            collection = io.openCollection(realm: realm, collectionPath: path)
+        }
+        
+        _ = assignIOtoWindow(io: io)
+    }
+    
+    /// Figure out what to do with a bunch of passed URLs.
+    func open(urls: [URL]) -> Int {
+        let tempIO = FileIO()
+        var successfulOpens = 0
+        for url in urls {
+            let type = tempIO.checkPathType(path: url.path)
+            switch type {
+            case .empty:
+                let ok = newCollection(fileURL: url)
+                if ok {
+                    successfulOpens += 1
+                }
+            case .existing:
+                let ok = openFileWithNewWindow(fileURL: url, readOnly: false)
+                if ok {
+                    successfulOpens += 1
+                }
+            case .hopeless:
+                communicateError("Item to be opened at \(url.path) could not be used",
+                alert: true)
+            case .realm:
+                openParentRealm(parentURL: url)
+                successfulOpens += 1
+            }
+        }
+        return successfulOpens
     }
     
     /// Respond to a user request to create a new collection
@@ -113,17 +170,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         let realmScanner = RealmScanner()
         realmScanner.openRealm(path: parentURL.path)
         let io = realmScanner.realmIO
-        if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
-            windowController.shouldCascadeWindows = true
-            windowController.io = io
-            self.registerWindow(window: windowController)
-            windowController.showWindow(self)
-        } else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "CollectionJuggler",
-                              level: .error,
-                              message: "Couldn't get a Window Controller!")
-        }
+        _ = assignIOtoWindow(io: io)
     }
     
     /// The user has requested us to save the current collection in a new location
@@ -325,18 +372,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         
         saveCollectionInfo(collection)
 
-        if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
-            windowController.shouldCascadeWindows = true
-            windowController.io = io
-            self.registerWindow(window: windowController)
-            windowController.showWindow(self)
-            ok = true
-        } else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "CollectionJuggler",
-                              level: .error,
-                              message: "Couldn't get a Window Controller!")
-        }
+        ok = assignIOtoWindow(io: io)
     }
     
     /// Make the given collection the easily accessible Essential collection
@@ -437,20 +473,33 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                               message: "Collection successfully opened: \(collection!.title)")
             collection!.readOnly = readOnly
             saveCollectionInfo(collection!)
+            openOK = assignIOtoWindow(io: io)
+        }
+        return openOK
+    }
+    
+    /// Assign an Input/Output module to a new or existing window.
+    /// - Parameter io: An I/O module already opened with a Collection.
+    func assignIOtoWindow(io: NotenikIO) -> Bool {
+        var ok = true
+        if initialWindowUsed {
             if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
                 windowController.shouldCascadeWindows = true
                 windowController.io = io
                 self.registerWindow(window: windowController)
                 windowController.showWindow(self)
-                openOK = true
             } else {
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                                   category: "CollectionJuggler",
                                   level: .error,
                                   message: "Couldn't get a Window Controller!")
+                ok = false
             }
+        } else {
+            initialWindow!.io = io
+            initialWindowUsed = true
         }
-        return openOK
+        return ok
     }
     
     /// Register a window so that we can keep track of it. If we've already got the window
@@ -478,35 +527,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         if window.windowNumber == 0 && window.io == nil {
             initialWindow = window
         }
-    }
-    
-    /// Find a collection to show in the initial window shown upon application launch.
-    func loadInitialCollection() {
-        
-        // Figure out a good collection to open
-        let io: NotenikIO = FileIO()
-        let realm = io.getDefaultRealm()
-        realm.path = ""
-        var collection: NoteCollection?
-
-        if essentialURL != nil {
-            collection = io.openCollection(realm: realm, collectionPath: essentialURL!.path)
-        }
-
-        if collection == nil && lastURL != nil {
-            collection = io.openCollection(realm: realm, collectionPath: lastURL!.path)
-        }
-        
-        if collection != nil {
-            saveCollectionInfo(collection!)
-        }
-
-        if collection == nil {
-            let path = Bundle.main.resourcePath! + "/notenik-swift-intro"
-            collection = io.openCollection(realm: realm, collectionPath: path)
-        }
-        
-        initialWindow!.io = io
     }
     
     /// Once we've opened a collection, save some info about it so we can use it later

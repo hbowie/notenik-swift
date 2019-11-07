@@ -17,8 +17,8 @@ class FileUtils {
     ///
     /// - Parameter path: A string containing a path pointing to a file system object.
     /// - Returns: True if the path points to a folder; otherwise false. 
-    static func isDir (_ path : String) -> Bool {
-        var isDirectory : ObjCBool = false
+    static func isDir (_ path: String) -> Bool {
+        var isDirectory: ObjCBool = false
         FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
         return isDirectory.boolValue
     }

@@ -20,3 +20,10 @@ Once a template file is created, suitably named and placed, it will become avail
 
 Selecting a report will then cause the Collection's notes to be merged into the corresponding template file, creating whatever ouput is identified in the template file. 
 
+Two other options appear on the Reports Action drop-down (identified with the gear icon). 
+
+- Generate Report Sample in HTML
+- Generate Report Sample in Markdown
+
+Selecting one of these will then cause Notenik to create a reports folder for the collection, if one does not already exist, and then to create a report template containing all of the Collection's fields in a basic layout. The user may then modify this template in order to further customize the output formatting.  Once the user reloads the Collection, those reports will then become available to run. 
+

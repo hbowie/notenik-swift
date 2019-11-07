@@ -8,15 +8,15 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>nnk</string>
-			</array>
+			<array/>
 			<key>CFBundleTypeName</key>
-			<string>Notenik Info</string>
+			<string>Folder</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>LSHandlerRank</key>
-			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.folder</string>
+			</array>
 			<key>LSTypeIsPackage</key>
 			<integer>0</integer>
 		</dict>
@@ -56,5 +56,16 @@
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeDescription</key>
+			<string>Folder</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.folder</string>
+			<key>UTTypeTagSpecification</key>
+			<dict/>
+		</dict>
+	</array>
 </dict>
 </plist>

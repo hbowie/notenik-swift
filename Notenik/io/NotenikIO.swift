@@ -37,6 +37,9 @@ protocol NotenikIO {
     /// Get the default realm.
     func getDefaultRealm() -> Realm
     
+    /// See what sort of path this might be. 
+    func checkPathType(path: String) -> NotenikPathType
+    
 
     /// Attempt to open the collection at the provided path.
     ///
@@ -229,3 +232,4 @@ protocol NotenikIO {
     /// Create an iterator for the tags nodes.
     func makeTagsNodeIterator() -> TagsNodeIterator
 }
+

@@ -707,6 +707,7 @@ class TemplateUtil {
     
     /// Convert Markdown to HTML
     func convertMarkdownToHTML(_ markdown: String) -> String {
+        markedup.flushCode()
         markedup.startDoc(withTitle: nil, withCSS: nil)
         markedup.append(markdown: markdown)
         markedup.finishDoc()

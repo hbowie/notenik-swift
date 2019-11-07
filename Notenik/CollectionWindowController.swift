@@ -19,6 +19,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     @IBOutlet var searchField: NSSearchField!
     
+    /// The Reports Action Menu.
     @IBOutlet var actionMenu: NSMenu!
     
     @IBOutlet var attachmentsMenu: NSMenu!
@@ -128,12 +129,97 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                 actionMenu.removeItem(at: i)
                 i -= 1
             }
+            
+            let genSampleHTML = NSMenuItem(title: "Generate Report Sample in HTML", action: #selector(genReportTemplateSample), keyEquivalent: "")
+            actionMenu.addItem(genSampleHTML)
+            
+            let genSampleMD = NSMenuItem(title: "Generate Report Sample in Markdown", action: #selector(genReportTemplateSample), keyEquivalent: "")
+            actionMenu.addItem(genSampleMD)
 
             for report in notenikIO!.reports {
                 let title = String(describing: report)
                 let reportItem = NSMenuItem(title: title, action: #selector(runReport), keyEquivalent: "")
                 actionMenu.addItem(reportItem)
             }
+        }
+    }
+    
+    @objc func genReportTemplateSample(_ sender: NSMenuItem) {
+        guard let io = notenikIO else { return }
+        guard let collection = io.collection else { return }
+        guard let reportsFolder = io.reportsFullPath else { return }
+        let dict = collection.dict
+        let fields = dict.list
+        let menuItemTitle = sender.title.lowercased()
+        var fileExt = ""
+        var shortMods = ""
+        var longMods = ""
+        var markup: Markedup!
+        if menuItemTitle.contains("markdown") {
+            fileExt = "md"
+            markup = Markedup(format: .markdown)
+        } else {
+            fileExt = "html"
+            shortMods = "&h"
+            longMods = "&o"
+            markup = Markedup(format: .htmlDoc)
+        }
+        markup.writeLine("<?output \"report.\(fileExt)\"?>")
+        markup.startDoc(withTitle: collection.title, withCSS: nil)
+        markup.heading(level: 1, text: collection.title)
+        markup.writeLine("<?nextrec?>")
+        for field in fields {
+            let proper = field.fieldLabel.properForm
+            let common = field.fieldLabel.commonForm
+            let type = field.fieldType.typeString
+            if common == "title" {
+                markup.heading(level: 2, text: "=$title\(shortMods)$=")
+            } else if common == "body" || type == "longtext" {
+                markup.startParagraph()
+                markup.startStrong()
+                markup.write(proper)
+                markup.write(":")
+                markup.finishStrong()
+                markup.finishParagraph()
+                if fileExt == "md" {
+                    markup.paragraph(text: "=$\(common)\(longMods)$=")
+                } else {
+                    markup.writeLine("=$\(common)\(longMods)$=")
+                }
+            } else {
+                markup.startParagraph()
+                markup.startStrong()
+                markup.write("\(proper):")
+                markup.finishStrong()
+                markup.write(" =$\(common)\(shortMods)$=")
+                markup.finishParagraph()
+            }
+        }
+        markup.writeLine("<?loop?>")
+        markup.finishDoc()
+        
+        _ = FileUtils.ensureFolder(forDir: reportsFolder)
+        let reportsFolderURL = URL(fileURLWithPath: reportsFolder)
+        let sampleURL = reportsFolderURL.appendingPathComponent("report template.\(fileExt)")
+        do {
+            try markup.code.write(to: sampleURL, atomically: false, encoding: .utf8)
+        }
+        catch {
+            communicateError("Error saving sample report to \(sampleURL.path)", alert: true)
+            return
+        }
+        
+        let template = Template()
+        var ok = template.openTemplate(templateURL: sampleURL)
+        if ok {
+            template.supplyData(notesList: io.notesList,
+                                dataSource: collection.collectionFullPath)
+            ok = template.generateOutput()
+            if !ok {
+                communicateError("Problems generating template output", alert: false)
+            }
+        } else {
+            communicateError("Problems opening template file", alert: false)
         }
     }
     
