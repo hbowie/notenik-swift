@@ -105,6 +105,6 @@ class StringConverter {
             strIndex = str.index(strIndex, offsetBy: 1)
             str2Index = str2.index(str2Index, offsetBy: 1)
         }
-        return true
+        return (str2Index >= str2.endIndex)
     }
 }
