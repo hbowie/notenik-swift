@@ -1,0 +1,5 @@
+module	action	modifier	object	value
+input	set		xpltags	false
+input	open	markdown-with-headers		/Users/hbowie/Xcode/Notenik/Test Collections/MD Headers/Markdown with Headers.md
+template	open			/Users/hbowie/Xcode/Notenik/Test Collections/MD Headers/Markdown Headers Test template.html
+template	generate			

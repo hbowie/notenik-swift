@@ -126,6 +126,7 @@ class ScriptViewController: NSViewController {
         } else if command.module == .input && command.action == .open {
             modifierPopUp.addItem(withTitle: "dir")
             modifierPopUp.addItem(withTitle: "file")
+            modifierPopUp.addItem(withTitle: "markdown-with-headers")
             modifierPopUp.addItem(withTitle: "notenik-defined")
             modifierPopUp.addItem(withTitle: "notenik+")
             modifierPopUp.addItem(withTitle: "notenik-general")
