@@ -1034,11 +1034,9 @@ class FileIO: NotenikIO, RowConsumer {
         
         // Make sure we have an open collection available to us
         guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
-        
         // Make sure we have a selected note
         let (noteToDelete, oldPosition) = bunch!.getSelectedNote()
         guard noteToDelete != nil && oldPosition.index >= 0 else { return (nil, NotePosition(index: -1)) }
-        
         let (priorNote, priorPosition) = bunch!.priorNote(oldPosition)
         var nextNote = priorNote
         var nextPosition = priorPosition
@@ -1055,7 +1053,7 @@ class FileIO: NotenikIO, RowConsumer {
             _ = bunch!.firstNote()
         }
         
-        _ = noteToDelete!.fullPath
+        let notePath = noteToDelete!.fullPath
         let noteURL = noteToDelete!.url
         if noteURL != nil {
             for attachment in noteToDelete!.attachments {
@@ -1072,8 +1070,9 @@ class FileIO: NotenikIO, RowConsumer {
                 }
             }
             do {
-                try fileManager.removeItem(at: noteURL!)
+                // try fileManager.removeItem(at: noteURL!)
                 // try fileManager.trashItem(at: noteURL!, resultingItemURL: nil)
+                try fileManager.removeItem(atPath: notePath!)
                 // As of Oct 15, 2019, running on Catalina, trashing an item fails due
                 // to alleged permission errors, while removing an item works without complaint.
             } catch {

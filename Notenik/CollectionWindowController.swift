@@ -935,6 +935,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             }
         }
         if proceed {
+            pendingEdits = false
             let (nextNote, nextPosition) = noteIO.deleteSelectedNote()
             reloadViews()
             if nextNote != nil {
