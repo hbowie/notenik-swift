@@ -12,7 +12,7 @@
 import Foundation
 
 /// The full name assigned to a Note attachment.
-class AttachmentName: Comparable, NSCopying {
+class AttachmentName: Comparable, NSCopying, CustomStringConvertible {
     
     let preferredSeparator = " | "
     
@@ -20,6 +20,11 @@ class AttachmentName: Comparable, NSCopying {
     var separator = " | "
     var suffix = ""
     var ext = ""
+    
+    /// Standard string representation to conform to CustomStringConvertible.
+    var description: String {
+        return fullName
+    }
     
     /// The full name for the attachment, consisting of
     /// prefix, separator, suffix and file extension.

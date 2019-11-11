@@ -63,9 +63,6 @@ class ModWhenChanged {
             }
             let userValue = fieldView.text
             if userValue != noteValue {
-                // print("\(def.fieldLabel) values unequal: ")
-                // print("  Note = \(noteValue)")
-                // print("  User = \(userValue)")
                 let newValue = def.fieldType.createValue(userValue)
                 if field == nil {
                     let newField = NoteField(def: def, statusConfig: statusConfig)
@@ -114,8 +111,6 @@ class ModWhenChanged {
             }
         }
         
-        // print("Overall outcome = \(outcome)")
-        
         // Figure out what we need to do
         switch outcome {
         case .notReady:
@@ -140,6 +135,7 @@ class ModWhenChanged {
                 return (.tryAgain, nil)
             }
         case .deleteAndAdd:
+            modNote.makeFileNameFromTitle()
             let attachmentsOK = io.reattach(from: startingNote, to: modNote)
             if !attachmentsOK {
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik",
