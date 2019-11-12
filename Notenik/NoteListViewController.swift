@@ -142,6 +142,10 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
         tableView.reloadData()
     }
     
+    func setSortDescending(_ descending: Bool) {
+        tableView.reloadData()
+    }
+    
     func addTitleColumn(at desiredIndex: Int) {
         addColumn(title: "Title", strID: "title-column", at: desiredIndex, min: 200, width: 445, max: 1500)
     }

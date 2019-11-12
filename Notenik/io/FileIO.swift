@@ -140,6 +140,7 @@ class FileIO: NotenikIO, RowConsumer {
         guard newOK else { return nil }
         archiveCollection = collection
         archiveCollection!.sortParm = primeCollection.sortParm
+        archiveCollection!.sortDescending = primeCollection.sortDescending
         archiveCollection!.dict = primeCollection.dict
         archiveCollection!.preferredExt = primeCollection.preferredExt
         newOK = newCollection(collection: archiveCollection!)
@@ -191,6 +192,12 @@ class FileIO: NotenikIO, RowConsumer {
                         var nsp: NoteSortParm = sortParm
                         nsp.str = sortParmStr
                         sortParm = nsp
+                        
+                        let sortDescField = infoNote!.getField(label: LabelConstants.sortDescending)
+                        if sortDescField != nil {
+                            let sortDescending = BooleanValue(sortDescField!.value.value)
+                            collection!.sortDescending = sortDescending.isTrue
+                        }
 
                         infoFound = true
                     }
@@ -296,6 +303,7 @@ class FileIO: NotenikIO, RowConsumer {
                               message: "\(notesRead) Notes loaded for the Collection")
             collectionOpen = true
             bunch!.sortParm = collection!.sortParm
+            bunch!.sortDescending = collection!.sortDescending
             if pickLists.tagsPickList.values.count > 0 {
                 AppPrefs.shared.pickLists = pickLists
             }
@@ -595,6 +603,7 @@ class FileIO: NotenikIO, RowConsumer {
         
         collectionOpen = true
         bunch!.sortParm = collection.sortParm
+        bunch!.sortDescending = collection.sortDescending
         
         return ok
     }
@@ -708,6 +717,7 @@ class FileIO: NotenikIO, RowConsumer {
         var str = "Title: " + collection!.title + "\n\n"
         str.append("Link: " + collection!.collectionFullPathURL!.absoluteString + "\n\n")
         str.append("Sort Parm: " + collection!.sortParm.str + "\n\n")
+        str.append("Sort Descending: \(collection!.sortDescending)" + "\n\n")
         str.append("Other Fields Allowed: " + String(collection!.otherFields) + "\n\n")
         
         let filePath = collection!.makeFilePath(fileName: FileIO.infoFileName)
@@ -929,6 +939,19 @@ class FileIO: NotenikIO, RowConsumer {
             if newValue != collection!.sortParm {
                 collection!.sortParm = newValue
                 bunch!.sortParm = newValue
+                _ = saveInfoFile()
+            }
+        }
+    }
+    
+    var sortDescending: Bool {
+        get {
+            return collection!.sortDescending
+        }
+        set {
+            if newValue != collection!.sortDescending {
+                collection!.sortDescending = newValue
+                bunch!.sortDescending = newValue
                 _ = saveInfoFile()
             }
         }

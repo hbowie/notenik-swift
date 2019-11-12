@@ -6,6 +6,34 @@ Tags:   changes, history, log
 
 Body:
 
+### Version 1.9.0 | 11 Nov 2019
+
+#### 1. Added Option to Reverse the Sort
+
+An option has been added to the Sort menu that will allow the user to reverse the current sequence of the list (from ascending to descending, or vice-versa).
+
+
+#### 2. Fixed an Attachments Bug
+
+Attachments were being deleted when the parent Note's title was changed. This has now been corrected. 
+
+
+#### 3. Fixed a Note Delete Bug
+
+A note that was being deleted would sometimes be immediately re-added. This has been corrected. 
+
+
+#### 4. Scripter Can Now Read Markdown Headers
+
+Added a new input format to read a Markdown file and chunk it up into sections, based on its headers. Each resulting row of data will consist of fhe following fields:
+
+* Title - The text content of the header
+* Level - The level of the header (1 - 6)
+* Body - All of the text following the header, up to the next header. 
+
+Note that the resulting data can be used to generate a Table of Contents for the Markdown file, using an appropriately formatted template. 
+
+
 ### Version 1.8.0 | 06 Nov 2019
 
 #### 1. Changed Deployment Target Back to 10.14 to Allow Operation on Mojave

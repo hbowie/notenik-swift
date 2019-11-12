@@ -21,6 +21,7 @@ class NoteCollection {
     var dict         : FieldDictionary
     var idRule       : NoteIDRule
     var sortParm     : NoteSortParm
+    var sortDescending: Bool
     var typeCatalog =  AllTypes()
     var statusConfig : StatusValueConfig
     /// Preferred file extension for the current collection
@@ -38,6 +39,7 @@ class NoteCollection {
         dict = FieldDictionary()
         idRule = NoteIDRule.fromTitle
         sortParm = .title
+        sortDescending = false
         statusConfig = StatusValueConfig()
     }
     

@@ -119,10 +119,18 @@ class Note: Comparable, NSCopying {
     }
     
     static func < (lhs: Note, rhs: Note) -> Bool {
-        if lhs.collection.sortParm == .custom {
-            return compareCustomFields(lhs: lhs, rhs: rhs) < 0
+        if lhs.collection.sortDescending {
+            if lhs.collection.sortParm == .custom {
+                return compareCustomFields(lhs: lhs, rhs: rhs) > 0
+            } else {
+                return lhs.sortKey > rhs.sortKey
+            }
         } else {
-            return lhs.sortKey < rhs.sortKey
+            if lhs.collection.sortParm == .custom {
+                return compareCustomFields(lhs: lhs, rhs: rhs) < 0
+            } else {
+                return lhs.sortKey < rhs.sortKey
+            }
         }
     }
     

@@ -45,6 +45,24 @@ class BunchOfNotes {
         }
     }
     
+    /// Should the list be in descending sequence?
+    var sortDescending: Bool {
+        get {
+            return collection.sortDescending
+        }
+        set {
+            var selectedNote: Note?
+            (selectedNote, _) = getSelectedNote()
+            collection.sortDescending = newValue
+            notesList.sort()
+            if notesList.count == 0 {
+                listIndex = -1
+            } else if listIndex > 0 && selectedNote != nil {
+                (listIndex, _) = searchList(selectedNote!)
+            }
+        }
+    }
+    
     /// Initialize with a Note Collection
     init(collection: NoteCollection) {
         self.collection = collection

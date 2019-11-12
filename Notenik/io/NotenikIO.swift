@@ -103,6 +103,12 @@ protocol NotenikIO {
         set 
     }
     
+    /// Should the list be in descending sequence?
+    var sortDescending: Bool {
+        get
+        set
+    }
+    
     /// Return the number of notes in the current collection.
     ///
     /// - Returns: The number of notes in the current collection

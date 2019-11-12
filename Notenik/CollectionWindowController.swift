@@ -1102,11 +1102,27 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         setSortParm(.author)
     }
     
+    @IBAction func sortReverse(_ sender: NSMenuItem) {
+        guard let io = notenikIO else { return }
+        if io.sortDescending {
+            setSortDescending(false)
+        } else {
+            setSortDescending(true)
+        }
+    }
+    
     func setSortParm(_ sortParm: NoteSortParm) {
         guard var noteIO = notenikIO else { return }
         guard let lister = listVC else { return }
         noteIO.sortParm = sortParm
         lister.setSortParm(sortParm)
+    }
+    
+    func setSortDescending(_ descending: Bool) {
+        guard var noteIO = notenikIO else { return }
+        guard let lister = listVC else { return }
+        noteIO.sortDescending = descending
+        lister.setSortDescending(descending)
     }
     
     @IBAction func displayPrefs(_ sender: Any) {

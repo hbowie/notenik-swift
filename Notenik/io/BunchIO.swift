@@ -87,6 +87,19 @@ class BunchIO: NotenikIO, RowConsumer  {
         }
     }
     
+    /// Should the list be in descending sequence?
+    var sortDescending: Bool {
+        get {
+            return collection!.sortDescending
+        }
+        set {
+            if newValue != collection!.sortDescending {
+                collection!.sortDescending = newValue
+                bunch!.sortDescending = newValue
+            }
+        }
+    }
+    
     /// Open a Collection to be used as an archive for another Collection. This will
     /// be a normal open, if the archive has already been created, or will create
     /// a new Collection, if the Archive is being accessed for the first time.
