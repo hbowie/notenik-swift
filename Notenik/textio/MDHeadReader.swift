@@ -38,26 +38,34 @@ class MDHeadReader: RowImporter {
     ///
     /// - Parameter fileURL: The URL of the file to be read.
     func read(fileURL: URL) {
+        do {
+            let bigString = try String(contentsOf: fileURL, encoding: .utf8)
+            let reader = BigStringReader(bigString)
+            read(lineReader: reader)
+        } catch {
+            logError("Error reading Markdown File from \(fileURL)")
+        }
+    }
+    
+    /// Read the file and break it down into fields and rows, returning each
+    /// to the consumer, one at a time.
+    ///
+    /// - Parameter lineReader: A line reader ready to be opened.
+    func read(lineReader: LineReader) {
         labels.append("Title")
         labels.append("Level")
         labels.append("Body")
         priorLine = nil
-        do {
-            let bigString = try String(contentsOf: fileURL, encoding: .utf8)
-            lineReader = BigStringReader(bigString)
-            lineReader.open()
-            var line = lineReader.readLine()
-            startRow()
-            while line != nil {
-                scanLine(line!)
-                line = lineReader.readLine()
-            }
-            lineReader.close()
-            flushPriorLine()
-            finishRow()
-        } catch {
-            logError("Error reading Delimited Text File from \(fileURL)")
+        lineReader.open()
+        var line = lineReader.readLine()
+        startRow()
+        while line != nil {
+            scanLine(line!)
+            line = lineReader.readLine()
         }
+        lineReader.close()
+        flushPriorLine()
+        finishRow()
     }
     
     func scanLine(_ line: String) {

@@ -79,7 +79,7 @@ class TemplateLine {
             index = text.index(index, offsetBy: 1)
         }
         addToken(start: tokenStart, end: index)
-        command = TemplateCommand(rawValue: String(tokens[0]))
+        command = TemplateCommand(rawValue: String(tokens[0]).lowercased())
         if command != nil {
             switch command! {
             case .loop:

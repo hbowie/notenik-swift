@@ -131,6 +131,7 @@ class ScriptViewController: NSViewController {
             modifierPopUp.addItem(withTitle: "notenik+")
             modifierPopUp.addItem(withTitle: "notenik-general")
             modifierPopUp.addItem(withTitle: "notenik-index")
+            modifierPopUp.addItem(withTitle: "notenik-split-tags")
             modifierPopUp.addItem(withTitle: "xlsx")
         } else if command.module == .filter && command.action == .add {
             modifierPopUp.addItem(withTitle: "eq")

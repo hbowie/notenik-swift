@@ -138,7 +138,6 @@ class TemplateUtil {
         lineReader.close()
     }
     
-    
     /// Open an output file, as requested from an open command.
     ///
     /// - Parameter filePath: The complete path to the desired output file.
@@ -722,6 +721,7 @@ class TemplateUtil {
     
     /// Remove leading and trailing paragraph tags.
     func removeParagraphTags(_ html: String) -> String {
+        guard html.count > 0 else { return html }
         var start = html.startIndex
         var end = html.endIndex
         if html.hasPrefix("<p>") || html.hasPrefix("<P>") {

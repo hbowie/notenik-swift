@@ -97,6 +97,8 @@ class InputModule: RowConsumer {
             openNotenik(openURL: openURL)
         case "notenik-index":
             openNotenikIndex(openURL: openURL)
+        case "notenik-split-tags":
+            openNotenikSplitTags(openURL: openURL)
         case "xlsx":
             openXLSX(openURL: openURL)
         default:
@@ -143,6 +145,14 @@ class InputModule: RowConsumer {
     
     func openNotenikIndex(openURL: URL) {
         let reader = NoteIndexReader()
+        reader.setContext(consumer: self, workspace: workspace)
+        _ = reader.read(fileURL: openURL)
+        logInfo("\(notesInput) rows read from \(openURL.path)")
+    }
+    
+    func openNotenikSplitTags(openURL: URL) {
+        let reader = NoteReader()
+        reader.split = true
         reader.setContext(consumer: self, workspace: workspace)
         _ = reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")

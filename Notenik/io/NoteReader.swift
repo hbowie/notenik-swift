@@ -19,6 +19,8 @@ class NoteReader: RowImporter {
     
     var collection:         NoteCollection?
     
+    var split               = false
+    
     var labels:             [String] = []
     var fields:             [String] = []
     
@@ -54,22 +56,62 @@ class NoteReader: RowImporter {
             return
         }
         
+        // Build the list of labels
+        if split {
+            labels.append(LabelConstants.tag)
+        }
         for def in collection!.dict.dict {
             labels.append(def.value.fieldLabel.properForm)
         }
         
+        // Now read the notes and return fields and rows.
         var (note, position) = io.firstNote()
         while note != nil {
-            fields = []
-            for label in labels {
-                let value = note!.getFieldAsString(label: label)
-                consumer!.consumeField(label: label, value: value)
-                fields.append(value)
+            var tagsWritten = 0
+            if split {
+                for tag in note!.tags.tags {
+                    let splitTag = String(describing: tag)
+                    returnNoteFields(note: note!, splitTag: splitTag)
+                    tagsWritten += 1
+                }
             }
-            consumer!.consumeRow(labels: labels, fields: fields)
+            if tagsWritten == 0 {
+                returnNoteFields(note: note!, splitTag: nil)
+            }
+
             (note, position) = io.nextNote(position)
         }
         io.closeCollection()
+    }
+    
+    func returnNoteFields(note: Note, splitTag: String?) {
+        startRow()
+        for label in labels {
+            if split && label == LabelConstants.tag {
+                if splitTag == nil {
+                    anotherField(label: label, value: "")
+                } else {
+                    anotherField(label: label, value: splitTag!)
+                }
+            } else {
+                let value = note.getFieldAsString(label: label)
+                anotherField(label: label, value: value)
+            }
+        }
+        anotherRow()
+    }
+    
+    func startRow() {
+        fields = []
+    }
+    
+    func anotherField(label: String, value: String) {
+        consumer!.consumeField(label: label, value: value)
+        fields.append(value)
+    }
+    
+    func anotherRow() {
+        consumer!.consumeRow(labels: labels, fields: fields)
     }
     
     /// Send an error message to the log.

@@ -72,10 +72,13 @@ class StringValue: CustomStringConvertible, Equatable, Comparable {
         switch opcode {
         case "=":
             set(operand1)
-        case "+=", "+":
+        case "+=", "+", "++":
             var int1 = Int(value)
             let int2 = Int(operand1)
-            if int1 == nil || int2 == nil {
+            if int1 != nil && opcode == "++" {
+                int1! += 1
+                value = "\(int1!)"
+            } else if int1 == nil || int2 == nil {
                 value += operand1
             } else {
                 int1! += int2!
