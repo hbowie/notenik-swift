@@ -21,6 +21,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// The Reports Action Menu.
     @IBOutlet var actionMenu: NSMenu!
+    let sampleReportTemplateFileName = "sample report template"
     
     @IBOutlet var attachmentsMenu: NSMenu!
     
@@ -124,30 +125,54 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             let (selected, position) = notenikIO!.firstNote()
             select(note: selected, position: position, source: .nav)
             
-            var i = actionMenu.numberOfItems - 1
-            while i > 0 {
-                actionMenu.removeItem(at: i)
-                i -= 1
-            }
-            
-            let genSampleHTML = NSMenuItem(title: "Generate Report Sample in HTML", action: #selector(genReportTemplateSample), keyEquivalent: "")
-            actionMenu.addItem(genSampleHTML)
-            
-            let genSampleMD = NSMenuItem(title: "Generate Report Sample in Markdown", action: #selector(genReportTemplateSample), keyEquivalent: "")
-            actionMenu.addItem(genSampleMD)
-
-            for report in notenikIO!.reports {
-                let title = String(describing: report)
-                let reportItem = NSMenuItem(title: title, action: #selector(runReport), keyEquivalent: "")
-                actionMenu.addItem(reportItem)
-            }
+            buildReportsActionMenu()
         }
     }
     
+    /// Set up the Reports Action Menu in the Toolbar.
+    func buildReportsActionMenu() {
+        
+        // Clear out whatever we had before
+        var i = actionMenu.numberOfItems - 1
+        while i > 0 {
+            actionMenu.removeItem(at: i)
+            i -= 1
+        }
+
+        var genMD = true
+        var genHTML = true
+        
+        for report in notenikIO!.reports {
+            let title = String(describing: report)
+            let reportItem = NSMenuItem(title: title, action: #selector(runReport), keyEquivalent: "")
+            actionMenu.addItem(reportItem)
+            if report.reportName == sampleReportTemplateFileName {
+                if report.reportType == "html" {
+                    genHTML = false
+                } else if report.reportType == "md" {
+                    genMD = false
+                }
+            }
+        }
+        
+        if genHTML {
+            let genSampleHTML = NSMenuItem(title: "Generate Report Sample in HTML", action: #selector(genReportTemplateSample), keyEquivalent: "")
+            actionMenu.addItem(genSampleHTML)
+        }
+        
+        if genMD {
+            let genSampleMD = NSMenuItem(title: "Generate Report Sample in Markdown", action: #selector(genReportTemplateSample), keyEquivalent: "")
+            actionMenu.addItem(genSampleMD)
+        }
+    }
+    
+    /// Generate a sample report template.
+    /// - Parameter sender: The menu item selected by the user.
     @objc func genReportTemplateSample(_ sender: NSMenuItem) {
         guard let io = notenikIO else { return }
         guard let collection = io.collection else { return }
         guard let reportsFolder = io.reportsFullPath else { return }
+        var ok = true
         let dict = collection.dict
         let fields = dict.list
         let menuItemTitle = sender.title.lowercased()
@@ -198,9 +223,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         markup.writeLine("<?loop?>")
         markup.finishDoc()
         
+        // Now let's save the new report. 
         _ = FileUtils.ensureFolder(forDir: reportsFolder)
         let reportsFolderURL = URL(fileURLWithPath: reportsFolder)
-        let sampleURL = reportsFolderURL.appendingPathComponent("report template.\(fileExt)")
+        let sampleURL = reportsFolderURL.appendingPathComponent(sampleReportTemplateFileName + "." + fileExt)
         do {
             try markup.code.write(to: sampleURL, atomically: false, encoding: .utf8)
         }
@@ -209,17 +235,29 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             return
         }
         
-        let template = Template()
-        var ok = template.openTemplate(templateURL: sampleURL)
+        // Now let's rebuild the reports action menu, taking the new report into consideration.
         if ok {
-            template.supplyData(notesList: io.notesList,
-                                dataSource: collection.collectionFullPath)
-            ok = template.generateOutput()
-            if !ok {
-                communicateError("Problems generating template output", alert: false)
+            io.loadReports()
+            buildReportsActionMenu()
+        }
+        
+        // Let the user know that we created the file.
+        var runNow = false
+        if ok {
+            let alert = NSAlert()
+            alert.alertStyle = .informational
+            alert.messageText = "Sample Report Template Created"
+            alert.informativeText = "File created at:\n '\(sampleURL.path)'. \n\nFeel free to rename and edit it to suit your particular needs."
+            alert.addButton(withTitle: "OK")
+            alert.addButton(withTitle: "Run It Now")
+            let response = alert.runModal()
+            if response != .alertFirstButtonReturn {
+                runNow = true
             }
-        } else {
-            communicateError("Problems opening template file", alert: false)
+        }
+        
+        if runNow {
+            _ = runReportWithTemplate(sampleURL)
         }
     }
     
@@ -243,22 +281,39 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                         }
                     }
                 } else {
-                    let template = Template()
                     if noteIO.reportsFullPath != nil {
                         let templateURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
-                        var ok = template.openTemplate(templateURL: templateURL!)
-                        if ok {
-                            template.supplyData(notesList: noteIO.notesList,
-                                                dataSource: noteIO.collection!.collectionFullPath)
-                            ok = template.generateOutput()
-                        }
+                        _ = runReportWithTemplate(templateURL!)
                     }
                 }
             } else {
                 i += 1
             }
         }
-        
+    }
+    
+    /// Generate and display a report created from a template file.
+    func runReportWithTemplate(_ templateURL: URL) -> Bool {
+        guard let io = notenikIO else { return false }
+        guard let collection = io.collection else { return false }
+        let template = Template()
+        var ok = template.openTemplate(templateURL: templateURL)
+        if ok {
+            template.supplyData(notesList: io.notesList,
+                                dataSource: collection.collectionFullPath)
+            ok = template.generateOutput()
+            if ok {
+                let textOutURL = template.util.textOutURL
+                if textOutURL != nil {
+                    NSWorkspace.shared.open(textOutURL!)
+                }
+            } else {
+                communicateError("Problems generating template output", alert: true)
+            }
+        } else {
+            communicateError("Problems opening template file", alert: true)
+        }
+        return ok
     }
 
     override func windowDidLoad() {

@@ -256,6 +256,11 @@ class BunchIO: NotenikIO, RowConsumer  {
         _ = dict.addDef(typeCatalog: types, label: LabelConstants.body)
     }
     
+    /// Load the list of reports available for this collection.
+    func loadReports() {
+        // Nothing to do here. 
+    }
+    
     /// Import Notes from a CSV or tab-delimited file
     ///
     /// - Parameter fileURL: The URL of the file to be imported.

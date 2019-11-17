@@ -1,0 +1,9 @@
+Title:  Test Note 2
+
+Status: 0 - Idea
+
+Seq:    2
+
+Body: 
+
+Yes, it's another note. 

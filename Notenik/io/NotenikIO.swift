@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// Read and write notes from/to some sort of data store. 
 protocol NotenikIO {
     
     /// The currently open collection, if any
@@ -59,6 +60,9 @@ protocol NotenikIO {
     /// Add the default definitions to the Collection's dictionary:
     /// Title, Tags, Link and Body
     func addDefaultDefinitions()
+    
+    /// Load the list of reports available for this collection. 
+    func loadReports()
     
     /// Open a New Collection
     func newCollection(collection: NoteCollection) -> Bool

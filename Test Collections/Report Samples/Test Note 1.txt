@@ -1,0 +1,29 @@
+Title:  Test Note 1
+
+Tags:   test
+
+Link:   https://notenik.net
+
+Status: 0 - Idea
+
+Type:   Any Old
+
+Seq:    1
+
+Date:   16 Nov 2019
+
+Recurs: Daily
+
+Author: Herb Bowie
+
+Index:  Bowie, Herb; 
+
+Code: 
+
+let constant = 1
+
+Teaser: What a note!
+
+Body: 
+
+Yes, it's a note. 

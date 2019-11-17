@@ -46,8 +46,9 @@ class Markedup: CustomStringConvertible {
         switch format {
         case .htmlDoc:
             writeLine("<!DOCTYPE html>")
-            writeLine("<html>")
+            writeLine("<html lang=\"en\">")
             writeLine("<head>")
+            writeLine("<meta charset=\"utf-8\" />")
             if title != nil && title!.count > 0 {
                 writeLine("<title>\(title!)</title>")
             }
