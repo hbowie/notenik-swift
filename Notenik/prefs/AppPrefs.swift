@@ -27,6 +27,10 @@ class AppPrefs {
     let useCountKey     = "use-count"
     let lastVersionPromptedForReviewKey = "last-version-prompted-for-review"
     
+    let favoritesColumnsKey = "favorites-columns"
+    let favoritesRowsKey = "favorites-rows"
+    let favoritesColumnWidthKey = "favorites-column-width"
+    
     var _qd: Bool = false
     
     var _edFS:   Float   = 13.0
@@ -50,6 +54,10 @@ class AppPrefs {
     
     var _lvpfr = ""
     var currentVersion = ""
+    
+    var _favCols = 0
+    var _favRows = 0
+    var _favColWidth = "250px"
     
     var newVersionForReview = false
     
@@ -111,6 +119,20 @@ class AppPrefs {
         
         // Now see if we have a new version for review.
         newVersionForReview = currentVersion > lastVersionPromptedForReview
+        
+        // Get Favorites Defaults
+        _favCols = defaults.integer(forKey: favoritesColumnsKey)
+        _favRows = defaults.integer(forKey: favoritesRowsKey)
+        if _favCols == 0 {
+            _favCols = 4
+        }
+        if _favRows == 0 {
+            _favRows = 32
+        }
+        let favColWidth = defaults.string(forKey: favoritesColumnWidthKey)
+        if favColWidth != nil {
+            _favColWidth = favColWidth!
+        }
     }
     
     var confirmDeletes: Bool {
@@ -269,6 +291,36 @@ class AppPrefs {
         set {
             _lvpfr = newValue
             defaults.set(_lvpfr, forKey: lastVersionPromptedForReviewKey)
+        }
+    }
+    
+    var favoritesColumns: Int {
+        get { return _favCols }
+        set {
+            if newValue > 0 {
+                _favCols = newValue
+                defaults.set(_favCols, forKey: favoritesColumnsKey)
+            }
+        }
+    }
+    
+    var favoritesRows: Int {
+        get { return _favRows }
+        set {
+            if newValue > 0 {
+                _favRows = newValue
+                defaults.set(_favRows, forKey: favoritesRowsKey)
+            }
+        }
+    }
+    
+    var favoritesColumnWidth: String {
+        get { return _favColWidth }
+        set {
+            if newValue.count > 0 {
+                _favColWidth = newValue
+                defaults.set(_favColWidth, forKey: favoritesColumnWidthKey)
+            }
         }
     }
     

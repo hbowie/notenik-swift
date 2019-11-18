@@ -14,8 +14,10 @@ import Cocoa
 /// Write out an HTML page listing all of the user's favorite bookmarks.
 class FavoritesToHTML {
     
-    let maxColumns = 4
-    let maxLines = 32
+    let prefs = AppPrefs.shared
+    
+    var maxColumns = 4
+    var maxLines = 32
     
     var lineCount = 0
     var columnCount = 0
@@ -32,6 +34,8 @@ class FavoritesToHTML {
     
     init() {
         htmlConverter.addHTML()
+        maxColumns = prefs.favoritesColumns
+        maxLines = prefs.favoritesRows
     }
     
     convenience init (noteIO: NotenikIO, outURL: URL) {
@@ -112,7 +116,7 @@ class FavoritesToHTML {
             writeLineToCSS(displayCSS!)
         }
         writeLineToCSS("body { margin-left: 20px; } ")
-        writeLineToCSS(".col-md-3 { display:inline-block; width: 250px; vertical-align: top; }")
+        writeLineToCSS(".column { display:inline-block; width: 250px; vertical-align: top; }")
         writeLineToCSS("h2 { font-weight: 700; margin-top: 10pt; margin-bottom: 4pt; font-size: \(DisplayPrefs.shared.sizePlusUnit!); line-height: normal; }")
         writeLineToCSS("p { font-size: \(DisplayPrefs.shared.sizePlusUnit!); margin-top: 0pt; margin-bottom: 4pt; font-weight: 500; }")
         writeLineToCSS("a:link { text-decoration: none; color: #004080; }")
@@ -135,7 +139,7 @@ class FavoritesToHTML {
         if columnCount >= maxColumns {
             startRow()
         }
-        markedup.startDiv(klass: "col-md-3")
+        markedup.startDiv(klass: "column")
         lineCount = -1
     }
     

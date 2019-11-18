@@ -351,6 +351,8 @@
 		9C8540C222E8F9F20074E349 /* ScriptAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540C122E8F9F20074E349 /* ScriptAction.swift */; };
 		9C8540C322E8F9F20074E349 /* ScriptAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540C122E8F9F20074E349 /* ScriptAction.swift */; };
 		9C8540C422E8F9F20074E349 /* ScriptAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8540C122E8F9F20074E349 /* ScriptAction.swift */; };
+		9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C857C6323830F1600EDB93C /* FavoritesPrefsViewController.swift */; };
+		9C857C6523830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C857C6323830F1600EDB93C /* FavoritesPrefsViewController.swift */; };
 		9C86CF0222C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
 		9C86CF0322C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
 		9C86CF0422C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
@@ -784,6 +786,7 @@
 		9C8540B922E8F3660074E349 /* InputModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputModule.swift; sourceTree = "<group>"; };
 		9C8540BD22E8F4310074E349 /* ScriptWorkspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptWorkspace.swift; sourceTree = "<group>"; };
 		9C8540C122E8F9F20074E349 /* ScriptAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptAction.swift; sourceTree = "<group>"; };
+		9C857C6323830F1600EDB93C /* FavoritesPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPrefsViewController.swift; sourceTree = "<group>"; };
 		9C86CF0122C15A660035A8FA /* IntValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntValue.swift; sourceTree = "<group>"; };
 		9C8DD75622E3EEC400FF56C1 /* Attachment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Attachment.storyboard; sourceTree = "<group>"; };
 		9C8FD8D72216302900F16669 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1231,6 +1234,7 @@
 				9CE32506224D561E0051CA1F /* PrefsWindowController.swift */,
 				9CAD6A5122DFA0B000531D90 /* PrefsTabVC.swift */,
 				9CAD6A4E22DF9ACD00531D90 /* PrefsTabViewController.swift */,
+				9C857C6323830F1600EDB93C /* FavoritesPrefsViewController.swift */,
 				9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */,
 				9CAD6A4822DF806800531D90 /* TagsExportViewController.swift */,
 			);
@@ -1796,6 +1800,7 @@
 				9CB6ECA22364B02D00951820 /* BooleanType.swift in Sources */,
 				9CED74FB23356657003F7F2C /* Sequencer.swift in Sources */,
 				9C8540BE22E8F4310074E349 /* ScriptWorkspace.swift in Sources */,
+				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
 				9C9A6BB522EA603700E1F127 /* SortModule.swift in Sources */,
 				9C60E74121F651E500C332ED /* NoteField.swift in Sources */,
 				9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */,
@@ -2119,6 +2124,7 @@
 				9CC78E6D2283587300640477 /* DisplayPrefsWindowController.swift in Sources */,
 				9C2AE529220A34D400AE8BEE /* NoteDisplayViewController.swift in Sources */,
 				9C60E78221F651E500C332ED /* NoteType.swift in Sources */,
+				9C857C6523830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
 				9C2D40BC22F8C94C0074FCCE /* RowImporter.swift in Sources */,
 				9C1E0C9322E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
 				9C568DEB2322F701005D6B0A /* WorkTitleView.swift in Sources */,
