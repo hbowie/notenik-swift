@@ -1,0 +1,7 @@
+Title:  Fourth Note
+
+Tags:   aaa, bbb.cc, ddd
+
+Body: 
+
+Original tags are aaa, bbb.cc, ddd

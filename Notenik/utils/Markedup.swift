@@ -28,6 +28,9 @@ class Markedup: CustomStringConvertible {
     var listInProgress: Character = " "
     var defInProgress: Character = " "
     
+    var spacesPerIndent = 2
+    var currentIndent = 0
+    
     convenience init (format: MarkedupFormat) {
         self.init()
         self.format = format
@@ -43,6 +46,7 @@ class Markedup: CustomStringConvertible {
     }
     
     func startDoc(withTitle title: String?, withCSS css: String?) {
+        currentIndent = 0
         switch format {
         case .htmlDoc:
             writeLine("<!DOCTYPE html>")
@@ -60,6 +64,15 @@ class Markedup: CustomStringConvertible {
             }
             writeLine("</head>")
             writeLine("<body>")
+        case .netscapeBookmarks:
+            writeLine("<!DOCTYPE NETSCAPE-Bookmark-file-1>")
+            increaseIndent()
+            writeLine("<HTML>")
+            writeLine("<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=UTF-8\">")
+            writeLine("<Title>Bookmarks</Title>")
+            writeLine("<H1>Bookmarks</H1>")
+            writeLine("<DL><p>")
+            increaseIndent()
         default:
             break
         }
@@ -70,6 +83,11 @@ class Markedup: CustomStringConvertible {
         case .htmlDoc:
             writeLine("</body>")
             writeLine("</html>")
+        case .netscapeBookmarks:
+            writeLine("</DL>")
+            decreaseIndent()
+            writeLine("</HTML>")
+            decreaseIndent()
         case .htmlFragment, .markdown:
             break
         }
@@ -97,7 +115,7 @@ class Markedup: CustomStringConvertible {
     
     func startBlockQuote() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             writeLine("<blockquote>")
         default:
             break
@@ -106,7 +124,7 @@ class Markedup: CustomStringConvertible {
     
     func finishBlockQuote() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             writeLine("</blockquote>")
         default:
             break
@@ -115,7 +133,7 @@ class Markedup: CustomStringConvertible {
     
     func startOrderedList(klass: String?) {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("<ol")
             if klass != nil && klass!.count > 0 {
                 code.append(" class=\"\(klass!)\"")
@@ -132,7 +150,7 @@ class Markedup: CustomStringConvertible {
     
     func finishOrderedList() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             writeLine("</ol>")
         default:
             break
@@ -142,7 +160,7 @@ class Markedup: CustomStringConvertible {
     
     func startUnorderedList(klass: String?) {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("<ul")
             if klass != nil && klass!.count > 0 {
                 code.append(" class=\"\(klass!)\"")
@@ -159,7 +177,7 @@ class Markedup: CustomStringConvertible {
     
     func finishUnorderedList() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             writeLine("</ul>")
         default:
             break
@@ -169,7 +187,7 @@ class Markedup: CustomStringConvertible {
     
     func startDefinitionList(klass: String?) {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("<dl")
             if klass != nil && klass!.count > 0 {
                 code.append(" class=\"\(klass!)\"")
@@ -187,7 +205,7 @@ class Markedup: CustomStringConvertible {
     
     func startDefTerm() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("<dt>")
         case .markdown:
             break
@@ -197,7 +215,7 @@ class Markedup: CustomStringConvertible {
     
     func finishDefTerm() {
         switch format {
-        case .htmlDoc, .htmlFragment:
+        case .htmlDoc, .netscapeBookmarks, .htmlFragment:
             code.append("</dt>")
         case .markdown:
             break
@@ -207,7 +225,7 @@ class Markedup: CustomStringConvertible {
     
     func startDefDef() {
         switch format {
-        case .htmlDoc, .htmlFragment:
+        case .htmlDoc, .netscapeBookmarks, .htmlFragment:
             code.append("<dd>")
         case .markdown:
             break
@@ -217,7 +235,7 @@ class Markedup: CustomStringConvertible {
     
     func finishDefDef() {
         switch format {
-        case .htmlDoc, .htmlFragment:
+        case .htmlDoc, .netscapeBookmarks, .htmlFragment:
             code.append("</dd>")
         case .markdown:
             break
@@ -227,7 +245,7 @@ class Markedup: CustomStringConvertible {
     
     func finishDefinitionList() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             writeLine("</dl>")
         default:
             break
@@ -237,7 +255,7 @@ class Markedup: CustomStringConvertible {
     
     func startListItem() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             if code.count > 0 {
                 newLine()
             }
@@ -256,7 +274,7 @@ class Markedup: CustomStringConvertible {
     
     func finishListItem() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("</li>")
         case .markdown:
             break
@@ -271,7 +289,7 @@ class Markedup: CustomStringConvertible {
     
     func startParagraph() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             if code.count > 0 {
                 newLine()
             }
@@ -285,7 +303,7 @@ class Markedup: CustomStringConvertible {
     
     func startParagraph(klass: String?) {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             if code.count > 0 {
                 newLine()
             }
@@ -303,7 +321,7 @@ class Markedup: CustomStringConvertible {
     
     func lineBreak() {
         switch format {
-        case .htmlDoc, .htmlFragment:
+        case .htmlDoc, .netscapeBookmarks, .htmlFragment:
             code.append("<br />")
             newLine()
         case .markdown:
@@ -314,7 +332,7 @@ class Markedup: CustomStringConvertible {
     
     func finishParagraph() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("</p>")
             newLine()
         case .markdown:
@@ -324,7 +342,7 @@ class Markedup: CustomStringConvertible {
     
     func startStrong() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("<strong>")
         case .markdown:
             code.append("**")
@@ -335,7 +353,7 @@ class Markedup: CustomStringConvertible {
     
     func finishStrong() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("</strong>")
         case .markdown:
             code.append("**")
@@ -345,7 +363,7 @@ class Markedup: CustomStringConvertible {
     
     func startEmphasis() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("<em>")
         case .markdown:
             code.append("*")
@@ -355,7 +373,7 @@ class Markedup: CustomStringConvertible {
     
     func finishEmphasis() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("</em>")
         case .markdown:
             code.append("*")
@@ -365,7 +383,7 @@ class Markedup: CustomStringConvertible {
     
     func startItalics() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("<i>")
         case .markdown:
             code.append("*")
@@ -375,7 +393,7 @@ class Markedup: CustomStringConvertible {
     
     func finishItalics() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("</i>")
         case .markdown:
             code.append("*")
@@ -385,7 +403,7 @@ class Markedup: CustomStringConvertible {
     
     func startCite() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("<cite>")
         case .markdown:
             code.append("*")
@@ -394,7 +412,7 @@ class Markedup: CustomStringConvertible {
     
     func finishCite() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("</cite>")
         case .markdown:
             code.append("*")
@@ -403,7 +421,7 @@ class Markedup: CustomStringConvertible {
     
     func heading(level: Int, text: String) {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             writeLine("<h\(level)>\(text)</h\(level)>")
         case .markdown:
             writeLine(String(repeating: "#", count: level) + " " + text)
@@ -412,7 +430,7 @@ class Markedup: CustomStringConvertible {
     
     func startHeading(level: Int) {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             write("<h\(level)>")
         case .markdown:
             write(String(repeating: "#", count: level) + " ")
@@ -421,7 +439,7 @@ class Markedup: CustomStringConvertible {
     
     func finishHeading(level: Int) {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             writeLine("</h\(level)>")
         case .markdown:
             newLine()
@@ -430,7 +448,7 @@ class Markedup: CustomStringConvertible {
     
     func link(text: String, path: String) {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("<a href=\"" + path + "\">" + text + "</a>")
         case .markdown:
             code.append("[" + text + "](" + path + ")")
@@ -439,7 +457,7 @@ class Markedup: CustomStringConvertible {
     
     func startLink(path: String) {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("<a href=\"" + path + "\">")
         case .markdown:
             code.append("[")
@@ -448,7 +466,7 @@ class Markedup: CustomStringConvertible {
     
     func finishLink() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("</a>")
         case .markdown:
             break
@@ -457,7 +475,7 @@ class Markedup: CustomStringConvertible {
     
     func horizontalRule() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("<hr>")
         case .markdown:
             newLine()
@@ -468,7 +486,7 @@ class Markedup: CustomStringConvertible {
     
     func codeBlock(_ block: String) {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             writeLine("<pre><code>")
             writeLine(block)
             writeLine("</code></pre>")
@@ -503,7 +521,7 @@ class Markedup: CustomStringConvertible {
     
     func leftDoubleQuote() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("&#8220;")
         case .markdown:
             code.append("\"")
@@ -512,7 +530,7 @@ class Markedup: CustomStringConvertible {
     
     func rightDoubleQuote() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("&#8221;")
         case .markdown:
             code.append("\"")
@@ -521,7 +539,7 @@ class Markedup: CustomStringConvertible {
     
     func leftSingleQuote() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("&#8216;")
         case .markdown:
             code.append("'")
@@ -530,7 +548,7 @@ class Markedup: CustomStringConvertible {
     
     func rightSingleQuote() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("&#8217;")
         case .markdown:
             code.append("'")
@@ -545,9 +563,25 @@ class Markedup: CustomStringConvertible {
         writeEmDash()
     }
     
+    func increaseIndent() {
+        currentIndent += spacesPerIndent
+    }
+    
+    func decreaseIndent() {
+        currentIndent -= spacesPerIndent
+        if currentIndent < 0 {
+            currentIndent = 0
+        }
+    }
+    
     func writeLine(_ text: String) {
+        indent()
         write(text)
         newLine()
+    }
+    
+    func indent() {
+        write(String(repeating: " ", count: currentIndent))
     }
     
     func write(_ text: String) {
@@ -568,7 +602,7 @@ class Markedup: CustomStringConvertible {
     
     func append(markdown: String) {
         switch format {
-        case.htmlFragment, .htmlDoc:
+        case.htmlFragment, .htmlDoc, .netscapeBookmarks:
             let down = Down(markdownString: markdown)
             var html = ""
             do {
@@ -704,7 +738,7 @@ class Markedup: CustomStringConvertible {
     /// Write out an en dash
     func writeEnDash() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("&#8211;")
         case .markdown:
             code.append("-")
@@ -715,7 +749,7 @@ class Markedup: CustomStringConvertible {
     
     func writeEmDash() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("&#8212;")
         case .markdown:
             code.append("--")
@@ -726,7 +760,7 @@ class Markedup: CustomStringConvertible {
     
     func ellipsis() {
         switch format {
-        case .htmlDoc, .htmlFragment:
+        case .htmlDoc, .netscapeBookmarks, .htmlFragment:
             code.append("&#8230;")
         case .markdown:
             code.append("...")
@@ -735,7 +769,7 @@ class Markedup: CustomStringConvertible {
     
     func writeDoubleQuote() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             if startingQuote {
                 code.append("&#8220;")
                 startingQuote = false
@@ -752,7 +786,7 @@ class Markedup: CustomStringConvertible {
     
     func writeApostrophe() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("&apos;")
         case .markdown:
             code.append("'")
@@ -761,7 +795,7 @@ class Markedup: CustomStringConvertible {
     
     func writeSingleQuote() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             if startingQuote {
                 code.append("&#8216;")
                 startingQuote = false
@@ -778,7 +812,7 @@ class Markedup: CustomStringConvertible {
     
     func writeAmpersand() {
         switch format {
-        case .htmlFragment, .htmlDoc:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("&amp;")
         case .markdown:
             code.append("&")

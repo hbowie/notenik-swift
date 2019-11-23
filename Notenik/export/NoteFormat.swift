@@ -15,4 +15,5 @@ enum NoteFormat {
     case notenik
     case commaSeparated
     case tabDelimited
+    case bookmarks
 }

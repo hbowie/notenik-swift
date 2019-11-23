@@ -1,0 +1,7 @@
+Title:  Third Note
+
+Tags:   bbb.cc
+
+Body: 
+
+Note with tags of bbb.cc

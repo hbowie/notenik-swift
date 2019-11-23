@@ -1,0 +1,7 @@
+Title:  Second Note
+
+Tags:   aaa
+
+Body: 
+
+Original tags are aaa. 

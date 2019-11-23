@@ -58,6 +58,11 @@ class FavoritesPrefsViewController: NSViewController, PrefsTabVC {
         saveUserInput()
     }
     
+    @IBAction func favoritesPrefsOK(_ sender: Any) {
+        saveUserInput()
+        self.view.window!.close()
+    }
+    
     func saveUserInput() {
         prefs.favoritesColumnWidth = columnWidth.stringValue
     }

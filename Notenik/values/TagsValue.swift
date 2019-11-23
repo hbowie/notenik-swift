@@ -72,6 +72,11 @@ class TagsValue: StringValue {
     /// Sort the tags alphabetically
     func sort() {
         tags.sort { $0.description < $1.description }
+        removeDuplicates()
+        calcValue()
+    }
+    
+    func removeDuplicates() {
         var i = 0
         var j = 1
         while j < tags.count {
@@ -82,6 +87,9 @@ class TagsValue: StringValue {
                 j += 1
             }
         }
+    }
+    
+    func calcValue() {
         value = ""
         var x = 0
         for tag in tags {

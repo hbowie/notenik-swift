@@ -18,6 +18,7 @@ class FavoritesToHTML {
     
     var maxColumns = 4
     var maxLines = 32
+    var columnWidth = "250px"
     
     var lineCount = 0
     var columnCount = 0
@@ -36,6 +37,7 @@ class FavoritesToHTML {
         htmlConverter.addHTML()
         maxColumns = prefs.favoritesColumns
         maxLines = prefs.favoritesRows
+        columnWidth = prefs.favoritesColumnWidth
     }
     
     convenience init (noteIO: NotenikIO, outURL: URL) {
@@ -116,7 +118,7 @@ class FavoritesToHTML {
             writeLineToCSS(displayCSS!)
         }
         writeLineToCSS("body { margin-left: 20px; } ")
-        writeLineToCSS(".column { display:inline-block; width: 250px; vertical-align: top; }")
+        writeLineToCSS(".column { display:inline-block; width: \(columnWidth); vertical-align: top; }")
         writeLineToCSS("h2 { font-weight: 700; margin-top: 10pt; margin-bottom: 4pt; font-size: \(DisplayPrefs.shared.sizePlusUnit!); line-height: normal; }")
         writeLineToCSS("p { font-size: \(DisplayPrefs.shared.sizePlusUnit!); margin-top: 0pt; margin-bottom: 4pt; font-weight: 500; }")
         writeLineToCSS("a:link { text-decoration: none; color: #004080; }")

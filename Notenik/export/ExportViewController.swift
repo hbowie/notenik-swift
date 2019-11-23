@@ -18,10 +18,13 @@ class ExportViewController: NSViewController {
     
     let commaSep = "Comma-Separated"
     let tabDelim = "Tab-Delimited"
+    let bookmarks = "Netscape Bookmark File"
     
     let csv = "csv"
     let tab = "tab"
     let txt = "txt"
+    let htm = "htm"
+    let html = "html"
     
     @IBOutlet var formatPopup: NSPopUpButton!
     @IBOutlet var fileExtCombo: NSComboBox!
@@ -36,12 +39,15 @@ class ExportViewController: NSViewController {
         formatPopup.removeAllItems()
         formatPopup.addItem(withTitle: commaSep)
         formatPopup.addItem(withTitle: tabDelim)
+        formatPopup.addItem(withTitle: bookmarks)
         formatPopup.selectItem(at: 0)
         
         fileExtCombo.removeAllItems()
         fileExtCombo.addItem(withObjectValue: csv)
         fileExtCombo.addItem(withObjectValue: tab)
         fileExtCombo.addItem(withObjectValue: txt)
+        fileExtCombo.addItem(withObjectValue: htm)
+        fileExtCombo.addItem(withObjectValue: html)
         fileExtCombo.selectItem(at: 0)
     }
     
@@ -51,6 +57,9 @@ class ExportViewController: NSViewController {
                 fileExtCombo.selectItem(withObjectValue: csv)
             } else if selectedFormat.title == tabDelim {
                 fileExtCombo.selectItem(withObjectValue: txt)
+            } else if selectedFormat.title == bookmarks {
+                fileExtCombo.selectItem(withObjectValue: htm)
+                splitTagsCheckBox.state = .on
             }
         }
     }
@@ -68,6 +77,8 @@ class ExportViewController: NSViewController {
         if formatPopup.selectedItem != nil {
             if formatPopup.selectedItem!.title == tabDelim {
                 format = .tabDelimited
+            } else if formatPopup.selectedItem!.title == bookmarks {
+                format = .bookmarks
             }
         }
         

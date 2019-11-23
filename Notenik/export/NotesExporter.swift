@@ -26,6 +26,7 @@ class NotesExporter {
     var destination: URL!
     
     var delimWriter: DelimitedWriter!
+    var markup: Markedup!
     
     var authorDef = false
     var workDef = false
@@ -33,11 +34,13 @@ class NotesExporter {
     var notesExported = 0
     var tagsWritten = 0
     
+    /// Initialize the Exporter.
     init() {
         tagsToSelect = TagsValue(appPrefs.tagsToSelect)
         tagsToSuppress = TagsValue(appPrefs.tagsToSuppress)
     }
     
+    /// Export the Notes to one of several possible output formats.
     func export(noteIO: NotenikIO,
                        format: NoteFormat,
                        useTagsExportPrefs: Bool,
@@ -48,6 +51,9 @@ class NotesExporter {
         self.noteIO = noteIO
         self.format = format
         self.split = split
+        if format == .bookmarks {
+            self.split = true
+        }
         self.webExt = addWebExtensions
         self.destination = destination
         
@@ -72,29 +78,10 @@ class NotesExporter {
         open()
         notesExported = 0
         
-        // Now export each Note
-        var (nextNote, position) = noteIO.firstNote()
-        while nextNote != nil {
-            let note = nextNote!
-            
-            // Let's see if the next Note meets Tags Selection Criteria
-            var noteSelected = true
-            if tagsToSelect.tags.count > 0 {
-                noteSelected = false
-                for noteTag in note.tags.tags {
-                    for selTag in tagsToSelect.tags {
-                        if noteTag == selTag {
-                            noteSelected = true
-                        }
-                    }
-                }
-            }
-            
-            if noteSelected {
-                exportSelectedNote(note)
-            }
-            
-            (nextNote, position) = noteIO.nextNote(position)
+        if format == .bookmarks {
+            iterateOverTags(io: noteIO)
+        } else {
+            iterateOverNotes(noteIO: noteIO)
         }
         
         // Now close the writer, which is when the write to disk happens
@@ -114,6 +101,9 @@ class NotesExporter {
         case .tabDelimited, .commaSeparated:
             delimWriter = DelimitedWriter(destination: destination, format: format)
             delimOpen()
+        case .bookmarks:
+            markup = Markedup(format: .netscapeBookmarks)
+            markup.startDoc(withTitle: "Bookmarks", withCSS: nil)
         default:
             break
         }
@@ -149,6 +139,33 @@ class NotesExporter {
         
         // Finish up the heading line
         delimWriter.endLine()
+    }
+    
+    func iterateOverNotes(noteIO: NotenikIO) {
+        // Now export each Note
+        var (nextNote, position) = noteIO.firstNote()
+        while nextNote != nil {
+            let note = nextNote!
+            
+            // Let's see if the next Note meets Tags Selection Criteria
+            var noteSelected = true
+            if tagsToSelect.tags.count > 0 {
+                noteSelected = false
+                for noteTag in note.tags.tags {
+                    for selTag in tagsToSelect.tags {
+                        if noteTag == selTag {
+                            noteSelected = true
+                        }
+                    }
+                }
+            }
+            
+            if noteSelected {
+                exportSelectedNote(note)
+            }
+            
+            (nextNote, position) = noteIO.nextNote(position)
+        }
     }
     
     /// Export a Note that has met the selection criteria. 
@@ -282,6 +299,8 @@ class NotesExporter {
             return delimClose()
         case .commaSeparated:
             return delimClose()
+        case .bookmarks:
+            return markupClose()
         default:
             break
         }
@@ -291,6 +310,50 @@ class NotesExporter {
     /// Close the Delimited Writer
     func delimClose() -> Bool {
         return delimWriter.close()
+    }
+    
+    func iterateOverTags(io: NotenikIO) {
+        var depth = 0
+        let iterator = io.makeTagsNodeIterator()
+        var tagsNode = iterator.next()
+        while tagsNode != nil {
+            while depth > iterator.depth {
+                markup.decreaseIndent()
+                markup.writeLine("</DL><p>")
+                depth -= 1
+            }
+            if tagsNode!.type == .tag {
+                markup.writeLine("<DT><H3 FOLDED>\(tagsNode!.tag!)</H3>")
+                markup.writeLine("<DL><p>")
+                markup.increaseIndent()
+            } else if tagsNode!.type == .note {
+                guard let note = tagsNode!.note else { break }
+                markup.writeLine("<DT><A HREF=\"\(note.link.value)\">\(note.title.value)</A>")
+                notesExported += 1
+            }
+            depth = iterator.depth
+            tagsNode = iterator.next()
+        }
+        while depth > iterator.depth {
+            markup.decreaseIndent()
+            markup.writeLine("</DL><p>")
+            depth -= 1
+        }
+    }
+    
+    // Close the markup writer.
+    func markupClose() -> Bool {
+        markup.finishDoc()
+        do {
+            try markup.code.write(to: destination, atomically: true, encoding: .utf8)
+        } catch {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "NotesExporter",
+                              level: .error,
+                              message: "Problem writing bookmarks file to disk!")
+            return false
+        }
+        return true
     }
     
     /// Log a normal message

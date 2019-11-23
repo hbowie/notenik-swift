@@ -40,6 +40,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     let displayPrefsStoryboard:    NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
     let exportStoryboard:          NSStoryboard = NSStoryboard(name: "Export", bundle: nil)
     let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
+    let tagsMassChangeStoryboard:  NSStoryboard = NSStoryboard(name: "TagsMassChange", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -450,9 +451,87 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             (note, position) = noteIO.nextNote(position)
         }
         finishBatchOperation()
+        reportNumberOfNotesUpdated(updated)
+    }
+    
+    /// The user has requested a chance to make mass changes to tags in  this Collection. 
+    @IBAction func tagsMassChange(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        if let tagsMassChangeController = self.tagsMassChangeStoryboard.instantiateController(withIdentifier: "tagsMassChangeWC") as? TagsMassChangeWindowController {
+            tagsMassChangeController.showWindow(self)
+            tagsMassChangeController.passCollectionInfo(io: noteIO, collectionWC: self)
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Tags Mass Change Window Controller!")
+        }
+    }
+    
+    func tagsMassChangeNow(from: String, to: String, vc: TagsMassChangeViewController) {
+        guard from.count > 0 else {
+            vc.window!.close()
+            return
+        }
+        guard let noteIO = guardForCollectionAction() else {
+            vc.window!.close()
+            return
+        }
+        logInfo(msg: "Changing tags from '\(from)' to '\(to)'")
+        let fromTags = TagsValue(from)
+        let toTags = TagsValue(to)
+        
+        var (note, position) = noteIO.firstNote()
+        var updated = 0
+        while note != nil {
+            if note!.hasTags() {
+                let newTags = TagsValue()
+                var matchedTags = 0
+                for noteTag in note!.tags.tags {
+                    var matchFound = false
+                    for fromTag in fromTags.tags {
+                        if fromTag == noteTag {
+                            matchFound = true
+                            break
+                        }
+                    }
+                    if matchFound {
+                        matchedTags += 1
+                    } else {
+                        newTags.tags.append(noteTag)
+                    }
+                }
+                if matchedTags == fromTags.tags.count {
+                    updated += 1
+                    for toTag in toTags.tags {
+                        newTags.tags.append(toTag)
+                    }
+                    newTags.sort()
+                    let modNote = note!.copy() as! Note
+                    _ = modNote.setTags(newTags.value)
+                    _ = noteIO.modNote(oldNote: note!, newNote: modNote)
+                }
+            }
+            (note, position) = noteIO.nextNote(position)
+        }
+        vc.window!.close()
+        finishBatchOperation()
+        logInfo(msg: "Notes with tags changed = \(updated)")
+        reportNumberOfNotesUpdated(updated)
+    }
+    
+    func reportNumberOfNotesUpdated(_ updated: Int) {
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = "\(updated) Notes were updated"
+        if updated == 0 {
+            alert.messageText = "No Notes were updated"
+        } else if updated == 1 {
+            alert.messageText = "1 Note was updated"
+        } else {
+            alert.messageText = "\(updated) Notes were updated"
+        }
         alert.addButton(withTitle: "OK")
         let _ = alert.runModal()
     }
@@ -1100,9 +1179,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// Launch a Note's Link
     @IBAction func launchLink(_ sender: Any) {
-        guard let noteIO = notenikIO else { return }
-        let (note, _) = noteIO.getSelectedNote()
-        guard let noteToUse = note else { return }
+        let (_, sel) = guardForNoteAction()
+        guard let noteToUse = sel else { return }
         let possibleURL = noteToUse.linkAsURL
         guard let url = possibleURL else { return }
         var urlPointsToCollection = false
@@ -1125,7 +1203,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         } else {
             NSWorkspace.shared.open(url)
         }
-
     }
     
     func launchScript(fileURL: URL) {
@@ -1279,15 +1356,12 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     /// Import additional notes from a comma- or tab-separated text file.
     @IBAction func importDelimited(_ sender: Any) {
         
-        guard io != nil && io!.collectionOpen else { return }
-        
-        let outcome = modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        guard let noteIO = guardForCollectionAction() else { return }
         
         // Ask the user for a location on disk
         let openPanel = NSOpenPanel();
         openPanel.title = "Open an input tab- or comma-separated text file"
-        let parent = io!.collection!.collectionFullPathURL!.deletingLastPathComponent()
+        let parent = noteIO.collection!.collectionFullPathURL!.deletingLastPathComponent()
         openPanel.directoryURL = parent
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
@@ -1297,14 +1371,14 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         openPanel.allowsMultipleSelection = false
         openPanel.begin { (result) -> Void  in
             if result == .OK {
-                self.importDelimitedFromURL(openPanel.url!)
+                self.importDelimitedFromURL(openPanel.url!, noteIO: noteIO)
             }
         }
     }
     
-    func importDelimitedFromURL(_ fileURL: URL) {
+    func importDelimitedFromURL(_ fileURL: URL, noteIO: NotenikIO) {
         let importer = DelimitedReader()
-        let imports = self.io!.importRows(importer: importer, fileURL: fileURL)
+        let imports = noteIO.importRows(importer: importer, fileURL: fileURL)
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionWindowController",
                           level: .info,
@@ -1314,9 +1388,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         alert.messageText = "Imported \(imports) notes from \(fileURL.path)"
         alert.addButton(withTitle: "OK")
         _ = alert.runModal()
-        self.reloadViews()
-        let (note, position) = self.io!.firstNote()
-        self.select(note: note, position: position, source: .nav)
+        editVC!.io = noteIO
+        finishBatchOperation()
     }
     
     @IBAction func importXLSX(_ sender: Any) {
@@ -1356,9 +1429,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         alert.messageText = "Imported \(imports) notes from \(fileURL.path)"
         alert.addButton(withTitle: "OK")
         _ = alert.runModal()
-        self.reloadViews()
-        let (note, position) = self.io!.firstNote()
-        self.select(note: note, position: position, source: .nav)
+        editVC!.io = noteIO
+        finishBatchOperation()
     }
     
     /// Import the notes from another Notenik Collection
@@ -1411,6 +1483,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let ok = imported > 0
         informUserOfImportExportResults(operation: "import", ok: ok, numberOfNotes: imported, path: importURL.path)
         
+        editVC!.io = noteIO
         finishBatchOperation()
     }
     
