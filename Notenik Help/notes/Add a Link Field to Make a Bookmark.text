@@ -9,7 +9,7 @@ Date Added: 2017-10-18 13:48:49
 Body: 
 
 A Link Field within Notenik is intended to hold a URL: a hyperlink to a location on the Web (or to a local file, if you'd prefer to use it that way).
-You can easily Launch a link from within Notenik by clicking on the Launch Link button in the Toolbar. 
+You can easily Launch a link from within Notenik by clicking on the Launch Link button in the Toolbar, or by selecting Launch Link under the Note menu, or by using the keyboard shortcut CMD-L. 
 
 Adding a Link to a Note doesn't necessarily reduce the Note to a simple Bookmark, but this is certainly one way to use a Collection of Notes. 
 
