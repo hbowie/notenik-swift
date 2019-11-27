@@ -54,6 +54,83 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     var newNote: Note?
     var modInProgress = false
     
+    /// Copy the selected note to the system clipboard.
+    @IBAction func copy(_ sender: AnyObject?) {
+        let (_, sel) = guardForNoteAction()
+        guard let selectedNote = sel else { return }
+        let maker = NoteLineMaker()
+        let _ = maker.putNote(selectedNote)
+        var str = ""
+        if let writer = maker.writer as? BigStringWriter {
+            str = writer.bigString
+        }
+        let board = NSPasteboard.general
+        board.clearContents()
+        board.setString(str, forType: NSPasteboard.PasteboardType.string)
+    }
+    
+    /// Copy the selected note to the system clipboard and then
+    /// attempt to delete the note.
+    @IBAction func cut(_ sender: AnyObject?) {
+        let (_, sel) = guardForNoteAction()
+        guard let selectedNote = sel else { return }
+        let maker = NoteLineMaker()
+        let _ = maker.putNote(selectedNote)
+        var str = ""
+        if let writer = maker.writer as? BigStringWriter {
+            str = writer.bigString
+        }
+        let board = NSPasteboard.general
+        board.clearContents()
+        board.setString(str, forType: NSPasteboard.PasteboardType.string)
+        if str.count > 0 {
+            deleteNote(sender ?? self)
+        }
+    }
+    
+    /// Paste the passed notes found in the system clipboard.
+    @IBAction func paste(_ sender: AnyObject?) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        let board = NSPasteboard.general
+        guard let items = board.pasteboardItems else { return }
+        var notesAdded = 0
+        var firstNotePasted: Note?
+        for item in items {
+            let str = item.string(forType: NSPasteboard.PasteboardType.string)
+            if str != nil && str!.count > 0 {
+                let reader = BigStringReader(str!)
+                let parser = NoteLineParser(collection: collection, lineReader: reader)
+                notesAdded += 1
+                let note = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)")
+                if note.hasTitle() {
+                    let originalTitle = note.title.value
+                    var keyFound = true
+                    var dupCount = 1
+                    while keyFound {
+                        let id = note.noteID
+                        let existingNote = noteIO.getNote(forID: id)
+                        if existingNote != nil {
+                            dupCount += 1
+                            _ = note.setTitle("\(originalTitle) \(dupCount)")
+                            keyFound = true
+                        } else {
+                            keyFound = false
+                        }
+                    }
+                    let (pastedNote, _) = noteIO.addNote(newNote: note)
+                    if pastedNote != nil && firstNotePasted == nil {
+                        firstNotePasted = pastedNote
+                    }
+                } // End if we got a good note out of the deal
+            } // End if we found a good string
+        } // end for each item
+        finishBatchOperation()
+        if firstNotePasted != nil {
+            select(note: firstNotePasted, position: nil, source: .nav)
+        }
+    } // end of paste function
+    
     var splitViewController: NoteSplitViewController?
     
         var collectionItem: NSSplitViewItem?

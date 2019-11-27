@@ -39,7 +39,7 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()        
     }
     
     override func viewDidAppear() {
