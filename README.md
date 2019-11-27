@@ -1,6 +1,5 @@
 Notenik for Swift
 -----------------
 
-This project is a redevelopment of the Notenik application in Swift. Initial target deployment is macOS. Still very much a work in progress, but version 1.0.0 was released to the Mac App Store on June 3, 2019. 
+This is a note-taking application written in Swift. The initial platform is macOS. The executable Notenik application is available from the Mac App Store. Complete documentation is available at [Notenik.net](https://notenik.net), and is maintaned in a separate [GitHub project](https://github.com/hbowie/notenik-project). 
 
-See [Notenik.net](https://notenik.net) for further info. 
