@@ -32,12 +32,18 @@ class FavoritesToHTML {
     
     let htmlConverter = StringConverter()
     
+    var favoritesWord = "favorites"
+    var favoritesCap = "Favorites"
     
     init() {
         htmlConverter.addHTML()
         maxColumns = prefs.favoritesColumns
         maxLines = prefs.favoritesRows
         columnWidth = prefs.favoritesColumnWidth
+        if !AppPrefs.shared.americanEnglish {
+            favoritesWord = "favourites"
+            favoritesCap = "Favourites"
+        }
     }
     
     convenience init (noteIO: NotenikIO, outURL: URL) {
@@ -53,7 +59,7 @@ class FavoritesToHTML {
         guard let url = outURL else { return }
         
         buildCSS()
-        markedup.startDoc(withTitle: "Bookmark Favorites", withCSS: css)
+        markedup.startDoc(withTitle: "Bookmark \(favoritesCap)", withCSS: css)
         markedup.startDiv(klass: "container")
         let iterator = io.makeTagsNodeIterator()
         var tagsNode = iterator.next()
@@ -65,7 +71,7 @@ class FavoritesToHTML {
         var favoritesCount = 0
         while tagsNode != nil {
             if tagsNode!.type == .tag {
-                if tagsNode!.tag!.lowercased() == "favorites" {
+                if tagsNode!.tag!.lowercased() == "favorites" || tagsNode!.tag!.lowercased() == "favourites" {
                     favorites = true
                     favoritesDepth = iterator.depth
                 } else if iterator.depth <= favoritesDepth {

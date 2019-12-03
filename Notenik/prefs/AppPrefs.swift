@@ -61,6 +61,11 @@ class AppPrefs {
     
     var newVersionForReview = false
     
+    var locale: Locale!
+    var languageCode = "en"
+    var localeID: String!
+    var americanEnglish = true
+    
     /// Private initializer to enforce usage of the singleton instance
     private init() {
         
@@ -132,6 +137,28 @@ class AppPrefs {
         let favColWidth = defaults.string(forKey: favoritesColumnWidthKey)
         if favColWidth != nil {
             _favColWidth = favColWidth!
+        }
+        
+        // American English? (Or British?)
+        locale = Locale.current
+        localeID = locale.identifier
+        if locale.languageCode != nil {
+            languageCode = locale.languageCode!
+        }
+        if languageCode == "en" {
+            americanEnglish = (localeID == "en_US" || localeID == "en_PH" || localeID == "en_UM" || localeID == "en_US_POSIX" || localeID == "en_AS" || localeID == "en_VI")
+        }
+        if localeID != nil {
+            logInfo("Locale identifier is \(localeID!)")
+        }
+        if locale.regionCode != nil {
+            logInfo("Region code is \(locale.regionCode!)")
+        }
+        logInfo("Language code is \(languageCode)")
+        if americanEnglish {
+            logInfo("Using American English")
+        } else {
+            logInfo("Using UK/British English")
         }
     }
     

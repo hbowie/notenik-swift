@@ -14,6 +14,8 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    @IBOutlet weak var favsToHTML: NSMenuItem!
+    
     let juggler: CollectionJuggler = CollectionJuggler.shared
     let logger = Logger.shared
     var stage = "0"
@@ -48,7 +50,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if successfulOpens == 0 {
             juggler.loadInitialCollection()
         }
-        
+        if !AppPrefs.shared.americanEnglish {
+            favsToHTML.title = "Favourites to HTML..."
+        }
     }
     
     func application(_ application: NSApplication, open urls: [URL]) {
