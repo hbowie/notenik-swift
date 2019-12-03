@@ -14,3 +14,4 @@ Tags may be used to group related notes into categories. One or more tags may be
 Click on the Tags tab to see your Notes organized by tags, instead of appearing in a straight List. If a Note has multiple Tags assigned, then it will appear multiple times on the Tags tab, once for each Tag. By adding multiple levels to your Tags, you can effectively organize your Notes into an outline.
 
 Beneath the Collection menu you will find an option to perform a Tags Mass Change. The user will be prompted to specify from tags and to tags, and Notenik will then replace the from tags (in combination, if more than one is specified) with the to tags. 
+

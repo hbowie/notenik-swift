@@ -6,6 +6,28 @@ Tags:   changes, history, log
 
 Body:
 
+### Version 2.2.0 | 03 Dec 2019
+
+#### 1. Added Support for 'Favourites' in addition to 'Favorites'
+
+Based on feedback from a user in Australia, added support for the British spelling of 'Favourites'. 
+
+
+#### 2. Moved Reload Collection Command from File Menu to Collection Menu
+
+The Reload Collection command will hopefully be easier to find beneath the Collection menu. 
+
+
+#### 3. Suppressed Empty Tags from Favorites to HTML Export
+
+You can sometimes end up with empty tags in a collection, as a result of deleting notes or changing tags. Previously these would be included when creating a Favorites page, but they are now suppressed. 
+
+
+#### 4. Added Cut, Copy and Paste Support for Notes
+
+The Cut, Copy and Paste commands — along with their corresponding keyboard shortcuts — are now enabled on the Edit menu for Notes. After selecting a Note, the Cut or Copy commands may be used to cut/copy the entire note. The note is copied to the clipboard as text, so that it can then be pasted into any application where text is accepted — including, but not limited to, Notenik itself. Be aware that the user should be on the Display Tab, and not the Edit tab, in order to perform these note-based functions since, when on the Edit tab, cut/copy/paste will typically apply to the text within a field, and not to the entire note. 
+
+
 ### Version 2.1.0 | 22 Nov 2019
 
 #### 1. Added Tags Mass Change Option
@@ -37,9 +59,9 @@ A Template Set command will now honor an operand of '++' and increment the indic
 
 ### Version 1.9.0 | 11 Nov 2019
 
-#### 1. Fixed a Note Delete Bug
+#### 1. Added Option to Reverse the Sort
 
-A note that was being deleted would sometimes be immediately re-added. This has been corrected. 
+An option has been added to the Sort menu that will allow the user to reverse the current sequence of the list (from ascending to descending, or vice-versa).
 
 
 #### 2. Fixed an Attachments Bug
@@ -47,9 +69,9 @@ A note that was being deleted would sometimes be immediately re-added. This has 
 Attachments were being deleted when the parent Note's title was changed. This has now been corrected. 
 
 
-#### 3. Added Option to Reverse the Sort
+#### 3. Fixed a Note Delete Bug
 
-An option has been added to the Sort menu that will allow the user to reverse the current sequence of the list (from ascending to descending, or vice-versa).
+A note that was being deleted would sometimes be immediately re-added. This has been corrected. 
 
 
 #### 4. Scripter Can Now Read Markdown Headers
@@ -65,7 +87,12 @@ Note that the resulting data can be used to generate a Table of Contents for the
 
 ### Version 1.8.0 | 06 Nov 2019
 
-#### 1. Folder Open thru Finder Drag-and-Drop Enabled
+#### 1. Changed Deployment Target Back to 10.14 to Allow Operation on Mojave
+
+The last release inadvertently made Notenik unavailable to Mojave users. 
+
+
+#### 2. Folder Open thru Finder Drag-and-Drop Enabled
 
 Folder(s) may now be opened by dragging them onto the Notenik icon in the Finder. Notenik will respond in one of four ways to each Finder item. 
 
@@ -73,11 +100,6 @@ Folder(s) may now be opened by dragging them onto the Notenik icon in the Finder
 * If a folder is empty, then it will be initialized as a new Notenik Collection, and opened in a new window. 
 * if the dragged item is not a folder at all, then an error message will be displayed. 
 * Any other folder will be treated as a parent realm, and the resulting window will show Collections and Scripts found within that realm. 
-
-
-#### 2. Changed Deployment Target Back to 10.14 to Allow Operation on Mojave
-
-The last release inadvertently made Notenik unavailable to Mojave users. 
 
 
 #### 3. Reports Option Added to Generate Sample Report Templates
@@ -97,9 +119,9 @@ Selecting one of these will then cause Notenik to create a reports folder for th
 Markdown is now used to format all longtext fields as they appear on the Display tab.
 
 
-#### 2. Internal Refactoring
+#### 2. Added Notenik Rate/Review Reminder
 
-Made some internal changes to handle field types in a way that will better lend itself to future growth. 
+Added code to remind users to rate and review Notenik on the Mac App Store. 
 
 
 #### 3. Additional Minor Improvements
@@ -107,31 +129,31 @@ Made some internal changes to handle field types in a way that will better lend 
 Made a few more minor improvements. 
 
 
-#### 4. Added Notenik Rate/Review Reminder
+#### 4. Internal Refactoring
 
-Added code to remind users to rate and review Notenik on the Mac App Store. 
+Made some internal changes to handle field types in a way that will better lend itself to future growth. 
 
 
 ### Version 1.6.0 | 15 Oct 2019
 
-#### 1. Various Minor Tweaks
-
-Made a number of tweaks to fix bugs and/or improve operation. 
-
-
-#### 2. Textile Parser Added
+#### 1. Textile Parser Added
 
 A homegrown "good enough" Textile Parser has been added to Notenik. It can be invoked by including a file with a '.textile' file extension when generating HTML output. 
 
 
-#### 3. Template Include File Conversion Honored
+#### 2. Various Minor Tweaks
 
-When using the Include command within a Scripting Template file to include another file, automatic conversion will now be done when the included file extension differs from the output file extension. In particular, Markdown and Textile documents will be converted to HTML, when appropriate. Note that the Textile parser used is one internal to Notenik, and is at best a "good enough" tool, but one that is far from comprehensive. 
+Made a number of tweaks to fix bugs and/or improve operation. 
 
 
-#### 4. Seq Field Prefix Now Honored
+#### 3. Seq Field Prefix Now Honored
 
 Field names beginning with "Seq" will now be treated as Seq fields for the purpose of sorting when using the Scripting Engine. This will cause numeric fields, for example, to sort into their proper numeric sequence, instead of treating them as alphanumeric fields. 
+
+
+#### 4. Template Include File Conversion Honored
+
+When using the Include command within a Scripting Template file to include another file, automatic conversion will now be done when the included file extension differs from the output file extension. In particular, Markdown and Textile documents will be converted to HTML, when appropriate. Note that the Textile parser used is one internal to Notenik, and is at best a "good enough" tool, but one that is far from comprehensive. 
 
 
 ### Version 1.5.0 | 20 Sep 2019
@@ -141,14 +163,14 @@ Field names beginning with "Seq" will now be treated as Seq fields for the purpo
 Made some improvements in the logic for incrementing the Seq field to properly increment following Notes to prevent overlap. 
 
 
-#### 2. Additional Refinements
-
-Fixed a bug that sometimes caused newline characters to be ignored when trying to load a Note from disk. 
-
-
-#### 3. Added a Dash as a New Variable Modifier
+#### 2. Added a Dash as a New Variable Modifier
 
 A dash may now optionally follow the letter O, which will result in the html string produced by the Markdown conversion having opening and closing paragraph tags stripped from the resulting string. 
+
+
+#### 3. Additional Refinements
+
+Fixed a bug that sometimes caused newline characters to be ignored when trying to load a Note from disk. 
 
 
 #### 4. Added Special Treatment for Artist Field
@@ -170,24 +192,24 @@ The Save As command relies on the user creating a new folder to receive the copi
 
 ### Version 1.4.0 | 03 Sep 2019
 
-#### 1. Work Type now uses a Combo Box
-
-When a Collection (typically, of quotations) has a 'Work Type' field, then Notenik will now present a standard, selectable list of options to choose from using what is known as a "Combo Box" control for editing. 
-
-
-#### 2. Improved Collection Load Speed
+#### 1. Improved Collection Load Speed
 
 Improved the speed of opening a new Collection by optimizing the sorting of Notes as they are loaded into memory. 
 
 
-#### 3. Miscellaneous Improvements
+#### 2. Work Type now uses a Combo Box
 
-A few minor bug fixes and minor improvements. 
+When a Collection (typically, of quotations) has a 'Work Type' field, then Notenik will now present a standard, selectable list of options to choose from using what is known as a "Combo Box" control for editing. 
 
 
-#### 4. Added Script File Recording
+#### 3. Added Script File Recording
 
 Notenik can now be used to record script files, as well as play them back. 
+
+
+#### 4. Miscellaneous Improvements
+
+A few minor bug fixes and minor improvements. 
 
 
 ### Version 1.3.0 | 13 Aug 2019
@@ -202,13 +224,13 @@ Users can now play a Script file that will run a series of data transformations.
 Each Note can have one or more Attachments. 
 
 
-#### 3. Bug Fixes and Minor Improvements
-
-
-
-#### 4. Added Tags Export Preferences
+#### 3. Added Tags Export Preferences
 
 This new Notenik Preferences tab allows the user to specify tags to select and tags to suppress. 
+
+
+#### 4. Bug Fixes and Minor Improvements
+
 
 
 ### Version 1.2.0 | 11 Jul 2019
@@ -218,11 +240,9 @@ This new Notenik Preferences tab allows the user to specify tags to select and t
 Users can now pick from previously identified tags when entering a new one. 
 
 
-#### 2. Bug Fixes and Improvements
+#### 2. Added Split Tags Export to the File Menu
 
-Markdown conversion now renders embedded HTML and does a smart typographic conversion.
-
-Occasional problem with erroneous blanks in the ‘X’ column (indicating done or not) is now fixed.
+The Split Tags command under the File menu will split the tags for each Note, and write one output row for each Tag for each Note. Notes without tags will be written out only once; Notes with multiple tags will be written out once for each Tag. In addition to the Tags column, a Tag (singular) column will be added to the front of each row, containing one particular Tag for the Note. This export file can be used, for example, to create an index page for each Tag. 
 
 
 #### 3. Added Standardize Dates to YMD to the Collection Menu
@@ -230,16 +250,18 @@ Occasional problem with erroneous blanks in the ‘X’ column (indicating done 
 Execution of this command will change all the dates in all the Notes for the current Collection so that they are stored in yyyy-mm-dd format, which can be useful to ensure than an export file sorts correctly on date. 
 
 
-#### 4. Added Split Tags Export to the File Menu
+#### 4. Bug Fixes and Improvements
 
-The Split Tags command under the File menu will split the tags for each Note, and write one output row for each Tag for each Note. Notes without tags will be written out only once; Notes with multiple tags will be written out once for each Tag. In addition to the Tags column, a Tag (singular) column will be added to the front of each row, containing one particular Tag for the Note. This export file can be used, for example, to create an index page for each Tag. 
+Markdown conversion now renders embedded HTML and does a smart typographic conversion.
+
+Occasional problem with erroneous blanks in the ‘X’ column (indicating done or not) is now fixed.
 
 
 ### Version 1.1.0 | 05 Jul 2019
 
-#### 1. Various Bug Fixes and Improvements
+#### 1. Added Favorites to HTML Function
 
-Miscellaneous bug fixes and improvements. 
+The File Menu now has a new command to export Favorites to HTML. This allows the user to identify favorite bookmarks using the 'Favorites' tag and then export those favorites to a four-column Web page. 
 
 
 #### 2. Added Reports Function
@@ -247,9 +269,9 @@ Miscellaneous bug fixes and improvements.
 Merge Templates may now be created, stored in a reports folder, and then run from a Collection's Toolbar. 
 
 
-#### 3. Added Favorites to HTML Function
+#### 3. Various Bug Fixes and Improvements
 
-The File Menu now has a new command to export Favorites to HTML. This allows the user to identify favorite bookmarks using the 'Favorites' tag and then export those favorites to a four-column Web page. 
+Miscellaneous bug fixes and improvements. 
 
 
 ### Version 1.0.0 | 03 Jun 2019
