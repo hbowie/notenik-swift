@@ -77,12 +77,14 @@ class FavoritesToHTML {
                 } else if iterator.depth <= favoritesDepth {
                     favorites = false
                 } else if favorites {
-                    if lineCount + 2 + tagsNode!.countChildren >= maxLines {
-                        newColumn()
+                    if tagsNode!.children.count > 0 {
+                        if lineCount + 2 + tagsNode!.countChildren >= maxLines {
+                            newColumn()
+                        }
+                        let text = htmlConverter.convert(from: tagsNode!.tag!)
+                        markedup.heading(level: 2, text: text)
+                        lineCount += 2
                     }
-                    let text = htmlConverter.convert(from: tagsNode!.tag!)
-                    markedup.heading(level: 2, text: text)
-                    lineCount += 2
                 }
             } else if tagsNode!.type == .note && favorites {
                 guard let note = tagsNode!.note else { break }
