@@ -216,6 +216,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             actionMenu.removeItem(at: i)
             i -= 1
         }
+        
+        guard !notenikIO!.collection!.readOnly else { return }
 
         var genMD = true
         var genHTML = true
@@ -1325,6 +1327,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard let lister = listVC else { return }
         noteIO.sortParm = sortParm
         lister.setSortParm(sortParm)
+        noteIO.persistCollectionInfo()
     }
     
     func setSortDescending(_ descending: Bool) {
@@ -1332,6 +1335,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard let lister = listVC else { return }
         noteIO.sortDescending = descending
         lister.setSortDescending(descending)
+        noteIO.persistCollectionInfo()
     }
     
     @IBAction func displayPrefs(_ sender: Any) {

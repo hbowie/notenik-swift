@@ -939,7 +939,6 @@ class FileIO: NotenikIO, RowConsumer {
             if newValue != collection!.sortParm {
                 collection!.sortParm = newValue
                 bunch!.sortParm = newValue
-                _ = saveInfoFile()
             }
         }
     }
@@ -952,7 +951,6 @@ class FileIO: NotenikIO, RowConsumer {
             if newValue != collection!.sortDescending {
                 collection!.sortDescending = newValue
                 bunch!.sortDescending = newValue
-                _ = saveInfoFile()
             }
         }
     }
