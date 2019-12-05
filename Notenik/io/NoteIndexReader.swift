@@ -11,6 +11,8 @@
 
 import Foundation
 
+/// Reads a Note Collection with Index fields and produces
+/// a special extract suitable for indexing a collection. 
 class NoteIndexReader: RowImporter {
     
     var consumer:           RowConsumer?
