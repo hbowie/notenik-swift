@@ -29,11 +29,12 @@
         <!--Prefs Tab View Controller-->
         <scene sceneID="pqd-gK-cR3">
             <objects>
-                <tabViewController selectedTabViewItemIndex="0" id="QcO-UB-82s" customClass="PrefsTabViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="3" id="QcO-UB-82s" customClass="PrefsTabViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="General" identifier="" id="jFi-DJ-6Nk"/>
                         <tabViewItem label="Favorites" id="sa9-Ja-wk2"/>
                         <tabViewItem label="Tags Export" id="ksR-rh-eYj"/>
+                        <tabViewItem label="Markdown" id="1v5-dX-UZ1"/>
                     </tabViewItems>
                     <tabView key="tabView" type="noTabsNoBorder" id="1MM-le-9ts">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
@@ -48,6 +49,7 @@
                         <segue destination="i5j-TU-ObT" kind="relationship" relationship="tabItems" id="bCy-27-nZ3"/>
                         <segue destination="lBs-F7-R4A" kind="relationship" relationship="tabItems" id="PZo-g2-XBk"/>
                         <segue destination="tET-7t-Lpv" kind="relationship" relationship="tabItems" id="c1e-wq-R8E"/>
+                        <segue destination="ChF-uA-97E" kind="relationship" relationship="tabItems" id="XWG-z1-szH"/>
                     </connections>
                 </tabViewController>
                 <customObject id="N6Y-LZ-f69" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -340,6 +342,91 @@ DQ
                 <customObject id="UHV-uv-ENb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="250" y="1379"/>
+        </scene>
+        <!--Markdown Prefs View Controller-->
+        <scene sceneID="Afm-jE-ZB6">
+            <objects>
+                <viewController id="ChF-uA-97E" customClass="MarkdownPrefsViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="93P-5f-jdj">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RJa-RV-kEX">
+                                <rect key="frame" x="18" y="264" width="117" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Markdown Parser: " id="knZ-tm-pye">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AsE-AV-gAu">
+                                <rect key="frame" x="138" y="263" width="294" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Down from Rob Phillips (iwasrobbed)" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Wzk-yL-G0e">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="buttonAction:" target="ChF-uA-97E" id="Ka3-b4-Uj2"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="6Jl-JW-5uH">
+                                <rect key="frame" x="156" y="218" width="276" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="272" id="KAj-7f-uDR"/>
+                                    <constraint firstAttribute="height" constant="38" id="NUU-76-E0B"/>
+                                </constraints>
+                                <textFieldCell key="cell" selectable="YES" title="Blazing fast Markdown / CommonMark rendering in Swift, built upon cmark" id="fCt-Nl-nue">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vh1-08-Wi3">
+                                <rect key="frame" x="138" y="195" width="291" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Ink from John Sundell" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="d2Q-h5-CeK">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="buttonAction:" target="ChF-uA-97E" id="asI-Ie-GC5"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qLZ-6r-bFe">
+                                <rect key="frame" x="157" y="149" width="272" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="268" id="qvQ-2y-NdQ"/>
+                                    <constraint firstAttribute="height" constant="38" id="r2K-5k-t07"/>
+                                </constraints>
+                                <textFieldCell key="cell" selectable="YES" title="A fast and flexible Markdown parser written in Swift" id="vVc-SL-TKm">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="qLZ-6r-bFe" firstAttribute="top" secondItem="vh1-08-Wi3" secondAttribute="bottom" constant="9" id="5uv-NT-QHr"/>
+                            <constraint firstAttribute="trailing" secondItem="AsE-AV-gAu" secondAttribute="trailing" constant="20" symbolic="YES" id="Cja-m7-LSw"/>
+                            <constraint firstItem="AsE-AV-gAu" firstAttribute="leading" secondItem="vh1-08-Wi3" secondAttribute="leading" id="Eas-Vl-Lzs"/>
+                            <constraint firstItem="vh1-08-Wi3" firstAttribute="top" secondItem="6Jl-JW-5uH" secondAttribute="bottom" constant="6" id="JFF-Jz-LAg"/>
+                            <constraint firstItem="RJa-RV-kEX" firstAttribute="leading" secondItem="93P-5f-jdj" secondAttribute="leading" constant="20" symbolic="YES" id="LlC-XR-eHW"/>
+                            <constraint firstAttribute="trailing" secondItem="vh1-08-Wi3" secondAttribute="trailing" constant="23" id="Ofq-Q4-bKB"/>
+                            <constraint firstItem="AsE-AV-gAu" firstAttribute="trailing" secondItem="6Jl-JW-5uH" secondAttribute="trailing" id="SwY-SB-3Vv"/>
+                            <constraint firstItem="RJa-RV-kEX" firstAttribute="top" secondItem="93P-5f-jdj" secondAttribute="top" constant="20" symbolic="YES" id="UsE-u6-Xze"/>
+                            <constraint firstItem="RJa-RV-kEX" firstAttribute="baseline" secondItem="AsE-AV-gAu" secondAttribute="baseline" id="Vme-V3-jCF"/>
+                            <constraint firstItem="vh1-08-Wi3" firstAttribute="trailing" secondItem="qLZ-6r-bFe" secondAttribute="trailing" id="mKq-2H-ZO4"/>
+                            <constraint firstItem="6Jl-JW-5uH" firstAttribute="top" secondItem="AsE-AV-gAu" secondAttribute="bottom" constant="8" symbolic="YES" id="oWn-pG-WxN"/>
+                            <constraint firstItem="AsE-AV-gAu" firstAttribute="leading" secondItem="RJa-RV-kEX" secondAttribute="trailing" constant="6" symbolic="YES" id="wWn-bR-8Gy"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="DownButton" destination="AsE-AV-gAu" id="ZJc-rD-Uz4"/>
+                        <outlet property="inkButton" destination="vh1-08-Wi3" id="hxA-1a-ezp"/>
+                    </connections>
+                </viewController>
+                <customObject id="88T-vO-Ekk" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-447" y="1233"/>
         </scene>
     </scenes>
 </document>

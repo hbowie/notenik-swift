@@ -1,0 +1,52 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CoreXLSX",
+        "repositoryURL": "https://github.com/MaxDesiatov/CoreXLSX",
+        "state": {
+          "branch": null,
+          "revision": "27e403bffde352450275cafeffa9d32cc8d24a39",
+          "version": "0.9.1"
+        }
+      },
+      {
+        "package": "Down",
+        "repositoryURL": "https://github.com/iwasrobbed/Down",
+        "state": {
+          "branch": null,
+          "revision": "940b173fc1328b0539d0e3681fdfa679501d2bdb",
+          "version": "0.9.0"
+        }
+      },
+      {
+        "package": "Ink",
+        "repositoryURL": "https://github.com/JohnSundell/Ink",
+        "state": {
+          "branch": null,
+          "revision": "c88bbce588a1ebfde2cf4d61eb9865a3edaa27d4",
+          "version": "0.2.0"
+        }
+      },
+      {
+        "package": "XMLCoder",
+        "repositoryURL": "https://github.com/maxdesiatov/XMLCoder.git",
+        "state": {
+          "branch": null,
+          "revision": "96d210ee78d8b1d38870f81ff48d8e8ab806fffa",
+          "version": "0.9.0"
+        }
+      },
+      {
+        "package": "ZIPFoundation",
+        "repositoryURL": "https://github.com/weichsel/ZIPFoundation.git",
+        "state": {
+          "branch": null,
+          "revision": "3f38d518c5e41f1cf25ff6a1d28c46db5e79a0b9",
+          "version": "0.9.10"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

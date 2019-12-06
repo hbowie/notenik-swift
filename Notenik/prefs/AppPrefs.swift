@@ -31,6 +31,8 @@ class AppPrefs {
     let favoritesRowsKey = "favorites-rows"
     let favoritesColumnWidthKey = "favorites-column-width"
     
+    let markdownParserKey = "markdown-parser"
+    
     var _qd: Bool = false
     
     var _edFS:   Float   = 13.0
@@ -60,6 +62,8 @@ class AppPrefs {
     var _favColWidth = "250px"
     
     var newVersionForReview = false
+    
+    var _mdParser = "down"
     
     var locale: Locale!
     var languageCode = "en"
@@ -137,6 +141,12 @@ class AppPrefs {
         let favColWidth = defaults.string(forKey: favoritesColumnWidthKey)
         if favColWidth != nil {
             _favColWidth = favColWidth!
+        }
+        
+        // Get Markdown Parser defaults
+        let mdParserDefault = defaults.string(forKey: markdownParserKey)
+        if mdParserDefault != nil {
+            _mdParser = mdParserDefault!
         }
         
         // American English? (Or British?)
@@ -347,6 +357,20 @@ class AppPrefs {
             if newValue.count > 0 {
                 _favColWidth = newValue
                 defaults.set(_favColWidth, forKey: favoritesColumnWidthKey)
+            }
+        }
+    }
+    
+    /// get or set the chosen Markdown parser.
+    var markdownParser: String {
+        get { return _mdParser }
+        set {
+            switch newValue {
+            case "down", "ink":
+                _mdParser = newValue
+                defaults.set(newValue, forKey: markdownParserKey)
+            default:
+                break
             }
         }
     }

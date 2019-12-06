@@ -9,7 +9,6 @@
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
-import Down
 import Foundation
 
 /// An object capable of generating marked up text (currently HTML or Markdown)
@@ -603,16 +602,12 @@ class Markedup: CustomStringConvertible {
     func append(markdown: String) {
         switch format {
         case.htmlFragment, .htmlDoc, .netscapeBookmarks:
-            let down = Down(markdownString: markdown)
-            var html = ""
-            do {
-                html = try down.toHTML(DownOptions.smartUnsafe)
-                code.append(html)
-            } catch {
-                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                                  category: "Markedup",
-                                  level: .error,
-                                  message: "Markdown parser threw an error")
+            let downer = Markdown()
+            downer.md = markdown
+            downer.parse()
+            if downer.ok {
+                code.append(downer.html)
+            } else {
                 code.append(markdown)
             }
         case.markdown:

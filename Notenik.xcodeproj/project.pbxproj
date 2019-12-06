@@ -3,13 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		06CC33334F9F6E5345FA61F7 /* Pods_NotenikTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F9EA3A98254B77CA8060612 /* Pods_NotenikTests.framework */; };
-		49D01940107BCC107747AB88 /* Pods_Notenik.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6EF8749B10F3962D960CD73 /* Pods_Notenik.framework */; };
-		5F13A8E921DCF361F4144B77 /* Pods_NotenikUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C852905ACCC300952386ABF /* Pods_NotenikUITests.framework */; };
 		9C02D2AE2267D46000587EDF /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
 		9C02D2B02267F29400587EDF /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C02D2AF2267F29400587EDF /* Calendar.storyboard */; };
 		9C02D2B12267F29400587EDF /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C02D2AF2267F29400587EDF /* Calendar.storyboard */; };
@@ -17,6 +14,15 @@
 		9C02D2B42267F41200587EDF /* CalendarWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2B22267F41200587EDF /* CalendarWindowController.swift */; };
 		9C02D2B62267F5E700587EDF /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2B52267F5E700587EDF /* CalendarViewController.swift */; };
 		9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2B52267F5E700587EDF /* CalendarViewController.swift */; };
+		9C036292239AE24F00C948DB /* CoreXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = 9C036291239AE24F00C948DB /* CoreXLSX */; };
+		9C036295239AE2A400C948DB /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 9C036294239AE2A400C948DB /* Down */; };
+		9C036298239AE7D500C948DB /* Ink in Frameworks */ = {isa = PBXBuildFile; productRef = 9C036297239AE7D500C948DB /* Ink */; };
+		9C03629A239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C036299239AFAAB00C948DB /* MarkdownPrefsViewController.swift */; };
+		9C03629B239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C036299239AFAAB00C948DB /* MarkdownPrefsViewController.swift */; };
+		9C03629C239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C036299239AFAAB00C948DB /* MarkdownPrefsViewController.swift */; };
+		9C03629E239B0A9900C948DB /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C03629D239B0A9900C948DB /* Markdown.swift */; };
+		9C03629F239B0A9900C948DB /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C03629D239B0A9900C948DB /* Markdown.swift */; };
+		9C0362A0239B0A9900C948DB /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C03629D239B0A9900C948DB /* Markdown.swift */; };
 		9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
 		9C055D4F2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
 		9C060687228E0A9300CB8C10 /* RealmScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C060686228E0A9300CB8C10 /* RealmScanner.swift */; };
@@ -603,20 +609,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9C3BDF45229D9A5200E0DA89 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9C3BDF40229D9A5200E0DA89 /* Down.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8A569F401E6B3E50008BE2AC;
-			remoteInfo = Down;
-		};
-		9C3BDF47229D9A5200E0DA89 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9C3BDF40229D9A5200E0DA89 /* Down.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8AFAEAFB1E6E32E900E09B68;
-			remoteInfo = DownTests;
-		};
 		9C60E6E121F64B3C00C332ED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9C60E6C621F64B3B00C332ED /* Project object */;
@@ -631,25 +623,15 @@
 			remoteGlobalIDString = 9C60E6CD21F64B3B00C332ED;
 			remoteInfo = Notenik;
 		};
-		9CDE92BD22A322A800043AE5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9CDE92B922A322A700043AE5 /* NotenikUtils.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9CDE92AD22A322A700043AE5;
-			remoteInfo = NotenikUtils;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2F9EA3A98254B77CA8060612 /* Pods_NotenikTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotenikTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C852905ACCC300952386ABF /* Pods_NotenikUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotenikUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5FDE71C2E4BE1CB0672AB26C /* Pods-NotenikTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotenikTests.release.xcconfig"; path = "Target Support Files/Pods-NotenikTests/Pods-NotenikTests.release.xcconfig"; sourceTree = "<group>"; };
-		69AF0F8CDDB8470F92452B1D /* Pods-NotenikUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotenikUITests.release.xcconfig"; path = "Target Support Files/Pods-NotenikUITests/Pods-NotenikUITests.release.xcconfig"; sourceTree = "<group>"; };
-		977FD321217F4764E663FF40 /* Pods-Notenik.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notenik.release.xcconfig"; path = "Target Support Files/Pods-Notenik/Pods-Notenik.release.xcconfig"; sourceTree = "<group>"; };
 		9C02D2AD2267D46000587EDF /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		9C02D2AF2267F29400587EDF /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
 		9C02D2B22267F41200587EDF /* CalendarWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWindowController.swift; sourceTree = "<group>"; };
 		9C02D2B52267F5E700587EDF /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		9C036299239AFAAB00C948DB /* MarkdownPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownPrefsViewController.swift; sourceTree = "<group>"; };
+		9C03629D239B0A9900C948DB /* Markdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markdown.swift; sourceTree = "<group>"; };
 		9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTabsViewController.swift; sourceTree = "<group>"; };
 		9C060686228E0A9300CB8C10 /* RealmScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmScanner.swift; sourceTree = "<group>"; };
 		9C09E1752248601D0046D50D /* notenik.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = notenik.iconset; sourceTree = "<group>"; };
@@ -683,7 +665,6 @@
 		9C2AE51D220A1ED700AE8BEE /* BunchOfNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunchOfNotes.swift; sourceTree = "<group>"; };
 		9C2D40B522F8C1920074FCCE /* XLSXReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XLSXReader.swift; sourceTree = "<group>"; };
 		9C2D40B922F8C94C0074FCCE /* RowImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowImporter.swift; sourceTree = "<group>"; };
-		9C3BDF40229D9A5200E0DA89 /* Down.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Down.xcodeproj; path = ../Down/Down.xcodeproj; sourceTree = "<group>"; };
 		9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefs.swift; sourceTree = "<group>"; };
 		9C4412672363478D00B3041F /* ArtistType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistType.swift; sourceTree = "<group>"; };
 		9C44126C23634B8A00B3041F /* AnyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyType.swift; sourceTree = "<group>"; };
@@ -862,7 +843,6 @@
 		9CD82F622211E456002314E4 /* LineWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineWriter.swift; sourceTree = "<group>"; };
 		9CD82F662211E4BA002314E4 /* BigStringWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigStringWriter.swift; sourceTree = "<group>"; };
 		9CD82F6A2211EDC2002314E4 /* NoteLineMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteLineMaker.swift; sourceTree = "<group>"; };
-		9CDE92B922A322A700043AE5 /* NotenikUtils.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NotenikUtils.xcodeproj; path = NotenikUtils/NotenikUtils.xcodeproj; sourceTree = "<group>"; };
 		9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputModule.swift; sourceTree = "<group>"; };
 		9CDEE7C622FE36E30000E3C1 /* DirReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirReader.swift; sourceTree = "<group>"; };
 		9CDF578123469A47004417FA /* TextileBlockPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileBlockPhase.swift; sourceTree = "<group>"; };
@@ -896,10 +876,6 @@
 		9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPrefsOwner.swift; sourceTree = "<group>"; };
 		9CFCB048226BCE1700443FFA /* SimpleDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleDate.swift; sourceTree = "<group>"; };
 		9CFD34FF23313D6D004ABA16 /* ArtistValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistValue.swift; sourceTree = "<group>"; };
-		AD717987FF01094DD809C349 /* Pods-NotenikTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotenikTests.debug.xcconfig"; path = "Target Support Files/Pods-NotenikTests/Pods-NotenikTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D6EF8749B10F3962D960CD73 /* Pods_Notenik.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Notenik.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DF4F36B47436A833F7ACB059 /* Pods-NotenikUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotenikUITests.debug.xcconfig"; path = "Target Support Files/Pods-NotenikUITests/Pods-NotenikUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		E62F8C06EDE63F726FA7C379 /* Pods-Notenik.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Notenik.debug.xcconfig"; path = "Target Support Files/Pods-Notenik/Pods-Notenik.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -907,7 +883,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49D01940107BCC107747AB88 /* Pods_Notenik.framework in Frameworks */,
+				9C036298239AE7D500C948DB /* Ink in Frameworks */,
+				9C036295239AE2A400C948DB /* Down in Frameworks */,
+				9C036292239AE24F00C948DB /* CoreXLSX in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -915,7 +893,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06CC33334F9F6E5345FA61F7 /* Pods_NotenikTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,26 +900,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F13A8E921DCF361F4144B77 /* Pods_NotenikUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6ECA9C480C008C65950F1859 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				E62F8C06EDE63F726FA7C379 /* Pods-Notenik.debug.xcconfig */,
-				977FD321217F4764E663FF40 /* Pods-Notenik.release.xcconfig */,
-				AD717987FF01094DD809C349 /* Pods-NotenikTests.debug.xcconfig */,
-				5FDE71C2E4BE1CB0672AB26C /* Pods-NotenikTests.release.xcconfig */,
-				DF4F36B47436A833F7ACB059 /* Pods-NotenikUITests.debug.xcconfig */,
-				69AF0F8CDDB8470F92452B1D /* Pods-NotenikUITests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		9C1E0C8D22E4F7780025C99C /* attachments */ = {
 			isa = PBXGroup;
 			children = (
@@ -952,15 +915,6 @@
 				9C1E0C9722E5306B0025C99C /* AttachmentMasterController.swift */,
 			);
 			path = attachments;
-			sourceTree = "<group>";
-		};
-		9C3BDF41229D9A5200E0DA89 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9C3BDF46229D9A5200E0DA89 /* Down.framework */,
-				9C3BDF48229D9A5200E0DA89 /* DownTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		9C4C1BAE22E7EE0A005997DF /* script */ = {
@@ -997,7 +951,6 @@
 				9C60E6CF21F64B3B00C332ED /* Products */,
 				9CAF2B2622664237009E19E2 /* Project Index */,
 				9C65394E21F91EBB00012184 /* Frameworks */,
-				6ECA9C480C008C65950F1859 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1103,6 +1056,7 @@
 				9C60E6FF21F650B800C332ED /* DateUtils.swift */,
 				9C60E70021F650B800C332ED /* FileName.swift */,
 				9C60E70121F650B800C332ED /* FileUtils.swift */,
+				9C03629D239B0A9900C948DB /* Markdown.swift */,
 				9C78888921FB950900452D74 /* Markedup.swift */,
 				9C78888521FB826100452D74 /* MarkedupFormat.swift */,
 				9CFCB048226BCE1700443FFA /* SimpleDate.swift */,
@@ -1224,11 +1178,6 @@
 		9C65394E21F91EBB00012184 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9CDE92B922A322A700043AE5 /* NotenikUtils.xcodeproj */,
-				9C3BDF40229D9A5200E0DA89 /* Down.xcodeproj */,
-				D6EF8749B10F3962D960CD73 /* Pods_Notenik.framework */,
-				2F9EA3A98254B77CA8060612 /* Pods_NotenikTests.framework */,
-				5C852905ACCC300952386ABF /* Pods_NotenikUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1245,6 +1194,7 @@
 				9CAD6A4E22DF9ACD00531D90 /* PrefsTabViewController.swift */,
 				9C857C6323830F1600EDB93C /* FavoritesPrefsViewController.swift */,
 				9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */,
+				9C036299239AFAAB00C948DB /* MarkdownPrefsViewController.swift */,
 				9CAD6A4822DF806800531D90 /* TagsExportViewController.swift */,
 			);
 			path = prefs;
@@ -1355,14 +1305,6 @@
 			path = textio;
 			sourceTree = "<group>";
 		};
-		9CDE92BA22A322A700043AE5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9CDE92BE22A322A800043AE5 /* libNotenikUtils.dylib */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		9CDF577F23469964004417FA /* textile */ = {
 			isa = PBXGroup;
 			children = (
@@ -1419,17 +1361,20 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9C60E6F421F64B3C00C332ED /* Build configuration list for PBXNativeTarget "Notenik" */;
 			buildPhases = (
-				1AB211A5D87490375E350CD8 /* [CP] Check Pods Manifest.lock */,
 				9C60E6CA21F64B3B00C332ED /* Sources */,
 				9C60E6CB21F64B3B00C332ED /* Frameworks */,
 				9C60E6CC21F64B3B00C332ED /* Resources */,
-				0ABA6F5101DFD73EA4190091 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Notenik;
+			packageProductDependencies = (
+				9C036291239AE24F00C948DB /* CoreXLSX */,
+				9C036294239AE2A400C948DB /* Down */,
+				9C036297239AE7D500C948DB /* Ink */,
+			);
 			productName = Notenik;
 			productReference = 9C60E6CE21F64B3B00C332ED /* Notenik.app */;
 			productType = "com.apple.product-type.application";
@@ -1438,7 +1383,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9C60E6F721F64B3C00C332ED /* Build configuration list for PBXNativeTarget "NotenikTests" */;
 			buildPhases = (
-				61AE1E2AF059AE045C3B1BE7 /* [CP] Check Pods Manifest.lock */,
 				9C60E6DC21F64B3C00C332ED /* Sources */,
 				9C60E6DD21F64B3C00C332ED /* Frameworks */,
 				9C60E6DE21F64B3C00C332ED /* Resources */,
@@ -1457,7 +1401,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9C60E6FA21F64B3C00C332ED /* Build configuration list for PBXNativeTarget "NotenikUITests" */;
 			buildPhases = (
-				D400756A9314ABA9333CBF8F /* [CP] Check Pods Manifest.lock */,
 				9C60E6E721F64B3C00C332ED /* Sources */,
 				9C60E6E821F64B3C00C332ED /* Frameworks */,
 				9C60E6E921F64B3C00C332ED /* Resources */,
@@ -1515,18 +1458,13 @@
 				Base,
 			);
 			mainGroup = 9C60E6C521F64B3B00C332ED;
+			packageReferences = (
+				9C036290239AE24F00C948DB /* XCRemoteSwiftPackageReference "CoreXLSX" */,
+				9C036293239AE2A400C948DB /* XCRemoteSwiftPackageReference "Down" */,
+				9C036296239AE7D500C948DB /* XCRemoteSwiftPackageReference "Ink" */,
+			);
 			productRefGroup = 9C60E6CF21F64B3B00C332ED /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 9C3BDF41229D9A5200E0DA89 /* Products */;
-					ProjectRef = 9C3BDF40229D9A5200E0DA89 /* Down.xcodeproj */;
-				},
-				{
-					ProductGroup = 9CDE92BA22A322A700043AE5 /* Products */;
-					ProjectRef = 9CDE92B922A322A700043AE5 /* NotenikUtils.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				9C60E6CD21F64B3B00C332ED /* Notenik */,
@@ -1535,30 +1473,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		9C3BDF46229D9A5200E0DA89 /* Down.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Down.framework;
-			remoteRef = 9C3BDF45229D9A5200E0DA89 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9C3BDF48229D9A5200E0DA89 /* DownTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = DownTests.xctest;
-			remoteRef = 9C3BDF47229D9A5200E0DA89 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9CDE92BE22A322A800043AE5 /* libNotenikUtils.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libNotenikUtils.dylib;
-			remoteRef = 9CDE92BD22A322A800043AE5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9C60E6CC21F64B3B00C332ED /* Resources */ = {
@@ -1615,92 +1529,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		0ABA6F5101DFD73EA4190091 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Notenik/Pods-Notenik-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Notenik/Pods-Notenik-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Notenik/Pods-Notenik-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1AB211A5D87490375E350CD8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Notenik-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		61AE1E2AF059AE045C3B1BE7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NotenikTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D400756A9314ABA9333CBF8F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NotenikUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		9C60E6CA21F64B3B00C332ED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1718,6 +1546,7 @@
 				9C27D9F722FB3ED1008EE0A1 /* IndexValue.swift in Sources */,
 				9CF11932225802AA0015AE91 /* ModView.swift in Sources */,
 				9C4018A422838F4F002C2B3D /* DisplayPrefs.swift in Sources */,
+				9C03629A239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
 				9CE2170E22A9BC6000EE656C /* LineWithBreak.swift in Sources */,
 				9C97C1B02278F46100A43913 /* CollectionRequestType.swift in Sources */,
 				9C60E70521F650B800C332ED /* DateUtils.swift in Sources */,
@@ -1730,6 +1559,7 @@
 				9CDF578623469AD0004417FA /* TextileOpeningClosing.swift in Sources */,
 				9CC0F5A8227629C4002683F8 /* BooleanValue.swift in Sources */,
 				9C60E75621F651E500C332ED /* StringValue.swift in Sources */,
+				9C03629E239B0A9900C948DB /* Markdown.swift in Sources */,
 				9CF3DE4522A6BAA00078A6B0 /* TemplateLine.swift in Sources */,
 				9C1E0C9222E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
@@ -1955,6 +1785,7 @@
 				9C27DA0422FB581D008EE0A1 /* IndexPageRef.swift in Sources */,
 				9C60E77B21F651E500C332ED /* FieldDefinition.swift in Sources */,
 				9C60E71321F6518400C332ED /* Logger.swift in Sources */,
+				9C03629B239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
 				9C60E78121F651E500C332ED /* NoteType.swift in Sources */,
 				9C8540B722E8F0790074E349 /* ScriptModule.swift in Sources */,
 				9C7348432374D90600421598 /* MDHeadReader.swift in Sources */,
@@ -2066,6 +1897,7 @@
 				9C60E74821F651E500C332ED /* ProviderType.swift in Sources */,
 				9C060688228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
 				9CB6ECCB2365DAFE00951820 /* StringType.swift in Sources */,
+				9C03629F239B0A9900C948DB /* Markdown.swift in Sources */,
 				9CB337552347BA4A006767A4 /* TextileCharDisposition.swift in Sources */,
 				9CB6ECC72365D9E100951820 /* StatusType.swift in Sources */,
 				9C60E7C221F6525F00C332ED /* SeqValueTests.swift in Sources */,
@@ -2126,6 +1958,7 @@
 				9CD19A5B23721B0500D97E71 /* NotenikPathType.swift in Sources */,
 				9CA80798229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
 				9CAD6A5322DFA0B000531D90 /* PrefsTabVC.swift in Sources */,
+				9C03629C239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
 				9C60E77921F651E500C332ED /* StatusValue.swift in Sources */,
 				9C822B9822D63A11008EF106 /* TagValue.swift in Sources */,
 				9CB6ECA42364B02D00951820 /* BooleanType.swift in Sources */,
@@ -2239,6 +2072,7 @@
 				9C60E6F021F64B3C00C332ED /* NotenikUITests.swift in Sources */,
 				9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */,
 				9C2D40B822F8C1920074FCCE /* XLSXReader.swift in Sources */,
+				9C0362A0239B0A9900C948DB /* Markdown.swift in Sources */,
 				9C60E7A221F6520100C332ED /* FileIO.swift in Sources */,
 				9CA420F822C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */,
 				9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */,
@@ -2360,7 +2194,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2415,7 +2249,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -2426,14 +2260,13 @@
 		};
 		9C60E6F521F64B3C00C332ED /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E62F8C06EDE63F726FA7C379 /* Pods-Notenik.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Notenik/Notenik.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 40;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2445,7 +2278,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2454,14 +2287,13 @@
 		};
 		9C60E6F621F64B3C00C332ED /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 977FD321217F4764E663FF40 /* Pods-Notenik.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Notenik/Notenik.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 40;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2473,7 +2305,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2482,7 +2314,6 @@
 		};
 		9C60E6F821F64B3C00C332ED /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AD717987FF01094DD809C349 /* Pods-NotenikTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2504,7 +2335,6 @@
 		};
 		9C60E6F921F64B3C00C332ED /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5FDE71C2E4BE1CB0672AB26C /* Pods-NotenikTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2526,7 +2356,6 @@
 		};
 		9C60E6FB21F64B3C00C332ED /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DF4F36B47436A833F7ACB059 /* Pods-NotenikUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -2547,7 +2376,6 @@
 		};
 		9C60E6FC21F64B3C00C332ED /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 69AF0F8CDDB8470F92452B1D /* Pods-NotenikUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -2606,6 +2434,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9C036290239AE24F00C948DB /* XCRemoteSwiftPackageReference "CoreXLSX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MaxDesiatov/CoreXLSX";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.1;
+			};
+		};
+		9C036293239AE2A400C948DB /* XCRemoteSwiftPackageReference "Down" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iwasrobbed/Down";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+		9C036296239AE7D500C948DB /* XCRemoteSwiftPackageReference "Ink" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JohnSundell/Ink";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9C036291239AE24F00C948DB /* CoreXLSX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C036290239AE24F00C948DB /* XCRemoteSwiftPackageReference "CoreXLSX" */;
+			productName = CoreXLSX;
+		};
+		9C036294239AE2A400C948DB /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C036293239AE2A400C948DB /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
+		};
+		9C036297239AE7D500C948DB /* Ink */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C036296239AE7D500C948DB /* XCRemoteSwiftPackageReference "Ink" */;
+			productName = Ink;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9C60E6C621F64B3B00C332ED /* Project object */;
 }
