@@ -33,6 +33,7 @@ class AllTypes {
     let stringType  = StringType()
     let tagsType    = TagsType()
     let titleType   = TitleType()
+    let timestampType = TimestampType()
     let workTitleType = WorkTitleType()
     let workTypeType = WorkTypeType()
     
@@ -94,6 +95,8 @@ class AllTypes {
         fieldTypes.append(stringType)
         
         fieldTypes.append(tagsType)
+        
+        fieldTypes.append(timestampType)
         
         fieldTypes.append(titleType)
         

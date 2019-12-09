@@ -117,6 +117,10 @@ class FieldLabel: CustomStringConvertible {
         return (commonForm == LabelConstants.teaserCommon)
     }
     
+    var isTimestamp: Bool {
+        return (commonForm == LabelConstants.timestampCommon)
+    }
+    
     var isTitle: Bool {
         return commonForm == LabelConstants.titleCommon
         

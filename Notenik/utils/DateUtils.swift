@@ -23,6 +23,7 @@ class DateUtils {
     var ddFormatter   : DateFormatter
     var gregCalendar  : Calendar
     var dateTimeFormatter: DateFormatter
+    var timestampFormatter: DateFormatter
     
     static let monthNames = [
         "n/a",
@@ -76,6 +77,10 @@ class DateUtils {
         dateTimeFormatter = DateFormatter()
         dateTimeFormatter.dateStyle = .medium
         dateTimeFormatter.timeStyle = .medium
+        timestampFormatter = DateFormatter()
+        timestampFormatter.locale = Locale(identifier: "en_US_POSIX")
+        timestampFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        timestampFormatter.dateFormat = "yyyyMMddkkmmss"
     }
     
     /// Return today's date in yyyy-MM-dd format

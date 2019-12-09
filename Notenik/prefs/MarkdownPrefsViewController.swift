@@ -33,6 +33,15 @@ class MarkdownPrefsViewController: NSViewController {
     
     // Save the user's preferences.
     @IBAction func buttonAction(_ sender: NSButton) {
+        saveUserInput()
+    }
+    @IBAction func prefsOK(_ sender: Any) {
+        saveUserInput()
+        self.view.window!.close()
+    }
+    
+    // Save the user's preferences.
+    func saveUserInput() {
         if downButton.state == .on {
             prefs.markdownParser = "down"
         } else if inkButton.state == .on {

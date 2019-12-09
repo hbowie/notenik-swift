@@ -475,6 +475,12 @@
 		9CC0F5A8227629C4002683F8 /* BooleanValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC0F5A7227629C4002683F8 /* BooleanValue.swift */; };
 		9CC0F5A9227629C4002683F8 /* BooleanValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC0F5A7227629C4002683F8 /* BooleanValue.swift */; };
 		9CC0F5AA227629C4002683F8 /* BooleanValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC0F5A7227629C4002683F8 /* BooleanValue.swift */; };
+		9CC2AAD0239EC36B00C85191 /* TimestampType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2AACF239EC36B00C85191 /* TimestampType.swift */; };
+		9CC2AAD1239EC36B00C85191 /* TimestampType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2AACF239EC36B00C85191 /* TimestampType.swift */; };
+		9CC2AAD2239EC36B00C85191 /* TimestampType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2AACF239EC36B00C85191 /* TimestampType.swift */; };
+		9CC2AAD4239EC3E600C85191 /* TimestampValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2AAD3239EC3E600C85191 /* TimestampValue.swift */; };
+		9CC2AAD5239EC3E600C85191 /* TimestampValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2AAD3239EC3E600C85191 /* TimestampValue.swift */; };
+		9CC2AAD6239EC3E600C85191 /* TimestampValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2AAD3239EC3E600C85191 /* TimestampValue.swift */; };
 		9CC41CD5229CA61700E92A66 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9CC41CD4229CA61700E92A66 /* Credits.rtf */; };
 		9CC78E692283565E00640477 /* DisplayPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CC78E682283565E00640477 /* DisplayPrefs.storyboard */; };
 		9CC78E6A2283565E00640477 /* DisplayPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CC78E682283565E00640477 /* DisplayPrefs.storyboard */; };
@@ -822,6 +828,8 @@
 		9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTagsViewController.swift; sourceTree = "<group>"; };
 		9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
 		9CC0F5A7227629C4002683F8 /* BooleanValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooleanValue.swift; sourceTree = "<group>"; };
+		9CC2AACF239EC36B00C85191 /* TimestampType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampType.swift; sourceTree = "<group>"; };
+		9CC2AAD3239EC3E600C85191 /* TimestampValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampValue.swift; sourceTree = "<group>"; };
 		9CC41CD4229CA61700E92A66 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9CC78E682283565E00640477 /* DisplayPrefs.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DisplayPrefs.storyboard; sourceTree = "<group>"; };
 		9CC78E6B2283587300640477 /* DisplayPrefsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefsWindowController.swift; sourceTree = "<group>"; };
@@ -1144,6 +1152,8 @@
 				9CB6ECCD2365DC3F00951820 /* TagsType.swift */,
 				9C60E72F21F651E500C332ED /* TagsValue.swift */,
 				9C822B9522D63A11008EF106 /* TagValue.swift */,
+				9CC2AACF239EC36B00C85191 /* TimestampType.swift */,
+				9CC2AAD3239EC3E600C85191 /* TimestampValue.swift */,
 				9CB6ECD12365DE3100951820 /* TitleType.swift */,
 				9C60E72821F651E500C332ED /* TitleValue.swift */,
 				9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */,
@@ -1538,6 +1548,7 @@
 				9C86CF0222C15A660035A8FA /* IntValue.swift in Sources */,
 				9C60E78021F651E500C332ED /* NoteType.swift in Sources */,
 				9C60E75921F651E500C332ED /* SeqValue.swift in Sources */,
+				9CC2AAD0239EC36B00C85191 /* TimestampType.swift in Sources */,
 				9C60E7A021F6520100C332ED /* FileIO.swift in Sources */,
 				9CD358892293C42B00C9203F /* LinkView.swift in Sources */,
 				9C60E70221F650B800C332ED /* StringUtils.swift in Sources */,
@@ -1722,6 +1733,7 @@
 				9CDF578A23469B4B004417FA /* TextileChunk.swift in Sources */,
 				9C832A02224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
 				9C1BE27422EB9444006FDFEC /* ScriptViewController.swift in Sources */,
+				9CC2AAD4239EC3E600C85191 /* TimestampValue.swift in Sources */,
 				9CB60BC322650A89003B5655 /* ShareWindowController.swift in Sources */,
 				9C553C612266A0D50008D176 /* StatusView.swift in Sources */,
 				9C60E77721F651E500C332ED /* StatusValue.swift in Sources */,
@@ -1836,6 +1848,7 @@
 				9C60E7B921F6525F00C332ED /* LinkValueTests.swift in Sources */,
 				9C568DDE2322F0D6005D6B0A /* WorkTitleValue.swift in Sources */,
 				9CB6ECCF2365DC3F00951820 /* TagsType.swift in Sources */,
+				9CC2AAD5239EC3E600C85191 /* TimestampValue.swift in Sources */,
 				9C559D7122E67F940014019C /* AttachmentName.swift in Sources */,
 				9CC8336E22B3F65B0006AAE0 /* MarkedupTests.swift in Sources */,
 				9C60E78D21F651E500C332ED /* FieldDictionary.swift in Sources */,
@@ -1871,6 +1884,7 @@
 				9C60E79C21F651E500C332ED /* NotePosition.swift in Sources */,
 				9CED74FC23356657003F7F2C /* Sequencer.swift in Sources */,
 				9CB6ECA32364B02D00951820 /* BooleanType.swift in Sources */,
+				9CC2AAD1239EC36B00C85191 /* TimestampType.swift in Sources */,
 				9C44539322FCC80200560F72 /* NoteReader.swift in Sources */,
 				9C60E6E521F64B3C00C332ED /* NotenikTests.swift in Sources */,
 				9C86CF0322C15A660035A8FA /* IntValue.swift in Sources */,
@@ -2028,10 +2042,12 @@
 				9C559D7222E67F940014019C /* AttachmentName.swift in Sources */,
 				9C1BE27222EB940E006FDFEC /* ScriptWindowController.swift in Sources */,
 				9C78888821FB826100452D74 /* MarkedupFormat.swift in Sources */,
+				9CC2AAD2239EC36B00C85191 /* TimestampType.swift in Sources */,
 				9CD32626223308C400D06B77 /* StringView.swift in Sources */,
 				9C60E70A21F650B800C332ED /* FileName.swift in Sources */,
 				9CD326222233068F00D06B77 /* MacEditView.swift in Sources */,
 				9C60E78E21F651E500C332ED /* FieldDictionary.swift in Sources */,
+				9CC2AAD6239EC3E600C85191 /* TimestampValue.swift in Sources */,
 				9C12D49122134970003136B2 /* NoteSelectionSource.swift in Sources */,
 				9C27D9FD22FB3FA6008EE0A1 /* IndexTerm.swift in Sources */,
 				9CD3262A22330C8A00D06B77 /* ViewFactory.swift in Sources */,
@@ -2266,7 +2282,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2293,7 +2309,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

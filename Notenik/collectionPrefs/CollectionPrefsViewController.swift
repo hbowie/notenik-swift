@@ -31,6 +31,7 @@ class CollectionPrefsViewController: NSViewController {
     var fieldSelectors:  [NSButton] = []
     
     var titleCkBox:      NSButton!
+    var timestampCkBox:  NSButton!
     var tagsCkBox:       NSButton!
     var linkCkBox:       NSButton!
     var statusCkBox:     NSButton!
@@ -97,6 +98,10 @@ class CollectionPrefsViewController: NSViewController {
         titleCkBox = NSButton(checkboxWithTitle: "Title", target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(titleCkBox)
         stackView.addArrangedSubview(titleCkBox)
+        
+        timestampCkBox = NSButton(checkboxWithTitle: "Timestamp", target: self, action: #selector(checkBoxClicked))
+        fieldSelectors.append(timestampCkBox)
+        stackView.addArrangedSubview(timestampCkBox)
         
         tagsCkBox = NSButton(checkboxWithTitle: "Tags", target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(tagsCkBox)

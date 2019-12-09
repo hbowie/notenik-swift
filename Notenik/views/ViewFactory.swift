@@ -33,7 +33,8 @@ class ViewFactory {
         } else if def.fieldType.typeString == "tags" {
             return TagsView(pickList: pickLists.tagsPickList)
         } else if def.fieldType.typeString == "label"
-            || def.fieldType.typeString == "dateadded" {
+            || def.fieldType.typeString == "dateadded"
+            || def.fieldType.typeString == "timestamp" {
             return LabelView()
         } else if def.fieldType.typeString == "worktype" {
             return WorkTypeView()

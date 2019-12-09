@@ -66,6 +66,7 @@ class Note: Comparable, NSCopying {
         self.collection = collection
     }
     
+    /// The note's creation date, as reported from the note's environment (file system, etc.)
     var envCreateDate: String {
         get {
             return _envCreateDate
@@ -77,6 +78,14 @@ class Note: Comparable, NSCopying {
                 let dateAddedValue = dateAdded
                 if dateAddedValue.value.count == 0 {
                     _ = setDateAdded(newValue)
+                }
+            }
+            let timestampDef = collection.dict.getDef(LabelConstants.timestamp)
+            if timestampDef != nil {
+                if !self.contains(label: LabelConstants.timestamp) {
+                    let timestamp = TimestampValue(newValue)
+                    let timestampField = NoteField(def: timestampDef!, value: timestamp)
+                    fields[timestampDef!.fieldLabel.commonForm] = timestampField
                 }
             }
         }
@@ -493,6 +502,16 @@ class Note: Comparable, NSCopying {
             return val as! DateValue
         } else {
             return DateValue(val.value)
+        }
+    }
+    
+    /// Retum the timestamp value
+    var timestamp: TimestampValue {
+        let val = getFieldAsValue(label: LabelConstants.timestamp)
+        if val is TimestampValue {
+            return val as! TimestampValue
+        } else {
+            return TimestampValue(val.value)
         }
     }
     
