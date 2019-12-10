@@ -43,6 +43,7 @@ class NoteLineParser {
     var oneChar      = true
     var bodyStarted  = false
     var indexStarted = false
+    var mdFormat     = false
     
     var lineNumber   = 0
     var fileSize     = 0
@@ -82,6 +83,7 @@ class NoteLineParser {
         fileSize   = 0
         bodyStarted = false
         indexStarted = false
+        mdFormat = false
         pendingBlankLines = 0
     }
     
@@ -165,15 +167,24 @@ class NoteLineParser {
             line = ""
         } else {
             line = possibleLine!
-            scanLine()
+            lineNumber += 1
+            fileSize += line.count + 1
+            if lineNumber == 1 &&
+                        line.starts(with: "# ") {
+                grabMarkdownTitle()
+            } else if (mdFormat &&
+                        line.starts(with: "#") &&
+                        !bodyStarted &&
+                        !label.validLabel) {
+                grabMarkdownTag()
+            } else {
+                scanLine()
+            }
         }
     }
     
     /// Scan the line and collect relevant info about it
     func scanLine() {
-        
-        lineNumber += 1
-        fileSize += line.count + 1
         
         firstIndex = line.startIndex
         lastIndex  = line.endIndex
@@ -187,7 +198,7 @@ class NoteLineParser {
         oneChar = true
         firstChar = nil
         var colonCount = 0
-        var commaCount = 0
+        var badLabelPunctuationCount = 0
         var offset = 0
         for c in line {
             nextIndex = line.index(index, offsetBy: 1)
@@ -206,7 +217,7 @@ class NoteLineParser {
             var validLabel = false
             if c == ":" {
                 colonCount += 1
-                if colonCount == 1 && commaCount == 0 && !bodyStarted {
+                if colonCount == 1 && badLabelPunctuationCount == 0 && !bodyStarted {
                     colonFound = true
                     colonIndex = index
                     possibleLabel.set(StringUtils.trim(String(line[line.startIndex..<index])))
@@ -216,13 +227,28 @@ class NoteLineParser {
                         nextValue = StringUtils.trim(String(line[nextIndex..<line.endIndex]))
                     }
                 }
-            } else if c == "," {
-                commaCount += 1
+            } else if c == "," || c == "[" || c == "]" || c == "(" || c == ")" {
+                badLabelPunctuationCount += 1
             }
             index = nextIndex
             offset += 1
         } // end for each character in line
         
+    }
+    
+    /// If the first line of the file appears to be a Markdown level 1 header,
+    /// then use this as the Note's title.
+    func grabMarkdownTitle() {
+        let title = StringUtils.trimHeading(line)
+        _ = note.setTitle(title)
+        mdFormat = true
+    }
+    
+    /// If the file seems to be more or less straight Markdown, and it has a line starting
+    /// with a '#' followed immediately by text, then treat this as a tag.
+    func grabMarkdownTag() {
+        let tags = StringUtils.trimHeading(line)
+        _ = note.setTags(tags)
     }
     
     func appendNonBlankLine() {
