@@ -16,7 +16,7 @@ In other words, something like this:
 
 	Title: This is a Sample Note
 
-Field Labels must follow a few rules. A Field Label must always start at the beginning of a line. A Field Label may not consist of more than 48 characters, and may not contain a comma (',').
+Field Labels must follow a few rules. A Field Label must always start at the beginning of a line. A Field Label may not consist of more than 48 characters, and may not contain a comma, brackets or parentheses. 
 
 The Field Value may be specified on the same line, and/or on one or more following lines.
 
