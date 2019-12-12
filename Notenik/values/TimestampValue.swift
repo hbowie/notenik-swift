@@ -21,7 +21,11 @@ class TimestampValue: StringValue {
     /// Set an initial value as part of initialization
     convenience init (_ value: String) {
         self.init()
-        set(value)
+        if value.count == 0 {
+            now()
+        } else {
+            set(value)
+        }
     }
     
     /// Set this value to the current date and time.

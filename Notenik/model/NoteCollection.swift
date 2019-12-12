@@ -22,15 +22,18 @@ class NoteCollection {
     var idRule       : NoteIDRule
     var sortParm     : NoteSortParm
     var sortDescending: Bool
-    var typeCatalog =  AllTypes()
+    var typeCatalog  = AllTypes()
     var statusConfig : StatusValueConfig
-    /// Preferred file extension for the current collection
     var preferredExt : String = "txt"
     var otherFields  = false
     var readOnly     : Bool = false
     var customFields : [SortField] = []
+    var doubleBracketParsing = false
     
-    ///Is this collection a collection of collections within a parent realm?
+    /// Does this collection include a timestamp field?
+    var hasTimestamp = false
+    
+    /// Is this collection a collection of collections within a parent realm?
     var isRealmCollection = false
     
     /// Default initialization of a new Realm.

@@ -67,9 +67,6 @@ protocol NotenikIO {
     /// Open a New Collection
     func newCollection(collection: NoteCollection) -> Bool
     
-    /// Open a Collection to be used as an archive for another Collection.
-    
-    
     /// Open a Collection to be used as an archive for another Collection. This will
     /// be a normal open, if the archive has already been created, or will create
     /// a new Collection, if the Archive is being accessed for the first time.
@@ -167,6 +164,11 @@ protocol NotenikIO {
     /// - Parameter id: The ID we are looking for.
     /// - Returns: The Note with this key, if one exists; otherwise nil.
     func getNote(forID id: String) -> Note?
+    
+    /// Get the existing note with the specified timestamp, if one exists.
+    /// - Parameter stamp: The timestamp we are looking for.
+    /// - Returns: The Note with this timestamp, if one exists; otherwise nil. 
+    func getNote(forTimestamp stamp: String) -> Note?
     
     /// Return the first note in the sorted list, along with its index position.
     ///

@@ -31,6 +31,7 @@ class ShareViewController: NSViewController {
     let fileValue = "file"
     
     var window: ShareWindowController?
+    var io: NotenikIO?
     var note: Note?
     var stringToShare = "No data available"
 
@@ -78,7 +79,7 @@ class ShareViewController: NSViewController {
     /// User said OK -- Let's do the Sharing now
     @IBAction func okButtonPressed(_ sender: Any) {
         
-        guard note != nil && window != nil else { return }
+        guard note != nil && window != nil && io != nil else { return }
         
         // Set desired output format
         var format: MarkedupFormat = .htmlDoc
@@ -109,7 +110,7 @@ class ShareViewController: NSViewController {
         } else {
             let noteDisplay = NoteDisplay()
             noteDisplay.format = format
-            stringToShare = noteDisplay.display(note!)
+            stringToShare = noteDisplay.display(note!, io: io!)
         }
         
         // Write the string to an output destination

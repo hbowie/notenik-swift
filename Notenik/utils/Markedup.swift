@@ -14,6 +14,8 @@ import Foundation
 /// An object capable of generating marked up text (currently HTML or Markdown)
 class Markedup: CustomStringConvertible {
     
+    var notenikIO: NotenikIO?
+    
     var format: MarkedupFormat = .htmlFragment
     var code = ""
     
@@ -603,6 +605,7 @@ class Markedup: CustomStringConvertible {
         switch format {
         case.htmlFragment, .htmlDoc, .netscapeBookmarks:
             let downer = Markdown()
+            downer.notenikIO = notenikIO
             downer.md = markdown
             downer.parse()
             if downer.ok {

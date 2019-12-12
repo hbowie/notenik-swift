@@ -51,6 +51,8 @@ class CollectionPrefsViewController: NSViewController {
     
     var otherFieldsCkBox: NSButton!
     
+    var doubleBracketCkBox: NSButton!
+    
     var okButton:        NSButton!
     var cancelButton:    NSButton!
     var actionStack:     NSStackView!
@@ -68,6 +70,7 @@ class CollectionPrefsViewController: NSViewController {
         setFileExt(collection.preferredExt)
         setFieldsForCollection()
         setOtherFieldsAllowed(collection.otherFields)
+        setDoubleBracketParsing(collection.doubleBracketParsing)
     }
     
     override func viewDidLoad() {
@@ -164,6 +167,9 @@ class CollectionPrefsViewController: NSViewController {
         otherFieldsCkBox = NSButton(checkboxWithTitle: "Other fields allowed?", target: self, action: #selector(checkBoxClicked))
         stackView.addArrangedSubview(otherFieldsCkBox)
         
+        doubleBracketCkBox = NSButton(checkboxWithTitle: "Double Bracket Parsing for Inter-Note Links?", target: self, action: #selector(checkBoxClicked))
+        stackView.addArrangedSubview(doubleBracketCkBox)
+        
         okButton = NSButton(title: "OK", target: self, action: #selector(okButtonClicked))
         cancelButton = NSButton(title: "Cancel", target: self, action: #selector(cancelButtonClicked))
         actionStack = NSStackView(views: [okButton, cancelButton])
@@ -176,6 +182,7 @@ class CollectionPrefsViewController: NSViewController {
         setFileExt(collection!.preferredExt)
         setFieldsForCollection()
         setOtherFieldsAllowed(collection!.otherFields)
+        setDoubleBracketParsing(collection!.doubleBracketParsing)
     }
     
     func setFileExt(_ ext: String?) {
@@ -238,6 +245,14 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
+    func setDoubleBracketParsing(_ on: Bool) {
+        if on {
+            doubleBracketCkBox.state = NSControl.StateValue.on
+        } else {
+            doubleBracketCkBox.state = NSControl.StateValue.off
+        }
+    }
+    
     @objc func checkBoxClicked() {
         // No need to take any immediate action here
     }
@@ -247,6 +262,7 @@ class CollectionPrefsViewController: NSViewController {
         collection!.title = collectionTitle.stringValue
         collection!.preferredExt = fileExtComboBox.stringValue
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
+        collection!.doubleBracketParsing = doubleBracketCkBox.state == NSControl.StateValue.on
         let dict = collection!.dict
         for checkBox in fieldSelectors {
             let def = dict.getDef(checkBox.title)

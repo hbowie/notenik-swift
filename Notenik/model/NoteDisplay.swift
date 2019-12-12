@@ -22,15 +22,16 @@ class NoteDisplay: NSObject {
     ///
     /// - Parameter note: The note to be displayed.
     /// - Returns: A string containing the encoded note.
-    func display(_ note: Note) -> String {
+    func display(_ note: Note, io: NotenikIO) -> String {
         let collection = note.collection
         let dict = collection.dict
         let code = Markedup(format: format)
+        code.notenikIO = io
         code.startDoc(withTitle: note.title.value, withCSS: displayPrefs.bodyCSS)
         var i = 0
         if note.hasTags() {
             let tagsField = note.getField(label: LabelConstants.tags)
-            code.append(display(tagsField!))
+            code.append(display(tagsField!, io: io))
         }
         while i < dict.count {
             let def = dict.getDef(i)
@@ -40,7 +41,7 @@ class NoteDisplay: NSObject {
                     field!.value.hasData &&
                     field!.def.fieldLabel.commonForm != LabelConstants.tagsCommon &&
                     field!.def.fieldLabel.commonForm != LabelConstants.dateAddedCommon) {
-                    code.append(display(field!))
+                    code.append(display(field!, io: io))
                 }
             }
             i += 1
@@ -49,7 +50,7 @@ class NoteDisplay: NSObject {
             let dateAdded = note.getField(label: LabelConstants.dateAdded)
             if dateAdded != nil {
                 code.horizontalRule()
-                code.append(display(dateAdded!))
+                code.append(display(dateAdded!, io: io))
             }
         }
         code.finishDoc()
@@ -61,9 +62,9 @@ class NoteDisplay: NSObject {
     ///
     /// - Parameter field: The field to be displayed.
     /// - Returns: A String containing the code that can be used to display this field.
-    func display(_ field: NoteField) -> String {
+    func display(_ field: NoteField, io: NotenikIO) -> String {
         let code = Markedup(format: format)
-
+        code.notenikIO = io
         if field.def.fieldLabel.commonForm == LabelConstants.titleCommon {
             code.startParagraph()
             code.startStrong()

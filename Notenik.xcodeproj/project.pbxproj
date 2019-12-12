@@ -387,6 +387,9 @@
 		9C9A6BB522EA603700E1F127 /* SortModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A6BB422EA603700E1F127 /* SortModule.swift */; };
 		9C9A6BB622EA603700E1F127 /* SortModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A6BB422EA603700E1F127 /* SortModule.swift */; };
 		9C9A6BB722EA603700E1F127 /* SortModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A6BB422EA603700E1F127 /* SortModule.swift */; };
+		9C9B6D8323A2DE6400E7E348 /* NoteCrumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B6D8223A2DE6400E7E348 /* NoteCrumbs.swift */; };
+		9C9B6D8423A2DE6400E7E348 /* NoteCrumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B6D8223A2DE6400E7E348 /* NoteCrumbs.swift */; };
+		9C9B6D8523A2DE6400E7E348 /* NoteCrumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9B6D8223A2DE6400E7E348 /* NoteCrumbs.swift */; };
 		9CA0D1F523677CE100ACA52A /* DateAddedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA0D1F423677CE100ACA52A /* DateAddedType.swift */; };
 		9CA0D1F623677CE100ACA52A /* DateAddedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA0D1F423677CE100ACA52A /* DateAddedType.swift */; };
 		9CA0D1F723677CE100ACA52A /* DateAddedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA0D1F423677CE100ACA52A /* DateAddedType.swift */; };
@@ -794,6 +797,7 @@
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
 		9C9A6BAD22EA5FBC00E1F127 /* SortField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortField.swift; sourceTree = "<group>"; };
 		9C9A6BB422EA603700E1F127 /* SortModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortModule.swift; sourceTree = "<group>"; };
+		9C9B6D8223A2DE6400E7E348 /* NoteCrumbs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCrumbs.swift; sourceTree = "<group>"; };
 		9CA0D1F423677CE100ACA52A /* DateAddedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAddedType.swift; sourceTree = "<group>"; };
 		9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldComparisonOperator.swift; sourceTree = "<group>"; };
 		9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewController.swift; sourceTree = "<group>"; };
@@ -1181,6 +1185,7 @@
 				9C8540AD22E8D78B0074E349 /* NotesList.swift */,
 				9C060686228E0A9300CB8C10 /* RealmScanner.swift */,
 				9CED74FA23356657003F7F2C /* Sequencer.swift */,
+				9C9B6D8223A2DE6400E7E348 /* NoteCrumbs.swift */,
 			);
 			path = io;
 			sourceTree = "<group>";
@@ -1719,6 +1724,7 @@
 				9C0B643C23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */,
 				9CB6EC992363D5B600951820 /* AllTypes.swift in Sources */,
 				9CC78E6F228358A400640477 /* DisplayPrefsViewController.swift in Sources */,
+				9C9B6D8323A2DE6400E7E348 /* NoteCrumbs.swift in Sources */,
 				9C60E79B21F651E500C332ED /* NotePosition.swift in Sources */,
 				9C78888A21FB950900452D74 /* Markedup.swift in Sources */,
 				9C822B9622D63A11008EF106 /* TagValue.swift in Sources */,
@@ -1758,6 +1764,7 @@
 				9C60E7C621F6525F00C332ED /* FileNameTests.swift in Sources */,
 				9CB6EC9F2364AE0100951820 /* AuthorType.swift in Sources */,
 				9C60E70321F650B800C332ED /* StringUtils.swift in Sources */,
+				9C9B6D8423A2DE6400E7E348 /* NoteCrumbs.swift in Sources */,
 				9C60E77221F651E500C332ED /* LinkValue.swift in Sources */,
 				9C21DB8121F82DB500A5A08C /* NoteDisplay.swift in Sources */,
 				9C60E76C21F651E500C332ED /* StatusValueConfig.swift in Sources */,
@@ -1963,6 +1970,7 @@
 				9CF1193F225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
 				9C2AE523220A34B300AE8BEE /* AppDelegate.swift in Sources */,
 				9C67248722EA1B2D00CB7D39 /* FilterModule.swift in Sources */,
+				9C9B6D8523A2DE6400E7E348 /* NoteCrumbs.swift in Sources */,
 				9C0B643A23888D6700869FAA /* TagsMassChangeWindowController.swift in Sources */,
 				9C2AE520220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9CF3DE4E22A6F5330078A6B0 /* MergeReport.swift in Sources */,
@@ -2282,7 +2290,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2294,7 +2302,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.3.0;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2309,7 +2317,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2321,7 +2329,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.3.0;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

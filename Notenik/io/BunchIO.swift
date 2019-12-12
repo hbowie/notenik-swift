@@ -365,6 +365,14 @@ class BunchIO: NotenikIO, RowConsumer  {
         return bunch!.getNote(forID: id)
     }
     
+    /// Get the existing note with the specified timestamp, if one exists.
+    /// - Parameter stamp: The timestamp we are looking for.
+    /// - Returns: The Note with this timestamp, if one exists; otherwise nil.
+    func getNote(forTimestamp stamp: String) -> Note? {
+        guard collection != nil && collectionOpen else { return nil }
+        return bunch!.getNote(forTimestamp: stamp)
+    }
+    
     /// Return the first note in the sorted list, along with its index position.
     ///
     /// If the list is empty, return a nil Note and an index position of -1.

@@ -24,6 +24,8 @@ struct LabelConstants {
     static let dateCommon       = "date"
     static let dateAdded        = "Date Added"
     static let dateAddedCommon  = "dateadded"
+    static let doubleBracketParsing = "Double Bracket Parsing"
+    static let doubleBracketParsingCommon = "doublebracketparsing"
     static let index            = "Index"
     static let indexCommon      = "index"
     static let link             = "Link"

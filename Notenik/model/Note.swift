@@ -312,6 +312,10 @@ class Note: Comparable, NSCopying {
         return setField(label: LabelConstants.dateAdded, value: dateAdded)
     }
     
+    func setTimestamp(_ timestamp: String) -> Bool {
+        return setField(label: LabelConstants.timestamp, value: timestamp)
+    }
+    
     /// Return the Note's Artist Value
     var artist: ArtistValue {
         let val = getFieldAsValue(label: LabelConstants.artist)
@@ -628,6 +632,10 @@ class Note: Comparable, NSCopying {
     /// Does this note have a date added?
     func hasDateAdded() -> Bool {
         return dateAdded.count > 0
+    }
+    
+    func hasTimestamp() -> Bool {
+        return timestamp.count > 0
     }
     
     /// Does this Note contain a title?

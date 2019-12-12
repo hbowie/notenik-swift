@@ -1,0 +1,8 @@
+Title:  Note to Link From
+
+Timestamp: 20191210213329
+
+Body: 
+
+Trying to figure out how to link from one note to [another](https://ntnk.app/note-to-link-to).
+

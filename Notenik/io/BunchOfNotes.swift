@@ -18,6 +18,7 @@ class BunchOfNotes {
     var notesDict = [String : Note]()
     var notesList = NotesList()
     var notesTree = TagsTree()
+    var timestampDict = [String : Note]()
     var listIndex = 0
     
     /// Return the number of notes in the current collection.
@@ -75,24 +76,32 @@ class BunchOfNotes {
     func add(note: Note) -> Bool {
         let noteID = note.noteID
         let existingNote = notesDict[noteID]
-        if existingNote != nil {
-            return false
+        guard existingNote == nil else { return false }
+
+        notesDict[noteID] = note
+        let (index, _) = searchList(note)
+        if index < 0 {
+            notesList.insert(note, at: 0)
+            listIndex = 0
+        } else if index >= notesList.count {
+            listIndex = notesList.count
+            notesList.append(note)
         } else {
-            notesDict[noteID] = note
-            let (index, _) = searchList(note)
-            if index < 0 {
-                notesList.insert(note, at: 0)
-                listIndex = 0
-            } else if index >= notesList.count {
-                listIndex = notesList.count
-                notesList.append(note)
-            } else {
-                notesList.insert(note, at: index)
-                listIndex = index
-            }
-            notesTree.add(note: note)
-            return true
+            notesList.insert(note, at: index)
+            listIndex = index
         }
+        
+        notesTree.add(note: note)
+        
+        if collection.hasTimestamp {
+            let stamp = note.timestamp.value
+            if stamp.count > 0 {
+                timestampDict[stamp] = note
+            }
+        }
+        
+        return true
+
     }
     
     func delete(note: Note) ->  Bool {
@@ -111,6 +120,11 @@ class BunchOfNotes {
         
         // Remove the note from the Tags Tree
         notesTree.delete(note: note)
+        
+        // Remove the note from the timestamp dictionary
+        if collection.hasTimestamp {
+            timestampDict.removeValue(forKey: note.timestamp.value)
+        }
         
         return true
     }
@@ -176,13 +190,20 @@ class BunchOfNotes {
         }
     }
     
-    
     /// Get the existing note with the specified ID.
     ///
     /// - Parameter id: The ID we are looking for.
     /// - Returns: The Note with this key, if one exists; otherwise nil.
     func getNote(forID id: String) -> Note? {
         return notesDict[id]
+    }
+    
+    /// Get the existing note with the specified timestamp.
+    /// - Parameter stamp: The timestamp in string form.
+    /// - Returns: The Note with this timestamp, if one exists; otherwise nil.
+    func getNote(forTimestamp stamp: String) -> Note? {
+        guard collection.hasTimestamp else { return nil }
+        return timestampDict[stamp]
     }
     
     /// Return the next note in the sorted list, along with its index position.

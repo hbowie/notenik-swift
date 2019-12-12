@@ -33,6 +33,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     let addAttachmentTitle = "Add Attachment..."
     
     var notenikIO:           NotenikIO?
+    var crumbs:              NoteCrumbs?
     var windowNumber         = 0
     
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
@@ -53,83 +54,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     var newNote: Note?
     var modInProgress = false
-    
-    /// Copy the selected note to the system clipboard.
-    @IBAction func copy(_ sender: AnyObject?) {
-        let (_, sel) = guardForNoteAction()
-        guard let selectedNote = sel else { return }
-        let maker = NoteLineMaker()
-        let _ = maker.putNote(selectedNote)
-        var str = ""
-        if let writer = maker.writer as? BigStringWriter {
-            str = writer.bigString
-        }
-        let board = NSPasteboard.general
-        board.clearContents()
-        board.setString(str, forType: NSPasteboard.PasteboardType.string)
-    }
-    
-    /// Copy the selected note to the system clipboard and then
-    /// attempt to delete the note.
-    @IBAction func cut(_ sender: AnyObject?) {
-        let (_, sel) = guardForNoteAction()
-        guard let selectedNote = sel else { return }
-        let maker = NoteLineMaker()
-        let _ = maker.putNote(selectedNote)
-        var str = ""
-        if let writer = maker.writer as? BigStringWriter {
-            str = writer.bigString
-        }
-        let board = NSPasteboard.general
-        board.clearContents()
-        board.setString(str, forType: NSPasteboard.PasteboardType.string)
-        if str.count > 0 {
-            deleteNote(sender ?? self)
-        }
-    }
-    
-    /// Paste the passed notes found in the system clipboard.
-    @IBAction func paste(_ sender: AnyObject?) {
-        guard let noteIO = guardForCollectionAction() else { return }
-        guard let collection = noteIO.collection else { return }
-        let board = NSPasteboard.general
-        guard let items = board.pasteboardItems else { return }
-        var notesAdded = 0
-        var firstNotePasted: Note?
-        for item in items {
-            let str = item.string(forType: NSPasteboard.PasteboardType.string)
-            if str != nil && str!.count > 0 {
-                let reader = BigStringReader(str!)
-                let parser = NoteLineParser(collection: collection, lineReader: reader)
-                notesAdded += 1
-                let note = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)")
-                if note.hasTitle() {
-                    let originalTitle = note.title.value
-                    var keyFound = true
-                    var dupCount = 1
-                    while keyFound {
-                        let id = note.noteID
-                        let existingNote = noteIO.getNote(forID: id)
-                        if existingNote != nil {
-                            dupCount += 1
-                            _ = note.setTitle("\(originalTitle) \(dupCount)")
-                            keyFound = true
-                        } else {
-                            keyFound = false
-                        }
-                    }
-                    let (pastedNote, _) = noteIO.addNote(newNote: note)
-                    if pastedNote != nil && firstNotePasted == nil {
-                        firstNotePasted = pastedNote
-                    }
-                } // End if we got a good note out of the deal
-            } // End if we found a good string
-        } // end for each item
-        finishBatchOperation()
-        if firstNotePasted != nil {
-            select(note: firstNotePasted, position: nil, source: .nav)
-        }
-    } // end of paste function
     
     var splitViewController: NoteSplitViewController?
     
@@ -157,6 +81,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                 window!.title = "No Collection to Display"
                 return
             }
+            crumbs = NoteCrumbs(io: newValue!)
             window!.representedURL = notenikIO!.collection!.collectionFullPathURL
             if notenikIO!.collection!.title == "" {
                 window!.title = notenikIO!.collection!.path
@@ -312,6 +237,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
         catch {
             communicateError("Error saving sample report to \(sampleURL.path)", alert: true)
+            ok = false
             return
         }
         
@@ -427,6 +353,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             editItem = noteTabs?.tabViewItems[1]
             editVC = editItem?.viewController as? NoteEditViewController
             editVC!.window = self
+            
+            if displayVC != nil {
+                displayVC!.wc = self
+            }
         }
     }
     
@@ -615,6 +545,83 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let _ = alert.runModal()
     }
     
+    /// Copy the selected note to the system clipboard.
+    @IBAction func copy(_ sender: AnyObject?) {
+        let (_, sel) = guardForNoteAction()
+        guard let selectedNote = sel else { return }
+        let maker = NoteLineMaker()
+        let _ = maker.putNote(selectedNote)
+        var str = ""
+        if let writer = maker.writer as? BigStringWriter {
+            str = writer.bigString
+        }
+        let board = NSPasteboard.general
+        board.clearContents()
+        board.setString(str, forType: NSPasteboard.PasteboardType.string)
+    }
+    
+    /// Copy the selected note to the system clipboard and then
+    /// attempt to delete the note.
+    @IBAction func cut(_ sender: AnyObject?) {
+        let (_, sel) = guardForNoteAction()
+        guard let selectedNote = sel else { return }
+        let maker = NoteLineMaker()
+        let _ = maker.putNote(selectedNote)
+        var str = ""
+        if let writer = maker.writer as? BigStringWriter {
+            str = writer.bigString
+        }
+        let board = NSPasteboard.general
+        board.clearContents()
+        board.setString(str, forType: NSPasteboard.PasteboardType.string)
+        if str.count > 0 {
+            deleteNote(sender ?? self)
+        }
+    }
+    
+    /// Paste the passed notes found in the system clipboard.
+    @IBAction func paste(_ sender: AnyObject?) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        let board = NSPasteboard.general
+        guard let items = board.pasteboardItems else { return }
+        var notesAdded = 0
+        var firstNotePasted: Note?
+        for item in items {
+            let str = item.string(forType: NSPasteboard.PasteboardType.string)
+            if str != nil && str!.count > 0 {
+                let reader = BigStringReader(str!)
+                let parser = NoteLineParser(collection: collection, lineReader: reader)
+                notesAdded += 1
+                let note = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)")
+                if note.hasTitle() {
+                    let originalTitle = note.title.value
+                    var keyFound = true
+                    var dupCount = 1
+                    while keyFound {
+                        let id = note.noteID
+                        let existingNote = noteIO.getNote(forID: id)
+                        if existingNote != nil {
+                            dupCount += 1
+                            _ = note.setTitle("\(originalTitle) \(dupCount)")
+                            keyFound = true
+                        } else {
+                            keyFound = false
+                        }
+                    }
+                    let (pastedNote, _) = noteIO.addNote(newNote: note)
+                    if pastedNote != nil && firstNotePasted == nil {
+                        firstNotePasted = pastedNote
+                    }
+                } // End if we got a good note out of the deal
+            } // End if we found a good string
+        } // end for each item
+        finishBatchOperation()
+        if firstNotePasted != nil {
+            select(note: firstNotePasted, position: nil, source: .nav)
+        }
+    } // end of paste function
+    
     /// Ask the user to pick a file or folder and set the link field to the local URL
     @IBAction func setLocalLink(_ sender: Any) {
 
@@ -790,6 +797,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             guard let vc = shareController.contentViewController as? ShareViewController else { return }
             shareController.showWindow(sender)
             vc.window = shareController
+            vc.io = notenikIO!
             vc.note = note
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
@@ -833,28 +841,22 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// Go to the next note in the list
     @IBAction func goToNextNote(_ sender: Any) {
-        guard let noteIO = notenikIO else { return }
-        let outcome = modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return }
-        let startingPosition = noteIO.position
-        var (note, position) = noteIO.nextNote(startingPosition!)
-        if note == nil {
-            (note, position) = noteIO.firstNote()
-        }
-        select(note: note, position: position, source: .nav)
+        let (_, sel) = guardForNoteAction()
+        guard let selNote = sel else { return }
+        
+        let nextNote = crumbs!.advance(from: selNote)
+
+        select(note: nextNote, position: nil, source: .nav)
     }
     
     /// Go to the prior note in the list
     @IBAction func goToPriorNote(_ sender: Any) {
-        guard let noteIO = notenikIO else { return }
-        let outcome = modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return }
-        let startingPosition = noteIO.position
-        var (note, position) = noteIO.priorNote(startingPosition!)
-        if note == nil {
-            (note, position) = noteIO.lastNote()
-        }
-        select(note: note, position: position, source: .nav)
+        let (_, sel) = guardForNoteAction()
+        guard let selNote = sel else { return }
+        
+        let priorNote = crumbs!.backup(from: selNote)
+        
+        select(note: priorNote, position: nil, source: .nav)
     }
     
     @IBAction func findNote(_ sender: Any) {
@@ -960,7 +962,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             listVC!.selectRow(index: positionToUse!.index)
         }
         if displayVC != nil  && noteToUse != nil {
-            displayVC!.display(note: noteToUse!)
+            displayVC!.display(note: noteToUse!, io: notenikIO!)
         }
         if editVC != nil && noteToUse != nil {
             editVC!.select(note: noteToUse!)
@@ -968,6 +970,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         if noteToUse != nil {
             adjustAttachmentsMenu(noteToUse!)
         }
+        
+        crumbs!.select(latest: noteToUse!)
     }
     
     /// Adjust the Attachments menu based on the attachments found in the passed note.
@@ -1205,7 +1209,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     /// Take appropriate actions when the user has modified the note
     func noteModified(updatedNote: Note) {
         if displayVC != nil {
-            displayVC!.display(note: updatedNote)
+            displayVC!.display(note: updatedNote, io: notenikIO!)
         }
     }
     
@@ -1602,8 +1606,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             return nil
         }
     }
-    
-
     
     /// Export the current collection in Notenik format.
     @IBAction func exportNotenik(_ sender: Any) {

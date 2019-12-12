@@ -1,0 +1,7 @@
+Title:  5th Note to Link From
+
+Body: 
+
+Now let's try double-brackets with a timestamp. 
+
+Let's link to [[20191211195917]].

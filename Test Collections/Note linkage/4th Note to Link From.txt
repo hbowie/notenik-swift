@@ -1,0 +1,7 @@
+Title:  4th Note to Link From
+
+Body: 
+
+This time we're going to try wiki-style double-bracket links. 
+
+So let's go to [[Note to Link From]].

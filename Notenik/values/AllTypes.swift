@@ -32,6 +32,7 @@ class AllTypes {
     let statusType  = StatusType()
     let stringType  = StringType()
     let tagsType    = TagsType()
+    let teaserType  = LongTextType()
     let titleType   = TitleType()
     let timestampType = TimestampType()
     let workTitleType = WorkTitleType()
@@ -83,6 +84,10 @@ class AllTypes {
         codeType.properLabel = "Code"
         codeType.commonLabel = "code"
         fieldTypes.append(codeType)
+        
+        teaserType.properLabel = "Teaser"
+        teaserType.commonLabel = "teaser"
+        fieldTypes.append(teaserType)
         
         fieldTypes.append(ratingType)
         

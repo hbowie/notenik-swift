@@ -12,21 +12,28 @@
 import Cocoa
 import WebKit
 
-class NoteDisplayViewController: NSViewController, WKUIDelegate {
+class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
+    
+    var wc: CollectionWindowController?
     
     @IBOutlet var webView: WKWebView!
     
+    let urlNavPrevix = "https://ntnk.app/"
+    
     let noteDisplay = NoteDisplay()
     
+    var io: NotenikIO?
     var note: Note?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.uiDelegate = self
+        webView.navigationDelegate = self
     }
     
     /// Display the provided note
-    func display(note: Note) {
+    func display(note: Note, io: NotenikIO) {
+        self.io = io
         self.note = note
         display()
     }
@@ -41,7 +48,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate {
     /// Generate the display from the last note provided
     func display() {
         guard note != nil else { return }
-        let html = noteDisplay.display(note!)
+        guard io != nil else { return }
+        let html = noteDisplay.display(note!, io: io!)
         let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
         if nav == nil {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
@@ -49,6 +57,43 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate {
                               level: .error,
                               message: "load html String returned nil")
         }
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let url = navigationAction.request.url?.absoluteString else {
+            decisionHandler(.allow)
+            return
+        }
+        if !url.starts(with: urlNavPrevix) {
+            decisionHandler(.allow)
+            return
+        }
+        let notePath = url.dropFirst(urlNavPrevix.count)
+        let noteID = StringUtils.toCommon(String(notePath))
+        guard let io = wc?.notenikIO else {
+            decisionHandler(.cancel)
+            return
+        }
+        var nextNote = io.getNote(forID: noteID)
+        if nextNote == nil {
+            nextNote = io.getNote(forTimestamp: noteID)
+        }
+        if nextNote == nil {
+            // print("---- Linked Note not found")
+        } else {
+            wc!.select(note: nextNote, position: nil, source: .nav)
+        }
+        decisionHandler(.cancel)
+
+        /*
+        if let host = navigationAction.request.url?.host {
+            if host.contains("hackingwithswift.com") {
+                decisionHandler(.allow)
+                return
+            }
+        }
+ 
+        decisionHandler(.cancel) */
     }
     
 }

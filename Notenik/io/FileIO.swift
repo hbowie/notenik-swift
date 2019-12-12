@@ -198,7 +198,13 @@ class FileIO: NotenikIO, RowConsumer {
                             let sortDescending = BooleanValue(sortDescField!.value.value)
                             collection!.sortDescending = sortDescending.isTrue
                         }
-
+                        
+                        let doubleBracketField = infoNote!.getField(label: LabelConstants.doubleBracketParsingCommon)
+                        if doubleBracketField != nil {
+                            let doubleBracketParsing = BooleanValue(doubleBracketField!.value.value)
+                            collection!.doubleBracketParsing = doubleBracketParsing.isTrue
+                        }
+                        
                         infoFound = true
                     }
                     
@@ -209,6 +215,9 @@ class FileIO: NotenikIO, RowConsumer {
                         && collection!.dict.count > 0) {
                         templateFound = true
                         for def in collection!.dict.list {
+                            if def.fieldLabel.commonForm == LabelConstants.timestampCommon {
+                                collection!.hasTimestamp = true
+                            }
                             let val = templateNote!.getFieldAsValue(label: def.fieldLabel.commonForm)
                             if val.value.hasPrefix("<") && val.value.hasSuffix(">") {
                                 var typeStr = ""
@@ -719,6 +728,7 @@ class FileIO: NotenikIO, RowConsumer {
         str.append("Sort Parm: " + collection!.sortParm.str + "\n\n")
         str.append("Sort Descending: \(collection!.sortDescending)" + "\n\n")
         str.append("Other Fields Allowed: " + String(collection!.otherFields) + "\n\n")
+        str.append("\(LabelConstants.doubleBracketParsing): \(collection!.doubleBracketParsing)\n\n")
         
         let filePath = collection!.makeFilePath(fileName: FileIO.infoFileName)
         
@@ -739,6 +749,9 @@ class FileIO: NotenikIO, RowConsumer {
         let dict = collection!.dict
         var str = ""
         for def in dict.list {
+            if def.fieldLabel.commonForm == LabelConstants.timestampCommon {
+                collection!.hasTimestamp = true
+            }
             str.append(def.fieldLabel.properForm + ": \n\n")
         }
         let filePath = collection!.makeFilePath(fileName: "template." + collection!.preferredExt)
@@ -787,6 +800,11 @@ class FileIO: NotenikIO, RowConsumer {
         // Make sure we have an open collection available to us
         guard collection != nil && collectionOpen else { return (nil, NotePosition(index: -1)) }
         guard newNote.hasTitle() else { return (nil, NotePosition(index: -1)) }
+        if collection!.hasTimestamp {
+            if !newNote.hasTimestamp() {
+                _ = newNote.setTimestamp("")
+            }
+        }
         let added = bunch!.add(note: newNote)
         guard added else { return (nil, NotePosition(index: -1)) }
         newNote.makeFileNameFromTitle()
@@ -1001,6 +1019,14 @@ class FileIO: NotenikIO, RowConsumer {
     func getNote(forID id: String) -> Note? {
         guard collection != nil && collectionOpen else { return nil }
         return bunch!.getNote(forID: id)
+    }
+    
+    /// Get the existing note with the specified timestamp, if one exists.
+    /// - Parameter stamp: The timestamp we are looking for.
+    /// - Returns: The Note with this timestamp, if one exists; otherwise nil.
+    func getNote(forTimestamp stamp: String) -> Note? {
+        guard collection != nil && collectionOpen else { return nil }
+        return bunch!.getNote(forTimestamp: stamp)
     }
     
     /// Return the first note in the sorted list, along with its index position.
