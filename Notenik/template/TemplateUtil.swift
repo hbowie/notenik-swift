@@ -71,6 +71,7 @@ class TemplateUtil {
     let emailSingleQuoteConverter = StringConverter()
     let noBreakConverter = StringConverter()
     let markedup = Markedup(format: .htmlFragment)
+    let wikiLinks = WikiLinks()
     
     /// Initialize things.
     init() {
@@ -81,6 +82,9 @@ class TemplateUtil {
         noBreakConverter.addNoBreaks()
         resetGroupValues()
         resetGroupBreaks()
+        wikiLinks.prefix = ""
+        wikiLinks.format = .fileName
+        wikiLinks.suffix = ".html"
     }
     
     func setWebRoot(filePath: String) {
@@ -624,6 +628,22 @@ class TemplateUtil {
                 inc = 2
             } else if charLower == "v" {
                 varyStage = 1
+            } else if charLower == "w" {
+                switch nextChar {
+                case "1":
+                    wikiLinks.prefix = ""
+                    wikiLinks.format = .fileName
+                    wikiLinks.suffix = ".html"
+                    inc = 2
+                case "2":
+                    wikiLinks.prefix = "#"
+                    wikiLinks.format = .fileName
+                    wikiLinks.suffix = ""
+                    inc = 2
+                default:
+                    break
+                }
+                modifiedValue = wikiLinksParse(modifiedValue)
             } else if charLower == "x" {
                 modifiedValue = xmlConverter.convert(from: modifiedValue)
             } else if char == "y" {
@@ -702,6 +722,12 @@ class TemplateUtil {
         separatorPending = true
         lastSeparator = separator
         return out
+    }
+    
+    /// Pre-parse Markdown text to convert special wiki-style inter-note inks
+    /// to some sort of links that Markdown and HTML can work with.
+    func wikiLinksParse(_ textIn: String) -> String {
+        return wikiLinks.parse(textIn: textIn, io: nil)
     }
     
     /// Convert Markdown to HTML

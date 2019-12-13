@@ -40,16 +40,21 @@ class NoteDisplay: NSObject {
                 if (field != nil &&
                     field!.value.hasData &&
                     field!.def.fieldLabel.commonForm != LabelConstants.tagsCommon &&
-                    field!.def.fieldLabel.commonForm != LabelConstants.dateAddedCommon) {
+                    field!.def.fieldLabel.commonForm != LabelConstants.dateAddedCommon &&
+                    field!.def.fieldLabel.commonForm != LabelConstants.timestampCommon) {
                     code.append(display(field!, io: io))
                 }
             }
             i += 1
         }
-        if note.hasDateAdded() {
+        if note.hasDateAdded() || note.hasTimestamp() {
+            code.horizontalRule()
+            let stamp = note.getField(label: LabelConstants.timestamp)
+            if stamp != nil {
+                code.append(display(stamp!, io: io))
+            }
             let dateAdded = note.getField(label: LabelConstants.dateAdded)
             if dateAdded != nil {
-                code.horizontalRule()
                 code.append(display(dateAdded!, io: io))
             }
         }

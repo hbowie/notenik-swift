@@ -141,6 +141,9 @@
 		9C52B5882346B0D800CD7517 /* TextileSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C52B5872346B0D800CD7517 /* TextileSignature.swift */; };
 		9C52B5892346B0D800CD7517 /* TextileSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C52B5872346B0D800CD7517 /* TextileSignature.swift */; };
 		9C52B58A2346B0D800CD7517 /* TextileSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C52B5872346B0D800CD7517 /* TextileSignature.swift */; };
+		9C535F5723A3FDC300D47282 /* WikiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C535F5623A3FDC300D47282 /* WikiLinks.swift */; };
+		9C535F5823A3FDC300D47282 /* WikiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C535F5623A3FDC300D47282 /* WikiLinks.swift */; };
+		9C535F5923A3FDC300D47282 /* WikiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C535F5623A3FDC300D47282 /* WikiLinks.swift */; };
 		9C551C8E22A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
 		9C551C8F22A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
 		9C551C9022A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
@@ -682,6 +685,7 @@
 		9C45E8BD2298BC87003F6589 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptEngine.swift; sourceTree = "<group>"; };
 		9C52B5872346B0D800CD7517 /* TextileSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileSignature.swift; sourceTree = "<group>"; };
+		9C535F5623A3FDC300D47282 /* WikiLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikiLinks.swift; sourceTree = "<group>"; };
 		9C551C8D22A3459C009BA329 /* LogEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEvent.swift; sourceTree = "<group>"; };
 		9C553C602266A0D50008D176 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		9C5556D122E115960099414E /* Export.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Export.storyboard; sourceTree = "<group>"; };
@@ -1075,6 +1079,7 @@
 				9CCFD62722AEDA5C00C64D37 /* StringConverter.swift */,
 				9CCFD62022AED9FA00C64D37 /* StringFromTo.swift */,
 				9C60E6FE21F650B800C332ED /* StringUtils.swift */,
+				9C535F5623A3FDC300D47282 /* WikiLinks.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -1178,6 +1183,7 @@
 				9C1CB85A22CC26F000F7B055 /* FavoritesToHTML.swift */,
 				9C60E79F21F6520100C332ED /* FileIO.swift */,
 				9CF3DE4B22A6F5330078A6B0 /* MergeReport.swift */,
+				9C9B6D8223A2DE6400E7E348 /* NoteCrumbs.swift */,
 				9C27D9F122FB3758008EE0A1 /* NoteIndexReader.swift */,
 				9C44539122FCC80200560F72 /* NoteReader.swift */,
 				9C60E71E21F651E500C332ED /* NotenikIO.swift */,
@@ -1185,7 +1191,6 @@
 				9C8540AD22E8D78B0074E349 /* NotesList.swift */,
 				9C060686228E0A9300CB8C10 /* RealmScanner.swift */,
 				9CED74FA23356657003F7F2C /* Sequencer.swift */,
-				9C9B6D8223A2DE6400E7E348 /* NoteCrumbs.swift */,
 			);
 			path = io;
 			sourceTree = "<group>";
@@ -1706,6 +1711,7 @@
 				9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
 				9CE2170722A95EB300EE656C /* TemplateCommand.swift in Sources */,
 				9CAD6A5A22DFBEEB00531D90 /* NoteFormat.swift in Sources */,
+				9C535F5723A3FDC300D47282 /* WikiLinks.swift in Sources */,
 				9CB6ECAA2364F7DB00951820 /* IndexType.swift in Sources */,
 				9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */,
 				9CE60322234558FA000B45E6 /* Textiler.swift in Sources */,
@@ -1849,6 +1855,7 @@
 				9C60E70921F650B800C332ED /* FileName.swift in Sources */,
 				9C60E7C421F6525F00C332ED /* DateValueTests.swift in Sources */,
 				9C0B25E5224D6548003AAF21 /* LogWindowController.swift in Sources */,
+				9C535F5823A3FDC300D47282 /* WikiLinks.swift in Sources */,
 				9C10311E229A134E009CCE3B /* AppPrefs.swift in Sources */,
 				9C4018A62283B68B002C2B3D /* DisplayPrefs.swift in Sources */,
 				9C568DDA2322BA21005D6B0A /* AuthorPickList.swift in Sources */,
@@ -1957,6 +1964,7 @@
 				9C60E78B21F651E500C332ED /* NoteLineParser.swift in Sources */,
 				9C02D2B42267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C5556D822E11E3B0099414E /* ExportWindowController.swift in Sources */,
+				9C535F5923A3FDC300D47282 /* WikiLinks.swift in Sources */,
 				9C60E78521F651E500C332ED /* LineReader.swift in Sources */,
 				9C27D9F922FB3ED1008EE0A1 /* IndexValue.swift in Sources */,
 				9CB6ECC02365D73100951820 /* RecursType.swift in Sources */,

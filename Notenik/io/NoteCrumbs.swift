@@ -23,6 +23,11 @@ class NoteCrumbs {
         self.io = io
     }
     
+    /// Let's start over. 
+    func refresh() {
+        crumbs = []
+    }
+    
     /// Indicate the latest note visited by the user.
     func select(latest: Note) {
         let latestID = latest.noteID

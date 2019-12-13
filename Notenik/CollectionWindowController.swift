@@ -832,10 +832,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// Go to the first note in the list
     @IBAction func goToFirstNote(_ sender: Any) {
-        guard let noteIO = notenikIO else { return }
-        let outcome = modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        let (nio, _) = guardForNoteAction()
+        guard let noteIO = nio else { return }
         let (note, position) = noteIO.firstNote()
+        crumbs!.refresh()
         select(note: note, position: position, source: .nav)
     }
     
@@ -1232,6 +1232,27 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     @IBAction func makeCollectionEssential(_ sender: Any) {
         juggler.makeCollectionEssential(io: notenikIO!)
+    }
+    
+    @IBAction func normalizeCollection(_ sender: Any) {
+        reloadCollection(sender)
+        guard let noteIO = guardForCollectionAction() else { return }
+        var updated = 0
+        var (note, position) = noteIO.firstNote()
+        while note != nil {
+            let written = noteIO.writeNote(note!)
+            if written {
+                updated += 1
+            } else {
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .error,
+                                  message: "Problems saving note titled \(note!.title)")
+            }
+            (note, position) = noteIO.nextNote(position)
+        }
+        finishBatchOperation()
+        reportNumberOfNotesUpdated(updated)
     }
     
     /// Reload the current collection from disk
