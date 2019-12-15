@@ -37,6 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
+        let appPrefs = AppPrefs.shared
         juggler.docController = docController
         recentDocumentURLs = docController.recentDocumentURLs
         stage = "2"
@@ -53,6 +54,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if !AppPrefs.shared.americanEnglish {
             favsToHTML.title = "Favourites to HTML..."
         }
+        
+        // Done launching
+        appPrefs.appLaunching = false
     }
     
     func application(_ application: NSApplication, open urls: [URL]) {

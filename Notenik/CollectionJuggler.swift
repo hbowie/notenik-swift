@@ -31,11 +31,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     var scriptWindowController: ScriptWindowController?
     
     let osdir = OpenSaveDirectory.shared
-    let essentialURLKey = "essential-collection"
-    var essentialURL: URL?
-    
-    let lastURLKey = "last-collection"
-    var lastURL: URL?
     
     var docController: NoteDocumentController?
     
@@ -47,8 +42,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     override private init() {
         super.init()
-        essentialURL = defaults.url(forKey: essentialURLKey)
-        lastURL = defaults.url(forKey: lastURLKey)
     }
     
     /// Startup called by AppDelegate
@@ -72,12 +65,12 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         realm.path = ""
         var collection: NoteCollection?
 
-        if essentialURL != nil {
-            collection = io.openCollection(realm: realm, collectionPath: essentialURL!.path)
+        if appPrefs.essentialURL != nil {
+            collection = io.openCollection(realm: realm, collectionPath: appPrefs.essentialURL!.path)
         }
 
-        if collection == nil && lastURL != nil {
-            collection = io.openCollection(realm: realm, collectionPath: lastURL!.path)
+        if collection == nil && appPrefs.lastURL != nil {
+            collection = io.openCollection(realm: realm, collectionPath: appPrefs.lastURL!.path)
         }
         
         if collection != nil {
@@ -379,20 +372,15 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     ///
     /// - Parameter io: The Notenik Input/Output module accessing the collection that is to become essential
     func makeCollectionEssential(io: NotenikIO) {
-        let collection = io.collection
-        if collection != nil {
-            essentialURL = collection!.collectionFullPathURL
-            if essentialURL != nil {
-                defaults.set(essentialURL!, forKey: essentialURLKey)
-            }
-        }
+        guard let collection = io.collection else { return }
+        guard let collectionURL = collection.collectionFullPathURL else { return }
+        appPrefs.essentialURL = collectionURL
     }
     
     /// Open the Essential Collection, if we have one
     func openEssentialCollection() {
-        if essentialURL != nil {
-            _ = openFileWithNewWindow(fileURL: essentialURL!, readOnly: false)
-        }
+        guard let essentialURL = appPrefs.essentialURL else { return }
+        _ = openFileWithNewWindow(fileURL: essentialURL, readOnly: false)
     }
     
     /// Open the Application's Internal Collection of Help Notes
@@ -535,7 +523,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         if self.docController != nil {
             self.docController!.noteNewRecentDocumentURL(collectionURL)
         }
-        defaults.set(collectionURL, forKey: lastURLKey)
+        appPrefs.lastURL = collectionURL
         self.osdir.lastParentFolder = collectionURL.deletingLastPathComponent()
     }
     

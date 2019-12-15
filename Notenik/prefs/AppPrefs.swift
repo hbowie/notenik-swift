@@ -19,6 +19,7 @@ class AppPrefs {
     
     let defaults = UserDefaults.standard
     
+    let launchingKey    = "app-launching"
     let quickDeletesKey = "quick-deletes"
     let fontSizeKey     = "font-size"
     let tagsSelectKey   = "tags-to-select"
@@ -32,6 +33,14 @@ class AppPrefs {
     let favoritesColumnWidthKey = "favorites-column-width"
     
     let markdownParserKey = "markdown-parser"
+    
+    let essentialURLKey = "essential-collection"
+    var _essentialURL: URL?
+    
+    let lastURLKey = "last-collection"
+    var _lastURL: URL?
+    
+    var _appLaunching = false
     
     var _qd: Bool = false
     
@@ -74,7 +83,6 @@ class AppPrefs {
     private init() {
         
         // Retrieve and log info about the current app.
-        
         if let infoDictionary = Bundle.main.infoDictionary {
             let version = infoDictionary["CFBundleShortVersionString"] as? String
             let build   = infoDictionary[kCFBundleVersionKey as String] as? String
@@ -93,6 +101,35 @@ class AppPrefs {
                 logInfo("Build # \(build!)")
             }
         }
+        
+        /// Check a prefs flag to see if we successfully completed launching
+        /// last time around; if not, then reset to initial defaults.
+        _appLaunching = defaults.bool(forKey: launchingKey)
+        if appLaunching {
+            resetDefaults()
+        } else {
+            appLaunching = true
+            loadDefaults()
+        }
+    }
+    
+    func resetDefaults() {
+        confirmDeletes = true
+        resetEditFontSize()
+        deriveRelatedFontFields()
+        parentRealmParent = ""
+        useCount = 0
+        favoritesColumns = 4
+        favoritesRows = 32
+        favoritesColumnWidth = "250px"
+        markdownParser = "down"
+    }
+    
+    func loadDefaults() {
+        
+        _essentialURL = defaults.url(forKey: essentialURLKey)
+        
+        _lastURL = defaults.url(forKey: lastURLKey)
         
         _qd = defaults.bool(forKey: quickDeletesKey)
         
@@ -169,6 +206,37 @@ class AppPrefs {
             logInfo("Using American English")
         } else {
             logInfo("Using UK/British English")
+        }
+    }
+    
+    /// Has the app made it out of the launching phase successfully?
+    var appLaunching: Bool {
+        get {
+            return _appLaunching
+        }
+        set {
+            _appLaunching = newValue
+            defaults.set(newValue, forKey: launchingKey)
+        }
+    }
+    
+    var essentialURL: URL? {
+        get {
+            return _essentialURL
+        }
+        set {
+            _essentialURL = newValue
+            defaults.set(_essentialURL, forKey: essentialURLKey)
+        }
+    }
+    
+    var lastURL: URL? {
+        get {
+            return _lastURL
+        }
+        set {
+            _lastURL = newValue
+            defaults.set(_lastURL, forKey: lastURLKey)
         }
     }
     
