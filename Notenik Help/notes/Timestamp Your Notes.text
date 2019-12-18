@@ -1,6 +1,8 @@
 Title:  Timestamp Your Notes
 
-Seq:    27
+Timestamp: 20191211210501
+
+Seq:    25
 
 Tags:   timestamp, zettelkasten
 
@@ -23,4 +25,7 @@ All of this is normalized to Greenwich Mean Time, and formatted without spaces o
 
 In general, such a field can be used as a unique identifier for each Note in a Collection. 
 
+If you are adding a Timestamp field to an existing Collection, then you should first modify the Collection Preferences to check the box for the Timestamp field, and then execute the Normalize Storage command beneath the Collection menu to set the Timestamp values for the existing Notes. 
+
 Timestamps such as these are often used when creating a *[zettelkasten](https://zettelkasten.de)*.
+

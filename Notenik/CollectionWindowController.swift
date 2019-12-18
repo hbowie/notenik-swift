@@ -1270,15 +1270,22 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         self.io = newIO
     }
     
+    /// Open the current Note in the user's preferred text editor.
     @IBAction func textEditNote(_ sender: Any) {
-        guard let noteIO = notenikIO else { return }
-        let outcome = modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return }
-        let (note, _) = noteIO.getSelectedNote()
-        guard let noteToUse = note else { return }
+        let (_, sel) = guardForNoteAction()
+        guard let noteToUse = sel else { return }
         if noteToUse.hasFileName() {
             NSWorkspace.shared.openFile(noteToUse.fullPath!)
         }
+    }
+    
+    /// Reload the currently selected note from disk.
+    @IBAction func reloadNote(_ sender: Any) {
+        let (nio, sel) = guardForNoteAction()
+        guard let noteIO = nio, let selNote = sel else { return }
+        guard let reloaded = noteIO.reloadNote(selNote) else { return }
+        reloadViews()
+        select(note: reloaded, position: nil, source: .action)
     }
     
     /// Launch a Note's Link

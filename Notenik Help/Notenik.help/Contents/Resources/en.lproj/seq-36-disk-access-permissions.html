@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Disk Access Permissions</title>
+<meta name="KEYWORDS" content="Finder, collection, permissions, realm, script, security">
+</head>
+<body class="Aside apd-topic" dir="ltr" id="seq-36-disk-access-permissions" data-istaskopen="false">
+<a name="seq-36-disk-access-permissions"></a>
+<h1>
+Disk Access Permissions
+</h1>
+<p>Notenik is a modern, well-mannered Mac application, which means that it does not presume to have free run of your hard drive, roaming wantonly wherever it will.</p>
+<p>In other words, to use Apple’s terminology, Notenik is sandboxed.</p>
+<p>At the same time, Notenik does not take all the data you have given it and stash it away in some secret location that only Notenik can access because — well, it’s your data. You can store it wherever you like. It’s stored in plain sight. You can see it whenever you want. And if you want to open that data using your favorite text editor, then more power to you. Have at it. Knock yourself out.</p>
+<p>These two Notenik traits can sometimes come into conflict, however. If you store your Notenik data in lots of different Collections, and store those Collections in different places, then Notenik may sometimes have trouble getting access to them.</p>
+<p>Here’s how this works.</p>
+<ol>
+<li>
+<p>Any Collection folder that you select through the Open command under the File menu will be available to you, because you have explicitly selected it for use by Notenik.</p>
+</li>
+<li>
+<p>Any Collection folder that you select using the Open Recent command under the File menu will be available to you, because macOS remembers that you previously gave Notenik permission to access that Collection.</p>
+</li>
+<li>
+<p>If you use the Open Parent Realm command under the File menu to have Notenik search for its Collections and Scripts within a parent folder, then those Collections and Scripts will be available to be opened, because you have explicitly given Notenik permission to access everything within that parent folder.</p>
+</li>
+</ol>
+<p>(Note that you can also achieve these same results by using the macOS FInder to drag a folder and drop it onto the Notenik app icon.)</p>
+<p>In general, the rules above will be enough to cover most situations. If they prove too restrictive, though, you can always grant Notenik full disk access in the Security &amp; Privacy pane of System Preferences.</p>
+
+<p>Next Topic: <a href="seq-37-website-building.html">Website Building</a></p>
+</body>
+</html>

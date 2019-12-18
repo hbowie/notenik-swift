@@ -117,6 +117,9 @@ protocol NotenikIO {
         get
     }
     
+    /// Reload the note in memory from the backing data store.
+    func reloadNote(_ noteToReload: Note) -> Note?
+    
     /// Register modifications to the old note to make the new note.
     ///
     /// - Parameters:

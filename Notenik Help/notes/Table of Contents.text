@@ -6,43 +6,44 @@ Tags:   ToC
 
 Body:
 
-1. [Motivations](#motivations)
-2. [The Notenik Application](#the-notenik-application)
-3. [Help Using Notenik](#help-using-notenik)
-4. [Each Note has a Title and a Body](#each-note-has-a-title-and-a-body)
-5. [Each Note is its own Text File](#each-note-is-its-own-text-file)
-6. [Notes are Collected into Folders](#notes-are-collected-into-folders)
-7. [Add, Delete and Update Your Notes](#add-delete-and-update-your-notes)
-8. [View Your Notes as a List](#view-your-notes-as-a-list)
-9. [Sync Your Notes](#sync-your-notes)
-10. [Format the Body of a Note using Markdown](#format-the-body-of-a-note-using-markdown)
-11. [Add Other Fields to Your Notes](#add-other-fields-to-your-notes)
-12. [Organize Your Notes with Tags](#organize-your-notes-with-tags)
-13. [Add a Link Field to Make a Bookmark](#add-a-link-field-to-make-a-bookmark)
-14. [Override Default Fields with a Template file](#override-default-fields-with-a-template-file)
-15. [A Note File Template](#a-note-file-template)
-16. [Sequence Your Notes](#sequence-your-notes)
-17. [Track the Status of Your Notes](#track-the-status-of-your-notes)
-18. [Date Your Notes](#date-your-notes)
-19. [Specify Date Recurs Rules](#specify-date-recurs-rules)
-20. [Track Your Tasks](#track-your-tasks)
-21. [Add Code Snippets to Your Notes](#add-code-snippets-to-your-notes)
-22. [Track Authors and Artists](#track-authors-and-artists)
-23. [Timestamp Your Notes](#timestamp-your-notes)
-24. [Search for One or More Notes Containing Specified Text](#search-for-one-or-more-notes-containing-specified-text)
-25. [Use Other Special Fields](#use-other-special-fields)
-26. [Attach Files to Your Notes](#attach-files-to-your-notes)
-27. [Use Report Templates](#use-report-templates)
-28. [Record and Play Scripts](#record-and-play-scripts)
-29. [Copy, Cut, Paste and Share your Notes](#copy-cut-paste-and-share-your-notes)
-30. [Import and Export Your Notes](#import-and-export-your-notes)
-31. [Favorites to HTML](#favorites-to-html)
-32. [Open Parent Realm](#open-parent-realm)
-33. [Disk Access Permissions](#disk-access-permissions)
-34. [Website Building](#website-building)
-35. [View the Log](#view-the-log)
-36. [Keyboard Shortcuts](#keyboard-shortcuts)
-37. [Files and Folders](#files-and-folders)
-38. [Rights](#rights)
-39. [Support](#support)
-40. [Version History](#version-history)
+1. [[Motivations]]
+2. [[The Notenik Application]]
+3. [[Help Using Notenik]]
+4. [[Each Note has a Title and a Body]]
+5. [[Each Note is its own Text File]]
+6. [[Notes are Collected into Folders]]
+7. [[Add, Delete and Update Your Notes]]
+8. [[View Your Notes as a List]]
+9. [[Sync Your Notes]]
+10. [[Format the Body of a Note using Markdown]]
+11. [[Add Other Fields to Your Notes]]
+12. [[Organize Your Notes with Tags]]
+13. [[Add a Link Field to Make a Bookmark]]
+14. [[Override Default Fields with a Template file]]
+15. [[A Note File Template]]
+16. [[Sequence Your Notes]]
+17. [[Track the Status of Your Notes]]
+18. [[Date Your Notes]]
+19. [[Specify Date Recurs Rules]]
+20. [[Track Your Tasks]]
+21. [[Add Code Snippets to Your Notes]]
+22. [[Track Authors and Artists]]
+23. [[Timestamp Your Notes]]
+24. [[Add Links Between Notes]]
+25. [[Search for One or More Notes Containing Specified Text]]
+26. [[Use Other Special Fields]]
+27. [[Attach Files to Your Notes]]
+28. [[Use Report Templates]]
+29. [[Record and Play Scripts]]
+30. [[Copy, Cut, Paste and Share your Notes]]
+31. [[Import and Export Your Notes]]
+32. [[Favorites to HTML]]
+33. [[Open Parent Realm]]
+34. [[Disk Access Permissions]]
+35. [[Website Building]]
+36. [[View the Log]]
+37. [[Keyboard Shortcuts]]
+38. [[Files and Folders]]
+39. [[Rights]]
+40. [[Support]]
+41. [[Version History]]

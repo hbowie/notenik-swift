@@ -323,6 +323,30 @@ class FileIO: NotenikIO, RowConsumer {
         }
     }
     
+    /// Reload the note in memory from the backing data store. 
+    func reloadNote(_ noteToReload: Note) -> Note? {
+        var ok = false
+        guard collection != nil && collectionOpen else { return nil }
+        guard let noteURL = noteToReload.url else { return nil }
+        let reloaded = readNote(collection: collection!, noteURL: noteURL)
+        guard reloaded!.hasTitle() else { return nil }
+        if reloaded != nil {
+            ok = bunch!.delete(note: noteToReload)
+            guard ok else { return nil }
+            if collection!.hasTimestamp {
+                if !reloaded!.hasTimestamp() {
+                    _ = reloaded!.setTimestamp("")
+                }
+            }
+            ok = bunch!.add(note: reloaded!)
+        }
+        if ok {
+            return reloaded
+        } else {
+            return nil
+        }
+    }
+    
     /// Load attachments from the files folder.
     func loadAttachments() {
         guard let filesPath = getAttachmentsLocation() else { return }
