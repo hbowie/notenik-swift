@@ -57,6 +57,7 @@ class BodyView: MacEditView {
         textView.isRichText = false
         textView.usesFontPanel = false
         textView.isAutomaticQuoteSubstitutionEnabled = false
+        textView.isContinuousSpellCheckingEnabled = true
         
         AppPrefs.shared.setRegularFont(object: textView)
         

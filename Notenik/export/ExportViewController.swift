@@ -16,8 +16,9 @@ class ExportViewController: NSViewController {
     var window: ExportWindowController!
     var io: NotenikIO!
     
-    let commaSep = "Comma-Separated"
-    let tabDelim = "Tab-Delimited"
+    let commaSep  = "Comma-Separated"
+    let jsonTitle = "JSON"
+    let tabDelim  = "Tab-Delimited"
     let bookmarks = "Netscape Bookmark File"
     
     let csv = "csv"
@@ -25,6 +26,7 @@ class ExportViewController: NSViewController {
     let txt = "txt"
     let htm = "htm"
     let html = "html"
+    let json = "json"
     
     @IBOutlet var formatPopup: NSPopUpButton!
     @IBOutlet var fileExtCombo: NSComboBox!
@@ -39,6 +41,7 @@ class ExportViewController: NSViewController {
         formatPopup.removeAllItems()
         formatPopup.addItem(withTitle: commaSep)
         formatPopup.addItem(withTitle: tabDelim)
+        formatPopup.addItem(withTitle: jsonTitle)
         formatPopup.addItem(withTitle: bookmarks)
         formatPopup.selectItem(at: 0)
         
@@ -46,6 +49,7 @@ class ExportViewController: NSViewController {
         fileExtCombo.addItem(withObjectValue: csv)
         fileExtCombo.addItem(withObjectValue: tab)
         fileExtCombo.addItem(withObjectValue: txt)
+        fileExtCombo.addItem(withObjectValue: json)
         fileExtCombo.addItem(withObjectValue: htm)
         fileExtCombo.addItem(withObjectValue: html)
         fileExtCombo.selectItem(at: 0)
@@ -57,6 +61,8 @@ class ExportViewController: NSViewController {
                 fileExtCombo.selectItem(withObjectValue: csv)
             } else if selectedFormat.title == tabDelim {
                 fileExtCombo.selectItem(withObjectValue: txt)
+            } else if selectedFormat.title == jsonTitle {
+                fileExtCombo.selectItem(withObjectValue: json)
             } else if selectedFormat.title == bookmarks {
                 fileExtCombo.selectItem(withObjectValue: htm)
                 splitTagsCheckBox.state = .on
@@ -64,6 +70,7 @@ class ExportViewController: NSViewController {
         }
     }
     
+    /// The user clicked ok -- let's go ahead and export now. 
     @IBAction func okButtonPressed(_ sender: Any) {
         
         io = window.io
@@ -77,6 +84,8 @@ class ExportViewController: NSViewController {
         if formatPopup.selectedItem != nil {
             if formatPopup.selectedItem!.title == tabDelim {
                 format = .tabDelimited
+            } else if formatPopup.selectedItem!.title == jsonTitle {
+                format = .json
             } else if formatPopup.selectedItem!.title == bookmarks {
                 format = .bookmarks
             }

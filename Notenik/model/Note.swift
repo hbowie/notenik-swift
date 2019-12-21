@@ -232,12 +232,7 @@ class Note: Comparable, NSCopying {
             status.close(config: collection.statusConfig)
         }
     }
-    
-    /// Bump the Note's Date up by 1
-    func incrementDate() {
         
-    }
-    
     /// Apply the recurs rule to the note
     func recur() {
         if hasDate() && hasRecurs() {

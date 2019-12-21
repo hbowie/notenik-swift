@@ -12,8 +12,9 @@
 import Foundation
 
 enum NoteFormat {
-    case notenik
-    case commaSeparated
-    case tabDelimited
     case bookmarks
+    case commaSeparated
+    case json
+    case notenik
+    case tabDelimited
 }

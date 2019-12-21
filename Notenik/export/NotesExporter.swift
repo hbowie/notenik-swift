@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// An object capable of exporting a collection of notes to any one of several output formats.
 class NotesExporter {
     
     let appPrefs = AppPrefs.shared
@@ -27,6 +28,7 @@ class NotesExporter {
     
     var delimWriter: DelimitedWriter!
     var markup: Markedup!
+    var jsonWriter: JSONWriter!
     
     var authorDef = false
     var workDef = false
@@ -104,6 +106,8 @@ class NotesExporter {
         case .bookmarks:
             markup = Markedup(format: .netscapeBookmarks)
             markup.startDoc(withTitle: "Bookmarks", withCSS: nil)
+        case .json:
+            jsonOpen()
         default:
             break
         }
@@ -116,7 +120,7 @@ class NotesExporter {
         
         // Write out column headers
         if split {
-            delimWriter.write(value: "Tag")
+            delimWriter.write(value: LabelConstants.tag)
         }
         for def in dict.list {
             delimWriter.write(value: def.fieldLabel.properForm)
@@ -139,6 +143,14 @@ class NotesExporter {
         
         // Finish up the heading line
         delimWriter.endLine()
+    }
+    
+    func jsonOpen() {
+        jsonWriter = JSONWriter()
+        jsonWriter.lineByLine = true
+        jsonWriter.writer = BigStringWriter()
+        jsonWriter.open()
+        jsonWriter.startObject()
     }
     
     func iterateOverNotes(noteIO: NotenikIO) {
@@ -189,14 +201,32 @@ class NotesExporter {
         tagsWritten = 0
         if split {
             for tag in cleanTags.tags {
-                writeLine(splitTag: tag.description, cleanTags: cleanTags.description, note: note)
+                writeNote(splitTag: tag.description, cleanTags: cleanTags.description, note: note)
             }
         }
         if tagsWritten == 0 {
-            writeLine(splitTag: "", cleanTags: cleanTags.description, note: note)
+            writeNote(splitTag: "", cleanTags: cleanTags.description, note: note)
         }
         
     }
+    
+    /// Write output containing data from a single Note.
+    ///
+    /// - Parameters:
+    ///   - splitTag: If we're splitting by tag, then the tag to write for this line; otherwise blank.
+    ///   - cleanTags: The cleaned tags for this note, with any suppressed tags removed.
+    ///   - note: The Note to be written.
+    func writeNote(splitTag: String, cleanTags: String, note: Note) {
+        switch format {
+        case .commaSeparated, .tabDelimited:
+            writeLine(splitTag: splitTag, cleanTags: cleanTags, note: note)
+        case .json:
+            writeObject(splitTag: splitTag, cleanTags: cleanTags, note: note)
+        default:
+            writeLine(splitTag: splitTag, cleanTags: cleanTags, note: note)
+        }
+    }
+
     
     /// Write a single output line containing data from a single Note.
     ///
@@ -230,37 +260,8 @@ class NotesExporter {
             }
             
             if workDef {
-                
-                // Write the Work HTML Line
-                var html = Markedup(format: .htmlFragment)
-                let workType = note.getFieldAsString(label: LabelConstants.workTypeCommon)
-                html.spanConditional(value: workType, klass: "sourcetype", prefix: "the ", suffix: " ")
-                let workTitle = note.getFieldAsString(label: LabelConstants.workTitleCommon)
-                html.spanConditional(value: workTitle, klass: "majortitle", prefix: "", suffix: "", tag: "cite")
-                let pubCity = note.getFieldAsString(label: LabelConstants.pubCityCommon)
-                html.spanConditional(value: pubCity, klass: "city", prefix: ", ", suffix: ":")
-                let publisher = note.getFieldAsString(label: LabelConstants.publisherCommon)
-                html.spanConditional(value: publisher, klass: "publisher", prefix: " ", suffix: "")
-                let date = String(describing: note.date)
-                html.spanConditional(value: date, klass: "datepublished", prefix: ", ", suffix: "")
-                let pages = note.getFieldAsString(label: LabelConstants.workPagesCommon)
-                html.spanConditional(value: pages, klass: "pages", prefix: ", pages&nbsp;", suffix: "")
-                let workID = note.getFieldAsString(label: LabelConstants.workIDcommon)
-                html.spanConditional(value: workID, klass: "isbn", prefix: ", ISBN&nbsp;", suffix: "")
-                writeField(value: String(describing: html))
-                
-                // Write the Work Rights HTML Line
-                html = Markedup(format: .htmlFragment)
-                let rights = note.getFieldAsString(label: LabelConstants.workRightsCommon)
-                var symbol = ""
-                if rights.lowercased() == "copyright" {
-                    symbol = " &copy;"
-                }
-                html.spanConditional(value: rights, klass: "rights", prefix: "", suffix: symbol)
-                html.spanConditional(value: date, klass: "datepublished", prefix: " ", suffix: "")
-                let owner = note.getFieldAsString(label: LabelConstants.workRightsHolderCommon)
-                html.spanConditional(value: owner, klass: "rightsowner", prefix: " by ", suffix: "")
-                writeField(value: String(describing: html))
+                writeField(value: workToHTML(note: note))
+                writeField(value: workRightsToHTML(note: note))
             }
         }
         
@@ -292,6 +293,86 @@ class NotesExporter {
         }
     }
     
+    /// Write a JSON object for a single note.
+    ///
+    /// - Parameters:
+    ///   - splitTag: If we're splitting by tag, then the tag to write for this line; otherwise blank.
+    ///   - cleanTags: The cleaned tags for this note, with any suppressed tags removed.
+    ///   - note: The Note to be written.
+    func writeObject(splitTag: String, cleanTags: String, note: Note) {
+        jsonWriter.writeKey(note.noteID)
+        jsonWriter.startObject()
+        if split {
+            jsonWriter.write(key: LabelConstants.tag, value: splitTag)
+        }
+        for def in dict.list {
+            if def.fieldLabel.commonForm == LabelConstants.tagsCommon {
+                jsonWriter.write(key: def.fieldLabel.properForm, value: cleanTags)
+            } else {
+                jsonWriter.write(key: def.fieldLabel.properForm, value: note.getFieldAsString(label: def.fieldLabel.commonForm))
+            }
+        }
+        
+        if webExt {
+            
+            // Now add derived fields
+            let code = Markedup(format: .htmlFragment)
+            code.append(markdown: note.getFieldAsString(label: LabelConstants.bodyCommon))
+            jsonWriter.write(key: "Body as HTML", value: String(describing: code))
+            
+            if authorDef {
+                let author = note.author
+                jsonWriter.write(key: "Author Last Name First", value: author.lastNameFirst)
+                jsonWriter.write(key: "Author File Name", value: StringUtils.toCommonFileName(author.firstNameFirst))
+                jsonWriter.write(key: "Author Wikimedia Page", value: StringUtils.wikiMediaPage(author.firstNameFirst))
+            }
+            
+            if workDef {
+                jsonWriter.write(key: "Work HTML Line", value: workToHTML(note: note))
+                jsonWriter.write(key: "Work Rights HTML Line", value: workRightsToHTML(note: note))
+            }
+        }
+        
+        // Finish up the object
+        jsonWriter.endObject()
+        tagsWritten += 1
+        notesExported += 1
+    }
+    
+    func workToHTML(note: Note) -> String {
+        let html = Markedup(format: .htmlFragment)
+        let workType = note.getFieldAsString(label: LabelConstants.workTypeCommon)
+        html.spanConditional(value: workType, klass: "sourcetype", prefix: "the ", suffix: " ")
+        let workTitle = note.getFieldAsString(label: LabelConstants.workTitleCommon)
+        html.spanConditional(value: workTitle, klass: "majortitle", prefix: "", suffix: "", tag: "cite")
+        let pubCity = note.getFieldAsString(label: LabelConstants.pubCityCommon)
+        html.spanConditional(value: pubCity, klass: "city", prefix: ", ", suffix: ":")
+        let publisher = note.getFieldAsString(label: LabelConstants.publisherCommon)
+        html.spanConditional(value: publisher, klass: "publisher", prefix: " ", suffix: "")
+        let date = String(describing: note.date)
+        html.spanConditional(value: date, klass: "datepublished", prefix: ", ", suffix: "")
+        let pages = note.getFieldAsString(label: LabelConstants.workPagesCommon)
+        html.spanConditional(value: pages, klass: "pages", prefix: ", pages&nbsp;", suffix: "")
+        let workID = note.getFieldAsString(label: LabelConstants.workIDcommon)
+        html.spanConditional(value: workID, klass: "isbn", prefix: ", ISBN&nbsp;", suffix: "")
+        return String(describing: html)
+    }
+    
+    func workRightsToHTML(note: Note) -> String {
+        let html = Markedup(format: .htmlFragment)
+        let rights = note.getFieldAsString(label: LabelConstants.workRightsCommon)
+        var symbol = ""
+        if rights.lowercased() == "copyright" {
+            symbol = " &copy;"
+        }
+        html.spanConditional(value: rights, klass: "rights", prefix: "", suffix: symbol)
+        let date = String(describing: note.date)
+        html.spanConditional(value: date, klass: "datepublished", prefix: " ", suffix: "")
+        let owner = note.getFieldAsString(label: LabelConstants.workRightsHolderCommon)
+        html.spanConditional(value: owner, klass: "rightsowner", prefix: " by ", suffix: "")
+        return String(describing: html)
+    }
+    
     /// Close the output file, and return result.
     func close() -> Bool {
         switch format {
@@ -301,6 +382,8 @@ class NotesExporter {
             return delimClose()
         case .bookmarks:
             return markupClose()
+        case .json:
+            return jsonClose()
         default:
             break
         }
@@ -312,6 +395,14 @@ class NotesExporter {
         return delimWriter.close()
     }
     
+    /// Close the JSON generator.
+    func jsonClose() -> Bool {
+        jsonWriter.endObject()
+        jsonWriter.close()
+        return jsonWriter.save(destination: destination)
+    }
+    
+    /// Generate output organized by tag.
     func iterateOverTags(io: NotenikIO) {
         var depth = 0
         let iterator = io.makeTagsNodeIterator()

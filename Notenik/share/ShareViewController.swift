@@ -26,6 +26,7 @@ class ShareViewController: NSViewController {
     let htmlFragmentValue = "html-fragment"
     let markkdownValue = "markdown"
     let notenikValue = "notenik"
+    let jsonValue = "json"
     
     let clipboardValue = "clipboard"
     let fileValue = "file"
@@ -42,6 +43,7 @@ class ShareViewController: NSViewController {
     @IBOutlet var formatHTMLFragmentButton: NSButton!
     @IBOutlet var formatMarkdownButton: NSButton!
     @IBOutlet var formatNotenikButton: NSButton!
+    @IBOutlet var formatJSONButton: NSButton!
     
     @IBOutlet var destinationClipboardButton: NSButton!
     @IBOutlet var destinationFileButton: NSButton!
@@ -64,6 +66,8 @@ class ShareViewController: NSViewController {
             formatHTMLFragmentButton.state = .on
         } else if formatSelector == markkdownValue {
             formatMarkdownButton.state = .on
+        } else if formatSelector == jsonValue {
+            formatJSONButton.state = .on
         } else {
             formatNotenikButton.state = .on
         }
@@ -107,6 +111,16 @@ class ShareViewController: NSViewController {
             if noteLineMaker.fieldsWritten > 0 {
                 stringToShare = writer.bigString
             }
+        } else if formatJSONButton.state == .on {
+            let jWriter = JSONWriter()
+            jWriter.open()
+            if contentBodyOnlyButton.state == .on {
+                jWriter.writeBodyAsObject(note!)
+            } else {
+                jWriter.writeNoteAsObject(note!)
+            }
+            jWriter.close()
+            stringToShare = jWriter.outputString
         } else {
             let noteDisplay = NoteDisplay()
             noteDisplay.format = format
@@ -164,6 +178,8 @@ class ShareViewController: NSViewController {
             formatSelector = htmlFragmentValue
         } else if formatMarkdownButton.state == .on {
             formatSelector = markkdownValue
+        } else if formatJSONButton.state == .on {
+            formatSelector = jsonValue
         }
         defaults.set(formatSelector, forKey: formatKey)
         

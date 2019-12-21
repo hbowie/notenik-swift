@@ -177,6 +177,9 @@
 		9C568DF5232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */; };
 		9C568DF6232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */; };
 		9C58BCF9225EF11B008E57D1 /* Notenik.help in Resources */ = {isa = PBXBuildFile; fileRef = 9C58BCF8225EF11B008E57D1 /* Notenik.help */; };
+		9C5BBC5E23ABF91600589A86 /* JSONWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5BBC5D23ABF91600589A86 /* JSONWriter.swift */; };
+		9C5BBC5F23ABF91600589A86 /* JSONWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5BBC5D23ABF91600589A86 /* JSONWriter.swift */; };
+		9C5BBC6023ABF91600589A86 /* JSONWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5BBC5D23ABF91600589A86 /* JSONWriter.swift */; };
 		9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6D121F64B3B00C332ED /* AppDelegate.swift */; };
 		9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C60E6D521F64B3C00C332ED /* Assets.xcassets */; };
 		9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C60E6D721F64B3C00C332ED /* Main.storyboard */; };
@@ -701,6 +704,7 @@
 		9C568DF123230B17005D6B0A /* WorkTitleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTitleDataSource.swift; sourceTree = "<group>"; };
 		9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTypeDataSource.swift; sourceTree = "<group>"; };
 		9C58BCF8225EF11B008E57D1 /* Notenik.help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Notenik.help; path = "Notenik Help/Notenik.help"; sourceTree = SOURCE_ROOT; };
+		9C5BBC5D23ABF91600589A86 /* JSONWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONWriter.swift; sourceTree = "<group>"; };
 		9C60E6CE21F64B3B00C332ED /* Notenik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notenik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C60E6D121F64B3B00C332ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C60E6D521F64B3C00C332ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1072,6 +1076,7 @@
 				9C60E6FF21F650B800C332ED /* DateUtils.swift */,
 				9C60E70021F650B800C332ED /* FileName.swift */,
 				9C60E70121F650B800C332ED /* FileUtils.swift */,
+				9C5BBC5D23ABF91600589A86 /* JSONWriter.swift */,
 				9C03629D239B0A9900C948DB /* Markdown.swift */,
 				9C78888921FB950900452D74 /* Markedup.swift */,
 				9C78888521FB826100452D74 /* MarkedupFormat.swift */,
@@ -1722,6 +1727,7 @@
 				9C8540B622E8F0790074E349 /* ScriptModule.swift in Sources */,
 				9C8540AE22E8D78B0074E349 /* NotesList.swift in Sources */,
 				9CB60BC622651074003B5655 /* ShareViewController.swift in Sources */,
+				9C5BBC5E23ABF91600589A86 /* JSONWriter.swift in Sources */,
 				9CA0D1F523677CE100ACA52A /* DateAddedType.swift in Sources */,
 				9C568DF5232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */,
 				9CB6ECCA2365DAFE00951820 /* StringType.swift in Sources */,
@@ -1764,6 +1770,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C5BBC5F23ABF91600589A86 /* JSONWriter.swift in Sources */,
 				9C60E77E21F651E500C332ED /* LabelConstants.swift in Sources */,
 				9C60E7BA21F6525F00C332ED /* FileIOTests.swift in Sources */,
 				9C822B9722D63A11008EF106 /* TagValue.swift in Sources */,
@@ -2066,6 +2073,7 @@
 				9CC2AAD6239EC3E600C85191 /* TimestampValue.swift in Sources */,
 				9C12D49122134970003136B2 /* NoteSelectionSource.swift in Sources */,
 				9C27D9FD22FB3FA6008EE0A1 /* IndexTerm.swift in Sources */,
+				9C5BBC6023ABF91600589A86 /* JSONWriter.swift in Sources */,
 				9CD3262A22330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9CD82F6D2211EDC2002314E4 /* NoteLineMaker.swift in Sources */,
 				9CC78E70228358A400640477 /* DisplayPrefsViewController.swift in Sources */,
