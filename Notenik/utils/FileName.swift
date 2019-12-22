@@ -176,10 +176,14 @@ class FileName: CustomStringConvertible {
             fileOrDir = .file
         }
         switch extLower {
-        case "txt", "text", "markdown", "md", "mdown", "mkdown", "mdtext", "nnk", "notenik":
+        case "txt", "text", "markdown", "md", "mdown", "mkdown", "mdtext", "notenik":
+            noteExt = true
+            infofile = false
+        case "nnk":
             noteExt = true
         default:
             noteExt = false
+            infofile = false
         }
     }
     
@@ -224,10 +228,10 @@ class FileName: CustomStringConvertible {
                 infofile = false
             }
         }
-        if j == 0 {
+        if j < readMeStr.count {
             readme = false
         }
-        if k == 0 {
+        if k < infoStr.count {
             infofile = false
         }
         if !noteExt {
