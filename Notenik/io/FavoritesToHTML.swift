@@ -53,10 +53,10 @@ class FavoritesToHTML {
     }
     
     /// Generate the web page.
-    func generate() {
+    func generate() -> Bool {
         
-        guard let io = noteIO else { return }
-        guard let url = outURL else { return }
+        guard let io = noteIO else { return false }
+        guard let url = outURL else { return false }
         
         buildCSS()
         markedup.startDoc(withTitle: "Bookmark \(favoritesCap)", withCSS: css)
@@ -110,13 +110,14 @@ class FavoritesToHTML {
                               category: "FavoritesToHTML",
                               level: .info,
                               message: "\(favoritesCount) favorites written to \(url.path)")
-            NSWorkspace.shared.open(url)
         } catch {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik",
                               category: "FavoritesToHTML",
                               level: .error,
                               message: "Problems writing favorites to \(url.path)")
+            return false
         }
+        return true
     }
     
     func buildCSS() {

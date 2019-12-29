@@ -61,7 +61,11 @@ class ModWhenChanged {
             if field != nil {
                 noteValue = field!.value.value
             }
-            let userValue = fieldView.text
+            var userValue = fieldView.text
+            if def.fieldType is TagsType {
+                let userTags = TagsValue(fieldView.text)
+                userValue = userTags.value
+            }
             if userValue != noteValue {
                 let newValue = def.fieldType.createValue(userValue)
                 if field == nil {

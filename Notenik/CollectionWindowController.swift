@@ -1607,7 +1607,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         
         guard let fileURL = getExportURL(fileExt: "html", fileName: "favorites") else { return }
         let favsToHTML = FavoritesToHTML(noteIO: noteIO, outURL: fileURL)
-        favsToHTML.generate()
+        let genOK = favsToHTML.generate()
+        if genOK {
+            NSWorkspace.shared.open(fileURL)
+        }
     }
     
     /// Ask the user where to save the export file
