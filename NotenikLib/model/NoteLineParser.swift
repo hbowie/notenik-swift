@@ -43,9 +43,10 @@ class NoteLineParser {
     var oneChar      = true
     var bodyStarted  = false
     var indexStarted = false
-    var mdFormat     = false
     
     var lineNumber   = 0
+    var fieldNumber  = 0
+    var blankLines   = 0
     var fileSize     = 0
     
     /// Initialize with a functioning Line Reader
@@ -80,10 +81,11 @@ class NoteLineParser {
         label = FieldLabel()
         def = FieldDefinition()
         lineNumber = 0
+        fieldNumber = 0
+        blankLines = 0
         fileSize   = 0
         bodyStarted = false
         indexStarted = false
-        mdFormat = false
         pendingBlankLines = 0
     }
     
@@ -97,7 +99,9 @@ class NoteLineParser {
             
             // If we've reached the end of the file, or the label for a new field,
             // then finish up the last field we were working on.
-            if possibleLine == nil || possibleLabel.validLabel {
+            if possibleLine == nil || possibleLabel.validLabel
+                || (blankLine && (fieldNumber > 1)
+                    || (fieldNumber == 1 && label.validLabel && value.count > 0)) {
                 if label.validLabel && value.count > 0 {
                     let field = NoteField(def: def, value: value, statusConfig: collection.statusConfig)
                     if field.def.fieldLabel.isIndex {
@@ -105,10 +109,12 @@ class NoteLineParser {
                             note.appendToIndex(value)
                         } else {
                             _ = note.setIndex(value)
+                            fieldNumber += 1
                             indexStarted = true
                         }
                     } else {
                         _ = note.setField(field)
+                        fieldNumber += 1
                     }
                 }
                 pendingBlankLines = 0
@@ -125,8 +131,16 @@ class NoteLineParser {
                     bodyStarted = true
                 }
             } else if blankLine {
-                if value.count > 0 {
-                    pendingBlankLines += 1
+                if fieldNumber > 1 && blankLines == 0 {
+                    note.noteFileFormat = .multiMarkdown
+                    label.set(LabelConstants.body)
+                    def = note.collection.getDef(label: &label)!
+                    bodyStarted = true
+                } else {
+                    blankLines += 1
+                    if value.count > 0 {
+                        pendingBlankLines += 1
+                    }
                 }
             } else if label.validLabel {
                 appendNonBlankLine()
@@ -136,6 +150,9 @@ class NoteLineParser {
                 def = note.collection.getDef(label: &label)!
                 value = line
                 bodyStarted = true
+                if lineNumber == 1 {
+                    note.noteFileFormat = .plainText
+                }
             }
             /* else {
                 let titleField = NoteField(label: LabelConstants.title,
@@ -147,6 +164,7 @@ class NoteLineParser {
             if label.isTitle && value.count > 0 {
                 let titleField = NoteField(def: def, value: value, statusConfig: collection.statusConfig)
                 _ = note.setField(titleField)
+                fieldNumber += 1
                 pendingBlankLines = 0
                 label = FieldLabel()
                 value = ""
@@ -172,7 +190,7 @@ class NoteLineParser {
             if lineNumber == 1 &&
                         line.starts(with: "# ") {
                 grabMarkdownTitle()
-            } else if (mdFormat &&
+            } else if (note.noteFileFormat == .markdown &&
                         line.starts(with: "#") &&
                         !bodyStarted &&
                         !label.validLabel) {
@@ -241,7 +259,7 @@ class NoteLineParser {
     func grabMarkdownTitle() {
         let title = StringUtils.trimHeading(line)
         _ = note.setTitle(title)
-        mdFormat = true
+        note.noteFileFormat = .markdown
     }
     
     /// If the file seems to be more or less straight Markdown, and it has a line starting

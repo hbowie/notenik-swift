@@ -36,6 +36,9 @@ class NoteCollection {
     /// Is this collection a collection of collections within a parent realm?
     var isRealmCollection = false
     
+    /// Is this collection in MultiMarkdown format?
+    var noteFileFormat: NoteFileFormat = .toBeDetermined
+    
     /// Default initialization of a new Realm.
     init () {
         realm = Realm()

@@ -94,28 +94,68 @@ class FileIO: NotenikIO, RowConsumer {
     
     /// See what sort of path this might be.
     func checkPathType(path: String) -> NotenikPathType {
-        if FileUtils.isDir(path) {
-            let infoPath = FileUtils.joinPaths(path1: path, path2: FileIO.infoFileName)
-            if fileManager.fileExists(atPath: infoPath)
-                && fileManager.isReadableFile(atPath: infoPath) {
-                return .existing
-            } else {
-                do {
-                    let contents = try fileManager.contentsOfDirectory(atPath: path)
-                    if contents.count == 0 {
-                        logInfo("Empty folder found at \(path)")
-                        return .empty
-                    } else {
-                        return .realm
-                    }
-                } catch {
-                    logInfo("Problems reading contents of folder at \(path)")
-                    return .hopeless
-                }
-            }
-        } else {
+        
+        guard FileUtils.isDir(path) else {
             logInfo("Notenik cannot do anything with this path: \(path)")
             return .hopeless
+        }
+        
+        let infoPath = FileUtils.joinPaths(path1: path, path2: FileIO.infoFileName)
+        if fileManager.fileExists(atPath: infoPath)
+            && fileManager.isReadableFile(atPath: infoPath) {
+            return .existing
+        }
+        
+        var contents: [String] = []
+        do {
+            contents = try fileManager.contentsOfDirectory(atPath: path)
+        } catch {
+            logInfo("Problems reading contents of folder at \(path)")
+            return .hopeless
+        }
+
+        if contents.count == 0 {
+            logInfo("Empty folder found at \(path)")
+            return .empty
+        }
+        
+        var foldersFound = 0
+        var notesFound = 0
+        for itemPath in contents {
+            let itemFullPath = FileUtils.joinPaths(path1: path,
+                                                   path2: itemPath)
+            let fileName = FileName(itemFullPath)
+            if FileUtils.isDir(itemFullPath) {
+                if itemPath == reportsFolderName {
+                    // Skip this type of folder
+                } else {
+                    foldersFound += 1
+                }
+            } else if fileName.readme {
+                // Skip the readme file
+            } else if fileName.infofile {
+                // Skip the info file
+            } else if fileName.dotfile {
+                // Skip filenames starting with a period
+            } else if fileName.template {
+                // Skip the template file
+            } else if fileName.licenseFile {
+                // Skip a LICENSE file
+            } else if fileName.collectionParms {
+                // Skip a Collection Parms file
+            } else if fileName.noteExt {
+                notesFound += 1
+            } else {
+                // print ("- Does not have a valid note extension")
+            }
+        }
+        if notesFound > 0 {
+            return .existing
+        } else if foldersFound > 0 {
+            return .realm
+        } else {
+            logInfo("Empty folder found at \(path)")
+            return .empty
         }
     }
     
@@ -203,6 +243,16 @@ class FileIO: NotenikIO, RowConsumer {
                         if doubleBracketField != nil {
                             let doubleBracketParsing = BooleanValue(doubleBracketField!.value.value)
                             collection!.doubleBracketParsing = doubleBracketParsing.isTrue
+                        }
+                        
+                        let noteFileFormatField = infoNote!.getField(label: LabelConstants.noteFileFormat)
+                        if noteFileFormatField != nil {
+                            let noteFileFormat = NoteFileFormat(rawValue: noteFileFormatField!.value.value)
+                            if noteFileFormat != nil {
+                                collection!.noteFileFormat = noteFileFormat!
+                            } else {
+                                logError("\(noteFileFormatField!.value.value) is an invalid INFO file value for the key \(LabelConstants.noteFileFormat).")
+                            }
                         }
                         
                         infoFound = true

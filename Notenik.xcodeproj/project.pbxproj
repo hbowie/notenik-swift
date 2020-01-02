@@ -338,6 +338,9 @@
 		9C78888C21FB950900452D74 /* Markedup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C78888921FB950900452D74 /* Markedup.swift */; };
 		9C79BDB0226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
 		9C79BDB1226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
+		9C7F27C223BC0A51001381DF /* NoteFileFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7F27C123BC0A51001381DF /* NoteFileFormat.swift */; };
+		9C7F27C323BC0A51001381DF /* NoteFileFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7F27C123BC0A51001381DF /* NoteFileFormat.swift */; };
+		9C7F27C423BC0A51001381DF /* NoteFileFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7F27C123BC0A51001381DF /* NoteFileFormat.swift */; };
 		9C822B9622D63A11008EF106 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9522D63A11008EF106 /* TagValue.swift */; };
 		9C822B9722D63A11008EF106 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9522D63A11008EF106 /* TagValue.swift */; };
 		9C822B9822D63A11008EF106 /* TagValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9522D63A11008EF106 /* TagValue.swift */; };
@@ -782,6 +785,7 @@
 		9C78888521FB826100452D74 /* MarkedupFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedupFormat.swift; sourceTree = "<group>"; };
 		9C78888921FB950900452D74 /* Markedup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markedup.swift; sourceTree = "<group>"; };
 		9C79BDAF226E368800796E93 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
+		9C7F27C123BC0A51001381DF /* NoteFileFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFileFormat.swift; sourceTree = "<group>"; };
 		9C822B9522D63A11008EF106 /* TagValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValue.swift; sourceTree = "<group>"; };
 		9C822B9C22D6D5D6008EF106 /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
 		9C822BA122D6DC71008EF106 /* TagsTokenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsTokenDelegate.swift; sourceTree = "<group>"; };
@@ -943,18 +947,6 @@
 				9C1BE26A22EB9164006FDFEC /* Script.storyboard */,
 				9C1BE27022EB940E006FDFEC /* ScriptWindowController.swift */,
 				9C1BE27322EB9444006FDFEC /* ScriptViewController.swift */,
-				9C67248422EA1B2D00CB7D39 /* FilterModule.swift */,
-				9C67248B22EA205800CB7D39 /* FilterRule.swift */,
-				9C8540B922E8F3660074E349 /* InputModule.swift */,
-				9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */,
-				9C8540C122E8F9F20074E349 /* ScriptAction.swift */,
-				9C8540B122E8F0330074E349 /* ScriptCommand.swift */,
-				9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */,
-				9C8540B522E8F0790074E349 /* ScriptModule.swift */,
-				9C8540BD22E8F4310074E349 /* ScriptWorkspace.swift */,
-				9C9A6BAD22EA5FBC00E1F127 /* SortField.swift */,
-				9C9A6BB422EA603700E1F127 /* SortModule.swift */,
-				9C1C761122EDE1A8002B97DA /* TemplateModule.swift */,
 			);
 			path = script;
 			sourceTree = "<group>";
@@ -965,6 +957,7 @@
 				9C8FD8D92216303F00F16669 /* LICENSE.txt */,
 				9C8FD8D72216302900F16669 /* README.md */,
 				9C60E6D021F64B3B00C332ED /* Notenik */,
+				9C78907923BBE3C90008A077 /* NotenikLib */,
 				9CE715B0225E887300025C00 /* Notenik Help */,
 				9C60E6E321F64B3C00C332ED /* NotenikTests */,
 				9C60E6EE21F64B3C00C332ED /* NotenikUITests */,
@@ -1011,20 +1004,11 @@
 				9CF1193522581ABE0015AE91 /* collectionPrefs */,
 				9CC78E672283560F00640477 /* displayPrefs */,
 				9CAD6A5422DFA95D00531D90 /* export */,
-				9CA0F88823410D1F00D7061A /* fields */,
-				9C60E79E21F6520100C332ED /* io */,
 				9C60E70E21F6518400C332ED /* logging */,
-				9C60E71B21F651E500C332ED /* model */,
-				9CF1192C2257FD170015AE91 /* modifchanged */,
 				9C832A00224ABDBD007DA6FC /* prefs */,
 				9C4C1BAE22E7EE0A005997DF /* script */,
 				9CB60BBE22650975003B5655 /* share */,
 				9CB06CB522CCF4A200887778 /* tags */,
-				9CE9C97D22A612D3008D2B0A /* template */,
-				9CDF577F23469964004417FA /* textile */,
-				9CD82F612211E29E002314E4 /* textio */,
-				9C60E6FD21F650B800C332ED /* utils */,
-				9C60E72421F651E500C332ED /* values */,
 				9CD3261E2233063100D06B77 /* views */,
 			);
 			path = Notenik;
@@ -1093,9 +1077,6 @@
 			isa = PBXGroup;
 			children = (
 				9CE32509224D58360051CA1F /* Log.storyboard */,
-				9C60E70F21F6518400C332ED /* Logger.swift */,
-				9C60E71021F6518400C332ED /* LogLevel.swift */,
-				9C551C8D22A3459C009BA329 /* LogEvent.swift */,
 				9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */,
 				9CE3250F224D5E180051CA1F /* LogViewController.swift */,
 			);
@@ -1113,6 +1094,7 @@
 				9C60E73921F651E500C332ED /* Note.swift */,
 				9C60E73A21F651E500C332ED /* NoteCollection.swift */,
 				9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */,
+				9C7F27C123BC0A51001381DF /* NoteFileFormat.swift */,
 				9C60E73B21F651E500C332ED /* NoteIDRule.swift */,
 				9C60E71D21F651E500C332ED /* NoteField.swift */,
 				9CD82F6A2211EDC2002314E4 /* NoteLineMaker.swift */,
@@ -1190,9 +1172,9 @@
 				9CF3DE4B22A6F5330078A6B0 /* MergeReport.swift */,
 				9C9B6D8223A2DE6400E7E348 /* NoteCrumbs.swift */,
 				9C27D9F122FB3758008EE0A1 /* NoteIndexReader.swift */,
-				9C44539122FCC80200560F72 /* NoteReader.swift */,
 				9C60E71E21F651E500C332ED /* NotenikIO.swift */,
 				9CD19A5823721B0500D97E71 /* NotenikPathType.swift */,
+				9C44539122FCC80200560F72 /* NoteReader.swift */,
 				9C8540AD22E8D78B0074E349 /* NotesList.swift */,
 				9C060686228E0A9300CB8C10 /* RealmScanner.swift */,
 				9CED74FA23356657003F7F2C /* Sequencer.swift */,
@@ -1207,13 +1189,99 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9C78907923BBE3C90008A077 /* NotenikLib */ = {
+			isa = PBXGroup;
+			children = (
+				9C78907A23BBE4440008A077 /* displayPrefs */,
+				9C78907B23BBE5030008A077 /* export */,
+				9CA0F88823410D1F00D7061A /* fields */,
+				9C60E79E21F6520100C332ED /* io */,
+				9C78907C23BBE6880008A077 /* logging */,
+				9C60E71B21F651E500C332ED /* model */,
+				9CF1192C2257FD170015AE91 /* modifchanged */,
+				9C78907D23BBE7BB0008A077 /* prefs */,
+				9C78907E23BBE81A0008A077 /* script */,
+				9C78907F23BBE8610008A077 /* tags */,
+				9CE9C97D22A612D3008D2B0A /* template */,
+				9CDF577F23469964004417FA /* textile */,
+				9CD82F612211E29E002314E4 /* textio */,
+				9C60E6FD21F650B800C332ED /* utils */,
+				9C60E72421F651E500C332ED /* values */,
+			);
+			path = NotenikLib;
+			sourceTree = "<group>";
+		};
+		9C78907A23BBE4440008A077 /* displayPrefs */ = {
+			isa = PBXGroup;
+			children = (
+				9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */,
+			);
+			path = displayPrefs;
+			sourceTree = "<group>";
+		};
+		9C78907B23BBE5030008A077 /* export */ = {
+			isa = PBXGroup;
+			children = (
+				9CAD6A5522DFA9C200531D90 /* NotesExporter.swift */,
+				9CAD6A5922DFBEEB00531D90 /* NoteFormat.swift */,
+			);
+			path = export;
+			sourceTree = "<group>";
+		};
+		9C78907C23BBE6880008A077 /* logging */ = {
+			isa = PBXGroup;
+			children = (
+				9C60E70F21F6518400C332ED /* Logger.swift */,
+				9C60E71021F6518400C332ED /* LogLevel.swift */,
+				9C551C8D22A3459C009BA329 /* LogEvent.swift */,
+			);
+			path = logging;
+			sourceTree = "<group>";
+		};
+		9C78907D23BBE7BB0008A077 /* prefs */ = {
+			isa = PBXGroup;
+			children = (
+				9C10311C229A134E009CCE3B /* AppPrefs.swift */,
+				9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */,
+				9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */,
+			);
+			path = prefs;
+			sourceTree = "<group>";
+		};
+		9C78907E23BBE81A0008A077 /* script */ = {
+			isa = PBXGroup;
+			children = (
+				9C67248422EA1B2D00CB7D39 /* FilterModule.swift */,
+				9C67248B22EA205800CB7D39 /* FilterRule.swift */,
+				9C8540B922E8F3660074E349 /* InputModule.swift */,
+				9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */,
+				9C8540C122E8F9F20074E349 /* ScriptAction.swift */,
+				9C8540B122E8F0330074E349 /* ScriptCommand.swift */,
+				9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */,
+				9C8540B522E8F0790074E349 /* ScriptModule.swift */,
+				9C8540BD22E8F4310074E349 /* ScriptWorkspace.swift */,
+				9C9A6BAD22EA5FBC00E1F127 /* SortField.swift */,
+				9C9A6BB422EA603700E1F127 /* SortModule.swift */,
+				9C1C761122EDE1A8002B97DA /* TemplateModule.swift */,
+			);
+			path = script;
+			sourceTree = "<group>";
+		};
+		9C78907F23BBE8610008A077 /* tags */ = {
+			isa = PBXGroup;
+			children = (
+				9C2AE511220A030800AE8BEE /* TagsTree.swift */,
+				9C2AE513220A033300AE8BEE /* TagsNode.swift */,
+				9C2AE519220A044800AE8BEE /* TagsNodeType.swift */,
+				9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */,
+			);
+			path = tags;
+			sourceTree = "<group>";
+		};
 		9C832A00224ABDBD007DA6FC /* prefs */ = {
 			isa = PBXGroup;
 			children = (
 				9CE32503224D48180051CA1F /* Preferences.storyboard */,
-				9C10311C229A134E009CCE3B /* AppPrefs.swift */,
-				9C8329FC224ABB13007DA6FC /* DefaultDiskLocation.swift */,
-				9C832A01224ABE96007DA6FC /* OpenSaveDirectory.swift */,
 				9CE32506224D561E0051CA1F /* PrefsWindowController.swift */,
 				9CAD6A5122DFA0B000531D90 /* PrefsTabVC.swift */,
 				9CAD6A4E22DF9ACD00531D90 /* PrefsTabViewController.swift */,
@@ -1243,8 +1311,6 @@
 				9C5556D122E115960099414E /* Export.storyboard */,
 				9C5556D622E11E3B0099414E /* ExportWindowController.swift */,
 				9C5556D922E132EC0099414E /* ExportViewController.swift */,
-				9CAD6A5522DFA9C200531D90 /* NotesExporter.swift */,
-				9CAD6A5922DFBEEB00531D90 /* NoteFormat.swift */,
 			);
 			path = export;
 			sourceTree = "<group>";
@@ -1255,10 +1321,6 @@
 				9C0B643423885E9900869FAA /* TagsMassChange.storyboard */,
 				9C0B643823888D6700869FAA /* TagsMassChangeWindowController.swift */,
 				9C0B643B23888D9E00869FAA /* TagsMassChangeViewController.swift */,
-				9C2AE511220A030800AE8BEE /* TagsTree.swift */,
-				9C2AE513220A033300AE8BEE /* TagsNode.swift */,
-				9C2AE519220A044800AE8BEE /* TagsNodeType.swift */,
-				9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */,
 			);
 			path = tags;
 			sourceTree = "<group>";
@@ -1277,7 +1339,6 @@
 			isa = PBXGroup;
 			children = (
 				9CC78E682283565E00640477 /* DisplayPrefs.storyboard */,
-				9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */,
 				9CC78E6B2283587300640477 /* DisplayPrefsWindowController.swift */,
 				9CC78E6E228358A400640477 /* DisplayPrefsViewController.swift */,
 			);
@@ -1581,6 +1642,7 @@
 				9C1BE27122EB940E006FDFEC /* ScriptWindowController.swift in Sources */,
 				9C60E78C21F651E500C332ED /* FieldDictionary.swift in Sources */,
 				9C551C8E22A3459C009BA329 /* LogEvent.swift in Sources */,
+				9C7F27C223BC0A51001381DF /* NoteFileFormat.swift in Sources */,
 				9C79BDB0226E368800796E93 /* LabelView.swift in Sources */,
 				9CDF578623469AD0004417FA /* TextileOpeningClosing.swift in Sources */,
 				9CC0F5A8227629C4002683F8 /* BooleanValue.swift in Sources */,
@@ -1914,6 +1976,7 @@
 				9C1C761322EDE1A8002B97DA /* TemplateModule.swift in Sources */,
 				9CE60323234558FA000B45E6 /* Textiler.swift in Sources */,
 				9C832A03224ABE96007DA6FC /* OpenSaveDirectory.swift in Sources */,
+				9C7F27C323BC0A51001381DF /* NoteFileFormat.swift in Sources */,
 				9CFD350123313D6D004ABA16 /* ArtistValue.swift in Sources */,
 				9C60E75A21F651E500C332ED /* SeqValue.swift in Sources */,
 				9CCFEE722270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
@@ -2018,6 +2081,7 @@
 				9CB6ECC82365D9E100951820 /* StatusType.swift in Sources */,
 				9CDF578423469A47004417FA /* TextileBlockPhase.swift in Sources */,
 				9C568DDB2322BA21005D6B0A /* AuthorPickList.swift in Sources */,
+				9C7F27C423BC0A51001381DF /* NoteFileFormat.swift in Sources */,
 				9C27DA0522FB581D008EE0A1 /* IndexPageRef.swift in Sources */,
 				9C9A6BB722EA603700E1F127 /* SortModule.swift in Sources */,
 				9CC0F5AA227629C4002683F8 /* BooleanValue.swift in Sources */,

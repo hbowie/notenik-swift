@@ -59,6 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         appPrefs.appLaunching = false
     }
     
+    /// Standard open when passed a list of URLs. 
     func application(_ application: NSApplication, open urls: [URL]) {
         if stage == "1" {
             launchURLs = urls

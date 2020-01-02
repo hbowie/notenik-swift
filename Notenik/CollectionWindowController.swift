@@ -961,17 +961,20 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         if listVC != nil && source != .list && positionToUse != nil && positionToUse!.index >= 0 {
             listVC!.selectRow(index: positionToUse!.index)
         }
-        if displayVC != nil  && noteToUse != nil {
+        
+        guard noteToUse != nil else { return }
+        
+        if displayVC != nil {
             displayVC!.display(note: noteToUse!, io: notenikIO!)
         }
-        if editVC != nil && noteToUse != nil {
+        if editVC != nil {
             editVC!.select(note: noteToUse!)
         }
-        if noteToUse != nil {
-            adjustAttachmentsMenu(noteToUse!)
-        }
+        adjustAttachmentsMenu(noteToUse!)
         
-        crumbs!.select(latest: noteToUse!)
+        if crumbs != nil {
+            crumbs!.select(latest: noteToUse!)
+        }
     }
     
     /// Adjust the Attachments menu based on the attachments found in the passed note.

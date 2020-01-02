@@ -14,7 +14,8 @@ import Foundation
 /// A single Note. 
 class Note: Comparable, NSCopying {
     
-    var collection:  NoteCollection
+    var collection:     NoteCollection
+    var noteFileFormat: NoteFileFormat = .toBeDetermined
     
     var fields = [:] as [String: NoteField]
     var attachments: [AttachmentName] = []
@@ -64,6 +65,7 @@ class Note: Comparable, NSCopying {
     init (collection: NoteCollection) {
         // self.init()
         self.collection = collection
+        noteFileFormat = collection.noteFileFormat
     }
     
     /// The note's creation date, as reported from the note's environment (file system, etc.)
