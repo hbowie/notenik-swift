@@ -3,7 +3,7 @@
 //  notenik
 //
 //  Created by Herb Bowie on 11/26/18.
-//  Copyright © 2018-2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2018-2020 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// A String value representing a date.
 class DateValue: StringValue {
     
     var yyyy = ""
@@ -151,6 +152,12 @@ class DateValue: StringValue {
                 word.append(c)
             } else if StringUtils.isDigit(c) {
                 if word.letters {
+                    processWord(context: parseContext, word: word)
+                    word = DateWord()
+                } else if word.numbers && word.count == 4 {
+                    processWord(context: parseContext, word: word)
+                    word = DateWord()
+                } else if word.numbers && yyyy.count == 4 && word.count == 2 {
                     processWord(context: parseContext, word: word)
                     word = DateWord()
                 }
@@ -318,11 +325,11 @@ class DateValue: StringValue {
             word.append(c)
         }
         
-        var isEmpty : Bool {
+        var isEmpty: Bool {
             return (word.count == 0)
         }
         
-        var hasData : Bool {
+        var hasData: Bool {
             return (word.count > 0)
         }
         
