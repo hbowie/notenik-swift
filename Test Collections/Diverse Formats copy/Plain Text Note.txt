@@ -1,5 +1,0 @@
-This is a plain-text note. The file name will be used as the title. 
-
-This is a second paragraph. 
-
-## This is a level 2 heading. 

@@ -9,8 +9,6 @@
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
-import Foundation
-
 enum NoteSelectionSource {
     case nav
     case list

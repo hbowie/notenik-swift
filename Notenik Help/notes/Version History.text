@@ -6,6 +6,33 @@ Tags:   changes, history, log
 
 Body:
 
+### Version 2.5.0 | 29 Dec 2019
+
+#### 1. Fixed a few other bugs
+
+A few more code improvements. 
+
+
+#### 2. Fixed bug in identifying the Info file
+
+Corrected a bug that could sometimes cause a legitimate note to be misidentified as the collection's info file. 
+
+
+#### 3. Added JSON Export and Sharing
+
+A note can now be shared in JSON format, and a collection can be exported in JSON. 
+
+
+#### 4. Enabled Spelling Checker on Body text
+
+Spelling will now be checked in the Body field. 
+
+
+#### 5. Added Reload Note Command
+
+The Note menu now contains a Reload Note command, which will reload the currently selected Note from disk. This is useful after using an external editor to modify a Note on disk. 
+
+
 ### Version 2.4.0 | 13 Dec 2019
 
 #### 1. Added Startup Check

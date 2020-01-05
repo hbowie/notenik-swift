@@ -24,6 +24,10 @@ Following are the supported formats.
 * Import/Export in CSV Format
 
 	Each Note will be represented as one row/line, and each field will be represented in a separate column. Commas are used to separate columns. This format is suitable for import into MS Excel, for example.
+	
+* Export in JSON Format
+
+	Each Note will be represented as one JSON object. 
 
 When exporting the Notes in a Collection, you will be presented with a few options for the export. 
 

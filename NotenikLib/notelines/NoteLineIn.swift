@@ -24,8 +24,8 @@ class NoteLineIn {
     var index:         String.Index
     var nextIndex:     String.Index
 
-    var allOneChar   = true
-    var blankLine    = true
+    var allOneChar   = false
+    var blankLine    = false
     var lastLine     = false
     var mdH1Line     = false
     var mdTagsLine   = false
