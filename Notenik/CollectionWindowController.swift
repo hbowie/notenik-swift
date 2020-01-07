@@ -1030,7 +1030,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let (nio, sel) = guardForNoteAction()
         guard let noteIO = nio, let selNote = sel else { return }
         guard let filesFolderPath = noteIO.getAttachmentsLocation() else { return }
-        guard selNote.fileNameBase != nil else { return }
+        guard selNote.fileInfo.base != nil else { return }
         
         // Ask the user for a location on disk
         let openPanel = NSOpenPanel();
@@ -1277,8 +1277,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     @IBAction func textEditNote(_ sender: Any) {
         let (_, sel) = guardForNoteAction()
         guard let noteToUse = sel else { return }
-        if noteToUse.hasFileName() {
-            NSWorkspace.shared.openFile(noteToUse.fullPath!)
+        if !noteToUse.fileInfo.isEmpty {
+            NSWorkspace.shared.openFile(noteToUse.fileInfo.fullPath!)
         }
     }
     

@@ -377,7 +377,7 @@ class FileIO: NotenikIO, RowConsumer {
     func reloadNote(_ noteToReload: Note) -> Note? {
         var ok = false
         guard collection != nil && collectionOpen else { return nil }
-        guard let noteURL = noteToReload.url else { return nil }
+        guard let noteURL = noteToReload.fileInfo.url else { return nil }
         let reloaded = readNote(collection: collection!, noteURL: noteURL)
         guard reloaded!.hasTitle() else { return nil }
         if reloaded != nil {
@@ -414,7 +414,7 @@ class FileIO: NotenikIO, RowConsumer {
     
     /// Add matching attachments to a Note. 
     func addAttachments(to note: Note) {
-        guard let base = note.fileNameBase else { return }
+        guard let base = note.fileInfo.base else { return }
         guard attachments != nil else { return }
         var i = 0
         var looking = true
@@ -471,9 +471,9 @@ class FileIO: NotenikIO, RowConsumer {
     ///   - note2: The Note to wich the files should now be attached.
     /// - Returns: True if successful, false otherwise.
     func reattach(from: Note, to: Note) -> Bool {
-        if from.attachments.count == 0 { return true}
-        guard let fromNoteName = from.fileNameBase else { return false }
-        guard let toNoteName = to.fileNameBase else { return false }
+        guard from.attachments.count > 0 else { return true }
+        guard let fromNoteName = from.fileInfo.base else { return false }
+        guard let toNoteName = to.fileInfo.base else { return false }
         if fromNoteName == toNoteName { return true }
         to.attachments = []
         var allOK = true
@@ -672,7 +672,7 @@ class FileIO: NotenikIO, RowConsumer {
             return false
         }
         
-        firstNote.makeFileNameFromTitle()
+        firstNote.fileInfo.genFileName()
         collectionOpen = true
         ok = writeNote(firstNote)
         guard ok else {
@@ -881,7 +881,7 @@ class FileIO: NotenikIO, RowConsumer {
         }
         let added = bunch!.add(note: newNote)
         guard added else { return (nil, NotePosition(index: -1)) }
-        newNote.makeFileNameFromTitle()
+        newNote.fileInfo.genFileName()
         let written = writeNote(newNote)
         if !written {
             return (nil, NotePosition(index: -1))
@@ -905,8 +905,8 @@ class FileIO: NotenikIO, RowConsumer {
         
         guard deleted else { return false }
 
-        _ = noteToDelete.fullPath
-        let noteURL = noteToDelete.url
+        // _ = noteToDelete.fullPath
+        let noteURL = noteToDelete.fileInfo.url
         if noteURL != nil {
             do {
                 try fileManager.removeItem(at: noteURL!)
@@ -933,27 +933,26 @@ class FileIO: NotenikIO, RowConsumer {
         
         // Make sure we have an open collection available to us
         guard collection != nil && collectionOpen else { return false }
-        guard note.hasFileName() else { return false }
+        guard !note.fileInfo.isEmpty else { return false }
         
         pickLists.registerNote(note: note)
         let writer = BigStringWriter()
         let maker = NoteLineMaker(writer)
         let fieldsWritten = maker.putNote(note)
-        if fieldsWritten == 0 {
-            return false
-        } else {
-            let stringToSave = NSString(string: writer.bigString)
-            do {
-                try stringToSave.write(toFile: note.fullPath!, atomically: true, encoding: String.Encoding.utf8.rawValue)
-                let noteURL = URL(fileURLWithPath: note.fullPath!)
-                updateEnvDates(note: note, noteURL: noteURL)
-            } catch {
-                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                                  category: "FileIO",
-                                  level: .error,
-                                  message: "Problem writing Note to disk at \(note.fullPath!)")
-                return false
+        guard fieldsWritten > 0 else { return false }
+        let stringToSave = NSString(string: writer.bigString)
+        do {
+            try stringToSave.write(toFile: note.fileInfo.fullPath!, atomically: true, encoding: String.Encoding.utf8.rawValue)
+            let noteURL = note.fileInfo.url
+            if noteURL != nil {
+                updateEnvDates(note: note, noteURL: noteURL!)
             }
+        } catch {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileIO",
+                              level: .error,
+                              message: "Problem writing Note to disk at \(note.fileInfo.fullPath!)")
+            return false
         }
         return true
     }
@@ -976,7 +975,7 @@ class FileIO: NotenikIO, RowConsumer {
             }
             let note = parser.getNote(defaultTitle: defaultTitle)
             if fileName.count > 0 {
-                note.fileName = fileName
+                note.fileInfo.baseDotExt = fileName
             }
             updateEnvDates(note: note, noteURL: noteURL)
             return note
@@ -1174,8 +1173,8 @@ class FileIO: NotenikIO, RowConsumer {
             _ = bunch!.firstNote()
         }
         
-        let notePath = noteToDelete!.fullPath
-        let noteURL = noteToDelete!.url
+        let notePath = noteToDelete!.fileInfo.fullPath
+        let noteURL = noteToDelete!.fileInfo.url
         if noteURL != nil {
             for attachment in noteToDelete!.attachments {
                 let attachmentURL = getURLforAttachment(attachmentName: attachment)

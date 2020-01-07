@@ -15,7 +15,6 @@ import Foundation
 class Note: Comparable, NSCopying {
     
     var collection:     NoteCollection
-    var noteFileFormat: NoteFileFormat = .toBeDetermined
     
     var fields = [:] as [String: NoteField]
     var attachments: [AttachmentName] = []
@@ -23,49 +22,13 @@ class Note: Comparable, NSCopying {
     var _envCreateDate = ""
     var _envModDate    = ""
     
-    /// This should contain the file name (without the path) plus the file extension
-    var fileNameBase: String?
-    var fileNameExt:  String?
-    
-    var fileName: String? {
-        get {
-            if fileNameBase == nil || fileNameExt == nil {
-                return nil
-            } else {
-                return fileNameBase! + "." + fileNameExt!
-            }
-        }
-        set {
-            if newValue == nil {
-                fileNameBase = nil
-                fileNameExt = nil
-            } else {
-                fileNameBase = ""
-                fileNameExt = ""
-                var dotFound = false
-                for char in newValue! {
-                    if char == "." {
-                        dotFound = true
-                        if fileNameExt!.count > 0 {
-                            fileNameBase!.append(".")
-                            fileNameBase!.append(fileNameExt!)
-                            fileNameExt = ""
-                        }
-                    } else if dotFound {
-                        fileNameExt!.append(char)
-                    } else {
-                        fileNameBase!.append(char)
-                    }
-                }
-            }
-        }
-    }
+    var fileInfo: NoteFileInfo!
     
     /// Initialize with a Collection
     init (collection: NoteCollection) {
         // self.init()
         self.collection = collection
-        noteFileFormat = collection.noteFileFormat
+        fileInfo = NoteFileInfo(note: self)
     }
     
     /// The note's creation date, as reported from the note's environment (file system, etc.)
@@ -99,33 +62,6 @@ class Note: Comparable, NSCopying {
         }
         set {
             _envModDate = newValue
-        }
-    }
-    
-    /// Return the full URL pointing to the Note's file
-    var url: URL? {
-        let path = fullPath
-        if path == nil {
-            return nil
-        } else {
-            return URL(fileURLWithPath: path!)
-        }
-    }
-    
-    /// Return the full file path for the Note
-    var fullPath: String? {
-        if hasFileName() {
-            return FileUtils.joinPaths(path1: collection.collectionFullPath, path2: fileName!)
-        } else {
-            return nil
-        }
-    }
-    
-    /// Create a file name for the file, based on the Note's title
-    func makeFileNameFromTitle() {
-        guard collection.preferredExt.count > 0 else { return }
-        if hasTitle() {
-            fileName = StringUtils.toReadableFilename(title.value) + "." + collection.preferredExt
         }
     }
     
@@ -185,13 +121,13 @@ class Note: Comparable, NSCopying {
     /// Make a copy of this Note
     func copy(with zone: NSZone? = nil) -> Any {
         let newNote = Note(collection: collection)
-        if fileName == nil {
-            newNote.fileName = nil
-        } else {
-            newNote.fileName = String(fileName!)
-        }
         copyFields(to: newNote)
         copyAttachments(to: newNote)
+        if !fileInfo.isEmpty {
+            newNote.fileInfo.base = fileInfo.base
+            newNote.fileInfo.ext  = fileInfo.ext
+            newNote.fileInfo.baseDotExt = fileInfo.baseDotExt
+        }
         return newNote
     }
     
@@ -518,11 +454,16 @@ class Note: Comparable, NSCopying {
     
     /// Get the unique ID used to identify this note within its collection
     var noteID: String {
+        return StringUtils.toCommon(noteIDSource)
+    }
+    
+    /// Return the source field value used as a source for creating the Note ID.
+    var noteIDSource: String {
         switch collection.idRule {
         case .fromTitle:
-            return StringUtils.toCommon(title.value)
+            return title.value
         default:
-            return StringUtils.toCommon(title.value)
+            return title.value
         }
     }
     
@@ -565,11 +506,6 @@ class Note: Comparable, NSCopying {
             }
             return key
         }
-    }
-    
-    /// Does this note have a file name?
-    func hasFileName() -> Bool {
-        return fileName != nil && fileName!.count > 0
     }
     
     /// Does this note have a non-blank title field?
@@ -643,6 +579,10 @@ class Note: Comparable, NSCopying {
     /// Get the Title field, if one exists
     func getTitleAsField() -> NoteField? {
         return getField(label: LabelConstants.title)
+    }
+    
+    func getTagsAsField() -> NoteField? {
+        return getField(label: LabelConstants.tags)
     }
     
     /// Get the body field, if one exists

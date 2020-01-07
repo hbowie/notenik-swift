@@ -139,7 +139,7 @@ class ModWhenChanged {
                 return (.tryAgain, nil)
             }
         case .deleteAndAdd:
-            modNote.makeFileNameFromTitle()
+            modNote.fileInfo.optRegenFileName()
             let attachmentsOK = io.reattach(from: startingNote, to: modNote)
             if !attachmentsOK {
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik",

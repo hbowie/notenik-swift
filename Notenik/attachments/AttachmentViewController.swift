@@ -39,7 +39,7 @@ class AttachmentViewController: NSViewController {
     
     func setNote(_ note: Note) {
         self.note = note
-        attachmentPrefix.stringValue = note.fileNameBase!
+        attachmentPrefix.stringValue = note.fileInfo.base!
         attachmentPrefix.isEditable = false
     }
     

@@ -100,8 +100,8 @@ class NoteLineParser {
                 label.set(LabelConstants.title)
                 def = note.collection.getDef(label: &label)!
                 value = noteLine.value
-                note.noteFileFormat = .markdown
-            } else if note.noteFileFormat == .markdown && !bodyStarted && noteLine.mdTagsLine {
+                note.fileInfo.format = .markdown
+            } else if note.fileInfo.format == .markdown && !bodyStarted && noteLine.mdTagsLine {
                 label.set(LabelConstants.tags)
                 def = note.collection.getDef(label: &label)!
                 value = noteLine.value
@@ -115,7 +115,7 @@ class NoteLineParser {
                 }
             } else if noteLine.blankLine {
                 if fieldNumber > 1 && blankLines == 1 && !bodyStarted {
-                    note.noteFileFormat = .multiMarkdown
+                    note.fileInfo.format = .multiMarkdown
                     label.set(LabelConstants.body)
                     def = note.collection.getDef(label: &label)!
                     clearValue()
@@ -135,7 +135,9 @@ class NoteLineParser {
                 value = noteLine.line
                 bodyStarted = true
                 if lineNumber == 1 {
-                    note.noteFileFormat = .plainText
+                    note.fileInfo.format = .plainText
+                } else {
+                    note.fileInfo.format = .multiMarkdown
                 }
             }
             /* else {

@@ -1,0 +1,13 @@
+title:  Good Old Notenik Note
+
+location: anywhere
+
+author: Herb Bowie
+
+date:   06 Jan 2020
+
+tags:   test
+
+Body: 
+
+This is a good old Notenik note. 

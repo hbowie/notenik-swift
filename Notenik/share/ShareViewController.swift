@@ -104,7 +104,8 @@ class ShareViewController: NSViewController {
             let writer = BigStringWriter()
             let noteLineMaker = NoteLineMaker(writer)
             if contentBodyOnlyButton.state == .on {
-                noteLineMaker.putField(note!.getBodyAsField())
+                noteLineMaker.putField(note!.getBodyAsField(),
+                                       format: note!.fileInfo.format)
             } else {
                 _ = noteLineMaker.putNote(note!)
             }
