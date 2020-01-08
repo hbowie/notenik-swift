@@ -259,11 +259,15 @@ class FileIO: NotenikIO, RowConsumer {
                     }
                     
                 } else if fileName.template {
+                    let dict = collection!.dict
+                    let types = collection!.typeCatalog
+                    _ = dict.addDef(typeCatalog: types, label: LabelConstants.title)
                     let templateNote = readNote(collection: collection!, noteURL: itemURL)
                     if (templateNote != nil
                         && templateNote!.fields.count > 0
                         && collection!.dict.count > 0) {
                         templateFound = true
+                        _ = dict.addDef(typeCatalog: types, label: LabelConstants.body)
                         for def in collection!.dict.list {
                             if def.fieldLabel.commonForm == LabelConstants.timestampCommon {
                                 collection!.hasTimestamp = true

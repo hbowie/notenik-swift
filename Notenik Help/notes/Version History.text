@@ -6,6 +6,18 @@ Tags:   changes, history, log
 
 Body:
 
+### Version 2.6.0 | 04 Jan 2020
+
+#### 1. Applied Postel's Law to Note Formats
+
+Notenik is now more liberal in terms of accepting Notes in a wider variety of formats. Plain text notes, Multi-Markdown notes, and Markdown notes will now be accepted, in addition to the defined Notenik format. 
+
+
+#### 2. Applied Postel's Law to Date Formats
+
+Notenik is now more liberal in terms of the sorts of dates it will parse correctly. Specifically, an 8-digit yyyymmdd date, without any punctuation, should now be correctly parsed. 
+
+
 ### Version 2.5.0 | 29 Dec 2019
 
 #### 1. Fixed a few other bugs
