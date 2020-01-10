@@ -18,15 +18,18 @@ class ExportViewController: NSViewController {
     
     let commaSep  = "Comma-Separated"
     let jsonTitle = "JSON"
+    let notenik   = "Notenik"
     let tabDelim  = "Tab-Delimited"
     let bookmarks = "Netscape Bookmark File"
+    let osdir     = OpenSaveDirectory.shared
     
-    let csv = "csv"
-    let tab = "tab"
-    let txt = "txt"
-    let htm = "htm"
-    let html = "html"
-    let json = "json"
+    let csv     = "csv"
+    let htm     = "htm"
+    let html    = "html"
+    let json    = "json"
+    let md      = "md"
+    let tab     = "tab"
+    let txt     = "txt"
     
     @IBOutlet var formatPopup: NSPopUpButton!
     @IBOutlet var fileExtCombo: NSComboBox!
@@ -42,6 +45,7 @@ class ExportViewController: NSViewController {
         formatPopup.addItem(withTitle: commaSep)
         formatPopup.addItem(withTitle: tabDelim)
         formatPopup.addItem(withTitle: jsonTitle)
+        formatPopup.addItem(withTitle: notenik)
         formatPopup.addItem(withTitle: bookmarks)
         formatPopup.selectItem(at: 0)
         
@@ -50,6 +54,7 @@ class ExportViewController: NSViewController {
         fileExtCombo.addItem(withObjectValue: tab)
         fileExtCombo.addItem(withObjectValue: txt)
         fileExtCombo.addItem(withObjectValue: json)
+        fileExtCombo.addItem(withObjectValue: md)
         fileExtCombo.addItem(withObjectValue: htm)
         fileExtCombo.addItem(withObjectValue: html)
         fileExtCombo.selectItem(at: 0)
@@ -66,6 +71,9 @@ class ExportViewController: NSViewController {
             } else if selectedFormat.title == bookmarks {
                 fileExtCombo.selectItem(withObjectValue: htm)
                 splitTagsCheckBox.state = .on
+            } else if selectedFormat.title == notenik {
+                fileExtCombo.selectItem(withObjectValue: txt)
+                splitTagsCheckBox.state = .off
             }
         }
     }
@@ -75,29 +83,46 @@ class ExportViewController: NSViewController {
         
         io = window.io
         
-        guard let destination = getExportURL(fileExt: fileExtCombo.stringValue) else {
+        // Figure out the desired output format.
+        var formatTitle = commaSep
+        var format = ExportFormat.commaSeparated
+        if formatPopup.selectedItem != nil {
+            formatTitle = formatPopup.selectedItem!.title
+        }
+        switch formatTitle {
+        case tabDelim:
+            format = .tabDelimited
+        case jsonTitle:
+            format = .json
+        case bookmarks:
+            format = .bookmarks
+        case notenik:
+            format = .notenik
+        default:
+            format = .commaSeparated
+        }
+        
+        // See where the user wants to save it.
+        var url: URL?
+        if format == .notenik {
+            url = getNotenikExportURL()
+        } else {
+            url = getExportURL(fileExt: fileExtCombo.stringValue)
+        }
+        guard let destination = url else {
             window.close()
             return
         }
         
-        var format = NoteFormat.commaSeparated
-        if formatPopup.selectedItem != nil {
-            if formatPopup.selectedItem!.title == tabDelim {
-                format = .tabDelimited
-            } else if formatPopup.selectedItem!.title == jsonTitle {
-                format = .json
-            } else if formatPopup.selectedItem!.title == bookmarks {
-                format = .bookmarks
-            }
-        }
-        
+        // Now let's export. 
         let exporter = NotesExporter()
         let notesExported = exporter.export(noteIO: io,
                                             format: format,
                                             useTagsExportPrefs: tagsExportPrefsCheckBox.state == .on,
                                             split: splitTagsCheckBox.state == .on,
                                             addWebExtensions: addWebExtensionsCheckBox.state == .on,
-                                            destination: destination)
+                                            destination: destination,
+                                            ext: fileExtCombo.stringValue)
         let ok = notesExported > 0
         informUserOfImportExportResults(operation: "export",
                                         ok: ok,
@@ -107,7 +132,7 @@ class ExportViewController: NSViewController {
         window.close()
     }
     
-    /// Ask the user where to save the export file
+    /// Ask the user where to save the export file.
     func getExportURL(fileExt: String, fileName: String = "export") -> URL? {
         
         let savePanel = NSSavePanel();
@@ -123,6 +148,29 @@ class ExportViewController: NSViewController {
         let userChoice = savePanel.runModal()
         if userChoice == .OK {
             return savePanel.url
+        } else {
+            return nil
+        }
+    }
+    
+    /// Ask the user where to save the export folder.
+    func getNotenikExportURL() -> URL? {
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Create a New Notenik Folder"
+        let parent = osdir.directoryURL
+        if parent != nil {
+            openPanel.directoryURL = parent!
+        }
+        // openPanel.directoryURL = home
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = true
+        openPanel.canChooseFiles = false
+        openPanel.allowsMultipleSelection = false
+        let response = openPanel.runModal()
+        if response == .OK {
+            return openPanel.url
         } else {
             return nil
         }

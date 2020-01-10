@@ -1,0 +1,32 @@
+Title:  Export to Notenik vs. Save As
+
+Tags:   export, save
+
+Timestamp: 20200110223242
+
+Seq:    35
+
+Date Added: 2020-01-10 22:32:42 +0000
+
+Body: 
+
+The careful observer may at some point wonder why Notenik includes both a 'Save As' command as well as the ability to Export a Collection in the Notenik format. Are these just two ways of accomplishing the same objective? Well, not quite. 
+
+It's true that both commands will copy your current Collection of Notes to a new location. However, there are some subtle differences between the two. 
+
+With 'Save As': 
+
+* The command will finish with the new Collection becoming the one that is currently open.
+* The current note files will be copied exactly as-is. 
+* Attachments will be copied as-is. 
+
+With 'Export to Notenik':
+
+* The command will finish with the old Collection remaining the one that is currently open. 
+* Each Note will be rewritten using the standard Notenik format. This can be especially useful if you're starting with a folder full of text files that were not created by Notenik, and you're ready to fully commit to the Notenik file format. 
+* You will have the chance to specify a new file extension to be used, and this will be used consistently for all Notes in the Collection. 
+* Not all Notes may be copied! If there are any Notes with duplicate Titles, then only one will make the move. Check the Log window carefully to see if this problem stranded any of your Notes in the old Collection. 
+* Attachments will be ignored. 
+
+In summary, these are two different tools, and you should be careful to use whichever one is the best fit for your particular situation. 
+

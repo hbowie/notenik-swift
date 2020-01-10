@@ -35,7 +35,7 @@ class OutputModule {
     func open() {
         let outputFileName = FileName(command.valueWithPathResolved)
         let outputURL = URL(fileURLWithPath: command.valueWithPathResolved)
-        var format = NoteFormat.tabDelimited
+        var format = ExportFormat.tabDelimited
         if outputFileName.extLower == "csv" {
             format = .commaSeparated
         }

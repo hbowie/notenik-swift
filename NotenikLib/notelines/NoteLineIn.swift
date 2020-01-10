@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// A single line from an input Notenik file.
 class NoteLineIn {
     
     // Input fields
@@ -25,10 +26,12 @@ class NoteLineIn {
     var nextIndex:     String.Index
 
     var allOneChar   = false
+    var allOneCharCount = 0
     var blankLine    = false
     var lastLine     = false
     var mdH1Line     = false
     var mdTagsLine   = false
+    var mmdMetaStartEndLine = false
     
     var firstIndex   : String.Index
     var lastIndex    : String.Index
@@ -82,6 +85,7 @@ class NoteLineIn {
         colonFound = false
         blankLine = true
         allOneChar = true
+        allOneCharCount = 0
         firstChar = nil
 
         var badLabelPunctuationCount = 0
@@ -91,7 +95,15 @@ class NoteLineIn {
             // See if the line conists of one character repeated multiple times
             if firstChar == nil {
                 firstChar = c
-            } else if c != firstChar {
+                allOneCharCount = 1
+            } else if allOneChar && c == firstChar {
+                allOneCharCount += 1
+                if firstChar == "-" && allOneCharCount == 3 {
+                    mmdMetaStartEndLine = true
+                } else if firstChar == "." && allOneCharCount == 4 {
+                    mmdMetaStartEndLine = true
+                }
+            } else {
                 allOneChar = false
             }
             

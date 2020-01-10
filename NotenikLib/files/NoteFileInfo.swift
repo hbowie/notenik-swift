@@ -18,6 +18,8 @@ class NoteFileInfo {
     var collection: NoteCollection
     
     var format: NoteFileFormat = .toBeDetermined
+    var mmdMetaStartLine = ""
+    var mmdMetaEndLine = ""
     
     /// This should contain the file name (without the path) plus the file extension
     var base: String?

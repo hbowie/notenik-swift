@@ -39,6 +39,13 @@ class ModWhenChanged {
         guard let collection = io.collection else { return (outcome, nil) }
         guard io.collectionOpen else { return (outcome, nil) }
         
+        let dict = collection.dict
+        let defs = dict.list
+        
+        guard defs.count == modViews.count else {
+            return (outcome, nil)
+        }
+        
         outcome = .noChange
         
         // Let's get a Note ready for comparison and possible modifications
@@ -51,8 +58,6 @@ class ModWhenChanged {
         
         // See if any fields were modified by the user, and update corresponding Note fields
         var modified = false
-        let dict = collection.dict
-        let defs = dict.list
         var i = 0
         for def in defs {
             let field = modNote.getField(def: def)

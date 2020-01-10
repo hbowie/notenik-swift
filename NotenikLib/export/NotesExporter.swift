@@ -21,14 +21,20 @@ class NotesExporter {
     
     var noteIO: NotenikIO!
     var dict = FieldDictionary()
-    var format = NoteFormat.commaSeparated
+    var format = ExportFormat.commaSeparated
     var split = false
     var webExt = false
     var destination: URL!
+    var fileExt = "txt"
     
     var delimWriter: DelimitedWriter!
     var markup: Markedup!
     var jsonWriter: JSONWriter!
+    var exportIO: NotenikIO!
+    var exportCollection: NoteCollection!
+    var exportDict: FieldDictionary!
+    
+    var exportErrors = 0
     
     var authorDef = false
     var workDef = false
@@ -44,22 +50,30 @@ class NotesExporter {
     
     /// Export the Notes to one of several possible output formats.
     func export(noteIO: NotenikIO,
-                       format: NoteFormat,
+                       format: ExportFormat,
                        useTagsExportPrefs: Bool,
                        split: Bool,
                        addWebExtensions: Bool,
-                       destination: URL) -> Int {
+                       destination: URL,
+                       ext: String) -> Int {
         
         self.noteIO = noteIO
         self.format = format
         self.split = split
-        if format == .bookmarks {
-            self.split = true
-        }
         self.webExt = addWebExtensions
         self.destination = destination
+        self.fileExt = ext
+        if format == .bookmarks {
+            self.split = true
+        } else if format == .notenik {
+            self.split = false
+            self.webExt = false
+        }
         
         guard noteIO.collection != nil && noteIO.collectionOpen else { return -1 }
+        
+        exportErrors = 0
+        
         dict = noteIO.collection!.dict
         
         authorDef = dict.contains(LabelConstants.authorCommon)
@@ -97,6 +111,12 @@ class NotesExporter {
         }
     }
     
+    // --------------------------------------------------------------
+    //
+    // Open Methods follow.
+    //
+    // --------------------------------------------------------------
+    
     /// Open an output file for the export. 
     func open () {
         switch format {
@@ -108,8 +128,8 @@ class NotesExporter {
             markup.startDoc(withTitle: "Bookmarks", withCSS: nil)
         case .json:
             jsonOpen()
-        default:
-            break
+        case .notenik:
+            notenikOpen()
         }
     }
     
@@ -152,6 +172,59 @@ class NotesExporter {
         jsonWriter.open()
         jsonWriter.startObject()
     }
+    
+    func notenikOpen() {
+        exportIO = FileIO()
+        let realm = exportIO.getDefaultRealm()
+        realm.path = ""
+        
+        let initOK = exportIO.initCollection(realm: realm,
+                                             collectionPath: destination.path)
+        guard initOK else {
+            logError("Could not open requested output folder at \(destination.path) as a new Notenik collection")
+            exportErrors += 1
+            return
+        }
+        let collection = noteIO.collection!
+        
+        exportCollection = exportIO.collection!
+        exportDict = exportCollection.dict
+        
+        exportCollection.noteType = collection.noteType
+        exportCollection.idRule = collection.idRule
+        exportCollection.sortParm = collection.sortParm
+        exportCollection.sortDescending = collection.sortDescending
+        exportCollection.statusConfig = collection.statusConfig
+        exportCollection.preferredExt = fileExt
+        exportCollection.otherFields = collection.otherFields
+        exportCollection.doubleBracketParsing = collection.doubleBracketParsing
+        let caseMods = ["u", "u", "l"]
+        for def in dict.list {
+            let proper = def.fieldLabel.properForm
+            let exportProper = StringUtils.wordDemarcation(proper, caseMods: caseMods, delimiter: " ")
+            let exportLabel = FieldLabel(exportProper)
+            let exportDef = FieldDefinition()
+            exportDef.fieldLabel = exportLabel
+            exportDef.typeCatalog = def.typeCatalog
+            exportDef.fieldType = def.fieldType
+            _ = exportDict.addDef(exportDef)
+        }
+        let ok = exportIO.newCollection(collection: exportCollection)
+        guard ok else {
+            logError("Could not open requested output folder at \(destination.path) as a new Notenik collection")
+            exportErrors += 1
+            return
+        }
+        
+        logNormal("New Collection successfully initialized at \(exportCollection.collectionFullPath)")
+        
+    }
+    
+    // --------------------------------------------------------------
+    //
+    // Write Methods follow.
+    //
+    // --------------------------------------------------------------
     
     func iterateOverNotes(noteIO: NotenikIO) {
         // Now export each Note
@@ -222,6 +295,8 @@ class NotesExporter {
             writeLine(splitTag: splitTag, cleanTags: cleanTags, note: note)
         case .json:
             writeObject(splitTag: splitTag, cleanTags: cleanTags, note: note)
+        case .notenik:
+            writeNotenik(splitTag: splitTag, cleanTags: cleanTags, note: note)
         default:
             writeLine(splitTag: splitTag, cleanTags: cleanTags, note: note)
         }
@@ -373,6 +448,52 @@ class NotesExporter {
         return String(describing: html)
     }
     
+    /// Write a Notenik Note  for a single note.
+    ///
+    /// - Parameters:
+    ///   - splitTag: If we're splitting by tag, then the tag to write for this line; otherwise blank.
+    ///   - cleanTags: The cleaned tags for this note, with any suppressed tags removed.
+    ///   - note: The Note to be written.
+    func writeNotenik(splitTag: String, cleanTags: String, note: Note) {
+        
+        let exportNote = Note(collection: exportCollection)
+        
+        for def in dict.list {
+            let exportDef = exportDict.getDef(def.fieldLabel.commonForm)
+            if exportDef != nil {
+                let field = note.getField(def: def)
+                if field != nil && field!.value.count > 0 {
+                    let exportField = NoteField()
+                    exportField.def = exportDef!
+                    if def.fieldLabel.commonForm == LabelConstants.tagsCommon {
+                        _ = exportNote.setTags(cleanTags)
+                    } else {
+                        exportField.value = field!.value
+                        _ = exportNote.addField(exportField)
+                    }
+                }
+            }
+        }
+        
+        exportNote.fileInfo.ext = fileExt
+        exportNote.fileInfo.format = .notenik
+        exportNote.fileInfo.genFileName()
+        let (added, position) = exportIO.addNote(newNote: exportNote)
+        if added == nil || position.index < 0 {
+            exportErrors += 1
+            logError("Note titled \(exportNote.title.value) could not be saved to the exported collection")
+        } else {
+            tagsWritten += 1
+            notesExported += 1
+        }
+    }
+    
+    // --------------------------------------------------------------
+    //
+    // Close Methods follow.
+    //
+    // --------------------------------------------------------------
+    
     /// Close the output file, and return result.
     func close() -> Bool {
         switch format {
@@ -384,10 +505,9 @@ class NotesExporter {
             return markupClose()
         case .json:
             return jsonClose()
-        default:
-            break
+        case .notenik:
+            return notenikClose()
         }
-        return true
     }
     
     /// Close the Delimited Writer
@@ -445,6 +565,11 @@ class NotesExporter {
             return false
         }
         return true
+    }
+    
+    func notenikClose() -> Bool {
+        exportIO.closeCollection()
+        return exportErrors == 0
     }
     
     /// Log a normal message

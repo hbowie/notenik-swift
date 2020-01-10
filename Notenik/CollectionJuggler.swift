@@ -21,7 +21,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     private let defaults = UserDefaults.standard
     let home = FileManager.default.homeDirectoryForCurrentUser
     
-    let appPrefs = AppPrefs.shared
+    let appPrefs  = AppPrefs.shared
+    let osdir     = OpenSaveDirectory.shared
     
     let storyboard:      NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
     let logStoryboard:   NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
@@ -29,8 +30,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     let scriptStoryboard: NSStoryboard = NSStoryboard(name: "Script", bundle: nil)
     var scriptWindowController: ScriptWindowController?
-    
-    let osdir = OpenSaveDirectory.shared
     
     var docController: NoteDocumentController?
     

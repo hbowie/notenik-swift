@@ -101,7 +101,7 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
                 found = true
                 sizeComboBox.selectItem(at: i)
             } else if defaultSize! < sizes[i] {
-                fonts.insert(defaultSize!, at: i)
+                sizes.insert(defaultSize!, at: i)
                 found = true
                 sizeComboBox.reloadData()
                 sizeComboBox.selectItem(at: i)
@@ -111,6 +111,7 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         }
         if !found {
             sizes.append(defaultSize!)
+            sizeComboBox.reloadData()
             sizeComboBox.selectItem(at: i)
         }
         
@@ -133,9 +134,12 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
     }
     
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
+        guard index >= 0 else { return nil }
         if comboBox == fontComboBox {
+            guard index < fonts.count else { return nil }
             return fonts[index]
         } else {
+            guard index < sizes.count else { return nil }
             return sizes[index]
         }
     }

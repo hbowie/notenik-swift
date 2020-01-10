@@ -422,9 +422,9 @@
 		9CAD6A5622DFA9C200531D90 /* NotesExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A5522DFA9C200531D90 /* NotesExporter.swift */; };
 		9CAD6A5722DFA9C200531D90 /* NotesExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A5522DFA9C200531D90 /* NotesExporter.swift */; };
 		9CAD6A5822DFA9C200531D90 /* NotesExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A5522DFA9C200531D90 /* NotesExporter.swift */; };
-		9CAD6A5A22DFBEEB00531D90 /* NoteFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A5922DFBEEB00531D90 /* NoteFormat.swift */; };
-		9CAD6A5B22DFBEEB00531D90 /* NoteFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A5922DFBEEB00531D90 /* NoteFormat.swift */; };
-		9CAD6A5C22DFBEEB00531D90 /* NoteFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A5922DFBEEB00531D90 /* NoteFormat.swift */; };
+		9CAD6A5A22DFBEEB00531D90 /* ExportFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A5922DFBEEB00531D90 /* ExportFormat.swift */; };
+		9CAD6A5B22DFBEEB00531D90 /* ExportFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A5922DFBEEB00531D90 /* ExportFormat.swift */; };
+		9CAD6A5C22DFBEEB00531D90 /* ExportFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A5922DFBEEB00531D90 /* ExportFormat.swift */; };
 		9CB06CBA22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */; };
 		9CB06CBB22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */; };
 		9CB06CBC22CCF4DD00887778 /* TagsNodeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */; };
@@ -825,7 +825,7 @@
 		9CAD6A4E22DF9ACD00531D90 /* PrefsTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsTabViewController.swift; sourceTree = "<group>"; };
 		9CAD6A5122DFA0B000531D90 /* PrefsTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsTabVC.swift; sourceTree = "<group>"; };
 		9CAD6A5522DFA9C200531D90 /* NotesExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesExporter.swift; sourceTree = "<group>"; };
-		9CAD6A5922DFBEEB00531D90 /* NoteFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFormat.swift; sourceTree = "<group>"; };
+		9CAD6A5922DFBEEB00531D90 /* ExportFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFormat.swift; sourceTree = "<group>"; };
 		9CAF2B2622664237009E19E2 /* Project Index */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Project Index"; sourceTree = "<group>"; };
 		9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNodeIterator.swift; sourceTree = "<group>"; };
 		9CB337532347BA4A006767A4 /* TextileCharDisposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileCharDisposition.swift; sourceTree = "<group>"; };
@@ -1239,7 +1239,7 @@
 			isa = PBXGroup;
 			children = (
 				9CAD6A5522DFA9C200531D90 /* NotesExporter.swift */,
-				9CAD6A5922DFBEEB00531D90 /* NoteFormat.swift */,
+				9CAD6A5922DFBEEB00531D90 /* ExportFormat.swift */,
 			);
 			path = export;
 			sourceTree = "<group>";
@@ -1804,7 +1804,7 @@
 				9C60E75021F651E500C332ED /* NoteSortParm.swift in Sources */,
 				9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
 				9CE2170722A95EB300EE656C /* TemplateCommand.swift in Sources */,
-				9CAD6A5A22DFBEEB00531D90 /* NoteFormat.swift in Sources */,
+				9CAD6A5A22DFBEEB00531D90 /* ExportFormat.swift in Sources */,
 				9C535F5723A3FDC300D47282 /* WikiLinks.swift in Sources */,
 				9CB6ECAA2364F7DB00951820 /* IndexType.swift in Sources */,
 				9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */,
@@ -1986,7 +1986,7 @@
 				9CDF578723469AD0004417FA /* TextileOpeningClosing.swift in Sources */,
 				9CB6ECBB2365D5EC00951820 /* RatingType.swift in Sources */,
 				9CE9C98322A6134A008D2B0A /* Template.swift in Sources */,
-				9CAD6A5B22DFBEEB00531D90 /* NoteFormat.swift in Sources */,
+				9CAD6A5B22DFBEEB00531D90 /* ExportFormat.swift in Sources */,
 				9C78888721FB826100452D74 /* MarkedupFormat.swift in Sources */,
 				9CB6ECA72364C25A00951820 /* DateType.swift in Sources */,
 				9C27D9FC22FB3FA6008EE0A1 /* IndexTerm.swift in Sources */,
@@ -2200,7 +2200,7 @@
 				9CE2170922A95EB300EE656C /* TemplateCommand.swift in Sources */,
 				9C60E79D21F651E500C332ED /* NotePosition.swift in Sources */,
 				9C4C1BB222E7EE61005997DF /* ScriptEngine.swift in Sources */,
-				9CAD6A5C22DFBEEB00531D90 /* NoteFormat.swift in Sources */,
+				9CAD6A5C22DFBEEB00531D90 /* ExportFormat.swift in Sources */,
 				9CB60BC422650A89003B5655 /* ShareWindowController.swift in Sources */,
 				9CB6ECAC2364F7DB00951820 /* IndexType.swift in Sources */,
 				9C21DB8221F82DB600A5A08C /* NoteDisplay.swift in Sources */,
@@ -2402,7 +2402,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2414,7 +2414,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.6.0;
+				MARKETING_VERSION = 2.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2429,7 +2429,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2441,7 +2441,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.6.0;
+				MARKETING_VERSION = 2.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -205,6 +205,14 @@ class StringUtils {
         }
     }
     
+    /// Change the way words are  identified in the output string.
+    /// - Parameters:
+    ///   - from: The input String.
+    ///   - caseMods: Three characters indicating where upper- and lower-case letters should be used. Each position
+    ///               should be set to a 'u' or an 'l'.  The first position indicates the desired case for the first character
+    ///               in the string; the second position indicates the desired case for the first character in each word;
+    ///               the third position inidcates the desired case for the remaining letters. 
+    ///   - delimiter: The desired delimiter to be placed between words.
     static func wordDemarcation(_ from: String, caseMods: [String], delimiter: String) -> String {
         var out = ""
         var demarcationPending = false
@@ -500,13 +508,14 @@ class StringUtils {
     }
     
     /// Remove white space and Markdown heading characters from front and back of string
-    static func trimHeading(_ inStr : String) -> String {
+    static func trimHeading(_ inStr: String) -> String {
+        guard inStr.count > 0 else { return "" }
         var headingFound = false
         var start = inStr.startIndex
         var end = inStr.endIndex
         var index = inStr.startIndex
         for c in inStr {
-            if c == " " || c == "#" {
+            if c.isWhitespace || c == "#" {
                 // Skip spaces and heading characters
             } else {
                 if !headingFound {
@@ -517,7 +526,11 @@ class StringUtils {
             }
             index = inStr.index(index, offsetBy: 1)
         }
-        return String(inStr[start...end])
+        if headingFound {
+            return String(inStr[start...end])
+        } else {
+            return ""
+        }
     }
     
     /// Return the character located at the given position within the passed string

@@ -77,10 +77,13 @@ class NoteLineParser {
                 blankLines += 1
             }
             
-            if label.validLabel && value.count > 0 {
+            if label.validLabel && value.count > 0 && !bodyStarted {
                 if noteLine.blankLine && blankLines == 1 && fieldNumber > 1 {
                     valueComplete = true
                 } else if fieldNumber == 1 {
+                    valueComplete = true
+                } else if noteLine.mmdMetaStartEndLine
+                    && note.fileInfo.format == .multiMarkdown {
                     valueComplete = true
                 }
             }
@@ -96,7 +99,14 @@ class NoteLineParser {
             valueComplete = false
             
             // Now figure out what to do with this line.
-            if lineNumber == 1 && noteLine.mdH1Line && noteLine.value.count > 0 && !bodyStarted {
+            if noteLine.mmdMetaStartEndLine && lineNumber == 1 {
+                note.fileInfo.format = .multiMarkdown
+                note.fileInfo.mmdMetaStartLine = noteLine.line
+            } else if noteLine.mmdMetaStartEndLine
+                && note.fileInfo.format == .multiMarkdown
+                && !bodyStarted {
+                note.fileInfo.mmdMetaEndLine = noteLine.line
+            } else if lineNumber == 1 && noteLine.mdH1Line && noteLine.value.count > 0 && !bodyStarted {
                 label.set(LabelConstants.title)
                 def = note.collection.getDef(label: &label)!
                 value = noteLine.value
