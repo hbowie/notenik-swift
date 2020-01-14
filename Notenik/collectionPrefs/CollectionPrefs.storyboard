@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -30,24 +31,43 @@
         <scene sceneID="aLq-Zz-bRx">
             <objects>
                 <viewController id="CWf-be-GpI" customClass="CollectionPrefsViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="Gr5-Kw-6rc">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="466"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DXr-Jd-qax">
-                                <rect key="frame" x="5" y="5" width="470" height="456"/>
-                                <edgeInsets key="edgeInsets" left="5" right="5" top="5" bottom="5"/>
-                            </stackView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="DXr-Jd-qax" firstAttribute="top" secondItem="Gr5-Kw-6rc" secondAttribute="top" constant="5" id="6zh-Q3-iVS"/>
-                            <constraint firstAttribute="trailing" secondItem="DXr-Jd-qax" secondAttribute="trailing" constant="5" id="Kdz-aK-l9r"/>
-                            <constraint firstAttribute="bottom" secondItem="DXr-Jd-qax" secondAttribute="bottom" constant="5" id="Y8g-QS-73w"/>
-                            <constraint firstItem="DXr-Jd-qax" firstAttribute="leading" secondItem="Gr5-Kw-6rc" secondAttribute="leading" constant="5" id="kfW-md-zf5"/>
-                        </constraints>
-                    </view>
+                    <scrollView key="view" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7c7-9G-lbr">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <clipView key="contentView" id="ffv-CT-gDI">
+                            <rect key="frame" x="1" y="1" width="433" height="283"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <view ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2pj-E4-Xed">
+                                    <rect key="frame" x="0.0" y="0.0" width="418" height="268"/>
+                                    <subviews>
+                                        <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fRz-ho-rOH">
+                                            <rect key="frame" x="20" y="20" width="0.0" height="0.0"/>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="fRz-ho-rOH" firstAttribute="leading" secondItem="2pj-E4-Xed" secondAttribute="leading" constant="20" symbolic="YES" id="ENM-6j-qZx"/>
+                                        <constraint firstItem="fRz-ho-rOH" firstAttribute="top" secondItem="2pj-E4-Xed" secondAttribute="top" constant="20" symbolic="YES" id="bLP-54-fwq"/>
+                                        <constraint firstAttribute="bottom" secondItem="fRz-ho-rOH" secondAttribute="bottom" constant="20" symbolic="YES" id="bcz-yc-cB3"/>
+                                        <constraint firstAttribute="trailing" secondItem="fRz-ho-rOH" secondAttribute="trailing" constant="20" symbolic="YES" id="seZ-1c-0n0"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="flipped" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                        </clipView>
+                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="0sY-WY-Z7d">
+                            <rect key="frame" x="1" y="284" width="433" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Amc-bW-cdb">
+                            <rect key="frame" x="434" y="1" width="15" height="283"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
                     <connections>
-                        <outlet property="stackView" destination="DXr-Jd-qax" id="PWe-Pm-roh"/>
+                        <outlet property="stackView" destination="fRz-ho-rOH" id="HiD-79-aNT"/>
                     </connections>
                 </viewController>
                 <customObject id="W5F-Ur-H03" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
