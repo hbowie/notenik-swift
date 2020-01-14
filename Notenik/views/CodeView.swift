@@ -43,6 +43,7 @@ class CodeView: MacEditView {
         scrollView.autoresizingMask = [.width, .height]
         let height = AppPrefs.shared.getViewHeight(lines: 5.0)
         scrollView.heightAnchor.constraint(equalToConstant: height).isActive = true
+        scrollView.borderType = .bezelBorder
         
         // Set up the Text View
         let contentSize = scrollView.contentSize

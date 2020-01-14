@@ -41,6 +41,9 @@ class BodyView: MacEditView {
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
         scrollView.autoresizingMask = [.width, .height]
+        let height = AppPrefs.shared.getViewHeight(lines: 5.0)
+        scrollView.heightAnchor.constraint(greaterThanOrEqualToConstant: height).isActive = true
+        scrollView.borderType = .bezelBorder
         
         // Set up the Text View
         let contentSize = scrollView.contentSize
@@ -50,7 +53,7 @@ class BodyView: MacEditView {
         textView.maxSize = NSSize(width: 32000, height: 32000)
         textView.isVerticallyResizable = true
         textView.isHorizontallyResizable = false
-        textView.autoresizingMask = .width
+        textView.autoresizingMask = [.width, .height]
         textView.textContainer!.containerSize = NSSize(width: contentSize.width, height: 32000)
         textView.textContainer!.widthTracksTextView = true
         
