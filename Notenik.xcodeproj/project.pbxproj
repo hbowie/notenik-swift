@@ -330,6 +330,9 @@
 		9C67248C22EA205800CB7D39 /* FilterRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C67248B22EA205800CB7D39 /* FilterRule.swift */; };
 		9C67248D22EA205800CB7D39 /* FilterRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C67248B22EA205800CB7D39 /* FilterRule.swift */; };
 		9C67248E22EA205800CB7D39 /* FilterRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C67248B22EA205800CB7D39 /* FilterRule.swift */; };
+		9C727D6723CD3A5000D04C45 /* NoteDisplayMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C727D6623CD3A5000D04C45 /* NoteDisplayMaster.swift */; };
+		9C727D6823CD3A5000D04C45 /* NoteDisplayMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C727D6623CD3A5000D04C45 /* NoteDisplayMaster.swift */; };
+		9C727D6923CD3A5000D04C45 /* NoteDisplayMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C727D6623CD3A5000D04C45 /* NoteDisplayMaster.swift */; };
 		9C7348422374D90600421598 /* MDHeadReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7348412374D90600421598 /* MDHeadReader.swift */; };
 		9C7348432374D90600421598 /* MDHeadReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7348412374D90600421598 /* MDHeadReader.swift */; };
 		9C7348442374D90600421598 /* MDHeadReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7348412374D90600421598 /* MDHeadReader.swift */; };
@@ -788,6 +791,7 @@
 		9C619A37231B323B003CFFBE /* WorkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTypeView.swift; sourceTree = "<group>"; };
 		9C67248422EA1B2D00CB7D39 /* FilterModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModule.swift; sourceTree = "<group>"; };
 		9C67248B22EA205800CB7D39 /* FilterRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRule.swift; sourceTree = "<group>"; };
+		9C727D6623CD3A5000D04C45 /* NoteDisplayMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayMaster.swift; sourceTree = "<group>"; };
 		9C7348412374D90600421598 /* MDHeadReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDHeadReader.swift; sourceTree = "<group>"; };
 		9C78888521FB826100452D74 /* MarkedupFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedupFormat.swift; sourceTree = "<group>"; };
 		9C78888921FB950900452D74 /* Markedup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markedup.swift; sourceTree = "<group>"; };
@@ -1231,6 +1235,7 @@
 			isa = PBXGroup;
 			children = (
 				9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */,
+				9C727D6623CD3A5000D04C45 /* NoteDisplayMaster.swift */,
 			);
 			path = displayPrefs;
 			sourceTree = "<group>";
@@ -1746,6 +1751,7 @@
 				9CB6ECAE2364FA0500951820 /* IntType.swift in Sources */,
 				9C60E73E21F651E500C332ED /* FieldLabel.swift in Sources */,
 				9CD82F6B2211EDC2002314E4 /* NoteLineMaker.swift in Sources */,
+				9C727D6723CD3A5000D04C45 /* NoteDisplayMaster.swift in Sources */,
 				9CB6ECD22365DE3100951820 /* TitleType.swift in Sources */,
 				9C78888621FB826100452D74 /* MarkedupFormat.swift in Sources */,
 				9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */,
@@ -1899,6 +1905,7 @@
 				9CA0D1F623677CE100ACA52A /* DateAddedType.swift in Sources */,
 				9C60E77821F651E500C332ED /* StatusValue.swift in Sources */,
 				9CB6ECD32365DE3100951820 /* TitleType.swift in Sources */,
+				9C727D6823CD3A5000D04C45 /* NoteDisplayMaster.swift in Sources */,
 				9CD19A5A23721B0500D97E71 /* NotenikPathType.swift in Sources */,
 				9CDF57972346A22B004417FA /* TextileLineType.swift in Sources */,
 				9CC0F5A9227629C4002683F8 /* BooleanValue.swift in Sources */,
@@ -2179,6 +2186,7 @@
 				9C67248E22EA205800CB7D39 /* FilterRule.swift in Sources */,
 				9C60E79121F651E500C332ED /* Note.swift in Sources */,
 				9C553C622266A0D50008D176 /* StatusView.swift in Sources */,
+				9C727D6923CD3A5000D04C45 /* NoteDisplayMaster.swift in Sources */,
 				9C2AE51C220A044800AE8BEE /* TagsNodeType.swift in Sources */,
 				9C8540C022E8F4310074E349 /* ScriptWorkspace.swift in Sources */,
 				9CCFEE732270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
@@ -2402,7 +2410,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2414,7 +2422,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2429,7 +2437,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2441,7 +2449,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

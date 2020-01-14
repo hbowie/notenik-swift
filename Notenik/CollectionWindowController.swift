@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -38,7 +38,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
     let shareStoryboard:           NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
-    let displayPrefsStoryboard:    NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
     let exportStoryboard:          NSStoryboard = NSStoryboard(name: "Export", bundle: nil)
     let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
     let tagsMassChangeStoryboard:  NSStoryboard = NSStoryboard(name: "TagsMassChange", bundle: nil)
@@ -1371,18 +1370,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         noteIO.sortDescending = descending
         lister.setSortDescending(descending)
         noteIO.persistCollectionInfo()
-    }
-    
-    @IBAction func displayPrefs(_ sender: Any) {
-        if let displayPrefsController = self.displayPrefsStoryboard.instantiateController(withIdentifier: "displayPrefsWC") as? DisplayPrefsWindowController {
-            displayPrefsController.showWindow(self)
-            // displayPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io!.collection!)
-        } else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "CollectionWindowController",
-                              level: .fault,
-                              message: "Couldn't get a Display Prefs Window Controller!")
-        }
     }
     
     // ----------------------------------------------------------------------------------

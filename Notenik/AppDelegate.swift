@@ -12,7 +12,7 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
 
     @IBOutlet weak var favsToHTML: NSMenuItem!
     
@@ -24,8 +24,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var docController: NoteDocumentController!
     var recentDocumentURLs: [URL] = []
     
-    let prefsStoryboard: NSStoryboard = NSStoryboard(name: "Preferences", bundle: nil)
-    let logStoryboard:   NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
+    let prefsStoryboard:            NSStoryboard = NSStoryboard(name: "Preferences", bundle: nil)
+    let displayPrefsStoryboard:     NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
+    let logStoryboard:              NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
     
     var logController: LogWindowController?
     
@@ -38,6 +39,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         let appPrefs = AppPrefs.shared
+        let displayPrefs = DisplayPrefs.shared
+        displayPrefs.setMaster(master: self)
         juggler.docController = docController
         recentDocumentURLs = docController.recentDocumentURLs
         stage = "2"
@@ -142,6 +145,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if url != nil {
             NSWorkspace.shared.open(url!)
         }
+    }
+    
+    @IBAction func displayPrefs(_ sender: Any) {
+        if let displayPrefsController = self.displayPrefsStoryboard.instantiateController(withIdentifier: "displayPrefsWC") as? DisplayPrefsWindowController {
+            displayPrefsController.showWindow(self)
+            // displayPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io!.collection!)
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Display Prefs Window Controller!")
+        }
+    }
+    
+    func displayRefresh() {
+        juggler.displayRefresh()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

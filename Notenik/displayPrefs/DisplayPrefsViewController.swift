@@ -186,6 +186,7 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
     @IBAction func okClicked(_ sender: Any) {
         displayPrefs.css = cssText.string
         window.close()
+        displayPrefs.displayRefresh()
     }
     
 }

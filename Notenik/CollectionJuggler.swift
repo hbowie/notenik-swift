@@ -334,6 +334,12 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
     }
     
+    func displayRefresh() {
+        for window in windows {
+            window.reloadDisplayView(self)
+        }
+    }
+    
     /// Let the calling class know that the user has completed modifications
     /// of the Collection Preferences.
     ///

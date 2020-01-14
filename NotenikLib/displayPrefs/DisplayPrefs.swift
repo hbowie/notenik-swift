@@ -30,6 +30,8 @@ class DisplayPrefs {
     let displayCSSKey = "display-css"
     var _displayCSS: String?
     
+    var displayMaster: NoteDisplayMaster?
+    
     /// Private initializer to prevent creation of more than one instance
     private init() {
         
@@ -130,6 +132,16 @@ class DisplayPrefs {
         set {
             _displayCSS = newValue
             defaults.set(_displayCSS, forKey: displayCSSKey)
+        }
+    }
+    
+    func setMaster(master: NoteDisplayMaster) {
+        self.displayMaster = master
+    }
+    
+    func displayRefresh() {
+        if displayMaster != nil {
+            displayMaster!.displayRefresh()
         }
     }
 }

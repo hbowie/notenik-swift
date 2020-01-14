@@ -108,11 +108,13 @@ class NoteLineParser {
                 note.fileInfo.mmdMetaEndLine = noteLine.line
             } else if lineNumber == 1 && noteLine.mdH1Line && noteLine.value.count > 0 && !bodyStarted {
                 label.set(LabelConstants.title)
+                label.validLabel = true
                 def = note.collection.getDef(label: &label)!
                 value = noteLine.value
                 note.fileInfo.format = .markdown
             } else if note.fileInfo.format == .markdown && !bodyStarted && noteLine.mdTagsLine {
                 label.set(LabelConstants.tags)
+                label.validLabel = true
                 def = note.collection.getDef(label: &label)!
                 value = noteLine.value
                 valueComplete = true
@@ -127,6 +129,7 @@ class NoteLineParser {
                 if fieldNumber > 1 && blankLines == 1 && !bodyStarted {
                     note.fileInfo.format = .multiMarkdown
                     label.set(LabelConstants.body)
+                    label.validLabel = true
                     def = note.collection.getDef(label: &label)!
                     clearValue()
                     bodyStarted = true
@@ -141,6 +144,7 @@ class NoteLineParser {
             } else {
                 // Value with no label
                 label.set(LabelConstants.body)
+                label.validLabel = true
                 def = note.collection.getDef(label: &label)!
                 value = noteLine.line
                 bodyStarted = true
