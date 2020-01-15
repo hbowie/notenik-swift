@@ -1,10 +1,10 @@
 Title:  Add Other Fields to Your Notes
 
+Tags:   YAML, colon, fields, keys, labels, multimarkdown, values
+
 Timestamp: 20191210005553
 
 Seq:    13
-
-Tags:   YAML, colon, fields, keys, labels, multimarkdown, values
 
 Date Added: 2017-04-10 22:18:17 +0000
 
@@ -18,7 +18,7 @@ In other words, something like this:
 
 	Title: This is a Sample Note
 
-Field Labels must follow a few rules. A Field Label must always start at the beginning of a line. A Field Label may not consist of more than 48 characters, and may not contain a comma, brackets or parentheses. 
+Field Labels must follow a few rules. A Field Label must always start at the beginning of a line. A Field Label may not consist of more than 48 characters, and may not contain special characters other than dashes and underscores. 
 
 The Field Value may be specified on the same line, and/or on one or more following lines.
 
