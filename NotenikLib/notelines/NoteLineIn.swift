@@ -124,7 +124,7 @@ class NoteLineIn {
                         value = StringUtils.trim(String(line[nextIndex..<line.endIndex]))
                     }
                 }
-            } else if c == "," || c == "[" || c == "]" || c == "(" || c == ")" || c == "$" || c == "'" || c == "\"" || c == "`" || c == "*" || c == "#" || c == "@" {
+            } else if c == "," || c == "[" || c == "]" || c == "(" || c == ")" || c == "$" || c == "'" || c == "\"" || c == "`" || c == "*" || c == "#" || c == "@" || c == "+" {
                 badLabelPunctuationCount += 1
             }
             index = nextIndex

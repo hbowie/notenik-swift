@@ -15,6 +15,7 @@ import Foundation
 class NoteLineParser {
     
     var collection:     NoteCollection
+    var dict:           FieldDictionary
     var lineReader:     LineReader
     
     var note:           Note
@@ -42,6 +43,14 @@ class NoteLineParser {
     init (collection: NoteCollection, lineReader: LineReader) {
         
         self.collection = collection
+        self.dict = collection.dict
+        let typeCat = collection.typeCatalog
+        
+        let tagsDef = dict.getDef(LabelConstants.tags)
+        if tagsDef == nil {
+            _ = dict.addDef(typeCatalog: typeCat, label: LabelConstants.tags)
+        }
+        
         self.lineReader = lineReader
         
         note = Note(collection: collection)
@@ -161,7 +170,7 @@ class NoteLineParser {
             } */
             
             // Don't allow the title field to consume multiple lines. 
-            if label.isTitle && value.count > 0 {
+            if value.count > 0 && (label.isTitle || label.isDate)  {
                 valueComplete = true
             }
             
