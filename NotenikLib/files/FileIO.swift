@@ -206,96 +206,27 @@ class FileIO: NotenikIO, RowConsumer {
         
         var notesRead = 0
         
+        _ = loadInfoFile(realm: realm,
+                                    collectionPath: collectionPath,
+                                    itemPath: FileIO.infoFileName)
+        
+        var templateNote = loadTemplateFile(realm: realm,
+                                            collectionPath: collectionPath,
+                                            itemPath: "template.txt")
+        if templateNote == nil {
+            templateNote = loadTemplateFile(realm: realm,
+                                            collectionPath: collectionPath,
+                                            itemPath: "template.md")
+        }
+        
         do {
             let dirContents = try fileManager.contentsOfDirectory(atPath: collectionFullPath!)
             
             // First pass through directory contents -- look for template and info files
-            for itemPath in dirContents {
-                let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath!,
-                                                       path2: itemPath)
-                let fileName = FileName(itemFullPath)
-                let itemURL = URL(fileURLWithPath: itemFullPath)
-                if fileName.infofile {
-                    let infoCollection = NoteCollection(realm: realm)
-                    infoCollection.path = collectionPath
-                    let infoNote = readNote(collection: infoCollection, noteURL: itemURL)
-                    if infoNote != nil {
-                        collection!.title = infoNote!.title.value
-                        
-                        let otherFieldsField = infoNote!.getField(label: LabelConstants.otherFields)
-                        if otherFieldsField != nil {
-                            let otherFields = BooleanValue(otherFieldsField!.value.value)
-                            collection!.otherFields = otherFields.isTrue
-                        }
-                        
-                        let sortParmStr = infoNote!.getFieldAsString(label: LabelConstants.sortParmCommon)
-                        var nsp: NoteSortParm = sortParm
-                        nsp.str = sortParmStr
-                        sortParm = nsp
-                        
-                        let sortDescField = infoNote!.getField(label: LabelConstants.sortDescending)
-                        if sortDescField != nil {
-                            let sortDescending = BooleanValue(sortDescField!.value.value)
-                            collection!.sortDescending = sortDescending.isTrue
-                        }
-                        
-                        let doubleBracketField = infoNote!.getField(label: LabelConstants.doubleBracketParsingCommon)
-                        if doubleBracketField != nil {
-                            let doubleBracketParsing = BooleanValue(doubleBracketField!.value.value)
-                            collection!.doubleBracketParsing = doubleBracketParsing.isTrue
-                        }
-                        
-                        let noteFileFormatField = infoNote!.getField(label: LabelConstants.noteFileFormat)
-                        if noteFileFormatField != nil {
-                            let noteFileFormat = NoteFileFormat(rawValue: noteFileFormatField!.value.value)
-                            if noteFileFormat != nil {
-                                collection!.noteFileFormat = noteFileFormat!
-                            } else {
-                                logError("\(noteFileFormatField!.value.value) is an invalid INFO file value for the key \(LabelConstants.noteFileFormat).")
-                            }
-                        }
-                        
-                        infoFound = true
-                    }
-                    
-                } else if fileName.template {
-                    let dict = collection!.dict
-                    let types = collection!.typeCatalog
-                    _ = dict.addDef(typeCatalog: types, label: LabelConstants.title)
-                    let templateNote = readNote(collection: collection!, noteURL: itemURL)
-                    if (templateNote != nil
-                        && templateNote!.fields.count > 0
-                        && collection!.dict.count > 0) {
-                        templateFound = true
-                        _ = dict.addDef(typeCatalog: types, label: LabelConstants.body)
-                        for def in collection!.dict.list {
-                            if def.fieldLabel.commonForm == LabelConstants.timestampCommon {
-                                collection!.hasTimestamp = true
-                            }
-                            let val = templateNote!.getFieldAsValue(label: def.fieldLabel.commonForm)
-                            if val.value.hasPrefix("<") && val.value.hasSuffix(">") {
-                                var typeStr = ""
-                                for char in val.value {
-                                    if char != "<" && char != ">" {
-                                        typeStr.append(char)
-                                    }
-                                }
-                                def.fieldType = collection!.typeCatalog.assignType(label: def.fieldLabel, type: typeStr)
-                            }
-                        }
-                        collection!.dict.lock()
-                        collection!.preferredExt = fileName.extLower
-                        let templateStatusValue = templateNote!.status.value
-                        if templateStatusValue.count > 1 {
-                            let config = collection!.statusConfig
-                            config.set(templateStatusValue)
-                            collection!.typeCatalog.statusValueConfig = config
-                        }
-                    }
-                }
-                if infoFound && templateFound {
-                    break
-                }
+            if !infoFound || !templateFound {
+                scanDirForSpecialFiles(realm: realm,
+                                       collectionPath: collectionPath,
+                                       dirContents: dirContents)
             }
             
             // Second pass through directory contents -- look for Notes
@@ -375,6 +306,120 @@ class FileIO: NotenikIO, RowConsumer {
             }
             return collection
         }
+    }
+    
+    /// Scan the directory list for an info and template file.
+    func scanDirForSpecialFiles(realm: Realm, collectionPath: String, dirContents: [String]) {
+        // First pass through directory contents -- look for template and info files
+        for itemPath in dirContents {
+            let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath!,
+                                                   path2: itemPath)
+            let fileName = FileName(itemFullPath)
+            if fileName.infofile && !infoFound {
+                _ = loadInfoFile(realm: realm,
+                                            collectionPath: collectionPath,
+                                            itemPath: itemPath)
+            } else if fileName.template && !templateFound {
+                _ = loadTemplateFile(realm: realm,
+                                                    collectionPath: collectionPath,
+                                                    itemPath: itemPath)
+            }
+            if infoFound && templateFound {
+                break
+            }
+        }
+    }
+    
+    /// Attempt to load the info file.
+    func loadInfoFile(realm: Realm, collectionPath: String, itemPath: String) -> Note? {
+        let infoCollection = NoteCollection(realm: realm)
+        infoCollection.path = collectionPath
+        let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath!,
+                                               path2: itemPath)
+        let itemURL = URL(fileURLWithPath: itemFullPath)
+        let infoNt = readNote(collection: infoCollection, noteURL: itemURL)
+        guard let infoNote = infoNt else { return nil }
+
+        collection!.title = infoNote.title.value
+        
+        let otherFieldsField = infoNote.getField(label: LabelConstants.otherFields)
+        if otherFieldsField != nil {
+            let otherFields = BooleanValue(otherFieldsField!.value.value)
+            collection!.otherFields = otherFields.isTrue
+        }
+        
+        let sortParmStr = infoNote.getFieldAsString(label: LabelConstants.sortParmCommon)
+        var nsp: NoteSortParm = sortParm
+        nsp.str = sortParmStr
+        sortParm = nsp
+        
+        let sortDescField = infoNote.getField(label: LabelConstants.sortDescending)
+        if sortDescField != nil {
+            let sortDescending = BooleanValue(sortDescField!.value.value)
+            collection!.sortDescending = sortDescending.isTrue
+        }
+        
+        let doubleBracketField = infoNote.getField(label: LabelConstants.doubleBracketParsingCommon)
+        if doubleBracketField != nil {
+            let doubleBracketParsing = BooleanValue(doubleBracketField!.value.value)
+            collection!.doubleBracketParsing = doubleBracketParsing.isTrue
+        }
+        
+        let noteFileFormatField = infoNote.getField(label: LabelConstants.noteFileFormat)
+        if noteFileFormatField != nil {
+            let noteFileFormat = NoteFileFormat(rawValue: noteFileFormatField!.value.value)
+            if noteFileFormat != nil {
+                collection!.noteFileFormat = noteFileFormat!
+            } else {
+                logError("\(noteFileFormatField!.value.value) is an invalid INFO file value for the key \(LabelConstants.noteFileFormat).")
+            }
+        }
+        
+        infoFound = true
+        return infoNote
+    }
+    
+    /// Attempt to load the template file.
+    func loadTemplateFile(realm: Realm, collectionPath: String, itemPath: String) -> Note? {
+        let dict = collection!.dict
+        let types = collection!.typeCatalog
+        _ = dict.addDef(typeCatalog: types, label: LabelConstants.title)
+        let itemFullPath = FileUtils.joinPaths(path1: collectionFullPath!,
+                                               path2: itemPath)
+        let fileName = FileName(itemFullPath)
+        let itemURL = URL(fileURLWithPath: itemFullPath)
+        let templateNt = readNote(collection: collection!, noteURL: itemURL)
+        
+        guard let templateNote = templateNt else { return nil }
+        guard templateNote.fields.count > 0 else { return nil }
+        guard collection!.dict.count > 0 else { return nil }
+
+        templateFound = true
+        _ = dict.addDef(typeCatalog: types, label: LabelConstants.body)
+        for def in collection!.dict.list {
+            if def.fieldLabel.commonForm == LabelConstants.timestampCommon {
+                collection!.hasTimestamp = true
+            }
+            let val = templateNote.getFieldAsValue(label: def.fieldLabel.commonForm)
+            if val.value.hasPrefix("<") && val.value.hasSuffix(">") {
+                var typeStr = ""
+                for char in val.value {
+                    if char != "<" && char != ">" {
+                        typeStr.append(char)
+                    }
+                }
+                def.fieldType = collection!.typeCatalog.assignType(label: def.fieldLabel, type: typeStr)
+            }
+        }
+        collection!.dict.lock()
+        collection!.preferredExt = fileName.extLower
+        let templateStatusValue = templateNote.status.value
+        if templateStatusValue.count > 1 {
+            let config = collection!.statusConfig
+            config.set(templateStatusValue)
+            collection!.typeCatalog.statusValueConfig = config
+        }
+        return templateNote
     }
     
     /// Reload the note in memory from the backing data store. 
@@ -967,29 +1012,28 @@ class FileIO: NotenikIO, RowConsumer {
     /// - Returns: A note composed from the contents of the indicated file,
     ///            or nil, if problems reading file.
     func readNote(collection: NoteCollection, noteURL: URL) -> Note? {
-        do {
-            let itemContents = try String(contentsOf: noteURL, encoding: .utf8)
-            let lineReader = BigStringReader(itemContents)
-            let parser = NoteLineParser(collection: collection, lineReader: lineReader)
-            let fileName = noteURL.lastPathComponent
-            var defaultTitle = ""
-            if fileName.count > 0 {
-                let fileNameUtil = FileName(noteURL)
-                defaultTitle = fileNameUtil.base
-            }
-            let note = parser.getNote(defaultTitle: defaultTitle)
-            if fileName.count > 0 {
-                note.fileInfo.baseDotExt = fileName
-            }
-            updateEnvDates(note: note, noteURL: noteURL)
-            return note
-        } catch {
+        
+        let reader = BigStringReader(fileURL: noteURL)
+        guard reader != nil else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik",
                               category: "FileIO",
                               level: .error,
                               message: "Error reading Note from \(noteURL)")
             return nil
         }
+        let parser = NoteLineParser(collection: collection, reader: reader!)
+        let fileName = noteURL.lastPathComponent
+        var defaultTitle = ""
+        if fileName.count > 0 {
+            let fileNameUtil = FileName(noteURL)
+            defaultTitle = fileNameUtil.base
+        }
+        let note = parser.getNote(defaultTitle: defaultTitle)
+        if fileName.count > 0 {
+            note.fileInfo.baseDotExt = fileName
+        }
+        updateEnvDates(note: note, noteURL: noteURL)
+        return note
     }
     
     /// Update the Note with the latest creation and modification dates from our storage environment

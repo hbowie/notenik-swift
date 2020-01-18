@@ -16,7 +16,7 @@ class NoteLineParser {
     
     var collection:     NoteCollection
     var dict:           FieldDictionary
-    var lineReader:     LineReader
+    var reader:         BigStringReader
     
     var note:           Note
     
@@ -40,7 +40,7 @@ class NoteLineParser {
     var fileSize     = 0
     
     /// Initialize with a functioning Line Reader
-    init (collection: NoteCollection, lineReader: LineReader) {
+    init (collection: NoteCollection, reader: BigStringReader) {
         
         self.collection = collection
         self.dict = collection.dict
@@ -51,7 +51,7 @@ class NoteLineParser {
             _ = dict.addDef(typeCatalog: typeCat, label: LabelConstants.tags)
         }
         
-        self.lineReader = lineReader
+        self.reader = reader
         
         note = Note(collection: collection)
         
@@ -73,11 +73,13 @@ class NoteLineParser {
         indexStarted = false
         pendingBlankLines = 0
         var valueComplete = false
+        var noteComplete = false
         
-        lineReader.open()
+        reader.open()
         repeat {
-            textLine = lineReader.readLine()
-            noteLine = NoteLineIn(line: textLine,
+            
+            // Read and parse the next line and perform some basic accounting.
+            noteLine = NoteLineIn(reader: reader,
                                   collection: collection,
                                   bodyStarted: bodyStarted)
             lineNumber += 1
@@ -86,6 +88,7 @@ class NoteLineParser {
                 blankLines += 1
             }
             
+            // See if we should declare the value to be complete at this point.
             if label.validLabel && value.count > 0 && !bodyStarted {
                 if noteLine.blankLine && blankLines == 1 && fieldNumber > 1 {
                     valueComplete = true
@@ -105,6 +108,7 @@ class NoteLineParser {
                 captureLastField()
             }
             
+            // Reset the value complete flag.
             valueComplete = false
             
             // Now figure out what to do with this line.
@@ -149,7 +153,11 @@ class NoteLineParser {
                 }
             } else if label.validLabel {
                 appendNonBlankLine()
-            // } else if note.containsTitle() {
+                if label.isBody {
+                    value.append(reader.remaining)
+                    captureLastField()
+                    noteComplete = true
+                }
             } else {
                 // Value with no label
                 label.set(LabelConstants.body)
@@ -163,20 +171,19 @@ class NoteLineParser {
                     note.fileInfo.format = .multiMarkdown
                 }
             }
-            /* else {
-                let titleField = NoteField(label: LabelConstants.title,
-                                           value: StringUtils.trimHeading(line))
-                note.setField(titleField)
-            } */
             
             // Don't allow the title field to consume multiple lines. 
             if value.count > 0 && (label.isTitle || label.isDate)  {
                 valueComplete = true
             }
             
-        } while !noteLine.lastLine
+            if noteLine.lastLine {
+                noteComplete = true
+            }
+            
+        } while !noteComplete
         
-        lineReader.close()
+        reader.close()
         if !note.hasTitle() {
             _ = note.setTitle(defaultTitle)
         }

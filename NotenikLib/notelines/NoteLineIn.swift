@@ -18,6 +18,8 @@ class NoteLineIn {
     var line         = ""
     var collection   : NoteCollection!
     var bodyStarted  = false
+    
+    var charCount = 0
 
     var colonCount   = 0
     var firstChar:     Character?
@@ -43,6 +45,149 @@ class NoteLineIn {
     var label        = FieldLabel()
     var definition:    FieldDefinition?
     var value        = ""
+    
+    var mdValueFound = false
+    var valueFound = false
+    
+    var c: Character = " "
+    
+    /// Analyze the next line and return the line plus useful metadata about the line.
+    init(reader: BigStringReader,
+         collection: NoteCollection,
+         bodyStarted: Bool) {
+        
+        self.collection = collection
+        self.bodyStarted = bodyStarted
+        
+        line = ""
+        
+        index      = line.startIndex
+        nextIndex  = line.startIndex
+        colonIndex = line.startIndex
+        firstIndex = line.startIndex
+        lastIndex  = line.endIndex
+        
+        var mdValueFirst = reader.bigString.startIndex
+        var mdValueLast  = reader.bigString.endIndex
+        
+        var valueFirst = reader.bigString.startIndex
+        var valueLast  = reader.bigString.endIndex
+        
+        var labelLast    = reader.bigString.startIndex
+        
+        validLabel = false
+        label = FieldLabel()
+        value  = ""
+        colonFound = false
+        blankLine = true
+        allOneChar = true
+        allOneCharCount = 0
+        firstChar = nil
+
+        var badLabelPunctuationCount = 0
+        
+        definition = FieldDefinition()
+        
+        if reader.endOfFile {
+            line = ""
+            lastLine = true
+        } else {
+            repeat {
+                
+                c = reader.nextChar()
+                
+                if !reader.endOfLine {
+                    charCount += 1
+                }
+                
+                // See if the entire line consists of one character repeated some
+                // number of times.
+                if firstChar == nil && !reader.endOfLine {
+                    firstChar = c
+                    allOneCharCount = 1
+                } else if allOneChar && c == firstChar {
+                    allOneCharCount += 1
+                    if firstChar == "-" && allOneCharCount == 3 {
+                        mmdMetaStartEndLine = true
+                    } else if firstChar == "." && allOneCharCount == 4 {
+                        mmdMetaStartEndLine = true
+                    }
+                } else {
+                    allOneChar = false
+                }
+                
+                // See if we have a Markdown Heading 1 line
+                // or a tags line.
+                if charCount == 2 && firstChar == "#" {
+                    if c == " " {
+                        mdH1Line = true
+                        value = StringUtils.trimHeading(self.line)
+                    } else if c != "#" {
+                        mdTagsLine = true
+                        value = StringUtils.trimHeading(self.line)
+                    }
+                }
+                
+                // If we do have a Markdown special line, then
+                // keep track of where the content starts and ends.
+                if (mdH1Line || mdTagsLine) {
+                    if !c.isWhitespace && c != "#" && !reader.endOfLine {
+                        if !mdValueFound {
+                            mdValueFound = true
+                            mdValueFirst = reader.currIndex
+                        }
+                        mdValueLast = reader.currIndex
+                    }
+                }
+                
+                // See if we have a completely blank line
+                if !StringUtils.isWhitespace(c) && !reader.endOfLine {
+                    blankLine = false
+                }
+                
+                // See if we have a colon following what appears to be a valid label
+                if colonCount == 0 {
+                    if c == ":" {
+                        if badLabelPunctuationCount == 0 && !bodyStarted {
+                            colonFound = true
+                            colonIndex = reader.currIndex
+                            label.set(String(reader.bigString[reader.lineStartIndex...labelLast]))
+                            definition = collection.getDef(label: &label)
+                            validLabel = label.validLabel
+                        }
+                        colonCount += 1
+                    } else if c.isWhitespace {
+                        // just skip it
+                    } else if c.isLetter ||
+                        c.isWholeNumber ||
+                        c == "-" ||
+                        c == "_" {
+                        // Still a possibly good label
+                        labelLast = reader.currIndex
+                    } else {
+                        badLabelPunctuationCount += 1
+                    }
+                } else if colonFound && validLabel {
+                    if !c.isWhitespace {
+                        if !valueFound {
+                            valueFound = true
+                            valueFirst = reader.currIndex
+                        }
+                        valueLast = reader.currIndex
+                    }
+                }
+                
+            } while !reader.endOfLine
+            
+            if mdValueFound {
+                value = String(reader.bigString[mdValueFirst...mdValueLast])
+            } else if validLabel && valueFound {
+                value = String(reader.bigString[valueFirst...valueLast])
+            }
+            
+            line = reader.lastLine
+        }
+    }
     
     init(line: String?, collection: NoteCollection, bodyStarted: Bool) {
         

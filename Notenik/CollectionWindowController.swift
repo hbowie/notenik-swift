@@ -590,7 +590,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             let str = item.string(forType: NSPasteboard.PasteboardType.string)
             if str != nil && str!.count > 0 {
                 let reader = BigStringReader(str!)
-                let parser = NoteLineParser(collection: collection, lineReader: reader)
+                let parser = NoteLineParser(collection: collection, reader: reader)
                 notesAdded += 1
                 let note = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)")
                 if note.hasTitle() {
