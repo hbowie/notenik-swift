@@ -1,9 +1,9 @@
 //
-//  TemplateViewController.swift
+//  CollectionPrefsViewController.swift
 //  Notenik
 //
 //  Created by Herb Bowie on 4/5/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -17,14 +17,15 @@ class CollectionPrefsViewController: NSViewController {
     var collection: NoteCollection?
     var windowController: CollectionPrefsWindowController?
     
-    @IBOutlet var stackView: NSStackView!
+    @IBOutlet var collectionTitle:      NSTextField!
+    @IBOutlet var fileExtComboBox:      NSComboBox!
+    @IBOutlet var doubleBracketCkBox:   NSButton!
+    @IBOutlet var pathControl:          NSPathControl!
+    @IBOutlet var parentView:           NSView!
     
-    var titleLabel:      NSTextField!
-    var collectionTitle: NSTextField!
+    var subView:                        NSView?
     
-    let fileExtensions = ["txt", "md", "text", "markdown", "mdown", "mkdown", "mktext", "mdtext", "nnk", "notenik" ]
-    var fileExtLabel:    NSTextField!
-    var fileExtComboBox: NSComboBox!
+    var stackView:       NSStackView!
     
     var fieldsLabel:     NSTextField!
     
@@ -51,12 +52,6 @@ class CollectionPrefsViewController: NSViewController {
     
     var otherFieldsCkBox: NSButton!
     
-    var doubleBracketCkBox: NSButton!
-    
-    var okButton:        NSButton!
-    var cancelButton:    NSButton!
-    var actionStack:     NSStackView!
-    
     /// Pass needed info from the Collection Juggler
     func passCollectionPrefsRequesterInfo(owner: CollectionPrefsOwner,
                          collection: NoteCollection,
@@ -64,39 +59,41 @@ class CollectionPrefsViewController: NSViewController {
         self.owner = owner
         self.collection = collection
         self.windowController = window
-        if collectionTitle != nil {
-            collectionTitle!.stringValue = collection.title
+        setCollectionValues()
+
+        let collectionFileName = FileName(collection.collectionFullPath)
+        pathControl.url = collection.collectionFullPathURL
+        
+        // The following nonsense attempts to work around a bug
+        // that truncates part of the last folder name if it
+        // contains a space. 
+        var i = collectionFileName.folders.count - 1
+        var j = pathControl.pathItems.count - 1
+        while i >= 0 && j > 0 {
+            let pathItem = pathControl.pathItems[j]
+            pathItem.title = collectionFileName.folders[i]
+            i -= 1
+            j -= 1
         }
-        setFileExt(collection.preferredExt)
-        setFieldsForCollection()
-        setOtherFieldsAllowed(collection.otherFields)
-        setDoubleBracketParsing(collection.doubleBracketParsing)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        makeStackView()
+        makeViews()
     }
     
     /// Create the fields we need and stack them up vertically
+    func makeViews() {
+        
+        collectionTitle.maximumNumberOfLines = 3
+        makeStackView()
+    }
+    
     func makeStackView() {
         
-        titleLabel = NSTextField(labelWithString: "Collection Title: ")
-        stackView.addArrangedSubview(titleLabel)
-        
-        collectionTitle = NSTextField(string: "")
-        collectionTitle.maximumNumberOfLines = 3
-        stackView.addArrangedSubview(collectionTitle)
-        
-        fileExtLabel = NSTextField(labelWithString: "Preferred File Extension: ")
-        stackView.addArrangedSubview(fileExtLabel)
-        
-        fileExtComboBox = NSComboBox()
-        fileExtComboBox.addItems(withObjectValues: fileExtensions)
-        stackView.addArrangedSubview(fileExtComboBox)
-        
-        fieldsLabel = NSTextField(labelWithString: "Fields: ")
-        stackView.addArrangedSubview(fieldsLabel)
+        stackView = NSStackView()
+        stackView.orientation = .vertical
+        stackView.alignment = .leading
         
         titleCkBox = NSButton(checkboxWithTitle: "Title", target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(titleCkBox)
@@ -167,18 +164,31 @@ class CollectionPrefsViewController: NSViewController {
         otherFieldsCkBox = NSButton(checkboxWithTitle: "Other fields allowed?", target: self, action: #selector(checkBoxClicked))
         stackView.addArrangedSubview(otherFieldsCkBox)
         
-        doubleBracketCkBox = NSButton(checkboxWithTitle: "Double Bracket Parsing for Inter-Note Links?", target: self, action: #selector(checkBoxClicked))
-        stackView.addArrangedSubview(doubleBracketCkBox)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        okButton = NSButton(title: "OK", target: self, action: #selector(okButtonClicked))
-        cancelButton = NSButton(title: "Cancel", target: self, action: #selector(cancelButtonClicked))
-        actionStack = NSStackView(views: [okButton, cancelButton])
+        if subView == nil {
+            parentView.addSubview(stackView)
+        } else {
+            parentView.replaceSubview(subView!, with: stackView)
+        }
+        subView = stackView
         
-        stackView.addArrangedSubview(actionStack)
+        // Pin the grid to the edges of our main view
+        stackView!.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 8).isActive = true
+        stackView!.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -8).isActive = true
+        stackView!.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 8).isActive = true
+        stackView!.bottomAnchor.constraint(equalTo: parentView.bottomAnchor, constant: -8).isActive = true
         
+        setCollectionValues()
+        
+    }
+    
+    func setCollectionValues() {
         guard collection != nil else { return }
         
-        collectionTitle.stringValue = collection!.title
+        if collectionTitle != nil {
+            collectionTitle!.stringValue = collection!.title
+        }
         setFileExt(collection!.preferredExt)
         setFieldsForCollection()
         setOtherFieldsAllowed(collection!.otherFields)
@@ -189,8 +199,9 @@ class CollectionPrefsViewController: NSViewController {
         guard ext != nil && ext != "" else { return }
         var i = 0
         var found = false
-        while i < fileExtensions.count && !found {
-            if ext == fileExtensions[i] {
+        while i < fileExtComboBox.numberOfItems && !found {
+            let validExt = fileExtComboBox.objectValues[i] as! String
+            if ext == validExt {
                 found = true
                 fileExtComboBox.selectItem(at: i)
             } else {
@@ -257,20 +268,25 @@ class CollectionPrefsViewController: NSViewController {
         // No need to take any immediate action here
     }
     
-    @objc func okButtonClicked() {
+    @IBAction func okButtonClicked(_ sender: Any) {
         guard collection != nil else { return }
         collection!.title = collectionTitle.stringValue
         collection!.preferredExt = fileExtComboBox.stringValue
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
         collection!.doubleBracketParsing = doubleBracketCkBox.state == NSControl.StateValue.on
         let dict = collection!.dict
+        dict.unlock()
         for checkBox in fieldSelectors {
             let def = dict.getDef(checkBox.title)
             if def == nil && checkBox.state == NSControl.StateValue.off {
                 // No definition found or requested
             } else if def == nil && checkBox.state == NSControl.StateValue.on {
                 // Add a new definition
-                _ = dict.addDef(typeCatalog: collection!.typeCatalog, label: checkBox.title)
+                let added = dict.addDef(typeCatalog: collection!.typeCatalog,
+                                        label: checkBox.title)
+                if added == nil {
+                    communicateError("Trouble adding definition to dictionary", alert: true)
+                }
             } else if def != nil && checkBox.state == NSControl.StateValue.on {
                 // Definition already in dictionary and requested
             } else if def != nil && checkBox.state == NSControl.StateValue.off {
@@ -278,11 +294,30 @@ class CollectionPrefsViewController: NSViewController {
                 _ = dict.removeDef(def!)
             }
         }
+        if !collection!.otherFields {
+            dict.lock()
+        }
         owner!.collectionPrefsModified(ok: true, collection: collection!, window: windowController!)
     }
     
-    @objc func cancelButtonClicked() {
-        owner!.collectionPrefsModified(ok: false, collection: collection!, window: windowController!)
+    @IBAction func cancelButtonClicked(_ sender: Any) {
+                owner!.collectionPrefsModified(ok: false, collection: collection!, window: windowController!)
     }
     
+    /// Log an error message and optionally display an alert message.
+    func communicateError(_ msg: String, alert: Bool=false) {
+        
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionPrefsViewController",
+                          level: .error,
+                          message: msg)
+        
+        if alert {
+            let dialog = NSAlert()
+            dialog.alertStyle = .warning
+            dialog.messageText = msg
+            dialog.addButton(withTitle: "OK")
+            let _ = dialog.runModal()
+        }
+    }
 }

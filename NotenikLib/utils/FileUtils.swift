@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/24/18.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -29,7 +29,7 @@ class FileUtils {
     ///   - path1: A string containing the beginning of a file path.
     ///   - path2: A string containing a continuation of a file path.
     /// - Returns: A combination of the two. 
-    static func joinPaths(path1 : String, path2 : String) -> String {
+    static func joinPaths(path1: String, path2: String) -> String {
         var e1 = path1.endIndex
         if path1.hasSuffix("/") {
             e1 = path1.index(path1.startIndex, offsetBy: path1.count - 1)

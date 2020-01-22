@@ -14,10 +14,10 @@ import Foundation
 /// Retrieve and save Notes from and to files stored locally.
 class FileIO: NotenikIO, RowConsumer {
     
-    let filesFolderName = "files"
-    let reportsFolderName = "reports"
-    let scriptExt = ".tcz"
-    let templateID = "template"
+    let filesFolderName     = "files"
+    let reportsFolderName   = "reports"
+    let scriptExt           = ".tcz"
+    let templateID          = "template"
     
     let fileManager = FileManager.default
     
@@ -867,6 +867,25 @@ class FileIO: NotenikIO, RowConsumer {
         return true
     }
     
+    /// Change the preferred file extension for the Collection.
+    func changePreferredExt(from: String, to: String) -> Bool {
+        guard collection != nil else { return false }
+        var ok = true
+        let fromFilePath = collection!.makeFilePath(fileName: "template." + from)
+        let fromURL = StringUtils.urlFrom(str: fromFilePath)
+        let toFilePath = collection!.makeFilePath(fileName: "template." + to)
+        let toURL = StringUtils.urlFrom(str: toFilePath)
+        guard fromURL != nil else { return false }
+        guard toURL != nil else { return false }
+        do {
+            try fileManager.moveItem(at: fromURL!, to: toURL!)
+        } catch {
+            logError("Unable to rename template file from \(fromURL!) to \(toURL!) due to the following error: \(error)")
+            ok = false
+        }
+        return ok
+    }
+    
     /// Save the template file into the current collection
     func saveTemplateFile() -> Bool {
         let dict = collection!.dict
@@ -945,7 +964,7 @@ class FileIO: NotenikIO, RowConsumer {
     /// - Parameter noteToDelete: The note to be deleted.
     /// - Returns: True if delete was successful, false otherwise.
     func deleteNote(_ noteToDelete: Note) -> Bool {
-
+        print("FileIO.deleteNote titled \(noteToDelete.title.value)")
         var deleted = false
         
         guard collection != nil && collectionOpen else { return false }

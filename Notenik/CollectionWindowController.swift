@@ -33,6 +33,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     let addAttachmentTitle = "Add Attachment..."
     
     var notenikIO:           NotenikIO?
+    var preferredExt = ""
     var crumbs:              NoteCrumbs?
     var windowNumber         = 0
     
@@ -363,6 +364,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     @IBAction func menuCollectionPreferences(_ sender: Any) {
         
         guard let noteIO = guardForCollectionAction() else { return }
+        preferredExt = noteIO.collection!.preferredExt
         
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
             collectionPrefsController.showWindow(self)
@@ -373,6 +375,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                               level: .fault,
                               message: "Couldn't get a Collection Prefs Window Controller!")
         }
+        
     }
     
     /// Let the calling class know that the user has completed modifications
@@ -388,6 +391,16 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         window.close()
         guard ok else { return }
         guard let noteIO = guardForCollectionAction() else { return }
+        if noteIO.collection!.preferredExt != preferredExt {
+            if noteIO is FileIO {
+                let fileIO = noteIO as! FileIO
+                let renameOK = fileIO.changePreferredExt(from: preferredExt,
+                                                         to: fileIO.collection!.preferredExt)
+                if !renameOK {
+                    noteIO.collection!.preferredExt = preferredExt
+                }
+            }
+        }
         noteIO.persistCollectionInfo()
         reloadCollection(self)
     }
