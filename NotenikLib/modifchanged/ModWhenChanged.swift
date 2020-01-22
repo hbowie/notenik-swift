@@ -32,7 +32,6 @@ class ModWhenChanged {
                       startingNote: Note,
                       modViews: [ModView],
                       statusConfig: StatusValueConfig) -> (modIfChangedOutcome, Note?) {
-        
         var outcome: modIfChangedOutcome = .notReady
         
         // See if we're ready for this
@@ -78,7 +77,7 @@ class ModWhenChanged {
                     newField.value = newValue
                     let addOK = modNote.addField(newField)
                     if !addOK {
-                        print("Unable to add field to note")
+                        logError("Unable to add field to note")
                     }
                 } else {
                     field!.value = newValue
@@ -118,7 +117,11 @@ class ModWhenChanged {
                     outcome = .deleteAndAdd
                 }
             }
+            if modID.count == 0 {
+                outcome = .noChange
+            }
         }
+        
         
         // Figure out what we need to do
         switch outcome {
@@ -137,39 +140,40 @@ class ModWhenChanged {
             if addedNote != nil {
                 return (outcome, addedNote)
             } else {
-                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                                  category: "ModWhenChanged",
-                                  level: .error,
-                                  message: "Problems adding note titled \(modNote.title)")
+                logError("Problems adding note titled \(modNote.title)")
                 return (.tryAgain, nil)
             }
         case .deleteAndAdd:
             modNote.fileInfo.optRegenFileName()
             let attachmentsOK = io.reattach(from: startingNote, to: modNote)
             if !attachmentsOK {
-                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                                  category: "ModWhenChanged",
-                                  level: .error,
-                                  message: "Problems renaming attachments for \(modNote.title)")
+                logError("Problems renaming attachments for \(modNote.title)")
             }
             let (_, _) = io.deleteSelectedNote()
             let (addedNote, _) = io.addNote(newNote: modNote)
             if addedNote != nil {
                 return (outcome, addedNote)
             } else {
-                Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                                  category: "ModWhenChanged",
-                                  level: .error,
-                                  message: "Problems adding note titled \(modNote.title)")
+                logError("Problems adding note titled \(modNote.title)")
                 return (.tryAgain, nil)
             }
         case .modify:
             modNote.copyFields(to: startingNote)
             let writeOK = io.writeNote(startingNote)
             if !writeOK {
-                print ("Write Note failed!")
+                logError("Write Note failed!")
             }
             return (outcome, startingNote)
         }
     } // end modIfChanged method
+    
+    /// Log an error message.
+    func logError(_ msg: String) {
+        
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                          category: "ModWhenChanged",
+                          level: .error,
+                          message: msg)
+        
+    }
 }
