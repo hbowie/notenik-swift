@@ -586,7 +586,7 @@ class StringUtils {
         if colonFound {
             possibleURL = URL(string: encoded)
         } else {
-            possibleURL = URL(fileURLWithPath: encoded)
+            possibleURL = URL(fileURLWithPath: str)
         }
         return possibleURL
     }
