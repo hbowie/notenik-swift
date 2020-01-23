@@ -14,6 +14,8 @@ import Cocoa
 /// A singleton object that controls all of the Note Collections that are open. 
 class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
+    let notenikSwiftIntroPath = "/notenik-swift-intro"
+    
     // Singleton instance
     static let shared = CollectionJuggler()
     
@@ -77,8 +79,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
 
         if collection == nil {
-            let path = Bundle.main.resourcePath! + "/notenik-swift-intro"
+            let path = Bundle.main.resourcePath! + notenikSwiftIntroPath
             collection = io.openCollection(realm: realm, collectionPath: path)
+            collection?.readOnly = true
         }
         
         _ = assignIOtoWindow(io: io)
@@ -390,7 +393,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     /// Open the Application's Internal Collection of Help Notes
     func openHelpNotes() {
-        let path = Bundle.main.resourcePath! + "/notenik-swift-intro"
+        let path = Bundle.main.resourcePath! + notenikSwiftIntroPath
         _ = openFileWithNewWindow(folderPath: path, readOnly: true)
     }
     

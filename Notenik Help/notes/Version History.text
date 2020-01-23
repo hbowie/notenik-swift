@@ -6,6 +6,28 @@ Tags:   changes, history, log
 
 Body:
 
+### Version 2.9.0 | 22 Jan 2020
+
+#### 1. Enabled the Preferred File Extension to be Changed
+
+The Collection Preferences window is shown when creating a new Collection, but can also be accessed after a Collection has been created. Previously, changing the preferred file extension after initial creation had no effect, but the file extension for the template file will now be changed to reflect the new preferred extension. Notes already created, however, will retain their existing extensions. This should close Issue # 31. 
+
+
+#### 2. Collection Preferences Window Redesigned
+
+The new Collection Preferences design now has two tabs, one for a scrollable list of fields, and the other for various other Collection Attributes. OK and Cancel buttons are positioned at the bottom of the window, outside of the tabs. A new file path has been added at the very bottom of the window, showing the file system path to the Collection whose preferences are being modified. This should close Issue # 30. 
+
+
+#### 3. Various Performance Improvements
+
+Made various changes intended to improve performance, especially when opening large collections. See Issue # 28. 
+
+
+#### 4. Changes to Collection Preferences Menu
+
+Added ellipsis to menu item to indicate that a new window will open before any action occurs. See Issue # 29. Also added a keyboard shortcut of CMD-; (Command semicolon). 
+
+
 ### Version 2.8.0 | 14 Jan 2020
 
 #### 1. Made Collection Preferences Scrollable
@@ -99,8 +121,7 @@ Wiki-style links between Notes within a Collection are now supported. Several re
 
 * Once this option is enabled, the body of a Note may include a link to another Note by enclosing the title of that other Note within double square brackets. 
 
-* A new Variable Modifier of 'W' available in Merge Templates allows these inter-note pointers to be converted to usable links when generating HTML. 
-
+* A new Variable Modifier of 'W' available in Merge Templates allows these inter-note pointers to be converted to usable links when generating HTML.
 
 ### Version 2.3.0 | 10 Dec 2019
 
@@ -119,8 +140,7 @@ Some note-takers start their text files with lines such as the following.
 
 Notenik will now recognize the first line of such a file as containing the Note's title, and will recognize the second line as containing a tag for the Note. 
 
-Also, bracket characters and parentheses preceding a colon will now indicate to Notenik that such text should not be treated as a field label. 
-
+Also, bracket characters and parentheses preceding a colon will now indicate to Notenik that such text should not be treated as a field label.
 
 #### 3. Added Timestamp Field
 
@@ -133,8 +153,7 @@ A Timestamp field can be used to generate a timestamp for each note, in a "yyyyM
 * minute of hour
 * second of minute
 
-All of this is normalized to Greenwich Mean Time, and formatted without spaces or punctuation. 
-
+All of this is normalized to Greenwich Mean Time, and formatted without spaces or punctuation.
 
 #### 4. Ink Added as another Markdown Parser Option
 
@@ -227,8 +246,7 @@ Added a new input format to read a Markdown file and chunk it up into sections, 
 * Level - The level of the header (1 - 6)
 * Body - All of the text following the header, up to the next header. 
 
-Note that the resulting data can be used to generate a Table of Contents for the Markdown file, using an appropriately formatted template. 
-
+Note that the resulting data can be used to generate a Table of Contents for the Markdown file, using an appropriately formatted template.
 
 ### Version 1.8.0 | 06 Nov 2019
 
@@ -239,8 +257,7 @@ Folder(s) may now be opened by dragging them onto the Notenik icon in the Finder
 * If a folder contains an existing Notenik Collection, then that Collection will be opened in a new window. 
 * If a folder is empty, then it will be initialized as a new Notenik Collection, and opened in a new window. 
 * if the dragged item is not a folder at all, then an error message will be displayed. 
-* Any other folder will be treated as a parent realm, and the resulting window will show Collections and Scripts found within that realm. 
-
+* Any other folder will be treated as a parent realm, and the resulting window will show Collections and Scripts found within that realm.
 
 #### 2. Changed Deployment Target Back to 10.14 to Allow Operation on Mojave
 
@@ -254,8 +271,7 @@ When the user pulls down the Reports Action menu from the Toolbar, the first two
 - Generate Report Sample in HTML
 - Generate Report Sample in Markdown
 
-Selecting one of these will then cause Notenik to create a reports folder for the collection, if one does not already exist, and then to create a report template containing all of the Collection's fields in a basic layout. The user may then modify this template in order to further customize the output formatting. 
-
+Selecting one of these will then cause Notenik to create a reports folder for the collection, if one does not already exist, and then to create a report template containing all of the Collection's fields in a basic layout. The user may then modify this template in order to further customize the output formatting.
 
 ### Version 1.7.0 | 31 Oct 2019
 
@@ -390,7 +406,6 @@ Users can now pick from previously identified tags when entering a new one.
 Markdown conversion now renders embedded HTML and does a smart typographic conversion.
 
 Occasional problem with erroneous blanks in the ‘X’ column (indicating done or not) is now fixed.
-
 
 #### 3. Added Standardize Dates to YMD to the Collection Menu
 
