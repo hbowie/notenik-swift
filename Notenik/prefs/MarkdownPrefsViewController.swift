@@ -15,6 +15,7 @@ class MarkdownPrefsViewController: NSViewController {
 
     @IBOutlet var downButton: NSButton!
     @IBOutlet var inkButton:  NSButton!
+    @IBOutlet var pandocButton: NSButton!
     
     let prefs = AppPrefs.shared
     
@@ -26,6 +27,8 @@ class MarkdownPrefsViewController: NSViewController {
             downButton.state = .on
         case "ink":
             inkButton.state = .on
+        case "pandoc":
+            pandocButton.state = .on
         default:
             downButton.state = .on
         }
@@ -35,6 +38,7 @@ class MarkdownPrefsViewController: NSViewController {
     @IBAction func buttonAction(_ sender: NSButton) {
         saveUserInput()
     }
+    
     @IBAction func prefsOK(_ sender: Any) {
         saveUserInput()
         self.view.window!.close()
@@ -46,6 +50,8 @@ class MarkdownPrefsViewController: NSViewController {
             prefs.markdownParser = "down"
         } else if inkButton.state == .on {
             prefs.markdownParser = "ink"
+        } else if pandocButton.state == .on {
+            prefs.markdownParser = "pandoc"
         }
     }
 }

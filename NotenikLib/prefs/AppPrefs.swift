@@ -17,6 +17,9 @@ class AppPrefs {
     /// Provide a standard shared singleton instance
     static let shared = AppPrefs()
     
+    let fileManager = FileManager.default
+    var tempDir: URL
+    
     let defaults = UserDefaults.standard
     
     let launchingKey    = "app-launching"
@@ -79,8 +82,12 @@ class AppPrefs {
     var localeID: String!
     var americanEnglish = true
     
+    var _tempFileCount =  1
+    
     /// Private initializer to enforce usage of the singleton instance
     private init() {
+        
+        tempDir = fileManager.temporaryDirectory
         
         // Retrieve and log info about the current app.
         if let infoDictionary = Bundle.main.infoDictionary {
@@ -434,13 +441,29 @@ class AppPrefs {
         get { return _mdParser }
         set {
             switch newValue {
-            case "down", "ink":
+            case "down", "ink", "pandoc":
                 _mdParser = newValue
                 defaults.set(newValue, forKey: markdownParserKey)
             default:
                 break
             }
         }
+    }
+    
+    /// Given a file extension, return the next temp file to be used by Notenik.
+    func nextTempFile(ext: String) -> URL {
+        var fnm = "notenik-temp-\(_tempFileCount)"
+        _tempFileCount += 1
+        if ext.count > 0 {
+            fnm.append(".\(ext)")
+        }
+        let tempFile = tempDir.appendingPathComponent(fnm)
+        do {
+            try fileManager.removeItem(at: tempFile)
+        } catch {
+            // Not a problem. 
+        }
+        return tempFile
     }
     
     /// Send an informative message to the log.

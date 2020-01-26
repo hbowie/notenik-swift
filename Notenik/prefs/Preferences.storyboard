@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -373,8 +373,8 @@ DQ
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="6Jl-JW-5uH">
                                 <rect key="frame" x="156" y="218" width="276" height="38"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="38" id="Ns1-Xe-geo"/>
-                                    <constraint firstAttribute="width" constant="272" id="ZrS-Qz-qZH"/>
+                                    <constraint firstAttribute="width" constant="272" id="2OX-IV-trX"/>
+                                    <constraint firstAttribute="height" constant="38" id="8LB-OH-rmO"/>
                                 </constraints>
                                 <textFieldCell key="cell" selectable="YES" title="Blazing fast Markdown / CommonMark rendering in Swift, built upon cmark" id="fCt-Nl-nue">
                                     <font key="font" metaFont="system"/>
@@ -395,8 +395,7 @@ DQ
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qLZ-6r-bFe">
                                 <rect key="frame" x="157" y="149" width="272" height="38"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="38" id="6Fe-Yq-yjv"/>
-                                    <constraint firstAttribute="width" constant="268" id="Yns-fy-XNm"/>
+                                    <constraint firstAttribute="height" constant="38" id="cTB-jT-Udh"/>
                                 </constraints>
                                 <textFieldCell key="cell" selectable="YES" title="A fast and flexible Markdown parser written in Swift" id="vVc-SL-TKm">
                                     <font key="font" metaFont="system"/>
@@ -417,27 +416,56 @@ DQ
                                     <action selector="prefsOK:" target="ChF-uA-97E" id="Agz-VF-62n"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JIp-jH-VfT">
+                                <rect key="frame" x="138" y="124" width="210" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Pandoc from John MacFarlane " bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="xbx-zD-b6Y">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="buttonAction:" target="ChF-uA-97E" id="YDG-4g-cr9"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ejO-8u-mGx">
+                                <rect key="frame" x="157" y="60" width="262" height="57"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="57" id="7jL-ih-jBR"/>
+                                    <constraint firstAttribute="width" constant="258" id="VSq-zC-Tyd"/>
+                                </constraints>
+                                <textFieldCell key="cell" selectable="YES" title="A swiss-army knife that converts documents from one markup format into another." id="9Zy-ew-w20">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="vh1-08-Wi3" firstAttribute="trailing" secondItem="qLZ-6r-bFe" secondAttribute="trailing" id="0hU-gX-Jns"/>
-                            <constraint firstAttribute="bottom" secondItem="UuI-hp-axq" secondAttribute="bottom" constant="20" symbolic="YES" id="3af-g9-3Gf"/>
-                            <constraint firstItem="RJa-RV-kEX" firstAttribute="baseline" secondItem="AsE-AV-gAu" secondAttribute="baseline" id="71e-HW-heU"/>
-                            <constraint firstItem="6Jl-JW-5uH" firstAttribute="top" secondItem="AsE-AV-gAu" secondAttribute="bottom" constant="8" symbolic="YES" id="BFs-gB-0IX"/>
-                            <constraint firstItem="AsE-AV-gAu" firstAttribute="leading" secondItem="vh1-08-Wi3" secondAttribute="leading" id="DVa-nf-OUr"/>
-                            <constraint firstItem="AsE-AV-gAu" firstAttribute="leading" secondItem="RJa-RV-kEX" secondAttribute="trailing" constant="6" symbolic="YES" id="GWD-05-V61"/>
-                            <constraint firstItem="qLZ-6r-bFe" firstAttribute="trailing" secondItem="UuI-hp-axq" secondAttribute="trailing" id="GyR-Vx-xRM"/>
-                            <constraint firstItem="qLZ-6r-bFe" firstAttribute="top" secondItem="vh1-08-Wi3" secondAttribute="bottom" constant="9" id="HCd-Hm-n2V"/>
-                            <constraint firstItem="RJa-RV-kEX" firstAttribute="top" secondItem="93P-5f-jdj" secondAttribute="top" constant="20" symbolic="YES" id="IgH-eq-6On"/>
-                            <constraint firstItem="AsE-AV-gAu" firstAttribute="trailing" secondItem="6Jl-JW-5uH" secondAttribute="trailing" id="N9a-Pb-hLH"/>
-                            <constraint firstAttribute="trailing" secondItem="AsE-AV-gAu" secondAttribute="trailing" constant="20" symbolic="YES" id="TEj-7j-xyA"/>
-                            <constraint firstAttribute="trailing" secondItem="vh1-08-Wi3" secondAttribute="trailing" constant="23" id="fUK-Wq-KYr"/>
-                            <constraint firstItem="vh1-08-Wi3" firstAttribute="top" secondItem="6Jl-JW-5uH" secondAttribute="bottom" constant="6" id="kXF-ao-fuM"/>
-                            <constraint firstItem="RJa-RV-kEX" firstAttribute="leading" secondItem="93P-5f-jdj" secondAttribute="leading" constant="20" symbolic="YES" id="mbV-eo-fGP"/>
+                            <constraint firstAttribute="trailing" secondItem="ejO-8u-mGx" secondAttribute="trailing" constant="33" id="2J9-6z-rCQ"/>
+                            <constraint firstItem="qLZ-6r-bFe" firstAttribute="top" secondItem="vh1-08-Wi3" secondAttribute="bottom" constant="9" id="Cxf-JW-Jyg"/>
+                            <constraint firstAttribute="trailing" secondItem="AsE-AV-gAu" secondAttribute="trailing" constant="20" symbolic="YES" id="GFb-2V-aUG"/>
+                            <constraint firstAttribute="trailing" secondItem="vh1-08-Wi3" secondAttribute="trailing" constant="23" id="I3J-M1-zZI"/>
+                            <constraint firstAttribute="bottom" secondItem="UuI-hp-axq" secondAttribute="bottom" constant="20" symbolic="YES" id="Nfw-9L-FGs"/>
+                            <constraint firstItem="vh1-08-Wi3" firstAttribute="trailing" secondItem="qLZ-6r-bFe" secondAttribute="trailing" id="OIg-Mt-KO4"/>
+                            <constraint firstItem="qLZ-6r-bFe" firstAttribute="leading" secondItem="ejO-8u-mGx" secondAttribute="leading" id="PQV-nm-IpX"/>
+                            <constraint firstItem="AsE-AV-gAu" firstAttribute="leading" secondItem="vh1-08-Wi3" secondAttribute="leading" id="TSb-JW-oS4"/>
+                            <constraint firstItem="vh1-08-Wi3" firstAttribute="top" secondItem="6Jl-JW-5uH" secondAttribute="bottom" constant="6" id="TcX-qg-TVU"/>
+                            <constraint firstItem="qLZ-6r-bFe" firstAttribute="trailing" secondItem="UuI-hp-axq" secondAttribute="trailing" id="co8-D5-oca"/>
+                            <constraint firstItem="vh1-08-Wi3" firstAttribute="leading" secondItem="JIp-jH-VfT" secondAttribute="leading" id="dMq-nI-F1e"/>
+                            <constraint firstItem="ejO-8u-mGx" firstAttribute="top" secondItem="JIp-jH-VfT" secondAttribute="bottom" constant="8" symbolic="YES" id="e6B-h6-01K"/>
+                            <constraint firstItem="JIp-jH-VfT" firstAttribute="top" secondItem="qLZ-6r-bFe" secondAttribute="bottom" constant="8" symbolic="YES" id="gmW-5D-6RO"/>
+                            <constraint firstItem="6Jl-JW-5uH" firstAttribute="top" secondItem="AsE-AV-gAu" secondAttribute="bottom" constant="8" symbolic="YES" id="jnR-fM-MNg"/>
+                            <constraint firstItem="RJa-RV-kEX" firstAttribute="baseline" secondItem="AsE-AV-gAu" secondAttribute="baseline" id="o76-ky-FJ5"/>
+                            <constraint firstItem="RJa-RV-kEX" firstAttribute="top" secondItem="93P-5f-jdj" secondAttribute="top" constant="20" symbolic="YES" id="oDN-wo-Ffl"/>
+                            <constraint firstItem="RJa-RV-kEX" firstAttribute="leading" secondItem="93P-5f-jdj" secondAttribute="leading" constant="20" symbolic="YES" id="sPe-GY-1LE"/>
+                            <constraint firstItem="AsE-AV-gAu" firstAttribute="leading" secondItem="RJa-RV-kEX" secondAttribute="trailing" constant="6" symbolic="YES" id="vcL-j6-VQG"/>
+                            <constraint firstItem="AsE-AV-gAu" firstAttribute="trailing" secondItem="6Jl-JW-5uH" secondAttribute="trailing" id="yIO-PU-kG7"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="DownButton" destination="AsE-AV-gAu" id="ZJc-rD-Uz4"/>
+                        <outlet property="downButton" destination="AsE-AV-gAu" id="Sy3-n8-ZdI"/>
                         <outlet property="inkButton" destination="vh1-08-Wi3" id="hxA-1a-ezp"/>
+                        <outlet property="pandocButton" destination="JIp-jH-VfT" id="DCd-GM-K6S"/>
                     </connections>
                 </viewController>
                 <customObject id="88T-vO-Ekk" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
