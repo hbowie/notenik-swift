@@ -6,6 +6,13 @@ Tags:   changes, history, log
 
 Body:
 
+### Version 3.0.0 | 26 Jan 2020
+
+#### 1. Add Pandoc as an alternate Markdown Parser
+
+Added Pandoc as another possible Markdown parser that can be selected in the Application preferences. This is related to Issue # 15, although it does not fully satisfy that request. 
+
+
 ### Version 2.9.0 | 22 Jan 2020
 
 #### 1. Enabled the Preferred File Extension to be Changed

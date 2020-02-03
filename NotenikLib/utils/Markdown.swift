@@ -56,9 +56,6 @@ class Markdown {
         case "ink":
             let ink = MarkdownParser()
             html = ink.html(from: md)
-        case "pandoc":
-            let pandoc = Pandoc()
-            html = pandoc.convertMarkdownToHTML(md)
         default:
             Logger.shared.log(subsystem: "com.powersurgepub.notenik",
                               category: "MarkdownParser",

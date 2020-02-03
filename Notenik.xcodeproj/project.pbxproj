@@ -499,9 +499,6 @@
 		9CC0F5A8227629C4002683F8 /* BooleanValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC0F5A7227629C4002683F8 /* BooleanValue.swift */; };
 		9CC0F5A9227629C4002683F8 /* BooleanValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC0F5A7227629C4002683F8 /* BooleanValue.swift */; };
 		9CC0F5AA227629C4002683F8 /* BooleanValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC0F5A7227629C4002683F8 /* BooleanValue.swift */; };
-		9CC1D07D23DCF25F005D3441 /* pandoc in Resources */ = {isa = PBXBuildFile; fileRef = 9CC1D07B23DCEDD3005D3441 /* pandoc */; };
-		9CC1D07E23DCF260005D3441 /* pandoc in Resources */ = {isa = PBXBuildFile; fileRef = 9CC1D07B23DCEDD3005D3441 /* pandoc */; };
-		9CC1D07F23DCF261005D3441 /* pandoc in Resources */ = {isa = PBXBuildFile; fileRef = 9CC1D07B23DCEDD3005D3441 /* pandoc */; };
 		9CC2AAD0239EC36B00C85191 /* TimestampType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2AACF239EC36B00C85191 /* TimestampType.swift */; };
 		9CC2AAD1239EC36B00C85191 /* TimestampType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2AACF239EC36B00C85191 /* TimestampType.swift */; };
 		9CC2AAD2239EC36B00C85191 /* TimestampType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2AACF239EC36B00C85191 /* TimestampType.swift */; };
@@ -862,7 +859,6 @@
 		9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTagsViewController.swift; sourceTree = "<group>"; };
 		9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
 		9CC0F5A7227629C4002683F8 /* BooleanValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooleanValue.swift; sourceTree = "<group>"; };
-		9CC1D07B23DCEDD3005D3441 /* pandoc */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = pandoc; sourceTree = "<group>"; };
 		9CC2AACF239EC36B00C85191 /* TimestampType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampType.swift; sourceTree = "<group>"; };
 		9CC2AAD3239EC3E600C85191 /* TimestampValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampValue.swift; sourceTree = "<group>"; };
 		9CC41CD4229CA61700E92A66 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
@@ -990,7 +986,6 @@
 				9CE715B0225E887300025C00 /* Notenik Help */,
 				9C60E6E321F64B3C00C332ED /* NotenikTests */,
 				9C60E6EE21F64B3C00C332ED /* NotenikUITests */,
-				9CC1D08023DCF2F4005D3441 /* bin */,
 				9C60E6CF21F64B3B00C332ED /* Products */,
 				9CAF2B2622664237009E19E2 /* Project Index */,
 				9C65394E21F91EBB00012184 /* Frameworks */,
@@ -1375,14 +1370,6 @@
 			path = share;
 			sourceTree = "<group>";
 		};
-		9CC1D08023DCF2F4005D3441 /* bin */ = {
-			isa = PBXGroup;
-			children = (
-				9CC1D07B23DCEDD3005D3441 /* pandoc */,
-			);
-			path = bin;
-			sourceTree = "<group>";
-		};
 		9CC78E672283560F00640477 /* displayPrefs */ = {
 			isa = PBXGroup;
 			children = (
@@ -1630,7 +1617,6 @@
 				9C65B2A023DE28BC00794C59 /* LICENSE.md in Resources */,
 				9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */,
 				9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */,
-				9CC1D07D23DCF25F005D3441 /* pandoc in Resources */,
 				9CE3250A224D58360051CA1F /* Log.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1640,7 +1626,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C2174A022024E2900B4BF48 /* notenik-swift-intro in Resources */,
-				9CC1D07E23DCF260005D3441 /* pandoc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1655,7 +1640,6 @@
 				9C2174A122024E2900B4BF48 /* notenik-swift-intro in Resources */,
 				9C8DD75822E3EEC400FF56C1 /* Attachment.storyboard in Resources */,
 				9CB60BC1226509B2003B5655 /* Share.storyboard in Resources */,
-				9CC1D07F23DCF261005D3441 /* pandoc in Resources */,
 				9C2AE524220A34BB00AE8BEE /* Main.storyboard in Resources */,
 				9C0B643623885E9900869FAA /* TagsMassChange.storyboard in Resources */,
 				9CE3250B224D58360051CA1F /* Log.storyboard in Resources */,

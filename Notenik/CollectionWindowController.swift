@@ -819,10 +819,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
     }
     
-    @IBAction func pandoc(_ sender: Any) {
-        print("Pandoc!")
-    }
-    
     /// Respond to the user's request to move forward, backwards, or back to start of list
     @IBAction func navigationClicked(_ sender: NSSegmentedControl) {
         

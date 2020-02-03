@@ -441,7 +441,7 @@ class AppPrefs {
         get { return _mdParser }
         set {
             switch newValue {
-            case "down", "ink", "pandoc":
+            case "down", "ink":
                 _mdParser = newValue
                 defaults.set(newValue, forKey: markdownParserKey)
             default:
