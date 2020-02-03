@@ -40,6 +40,7 @@ class CalendarViewController: NSViewController {
     
     var loaded = false
     
+    /// Populate our view with its initial data.
     override func viewDidLoad() {
         super.viewDidLoad()
         loaded = true
@@ -201,6 +202,150 @@ class CalendarViewController: NSViewController {
         }
     }
     
+    /// Set the year to be displayed.
+    func setYear(withInt yearInt: Int) {
+        year = yearInt
+        if loaded {
+            displayYear()
+        }
+        calcDaysInMonth()
+    }
+    
+    /// Set the month to be displayed.
+    func setMonth(withInt monthInt: Int) {
+        month = monthInt
+        if loaded {
+            displayMonth()
+        }
+        calcDaysInMonth()
+    }
+    
+    /// Set the day to be displayed.
+    func setDay(withInt dayInt: Int) {
+        day = dayInt
+        if loaded {
+            displayDay()
+            displayCalendar()
+        }
+    }
+    
+    /// Decrement the year by one, as requested by the user.
+    @IBAction func bumpYearDown(_ sender: Any) {
+        year -= 1
+        displayYear()
+        calcDaysInMonth()
+        displayCalendar()
+    }
+    
+    /// Increment the year by one, as requested by the user.
+    @IBAction func bumpYearUp(_ sender: Any) {
+        year += 1
+        displayYear()
+        calcDaysInMonth()
+        displayCalendar()
+    }
+    
+    /// Bump the month down, as requested by the user.
+    @IBAction func bumpMonthDown(_ sender: Any) {
+        if month > 1 {
+            month -= 1
+        } else {
+            month = 12
+            year -= 1
+            displayYear()
+        }
+        displayMonth()
+        calcDaysInMonth()
+        displayCalendar()
+    }
+    
+    /// Bump the month up, as requested by the user.
+    @IBAction func bumpMonthUp(_ sender: Any) {
+        if month < 12 {
+            month += 1
+        } else {
+            month = 1
+            year += 1
+            displayYear()
+        }
+        displayMonth()
+        calcDaysInMonth()
+        displayCalendar()
+    }
+    
+    /// Display the current year.
+    func displayYear() {
+        let strYear = String(year)
+        yearTextField.stringValue = strYear
+    }
+    
+    /// Display the current month as an alpha field.
+    func displayMonth() {
+        if month >= 1 && month <= 12 {
+            let monthName = DateUtils.monthNames[month]
+            monthTextField.stringValue = monthName
+        }
+    }
+    
+    /// Figure out how many days we have in the current month. If the current day of the month
+    /// is greater than the number of days in the current month, then set it to the last day of
+    /// the month.
+    func calcDaysInMonth() {
+        daysInMonth = DateUtils.shared.getDaysInMonth(year: year, month: month)
+        if day > daysInMonth {
+            day = daysInMonth
+            displayDay()
+        }
+    }
+    
+    /// Bump the day of the month down by 1.
+    @IBAction func bumpDayDown(_ sender: Any) {
+        if day > 1 {
+            day -= 1
+        } else {
+            bumpMonthDown(sender)
+            day = daysInMonth
+        }
+        displayDay()
+        displayCalendar()
+    }
+    
+    /// Bump the day of the month up by 1.
+    @IBAction func bumpDayUp(_ sender: Any) {
+        if day < daysInMonth {
+            day += 1
+        } else {
+            bumpMonthUp(sender)
+            day = 1
+        }
+        displayDay()
+        displayCalendar()
+    }
+    
+    ///Display the day of the month.
+    func displayDay() {
+        let strDay = String(day)
+        dayTextField.stringValue = strDay
+    }
+    
+    /// Back the input down by one month, wrapping around to 12 when passing 1.
+    func priorMonth(_ m: Int) -> Int {
+        if m > 1 {
+            return m - 1
+        } else {
+            return 12
+        }
+    }
+    
+    /// Bump input to the next month, or around the horn back to 1.
+    func nextMonth(_ m: Int) -> Int {
+        if m < 12 {
+            return m + 1
+        } else {
+            return 1
+        }
+    }
+    
     /// Update the button titles and styles to reflect the specified date
     func displayCalendar() {
         guard year > 0 && month >= 1 && month <= 12 else { return }
@@ -253,130 +398,6 @@ class CalendarViewController: NSViewController {
                 workMonth = nextMonth(workMonth)
                 workDaysInMonth = DateUtils.shared.getDaysInMonth(year: year, month: workMonth)
             }
-        }
-    }
-    
-    func setYear(withInt yearInt: Int) {
-        year = yearInt
-        if loaded {
-            displayYear()
-        }
-        calcDaysInMonth()
-    }
-    
-    func setMonth(withInt monthInt: Int) {
-        month = monthInt
-        if loaded {
-            displayMonth()
-        }
-        calcDaysInMonth()
-    }
-    
-    func setDay(withInt dayInt: Int) {
-        day = dayInt
-        if loaded {
-            displayDay()
-            displayCalendar()
-        }
-    }
-    
-    @IBAction func bumpYearDown(_ sender: Any) {
-        year -= 1
-        displayYear()
-        calcDaysInMonth()
-    }
-    
-    @IBAction func bumpYearUp(_ sender: Any) {
-        year += 1
-        displayYear()
-        calcDaysInMonth()
-    }
-    
-    @IBAction func bumpMonthDown(_ sender: Any) {
-        if month > 1 {
-            month -= 1
-        } else {
-            month = 12
-            year -= 1
-            displayYear()
-        }
-        displayMonth()
-        calcDaysInMonth()
-    }
-    
-    @IBAction func bumpMonthUp(_ sender: Any) {
-        if month < 12 {
-            month += 1
-        } else {
-            month = 1
-            year += 1
-            displayYear()
-        }
-        displayMonth()
-        calcDaysInMonth()
-        displayCalendar()
-    }
-    
-    func displayYear() {
-        let strYear = String(year)
-        yearTextField.stringValue = strYear
-    }
-    
-    func displayMonth() {
-        if month >= 1 && month <= 12 {
-            let monthName = DateUtils.monthNames[month]
-            monthTextField.stringValue = monthName
-        }
-    }
-    
-    func calcDaysInMonth() {
-        daysInMonth = DateUtils.shared.getDaysInMonth(year: year, month: month)
-        if day > daysInMonth {
-            day = daysInMonth
-            displayDay()
-        }
-    }
-    
-    @IBAction func bumpDayDown(_ sender: Any) {
-        if day > 1 {
-            day -= 1
-        } else {
-            bumpMonthDown(sender)
-            day = daysInMonth
-        }
-        displayDay()
-        displayCalendar()
-    }
-    
-    @IBAction func bumpDayUp(_ sender: Any) {
-        if day < daysInMonth {
-            day += 1
-        } else {
-            bumpMonthUp(sender)
-            day = 1
-        }
-        displayDay()
-        displayCalendar()
-    }
-    
-    func displayDay() {
-        let strDay = String(day)
-        dayTextField.stringValue = strDay
-    }
-    
-    func priorMonth(_ m: Int) -> Int {
-        if m > 1 {
-            return m - 1
-        } else {
-            return 12
-        }
-    }
-    
-    func nextMonth(_ m: Int) -> Int {
-        if m < 12 {
-            return m + 1
-        } else {
-            return 1
         }
     }
     
