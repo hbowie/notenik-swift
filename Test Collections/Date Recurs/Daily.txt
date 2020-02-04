@@ -1,0 +1,15 @@
+Title:  Daily
+
+Tags:   days
+
+Link:   	
+
+Status: 0 - Idea
+
+Date:   16 Feb 2020
+
+Recurs: Daily
+
+Body: 
+
+A task that should recur every day. 

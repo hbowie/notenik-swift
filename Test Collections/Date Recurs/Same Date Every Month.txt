@@ -1,0 +1,9 @@
+Title:  Same Date Every Month
+
+Tags:   day of the month
+
+Status: 0 - Idea
+
+Date:   01 May 2020
+
+Recurs: The first of every month

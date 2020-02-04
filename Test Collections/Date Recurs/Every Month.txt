@@ -1,0 +1,9 @@
+Title:  Every Month
+
+Tags:   months
+
+Status: 0 - Idea
+
+Date:   29 Apr 2020
+
+Recurs: Every month

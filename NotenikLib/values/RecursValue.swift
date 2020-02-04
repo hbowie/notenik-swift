@@ -86,6 +86,11 @@ class RecursValue: StringValue {
                 newDate.setDayOfMonth(dayOfMonth)
             }
             if dayOfWeek > 0 {
+                var backCount = 0
+                while newDate.dayOfWeek != dayOfWeek && backCount < 7 {
+                    newDate.addDays(-1)
+                    backCount += 1
+                }
                 while newDate.dayOfWeek != dayOfWeek {
                     newDate.addDays(1)
                 }
@@ -267,7 +272,7 @@ class RecursValue: StringValue {
             lower = word.lowercased()
             number = 0
             if digits > 0 {
-                let possibleNumber : Int? = Int(word)
+                let possibleNumber: Int? = Int(word)
                 if possibleNumber != nil {
                     number = possibleNumber!
                 }
