@@ -88,6 +88,7 @@ class SimpleDate: CustomStringConvertible {
     func setDayOfMonth(_ dayOfMonth: Int) {
         day = dayOfMonth
         adjustInvalidDay()
+        calcDayOfWeek()
     }
     
     func addDays(_ days: Int) {

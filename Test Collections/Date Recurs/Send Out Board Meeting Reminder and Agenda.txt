@@ -1,0 +1,13 @@
+Title:  Send Out Board Meeting Reminder and Agenda
+
+Tags:   UMSeattle
+
+Link:   http://www.umseattle.com
+
+Status: 4 - In Work
+
+Date:   10 Aug 2021
+
+Recurs: 2nd Tuesday of every Month
+
+Date Added: 2018-01-09 20:40:22

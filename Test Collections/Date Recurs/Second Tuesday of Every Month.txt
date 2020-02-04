@@ -1,0 +1,11 @@
+Title:  Second Tuesday of Every Month
+
+Tags:   months
+
+Status: 0 - Idea
+
+Date:   09 Nov 2021
+
+Recurs: 2nd Tuesday of every Month
+
+Date Added: 2020-02-04 20:58:09 +0000

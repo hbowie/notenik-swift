@@ -31,6 +31,8 @@ class RecursValue: StringValue {
     var weekOfMonth = 0
     var sequence = 0
     
+    var intervalToSequence = false
+    
     override init() {
         super.init()
     }
@@ -86,6 +88,43 @@ class RecursValue: StringValue {
                 newDate.setDayOfMonth(dayOfMonth)
             }
             if dayOfWeek > 0 {
+                if unit >= unitMonths {
+                    var dayOfWeekTargetCount = sequence
+                    if dayOfWeekTargetCount < 1 {
+                        dayOfWeekTargetCount = 1
+                    }
+                    newDate.setDayOfMonth(1)
+                    var dayOfWeekCount = 0
+                    var lastGoodDayOfMonth = 0
+                    var found = false
+                    repeat {
+                        if newDate.dayOfWeek == dayOfWeek {
+                            dayOfWeekCount += 1
+                            lastGoodDayOfMonth = newDate.day
+                        }
+                        if newDate.dayOfWeek == dayOfWeek && dayOfWeekCount == dayOfWeekTargetCount {
+                            found = true
+                        } else {
+                            if newDate.day < newDate.daysInMonth {
+                                newDate.addDays(1)
+                            } else {
+                                newDate.setDayOfMonth(lastGoodDayOfMonth)
+                                found = true
+                            }
+                        }
+                    } while !found
+                } else {
+                    var backCount = 0
+                    while newDate.dayOfWeek != dayOfWeek && backCount < 7 {
+                        newDate.addDays(-1)
+                        backCount += 1
+                    }
+                    while newDate.dayOfWeek != dayOfWeek {
+                        newDate.addDays(1)
+                    }
+                }
+            }
+            if dayOfWeek > 0 {
                 var backCount = 0
                 while newDate.dayOfWeek != dayOfWeek && backCount < 7 {
                     newDate.addDays(-1)
@@ -118,6 +157,7 @@ class RecursValue: StringValue {
         dayOfMonth = 0
         weekOfMonth = 0
         sequence = 0
+        intervalToSequence = false
         
         var word = RecursWord()
         word.precedingSeps = 1
@@ -180,8 +220,11 @@ class RecursValue: StringValue {
         }
         switch word.lower {
         case "of":
-            sequence = interval
-            interval = 1
+            if !intervalToSequence {
+                sequence = interval
+                interval = 1
+                intervalToSequence = true
+            }
         case "every":
             break
         case "day", "days", "daily":
@@ -193,7 +236,11 @@ class RecursValue: StringValue {
             unit = unitWeeks
         case "month", "months", "monthly":
             unit = unitMonths
-            if sequence > 0 {
+            if interval > 0 && dayOfWeek > 0 && !intervalToSequence {
+                sequence = interval
+                interval = 1
+                intervalToSequence = true
+            } else if sequence > 0 && dayOfWeek < 1 {
                 dayOfMonth = sequence
                 sequence = 0
             }
@@ -301,6 +348,11 @@ class RecursValue: StringValue {
             } else if letters > 0 {
                 alphaWord = true
             }
+        }
+        
+        func display() {
+            print("RecursWord")
+            print("  - Word = \(word)")
         }
     } // end inner class RecursWord
 } // end class RecursValue
