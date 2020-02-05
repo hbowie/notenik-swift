@@ -1,10 +1,10 @@
 Title:  Specify Date Recurs Rules
 
+Tags:   date, recurs
+
 Timestamp: 20191210005657
 
 Seq:    22
-
-Tags:   date, recurs
 
 Date Added: 2019-08-14 02:12:57 +0000
 
@@ -12,7 +12,17 @@ Body:
 
 Add a Recurs field to a Collection to cause a Date for a Note to recur on a regular basis. 
 
-Specify a recurs rule using normal English, such as "Every 3 months," "Every Tuesday" or "Every Year."
+Use the Recurs button on the Date editing row to apply the rule to the current Date associated with the selected Note.
 
-Use the Recurs button on the Date editing row to apply the rule to the current Date associated with the selected Note. 
+Specify a recurs rule using normal English, as in the following examples:
 
+* Daily
+* Every Weekday
+* Every 3 months
+* Every Tuesday
+* Every other Monday
+* Every month
+* Quarterly
+* Every Year
+* The 15th of every month
+* 2nd Tuesday of every month

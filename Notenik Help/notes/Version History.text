@@ -6,11 +6,11 @@ Tags:   changes, history, log
 
 Body:
 
-### Version 3.0.0 | 26 Jan 2020
+### Version 3.0.0 | 05 Feb 2020
 
-#### 1. Add Pandoc as an alternate Markdown Parser
+#### 1. A Few Small Improvements
 
-Added Pandoc as another possible Markdown parser that can be selected in the Application preferences. This is related to Issue # 15, although it does not fully satisfy that request. 
+Made a few small improvements, focusing on the Calendar displayed when updating a date, and the date recurs logic. 
 
 
 ### Version 2.9.0 | 22 Jan 2020
