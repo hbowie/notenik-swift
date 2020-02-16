@@ -35,6 +35,14 @@ class Logger {
         dateFormatter.dateFormat = dateFormat
     }
     
+    /// Log a new event. 
+    func log (_ event: LogEvent) {
+        log(subsystem: event.subsystem,
+            category: event.category,
+            level: event.level,
+            message: event.msg)
+    }
+    
     /// Process a loggable event
     func log (subsystem: String, category: String, level: LogLevel, message: String) {
         if level.rawValue >= logThreshold.rawValue {

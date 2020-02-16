@@ -29,15 +29,10 @@ class NoteCollection {
     var readOnly     : Bool = false
     var customFields : [SortField] = []
     var doubleBracketParsing = false
-    
-    /// Does this collection include a timestamp field?
     var hasTimestamp = false
-    
-    /// Is this collection a collection of collections within a parent realm?
     var isRealmCollection = false
-    
-    /// Is this collection in MultiMarkdown format?
     var noteFileFormat: NoteFileFormat = .toBeDetermined
+    var mirror:         NoteTransformer?
     
     /// Default initialization of a new Realm.
     init () {
@@ -50,7 +45,7 @@ class NoteCollection {
     }
     
     /// Convenience initialization that identifies the Realm. 
-    convenience init (realm : Realm) {
+    convenience init (realm: Realm) {
         self.init()
         self.realm = realm
     }

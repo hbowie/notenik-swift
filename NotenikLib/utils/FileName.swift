@@ -287,13 +287,16 @@ class FileName: CustomStringConvertible {
         var resolved = ""
         var foldersToCopy = folders.count
         var looking = true
-        var i = path.startIndex
-        while i < path.endIndex && looking {
-            let j = path.index(i, offsetBy: 3)
-            if j <= path.endIndex {
-                let nextThree = path[i..<j]
+        var i = 0
+        var index = path.startIndex
+        while i < path.count && looking {
+            let j = i + 3
+            if j < path.count {
+                let index2 = path.index(index, offsetBy: 3)
+                let nextThree = path[index..<index2]
                 if nextThree == "../" {
                     foldersToCopy -= 1
+                    index = index2
                     i = j
                 } else {
                     looking = false
@@ -307,7 +310,7 @@ class FileName: CustomStringConvertible {
             resolved.append("/")
             folderIndex += 1
         }
-        resolved.append(String(path[i..<path.endIndex]))
+        resolved.append(String(path[index..<path.endIndex]))
         return resolved
     }
     

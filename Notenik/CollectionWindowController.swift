@@ -21,7 +21,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// The Reports Action Menu.
     @IBOutlet var actionMenu: NSMenu!
-    let sampleReportTemplateFileName = "sample report template"
     
     @IBOutlet var attachmentsMenu: NSMenu!
     
@@ -130,196 +129,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             
             buildReportsActionMenu()
         }
-    }
-    
-    /// Set up the Reports Action Menu in the Toolbar.
-    func buildReportsActionMenu() {
-        
-        // Clear out whatever we had before
-        var i = actionMenu.numberOfItems - 1
-        while i > 0 {
-            actionMenu.removeItem(at: i)
-            i -= 1
-        }
-        
-        guard !notenikIO!.collection!.readOnly else { return }
-
-        var genMD = true
-        var genHTML = true
-        
-        for report in notenikIO!.reports {
-            let title = String(describing: report)
-            let reportItem = NSMenuItem(title: title, action: #selector(runReport), keyEquivalent: "")
-            actionMenu.addItem(reportItem)
-            if report.reportName == sampleReportTemplateFileName {
-                if report.reportType == "html" {
-                    genHTML = false
-                } else if report.reportType == "md" {
-                    genMD = false
-                }
-            }
-        }
-        
-        if genHTML {
-            let genSampleHTML = NSMenuItem(title: "Generate Report Sample in HTML", action: #selector(genReportTemplateSample), keyEquivalent: "")
-            actionMenu.addItem(genSampleHTML)
-        }
-        
-        if genMD {
-            let genSampleMD = NSMenuItem(title: "Generate Report Sample in Markdown", action: #selector(genReportTemplateSample), keyEquivalent: "")
-            actionMenu.addItem(genSampleMD)
-        }
-    }
-    
-    /// Generate a sample report template.
-    /// - Parameter sender: The menu item selected by the user.
-    @objc func genReportTemplateSample(_ sender: NSMenuItem) {
-        guard let io = notenikIO else { return }
-        guard let collection = io.collection else { return }
-        guard let reportsFolder = io.reportsFullPath else { return }
-        var ok = true
-        let dict = collection.dict
-        let fields = dict.list
-        let menuItemTitle = sender.title.lowercased()
-        var fileExt = ""
-        var shortMods = ""
-        var longMods = ""
-        var markup: Markedup!
-        if menuItemTitle.contains("markdown") {
-            fileExt = "md"
-            markup = Markedup(format: .markdown)
-        } else {
-            fileExt = "html"
-            shortMods = "&h"
-            longMods = "&o"
-            markup = Markedup(format: .htmlDoc)
-        }
-        markup.writeLine("<?output \"report.\(fileExt)\"?>")
-        markup.startDoc(withTitle: collection.title, withCSS: nil)
-        markup.heading(level: 1, text: collection.title)
-        markup.writeLine("<?nextrec?>")
-        for field in fields {
-            let proper = field.fieldLabel.properForm
-            let common = field.fieldLabel.commonForm
-            let type = field.fieldType.typeString
-            if common == "title" {
-                markup.heading(level: 2, text: "=$title\(shortMods)$=")
-            } else if common == "body" || type == "longtext" {
-                markup.startParagraph()
-                markup.startStrong()
-                markup.write(proper)
-                markup.write(":")
-                markup.finishStrong()
-                markup.finishParagraph()
-                if fileExt == "md" {
-                    markup.paragraph(text: "=$\(common)\(longMods)$=")
-                } else {
-                    markup.writeLine("=$\(common)\(longMods)$=")
-                }
-            } else {
-                markup.startParagraph()
-                markup.startStrong()
-                markup.write("\(proper):")
-                markup.finishStrong()
-                markup.write(" =$\(common)\(shortMods)$=")
-                markup.finishParagraph()
-            }
-        }
-        markup.writeLine("<?loop?>")
-        markup.finishDoc()
-        
-        // Now let's save the new report. 
-        _ = FileUtils.ensureFolder(forDir: reportsFolder)
-        let reportsFolderURL = URL(fileURLWithPath: reportsFolder)
-        let sampleURL = reportsFolderURL.appendingPathComponent(sampleReportTemplateFileName + "." + fileExt)
-        do {
-            try markup.code.write(to: sampleURL, atomically: false, encoding: .utf8)
-        }
-        catch {
-            communicateError("Error saving sample report to \(sampleURL.path)", alert: true)
-            ok = false
-            return
-        }
-        
-        // Now let's rebuild the reports action menu, taking the new report into consideration.
-        if ok {
-            io.loadReports()
-            buildReportsActionMenu()
-        }
-        
-        // Let the user know that we created the file.
-        var runNow = false
-        if ok {
-            let alert = NSAlert()
-            alert.alertStyle = .informational
-            alert.messageText = "Sample Report Template Created"
-            alert.informativeText = "File created at:\n '\(sampleURL.path)'. \n\nFeel free to rename and edit it to suit your particular needs."
-            alert.addButton(withTitle: "OK")
-            alert.addButton(withTitle: "Run It Now")
-            let response = alert.runModal()
-            if response != .alertFirstButtonReturn {
-                runNow = true
-            }
-        }
-        
-        if runNow {
-            _ = runReportWithTemplate(sampleURL)
-        }
-    }
-    
-    @objc func runReport(_ sender: NSMenuItem) {
-        
-        // See if we're ready to take action
-        guard let noteIO = guardForCollectionAction() else { return }
-        
-        var found = false
-        var i = 0
-        while i < noteIO.reports.count && !found {
-            let report = noteIO.reports[i]
-            let reportTitle = String(describing: report)
-            found = (sender.title == reportTitle)
-            if found {
-                if report.reportType == "tcz" {
-                    if noteIO.reportsFullPath != nil {
-                        let scriptURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
-                        if scriptURL != nil {
-                            launchScript(fileURL: scriptURL!)
-                        }
-                    }
-                } else {
-                    if noteIO.reportsFullPath != nil {
-                        let templateURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
-                        _ = runReportWithTemplate(templateURL!)
-                    }
-                }
-            } else {
-                i += 1
-            }
-        }
-    }
-    
-    /// Generate and display a report created from a template file.
-    func runReportWithTemplate(_ templateURL: URL) -> Bool {
-        guard let io = notenikIO else { return false }
-        guard let collection = io.collection else { return false }
-        let template = Template()
-        var ok = template.openTemplate(templateURL: templateURL)
-        if ok {
-            template.supplyData(notesList: io.notesList,
-                                dataSource: collection.collectionFullPath)
-            ok = template.generateOutput()
-            if ok {
-                let textOutURL = template.util.textOutURL
-                if textOutURL != nil {
-                    NSWorkspace.shared.open(textOutURL!)
-                }
-            } else {
-                communicateError("Problems generating template output", alert: true)
-            }
-        } else {
-            communicateError("Problems opening template file", alert: true)
-        }
-        return ok
     }
 
     override func windowDidLoad() {
@@ -1207,6 +1016,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         if outcome == .add || outcome == .deleteAndAdd {
             reloadViews()
             select(note: note, position: nil, source: .action)
+            if note != nil {
+                mirrorNote(note!)
+            }
             noteTabs!.tabView.selectFirstTabViewItem(nil)
         } else if outcome == .modify {
             noteModified(updatedNote: note!)
@@ -1225,6 +1037,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     func noteModified(updatedNote: Note) {
         if displayVC != nil {
             displayVC!.display(note: updatedNote, io: notenikIO!)
+        }
+        if updatedNote.collection.mirror != nil {
+            mirrorNote(updatedNote)
         }
     }
     
@@ -1704,6 +1519,219 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     // ----------------------------------------------------------------------------------
     //
+    // The following functions support note transformation via mirroring, reports. etc.
+    //
+    // ----------------------------------------------------------------------------------
+    
+    @IBAction func genMirrorSample(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let collection = noteIO.collection!
+        guard collection.mirror == nil else {
+            communicateError("This Collection already has a functioning mirror folder",
+                             alert: true)
+            return
+        }
+        collection.mirror = NoteTransformer.genSampleMirrorFolder(io: noteIO)
+        if collection.mirror == nil {
+            communicateError("Problems encountered trying to generate sample mirror folder",
+                             alert: true)
+        } else {
+            let alert = NSAlert()
+            alert.alertStyle = .informational
+            alert.messageText = "Sample Mirror Folder Created"
+            alert.informativeText = "Feel free to use your favorite text editor to modify the contents of the mirror folder to suit your particular needs. "
+            alert.addButton(withTitle: "OK")
+            _ = alert.runModal()
+        }
+    }
+    
+    /// Launch a task to mirror all notes in the collection.
+    @IBAction func mirrorNotes(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let collection = noteIO.collection!
+        guard collection.mirror != nil else {
+            communicateError("Mirror All Notes Requested but a functioning mirror folder was not found",
+                             alert: true)
+            return
+        }
+        let mirror = collection.mirror!
+        let dispatchQ = mirror.dispatchQueue
+        
+        dispatchQ.async { [weak self] in
+            let errors = mirror.mirrorAllNotes()
+            DispatchQueue.main.async { [weak self] in
+                self?.reportErrors(errors)
+                if errors.count == 0 {
+                    self?.logInfo(msg: "Mirroring of All Notes Completed Successfully")
+                }
+            }
+        }
+        
+        dispatchQ.async { [weak self] in
+            let errors = mirror.rebuildIndices()
+            DispatchQueue.main.async { [weak self] in
+                self?.reportErrors(errors)
+                if errors.count == 0 {
+                    self?.logInfo(msg: "Mirroring of All Notes Completed Successfully")
+                }
+            }
+        }
+    }
+    
+    /// Launch a task to mirror a single note in the collection.
+    func mirrorNote(_ noteToMirror: Note) {
+        let collection = noteToMirror.collection
+        guard let mirror = collection.mirror else { return }
+        let dispatchQ = mirror.dispatchQueue
+        
+        dispatchQ.async { [weak self] in
+            let errors = mirror.mirror(note: noteToMirror)
+            DispatchQueue.main.async { [weak self] in
+                self?.reportErrors(errors)
+            }
+        }
+        
+        dispatchQ.async { [weak self] in
+            let errors = mirror.rebuildIndices()
+            DispatchQueue.main.async { [weak self] in
+                self?.reportErrors(errors)
+            }
+        }
+    }
+    
+    /// Set up the Reports Action Menu in the Toolbar.
+    func buildReportsActionMenu() {
+        
+        // Clear out whatever we had before
+        var i = actionMenu.numberOfItems - 1
+        while i > 0 {
+            actionMenu.removeItem(at: i)
+            i -= 1
+        }
+        
+        guard !notenikIO!.collection!.readOnly else { return }
+
+        var genMD = true
+        var genHTML = true
+        
+        for report in notenikIO!.reports {
+            let title = String(describing: report)
+            let reportItem = NSMenuItem(title: title, action: #selector(runReport), keyEquivalent: "")
+            actionMenu.addItem(reportItem)
+            if report.reportName == NoteTransformer.sampleReportTemplateFileName {
+                if report.reportType == "html" {
+                    genHTML = false
+                } else if report.reportType == "md" {
+                    genMD = false
+                }
+            }
+        }
+        
+        if genHTML {
+            let genSampleHTML = NSMenuItem(title: "Generate Report Sample in HTML", action: #selector(genReportTemplateSample), keyEquivalent: "")
+            actionMenu.addItem(genSampleHTML)
+        }
+        
+        if genMD {
+            let genSampleMD = NSMenuItem(title: "Generate Report Sample in Markdown", action: #selector(genReportTemplateSample), keyEquivalent: "")
+            actionMenu.addItem(genSampleMD)
+        }
+    }
+    
+    /// Generate a sample report template.
+    /// - Parameter sender: The menu item selected by the user.
+    @objc func genReportTemplateSample(_ sender: NSMenuItem) {
+        guard let io = guardForCollectionAction() else { return }
+        // guard let reportsFolder = io.reportsFullPath else { return }
+        let menuItemTitle = sender.title.lowercased()
+        let markdown = menuItemTitle.contains("markdown")
+        let errors = NoteTransformer.genReportTemplateSample(io: io, markdown: markdown)
+        reportErrors(errors)
+        
+        // Now let's rebuild the reports action menu, taking the new report into consideration.
+        if errors.count == 0 {
+            io.loadReports()
+            buildReportsActionMenu()
+        }
+        
+        // Let the user know that we created the file.
+        var runNow = false
+        let sampleURL = NoteTransformer.getReportTemplateSampleURL(io: io, markdown: markdown)
+        if errors.count == 0 {
+            let alert = NSAlert()
+            alert.alertStyle = .informational
+            alert.messageText = "Sample Report Template Created at \(sampleURL!.path)"
+            alert.informativeText = "Report template file created. \n\nFeel free to rename and edit it to suit your particular needs."
+            alert.addButton(withTitle: "OK")
+            alert.addButton(withTitle: "Run It Now")
+            let response = alert.runModal()
+            if response != .alertFirstButtonReturn {
+                runNow = true
+            }
+        }
+        
+        if runNow {
+            _ = runReportWithTemplate(sampleURL!)
+        }
+    }
+    
+    @objc func runReport(_ sender: NSMenuItem) {
+        
+        // See if we're ready to take action
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        var found = false
+        var i = 0
+        while i < noteIO.reports.count && !found {
+            let report = noteIO.reports[i]
+            let reportTitle = String(describing: report)
+            found = (sender.title == reportTitle)
+            if found {
+                if report.reportType == "tcz" {
+                    if noteIO.reportsFullPath != nil {
+                        let scriptURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
+                        if scriptURL != nil {
+                            launchScript(fileURL: scriptURL!)
+                        }
+                    }
+                } else {
+                    if noteIO.reportsFullPath != nil {
+                        let templateURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
+                        _ = runReportWithTemplate(templateURL!)
+                    }
+                }
+            } else {
+                i += 1
+            }
+        }
+    }
+    
+    /// Generate and display a report created from a template file.
+    func runReportWithTemplate(_ templateURL: URL) -> Bool {
+        guard let io = notenikIO else { return false }
+        guard let collection = io.collection else { return false }
+        let template = Template()
+        var ok = template.openTemplate(templateURL: templateURL)
+        if ok {
+            template.supplyData(notesList: io.notesList,
+                                dataSource: collection.collectionFullPath)
+            ok = template.generateOutput()
+            if ok {
+                let textOutURL = template.util.textOutURL
+                if textOutURL != nil {
+                    NSWorkspace.shared.open(textOutURL!)
+                }
+            } else {
+                communicateError("Problems generating template output", alert: true)
+            }
+        } else {
+            communicateError("Problems opening template file", alert: true)
+        }
+        return ok
+    }
+    
+    // ----------------------------------------------------------------------------------
+    //
     // The following section of code contains internal utility routines.
     //
     // ----------------------------------------------------------------------------------
@@ -1755,6 +1783,13 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
         alert.addButton(withTitle: "OK")
         _ = alert.runModal()
+    }
+    
+    /// Report a bunch of errors.
+    func reportErrors(_ errors: [LogEvent]) {
+        for error in errors {
+            Logger.shared.log(error)
+        }
     }
     
     /// Log an error message and optionally display an alert message.

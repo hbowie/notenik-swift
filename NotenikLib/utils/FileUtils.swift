@@ -43,6 +43,21 @@ class FileUtils {
         return sub1 + "/" + sub2
     }
     
+    /// Ensure the given folder exists, creating it if necessary.
+    /// - Parameters:
+    ///   - path1: The beginning of the path.
+    ///   - path2: The rest of the path.
+    /// - Returns: The combined path, if it exists, otherwise nil. 
+    static func ensureFolder(path1: String, path2: String) -> String? {
+        let dirPath = FileUtils.joinPaths(path1: path1, path2: path2)
+        let ok = FileUtils.ensureFolder(forDir: dirPath)
+        if ok {
+            return dirPath
+        } else {
+            return nil
+        }
+    }
+    
     /// Check to see if the given folder already exists.
     /// If it does not, then try to create it.
     ///
@@ -55,8 +70,8 @@ class FileUtils {
         do {
             try FileManager.default.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
         } catch {
-            Logger.shared.log(subsystem: "com.",
-                              category: "com.powersurgepub.notenik",
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik",
+                              category: "FileUtils",
                               level: .error,
                               message: "Could not create a new directory at \(folderURL.path)")
             return false

@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 6/3/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -108,6 +108,7 @@ class Template {
         
         for note in notesList {
             util.resetGroupBreaks()
+            util.skippingData = false
             for line in loopLines {
                 line.generateOutput(note: note)
             }

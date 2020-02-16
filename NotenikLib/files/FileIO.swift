@@ -304,6 +304,12 @@ class FileIO: NotenikIO, RowConsumer {
             if !infoFound {
                 _ = saveInfoFile()
             }
+            collection!.mirror = NoteTransformer(io: self)
+            if collection!.mirror == nil {
+                print("No Mirroring")
+            } else {
+                print("Mirroring Engaged")
+            }
             return collection
         }
     }

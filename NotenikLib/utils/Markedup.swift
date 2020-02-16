@@ -46,7 +46,32 @@ class Markedup: CustomStringConvertible {
         code = ""
     }
     
-    func startDoc(withTitle title: String?, withCSS css: String?) {
+    func templateNextRec() {
+        writeLine("<?nextrec?>")
+    }
+    
+    func templateLoop() {
+        writeLine("<?loop?>")
+    }
+    
+    func templateOutput(filename: String) {
+        writeLine("<?output \"\(filename)\" ?>")
+    }
+    
+    func templateIfField(fieldname: String) {
+        writeLine("<?if \"\(fieldname)\" ?>")
+    }
+    
+    func templateEndIf() {
+        writeLine("<?endif?>")
+    }
+    
+    /// Start the document with appropriate markup.
+    /// - Parameters:
+    ///   - title: The page title, if one is available.
+    ///   - css: The CSS to be used, or the filename containing the CSS.
+    ///   - linkToFile: If true, then interpet the CSS string as a file name, rather than the actual CSS. 
+    func startDoc(withTitle title: String?, withCSS css: String?, linkToFile: Bool = false) {
         currentIndent = 0
         switch format {
         case .htmlDoc:
@@ -59,9 +84,13 @@ class Markedup: CustomStringConvertible {
             }
             writeLine("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />")
             if css != nil && css!.count > 0 {
-                writeLine("<style>")
-                writeLine(css!)
-                writeLine("</style>")
+                if linkToFile {
+                    writeLine("<link rel=\"stylesheet\" href=\"\(css!)\" type=\"text/css\" />")
+                } else {
+                    writeLine("<style>")
+                    writeLine(css!)
+                    writeLine("</style>")
+                }
             }
             writeLine("</head>")
             writeLine("<body>")
