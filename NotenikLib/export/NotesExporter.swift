@@ -130,6 +130,9 @@ class NotesExporter {
             jsonOpen()
         case .notenik:
             notenikOpen()
+        case .opml:
+            markup = Markedup(format: .opml)
+            markup.startDoc(withTitle: noteIO.collection!.title, withCSS: nil)
         }
     }
     
@@ -297,6 +300,8 @@ class NotesExporter {
             writeObject(splitTag: splitTag, cleanTags: cleanTags, note: note)
         case .notenik:
             writeNotenik(splitTag: splitTag, cleanTags: cleanTags, note: note)
+        case .opml:
+            writeOutline(splitTag: splitTag, cleanTags: cleanTags, note: note)
         default:
             writeLine(splitTag: splitTag, cleanTags: cleanTags, note: note)
         }
@@ -414,6 +419,64 @@ class NotesExporter {
         notesExported += 1
     }
     
+    /// Write an OPML outline object for a single note.
+    ///
+    /// - Parameters:
+    ///   - splitTag: If we're splitting by tag, then the tag to write for this line; otherwise blank.
+    ///   - cleanTags: The cleaned tags for this note, with any suppressed tags removed.
+    ///   - note: The Note to be written.
+    func writeOutline(splitTag: String, cleanTags: String, note: Note) {
+        markup.startOutlineOpen(note.title.value)
+        if split {
+            addOutlineAttribute(label: LabelConstants.tag, value: splitTag)
+        }
+        for def in dict.list {
+            if def.fieldLabel.commonForm == LabelConstants.tagsCommon {
+                addOutlineAttribute(label: def.fieldLabel.properForm, value: cleanTags)
+            } else if def.fieldLabel.commonForm == LabelConstants.titleCommon {
+                // We've already handled the title
+            } else if def.fieldLabel.commonForm == LabelConstants.bodyCommon {
+                // We'll handle the body below
+            } else {
+                addOutlineAttribute(label: def.fieldLabel.properForm,
+                                    value: note.getFieldAsString(label: def.fieldLabel.commonForm))
+            }
+        }
+        
+        if webExt {
+            
+            // Now add derived fields
+            let code = Markedup(format: .htmlFragment)
+            code.append(markdown: note.getFieldAsString(label: LabelConstants.bodyCommon))
+            addOutlineAttribute(label: "Body as HTML", value: String(describing: code))
+            
+            if authorDef {
+                let author = note.author
+                addOutlineAttribute(label: "Author Last Name First", value: author.lastNameFirst)
+                addOutlineAttribute(label: "Author File Name", value: StringUtils.toCommonFileName(author.firstNameFirst))
+                addOutlineAttribute(label: "Author Wikimedia Page", value: StringUtils.wikiMediaPage(author.firstNameFirst))
+            }
+            
+            if workDef {
+                addOutlineAttribute(label: "Work HTML Line", value: workToHTML(note: note))
+                addOutlineAttribute(label: "Work Rights HTML Line", value: workRightsToHTML(note: note))
+            }
+        }
+        
+        // Finish up the object
+        markup.addOutlineAttribute(label: "_note", value: note.body.value)
+        markup.startOutlineClose()
+        tagsWritten += 1
+        notesExported += 1
+    }
+    
+    func addOutlineAttribute(label: String, value: String) {
+        let labelOut = StringUtils.wordDemarcation(label,
+                                                   caseMods: ["l", "u", "l"],
+                                                   delimiter: "")
+        markup.addOutlineAttribute(label: labelOut, value: value)
+    }
+    
     func workToHTML(note: Note) -> String {
         let html = Markedup(format: .htmlFragment)
         let workType = note.getFieldAsString(label: LabelConstants.workTypeCommon)
@@ -507,6 +570,8 @@ class NotesExporter {
             return jsonClose()
         case .notenik:
             return notenikClose()
+        case .opml:
+            return markupClose()
         }
     }
     
@@ -561,7 +626,7 @@ class NotesExporter {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik",
                               category: "NotesExporter",
                               level: .error,
-                              message: "Problem writing bookmarks file to disk!")
+                              message: "Problem writing export file to disk!")
             return false
         }
         return true

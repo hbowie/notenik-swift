@@ -19,6 +19,7 @@ class ExportViewController: NSViewController {
     let commaSep  = "Comma-Separated"
     let jsonTitle = "JSON"
     let notenik   = "Notenik"
+    let outline   = "OPML"
     let tabDelim  = "Tab-Delimited"
     let bookmarks = "Netscape Bookmark File"
     let osdir     = OpenSaveDirectory.shared
@@ -28,6 +29,7 @@ class ExportViewController: NSViewController {
     let html    = "html"
     let json    = "json"
     let md      = "md"
+    let opml    = "opml"
     let tab     = "tab"
     let txt     = "txt"
     
@@ -47,6 +49,7 @@ class ExportViewController: NSViewController {
         formatPopup.addItem(withTitle: jsonTitle)
         formatPopup.addItem(withTitle: notenik)
         formatPopup.addItem(withTitle: bookmarks)
+        formatPopup.addItem(withTitle: outline)
         formatPopup.selectItem(at: 0)
         
         fileExtCombo.removeAllItems()
@@ -57,6 +60,7 @@ class ExportViewController: NSViewController {
         fileExtCombo.addItem(withObjectValue: md)
         fileExtCombo.addItem(withObjectValue: htm)
         fileExtCombo.addItem(withObjectValue: html)
+        fileExtCombo.addItem(withObjectValue: opml)
         fileExtCombo.selectItem(at: 0)
     }
     
@@ -73,6 +77,9 @@ class ExportViewController: NSViewController {
                 splitTagsCheckBox.state = .on
             } else if selectedFormat.title == notenik {
                 fileExtCombo.selectItem(withObjectValue: txt)
+                splitTagsCheckBox.state = .off
+            } else if selectedFormat.title == outline {
+                fileExtCombo.selectItem(withObjectValue: opml)
                 splitTagsCheckBox.state = .off
             }
         }
@@ -98,6 +105,8 @@ class ExportViewController: NSViewController {
             format = .bookmarks
         case notenik:
             format = .notenik
+        case outline:
+            format = .opml
         default:
             format = .commaSeparated
         }

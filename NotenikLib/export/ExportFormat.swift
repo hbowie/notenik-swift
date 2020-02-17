@@ -14,5 +14,6 @@ enum ExportFormat {
     case commaSeparated
     case json
     case notenik
+    case opml
     case tabDelimited
 }

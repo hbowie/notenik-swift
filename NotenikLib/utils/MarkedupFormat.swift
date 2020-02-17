@@ -21,4 +21,5 @@ enum MarkedupFormat: Int {
     case htmlDoc      = 1
     case markdown     = 2
     case netscapeBookmarks = 3
+    case opml         = 4
 }

@@ -32,6 +32,12 @@ class Markedup: CustomStringConvertible {
     var spacesPerIndent = 2
     var currentIndent = 0
     
+    let xmlConverter = StringConverter()
+    
+    init() {
+        xmlConverter.addXML()
+    }
+    
     convenience init (format: MarkedupFormat) {
         self.init()
         self.format = format
@@ -103,6 +109,15 @@ class Markedup: CustomStringConvertible {
             writeLine("<H1>Bookmarks</H1>")
             writeLine("<DL><p>")
             increaseIndent()
+        case .opml:
+            writeLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+            writeLine("<opml version=\"2.0\">")
+            writeLine("<head>")
+            if title != nil {
+                writeLine("<title>\(title!)</title>")
+            }
+            writeLine("</head>")
+            writeLine("<body>")
         default:
             break
         }
@@ -118,6 +133,9 @@ class Markedup: CustomStringConvertible {
             decreaseIndent()
             writeLine("</HTML>")
             decreaseIndent()
+        case .opml:
+            writeLine("</body>")
+            writeLine("</opml>")
         case .htmlFragment, .markdown:
             break
         }
@@ -174,6 +192,8 @@ class Markedup: CustomStringConvertible {
             if code.count > 0 {
                 newLine()
             }
+        case .opml:
+            break
         }
         listInProgress = "o"
     }
@@ -201,6 +221,8 @@ class Markedup: CustomStringConvertible {
             if code.count > 0 {
                 newLine()
             }
+        case .opml:
+            break
         }
         listInProgress = "u"
     }
@@ -228,6 +250,8 @@ class Markedup: CustomStringConvertible {
             if code.count > 0 {
                 newLine()
             }
+        case .opml:
+            break
         }
         listInProgress = "d"
         defInProgress = " "
@@ -239,6 +263,8 @@ class Markedup: CustomStringConvertible {
             code.append("<dt>")
         case .markdown:
             break
+        case .opml:
+            break
         }
         defInProgress = "t"
     }
@@ -248,6 +274,8 @@ class Markedup: CustomStringConvertible {
         case .htmlDoc, .netscapeBookmarks, .htmlFragment:
             code.append("</dt>")
         case .markdown:
+            break
+        case .opml:
             break
         }
         defInProgress = " "
@@ -259,6 +287,8 @@ class Markedup: CustomStringConvertible {
             code.append("<dd>")
         case .markdown:
             break
+        case .opml:
+            break
         }
         defInProgress = "d"
     }
@@ -268,6 +298,8 @@ class Markedup: CustomStringConvertible {
         case .htmlDoc, .netscapeBookmarks, .htmlFragment:
             code.append("</dd>")
         case .markdown:
+            break
+        case .opml:
             break
         }
         defInProgress = " "
@@ -299,6 +331,8 @@ class Markedup: CustomStringConvertible {
             default:
                 break
             }
+        case .opml:
+            break
         }
     }
     
@@ -307,6 +341,8 @@ class Markedup: CustomStringConvertible {
         case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("</li>")
         case .markdown:
+            break
+        case .opml:
             break
         }
     }
@@ -328,6 +364,8 @@ class Markedup: CustomStringConvertible {
             if code.count > 0 {
                 newLine()
             }
+        case .opml:
+            break
         }
     }
     
@@ -346,6 +384,8 @@ class Markedup: CustomStringConvertible {
             if code.count > 0 {
                 newLine()
             }
+        case .opml:
+            break
         }
     }
     
@@ -357,6 +397,8 @@ class Markedup: CustomStringConvertible {
         case .markdown:
             append("  ")
             newLine()
+        case .opml:
+            break
         }
     }
     
@@ -367,6 +409,8 @@ class Markedup: CustomStringConvertible {
             newLine()
         case .markdown:
             newLine()
+        case .opml:
+            break
         }
     }
     
@@ -376,6 +420,8 @@ class Markedup: CustomStringConvertible {
             code.append("<strong>")
         case .markdown:
             code.append("**")
+        case .opml:
+            break
         }
         emphasisPending = 2
         lastCharWasEmphasis = true
@@ -387,6 +433,8 @@ class Markedup: CustomStringConvertible {
             code.append("</strong>")
         case .markdown:
             code.append("**")
+        case .opml:
+            break
         }
         emphasisPending = 0
     }
@@ -397,6 +445,8 @@ class Markedup: CustomStringConvertible {
             code.append("<em>")
         case .markdown:
             code.append("*")
+        case .opml:
+            break
         }
         emphasisPending = 1
     }
@@ -407,6 +457,8 @@ class Markedup: CustomStringConvertible {
             code.append("</em>")
         case .markdown:
             code.append("*")
+        case .opml:
+            break
         }
         emphasisPending = 0
     }
@@ -417,6 +469,8 @@ class Markedup: CustomStringConvertible {
             code.append("<i>")
         case .markdown:
             code.append("*")
+        case .opml:
+            break
         }
         emphasisPending = 1
     }
@@ -427,6 +481,8 @@ class Markedup: CustomStringConvertible {
             code.append("</i>")
         case .markdown:
             code.append("*")
+        case .opml:
+            break
         }
         emphasisPending = 0
     }
@@ -437,6 +493,8 @@ class Markedup: CustomStringConvertible {
             code.append("<cite>")
         case .markdown:
             code.append("*")
+        case .opml:
+            break
         }
     }
     
@@ -446,6 +504,8 @@ class Markedup: CustomStringConvertible {
             code.append("</cite>")
         case .markdown:
             code.append("*")
+        case .opml:
+            break
         }
     }
     
@@ -455,6 +515,8 @@ class Markedup: CustomStringConvertible {
             writeLine("<h\(level)>\(text)</h\(level)>")
         case .markdown:
             writeLine(String(repeating: "#", count: level) + " " + text)
+        case .opml:
+            break
         }
     }
     
@@ -464,6 +526,8 @@ class Markedup: CustomStringConvertible {
             write("<h\(level)>")
         case .markdown:
             write(String(repeating: "#", count: level) + " ")
+        case .opml:
+            break
         }
     }
     
@@ -473,6 +537,8 @@ class Markedup: CustomStringConvertible {
             writeLine("</h\(level)>")
         case .markdown:
             newLine()
+        case .opml:
+            break
         }
     }
     
@@ -482,6 +548,8 @@ class Markedup: CustomStringConvertible {
             code.append("<a href=\"" + path + "\">" + text + "</a>")
         case .markdown:
             code.append("[" + text + "](" + path + ")")
+        case .opml:
+            break
         }
     }
     
@@ -491,6 +559,8 @@ class Markedup: CustomStringConvertible {
             code.append("<a href=\"" + path + "\">")
         case .markdown:
             code.append("[")
+        case .opml:
+            break
         }
     }
     
@@ -499,6 +569,8 @@ class Markedup: CustomStringConvertible {
         case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             code.append("</a>")
         case .markdown:
+            break
+        case .opml:
             break
         }
     }
@@ -511,6 +583,8 @@ class Markedup: CustomStringConvertible {
             newLine()
             code.append("---")
             newLine()
+        case .opml:
+            break
         }
     }
     
@@ -529,7 +603,41 @@ class Markedup: CustomStringConvertible {
                 line = reader.readLine()
             }
             reader.close()
+        case .opml:
+            break
         }
+    }
+    
+    /// Open up the starting outline tag.
+    func startOutlineOpen(_ text: String) {
+        code.append("<outline text=\"")
+        appendXML(text)
+        code.append("\"")
+    }
+    
+    func addOutlineAttribute(label: String, value: String) {
+        code.append(" \(label)=\"")
+        appendXML(value)
+        code.append("\"")
+    }
+    
+    /// Close out the starting outline tag.
+    func startOutlineClose(finishToo: Bool = true) {
+        if finishToo {
+            code.append("/")
+        }
+        code.append(">")
+        newLine()
+    }
+    
+    /// Finish up an open OPML outline.
+    func finishOutline() {
+        writeLine("</outline>")
+    }
+    
+    /// Encode restricted characters as XML entities.
+    func appendXML(_ text: String) {
+        code.append(xmlConverter.convert(from: text))
     }
     
     /// Enclose a value in a span tag, with a class.
@@ -555,6 +663,8 @@ class Markedup: CustomStringConvertible {
             code.append("&#8220;")
         case .markdown:
             code.append("\"")
+        case .opml:
+            code.append("&quot;")
         }
     }
     
@@ -564,6 +674,8 @@ class Markedup: CustomStringConvertible {
             code.append("&#8221;")
         case .markdown:
             code.append("\"")
+        case .opml:
+            code.append("&quot;")
         }
     }
     
@@ -573,6 +685,8 @@ class Markedup: CustomStringConvertible {
             code.append("&#8216;")
         case .markdown:
             code.append("'")
+        case .opml:
+            code.append("&apos;")
         }
     }
     
@@ -582,6 +696,8 @@ class Markedup: CustomStringConvertible {
             code.append("&#8217;")
         case .markdown:
             code.append("'")
+        case .opml:
+            code.append("&apos;")
         }
     }
     
@@ -632,7 +748,7 @@ class Markedup: CustomStringConvertible {
     
     func append(markdown: String) {
         switch format {
-        case.htmlFragment, .htmlDoc, .netscapeBookmarks:
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
             let downer = Markdown()
             downer.notenikIO = notenikIO
             downer.md = markdown
@@ -642,8 +758,10 @@ class Markedup: CustomStringConvertible {
             } else {
                 code.append(markdown)
             }
-        case.markdown:
+        case .markdown:
             code.append(markdown)
+        case .opml:
+            break
         }
     }
     
@@ -769,6 +887,8 @@ class Markedup: CustomStringConvertible {
             code.append("&#8211;")
         case .markdown:
             code.append("-")
+        case .opml:
+            code.append("-")
         }
         lastCharWasWhiteSpace = false
         lastCharWasEmDash = false
@@ -780,6 +900,8 @@ class Markedup: CustomStringConvertible {
             code.append("&#8212;")
         case .markdown:
             code.append("--")
+        case .opml:
+            code.append("--")
         }
         lastCharWasWhiteSpace = false
         lastCharWasEmDash = true
@@ -790,6 +912,8 @@ class Markedup: CustomStringConvertible {
         case .htmlDoc, .netscapeBookmarks, .htmlFragment:
             code.append("&#8230;")
         case .markdown:
+            code.append("...")
+        case .opml:
             code.append("...")
         }
     }
@@ -806,6 +930,8 @@ class Markedup: CustomStringConvertible {
             }
         case .markdown:
             code.append("\"")
+        case .opml:
+            code.append("&quot;")
         }
         lastCharWasWhiteSpace = false
         lastCharWasEmDash = false
@@ -817,6 +943,8 @@ class Markedup: CustomStringConvertible {
             code.append("&apos;")
         case .markdown:
             code.append("'")
+        case .opml:
+            code.append("&apos;")
         }
     }
     
@@ -832,6 +960,8 @@ class Markedup: CustomStringConvertible {
             }
         case .markdown:
             code.append("'")
+        case .opml:
+            code.append("&apos;")
         }
         lastCharWasWhiteSpace = false
         lastCharWasEmDash = false
@@ -843,6 +973,8 @@ class Markedup: CustomStringConvertible {
             code.append("&amp;")
         case .markdown:
             code.append("&")
+        case .opml:
+            code.append("&amp;")
         }
         lastCharWasWhiteSpace = false
         lastCharWasEmDash = false
