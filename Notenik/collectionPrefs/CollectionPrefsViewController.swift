@@ -20,6 +20,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var collectionTitle:      NSTextField!
     @IBOutlet var fileExtComboBox:      NSComboBox!
     @IBOutlet var doubleBracketCkBox:   NSButton!
+    @IBOutlet var mirrorAutoIndexCkBox: NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
     
@@ -193,6 +194,7 @@ class CollectionPrefsViewController: NSViewController {
         setFieldsForCollection()
         setOtherFieldsAllowed(collection!.otherFields)
         setDoubleBracketParsing(collection!.doubleBracketParsing)
+        setMirrorAutoIndex(collection!.mirrorAutoIndex)
     }
     
     func setFileExt(_ ext: String?) {
@@ -250,17 +252,25 @@ class CollectionPrefsViewController: NSViewController {
     
     func setOtherFieldsAllowed(_ allowed: Bool) {
         if allowed {
-            otherFieldsCkBox.state = NSControl.StateValue.on
+            otherFieldsCkBox.state = .on
         } else {
-            otherFieldsCkBox.state = NSControl.StateValue.off
+            otherFieldsCkBox.state = .off
         }
     }
     
     func setDoubleBracketParsing(_ on: Bool) {
         if on {
-            doubleBracketCkBox.state = NSControl.StateValue.on
+            doubleBracketCkBox.state = .on
         } else {
-            doubleBracketCkBox.state = NSControl.StateValue.off
+            doubleBracketCkBox.state = .off
+        }
+    }
+    
+    func setMirrorAutoIndex(_ on: Bool) {
+        if on {
+            mirrorAutoIndexCkBox.state = .on
+        } else {
+            mirrorAutoIndexCkBox.state = .off
         }
     }
     
@@ -273,7 +283,8 @@ class CollectionPrefsViewController: NSViewController {
         collection!.title = collectionTitle.stringValue
         collection!.preferredExt = fileExtComboBox.stringValue
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
-        collection!.doubleBracketParsing = doubleBracketCkBox.state == NSControl.StateValue.on
+        collection!.doubleBracketParsing = doubleBracketCkBox.state == .on
+        collection!.mirrorAutoIndex = mirrorAutoIndexCkBox.state == .on
         let dict = collection!.dict
         dict.unlock()
         for checkBox in fieldSelectors {

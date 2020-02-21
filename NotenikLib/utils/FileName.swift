@@ -291,7 +291,7 @@ class FileName: CustomStringConvertible {
         var index = path.startIndex
         while i < path.count && looking {
             let j = i + 3
-            if j < path.count {
+            if j <= path.count {
                 let index2 = path.index(index, offsetBy: 3)
                 let nextThree = path[index..<index2]
                 if nextThree == "../" {

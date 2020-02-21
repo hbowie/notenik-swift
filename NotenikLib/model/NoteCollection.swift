@@ -33,6 +33,7 @@ class NoteCollection {
     var isRealmCollection = false
     var noteFileFormat: NoteFileFormat = .toBeDetermined
     var mirror:         NoteTransformer?
+    var mirrorAutoIndex = false
     
     /// Default initialization of a new Realm.
     init () {

@@ -31,20 +31,20 @@
             <objects>
                 <viewController id="xFs-We-J5Y" customClass="CollectionPrefsViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="cix-xX-V6t">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="325"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="384"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tabView translatesAutoresizingMaskIntoConstraints="NO" id="U4u-SS-hzi">
-                                <rect key="frame" x="13" y="86" width="454" height="225"/>
+                                <rect key="frame" x="13" y="86" width="454" height="284"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Attributes" identifier="" id="aPE-bL-Uzn">
                                         <view key="view" id="xb2-F3-S40">
-                                            <rect key="frame" x="10" y="33" width="434" height="179"/>
+                                            <rect key="frame" x="10" y="33" width="434" height="238"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nRr-0A-BNF">
-                                                    <rect key="frame" x="15" y="160" width="99" height="16"/>
+                                                    <rect key="frame" x="15" y="219" width="99" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Collection Title:" id="EmA-Z0-c3S">
                                                         <font key="font" usesAppearanceFont="YES"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -52,7 +52,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hAm-Gx-DYu">
-                                                    <rect key="frame" x="17" y="131" width="400" height="21"/>
+                                                    <rect key="frame" x="17" y="190" width="400" height="21"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Lu6-a8-Qft">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -60,7 +60,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ctF-qt-QqX">
-                                                    <rect key="frame" x="17" y="107" width="152" height="16"/>
+                                                    <rect key="frame" x="17" y="166" width="152" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Preferred File Extension:" id="kRV-BC-Hq9">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -68,7 +68,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ej5-lu-c8j">
-                                                    <rect key="frame" x="18" y="73" width="185" height="25"/>
+                                                    <rect key="frame" x="18" y="132" width="185" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="182" id="Lps-Oz-XXm"/>
                                                     </constraints>
@@ -91,8 +91,16 @@
                                                     </comboBoxCell>
                                                 </comboBox>
                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nhg-ro-8IS">
-                                                    <rect key="frame" x="15" y="41" width="294" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Double-Bracket Parsing for Inter-Note Links?" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="h8Y-uX-er5">
+                                                    <rect key="frame" x="15" y="100" width="294" height="18"/>
+                                                    <buttonCell key="cell" type="check" title="Double-Bracket Parsing for Inter-Note Links?" bezelStyle="regularSquare" imagePosition="left" inset="2" id="h8Y-uX-er5">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                </button>
+                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b5H-Ay-EQb">
+                                                    <rect key="frame" x="15" y="59" width="306" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" title="Rerun Mirror Indexing with every Note Update?" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Wmq-3e-4g9">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
@@ -206,13 +214,14 @@ Gw
                         <outlet property="collectionTitle" destination="hAm-Gx-DYu" id="14C-Cc-s1d"/>
                         <outlet property="doubleBracketCkBox" destination="Nhg-ro-8IS" id="s42-mb-5Xh"/>
                         <outlet property="fileExtComboBox" destination="ej5-lu-c8j" id="0UM-si-z3o"/>
+                        <outlet property="mirrorAutoIndexCkBox" destination="b5H-Ay-EQb" id="96u-fx-WHZ"/>
                         <outlet property="parentView" destination="UV1-lD-2xQ" id="HeQ-ax-FyJ"/>
                         <outlet property="pathControl" destination="aTM-FJ-DUt" id="KXA-4o-N0X"/>
                     </connections>
                 </viewController>
                 <customObject id="q5t-fT-rxJ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5258" y="150.5"/>
+            <point key="canvasLocation" x="5258" y="180"/>
         </scene>
     </scenes>
 </document>

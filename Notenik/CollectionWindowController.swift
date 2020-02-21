@@ -1554,6 +1554,36 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                              alert: true)
             return
         }
+        
+        mirrorAll(collection: collection)
+    }
+    
+    @IBAction func mirrorIndices(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let collection = noteIO.collection!
+        guard collection.mirror != nil else {
+            communicateError("Mirror All Indices Requested but a functioning mirror folder was not found",
+                             alert: true)
+            return
+        }
+        
+        indexAll(collection: collection)
+    }
+    
+    @IBAction func mirrorAllNotesAndIndex(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let collection = noteIO.collection!
+        guard collection.mirror != nil else {
+            communicateError("Mirror All Notes and Indices Requested but a functioning mirror folder was not found",
+                             alert: true)
+            return
+        }
+        
+        mirrorAll(collection: collection)
+        indexAll(collection: collection)
+    }
+    
+    func mirrorAll(collection: NoteCollection) {
         let mirror = collection.mirror!
         let dispatchQ = mirror.dispatchQueue
         
@@ -1566,13 +1596,18 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                 }
             }
         }
+    }
+    
+    func indexAll(collection: NoteCollection) {
+        let mirror = collection.mirror!
+        let dispatchQ = mirror.dispatchQueue
         
         dispatchQ.async { [weak self] in
             let errors = mirror.rebuildIndices()
             DispatchQueue.main.async { [weak self] in
                 self?.reportErrors(errors)
                 if errors.count == 0 {
-                    self?.logInfo(msg: "Mirroring of All Notes Completed Successfully")
+                    self?.logInfo(msg: "Mirror Indices of All Notes Rebuilt Successfully")
                 }
             }
         }
@@ -1591,10 +1626,12 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             }
         }
         
-        dispatchQ.async { [weak self] in
-            let errors = mirror.rebuildIndices()
-            DispatchQueue.main.async { [weak self] in
-                self?.reportErrors(errors)
+        if collection.mirrorAutoIndex {
+            dispatchQ.async { [weak self] in
+                let errors = mirror.rebuildIndices()
+                DispatchQueue.main.async { [weak self] in
+                    self?.reportErrors(errors)
+                }
             }
         }
     }

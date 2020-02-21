@@ -16,14 +16,16 @@ class NoteTransformer {
     
     let fileManager  = FileManager.default
     
-    static let cssFolderName = "css"
-    static let cssFileName = "styles.css"
-    static let mirrorFolderName = "mirror"
-    static let templatesFolderName = "templates"
-    static let noteMirrorWords = ["note", "mirror"]
-    static let indexMirrorWords = ["index", "mirror"]
+    static let cssFolderName        = "css"
+    static let cssFileName          = "styles.css"
+    static let mirrorFolderName     = "mirror"
+    static let templatesFolderName  = "templates"
+    static let scriptsFolderName    = "scripts"
+    static let noteMirrorWords      = ["note", "mirror"]
+    static let indexMirrorWords     = ["index", "mirror"]
+    static let scriptExtension      = ".tcz"
     static let sampleMirrorTemplate = "note_mirror.html"
-    static let indexMirrorTemplate = "index_mirror.html"
+    static let indexMirrorTemplate  = "index_mirror.html"
     static let sampleReportTemplateFileName = "sample report template"
     
     var dispatchQueue: DispatchQueue
@@ -34,9 +36,11 @@ class NoteTransformer {
     
     var mirrorContents:     DirContents
     var templatesContents:  DirContents
+    var scriptsContents:    DirContents?
     var noteMirrorFileName: FileName
     var noteMirrorURL: URL
     var noteIndexFileNames: [FileName] = []
+    var scriptFileNames:    [FileName] = []
     
     let mirrorError = LogEvent(subsystem: "com.powersurgepub.notenik",
                                category: "NoteMirror", level: .error,
@@ -46,8 +50,10 @@ class NoteTransformer {
     /// Initializes a new instance of NoteTransformer if the appropriate folders and files can be found. 
     init?(io: NotenikIO) {
         
+        /// Set up a default errors list that can be used if necessary.
         mirrorErrors.append(mirrorError)
         
+        /// Make sure we have a FileIO instance to work with, because we'll be accessing files and folders. 
         if io is FileIO {
             self.io = io as? FileIO
         } else {
@@ -56,12 +62,14 @@ class NoteTransformer {
         
         guard self.io!.collectionOpen else { return nil }
         
+        // See if we can get a list of the contents of the mirror folder.
         guard let contents1 = DirContents(path1: self.io!.collectionFullPath!,
                                           path2: NoteTransformer.mirrorFolderName) else {
             return nil
         }
         mirrorContents = contents1
         
+        // Now see if we can get a list of the contents of the mirror/templates folder.
         guard let contents2 = DirContents(path1: mirrorContents.dirPath,
                                           path2: NoteTransformer.templatesFolderName) else {
             return nil
@@ -73,12 +81,26 @@ class NoteTransformer {
         noteMirrorFileName = mirrorName!
         guard let mirrorURL = noteMirrorFileName.url else { return nil }
         noteMirrorURL = mirrorURL
-        
+    
         var (indexName, index) = templatesContents.firstContaining(words: NoteTransformer.indexMirrorWords)
         while indexName != nil {
             noteIndexFileNames.append(indexName!)
             index += 1
-            (indexName, index) = templatesContents.nextContaining(words: NoteTransformer.indexMirrorWords, start: index)
+            (indexName, index) = templatesContents.nextContaining(words: NoteTransformer.indexMirrorWords,
+                                                                  start: index)
+        }
+        
+        // See if we have any scripts. These are optional.
+        scriptsContents = DirContents(path1: mirrorContents.dirPath,
+                                          path2: NoteTransformer.scriptsFolderName)
+        if scriptsContents != nil {
+            var (scriptName, _) = scriptsContents!.firstWithExtension(NoteTransformer.scriptExtension)
+            while scriptName != nil {
+                scriptFileNames.append(scriptName!)
+                index += 1
+                (scriptName, index) = scriptsContents!.nextWithExtension(NoteTransformer.scriptExtension,
+                                                                         start: index)
+            }
         }
         
         let qlabel = "com.powersurgepub.notenik.q4: \(io.collection!.collectionFullPath)"
@@ -164,6 +186,23 @@ class NoteTransformer {
                 errors.append(error)
                 return errors
             }
+        }
+        
+        for scriptFileName in scriptFileNames {
+            
+            let scripter = ScriptEngine()
+            
+            let openCommand = ScriptCommand(workspace: scripter.workspace)
+            openCommand.module = .script
+            openCommand.action = .open
+            openCommand.modifier = "input"
+            openCommand.value = scriptFileName.fileNameStr
+            scripter.playCommand(openCommand)
+            
+            let playCommand = ScriptCommand(workspace: scripter.workspace)
+            playCommand.module = .script
+            playCommand.action = .play
+            scripter.playCommand(playCommand)
         }
         
         return errors

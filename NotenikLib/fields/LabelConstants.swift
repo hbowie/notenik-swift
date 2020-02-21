@@ -30,6 +30,8 @@ struct LabelConstants {
     static let indexCommon      = "index"
     static let link             = "Link"
     static let linkCommon       = "link"
+    static let mirrorAutoIndex  = "Mirror Auto Index"
+    static let mirrorAutoIndexCommon = "mirrorautoindex"
     static let noteFileFormat   = "Note File Format"
     static let noteFileFormatCommon = "notefileformat"
     static let otherFields      = "Other Fields Allowed"
@@ -76,4 +78,6 @@ struct LabelConstants {
     static let workTitleCommon  = "worktitle"
     static let workType         = "Work Type"
     static let workTypeCommon   = "worktype"
+    
+    static let dateType         = "date"
 }

@@ -41,6 +41,41 @@ class DirContents {
         }
     }
     
+    /// Return the first directory entry ending with the indicated file extension. 
+    func firstWithExtension(_ ext: String) -> (name: FileName?, index: Int) {
+        return nextWithExtension(ext, start: 0)
+    }
+    
+    /// Return the next directory entry ending with the passed extension.
+    /// - Parameters:
+    ///   - ext: Case will be ignored, and this parameter may or may not start with a period.
+    ///   - start: The starting position for the search.
+    /// - Returns:
+    ///   - name: An optional filename, if another match was found.
+    ///   - index: The position at which the match was found.
+    func nextWithExtension(_ ext: String, start: Int) -> (name: FileName?, index: Int) {
+        var i = start
+        var ending = ""
+        if ext.starts(with: ".") {
+            ending = ext.lowercased()
+        } else {
+            ending = ".\(ext.lowercased())"
+        }
+        while i < dirEntries.count {
+            let entry = dirEntries[i]
+            if entry.starts(with: ".") && skipDotFiles {
+                continue
+            }
+            let lowerEntry = entry.lowercased()
+            if lowerEntry.hasSuffix(ending) {
+                let completePath = FileUtils.joinPaths(path1: dirPath, path2: entry)
+                return (FileName(completePath), i)
+            }
+            i += 1
+        }
+        return (nil, -1)
+    }
+    
     /// Return the first directory entry containing all of the passed words,
     /// ignoring case (upper or lower).
     func firstContaining(words: [String]) -> (name: FileName?, index: Int) {
