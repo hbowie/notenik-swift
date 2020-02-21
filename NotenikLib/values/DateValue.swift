@@ -127,6 +127,23 @@ class DateValue: StringValue {
         }
     }
     
+    var dMyWDate: String {
+        if mm.count == 0 {
+            return yyyy
+        } else if dd.count == 0 {
+            return "   " + DateUtils.shared.getShortMonthName(for: mm) + " " + yyyy
+        } else {
+            let simple = SimpleDate(dateValue: self)
+            if simple.goodDate {
+                let monthName = DateUtils.shared.getShortMonthName(for: mm)
+                let dayOfWeekName = DateUtils.dayOfWeekNames[simple.dayOfWeek]
+                return "\(dd) \(monthName) \(yyyy) - \(dayOfWeekName)"
+            } else {
+                return dd + " " + DateUtils.shared.getShortMonthName(for: mm) + " " + yyyy
+            }
+        }
+    }
+    
     /**
      Set the date's value to a new string, parsing the input and attempting to
      identify the year, month and date

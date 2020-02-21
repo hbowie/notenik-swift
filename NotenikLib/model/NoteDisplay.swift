@@ -110,6 +110,16 @@ class NoteDisplay: NSObject {
             code.append(": ")
             code.finishParagraph()
             code.append(markdown: field.value.value)
+        } else if field.def.fieldType.typeString == LabelConstants.dateType {
+            code.startParagraph()
+            code.finishParagraph()
+            code.append(field.def.fieldLabel.properForm)
+            code.append(": ")
+            if let dateValue = field.value as? DateValue {
+                code.append(dateValue.dMyWDate)
+            } else {
+                code.append(field.value.value)
+            }
         } else {
             code.startParagraph()
             code.append(field.def.fieldLabel.properForm)
