@@ -14,7 +14,7 @@ import Foundation
 /// A single Note. 
 class Note: Comparable, NSCopying {
     
-    var collection:     NoteCollection
+    unowned var collection: NoteCollection
     
     var fields = [:] as [String: NoteField]
     var attachments: [AttachmentName] = []
@@ -362,6 +362,16 @@ class Note: Comparable, NSCopying {
         let val = getFieldAsValue(label: LabelConstants.status)
         guard let status = val as? StatusValue else { return false }
         return status.isDone(config: collection.statusConfig)
+    }
+    
+    var doneXorT: String {
+        var val = " "
+        if status.isDone(config: collection.statusConfig) {
+            val = "X"
+        } else if date.isToday {
+            return "T"
+        }
+        return val
     }
     
     /// Return the Note's Status Value

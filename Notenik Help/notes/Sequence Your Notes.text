@@ -1,16 +1,18 @@
 Title:  Sequence Your Notes
 
+Tags:   fields, revision, seq, sort, version
+
 Timestamp: 20191210005649
 
-Seq:    19
+Seq:    22
 
-Tags:   fields, revision, seq, sort, version
+Level:  3
 
 Date Added: 2017-05-02 17:43:10
 
 Body: 
 
-Add a Seq Field to a Collection (using a template file) in order to specify a sequence number, revision letter, version number or priority to be associated with each Note.
+Add a Seq Field to a Collection in order to specify a sequence number, revision letter, version number or priority to be associated with each Note.
 
 A Seq field may contain letters, digits and one or more periods (aka decimal points) or hyphens or a dollar sign ('$'). 
 
@@ -22,5 +24,4 @@ If you want to insert a new note with a Seq Value already assigned to another No
 
 To add a new Note with the next available Seq value, first select the last note in the list (the one with the highest seq field) and then add a New Note in the normal manner. 
 
-Note that field names beginning with "Seq" will be treated as Seq fields for the purpose of sorting when using the Scripting Engine. This will cause numeric fields, for example, to sort into their proper numeric sequence, instead of treating them as alphanumeric fields. 
-
+Note that field names beginning with "Seq" will be treated as Seq fields for the purpose of sorting when using the Scripting Engine. This will cause numeric fields, for example, to sort into their proper numeric sequence, instead of treating them as alphanumeric fields.

@@ -1,10 +1,12 @@
 Title:  Import and Export Your Notes
 
+Tags:   comma-separated, export, import, tab-delimited
+
 Timestamp: 20191127194553
 
-Seq:    34
+Seq:    40
 
-Tags:   comma-separated, export, import, tab-delimited
+Level:  3
 
 Date Added: 2017-10-27 12:55:15
 
@@ -29,6 +31,10 @@ Following are the supported formats.
 
 	Each Note will be represented as one JSON object. 
 
+* Export in OPML Format
+
+	Each Note will be represented as an outline object. 
+
 When exporting the Notes in a Collection, you will be presented with a few options for the export. 
 
 * Output Format: Described above. 
@@ -45,5 +51,4 @@ When exporting the Notes in a Collection, you will be presented with a few optio
 
 * Split Tags? Select 'Yes' if you wish one row to be written for each Tag on each Note. This will result in a special export in which each Note may be written multiple times, once for each Tag in the Note's Tags field. Notes without any Tags will be written only once, with a blank Tag field. In other cases, the Tag field will contain a single Tag, even if the Tags field contains multiple Tags. 
 
-* Add Web Extensions? Select 'Yes' to add a number of fields that can be useful for generating Web pages. 
-
+* Add Web Extensions? Select 'Yes' to add a number of fields that can be useful for generating Web pages.

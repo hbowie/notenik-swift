@@ -1,10 +1,12 @@
 Title:  Track Your Tasks
 
+Tags:   GTD, date, recurs, sort, status, tasks, template
+
 Timestamp: 20191210005700
 
-Seq:    23
+Seq:    26
 
-Tags:   GTD, date, recurs, sort, status, tasks, template
+Level:  3
 
 Date Added: 2017-05-03 01:00:59 +0000
 
@@ -18,5 +20,4 @@ If you use the Close Note option under the Note menu, then you can cause the Due
 
 The Sort menu contains two options specific to task tracking. The first option sorts all the Notes in a list by Date and then Seq, while the second option sorts all tasks by Seq and then Date. In both cases, completed tasks sort to the bottom of the list. 
 
-And don't forget the Purge Option under the File menu, which will allow you to purge Cancelled and Completed Notes from a Collection. 
-
+And don't forget the Purge Option under the File menu, which will allow you to purge Cancelled and Completed Notes from a Collection.

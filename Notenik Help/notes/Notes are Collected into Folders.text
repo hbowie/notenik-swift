@@ -1,10 +1,12 @@
 Title:  Notes are Collected into Folders
 
+Tags:   collection, folders, title
+
 Timestamp: 20190917180304
 
-Seq:    8
+Seq:    12
 
-Tags:   collection, folders, title
+Level:  3
 
 Date Added: 2017-10-09 12:00:42
 
@@ -21,6 +23,3 @@ You may use a command under the File menu to designate the current Collection as
 The Save As command under the File menu allows you to save an entire Collection in a new location, with the option to either keep the current location (effectively making a copy) or to delete it (effectively moving the Collection to a new location). 
 
 Note that Notenik does not make any assumptions about how you wish to name your Notenik folders. When creating a new Collection, or using Save As to save your current Collection to a new location, Notenik expects you to create and appropriately name a new folder that will contain your Collection. In other words, you should not simply select an existing folder with the expectation that Notenik will then create a subfolder to store your Collection.
-
-You might want to use the New command on the File menu to create your first Collection now, if you don't already have one created. 
-

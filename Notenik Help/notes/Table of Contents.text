@@ -1,51 +1,61 @@
 Title:  Table of Contents
 
-Seq:    2
+Seq:    1
+
+Level:  2
 
 Tags:   ToC
 
 Body:
 
-1. [[Motivations]]
-2. [[The Notenik Application]]
-3. [[Help Using Notenik]]
-4. [[Each Note has a Title and a Body]]
-5. [[Each Note is its own Text File]]
-6. [[Notes are Collected into Folders]]
-7. [[Add, Delete and Update Your Notes]]
-8. [[View Your Notes as a List]]
-9. [[Sync Your Notes]]
-10. [[Format the Body of a Note using Markdown]]
-11. [[Add Other Fields to Your Notes]]
-12. [[Supported Variations in Text File Formats]]
-13. [[Organize Your Notes with Tags]]
-14. [[Add a Link Field to Make a Bookmark]]
-15. [[Override Default Fields with a Template file]]
-16. [[A Note File Template]]
-17. [[Sequence Your Notes]]
-18. [[Track the Status of Your Notes]]
-19. [[Date Your Notes]]
-20. [[Specify Date Recurs Rules]]
-21. [[Track Your Tasks]]
-22. [[Add Code Snippets to Your Notes]]
-23. [[Track Authors and Artists]]
-24. [[Timestamp Your Notes]]
-25. [[Add Links Between Notes]]
-26. [[Search for One or More Notes Containing Specified Text]]
-27. [[Use Other Special Fields]]
-28. [[Attach Files to Your Notes]]
-29. [[Use Report Templates]]
-30. [[Record and Play Scripts]]
-31. [[Copy, Cut, Paste and Share your Notes]]
-32. [[Import and Export Your Notes]]
-33. [[Export to Notenik vs. Save As]]
-34. [[Favorites to HTML]]
-35. [[Open Parent Realm]]
-36. [[Disk Access Permissions]]
-37. [[Website Building]]
-38. [[View the Log]]
-39. [[Keyboard Shortcuts]]
-40. [[Files and Folders]]
-41. [[Rights]]
-42. [[Version History]]
-43. [[Support]]
+1. [[Table of Contents]]  <br />
+2. [[Overview]]  <br />
+3. [[Getting Started]]  <br />
+3.1 [[Help Using Notenik]]  <br />
+3.2 [[Create a New Collection]]  <br />
+3.3 [[Add, Delete and Update Your Notes]]  <br />
+3.4 [[View Your Notes as a List]]  <br />
+3.5 [[Search for One or More Notes Containing Specified Text]]  <br />
+3.6 [[View the Log]]  <br />
+4. [[Files and Folders]]  <br />
+4.1 [[Each Note is its own Text File]]  <br />
+4.2 [[Notes are Collected into Folders]]  <br />
+4.3 [[Other Files and Subfolders]]  <br />
+4.4 [[Open Parent Realm]]  <br />
+4.5 [[Disk Access Permissions]]  <br />
+4.6 [[Supported Variations in Text File Formats]]  <br />
+4.7 [[Sync Your Notes]]  <br />
+5. [[Fields]]  <br />
+5.1 [[Each Note has a Title and a Body]]  <br />
+5.2 [[Organize Your Notes with Tags]]  <br />
+5.3 [[Add a Link Field to Make a Bookmark]]  <br />
+5.4 [[Sequence Your Notes]]  <br />
+5.5 [[Track the Status of Your Notes]]  <br />
+5.6 [[Date Your Notes]]  <br />
+5.7 [[Specify Date Recurs Rules]]  <br />
+5.8 [[Track Your Tasks]]  <br />
+5.9 [[Add Code Snippets to Your Notes]]  <br />
+5.10 [[Track Authors and Artists]]  <br />
+5.11 [[Timestamp Your Notes]]  <br />
+5.12 [[Use Other Special Fields]]  <br />
+5.13 [[Add Other Fields to Your Notes]]  <br />
+5.14 [[Override Default Fields with a Template file]]  <br />
+5.15 [[A Note File Template]]  <br />
+6. [[Format Your Notes]]  <br />
+6.1 [[Format the Body of a Note using Markdown]]  <br />
+6.2 [[Add Links Between Notes]]  <br />
+7. [[Attach Files to Your Notes]]  <br />
+8. [[Getting Data Into and Out Of Notenik]]  <br />
+8.1 [[Copy, Cut, Paste and Share your Notes]]  <br />
+8.2 [[Import and Export Your Notes]]  <br />
+8.3 [[Export to Notenik vs. Save As]]  <br />
+8.4 [[Favorites to HTML]]  <br />
+8.5 [[Use Report Templates]]  <br />
+8.6 [[Record and Play Scripts]]  <br />
+8.7 [[Mirror Your Notes]]  <br />
+8.8 [[Website Building]]  <br />
+9. [[Reference]]  <br />
+9.1 [[Keyboard Shortcuts]]  <br />
+9.2 [[Version History]]  <br />
+9.3 [[Rights]]  <br />
+9.4 [[Support]]  <br />

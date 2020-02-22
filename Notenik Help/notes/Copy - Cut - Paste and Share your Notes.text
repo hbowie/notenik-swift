@@ -1,10 +1,12 @@
 Title:  Copy, Cut, Paste and Share your Notes
 
+Tags:   copy, cut, paste, share
+
 Timestamp: 20191211202744
 
-Seq:    33
+Seq:    39
 
-Tags:   copy, cut, paste, share
+Level:  3
 
 Date Added: 2019-11-27 19:58:44 +0000
 
@@ -26,5 +28,4 @@ There are several different actions you can perform with individual notes.
 
 Be aware that the user should be on the Display Tab, and not the Edit tab, in order to perform cut/copy/paste functions since, when on the Edit tab, cut/copy/paste will typically apply to the text within a field, and not to the entire note. 
 
-Also be aware that Note Attachments will not be copied or pasted. 
-
+Also be aware that Note Attachments will not be copied or pasted.

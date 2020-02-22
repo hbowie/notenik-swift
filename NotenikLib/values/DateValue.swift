@@ -87,6 +87,10 @@ class DateValue: StringValue {
         return Int(dd)
     }
     
+    var isToday: Bool {
+        return DateUtils.shared.ymdToday == self.ymdDate
+    }
+    
     /// See if two of these objects have equal keys
     static func == (lhs: DateValue, rhs: DateValue) -> Bool {
         return lhs.ymdDate == rhs.ymdDate

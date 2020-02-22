@@ -1,0 +1,23 @@
+Title:  Overview
+
+Timestamp: 20200215001940
+
+Seq:    2
+
+Level:  2
+
+Date Added: 2020-02-15 00:19:40 +0000
+
+Body: 
+
+Notenik, as you might imagine, is an application you can use to record and manage your notes. It's free and [open-source](https://github.com/hbowie/notenik-swift), and is available from the [Mac App Store](https://apps.apple.com/us/app/notenik/id1465997984?mt=12). 
+
+A Note can contain whatever bits of textual information might interest you, and you can store your Notes in as many separate Collections as you would like. 
+
+Each Note is stored in its own text file, and each Collection consists of a folder full of Notes. Collections can be stored wherever you would like. Collections can be synced to the cloud, and/or to other devices, using services such as Dropbox and iCloud. You can use any text editor, on any platform, to view and edit your Notes. Notenik formats each text file in a simple, straightforward way that is easily read by humans. 
+
+Each Note always has a Title and a Body, but other fields are often added. A Tags field is generally present, and a Link field is also common. Alongside of a simple list of the Notes in a Collection, Notenik always displays an additional outline view, showing the same Notes organized by their Tags. 
+
+Notenik offers multiple ways to get Note data out of Notenik and into various alternate formats. These transformation functions include a special templating language, and a special scripting language. 
+
+Note that this documentation describes the latest version of the Notenik application, written in Swift, and not the earlier version, written in Java.

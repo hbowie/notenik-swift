@@ -1,0 +1,49 @@
+Title:  Mirror Your Notes
+
+Tags:   mirror
+
+Timestamp: 20200218221054
+
+Seq:    45
+
+Level:  3
+
+Date Added: 2020-02-18 22:10:54 +0000
+
+Body: 
+
+Notenik has the ability to automatically mirror all the Notes within a Collection to an alternate format (usually HTML), typically stored in the same folder. 
+
+Here's the way this works. 
+
+1. Although it's not essential, it may help if you start by using the Generate Sample Mirror Folder command under the Transform menu. This command will then create a 'mirror' folder within your frontmost Collection. This folder will then contain useful subfolders and templates that you can use as a starting point. 
+
+2. To make further modifications, you will need to use your trusty text editor to modify the supplied templates, and/or create new ones. 
+
+3. However it's created, your Collection will need to contain a subfolder named 'mirror' in order to enable mirroring for that Collection. 
+
+4. The 'mirror' folder should then contain another folder named 'templates'. 
+
+5. At a minimum, to enable mirroring, the 'mirror/templates' folder should contain one file with both 'note' and 'mirror' as part of the filename. The contents of this file should conform to the Notenik [Merge Template File Spec](https://notenik.net/template-spec.html). 
+
+6. If Notenik finds the subfolders and file identified above within a Collection being opened, then mirroring will be automatically enabled for that Collection. 
+
+7. Whenever you then modify or add a Note within that Collection, mirroring of the Note will happen automatically, in the background, creating whatever alternate format you have specified with your note mirror template file.
+
+8. In addition to mirroring individual Notes, you can create/refresh index pages for your Collection in two different ways. 
+
+	* A simple straightforward index can be built by supplying a second template file, containing the words 'index' and 'mirror' as part of the filename. 
+
+	* More complex indexing can be done by creating one or more [Merge Script files](https://notenik.net/script-spec.html) and placing them within a 'mirror/scripts' folder. 
+
+	Whichever approach you choose, indexing will by default not be done automatically, but only when you explicitly request it from one of the relevant options under the Transform menu. This option can be overridden in the Collection Preferences window for a given Collection, allowing indexing to happen automatically whenever a Note is added or updated. 
+
+9. In all cases, mirroring will be performed in the background, in parallel with other Notenik actions, which has a few implications:
+
+	* You won't have to wait for mirroring to be completed before you move on to other tasks within Notenik. 
+
+	* The results of mirroring may not be apparent immediately, but only after a few seconds have passed. 
+
+	* You won't receive any notification when mirroring has completed, so as not to interrupt any other work you may be doing. 
+
+	* If mirroring does not produce the expected results, you may need to consult the log window to see what might have gone wrong.

@@ -4,7 +4,9 @@ Tags:   export, save
 
 Timestamp: 20200110223242
 
-Seq:    35
+Seq:    41
+
+Level:  3
 
 Date Added: 2020-01-10 22:32:42 +0000
 
@@ -28,5 +30,4 @@ With 'Export to Notenik':
 * Not all Notes may be copied! If there are any Notes with duplicate Titles, then only one will make the move. Check the Log window carefully to see if this problem stranded any of your Notes in the old Collection. 
 * Attachments will be ignored. 
 
-In summary, these are two different tools, and you should be careful to use whichever one is the best fit for your particular situation. 
-
+In summary, these are two different tools, and you should be careful to use whichever one is the best fit for your particular situation.

@@ -1,10 +1,12 @@
 Title:  Use Other Special Fields
 
+Tags:   author, date, fields, rating, teaser, type
+
 Timestamp: 20191211202744
 
-Seq:    29
+Seq:    30
 
-Tags:   author, date, fields, rating, teaser, type
+Level:  3
 
 Date Added: 2017-10-27 12:55:15
 
@@ -19,4 +21,3 @@ You can use whatever Field Labels you want within a Collection, but there are a 
 * Type -- The type of note. Any values may be used to distinguish between different types of notes within a collection.
 
 * Teaser -- An excerpt from the note used as a teaser in a list of notes. The teaser may be formatted using Markdown.
-

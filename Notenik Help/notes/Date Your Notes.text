@@ -1,10 +1,12 @@
 Title:  Date Your Notes
 
+Tags:   calendar, date, recurs, today
+
 Timestamp: 20191210005656
 
-Seq:    21
+Seq:    24
 
-Tags:   calendar, date, recurs, today
+Level:  3
 
 Date Added: 2017-05-03 00:46:21 +0000
 
@@ -14,5 +16,4 @@ Add a Date field to a Collection in order to track the date each note was offici
 
 Note that the Date field has several helpful editing tools. You can enter a free-form date yourself, or you can use a Calendar widget to pick dates from a Calendar. You can use the Today button to set the date to Today's date, and you can use the Recurs button to apply the Recurs rule, if one has been supplied. 
 
-If you need to export a Collection in a format suitable for sorting by Date, then you may wish to use the Standardize Dates to YMD command under the Collection menu to make sure that all dates are stored in a yyyy-mm-dd format suitable for sorting. 
-
+If you need to export a Collection in a format suitable for sorting by Date, then you may wish to use the Standardize Dates to YMD command under the Collection menu to make sure that all dates are stored in a yyyy-mm-dd format suitable for sorting.

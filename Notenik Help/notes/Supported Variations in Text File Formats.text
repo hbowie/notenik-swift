@@ -2,7 +2,9 @@ Title:  Supported Variations in Text File Formats
 
 Timestamp: 20200106202358
 
-Seq:    14
+Seq:    16
+
+Level:  3
 
 Date Added: 2020-01-06 20:23:58 +0000
 
@@ -30,5 +32,4 @@ Note that these three formats differ from the normal Notenik format in one or mo
 
 Notenik will generally be able to determine which of these variations is being used based on the contents of the first few lines of the text file. 
 
-Notenik will also attempt to respect these variations when modifying an existing Note, keeping each Note in its original format. 
-
+Notenik will also attempt to respect these variations when modifying an existing Note, keeping each Note in its original format.

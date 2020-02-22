@@ -4,7 +4,9 @@ Tags:   Finder, collection, permissions, realm, script, security
 
 Timestamp: 20191107015018
 
-Seq:    38
+Seq:    15
+
+Level:  3
 
 Date Added: 2019-07-09 15:18:19 +0000
 
@@ -12,7 +14,7 @@ Body:
 
 Notenik is a modern, well-mannered Mac application, which means that it does not presume to have free run of your hard drive, roaming wantonly wherever it will. 
 
-In other words, to use Apple's terminology, Notenik is sandboxed. 
+In other words, to use the official jargon, Notenik is [sandboxed](https://en.wikipedia.org/wiki/Sandbox_(computer_security)). 
 
 At the same time, Notenik does not take all the data you have given it and stash it away in some secret location that only Notenik can access because — well, it's your data. You can store it wherever you like. It's stored in plain sight. You can see it whenever you want. And if you want to open that data using your favorite text editor, then more power to you. Have at it. Knock yourself out. 
 
@@ -28,5 +30,4 @@ Here's how this works.
 
 (Note that you can also achieve these same results by using the macOS FInder to drag a folder and drop it onto the Notenik app icon.)
 
-In general, the rules above will be enough to cover most situations. If they prove too restrictive, though, you can always grant Notenik full disk access in the Security & Privacy pane of System Preferences. 
-
+In general, the rules above will be enough to cover most situations. If they prove too restrictive, though, you can always grant Notenik full disk access in the Security & Privacy pane of System Preferences.

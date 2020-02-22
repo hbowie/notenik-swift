@@ -1,0 +1,26 @@
+Title:  Create a New Collection
+
+Timestamp: 20200217235238
+
+Seq:    5
+
+Level:  3
+
+Date Added: 2020-02-17 23:52:38 +0000
+
+Body: 
+
+You can choose to store your Notenik Collections anywhere you would like; storing them within Dropbox or iCloud Drive will allow them to be synced to the cloud and to other devices. If you'd like, you can create a folder named Notenik, and then store multiple Collections as subfolders, but that's not required. 
+
+To create a new Collection, select New from the File menu. This action will open up a standard Mac window for selecting a folder. Use the standard New Folder button in the lower left corner of this window to create an empty folder for your new Collection, then select that newly created folder (all within the same window) and hit the Open button. 
+
+The next thing you will see is a window allowing you to specify certain attributes for your new Collection. 
+
+The Collections Title will be formed from the folder path containing this Collection. Feel free to tweak this if you'd like. 
+
+Each Note file is an ordinary text file, and can be opened using any text editor, in addition to being editable within Notenik. Depending on what application you might wish to be the default text editor for your notes, you may wish to pick some special file extension to be used. If you don't care about this, or this doesn't make any sense to you, then feel free to just ignore this whole paragraph and leave the Preferred File Extension set to txt. 
+
+Next select the fields you would like to be made part of each Note. Every Note must have a Title and a Body, and the Tags and Link fields are commonly used, but feel free to use the checkboxes to select whatever other fields might be useful to you. 
+
+When you're done with this screen, click OK to continue, and you'll see your first Note!
+

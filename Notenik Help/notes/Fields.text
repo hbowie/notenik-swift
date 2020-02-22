@@ -1,0 +1,17 @@
+Title:  Fields
+
+Timestamp: 20200218004009
+
+Seq:    18
+
+Level:  2
+
+Date Added: 2020-02-18 00:40:09 +0000
+
+Body: 
+
+In most note-taking systems, a Note is just a chunk of text that may have a title (often the file name) and might contain some embedded tags. 
+
+Notenik is different. Each Note is a set of multiple fields, and different Collections may have different sets of fields to serve different purposes. 
+
+Let's further explore the way fields are used within Notenik.

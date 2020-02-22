@@ -78,7 +78,7 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
             } else if tableColumn?.title == "Seq" {
                 cellView.textField?.stringValue = note.seq.value
             } else if tableColumn?.title == "X" {
-                cellView.textField?.stringValue = note.status.doneX(config: note.collection.statusConfig)
+                cellView.textField?.stringValue = note.doneXorT
             } else if tableColumn?.title == "Date" {
                 cellView.textField?.stringValue = note.date.dMyDate
             } else if tableColumn?.title == "Author" {

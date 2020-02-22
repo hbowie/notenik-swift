@@ -1,10 +1,12 @@
 Title:  Track the Status of Your Notes
 
+Tags:   completed, fields, purge, status, template
+
 Timestamp: 20191210005651
 
-Seq:    20
+Seq:    23
 
-Tags:   completed, fields, purge, status, template
+Level:  3
 
 Date Added: 2017-04-12 02:49:11 +0000
 
@@ -29,5 +31,6 @@ The labels may be modified by placing a series of integer + label pairs in the V
 
 	Status: 1 - Idea; 4 - In Work; 9 - Published;
 
-Look under the File menu for an option to Purge Notes that have been Canceled or Completed. You'll be given the option of discarding the purged Notes, or of copying them to another location.
+See [[Override Default Fields with a Template file]] for more information on the Notes template file to be modified. 
 
+Look under the File menu for an option to Purge Notes that have been Canceled or Completed. You'll be given the option of discarding the purged Notes, or of copying them to another location.

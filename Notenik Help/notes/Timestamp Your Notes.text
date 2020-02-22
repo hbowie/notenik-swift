@@ -1,10 +1,10 @@
 Title:  Timestamp Your Notes
 
+Tags:   timestamp, zettelkasten
+
 Timestamp: 20191211210501
 
-Seq:    26
-
-Tags:   timestamp, zettelkasten
+Seq:    29
 
 Date Added: 2019-12-10 00:58:04 +0000
 
@@ -28,4 +28,3 @@ In general, such a field can be used as a unique identifier for each Note in a C
 If you are adding a Timestamp field to an existing Collection, then you should first modify the Collection Preferences to check the box for the Timestamp field, and then execute the Normalize Storage command beneath the Collection menu to set the Timestamp values for the existing Notes. 
 
 Timestamps such as these are often used when creating a *[zettelkasten](https://zettelkasten.de)*.
-

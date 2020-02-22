@@ -1,10 +1,12 @@
 Title:  View Your Notes as a List
 
+Tags:   collection, list, notes, title
+
 Timestamp: 20190917180311
 
-Seq:    10
+Seq:    7
 
-Tags:   collection, list, notes, title
+Level:  3
 
 Date Added: 2017-09-28 16:08:47
 
@@ -17,5 +19,4 @@ You can navigate through this list using some of the buttons on the Toolbar:
 - '<' Takes you to the prior note.
 - '>' Takes you to the next note. 
 
-Some of the same navigational commands are available under the Note menu, with handy keyboard shortcuts noted on the right. There you will also find a command to scroll the list so as to bring the currently selected Note into view at the top of the displayed Notes. 
-
+Some of the same navigational commands are available under the Note menu, with handy keyboard shortcuts noted on the right. There you will also find a command to scroll the list so as to bring the currently selected Note into view at the top of the displayed Notes.

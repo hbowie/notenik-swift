@@ -4,7 +4,9 @@ Tags:   YAML, colon, fields, keys, labels, multimarkdown, values
 
 Timestamp: 20191210005553
 
-Seq:    13
+Seq:    31
+
+Level:  3
 
 Date Added: 2017-04-10 22:18:17 +0000
 
@@ -26,5 +28,4 @@ The Body Field, if present, will always be the last Field in a Note, since all f
 
 Each Field Label may be considered to have a *proper form* (including capitalization, spaces and punctuation), and a *common form* (the proper form without capitalization, whitespace or punctuation). The common form is considered to be the key identifier for the Field, so that any variations of the Label that include the same letters and digits in the same sequence will be considered equivalent.
 
-The Notenik approach to identifying fields within a Note is very similar to the [Multimarkdown metadata syntax](http://fletcher.github.io/MultiMarkdown-4/metadata.html), and also similar to [YAML](https://en.wikipedia.org/wiki/YAML). 
-
+The Notenik approach to identifying fields within a Note is very similar to the [Multimarkdown metadata syntax](http://fletcher.github.io/MultiMarkdown-4/metadata.html), and also similar to [YAML](https://en.wikipedia.org/wiki/YAML).

@@ -1,10 +1,12 @@
 Title:  A Note File Template
 
+Tags:   fields, revision, seq, sort, version
+
 Timestamp: 20190920225214
 
-Seq:    18
+Seq:    33
 
-Tags:   fields, revision, seq, sort, version
+Level:  3
 
 Date Added: 2017-04-12 20:17:41 +0000
 
@@ -43,4 +45,3 @@ Following is a sample Note file, showing all of the Fields that Notenik treats a
     Body:
 
     The substance of the note
-

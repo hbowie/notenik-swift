@@ -1,0 +1,29 @@
+Title:  Other Files and Subfolders
+
+Tags:   files, folders, info, nnk, readme, script, template
+
+Timestamp: 20190830194007
+
+Seq:    13
+
+Level:  3
+
+Date Added: 2018-12-21 10:47:08
+
+Body: 
+
+Within each Collection folder you will find one file for each Note in the Collection, with the file name based closely on the Note's title. 
+
+In addition to the Note files, the following special files and folders may be found within a Collection folder. 
+
+* Each Collection folder will contain a special file named '- INFO.nnk'. This is a plain text file, in Notenik format, containing some handy metadata about the Collection, such as the last sort sequence set for it. If you sync a Collection to other devices using a service such as iCloud or Dropbox, then this metadata will be synced as well. 
+
+* Each Collection folder will also contain a special file named '- README.txt'. This file simply identifies the folder as a Notenik Collection. 
+
+* Each Collection folder will normally also contain a 'template.txt' or 'template.md' file identifying the fields used within the Collection. 
+
+* A 'files' folder will contain any Attachments for the Collection. 
+
+* a 'mirror' folder will contain templates, scripts and css used to mirror the collection to an alternate format (such as HTML). 
+
+* A 'reports' sub-folder may contain a number of Template files and/or Script files.

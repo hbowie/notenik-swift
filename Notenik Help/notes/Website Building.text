@@ -4,7 +4,7 @@ Tags:   website
 
 Timestamp: 20190830193706
 
-Seq:    39
+Seq:    46
 
 Date Added: 2019-08-30 19:36:49 +0000
 
@@ -14,5 +14,4 @@ Note that many of the individual Notenik functions described above can be combin
 
 What's more, whenever you add or change or delete any content, you can rerun your script file(s) to regenerate your new website, with everything updated to reflect the latest content. 
 
-As an example, the site at [Notenik.net](https://notenik.net), including this [User Guide](https://notenik.net/swift.html), was generated entirely using Notenik. 
-
+As an example, the site at [Notenik.net](https://notenik.net), including this [User Guide](https://notenik.net/swift.html), was generated entirely using Notenik.

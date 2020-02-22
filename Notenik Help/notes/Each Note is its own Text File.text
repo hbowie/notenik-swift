@@ -1,10 +1,12 @@
 Title:  Each Note is its own Text File
 
+Tags:   UTF, file, file extension, file name, markdown, md, reload, text edit, text editor, txt
+
 Timestamp: 20190917180302
 
-Seq:    7
+Seq:    11
 
-Tags:   UTF, file, file extension, file name, markdown, md, reload, text edit, text editor, txt
+Level:  3
 
 Date Added: 2017-04-08 22:43:33 +0000
 
@@ -28,5 +30,4 @@ Any of the following file extensions may be used:
 
 The two preferred extensions are '.txt' (short for text) and '.md' (short for markdown -- more on this later). 
 
-Use the Text Edit Note command under the Note menu to open the currently displayed Note in your default text editor. When you're done with your external edits, and have saved the file, use the Reload Note command to see the results of your external edits within Notenik. 
-
+Use the Text Edit Note command under the Note menu to open the currently displayed Note in your default text editor. When you're done with your external edits, and have saved the file, use the Reload Note command to see the results of your external edits within Notenik.

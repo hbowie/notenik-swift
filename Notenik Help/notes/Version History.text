@@ -1,10 +1,39 @@
 Title:  Version History
 
-Seq:    43
+Seq:    48
 
-Tags:   changes, history, log
+Level: 3
+
+Tags:   changes, versions, history, log
 
 Body:
+
+### Version 3.1.0 | 21 Feb 2020
+
+#### 1. Added T to mark Tasks with Today's Date
+
+In the List view, when sorting tasks, the first column contains an 'X' to mark items that have been completed. In addition, any tasks bearing today's date (and not yet completed) will now additionally show a 'T' in this same column. 
+
+
+#### 2. Added Day of Week to Date Lines in Display View
+
+When a Collection contains a date field, it will now be shown on a Note's display view with the appropriate day of week name. 
+
+
+#### 3. Restructured the User Guide
+
+Restructured the User Guide to make it easier to navigate. 
+
+
+#### 4. Added OPML Export
+
+Added an OPML export function. 
+
+
+#### 5. Added Mirroring Capability
+
+Added the ability to mirror a Collection of Notes to an alternate format. 
+
 
 ### Version 3.0.0 | 05 Feb 2020
 

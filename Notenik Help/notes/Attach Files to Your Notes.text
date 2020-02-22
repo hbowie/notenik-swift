@@ -2,7 +2,9 @@ Title:  Attach Files to Your Notes
 
 Timestamp: 20191211202744
 
-Seq:    30
+Seq:    37
+
+Level:  2
 
 Date Added: 2019-07-22 15:55:57 +0000
 
@@ -22,5 +24,4 @@ If you change the Title of a Note, then any files attached to the Note will be a
 
 If you delete a Note, then its attachments (if any) will be deleted as well. 
 
-In case you're wondering, the association between a Note and its Attachments is based solely on matching file names. In other words, if you wish to delete an attachment by using your operating system to delete the file from the files folder, then that's perfectly ok with Notenik: the next time you open that Collection, Notenik will have no "memory" of that attachment. By the same token, if you wish to use your OS to place a new attachment in the files folder, with a name matching that of a Note, then Notenik will recognize that new file as an attachment for the Note the next time you open that Collection. 
-
+In case you're wondering, the association between a Note and its Attachments is based solely on matching file names. In other words, if you wish to delete an attachment by using your operating system to delete the file from the files folder, then that's perfectly ok with Notenik: the next time you open that Collection, Notenik will have no "memory" of that attachment. By the same token, if you wish to use your OS to place a new attachment in the files folder, with a name matching that of a Note, then Notenik will recognize that new file as an attachment for the Note the next time you open that Collection.

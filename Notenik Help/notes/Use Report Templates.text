@@ -1,10 +1,10 @@
 Title:  Use Report Templates
 
+Tags:   script, template
+
 Timestamp: 20191211202744
 
-Seq:    31
-
-Tags:   script, template
+Seq:    43
 
 Date Added: 2019-07-05 16:39:30 +0000
 
@@ -27,5 +27,4 @@ Two other options appear on the Reports Action drop-down (identified with the ge
 - Generate Report Sample in HTML
 - Generate Report Sample in Markdown
 
-Selecting one of these will then cause Notenik to create a reports folder for the collection, if one does not already exist, and then to create a report template containing all of the Collection's fields in a basic layout. The user may then modify this template in order to further customize the output formatting.  Once the user reloads the Collection, those reports will then become available to run. 
-
+Selecting one of these will then cause Notenik to create a reports folder for the collection, if one does not already exist, and then to create a report template containing all of the Collection's fields in a basic layout. The user may then modify this template in order to further customize the output formatting.  Once the user reloads the Collection, those reports will then become available to run.

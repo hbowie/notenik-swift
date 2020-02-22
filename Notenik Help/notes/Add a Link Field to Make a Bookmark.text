@@ -1,10 +1,12 @@
 Title:  Add a Link Field to Make a Bookmark
 
+Tags:   bookmarks, link, url
+
 Timestamp: 20191120203619
 
-Seq:    16
+Seq:    21
 
-Tags:   bookmarks, link, url
+Level:  3
 
 Date Added: 2017-10-18 13:48:49
 
@@ -15,7 +17,6 @@ You can easily Launch a link from within Notenik by clicking on the Launch Link 
 
 Adding a Link to a Note doesn't necessarily reduce the Note to a simple Bookmark, but this is certainly one way to use a Collection of Notes. 
 
-Note that if you use a Link to point to a local folder containing another Notenik Collection, then Launching that Link will result in opening the linked Collection within Notenik.
+Note that if you use a Link to point to a local folder containing another Notenik Collection, then Launching that Link will result in opening the linked Collection within Notenik (so long as you have given Notenik permission to access that folder).
 
-You may use the Set Local Link command under the Note menu to choose a file or folder to be linked; the resulting 'file:///' style of URL will then replace any value previously stored in the Link field for the current Note. 
-
+You may use the Set Local Link command under the Note menu to choose a file or folder to be linked; the resulting 'file:///' style of URL will then replace any value previously stored in the Link field for the current Note.

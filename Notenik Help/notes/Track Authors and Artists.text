@@ -1,10 +1,10 @@
 Title:  Track Authors and Artists
 
+Tags:   artist, author
+
 Timestamp: 20191210005738
 
-Seq:    25
-
-Tags:   artist, author
+Seq:    28
 
 Date Added: 2019-09-17 18:10:36 +0000
 
@@ -14,5 +14,4 @@ You can specify an Author or an Artist field when using a Collection as some sor
 
 In either case, you can use Sort Option # 5 (under the Sort menu) to sort a Collection by Author or Artist. 
 
-When sorting by Author, the sort will be by last name first; if a Collection contains an Artist field, but no Author field, then the sort will be by Artist, and the word 'the' will be ignored when found as the first work in the Artist's name. (In other words, 'The Beatles' will be sorted under 'B', not under 'T'.) 
-
+When sorting by Author, the sort will be by last name first; if a Collection contains an Artist field, but no Author field, then the sort will be by Artist, and the word 'the' will be ignored when found as the first work in the Artist's name. (In other words, 'The Beatles' will be sorted under 'B', not under 'T'.)
