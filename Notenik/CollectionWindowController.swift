@@ -1045,11 +1045,13 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// See if this is an appropriate time to ask the user for an app store review
     func checkForReviewRequest() {
-        if appPrefs.newVersionForReview {
-            appPrefs.incrementUseCount()
-            if appPrefs.useCount > 20 {
-                appPrefs.userPromptedForReview()
-                SKStoreReviewController.requestReview()
+        if #available(OSX 10.14, *) {
+            if appPrefs.newVersionForReview {
+                appPrefs.incrementUseCount()
+                if appPrefs.useCount > 20 {
+                    appPrefs.userPromptedForReview()
+                    SKStoreReviewController.requestReview()
+                }
             }
         }
     }
