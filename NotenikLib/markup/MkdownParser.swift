@@ -13,11 +13,14 @@ import Foundation
 
 class MkdownParser {
     
-    var mkdown: String! = ""
+    var mkdown:    String! = ""
     var nextIndex: String.Index
     var nextLine = MkdownLine()
     var lineIndex = 0
+    var startLine: String.Index
     var startText: String.Index
+    var endLine:   String.Index
+    var endText:   String.Index
     
     var lines: [MkdownLine] = []
     
@@ -25,6 +28,9 @@ class MkdownParser {
     init() {
         nextIndex = mkdown.startIndex
         startText = nextIndex
+        startLine = nextIndex
+        endLine = nextIndex
+        endText = nextIndex
     }
     
     /// Initialize with a string that will be copied.
@@ -32,6 +38,9 @@ class MkdownParser {
         self.mkdown = mkdown
         nextIndex = self.mkdown.startIndex
         startText = nextIndex
+        startLine = nextIndex
+        endLine = nextIndex
+        endText = nextIndex
     }
     
     /// Try to initialize by reading input from a URL.
@@ -40,6 +49,9 @@ class MkdownParser {
             try mkdown = String(contentsOf: url)
             nextIndex = mkdown.startIndex
             startText = nextIndex
+            startLine = nextIndex
+            endLine = nextIndex
+            endText = nextIndex
         } catch {
             return nil
         }
@@ -47,75 +59,78 @@ class MkdownParser {
     
     /// Parse the Markdown source that has been provided.
     func parse() {
+        
         nextIndex = mkdown.startIndex
-        startLine()
+        beginLine()
+        
         while nextIndex < mkdown.endIndex {
              
             let char = mkdown[nextIndex]
+            let lastIndex = nextIndex
             nextIndex = mkdown.index(after: nextIndex)
+            
             if char.isNewline {
                 nextLine.endsWithNewline = true
-                endLine()
-                startLine()
+                endLine = nextIndex
+                finishLine()
+                beginLine()
                 continue
             }
 
             nextLine.line.append(char)
-
-
-            while !textFound && start < originalLine.endIndex {
-                let char = originalLine[start]
-                if !char.isWhitespace {
-                    blankLine = false
-                }
-                if char == "#" && lineIndex == hashCount {
-                    hashCount += 1
-                } else if ((char == "-" || char == "=")
-                        && (repeatingChar == " " || repeatingChar == char)
-                        && repeatCount == lineIndex) {
-                    repeatingChar = char
-                    repeatCount += 1
-                } else {
-                    textFound = true
-                }
-                lineIndex += 1
-                if !textFound {
-                    start = originalLine.index(after: start)
+            
+            if !char.isWhitespace {
+                nextLine.blankLine = false
+            }
+            
+            if char == "#" && lineIndex == nextLine.hashCount {
+                nextLine.hashCount += 1
+                continue
+            }
+            
+            if ((char == "-" || char == "=")
+                && (nextLine.repeatingChar == " " || nextLine.repeatingChar == char)
+                && nextLine.repeatCount == lineIndex) {
+                nextLine.repeatingChar = char
+                nextLine.repeatCount += 1
+                continue
+            }
+            
+            if !char.isWhitespace {
+                if !nextLine.textFound {
+                    nextLine.textFound = true
+                    startText = lastIndex
                 }
             }
             
-            // Examine the end of the line
-            var end = originalLine.endIndex
-            var endOfTextFound = false
-            if hashCount > 0 {
-                while end > start && !endOfTextFound {
-                    let next = originalLine.index(before: end)
-                    let char = originalLine[next]
-                    if char.isWhitespace || char == "#" {
-                        end = next
-                    } else {
-                        endOfTextFound = true
-                    }
-                }
+            if nextLine.hashCount > 0 && char == "#" {
+                // do not advance the end index
+            } else {
+                endText = nextIndex
             }
             
-            if !blankLine {
-                text = originalLine[start..<end]
-            }
-            
-            
+            lineIndex += 1
         } // end of mkdown input
-        endLine()
+        finishLine()
     } // end of method parse
     
-    func startLine() {
+    func beginLine() {
         nextLine = MkdownLine()
         lineIndex = 0
         startText = nextIndex
+        startLine = nextIndex
+        endLine = nextIndex
+        endText = nextIndex
     }
     
-    func endLine() {
+    func finishLine() {
         guard !nextLine.isEmpty else { return }
+        if endLine > startLine {
+            nextLine.line = String(mkdown[startLine..<endLine])
+        }
+        if endText > startText {
+            nextLine.text = String(mkdown[startText..<endText])
+        }
         lines.append(nextLine)
     }
     

@@ -54,7 +54,7 @@ class Markdown {
                 ok = false
             }
         case "ink":
-            let ink = MkdownParser()
+            let ink = MarkdownParser()
             html = ink.html(from: md)
         default:
             Logger.shared.log(subsystem: "com.powersurgepub.notenik",
