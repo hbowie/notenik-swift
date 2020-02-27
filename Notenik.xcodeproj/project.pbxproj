@@ -21,8 +21,6 @@
 		9C03629B239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C036299239AFAAB00C948DB /* MarkdownPrefsViewController.swift */; };
 		9C03629C239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C036299239AFAAB00C948DB /* MarkdownPrefsViewController.swift */; };
 		9C03629E239B0A9900C948DB /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C03629D239B0A9900C948DB /* Markdown.swift */; };
-		9C03629F239B0A9900C948DB /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C03629D239B0A9900C948DB /* Markdown.swift */; };
-		9C0362A0239B0A9900C948DB /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C03629D239B0A9900C948DB /* Markdown.swift */; };
 		9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
 		9C055D4F2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
 		9C060687228E0A9300CB8C10 /* RealmScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C060686228E0A9300CB8C10 /* RealmScanner.swift */; };
@@ -455,6 +453,9 @@
 		9CB337542347BA4A006767A4 /* TextileCharDisposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB337532347BA4A006767A4 /* TextileCharDisposition.swift */; };
 		9CB337552347BA4A006767A4 /* TextileCharDisposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB337532347BA4A006767A4 /* TextileCharDisposition.swift */; };
 		9CB337562347BA4A006767A4 /* TextileCharDisposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB337532347BA4A006767A4 /* TextileCharDisposition.swift */; };
+		9CB37ED52407189700C2AC1F /* MkdownParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB37ED42407189700C2AC1F /* MkdownParserTests.swift */; };
+		9CB37ED624071F4800C2AC1F /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C03629D239B0A9900C948DB /* Markdown.swift */; };
+		9CB37ED724071F7B00C2AC1F /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C03629D239B0A9900C948DB /* Markdown.swift */; };
 		9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CB60BBF226509B2003B5655 /* Share.storyboard */; };
 		9CB60BC1226509B2003B5655 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CB60BBF226509B2003B5655 /* Share.storyboard */; };
 		9CB60BC322650A89003B5655 /* ShareWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB60BC222650A89003B5655 /* ShareWindowController.swift */; };
@@ -863,6 +864,7 @@
 		9CAF2B2622664237009E19E2 /* Project Index */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Project Index"; sourceTree = "<group>"; };
 		9CB06CB922CCF4DD00887778 /* TagsNodeIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNodeIterator.swift; sourceTree = "<group>"; };
 		9CB337532347BA4A006767A4 /* TextileCharDisposition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileCharDisposition.swift; sourceTree = "<group>"; };
+		9CB37ED42407189700C2AC1F /* MkdownParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownParserTests.swift; sourceTree = "<group>"; };
 		9CB60BBF226509B2003B5655 /* Share.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
 		9CB60BC222650A89003B5655 /* ShareWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareWindowController.swift; sourceTree = "<group>"; };
 		9CB60BC522651074003B5655 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -1084,6 +1086,7 @@
 				9C60E7A521F6525D00C332ED /* LinkValueTests.swift */,
 				9C60E7A721F6525E00C332ED /* LongTextValueTests.swift */,
 				9CC8336D22B3F65B0006AAE0 /* MarkedupTests.swift */,
+				9CB37ED42407189700C2AC1F /* MkdownParserTests.swift */,
 				9C60E6E421F64B3C00C332ED /* NotenikTests.swift */,
 				9C60E7B521F6525F00C332ED /* RecursValueTests.swift */,
 				9C60E7AE21F6525E00C332ED /* SeqValueTests.swift */,
@@ -1978,6 +1981,7 @@
 				9C096BFE23C3B50400402A06 /* NoteFileInfo.swift in Sources */,
 				9C27DA0422FB581D008EE0A1 /* IndexPageRef.swift in Sources */,
 				9C60E77B21F651E500C332ED /* FieldDefinition.swift in Sources */,
+				9CB37ED52407189700C2AC1F /* MkdownParserTests.swift in Sources */,
 				9C60E71321F6518400C332ED /* Logger.swift in Sources */,
 				9C03629B239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
 				9C60E78121F651E500C332ED /* NoteType.swift in Sources */,
@@ -2059,6 +2063,7 @@
 				9CDF57932346A077004417FA /* TextileLine.swift in Sources */,
 				9CDF578723469AD0004417FA /* TextileOpeningClosing.swift in Sources */,
 				9CB6ECBB2365D5EC00951820 /* RatingType.swift in Sources */,
+				9CB37ED624071F4800C2AC1F /* Markdown.swift in Sources */,
 				9CE9C98322A6134A008D2B0A /* Template.swift in Sources */,
 				9CA834FC2405C61800C2531C /* MarkupElement.swift in Sources */,
 				9CAD6A5B22DFBEEB00531D90 /* ExportFormat.swift in Sources */,
@@ -2102,7 +2107,6 @@
 				9C60E74821F651E500C332ED /* ProviderType.swift in Sources */,
 				9C060688228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
 				9CB6ECCB2365DAFE00951820 /* StringType.swift in Sources */,
-				9C03629F239B0A9900C948DB /* Markdown.swift in Sources */,
 				9CB337552347BA4A006767A4 /* TextileCharDisposition.swift in Sources */,
 				9CB6ECC72365D9E100951820 /* StatusType.swift in Sources */,
 				9C60E7C221F6525F00C332ED /* SeqValueTests.swift in Sources */,
@@ -2149,6 +2153,7 @@
 				9CB6ECD02365DC3F00951820 /* TagsType.swift in Sources */,
 				9C8540B822E8F0790074E349 /* ScriptModule.swift in Sources */,
 				9C60E78821F651E500C332ED /* BigStringReader.swift in Sources */,
+				9CB37ED724071F7B00C2AC1F /* Markdown.swift in Sources */,
 				9CB6EC9B2363D5B600951820 /* AllTypes.swift in Sources */,
 				9C568DD22322B6CF005D6B0A /* AuthorView.swift in Sources */,
 				9C78888C21FB950900452D74 /* Markedup.swift in Sources */,
@@ -2291,7 +2296,6 @@
 				9C60E6F021F64B3C00C332ED /* NotenikUITests.swift in Sources */,
 				9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */,
 				9C2D40B822F8C1920074FCCE /* XLSXReader.swift in Sources */,
-				9C0362A0239B0A9900C948DB /* Markdown.swift in Sources */,
 				9C60E7A221F6520100C332ED /* FileIO.swift in Sources */,
 				9CA420F822C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */,
 				9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */,
@@ -2416,7 +2420,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2471,7 +2475,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;

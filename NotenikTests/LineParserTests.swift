@@ -28,7 +28,7 @@ class LineParserTests: XCTestCase {
         }
         let reader2 = BigStringReader(inString)
         let collection = NoteCollection()
-        let parser = NoteLineParser(collection: collection, lineReader: reader2)
+        let parser = NoteLineParser(collection: collection, reader: reader2)
         let note1 = parser.getNote(defaultTitle: "2018-09 Chicago")
         XCTAssertTrue(note1.title.value == "2018-09 Chicago")
     }

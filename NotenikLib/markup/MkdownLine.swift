@@ -18,12 +18,26 @@ class MkdownLine {
     var blankLine = true
     var repeatingChar: Character = " "
     var repeatCount = 0
-    var onlyRepeating = false
+    var onlyRepeating = true
     var textFound = false
     var text = ""
+    var indentLevels = 0
     
     var isEmpty: Bool {
         return line.count == 0 && !endsWithNewline
     }
     
+    func display() {
+        print(" ")
+        print("MkdownLine.display")
+        print("Input line: \(line)")
+        print("Indent levels: \(indentLevels)")
+        print("Blank Line? \(blankLine)")
+        print("Is Empty? \(isEmpty)")
+        print("Hash count: \(hashCount)")
+        if repeatCount > 0 {
+            print("Repeating char of \(repeatingChar), repeated \(repeatCount) times, only repeating chars? \(onlyRepeating)")
+        }
+        print("Text: '\(text)'")
+    }
 }

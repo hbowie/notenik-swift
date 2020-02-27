@@ -16,11 +16,13 @@ class MkdownParser {
     var mkdown:    String! = ""
     var nextIndex: String.Index
     var nextLine = MkdownLine()
-    var lineIndex = 0
+    var lineIndex = -1
     var startLine: String.Index
     var startText: String.Index
     var endLine:   String.Index
     var endText:   String.Index
+    var indenting = true
+    var spaceCount = 0
     
     var lines: [MkdownLine] = []
     
@@ -53,6 +55,7 @@ class MkdownParser {
             endLine = nextIndex
             endText = nextIndex
         } catch {
+            print("Error is \(error)")
             return nil
         }
     }
@@ -65,27 +68,23 @@ class MkdownParser {
         
         while nextIndex < mkdown.endIndex {
              
+            // Get the next character and adjust indices
             let char = mkdown[nextIndex]
             let lastIndex = nextIndex
             nextIndex = mkdown.index(after: nextIndex)
+            lineIndex += 1
             
+            // Deal with end of line
             if char.isNewline {
                 nextLine.endsWithNewline = true
-                endLine = nextIndex
+                endLine = lastIndex
                 finishLine()
                 beginLine()
                 continue
             }
-
-            nextLine.line.append(char)
             
             if !char.isWhitespace {
                 nextLine.blankLine = false
-            }
-            
-            if char == "#" && lineIndex == nextLine.hashCount {
-                nextLine.hashCount += 1
-                continue
             }
             
             if ((char == "-" || char == "=")
@@ -93,6 +92,30 @@ class MkdownParser {
                 && nextLine.repeatCount == lineIndex) {
                 nextLine.repeatingChar = char
                 nextLine.repeatCount += 1
+                continue
+            } else {
+                nextLine.onlyRepeating = false
+            }
+            
+            if indenting {
+                if char == "\t" {
+                    nextLine.indentLevels += 1
+                    continue
+                } else if char.isWhitespace {
+                    if spaceCount >= 3 {
+                        nextLine.indentLevels += 1
+                        spaceCount = 0
+                    } else {
+                        spaceCount += 1
+                    }
+                    continue
+                } else {
+                    indenting = false
+                }
+            }
+                        
+            if char == "#" && lineIndex == nextLine.hashCount {
+                nextLine.hashCount += 1
                 continue
             }
             
@@ -109,18 +132,19 @@ class MkdownParser {
                 endText = nextIndex
             }
             
-            lineIndex += 1
         } // end of mkdown input
         finishLine()
     } // end of method parse
     
     func beginLine() {
         nextLine = MkdownLine()
-        lineIndex = 0
+        lineIndex = -1
         startText = nextIndex
         startLine = nextIndex
         endLine = nextIndex
         endText = nextIndex
+        indenting = true
+        spaceCount = 0
     }
     
     func finishLine() {
@@ -131,6 +155,7 @@ class MkdownParser {
         if endText > startText {
             nextLine.text = String(mkdown[startText..<endText])
         }
+        nextLine.display()
         lines.append(nextLine)
     }
     
