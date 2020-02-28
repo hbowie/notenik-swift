@@ -21,8 +21,9 @@ class MkdownParser {
     var startText: String.Index
     var endLine:   String.Index
     var endText:   String.Index
-    var indenting = true
+    var phase:     LinePhase = .indenting
     var spaceCount = 0
+    var orderedListInProgress = false
     
     var lines: [MkdownLine] = []
     
@@ -77,27 +78,26 @@ class MkdownParser {
             // Deal with end of line
             if char.isNewline {
                 nextLine.endsWithNewline = true
-                endLine = lastIndex
                 finishLine()
                 beginLine()
                 continue
             }
             
-            if !char.isWhitespace {
-                nextLine.blankLine = false
-            }
+            endLine = nextIndex
             
-            if ((char == "-" || char == "=")
-                && (nextLine.repeatingChar == " " || nextLine.repeatingChar == char)
-                && nextLine.repeatCount == lineIndex) {
+            // Check for a line of all dashes or all equal signs
+            if (char == "-" || char == "=" || char == "*" || char == "_")
+                && (nextLine.repeatingChar == " " || nextLine.repeatingChar == char) {
                 nextLine.repeatingChar = char
                 nextLine.repeatCount += 1
-                continue
-            } else {
+            } else if char == " " {
                 nextLine.onlyRepeating = false
+            } else {
+                nextLine.onlyRepeatingAndSpaces = false
             }
             
-            if indenting {
+            // Count indentaton levels
+            if phase == .indenting {
                 if char == "\t" {
                     nextLine.indentLevels += 1
                     continue
@@ -110,26 +110,68 @@ class MkdownParser {
                     }
                     continue
                 } else {
-                    indenting = false
+                    phase = .leadingPunctuation
                 }
             }
-                        
-            if char == "#" && lineIndex == nextLine.hashCount {
-                nextLine.hashCount += 1
-                continue
+            
+            nextLine.blankLine = false
+            
+            // Look for leading punctuation
+            if phase == .leadingPunctuation {
+                var plusOne: Character = "X"
+                var plusTwo: Character = "X"
+                if nextIndex < mkdown.endIndex {
+                    plusOne = mkdown[nextIndex]
+                    let plusTwoIndex = mkdown.index(after: nextIndex)
+                    if plusTwoIndex < mkdown.endIndex {
+                        plusTwo = mkdown[plusTwoIndex]
+                    }
+                }
+                if char == ">" {
+                    nextLine.blockQuoteChars += 1
+                    continue
+                }  else if char == "#" {
+                    nextLine.hashCount += 1
+                    continue
+                } else if (char == "-" || char == "+" || char == "*") && plusOne == " " {
+                    nextLine.unorderedItem = true
+                    continue
+                } else if char == "1" && plusOne == "." && plusTwo == " " {
+                    nextLine.orderedItem = true
+                    continue
+                } else if char.isNumber && orderedListInProgress && plusOne == "." && plusTwo == " " {
+                    nextLine.orderedItem = true
+                    continue
+                } else if char == "." && nextLine.orderedItem {
+                    continue
+                } else if char.isWhitespace {
+                    continue
+                } else {
+                    phase = .text
+                }
             }
             
-            if !char.isWhitespace {
+            // Now look for text
+            if phase == .text {
                 if !nextLine.textFound {
-                    nextLine.textFound = true
-                    startText = lastIndex
+                     nextLine.textFound = true
+                     startText = lastIndex
                 }
-            }
-            
-            if nextLine.hashCount > 0 && char == "#" {
-                // do not advance the end index
-            } else {
-                endText = nextIndex
+                if char == " " {
+                    nextLine.trailingSpaceCount += 1
+                } else {
+                    nextLine.trailingSpaceCount = 0
+                }
+                if char == "\\" {
+                    nextLine.endsWithBackSlash = true
+                } else {
+                    nextLine.endsWithBackSlash = false
+                }
+                if char == "#" && nextLine.hashCount > 0 {
+                    // Drop trailing hash marks
+                } else {
+                    endText = nextIndex
+                }
             }
             
         } // end of mkdown input
@@ -143,20 +185,41 @@ class MkdownParser {
         startLine = nextIndex
         endLine = nextIndex
         endText = nextIndex
-        indenting = true
+        phase = .indenting
         spaceCount = 0
     }
     
     func finishLine() {
-        guard !nextLine.isEmpty else { return }
+        if nextLine.endsWithBackSlash {
+            endText = mkdown.index(before: endText)
+            nextLine.trailingSpaceCount = 2
+        }
         if endLine > startLine {
             nextLine.line = String(mkdown[startLine..<endLine])
         }
-        if endText > startText {
-            nextLine.text = String(mkdown[startText..<endText])
+        if nextLine.headingUnderlining || nextLine.horizontalRule {
+            nextLine.unorderedItem = false
+        } else {
+            if endText > startText {
+                nextLine.text = String(mkdown[startText..<endText])
+            }
         }
+        guard !nextLine.isEmpty else { return }
+        
+        if nextLine.orderedItem {
+            orderedListInProgress = true
+        } else if !nextLine.blankLine {
+            orderedListInProgress = false
+        }
+        
         nextLine.display()
         lines.append(nextLine)
+    }
+    
+    enum LinePhase {
+        case indenting
+        case leadingPunctuation
+        case text
     }
     
 }
