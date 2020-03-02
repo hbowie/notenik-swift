@@ -13,16 +13,14 @@ import Foundation
 
 class MkdownLine {
     var line = ""
+    var type: MkdownLineType = .blank
     var hashCount = 0
-    var blankLine = true
+    var headingLevel = 0
     
     var repeatingChar: Character = " "
     var repeatCount = 0
     var onlyRepeating = true
     var onlyRepeatingAndSpaces = true
-    
-    var unorderedItem = false
-    var orderedItem   = false
     
     var headingUnderlining: Bool {
         return (onlyRepeating && repeatCount >= 2 &&
@@ -47,7 +45,7 @@ class MkdownLine {
     }
     
     var endsWithLineBreak: Bool {
-        return !blankLine && trailingSpaceCount >= 2
+        return type != .blank && trailingSpaceCount >= 2
     }
     
     func display() {
@@ -57,8 +55,9 @@ class MkdownLine {
         if indentLevels > 0 {
             print("Indent levels: \(indentLevels)")
         }
-        if blankLine {
-            print("Blank Line? \(blankLine)")
+        print("Line type: \(type)")
+        if type == .heading {
+            print("Heading level: \(headingLevel)")
         }
         if isEmpty {
             print("Is Empty? \(isEmpty)")
@@ -83,12 +82,6 @@ class MkdownLine {
         }
         if horizontalRule {
             print("Horizontal Rule")
-        }
-        if unorderedItem {
-            print("Unordered List Item")
-        }
-        if orderedItem {
-            print("Ordered List Item")
         }
         print("Text: '\(text)'")
     }

@@ -15,7 +15,10 @@ class MkdownParser {
     
     var mkdown:    String! = ""
     var nextIndex: String.Index
+    
     var nextLine = MkdownLine()
+    var lastLine = MkdownLine()
+    
     var lineIndex = -1
     var startLine: String.Index
     var startText: String.Index
@@ -24,6 +27,14 @@ class MkdownParser {
     var phase:     LinePhase = .indenting
     var spaceCount = 0
     var orderedListInProgress = false
+    
+    var linkLabelPhase: LinkLabelDefPhase = .na
+    var angleBracketsUsed = false
+    var titleEndChar: Character = " "
+    
+    var refLink = RefLink()
+    
+    var linkDict: [String:RefLink] = [:]
     
     var lines: [MkdownLine] = []
     
@@ -114,7 +125,9 @@ class MkdownParser {
                 }
             }
             
-            nextLine.blankLine = false
+            if nextLine.type == .blank {
+                nextLine.type = .ordinaryText
+            }
             
             // Look for leading punctuation
             if phase == .leadingPunctuation {
@@ -134,16 +147,21 @@ class MkdownParser {
                     nextLine.hashCount += 1
                     continue
                 } else if (char == "-" || char == "+" || char == "*") && plusOne == " " {
-                    nextLine.unorderedItem = true
+                    nextLine.type = .unorderedItem
                     continue
                 } else if char == "1" && plusOne == "." && plusTwo == " " {
-                    nextLine.orderedItem = true
+                    nextLine.type = .orderedItem
                     continue
                 } else if char.isNumber && orderedListInProgress && plusOne == "." && plusTwo == " " {
-                    nextLine.orderedItem = true
+                    nextLine.type = .orderedItem
                     continue
-                } else if char == "." && nextLine.orderedItem {
+                } else if char == "." && nextLine.type == .orderedItem {
                     continue
+                } else if char == "[" && nextLine.indentLevels < 1 {
+                    print("Left Bracket found")
+                    linkLabelPhase = .leftBracket
+                    refLink = RefLink()
+                    phase = .text
                 } else if char.isWhitespace {
                     continue
                 } else {
@@ -172,11 +190,91 @@ class MkdownParser {
                 } else {
                     endText = nextIndex
                 }
+                
+                // Let's see if we have a possible reference link definition in work.
+                if linkLabelPhase != .na {
+                    linkLabelExamineChar(char)
+                }
             }
             
         } // end of mkdown input
         finishLine()
+        for line in lines {
+            line.display()
+        }
+        
+        for (_, link) in linkDict {
+            link.display()
+        }
     } // end of method parse
+    
+    func linkLabelExamineChar(_ char: Character) {
+        
+        print("linkLabelExamineChar char = \(char)")
+        switch linkLabelPhase {
+        case .na:
+            break
+        case .leftBracket:
+            if char == "[" && refLink.label.count == 0 {
+                break
+            } else if char == "]" {
+                linkLabelPhase = .rightBracket
+            } else {
+                refLink.label.append(char.lowercased())
+            }
+        case .rightBracket:
+            if char == ":" {
+                linkLabelPhase = .colon
+            } else {
+                linkLabelPhase = .na
+            }
+        case .colon:
+            if !char.isWhitespace {
+                if char == "<" {
+                    angleBracketsUsed = true
+                    linkLabelPhase = .linkStart
+                } else {
+                    refLink.link.append(char)
+                    linkLabelPhase = .linkStart
+                }
+            }
+        case .linkStart:
+            if angleBracketsUsed {
+                if char == ">" {
+                    linkLabelPhase = .linkEnd
+                } else {
+                    refLink.link.append(char)
+                }
+            } else if char.isWhitespace {
+                linkLabelPhase = .linkEnd
+            } else {
+                refLink.link.append(char)
+            }
+        case .linkEnd:
+            if char == "\"" || char == "'" || char == "(" {
+                print("Link End")
+                linkLabelPhase = .titleStart
+                if char == "(" {
+                    titleEndChar = ")"
+                } else {
+                    titleEndChar = char
+                }
+                print("  - Setting title start char to \(titleEndChar)")
+            } else if !char.isWhitespace {
+                linkLabelPhase = .na
+            }
+        case .titleStart:
+            if char == titleEndChar {
+                linkLabelPhase = .titleEnd
+            } else {
+                refLink.title.append(char)
+            }
+        case .titleEnd:
+            if !char.isWhitespace {
+                linkLabelPhase = .na
+            }
+        }
+    }
     
     func beginLine() {
         nextLine = MkdownLine()
@@ -187,39 +285,115 @@ class MkdownParser {
         endText = nextIndex
         phase = .indenting
         spaceCount = 0
+        if linkLabelPhase != .linkEnd {
+            linkLabelPhase = .na
+            angleBracketsUsed = false
+            refLink = RefLink()
+        }
+        titleEndChar = " "
     }
     
     func finishLine() {
+        
+        if endLine > startLine {
+            nextLine.line = String(mkdown[startLine..<endLine])
+        }
+        
+        if refLink.isValid && (linkLabelPhase == .linkEnd || linkLabelPhase == .linkStart) {
+            linkDict[refLink.label] = refLink
+            nextLine.type = .linkDef
+            linkLabelPhase = .linkEnd
+        } else if refLink.isValid && linkLabelPhase == .titleEnd {
+            let def = linkDict[refLink.label]
+            if def == nil {
+                linkDict[refLink.label] = refLink
+                nextLine.type = .linkDef
+            } else {
+                nextLine.type = .linkDefExt
+            }
+        } else if nextLine.headingUnderlining && nextLine.horizontalRule {
+            if lastLine.type == .blank {
+                nextLine.type = .horizontalRule
+            } else if nextLine.repeatCount > 4 {
+                nextLine.type = .h2Underlines
+            } else {
+                nextLine.type = .horizontalRule
+            }
+        } else if nextLine.headingUnderlining {
+            if nextLine.repeatingChar == "=" {
+                nextLine.type = .h1Underlines
+            } else {
+                nextLine.type = .h2Underlines
+            }
+        } else if nextLine.horizontalRule {
+            nextLine.type = .horizontalRule
+        } else if nextLine.hashCount >= 1 && nextLine.hashCount <= 6 {
+            nextLine.type = .heading
+            nextLine.headingLevel = nextLine.hashCount
+        }
+        
         if nextLine.endsWithBackSlash {
             endText = mkdown.index(before: endText)
             nextLine.trailingSpaceCount = 2
         }
-        if endLine > startLine {
-            nextLine.line = String(mkdown[startLine..<endLine])
+
+        if nextLine.type.hasText && endText > startText {
+            nextLine.text = String(mkdown[startText..<endText])
         }
-        if nextLine.headingUnderlining || nextLine.horizontalRule {
-            nextLine.unorderedItem = false
-        } else {
-            if endText > startText {
-                nextLine.text = String(mkdown[startText..<endText])
-            }
-        }
+        
         guard !nextLine.isEmpty else { return }
         
-        if nextLine.orderedItem {
+        if nextLine.type == .orderedItem {
             orderedListInProgress = true
-        } else if !nextLine.blankLine {
+        } else if nextLine.type != .blank {
             orderedListInProgress = false
         }
         
-        nextLine.display()
+        if nextLine.type == .h1Underlines {
+            lastLine.type = .heading
+            lastLine.headingLevel = 1
+        } else if nextLine.type == .h2Underlines {
+            lastLine.type = .heading
+            lastLine.headingLevel = 2
+        }
+        
         lines.append(nextLine)
+        lastLine = nextLine
     }
     
     enum LinePhase {
         case indenting
         case leadingPunctuation
         case text
+    }
+    
+    enum LinkLabelDefPhase {
+        case na
+        case leftBracket
+        case rightBracket
+        case colon
+        case linkStart
+        case linkEnd
+        case titleStart
+        case titleEnd
+    }
+    
+    class RefLink {
+        var label = ""
+        var link  = ""
+        var title = ""
+        
+        var isValid: Bool {
+            return label.count > 0 && link.count > 0
+        }
+        
+        func display() {
+            print(" ")
+            print("Reference Link Definition")
+            print("Label: \(label)")
+            print("Link:  \(link)")
+            print("Title: \(title)")
+        }
     }
     
 }

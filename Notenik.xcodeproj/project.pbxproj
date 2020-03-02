@@ -564,6 +564,9 @@
 		9CD3262A22330C8A00D06B77 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3262722330C8A00D06B77 /* ViewFactory.swift */; };
 		9CD358892293C42B00C9203F /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD358882293C42B00C9203F /* LinkView.swift */; };
 		9CD3588B2293C42B00C9203F /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD358882293C42B00C9203F /* LinkView.swift */; };
+		9CD42FA9240C26A000DCCC8D /* MkdownLineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */; };
+		9CD42FAA240C26A000DCCC8D /* MkdownLineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */; };
+		9CD42FAB240C26A000DCCC8D /* MkdownLineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */; };
 		9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD756D82210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD82F632211E456002314E4 /* LineWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F622211E456002314E4 /* LineWriter.swift */; };
@@ -908,6 +911,7 @@
 		9CD32623223308C400D06B77 /* StringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringView.swift; sourceTree = "<group>"; };
 		9CD3262722330C8A00D06B77 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		9CD358882293C42B00C9203F /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
+		9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownLineType.swift; sourceTree = "<group>"; };
 		9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSplitViewController.swift; sourceTree = "<group>"; };
 		9CD82F622211E456002314E4 /* LineWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineWriter.swift; sourceTree = "<group>"; };
 		9CD82F662211E4BA002314E4 /* BigStringWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigStringWriter.swift; sourceTree = "<group>"; };
@@ -1381,6 +1385,7 @@
 				9CA834FE2405C6F500C2531C /* MarkupNode.swift */,
 				9CA835022405C84C00C2531C /* MarkupNodeType.swift */,
 				9CA835062405CCEE00C2531C /* MkdownLine.swift */,
+				9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */,
 				9CA8350A2405EA2600C2531C /* MkdownParser.swift */,
 			);
 			path = markup;
@@ -1736,6 +1741,7 @@
 				9CC0F5A8227629C4002683F8 /* BooleanValue.swift in Sources */,
 				9C60E75621F651E500C332ED /* StringValue.swift in Sources */,
 				9C03629E239B0A9900C948DB /* Markdown.swift in Sources */,
+				9CD42FA9240C26A000DCCC8D /* MkdownLineType.swift in Sources */,
 				9CF3DE4522A6BAA00078A6B0 /* TemplateLine.swift in Sources */,
 				9C1E0C9222E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
@@ -2014,6 +2020,7 @@
 				9CD82F682211E4BA002314E4 /* BigStringWriter.swift in Sources */,
 				9CB6ECB32364FAEA00951820 /* LinkType.swift in Sources */,
 				9CD82F642211E456002314E4 /* LineWriter.swift in Sources */,
+				9CD42FAA240C26A000DCCC8D /* MkdownLineType.swift in Sources */,
 				9C60E74B21F651E500C332ED /* Realm.swift in Sources */,
 				9C2AE51F220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9CDF578F23469BBE004417FA /* TextileBlock.swift in Sources */,
@@ -2161,6 +2168,7 @@
 				9C2AE523220A34B300AE8BEE /* AppDelegate.swift in Sources */,
 				9C67248722EA1B2D00CB7D39 /* FilterModule.swift in Sources */,
 				9C9B6D8523A2DE6400E7E348 /* NoteCrumbs.swift in Sources */,
+				9CD42FAB240C26A000DCCC8D /* MkdownLineType.swift in Sources */,
 				9C0B643A23888D6700869FAA /* TagsMassChangeWindowController.swift in Sources */,
 				9C2AE520220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9CF3DE4E22A6F5330078A6B0 /* MergeReport.swift in Sources */,
