@@ -15,7 +15,8 @@ class MarkdownPrefsViewController: NSViewController {
 
     @IBOutlet var downButton: NSButton!
     @IBOutlet var inkButton:  NSButton!
-    
+    @IBOutlet var notenikButton: NSButton!
+   
     let prefs = AppPrefs.shared
     
     override func viewDidLoad() {
@@ -26,6 +27,8 @@ class MarkdownPrefsViewController: NSViewController {
             downButton.state = .on
         case "ink":
             inkButton.state = .on
+        case "notenik", "mkdown":
+            notenikButton.state = .on
         default:
             downButton.state = .on
         }
@@ -47,6 +50,8 @@ class MarkdownPrefsViewController: NSViewController {
             prefs.markdownParser = "down"
         } else if inkButton.state == .on {
             prefs.markdownParser = "ink"
-        } 
+        } else if notenikButton.state == .on {
+            prefs.markdownParser = "notenik"
+        }
     }
 }

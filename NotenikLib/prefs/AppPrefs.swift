@@ -444,6 +444,9 @@ class AppPrefs {
             case "down", "ink":
                 _mdParser = newValue
                 defaults.set(newValue, forKey: markdownParserKey)
+            case "notenik", "mkdown":
+                _mdParser = "notenik"
+                defaults.set("notenik", forKey: markdownParserKey)
             default:
                 break
             }

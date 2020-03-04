@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// A class to parse Mardkown input and do useful things with it.
 class MkdownParser {
     
     var mkdown:    String! = ""
@@ -26,7 +27,10 @@ class MkdownParser {
     var endText:   String.Index
     var phase:     LinePhase = .indenting
     var spaceCount = 0
-    var orderedListInProgress = false
+    var listsInProgress: [ListInfo] = []
+    var currentTableLevel: Int {
+        return listsInProgress.count - 1
+    }
     
     var linkLabelPhase: LinkLabelDefPhase = .na
     var angleBracketsUsed = false
@@ -37,6 +41,15 @@ class MkdownParser {
     var linkDict: [String:RefLink] = [:]
     
     var lines: [MkdownLine] = []
+    
+    var openBlock = ""
+    
+    var nextChunk = MkdownChunk()
+    var chunks: [MkdownChunk] = []
+    
+    var writer = Markedup()
+    
+    var html: String { return writer.code }
     
     /// Initialize with an empty string.
     init() {
@@ -72,8 +85,13 @@ class MkdownParser {
         }
     }
     
-    /// Parse the Markdown source that has been provided.
     func parse() {
+        firstPass()
+        secondPass()
+    }
+    
+    /// Make our first pass through the Markdown, identifying basic info about each line.
+    func firstPass() {
         
         nextIndex = mkdown.startIndex
         beginLine()
@@ -107,11 +125,10 @@ class MkdownParser {
                 nextLine.onlyRepeatingAndSpaces = false
             }
             
-            // Count indentaton levels
+            // Count indentation levels
             if phase == .indenting {
                 if char == "\t" {
                     nextLine.indentLevels += 1
-                    continue
                 } else if char.isWhitespace {
                     if spaceCount >= 3 {
                         nextLine.indentLevels += 1
@@ -119,10 +136,25 @@ class MkdownParser {
                     } else {
                         spaceCount += 1
                     }
-                    continue
                 } else {
                     phase = .leadingPunctuation
                 }
+            }
+            
+            // See if the indention level makes this a code line.
+            if (phase == .indenting
+                && nextLine.indentLevels > 0
+                && nextLine.type != .code
+                && nextLine.indentLevels > (currentTableLevel + 1)
+                && linkLabelPhase != .linkEnd) {
+                nextLine.type = .code
+                startText = nextIndex
+                phase = .text
+            }
+            
+            // If we're still indenting, then we're done with this character.
+            if phase == .indenting {
+                continue
             }
             
             if nextLine.type == .blank {
@@ -158,7 +190,6 @@ class MkdownParser {
                 } else if char == "." && nextLine.type == .orderedItem {
                     continue
                 } else if char == "[" && nextLine.indentLevels < 1 {
-                    print("Left Bracket found")
                     linkLabelPhase = .leftBracket
                     refLink = RefLink()
                     phase = .text
@@ -199,18 +230,26 @@ class MkdownParser {
             
         } // end of mkdown input
         finishLine()
-        for line in lines {
-            line.display()
-        }
-        
-        for (_, link) in linkDict {
-            link.display()
-        }
     } // end of method parse
+    
+    var orderedListInProgress: Bool {
+        print("Ordered list in progress?")
+        print("Next Line Table level: \(nextLine.tableLevel) ")
+        print("Current table level: \(currentTableLevel)")
+        if nextLine.tableLevel > currentTableLevel {
+            return false
+        } else if currentTableLevel < 0 {
+            return false
+        } else if nextLine.tableLevel < 0 {
+            return false
+        } else {
+            let listInfo = listsInProgress[nextLine.tableLevel]
+            return (listInfo.type == .ordered)
+        }
+    }
     
     func linkLabelExamineChar(_ char: Character) {
         
-        print("linkLabelExamineChar char = \(char)")
         switch linkLabelPhase {
         case .na:
             break
@@ -252,14 +291,12 @@ class MkdownParser {
             }
         case .linkEnd:
             if char == "\"" || char == "'" || char == "(" {
-                print("Link End")
                 linkLabelPhase = .titleStart
                 if char == "(" {
                     titleEndChar = ")"
                 } else {
                     titleEndChar = char
                 }
-                print("  - Setting title start char to \(titleEndChar)")
             } else if !char.isWhitespace {
                 linkLabelPhase = .na
             }
@@ -276,6 +313,7 @@ class MkdownParser {
         }
     }
     
+    // Prepare for a new Markdown line.
     func beginLine() {
         nextLine = MkdownLine()
         lineIndex = -1
@@ -293,13 +331,18 @@ class MkdownParser {
         titleEndChar = " "
     }
     
+    /// Wrap up initial examination of the line and figure out what to do with it.
     func finishLine() {
         
+        // Capture the entire line for later processing.
         if endLine > startLine {
             nextLine.line = String(mkdown[startLine..<endLine])
         }
         
-        if refLink.isValid && (linkLabelPhase == .linkEnd || linkLabelPhase == .linkStart) {
+        // Figure out some of the less ordinary line types.
+        if nextLine.type == .code {
+            // Don't bother looking for other indicators
+        } else if refLink.isValid && (linkLabelPhase == .linkEnd || linkLabelPhase == .linkStart) {
             linkDict[refLink.label] = refLink
             nextLine.type = .linkDef
             linkLabelPhase = .linkEnd
@@ -332,21 +375,53 @@ class MkdownParser {
             nextLine.headingLevel = nextLine.hashCount
         }
         
-        if nextLine.endsWithBackSlash {
+        // If the line ends with a backslash, treat this like a line break.
+        if nextLine.type != .code && nextLine.endsWithBackSlash {
             endText = mkdown.index(before: endText)
             nextLine.trailingSpaceCount = 2
         }
 
+        // Capture the text portion of the line, if it has any.
         if nextLine.type.hasText && endText > startText {
             nextLine.text = String(mkdown[startText..<endText])
         }
         
+        // If the line has no content and no end of line character(s), then ignore it.
         guard !nextLine.isEmpty else { return }
         
-        if nextLine.type == .orderedItem {
-            orderedListInProgress = true
-        } else if nextLine.type != .blank {
-            orderedListInProgress = false
+        // Let's see where we're at in any lists.
+        if nextLine.type.isListItem {
+            while currentTableLevel > nextLine.tableLevel {
+                listsInProgress.removeLast()
+            }
+            if nextLine.tableLevel == currentTableLevel {
+                let listInfo = listsInProgress[currentTableLevel]
+                if nextLine.type == .orderedItem && listInfo.type == .ordered {
+                    listInfo.itemNumber += 1
+                } else if nextLine.type == .unorderedItem && listInfo.type == .unordered {
+                    // OK as-is
+                } else if nextLine.type == .orderedItem {
+                    listInfo.type = .ordered
+                    listInfo.itemNumber = 1
+                } else {
+                    listInfo.type = .unordered
+                }
+            } else {
+                let listInfo = ListInfo()
+                listInfo.setTypeFrom(lineType: nextLine.type)
+                listInfo.itemNumber = 1
+                listsInProgress.append(listInfo)
+            }
+        } else if nextLine.type == .blank {
+            // Leave status as-is
+        } else if nextLine.indentLevels > 0 {
+            if nextLine.tableLevel > currentTableLevel {
+                nextLine.type = .code
+            }
+        } else {
+            while currentTableLevel >= 0 {
+                listsInProgress.removeLast()
+            }
         }
         
         if nextLine.type == .h1Underlines {
@@ -361,10 +436,160 @@ class MkdownParser {
         lastLine = nextLine
     }
     
+    func secondPass() {
+        writer = Markedup()
+        for line in lines {
+            switch line.type {
+            case .blank:
+                endBlock()
+            case .heading:
+                endBlock()
+                writer.startHeading(level: line.headingLevel)
+                chunkAndWrite(line)
+                writer.finishHeading(level: line.headingLevel)
+            case .ordinaryText:
+                if openBlock == "" {
+                    writer.startParagraph()
+                    openBlock = "p"
+                }
+                textToChunks(line)
+            default:
+                break
+            }
+        }
+        endBlock()
+    }
+    
+    func startBlock(_ element: String) {
+        openBlock = element
+        chunks = []
+    }
+    
+    func endBlock() {
+        writeChunks()
+        switch openBlock {
+        case "":
+            break
+        case "p":
+            writer.finishParagraph()
+        default:
+            break
+        }
+        openBlock = ""
+    }
+    
+    func chunkAndWrite(_ line: MkdownLine) {
+        textToChunks(line)
+        writeChunks()
+    }
+    
+    func textToChunks(_ line: MkdownLine) {
+        
+        nextChunk = MkdownChunk()
+        for char in line.text {
+            switch char {
+            case "*":
+                finishNextChunk()
+                nextChunk.text = "*"
+                nextChunk.type = .asterisk
+            case "_":
+                finishNextChunk()
+                nextChunk.text = "_"
+                nextChunk.type = .underline
+            case " ":
+                if nextChunk.text.count == 0 {
+                    nextChunk.startsWithSpace = true
+                }
+                nextChunk.endsWithSpace = true
+                nextChunk.text.append(char)
+            default:
+                nextChunk.text.append(char)
+            }
+            if !char.isWhitespace {
+                nextChunk.endsWithSpace = false
+            }
+        }
+        finishNextChunk()
+        
+        if line.endsWithLineBreak {
+            writeChunks()
+            writer.lineBreak()
+        }
+    }
+    
+    func finishNextChunk() {
+        if nextChunk.text.count > 0 {
+            chunks.append(nextChunk)
+        }
+        nextChunk = MkdownChunk()
+    }
+    
+    func writeChunks() {
+        
+        // Let's try to match up any unmatched enclosures
+        var index = 0
+        var indexPlus = 1
+        for chunk in chunks {
+            var nextChunk = MkdownChunk()
+            if indexPlus < chunks.count {
+                nextChunk = chunks[indexPlus]
+            }
+            switch chunk.type {
+            case .asterisk, .underline:
+                if chunk.text == nextChunk.text {
+                    let pairFound = scanForMatchingPair(from: index + 3, chunk: chunk)
+                }
+            default:
+                break
+            }
+            index = indexPlus
+            indexPlus += 1
+        }
+        
+        for chunk in chunks {
+            switch chunk.type {
+            default:
+                writer.append(chunk.text)
+            }
+        }
+        chunks = []
+    }
+    
+    func scanForMatchingPair(from: Int, chunk: MkdownChunk) -> Bool {
+        var found = false
+        var index = from
+        var indexPlus = index + 1
+        while !found && indexPlus < chunks.count {
+            
+        }
+        return found
+    }
+    
     enum LinePhase {
         case indenting
         case leadingPunctuation
         case text
+    }
+    
+    enum ListType {
+        case ordered
+        case unordered
+    }
+    
+    class ListInfo {
+        var type: ListType = .unordered
+        var itemNumber = 0
+        
+        func setTypeFrom(lineType: MkdownLineType) {
+            switch lineType {
+            case .orderedItem:
+                type = .ordered
+            case .unorderedItem:
+                type = .unordered
+            default:
+                break
+            }
+        }
     }
     
     enum LinkLabelDefPhase {

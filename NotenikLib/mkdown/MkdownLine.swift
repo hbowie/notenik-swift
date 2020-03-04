@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// One line in Markdown syntax.
 class MkdownLine {
     var line = ""
     var type: MkdownLineType = .blank
@@ -34,7 +35,17 @@ class MkdownLine {
     
     var textFound = false
     var text = ""
+    
     var indentLevels = 0
+    
+    /// Return -1 if no table level, otherwise 0 or up. 
+    var tableLevel: Int {
+        if type.isListItem {
+            return indentLevels
+        } else {
+            return indentLevels - 1
+        }
+    }
     var blockQuoteChars = 0 
     var trailingSpaceCount = 0
     var endsWithNewline = false
@@ -82,6 +93,9 @@ class MkdownLine {
         }
         if horizontalRule {
             print("Horizontal Rule")
+        }
+        if tableLevel >= 0 {
+            print("Table level = \(tableLevel)")
         }
         print("Text: '\(text)'")
     }

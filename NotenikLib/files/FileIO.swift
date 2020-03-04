@@ -252,10 +252,6 @@ class FileIO: NotenikIO, RowConsumer {
                     // Skip a LICENSE file
                 } else if fileName.collectionParms {
                     // Skip a Collection Parms file
-                } else if itemPath == "MkdownParserTest.md" {
-                    /// TEMPORARY CODE FOR TESTING!!!
-                    let parser = MkdownParser(itemURL)
-                    parser!.parse()
                 } else if fileName.noteExt {
                     let note = readNote(collection: collection!, noteURL: itemURL)
                     if note != nil && note!.hasTitle() {
