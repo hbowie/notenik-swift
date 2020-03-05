@@ -16,4 +16,6 @@ This line contains a ***bold and italicized phrase*** with asterisks.
 
 This line contains a ___bold and italicized phrase___ with underlines. 
 
-This line contains a par**tial**ly bold word. 
+This line contains a par**tial**ly bold word.
+
+This line contains \*escaped\* asterisks. 

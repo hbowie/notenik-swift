@@ -16,4 +16,13 @@ class MkdownChunk {
     var type: MkdownChunkType = .plaintext
     var startsWithSpace = false
     var endsWithSpace = false
+    
+    func setTextFrom(char: Character) {
+        text = String(char)
+    }
+    
+    func display() {
+        print("text: \(text)")
+        print("type: \(type)")
+    }
 }

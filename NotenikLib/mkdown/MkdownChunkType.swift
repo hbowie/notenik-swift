@@ -11,12 +11,18 @@
 
 enum MkdownChunkType {
     case plaintext
+    
     case asterisk
     case underline
-    case startBold1
-    case startBold2
-    case endBold1
-    case endBold2
-    case startItalics
-    case endItalics
+    
+    case startStrong1
+    case startStrong2
+    case endStrong1
+    
+    case endStrong2
+    case startEmphasis
+    case endEmphasis
+    
+    case backSlash
+    case escaped
 }

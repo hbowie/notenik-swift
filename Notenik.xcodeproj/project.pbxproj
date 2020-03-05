@@ -391,6 +391,15 @@
 		9C88E4F723EE025100684284 /* DirContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C88E4F623EE025100684284 /* DirContents.swift */; };
 		9C88E4F823EE025100684284 /* DirContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C88E4F623EE025100684284 /* DirContents.swift */; };
 		9C88E4F923EE025100684284 /* DirContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C88E4F623EE025100684284 /* DirContents.swift */; };
+		9C8965222410269300866FD0 /* RefLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965212410269300866FD0 /* RefLink.swift */; };
+		9C8965232410269300866FD0 /* RefLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965212410269300866FD0 /* RefLink.swift */; };
+		9C8965242410269300866FD0 /* RefLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965212410269300866FD0 /* RefLink.swift */; };
+		9C896526241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C896525241026EC00866FD0 /* LinkLabelDefPhase.swift */; };
+		9C896527241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C896525241026EC00866FD0 /* LinkLabelDefPhase.swift */; };
+		9C896528241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C896525241026EC00866FD0 /* LinkLabelDefPhase.swift */; };
+		9C89652A2410277100866FD0 /* MkdownLinePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965292410277100866FD0 /* MkdownLinePhase.swift */; };
+		9C89652B2410277100866FD0 /* MkdownLinePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965292410277100866FD0 /* MkdownLinePhase.swift */; };
+		9C89652C2410277100866FD0 /* MkdownLinePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965292410277100866FD0 /* MkdownLinePhase.swift */; };
 		9C8A5ADD23DBB8EA00C5A0DA /* Pandoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */; };
 		9C8A5ADE23DBB8EA00C5A0DA /* Pandoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */; };
 		9C8A5ADF23DBB8EA00C5A0DA /* Pandoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */; };
@@ -847,6 +856,9 @@
 		9C857C6323830F1600EDB93C /* FavoritesPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPrefsViewController.swift; sourceTree = "<group>"; };
 		9C86CF0122C15A660035A8FA /* IntValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntValue.swift; sourceTree = "<group>"; };
 		9C88E4F623EE025100684284 /* DirContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirContents.swift; sourceTree = "<group>"; };
+		9C8965212410269300866FD0 /* RefLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefLink.swift; sourceTree = "<group>"; };
+		9C896525241026EC00866FD0 /* LinkLabelDefPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkLabelDefPhase.swift; sourceTree = "<group>"; };
+		9C8965292410277100866FD0 /* MkdownLinePhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownLinePhase.swift; sourceTree = "<group>"; };
 		9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pandoc.swift; sourceTree = "<group>"; };
 		9C8DD75622E3EEC400FF56C1 /* Attachment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Attachment.storyboard; sourceTree = "<group>"; };
 		9C8FD8D72216302900F16669 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1389,14 +1401,17 @@
 		9CA834F92405C09300C2531C /* mkdown */ = {
 			isa = PBXGroup;
 			children = (
+				9C896525241026EC00866FD0 /* LinkLabelDefPhase.swift */,
 				9CA834FA2405C61800C2531C /* MarkupElement.swift */,
 				9CA834FE2405C6F500C2531C /* MarkupNode.swift */,
 				9CA835022405C84C00C2531C /* MarkupNodeType.swift */,
 				9C20962D240F3D03009265C7 /* MkdownChunk.swift */,
 				9C209631240F3DEC009265C7 /* MkdownChunkType.swift */,
 				9CA835062405CCEE00C2531C /* MkdownLine.swift */,
+				9C8965292410277100866FD0 /* MkdownLinePhase.swift */,
 				9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */,
 				9CA8350A2405EA2600C2531C /* MkdownParser.swift */,
+				9C8965212410269300866FD0 /* RefLink.swift */,
 			);
 			path = mkdown;
 			sourceTree = "<group>";
@@ -1836,6 +1851,7 @@
 				9C78888621FB826100452D74 /* MarkedupFormat.swift in Sources */,
 				9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */,
 				9C568DDD2322F0D6005D6B0A /* WorkTitleValue.swift in Sources */,
+				9C89652A2410277100866FD0 /* MkdownLinePhase.swift in Sources */,
 				9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */,
 				9C60E76221F651E500C332ED /* DateValue.swift in Sources */,
 				9CB6ECCE2365DC3F00951820 /* TagsType.swift in Sources */,
@@ -1854,6 +1870,7 @@
 				9C27D9F222FB3758008EE0A1 /* NoteIndexReader.swift in Sources */,
 				9C60E77D21F651E500C332ED /* LabelConstants.swift in Sources */,
 				9C619A33231B30A7003CFFBE /* WorkTypeValue.swift in Sources */,
+				9C8965222410269300866FD0 /* RefLink.swift in Sources */,
 				9C9A6BAE22EA5FBC00E1F127 /* SortField.swift in Sources */,
 				9CB6ECD62365E00C00951820 /* WorkTitleType.swift in Sources */,
 				9C60E71221F6518400C332ED /* Logger.swift in Sources */,
@@ -1936,6 +1953,7 @@
 				9C60E77721F651E500C332ED /* StatusValue.swift in Sources */,
 				9C60E70821F650B800C332ED /* FileName.swift in Sources */,
 				9CAD6A5622DFA9C200531D90 /* NotesExporter.swift in Sources */,
+				9C896526241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */,
 				9C8329FD224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */,
 				9C02D2AE2267D46000587EDF /* DateView.swift in Sources */,
 				9CFD350023313D6D004ABA16 /* ArtistValue.swift in Sources */,
@@ -2000,6 +2018,7 @@
 				9C27DA0422FB581D008EE0A1 /* IndexPageRef.swift in Sources */,
 				9C60E77B21F651E500C332ED /* FieldDefinition.swift in Sources */,
 				9CB37ED52407189700C2AC1F /* MkdownParserTests.swift in Sources */,
+				9C8965232410269300866FD0 /* RefLink.swift in Sources */,
 				9C60E71321F6518400C332ED /* Logger.swift in Sources */,
 				9C03629B239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
 				9C20962F240F3D03009265C7 /* MkdownChunk.swift in Sources */,
@@ -2021,7 +2040,9 @@
 				9C27DA0022FB55B4008EE0A1 /* IndexCollection.swift in Sources */,
 				9C60E7B721F6525F00C332ED /* FileUtilsTests.swift in Sources */,
 				9CB6ECDB2365E14700951820 /* WorkTypeType.swift in Sources */,
+				9C896527241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */,
 				9C8540C322E8F9F20074E349 /* ScriptAction.swift in Sources */,
+				9C89652B2410277100866FD0 /* MkdownLinePhase.swift in Sources */,
 				9CCC5E9F228F0B5500FA6B5C /* BunchIO.swift in Sources */,
 				9C27D9F322FB3758008EE0A1 /* NoteIndexReader.swift in Sources */,
 				9C60E75121F651E500C332ED /* NoteSortParm.swift in Sources */,
@@ -2149,6 +2170,7 @@
 				9C60E70421F650B800C332ED /* StringUtils.swift in Sources */,
 				9C10311F229A134E009CCE3B /* AppPrefs.swift in Sources */,
 				9C055D4F2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
+				9C8965242410269300866FD0 /* RefLink.swift in Sources */,
 				9C45E8BF2298BC87003F6589 /* CodeView.swift in Sources */,
 				9C60E77321F651E500C332ED /* LinkValue.swift in Sources */,
 				9C60E76D21F651E500C332ED /* StatusValueConfig.swift in Sources */,
@@ -2164,6 +2186,7 @@
 				9CB6ECB02364FA0500951820 /* IntType.swift in Sources */,
 				9C5556DB22E132EC0099414E /* ExportViewController.swift in Sources */,
 				9C60E78B21F651E500C332ED /* NoteLineParser.swift in Sources */,
+				9C896528241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */,
 				9C02D2B42267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C5556D822E11E3B0099414E /* ExportWindowController.swift in Sources */,
 				9C535F5923A3FDC300D47282 /* WikiLinks.swift in Sources */,
@@ -2172,6 +2195,7 @@
 				9CB6ECC02365D73100951820 /* RecursType.swift in Sources */,
 				9C97C1B12278F46100A43913 /* CollectionRequestType.swift in Sources */,
 				9CB6ECD02365DC3F00951820 /* TagsType.swift in Sources */,
+				9C89652C2410277100866FD0 /* MkdownLinePhase.swift in Sources */,
 				9C8540B822E8F0790074E349 /* ScriptModule.swift in Sources */,
 				9C60E78821F651E500C332ED /* BigStringReader.swift in Sources */,
 				9CB37ED724071F7B00C2AC1F /* Markdown.swift in Sources */,

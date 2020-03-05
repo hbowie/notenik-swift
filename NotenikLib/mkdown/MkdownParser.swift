@@ -25,7 +25,7 @@ class MkdownParser {
     var startText: String.Index
     var endLine:   String.Index
     var endText:   String.Index
-    var phase:     LinePhase = .indenting
+    var phase:     MkdownLinePhase = .indenting
     var spaceCount = 0
     var listsInProgress: [ListInfo] = []
     var currentTableLevel: Int {
@@ -46,6 +46,12 @@ class MkdownParser {
     
     var nextChunk = MkdownChunk()
     var chunks: [MkdownChunk] = []
+    
+    var startChunk = MkdownChunk()
+    var consecutiveStartCount = 0
+    var consecutiveCloseCount = 0
+    var startIndex = -1
+    var matchStart = -1
     
     var writer = Markedup()
     
@@ -373,6 +379,8 @@ class MkdownParser {
         } else if nextLine.hashCount >= 1 && nextLine.hashCount <= 6 {
             nextLine.type = .heading
             nextLine.headingLevel = nextLine.hashCount
+        } else if nextLine.hashCount > 0 {
+            startText = startLine
         }
         
         // If the line ends with a backslash, treat this like a line break.
@@ -436,6 +444,8 @@ class MkdownParser {
         lastLine = nextLine
     }
     
+    /// Now that we have the input divided into lines, and the lines assigned types,
+    /// let's generate the output HTML.
     func secondPass() {
         writer = Markedup()
         for line in lines {
@@ -460,11 +470,13 @@ class MkdownParser {
         endBlock()
     }
     
+    /// Start a new block.
     func startBlock(_ element: String) {
         openBlock = element
         chunks = []
     }
     
+    /// End the block, and write out the output.
     func endBlock() {
         writeChunks()
         switch openBlock {
@@ -478,31 +490,35 @@ class MkdownParser {
         openBlock = ""
     }
     
+    /// Divide a line up into chunks, then write them out.
     func chunkAndWrite(_ line: MkdownLine) {
         textToChunks(line)
         writeChunks()
     }
     
+    /// Divide another line of Markdown into chunks.
     func textToChunks(_ line: MkdownLine) {
         
         nextChunk = MkdownChunk()
+        var backslashed = false
         for char in line.text {
-            switch char {
-            case "*":
-                finishNextChunk()
-                nextChunk.text = "*"
-                nextChunk.type = .asterisk
-            case "_":
-                finishNextChunk()
-                nextChunk.text = "_"
-                nextChunk.type = .underline
-            case " ":
+            if backslashed {
+                addCharAsChunk(char: char, type: .escaped)
+                backslashed = false
+            } else if char == "\\" {
+                addCharAsChunk(char: char, type: .backSlash)
+                backslashed = true
+            } else if char == "*" {
+                addCharAsChunk(char: char, type: .asterisk)
+            } else if char == "_" {
+                addCharAsChunk(char: char, type: .underline)
+            } else if char == " " {
                 if nextChunk.text.count == 0 {
                     nextChunk.startsWithSpace = true
                 }
                 nextChunk.endsWithSpace = true
                 nextChunk.text.append(char)
-            default:
+            } else {
                 nextChunk.text.append(char)
             }
             if !char.isWhitespace {
@@ -517,6 +533,18 @@ class MkdownParser {
         }
     }
     
+    /// Add a character as its own chunk.
+    func addCharAsChunk(char: Character, type: MkdownChunkType) {
+        if nextChunk.text.count > 0 {
+            finishNextChunk()
+        }
+        nextChunk.setTextFrom(char: char)
+        nextChunk.type = type
+        chunks.append(nextChunk)
+        nextChunk = MkdownChunk()
+    }
+    
+    /// Add the chunk to the array.
     func finishNextChunk() {
         if nextChunk.text.count > 0 {
             chunks.append(nextChunk)
@@ -524,51 +552,106 @@ class MkdownParser {
         nextChunk = MkdownChunk()
     }
     
+    /// Now finish evaluation of the chunks and write them out.
     func writeChunks() {
         
         // Let's try to match up any unmatched enclosures
         var index = 0
-        var indexPlus = 1
-        for chunk in chunks {
-            var nextChunk = MkdownChunk()
-            if indexPlus < chunks.count {
-                nextChunk = chunks[indexPlus]
-            }
+        while index < chunks.count {
+            let chunk = chunks[index]
             switch chunk.type {
             case .asterisk, .underline:
-                if chunk.text == nextChunk.text {
-                    let pairFound = scanForMatchingPair(from: index + 3, chunk: chunk)
-                }
+                scanForClosure(forChunkAt: index)
             default:
                 break
             }
-            index = indexPlus
-            indexPlus += 1
+            index += 1
         }
         
         for chunk in chunks {
-            switch chunk.type {
-            default:
-                writer.append(chunk.text)
-            }
+            write(chunk: chunk)
         }
         chunks = []
     }
     
-    func scanForMatchingPair(from: Int, chunk: MkdownChunk) -> Bool {
-        var found = false
-        var index = from
-        var indexPlus = index + 1
-        while !found && indexPlus < chunks.count {
-            
+    func scanForClosure(forChunkAt: Int) {
+        startIndex = forChunkAt
+        startChunk = chunks[startIndex]
+        startChunk.display()
+        var done = false
+        var next = startIndex + 1
+        consecutiveStartCount = 1
+        consecutiveCloseCount = 0
+        matchStart = -1
+        while !done && next < chunks.count {
+            let nextChunk = chunks[next]
+            if nextChunk.text == startChunk.text && next == (startIndex + consecutiveStartCount) {
+                consecutiveStartCount += 1
+            } else if nextChunk.text == startChunk.text {
+                if consecutiveCloseCount == 0 {
+                    matchStart = next
+                    consecutiveCloseCount = 1
+                } else if next == (matchStart + consecutiveCloseCount) {
+                    consecutiveCloseCount += 1
+                }
+            } else if consecutiveCloseCount > 0 {
+                processClosure()
+            }
+            next += 1
         }
-        return found
+        processClosure()
     }
     
-    enum LinePhase {
-        case indenting
-        case leadingPunctuation
-        case text
+    /// Let's close things up.
+    func processClosure() {
+        guard consecutiveCloseCount > 0 else { return }
+        if consecutiveStartCount == consecutiveCloseCount {
+            switch consecutiveStartCount {
+            case 1:
+                startChunk.type = .startEmphasis
+                chunks[matchStart].type = .endEmphasis
+                consecutiveCloseCount = 0
+            case 2:
+                startChunk.type = .startStrong1
+                chunks[startIndex + 1].type = .startStrong2
+                chunks[matchStart].type = .endStrong1
+                chunks[matchStart + 1].type = .endStrong2
+                consecutiveCloseCount = 0
+            case 3:
+                startChunk.type = .startStrong1
+                chunks[startIndex + 1].type = .startStrong2
+                chunks[startIndex + 2].type = .startEmphasis
+                chunks[matchStart].type = .endEmphasis
+                chunks[matchStart + 1].type = .endStrong1
+                chunks[matchStart + 2].type = .endStrong2
+                consecutiveCloseCount = 0
+            default:
+                break
+            }
+        }
+    }
+    
+    func write(chunk: MkdownChunk) {
+        switch chunk.type {
+        case .backSlash:
+            break
+        case .escaped:
+            writer.append(chunk.text)
+        case .startEmphasis:
+            writer.startEmphasis()
+        case .endEmphasis:
+            writer.finishEmphasis()
+        case .startStrong1:
+            writer.startStrong()
+        case .startStrong2:
+            break
+        case .endStrong1:
+            writer.finishStrong()
+        case .endStrong2:
+            break
+        default:
+            writer.append(chunk.text)
+        }
     }
     
     enum ListType {
@@ -589,35 +672,6 @@ class MkdownParser {
             default:
                 break
             }
-        }
-    }
-    
-    enum LinkLabelDefPhase {
-        case na
-        case leftBracket
-        case rightBracket
-        case colon
-        case linkStart
-        case linkEnd
-        case titleStart
-        case titleEnd
-    }
-    
-    class RefLink {
-        var label = ""
-        var link  = ""
-        var title = ""
-        
-        var isValid: Bool {
-            return label.count > 0 && link.count > 0
-        }
-        
-        func display() {
-            print(" ")
-            print("Reference Link Definition")
-            print("Label: \(label)")
-            print("Link:  \(link)")
-            print("Title: \(title)")
         }
     }
     
