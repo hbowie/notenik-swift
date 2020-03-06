@@ -38,25 +38,6 @@ class MkdownParser {
     
     var refLink = RefLink()
     
-    var linkDict: [String:RefLink] = [:]
-    
-    var lines: [MkdownLine] = []
-    
-    var openBlock = ""
-    
-    var nextChunk = MkdownChunk()
-    var chunks: [MkdownChunk] = []
-    
-    var startChunk = MkdownChunk()
-    var consecutiveStartCount = 0
-    var consecutiveCloseCount = 0
-    var startIndex = -1
-    var matchStart = -1
-    
-    var writer = Markedup()
-    
-    var html: String { return writer.code }
-    
     /// Initialize with an empty string.
     init() {
         nextIndex = mkdown.startIndex
@@ -92,12 +73,19 @@ class MkdownParser {
     }
     
     func parse() {
-        firstPass()
-        secondPass()
+        mdToLines()
+        linesOut()
     }
     
+    // ===========================================================
+    //
+    // Section 1 - Parse the input block of Markdown text, and
+    // break down into lines.
+    //
+    // ===========================================================
+    
     /// Make our first pass through the Markdown, identifying basic info about each line.
-    func firstPass() {
+    func mdToLines() {
         
         nextIndex = mkdown.startIndex
         beginLine()
@@ -127,13 +115,19 @@ class MkdownParser {
                 nextLine.repeatCount += 1
             } else if char == " " {
                 nextLine.onlyRepeating = false
+            } else if char == ">" && phase == .indenting {
+                // Blockquotes make no difference
             } else {
                 nextLine.onlyRepeatingAndSpaces = false
             }
             
             // Count indentation levels
             if phase == .indenting {
-                if char == "\t" {
+                if char == ">" {
+                    nextLine.quoteLevel += 1
+                    nextLine.indentLevels = 0
+                    spaceCount = 0
+                } else if char == "\t" {
                     nextLine.indentLevels += 1
                 } else if char.isWhitespace {
                     if spaceCount >= 3 {
@@ -239,9 +233,7 @@ class MkdownParser {
     } // end of method parse
     
     var orderedListInProgress: Bool {
-        print("Ordered list in progress?")
-        print("Next Line Table level: \(nextLine.tableLevel) ")
-        print("Current table level: \(currentTableLevel)")
+
         if nextLine.tableLevel > currentTableLevel {
             return false
         } else if currentTableLevel < 0 {
@@ -440,15 +432,56 @@ class MkdownParser {
             lastLine.headingLevel = 2
         }
         
+        if lastLine.quoteLevel > 0 && nextLine.type == .ordinaryText && nextLine.quoteLevel == 0 {
+            nextLine.quoteLevel = lastLine.quoteLevel
+        }
+        
         lines.append(nextLine)
         lastLine = nextLine
     }
     
+    // ===========================================================
+    //
+    // This is the data passed from Section 1 to Section 2.
+    //
+    // ===========================================================
+    
+    var linkDict: [String:RefLink] = [:]
+    var lines:    [MkdownLine] = []
+
+    // ===========================================================
+    //
+    // Section 2 - Take the lines and convert them to HTML output.
+    //
+    // ===========================================================
+    
+    var writer = Markedup()
+    
+    var html: String { return writer.code }
+    
+    var lastQuoteLevel = 0
+    var openBlock = ""
+    
+    var nextChunk = MkdownChunk()
+    var chunks: [MkdownChunk] = []
+    
+    var startChunk = MkdownChunk()
+    var consecutiveStartCount = 0
+    var consecutiveCloseCount = 0
+    var leftToClose = 0
+    var startIndex = -1
+    var matchStart = -1
+    
     /// Now that we have the input divided into lines, and the lines assigned types,
     /// let's generate the output HTML.
-    func secondPass() {
+    func linesOut() {
         writer = Markedup()
         for line in lines {
+            while lastQuoteLevel < line.quoteLevel {
+                lastQuoteLevel += 1
+                writer.startBlockQuote()
+            }
+            endBlockQuotes(toLevel: line.quoteLevel)
             switch line.type {
             case .blank:
                 endBlock()
@@ -468,6 +501,14 @@ class MkdownParser {
             }
         }
         endBlock()
+        endBlockQuotes(toLevel: 0)
+    }
+    
+    func endBlockQuotes(toLevel: Int) {
+        while lastQuoteLevel > toLevel {
+            lastQuoteLevel -= 1
+            writer.finishBlockQuote()
+        }
     }
     
     /// Start a new block.
@@ -501,17 +542,18 @@ class MkdownParser {
         
         nextChunk = MkdownChunk()
         var backslashed = false
+        var lastChar: Character = " "
         for char in line.text {
             if backslashed {
-                addCharAsChunk(char: char, type: .escaped)
+                addCharAsChunk(char: char, type: .literal, lastChar: lastChar)
                 backslashed = false
             } else if char == "\\" {
-                addCharAsChunk(char: char, type: .backSlash)
+                addCharAsChunk(char: char, type: .backSlash, lastChar: lastChar)
                 backslashed = true
             } else if char == "*" {
-                addCharAsChunk(char: char, type: .asterisk)
+                addCharAsChunk(char: char, type: .asterisk, lastChar: lastChar)
             } else if char == "_" {
-                addCharAsChunk(char: char, type: .underline)
+                addCharAsChunk(char: char, type: .underline, lastChar: lastChar)
             } else if char == " " {
                 if nextChunk.text.count == 0 {
                     nextChunk.startsWithSpace = true
@@ -524,6 +566,7 @@ class MkdownParser {
             if !char.isWhitespace {
                 nextChunk.endsWithSpace = false
             }
+            lastChar = char
         }
         finishNextChunk()
         
@@ -534,22 +577,31 @@ class MkdownParser {
     }
     
     /// Add a character as its own chunk.
-    func addCharAsChunk(char: Character, type: MkdownChunkType) {
+    func addCharAsChunk(char: Character, type: MkdownChunkType, lastChar: Character) {
         if nextChunk.text.count > 0 {
             finishNextChunk()
         }
         nextChunk.setTextFrom(char: char)
         nextChunk.type = type
-        chunks.append(nextChunk)
+        nextChunk.spaceBefore = lastChar.isWhitespace
+        addChunk(nextChunk)
         nextChunk = MkdownChunk()
     }
     
     /// Add the chunk to the array.
     func finishNextChunk() {
         if nextChunk.text.count > 0 {
-            chunks.append(nextChunk)
+            addChunk(nextChunk)
         }
         nextChunk = MkdownChunk()
+    }
+    
+    func addChunk(_ chunk: MkdownChunk) {
+        if chunks.count > 0 {
+            let last = chunks.count - 1
+            chunks[last].spaceAfter = chunk.startsWithSpace
+        }
+        chunks.append(chunk)
     }
     
     /// Now finish evaluation of the chunks and write them out.
@@ -574,20 +626,25 @@ class MkdownParser {
         chunks = []
     }
     
+    /// If we have an asterisk or an underline, look for the closing symbols to end the emphasis span.
     func scanForClosure(forChunkAt: Int) {
+        // print(" ")
+        // print("Scan for Closure")
         startIndex = forChunkAt
         startChunk = chunks[startIndex]
-        startChunk.display()
-        var done = false
+        // startChunk.display(title: "Starting Chunk", indenting: 0)
         var next = startIndex + 1
         consecutiveStartCount = 1
+        leftToClose = 1
         consecutiveCloseCount = 0
         matchStart = -1
-        while !done && next < chunks.count {
+        while leftToClose > 0 && next < chunks.count {
             let nextChunk = chunks[next]
-            if nextChunk.text == startChunk.text && next == (startIndex + consecutiveStartCount) {
+            // nextChunk.display(title: "Next Chunk", indenting: 4)
+            if nextChunk.type == startChunk.type && next == (startIndex + consecutiveStartCount) {
                 consecutiveStartCount += 1
-            } else if nextChunk.text == startChunk.text {
+                leftToClose += 1
+            } else if nextChunk.type == startChunk.type {
                 if consecutiveCloseCount == 0 {
                     matchStart = next
                     consecutiveCloseCount = 1
@@ -628,6 +685,23 @@ class MkdownParser {
             default:
                 break
             }
+            leftToClose = 0
+        } else if consecutiveStartCount == 3 {
+            if consecutiveCloseCount == 1 {
+                chunks[startIndex + 2].type = .startEmphasis
+                chunks[matchStart].type = .endEmphasis
+                leftToClose = 2
+                consecutiveStartCount = 2
+                consecutiveCloseCount = 0
+            } else if consecutiveCloseCount == 2 {
+                chunks[startIndex + 1].type = .startStrong1
+                chunks[startIndex + 2].type = .startStrong2
+                chunks[matchStart].type = .endStrong1
+                chunks[matchStart + 1].type = .endStrong2
+                leftToClose = 1
+                consecutiveStartCount = 1
+                consecutiveCloseCount = 0
+            }
         }
     }
     
@@ -635,7 +709,7 @@ class MkdownParser {
         switch chunk.type {
         case .backSlash:
             break
-        case .escaped:
+        case .literal:
             writer.append(chunk.text)
         case .startEmphasis:
             writer.startEmphasis()

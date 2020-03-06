@@ -24,5 +24,5 @@ enum MkdownChunkType {
     case endEmphasis
     
     case backSlash
-    case escaped
+    case literal
 }

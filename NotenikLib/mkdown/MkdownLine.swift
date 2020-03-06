@@ -15,6 +15,7 @@ import Foundation
 class MkdownLine {
     var line = ""
     var type: MkdownLineType = .blank
+    var quoteLevel = 0
     var hashCount = 0
     var headingLevel = 0
     

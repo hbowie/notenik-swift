@@ -18,4 +18,10 @@ This line contains a ___bold and italicized phrase___ with underlines.
 
 This line contains a par**tial**ly bold word.
 
-This line contains \*escaped\* asterisks. 
+This line contains \*escaped\* asterisks.
+
+_ This line contains stand-alone * asterisks and _ underscores _
+
+This line contains a ***phrase that is italicized and** partially bold*.
+
+This line contains a ***phrase that is bold and* partially italicized**. 
