@@ -433,41 +433,6 @@ class MkdownParser {
         // If the line has no content and no end of line character(s), then ignore it.
         guard !nextLine.isEmpty else { return }
         
-        // Let's see where we're at in any lists.
-        nextLine.setListInfo()
-        if nextLine.type.isListItem {
-            while currentListLevel > nextLine.listLevel {
-                listsInProgress.removeLast()
-            }
-            if nextLine.listLevel == currentListLevel {
-                if nextLine.type == .orderedItem && currentList.type == .ordered {
-                    currentList.number += 1
-                } else if nextLine.type == .unorderedItem && currentList.type == .unordered {
-                    // OK as-is
-                } else if nextLine.type == .orderedItem {
-                    currentList.type = .ordered
-                    currentList.number = 1
-                } else {
-                    currentList.type = .unordered
-                }
-            } else {
-                let listInfo = MkdownListInfo()
-                listInfo.setTypeFrom(lineType: nextLine.type)
-                listInfo.number = 1
-                listsInProgress.append(listInfo)
-            }
-        } else if nextLine.type == .blank {
-            // Leave status as-is
-        } else if nextLine.indentLevels > 0 {
-            if nextLine.listLevel > currentListLevel {
-                nextLine.type = .code
-            }
-        } else {
-            while currentListLevel >= 1 {
-                listsInProgress.removeLast()
-            }
-        }
-        
         if nextLine.type == .h1Underlines {
             lastLine.heading1()
         } else if nextLine.type == .h2Underlines {
@@ -563,28 +528,6 @@ class MkdownParser {
     
     var linkDict: [String:RefLink] = [:]
     var lines:    [MkdownLine] = []
-    
-    var listsInProgress: [MkdownListInfo] = [MkdownListInfo()]
-    
-    var currentListLevel: Int {
-        return listsInProgress.count - 1
-    }
-    
-    var currentList: MkdownListInfo {
-        return listsInProgress[currentListLevel]
-    }
-    
-    func orderedListInProgress (forLevel: Int) -> Bool {
-        if forLevel != currentListLevel {
-            return false
-        } else if currentListLevel < 1 {
-            return false
-        } else if forLevel < 1 {
-            return false
-        } else {
-            return (currentList.type == .ordered)
-        }
-    }
 
     // ===========================================================
     //
@@ -617,7 +560,6 @@ class MkdownParser {
         
         writer = Markedup()
         lastQuoteLevel = 0
-        listsInProgress = [MkdownListInfo()]
         openBlocks = MkdownBlockStack()
         
         for line in lines {

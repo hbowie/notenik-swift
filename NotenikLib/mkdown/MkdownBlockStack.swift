@@ -53,13 +53,37 @@ class MkdownBlockStack: Equatable {
         }
     }
     
+    /// Continue a block from a previous line.
+    /// - Parameters:
+    ///   - from: The previous line.
+    ///   - forLevel: 1 for the first level, 2 for the second, etc.
     func continueBlock(from: MkdownBlockStack, forLevel: Int) -> Bool {
-        guard from.count >= forLevel else { return false }
-        guard self.count < forLevel else { return false }
-        let copy = from.blocks[forLevel].copy()
-        let copiedBlock = copy as! MkdownBlock
-        append(copiedBlock)
-        return true
+        var levelCount = 0
+        var index = 0
+        while levelCount < forLevel && index < from.count {
+            levelCount += 1
+            let indexPlus = index + 1
+            var indexInc = 1
+            if (indexPlus < from.count
+                && from.blocks[index].isListTag
+                && from.blocks[indexPlus].isListItem) {
+                indexInc = 2
+            }
+            
+            if levelCount == forLevel {
+                let copy1 = from.blocks[index].copy() as! MkdownBlock
+                append(copy1)
+                if indexInc == 2 {
+                    var copy2: MkdownBlock? = nil
+                    copy2 = from.blocks[indexPlus].copy() as? MkdownBlock
+                    if copy2 != nil {
+                        append(copy2!)
+                    }
+                }
+            }
+            index += indexInc
+        }
+        return levelCount == forLevel
     }
     
     func display() {

@@ -40,6 +40,14 @@ class MkdownBlock: CustomStringConvertible, Equatable, NSCopying {
         return tag == "p"
     }
     
+    var isListTag: Bool {
+        return tag == "ul" || tag == "ol"
+    }
+    
+    var isListItem: Bool {
+        return tag == "li"
+    }
+    
     var isBlockquote: Bool {
         return tag == "blockquote"
     }

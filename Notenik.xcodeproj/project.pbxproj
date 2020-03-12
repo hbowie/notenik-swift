@@ -638,9 +638,6 @@
 		9CE6FE4E2412B8F900E9EB7A /* MkdownListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE4D2412B8F900E9EB7A /* MkdownListType.swift */; };
 		9CE6FE4F2412B8F900E9EB7A /* MkdownListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE4D2412B8F900E9EB7A /* MkdownListType.swift */; };
 		9CE6FE502412B8F900E9EB7A /* MkdownListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE4D2412B8F900E9EB7A /* MkdownListType.swift */; };
-		9CE6FE522412BA4D00E9EB7A /* MkdownListInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE512412BA4D00E9EB7A /* MkdownListInfo.swift */; };
-		9CE6FE532412BA4D00E9EB7A /* MkdownListInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE512412BA4D00E9EB7A /* MkdownListInfo.swift */; };
-		9CE6FE542412BA4D00E9EB7A /* MkdownListInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE512412BA4D00E9EB7A /* MkdownListInfo.swift */; };
 		9CE6FE562413252200E9EB7A /* MkdownBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE552413252200E9EB7A /* MkdownBlock.swift */; };
 		9CE6FE572413252200E9EB7A /* MkdownBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE552413252200E9EB7A /* MkdownBlock.swift */; };
 		9CE6FE582413252200E9EB7A /* MkdownBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE552413252200E9EB7A /* MkdownBlock.swift */; };
@@ -962,7 +959,6 @@
 		9CE3250F224D5E180051CA1F /* LogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
 		9CE60321234558FA000B45E6 /* Textiler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Textiler.swift; sourceTree = "<group>"; };
 		9CE6FE4D2412B8F900E9EB7A /* MkdownListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownListType.swift; sourceTree = "<group>"; };
-		9CE6FE512412BA4D00E9EB7A /* MkdownListInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownListInfo.swift; sourceTree = "<group>"; };
 		9CE6FE552413252200E9EB7A /* MkdownBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownBlock.swift; sourceTree = "<group>"; };
 		9CE6FE592413253700E9EB7A /* MkdownBlockStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownBlockStack.swift; sourceTree = "<group>"; };
 		9CE715B0225E887300025C00 /* Notenik Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Notenik Help"; sourceTree = "<group>"; };
@@ -1423,7 +1419,6 @@
 				9CA835062405CCEE00C2531C /* MkdownLine.swift */,
 				9C8965292410277100866FD0 /* MkdownLinePhase.swift */,
 				9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */,
-				9CE6FE512412BA4D00E9EB7A /* MkdownListInfo.swift */,
 				9CE6FE4D2412B8F900E9EB7A /* MkdownListType.swift */,
 				9CA8350A2405EA2600C2531C /* MkdownParser.swift */,
 				9C8965212410269300866FD0 /* RefLink.swift */,
@@ -1760,7 +1755,6 @@
 				9CC2AAD0239EC36B00C85191 /* TimestampType.swift in Sources */,
 				9C60E7A021F6520100C332ED /* FileIO.swift in Sources */,
 				9CE6FE4E2412B8F900E9EB7A /* MkdownListType.swift in Sources */,
-				9CE6FE522412BA4D00E9EB7A /* MkdownListInfo.swift in Sources */,
 				9CD358892293C42B00C9203F /* LinkView.swift in Sources */,
 				9C60E70221F650B800C332ED /* StringUtils.swift in Sources */,
 				9C10311D229A134E009CCE3B /* AppPrefs.swift in Sources */,
@@ -1993,7 +1987,6 @@
 				9C60E7C621F6525F00C332ED /* FileNameTests.swift in Sources */,
 				9CB6EC9F2364AE0100951820 /* AuthorType.swift in Sources */,
 				9C60E70321F650B800C332ED /* StringUtils.swift in Sources */,
-				9CE6FE532412BA4D00E9EB7A /* MkdownListInfo.swift in Sources */,
 				9C88E4F823EE025100684284 /* DirContents.swift in Sources */,
 				9C9B6D8423A2DE6400E7E348 /* NoteCrumbs.swift in Sources */,
 				9C60E77221F651E500C332ED /* LinkValue.swift in Sources */,
@@ -2383,7 +2376,6 @@
 				9C60E75821F651E500C332ED /* StringValue.swift in Sources */,
 				9CE2171022A9BC6000EE656C /* LineWithBreak.swift in Sources */,
 				9CB337562347BA4A006767A4 /* TextileCharDisposition.swift in Sources */,
-				9CE6FE542412BA4D00E9EB7A /* MkdownListInfo.swift in Sources */,
 				9CCFD62322AED9FA00C64D37 /* StringFromTo.swift in Sources */,
 				9C60E75B21F651E500C332ED /* SeqValue.swift in Sources */,
 				9CCFEE772270F52200F472C5 /* RowConsumer.swift in Sources */,

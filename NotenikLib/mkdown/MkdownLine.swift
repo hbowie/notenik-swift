@@ -54,22 +54,6 @@ class MkdownLine {
     
     var indentLevels = 0
     
-    /// Return 0 if no list participation, otherwise 1 or up.
-    var listLevel: Int {
-        if type.isListItem {
-            return indentLevels + 1
-        } else {
-            return indentLevels
-        }
-    }
-    
-    var listInfo = MkdownListInfo()
-    
-    func setListInfo() {
-        listInfo.setTypeFrom(lineType: type)
-        listInfo.level = listLevel
-    }
-    
     func heading1() {
         type = .heading
         headingLevel = 1
@@ -247,9 +231,6 @@ class MkdownLine {
         }
         if horizontalRule {
             print("Horizontal Rule")
-        }
-        if listLevel > 0 {
-            print("List level = \(listLevel)")
         }
         print("Text: '\(text)'")
         blocks.display()
