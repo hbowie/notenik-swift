@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/5/18.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -26,6 +26,9 @@ class SeqValue: StringValue {
     var letters = false
     var uppercase = true
     
+    var segments = SeqStack()
+    var nextSegment = SeqSegment()
+    
     // Return portion of sequence string to the left of the first decimal point.
     var left: String {
         guard positionsToLeftOfDecimal > 0 else { return "" }
@@ -41,6 +44,8 @@ class SeqValue: StringValue {
     override func set (_ value : String) {
         
         super.set(value)
+        segments = SeqStack()
+        nextSegment = SeqSegment()
         
         positionOfFirstDecimal = -1
         positionOfLastDecimal = -1
@@ -54,6 +59,7 @@ class SeqValue: StringValue {
         var newValue = ""
         
         for c in value {
+            nextSegment.append(c)
             if c != "." && c != "-" && positionOfFirstDecimal < 0 {
                 positionsToLeftOfDecimal += 1
             }
@@ -92,9 +98,14 @@ class SeqValue: StringValue {
                 positionOfLastDecimal = newValue.count
                 positionsToRightOfDecimal = 0
                 newValue.append(c)
+                segments.append(nextSegment)
+                nextSegment = SeqSegment()
             } // end character evaluation
         } // end for loop
         self.value = newValue
+        if nextSegment.count > 0 {
+            segments.append(nextSegment)
+        }
     } // end set function
     
     /// Increment the sequence value by 1
@@ -148,7 +159,7 @@ class SeqValue: StringValue {
     
     /// Return a value that can be used as a key for comparison purposes
     override var sortKey: String {
-        return pad(leftChar: "0", leftNumber: 8, rightChar: "0", rightNumber: 4)
+        return segments.sortKey
     }
     
     /// Returns a padded string.
