@@ -74,6 +74,18 @@ class StatusValueConfig {
         }
     }
     
+    var statusOptionsAsString: String {
+        var opts = ""
+        var i = 0
+        for statusOpt in statusOptions {
+            if statusOpt.count > 0 && statusOpt != " " {
+                opts.append("\(i) - \(statusOpt); ")
+            }
+            i += 1
+        }
+        return opts
+    }
+    
     /// Is this status integer valid?
     func validStatus(_ i : Int) -> Bool {
         let label = get(i)
