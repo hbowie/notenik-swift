@@ -904,10 +904,13 @@ class FileIO: NotenikIO, RowConsumer {
         let dict = collection!.dict
         var str = ""
         for def in dict.list {
+            var value = ""
             if def.fieldLabel.commonForm == LabelConstants.timestampCommon {
                 collection!.hasTimestamp = true
+            } else if def.fieldLabel.commonForm == LabelConstants.statusCommon {
+                value = collection!.statusConfig.statusOptionsAsString
             }
-            str.append(def.fieldLabel.properForm + ": \n\n")
+            str.append("\(def.fieldLabel.properForm): \(value) \n\n")
         }
         let filePath = collection!.makeFilePath(fileName: "template." + collection!.preferredExt)
         do {
