@@ -11,7 +11,6 @@
 
 /// The phases of evaluation for a line of Markdown, proceeding from left to right. 
 enum MkdownLinePhase {
-    case indenting
     case leadingPunctuation
     case text
 }

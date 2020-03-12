@@ -237,6 +237,50 @@ class Markedup: CustomStringConvertible {
         listInProgress = " "
     }
     
+    func startPreformatted() {
+        switch format {
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
+            writeLine("<pre>")
+        case .markdown:
+            break
+        case .opml:
+            break
+        }
+    }
+    
+    func finishPreformatted() {
+        switch format {
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
+            writeLine("</pre>")
+        case .markdown:
+            break
+        case .opml:
+            break
+        }
+    }
+    
+    func startCode() {
+        switch format {
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
+            writeLine("<code>")
+        case .markdown:
+            break
+        case .opml:
+            break
+        }
+    }
+    
+    func finishCode() {
+        switch format {
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
+            writeLine("</code>")
+        case .markdown:
+            break
+        case .opml:
+            break
+        }
+    }
+    
     func startDefinitionList(klass: String?) {
         switch format {
         case .htmlFragment, .htmlDoc, .netscapeBookmarks:

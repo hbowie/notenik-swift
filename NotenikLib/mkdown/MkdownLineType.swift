@@ -16,6 +16,7 @@ enum MkdownLineType {
     case h2Underlines
     case heading
     case horizontalRule
+    case html
     case linkDef
     case linkDefExt
     case orderedItem

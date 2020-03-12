@@ -122,6 +122,11 @@ class ShareViewController: NSViewController {
             }
             jWriter.close()
             stringToShare = jWriter.outputString
+        } else if contentBodyOnlyButton.state == .on {
+            let markdown = Markdown()
+            markdown.md = note!.body.value
+            markdown.parse()
+            stringToShare = markdown.html
         } else {
             let noteDisplay = NoteDisplay()
             noteDisplay.format = format

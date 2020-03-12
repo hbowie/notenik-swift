@@ -15,6 +15,7 @@ import Foundation
 class MkdownLine {
     var line = ""
     var type: MkdownLineType = .blank
+    var blocks = MkdownBlockStack()
     var quoteLevel = 0
     var hashCount = 0
     var headingLevel = 0
@@ -23,6 +24,8 @@ class MkdownLine {
     var repeatCount = 0
     var onlyRepeating = true
     var onlyRepeatingAndSpaces = true
+    
+    var leadingBulletAndSpace = false
     
     var headingUnderlining: Bool {
         return (onlyRepeating && repeatCount >= 2 &&
@@ -36,18 +39,7 @@ class MkdownLine {
     
     var textFound = false
     var text = ""
-    
-    var indentLevels = 0
-    
-    /// Return -1 if no table level, otherwise 0 or up. 
-    var tableLevel: Int {
-        if type.isListItem {
-            return indentLevels
-        } else {
-            return indentLevels - 1
-        }
-    }
-    var blockQuoteChars = 0 
+
     var trailingSpaceCount = 0
     var endsWithNewline = false
     var endsWithBackSlash = false
@@ -60,22 +52,183 @@ class MkdownLine {
         return type != .blank && trailingSpaceCount >= 2
     }
     
+    var indentLevels = 0
+    
+    /// Return 0 if no list participation, otherwise 1 or up.
+    var listLevel: Int {
+        if type.isListItem {
+            return indentLevels + 1
+        } else {
+            return indentLevels
+        }
+    }
+    
+    var listInfo = MkdownListInfo()
+    
+    func setListInfo() {
+        listInfo.setTypeFrom(lineType: type)
+        listInfo.level = listLevel
+    }
+    
+    func heading1() {
+        type = .heading
+        headingLevel = 1
+        if blocks.last.isHeadingTag || blocks.last.isParagraph {
+            blocks.last.tag = "h1"
+        } else {
+            blocks.append("h1")
+        }
+    }
+    
+    func heading2() {
+        type = .heading
+        headingLevel = 2
+        if blocks.last.isHeadingTag || blocks.last.isParagraph {
+            blocks.last.tag = "h2"
+        } else {
+            blocks.append("h2")
+        }
+    }
+    
+    /// Another hash symbol
+    func incrementHeadingLevel() -> Bool {
+        hashCount += 1
+        if blocks.last.isHeadingTag {
+            let ok = blocks.incrementHeadingLevel()
+            if !ok {
+                return false
+            }
+        } else {
+            blocks.append("h1")
+        }
+        type = .heading
+        headingLevel += 1
+        return true
+    }
+    
+    func makeOrdinary() {
+        type = .ordinaryText
+        headingLevel = 0
+        if blocks.last.isHeadingTag {
+            blocks.removeLast()
+        }
+    }
+    
+    func makeHTML() {
+        type = .html
+    }
+    
+    func makeHorizontalRule() {
+        type = .horizontalRule
+    }
+    
+    func carryBlockquotesForward(lastLine: MkdownLine) {
+        var insertionPoint = 0
+        for block in lastLine.blocks.blocks {
+            if block.isBlockquote {
+                blocks.blocks.insert(MkdownBlock("blockquote"), at: insertionPoint)
+                insertionPoint += 1
+            } else {
+                return
+            }
+        }
+    }
+    
+    func makeUnordered(previousLine: MkdownLine, previousNonBlankLine: MkdownLine) {
+        
+        type = .unorderedItem
+        
+        blocks.append("ul")
+        let liIndex = blocks.count
+        blocks.append("li")
+        blocks.blocks[liIndex].itemNumber = 1
+        
+        var lastPossibleListItem = previousLine
+        if previousLine.type == .blank {
+            lastPossibleListItem = previousNonBlankLine
+        }
+        
+        guard lastPossibleListItem.type == .orderedItem else { return }
+        
+        guard blocks.count == lastPossibleListItem.blocks.count
+            || blocks.count == lastPossibleListItem.blocks.count - 1 else {
+            return
+        }
+        
+        blocks.blocks[liIndex].itemNumber = previousLine.blocks.blocks[liIndex].itemNumber + 1
+        
+        if previousLine.type == .blank {
+            previousLine.blocks.append("ul")
+            previousNonBlankLine.addParagraph()
+            self.addParagraph()
+        }
+    }
+    
+    func makeOrdered(previousLine: MkdownLine, previousNonBlankLine: MkdownLine) {
+        
+        type = .orderedItem
+        
+        blocks.append("ol")
+        let liIndex = blocks.count
+        blocks.append("li")
+        blocks.blocks[liIndex].itemNumber = 1
+        
+        var lastPossibleListItem = previousLine
+        if previousLine.type == .blank {
+            lastPossibleListItem = previousNonBlankLine
+        }
+        
+        guard lastPossibleListItem.type == .orderedItem else { return }
+        
+        guard blocks.count == lastPossibleListItem.blocks.count
+            || blocks.count == lastPossibleListItem.blocks.count - 1 else {
+            return
+        }
+        
+        // print("Make Ordered")
+        // print("Current Line:")
+        // display()
+        // print("Previous Line:")
+        // previousLine.display()
+        // print("Previous non-blank line:")
+        // previousNonBlankLine.display()
+        // print("liIndex: \(liIndex)")
+        blocks.blocks[liIndex].itemNumber = lastPossibleListItem.blocks.blocks[liIndex].itemNumber + 1
+        
+        if previousLine.type == .blank {
+            previousLine.blocks.append("ol")
+            previousNonBlankLine.addParagraph()
+            self.addParagraph()
+        }
+        
+    }
+    
+    func continueBlock(from: MkdownLine, forLevel: Int) -> Bool {
+        return blocks.continueBlock(from: from.blocks, forLevel: forLevel)
+    }
+    
+    func addParagraph() {
+        if blocks.last.tag != "p" {
+            blocks.append("p")
+        }
+    }
+    
     func display() {
         print(" ")
         print("MkdownLine.display")
         print("Input line: '\(line)'")
+        print("Line type: \(type)")
         if indentLevels > 0 {
             print("Indent levels: \(indentLevels)")
         }
-        print("Line type: \(type)")
         if type == .heading {
             print("Heading level: \(headingLevel)")
         }
         if isEmpty {
             print("Is Empty? \(isEmpty)")
         }
-        if blockQuoteChars > 0 {
-            print("Block Quote Char count = \(blockQuoteChars)")
+        if quoteLevel > 0 {
+            print("Quote Level = \(quoteLevel)")
         }
         if hashCount > 0 {
             print("Hash count: \(hashCount)")
@@ -95,9 +248,10 @@ class MkdownLine {
         if horizontalRule {
             print("Horizontal Rule")
         }
-        if tableLevel >= 0 {
-            print("Table level = \(tableLevel)")
+        if listLevel > 0 {
+            print("List level = \(listLevel)")
         }
         print("Text: '\(text)'")
+        blocks.display()
     }
 }
