@@ -61,23 +61,31 @@ class MkdownBlockStack: Equatable {
         var levelCount = 0
         var index = 0
         while levelCount < forLevel && index < from.count {
-            levelCount += 1
-            let indexPlus = index + 1
             var indexInc = 1
-            if (indexPlus < from.count
-                && from.blocks[index].isListTag
-                && from.blocks[indexPlus].isListItem) {
-                indexInc = 2
-            }
-            
-            if levelCount == forLevel {
-                let copy1 = from.blocks[index].copy() as! MkdownBlock
-                append(copy1)
-                if indexInc == 2 {
-                    var copy2: MkdownBlock? = nil
-                    copy2 = from.blocks[indexPlus].copy() as? MkdownBlock
-                    if copy2 != nil {
-                        append(copy2!)
+            let indexPlus = index + 1
+            let nextBlock = from.blocks[index]
+            let nextTag = nextBlock.tag
+            switch nextTag {
+            case "pre", "code":
+                break
+            case "li":
+                break
+            default:
+                if (indexPlus < from.count
+                    && nextBlock.isListTag
+                    && from.blocks[indexPlus].isListItem) {
+                    indexInc = 2
+                }
+                levelCount += 1
+                if levelCount == forLevel {
+                    let copy1 = nextBlock.copy() as! MkdownBlock
+                    append(copy1)
+                    if indexInc == 2 {
+                        var copy2: MkdownBlock? = nil
+                        copy2 = from.blocks[indexPlus].copy() as? MkdownBlock
+                        if copy2 != nil {
+                            append(copy2!)
+                        }
                     }
                 }
             }

@@ -18,11 +18,43 @@ enum MkdownChunkType {
     case startStrong1
     case startStrong2
     case endStrong1
-    
     case endStrong2
+    
     case startEmphasis
     case endEmphasis
     
     case backSlash
     case literal
+    
+    case leftAngleBracket
+    case tagStart
+    
+    case ampersand
+    case entityStart
+    
+    case leftSquareBracket
+    case rightSquareBracket
+    
+    case leftParen
+    case rightParen
+    
+    case singleQuote
+    case doubleQuote
+    
+    case startLinkText
+    case startWikiLink1
+    case startWikiLink2
+    
+    case endLinkText
+    case endWikiLink1
+    case endWikiLink2
+    
+    case startLinkLabel
+    case endLinkLabel
+    
+    case startLink
+    case endLink
+    
+    case startTitle
+    case endTitle
 }

@@ -54,7 +54,13 @@ class MkdownLine {
     
     var indentLevels = 0
     
-    func heading1() {
+    func makeCode() {
+        type = .code
+        blocks.append("pre")
+        blocks.append("code")
+    }
+    
+    func makeHeading1() {
         type = .heading
         headingLevel = 1
         if blocks.last.isHeadingTag || blocks.last.isParagraph {
@@ -64,7 +70,7 @@ class MkdownLine {
         }
     }
     
-    func heading2() {
+    func makeHeading2() {
         type = .heading
         headingLevel = 2
         if blocks.last.isHeadingTag || blocks.last.isParagraph {

@@ -586,10 +586,14 @@ class Markedup: CustomStringConvertible {
         }
     }
     
-    func link(text: String, path: String) {
+    func link(text: String, path: String, title: String? = nil) {
         switch format {
         case .htmlFragment, .htmlDoc, .netscapeBookmarks:
-            code.append("<a href=\"" + path + "\">" + text + "</a>")
+            code.append("<a href=\"" + path + "\"")
+            if title != nil && title!.count > 0 {
+                code.append(" title=\"\(title!)\"")
+            }
+            code.append(">" + text + "</a>")
         case .markdown:
             code.append("[" + text + "](" + path + ")")
         case .opml:
@@ -597,10 +601,14 @@ class Markedup: CustomStringConvertible {
         }
     }
     
-    func startLink(path: String) {
+    func startLink(path: String, title: String? = nil) {
         switch format {
         case .htmlFragment, .htmlDoc, .netscapeBookmarks:
-            code.append("<a href=\"" + path + "\">")
+            code.append("<a href=\"" + path + "\"")
+            if title != nil && title!.count > 0 {
+                code.append(" title=\"\(title!)\"")
+            }
+            code.append(">")
         case .markdown:
             code.append("[")
         case .opml:
@@ -1006,6 +1014,19 @@ class Markedup: CustomStringConvertible {
             code.append("'")
         case .opml:
             code.append("&apos;")
+        }
+        lastCharWasWhiteSpace = false
+        lastCharWasEmDash = false
+    }
+    
+    func writeLeftAngleBracket() {
+        switch format {
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
+            code.append("&lt;")
+        case .markdown:
+            code.append("<")
+        case .opml:
+            code.append("&lt;")
         }
         lastCharWasWhiteSpace = false
         lastCharWasEmDash = false

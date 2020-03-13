@@ -74,6 +74,7 @@ class MkdownParser {
         endText = nextIndex
         startNumber = nextIndex
         startBullet = nextIndex
+        noteIDPrefix = interNoteDomain
     }
     
     /// Initialize with a string that will be copied.
@@ -86,6 +87,7 @@ class MkdownParser {
         endText = nextIndex
         startNumber = nextIndex
         startBullet = nextIndex
+        noteIDPrefix = interNoteDomain
     }
     
     /// Try to initialize by reading input from a URL.
@@ -99,6 +101,7 @@ class MkdownParser {
             endText = nextIndex
             startNumber = nextIndex
             startBullet = nextIndex
+            noteIDPrefix = interNoteDomain
         } catch {
             print("Error is \(error)")
             return nil
@@ -242,7 +245,7 @@ class MkdownParser {
                         if continuedBlock {
                             continue
                         } else if nextLine.type != .code {
-                            nextLine.type = .code
+                            nextLine.makeCode()
                             startText = nextIndex
                             phase = .text
                             nextLine.textFound = true
@@ -414,9 +417,9 @@ class MkdownParser {
         }
         
         if nextLine.type == .h1Underlines {
-            lastLine.heading1()
+            lastLine.makeHeading1()
         } else if nextLine.type == .h2Underlines {
-            lastLine.heading2()
+            lastLine.makeHeading2()
         }
         
         // If the line ends with a backslash, treat this like a line break.
@@ -434,9 +437,9 @@ class MkdownParser {
         guard !nextLine.isEmpty else { return }
         
         if nextLine.type == .h1Underlines {
-            lastLine.heading1()
+            lastLine.makeHeading1()
         } else if nextLine.type == .h2Underlines {
-            lastLine.heading2()
+            lastLine.makeHeading2()
         }
         
         if lastLine.quoteLevel > 0 && nextLine.type == .ordinaryText && nextLine.quoteLevel == 0 {
@@ -587,6 +590,9 @@ class MkdownParser {
             }
             
             switch line.type {
+            case .code:
+                chunkAndWrite(line)
+                writer.newLine()
             case .heading:
                 chunkAndWrite(line)
             case .horizontalRule:
@@ -641,14 +647,14 @@ class MkdownParser {
     func closeBlocks(from startToClose: Int) {
         var blockToClose = openBlocks.count - 1
         while blockToClose >= startToClose {
-            closeBlock(openBlocks.blocks[blockToClose].tag)
+            closeBlock(tag: openBlocks.blocks[blockToClose].tag)
             openBlocks.removeLast()
             blockToClose -= 1
         }
     }
     
-    func closeBlock(_ tag: String) {
-        writeChunks()
+    func closeBlock(tag: String) {
+        outputChunks()
         switch tag {
         case "blockquote":
             writer.finishBlockQuote()
@@ -684,26 +690,40 @@ class MkdownParser {
     /// Divide a line up into chunks, then write them out.
     func chunkAndWrite(_ line: MkdownLine) {
         textToChunks(line)
-        writeChunks()
+        outputChunks()
     }
     
     /// Divide another line of Markdown into chunks.
     func textToChunks(_ line: MkdownLine) {
         
-        nextChunk = MkdownChunk()
+        nextChunk = MkdownChunk(line: line)
         var backslashed = false
         var lastChar: Character = " "
         for char in line.text {
             if backslashed {
-                addCharAsChunk(char: char, type: .literal, lastChar: lastChar)
+                addCharAsChunk(char: char, type: .literal, lastChar: lastChar, line: line)
                 backslashed = false
             } else if char == "\\" {
-                addCharAsChunk(char: char, type: .backSlash, lastChar: lastChar)
+                addCharAsChunk(char: char, type: .backSlash, lastChar: lastChar, line: line)
                 backslashed = true
             } else if char == "*" {
-                addCharAsChunk(char: char, type: .asterisk, lastChar: lastChar)
+                addCharAsChunk(char: char, type: .asterisk, lastChar: lastChar, line: line)
             } else if char == "_" {
-                addCharAsChunk(char: char, type: .underline, lastChar: lastChar)
+                addCharAsChunk(char: char, type: .underline, lastChar: lastChar, line: line)
+            } else if char == "<" {
+                addCharAsChunk(char: char, type: .leftAngleBracket, lastChar: lastChar, line: line)
+            } else if char == "[" {
+                addCharAsChunk(char: char, type: .leftSquareBracket, lastChar: lastChar, line: line)
+            } else if char == "]" {
+                addCharAsChunk(char: char, type: .rightSquareBracket, lastChar: lastChar, line: line)
+            } else if char == "(" {
+                addCharAsChunk(char: char, type: .leftParen, lastChar: lastChar, line: line)
+            } else if char == ")" {
+                addCharAsChunk(char: char, type: .rightParen, lastChar: lastChar, line: line)
+            } else if char == "\"" {
+                addCharAsChunk(char: char, type: .doubleQuote, lastChar: lastChar, line: line)
+            } else if char == "'" {
+                addCharAsChunk(char: char, type: .singleQuote, lastChar: lastChar, line: line)
             } else if char == " " {
                 if nextChunk.text.count == 0 {
                     nextChunk.startsWithSpace = true
@@ -718,32 +738,35 @@ class MkdownParser {
             }
             lastChar = char
         }
-        finishNextChunk()
+        finishNextChunk(line: line)
         
         if line.endsWithLineBreak {
-            writeChunks()
+            outputChunks()
             writer.lineBreak()
         }
     }
     
     /// Add a character as its own chunk.
-    func addCharAsChunk(char: Character, type: MkdownChunkType, lastChar: Character) {
+    func addCharAsChunk(char: Character,
+                        type: MkdownChunkType,
+                        lastChar: Character,
+                        line: MkdownLine) {
         if nextChunk.text.count > 0 {
-            finishNextChunk()
+            finishNextChunk(line: line)
         }
         nextChunk.setTextFrom(char: char)
         nextChunk.type = type
         nextChunk.spaceBefore = lastChar.isWhitespace
         addChunk(nextChunk)
-        nextChunk = MkdownChunk()
+        nextChunk = MkdownChunk(line: line)
     }
     
     /// Add the chunk to the array.
-    func finishNextChunk() {
+    func finishNextChunk(line: MkdownLine) {
         if nextChunk.text.count > 0 {
             addChunk(nextChunk)
         }
-        nextChunk = MkdownChunk()
+        nextChunk = MkdownChunk(line: line)
     }
     
     func addChunk(_ chunk: MkdownChunk) {
@@ -755,34 +778,48 @@ class MkdownParser {
     }
     
     /// Now finish evaluation of the chunks and write them out.
-    func writeChunks() {
+    func outputChunks() {
         
-        // Let's try to match up any unmatched enclosures
+        identifyPatterns()
+        
+        writeChunks(chunksToWrite: chunks)
+        
+        chunks = []
+    }
+    
+    /// Scan through our accumulated chunks, looking for meaningful patterns of puncutation.
+    func identifyPatterns() {
+        
         var index = 0
         while index < chunks.count {
             let chunk = chunks[index]
+            let nextIndex = index + 1
             switch chunk.type {
             case .asterisk, .underline:
-                scanForClosure(forChunkAt: index)
+                scanForEmphasisClosure(forChunkAt: index)
+            case .leftAngleBracket:
+                if chunk.lineType == .code { break }
+                if nextIndex >= chunks.count { break }
+                if chunks[nextIndex].startsWithSpace { break }
+                chunk.type = .tagStart
+            case .ampersand:
+                if chunk.lineType == .code { break }
+                if nextIndex >= chunks.count { break }
+                if chunks[nextIndex].startsWithSpace { break }
+                chunk.type = .entityStart
+            case .leftSquareBracket:
+                scanForLinkElements(forChunkAt: index)
             default:
                 break
             }
             index += 1
         }
-        
-        for chunk in chunks {
-            write(chunk: chunk)
-        }
-        chunks = []
     }
     
     /// If we have an asterisk or an underline, look for the closing symbols to end the emphasis span.
-    func scanForClosure(forChunkAt: Int) {
-        // print(" ")
-        // print("Scan for Closure")
+    func scanForEmphasisClosure(forChunkAt: Int) {
         startIndex = forChunkAt
         startChunk = chunks[startIndex]
-        // startChunk.display(title: "Starting Chunk", indenting: 0)
         var next = startIndex + 1
         consecutiveStartCount = 1
         leftToClose = 1
@@ -790,7 +827,6 @@ class MkdownParser {
         matchStart = -1
         while leftToClose > 0 && next < chunks.count {
             let nextChunk = chunks[next]
-            // nextChunk.display(title: "Next Chunk", indenting: 4)
             if nextChunk.type == startChunk.type && next == (startIndex + consecutiveStartCount) {
                 consecutiveStartCount += 1
                 leftToClose += 1
@@ -802,15 +838,15 @@ class MkdownParser {
                     consecutiveCloseCount += 1
                 }
             } else if consecutiveCloseCount > 0 {
-                processClosure()
+                processEmphasisClosure()
             }
             next += 1
         }
-        processClosure()
+        processEmphasisClosure()
     }
     
     /// Let's close things up.
-    func processClosure() {
+    func processEmphasisClosure() {
         guard consecutiveCloseCount > 0 else { return }
         if consecutiveStartCount == consecutiveCloseCount {
             switch consecutiveStartCount {
@@ -855,12 +891,185 @@ class MkdownParser {
         }
     }
     
+    /// If we have a left square bracket, scan for other punctuation related to a link.
+    func scanForLinkElements(forChunkAt: Int) {
+        
+        let leftBracket1 = chunks[forChunkAt]
+        var leftBracket2: MkdownChunk?
+        var rightBracket1: MkdownChunk?
+        var rightBracket2: MkdownChunk?
+        var closingTextBracketIndex = -1
+        var leftLabelBracket: MkdownChunk?
+        var rightLabelBracket: MkdownChunk?
+        var leftParen: MkdownChunk?
+        var leftQuote: MkdownChunk?
+        var rightQuote: MkdownChunk?
+        var rightParen: MkdownChunk?
+        var lastChunk = MkdownChunk()
+        
+        var doubleBrackets = false
+        var textBracketsClosed = false
+        var linkLooking = true
+        var index = forChunkAt + 1
+        while linkLooking && index < chunks.count {
+            let chunk = chunks[index]
+            switch chunk.type {
+            case .leftSquareBracket:
+                if index == forChunkAt + 1 {
+                    leftBracket2 = chunk
+                    doubleBrackets = true
+                } else if (textBracketsClosed
+                    && !doubleBrackets
+                    && (index == closingTextBracketIndex + 1
+                        || (index == closingTextBracketIndex + 2
+                            && lastChunk.text == " "))) {
+                    leftLabelBracket = chunk
+                } else {
+                    return
+                }
+            case .rightSquareBracket:
+                if rightBracket1 == nil {
+                    rightBracket1 = chunk
+                    if !doubleBrackets {
+                        textBracketsClosed = true
+                        closingTextBracketIndex = index
+                    }
+                } else if doubleBrackets && rightBracket2 == nil {
+                    rightBracket2 = chunk
+                    textBracketsClosed = true
+                    linkLooking = false
+                    closingTextBracketIndex = index
+                } else if leftLabelBracket != nil {
+                    rightLabelBracket = chunk
+                    linkLooking = false
+                } else {
+                    return
+                }
+            case .plaintext:
+                if textBracketsClosed && leftParen == nil && leftLabelBracket == nil {
+                    if chunk.text == " " {
+                        break
+                    } else {
+                        return
+                    }
+                }
+            case .leftParen:
+                if textBracketsClosed && leftParen == nil {
+                    leftParen = chunk
+                } else {
+                    return
+                }
+            case .rightParen:
+                if leftParen == nil {
+                    return
+                } else {
+                    rightParen = chunk
+                    linkLooking = false
+                }
+            case .singleQuote:
+                if leftQuote == nil && textBracketsClosed && leftParen != nil {
+                    leftQuote = chunk
+                } else if leftQuote != nil && leftQuote!.type == chunk.type {
+                    rightQuote = chunk
+                }
+            case .doubleQuote:
+                if leftQuote == nil && textBracketsClosed && leftParen != nil {
+                    leftQuote = chunk
+                } else if leftQuote != nil && leftQuote!.type == chunk.type {
+                    rightQuote = chunk
+                }
+            default:
+                break
+            }
+            lastChunk = chunk
+            index += 1
+        }
+        
+        if linkLooking { return }
+        
+        if doubleBrackets {
+            leftBracket1.type = .startWikiLink1
+            leftBracket2!.type = .startWikiLink2
+            rightBracket1!.type = .endWikiLink1
+            rightBracket2!.type = .endWikiLink2
+        } else {
+            leftBracket1.type = .startLinkText
+            rightBracket1!.type = .endLinkText
+            if leftParen != nil {
+                leftParen!.type = .startLink
+                rightParen!.type = .endLink
+                if leftQuote != nil && rightQuote != nil {
+                    leftQuote!.type = .startTitle
+                    rightQuote!.type = .endTitle
+                }
+            } else if leftLabelBracket != nil {
+                leftLabelBracket!.type = .startLinkLabel
+                rightLabelBracket!.type = .endLinkLabel
+            }
+        }
+    }
+    
+    func writeChunks(chunksToWrite: [MkdownChunk]) {
+        for chunkToWrite in chunksToWrite {
+            write(chunk: chunkToWrite)
+        }
+    }
+    
     func write(chunk: MkdownChunk) {
+        
+        // chunk.display()
+        
+        // If we're in the middle of a link, then capture the text for its
+        // various elements instead of writing anything out in the normal
+        // linear flow.
+        
+        if linkElementDiverter != .na {
+            switch linkElementDiverter {
+            case .text:
+                if chunk.type == .endLinkText {
+                    break
+                } else {
+                    linkTextChunks.append(chunk)
+                    linkText.append(chunk.text)
+                    return
+                }
+            case .url:
+                if chunk.type == .endLink || chunk.type == .startTitle || chunk.text == " " {
+                    break
+                } else {
+                    linkURL.append(chunk.text)
+                    return
+                }
+            case .title:
+                if chunk.type == .endTitle || chunk.type == .endLink {
+                    break
+                } else {
+                    linkTitle.append(chunk.text)
+                    return
+                }
+            case .label:
+                if chunk.type == .endLinkLabel {
+                    break
+                } else {
+                    linkLabel.append(chunk.text.lowercased())
+                    return
+                }
+            case .na:
+                break
+            }
+
+        }
+        
+        // Figure out what to do with the next chunk of text,
+        // depending on its type.
+        
         switch chunk.type {
+        case .ampersand:
+            writer.writeAmpersand()
         case .backSlash:
             break
-        case .literal:
-            writer.append(chunk.text)
+        case .leftAngleBracket:
+            writer.writeLeftAngleBracket()
         case .startEmphasis:
             writer.startEmphasis()
         case .endEmphasis:
@@ -873,9 +1082,107 @@ class MkdownParser {
             writer.finishStrong()
         case .endStrong2:
             break
+        case .startLinkText:
+            linkTextChunks = []
+            linkText = ""
+            linkElementDiverter = .text
+        case .startWikiLink1:
+            break
+        case .startWikiLink2:
+            linkTextChunks = []
+            linkText = ""
+            linkElementDiverter = .text
+            doubleBrackets = true
+        case .endWikiLink1:
+            break
+        case .endWikiLink2:
+            finishLink()
+        case .endLinkText:
+            linkElementDiverter = .na
+        case .startLink:
+            linkElementDiverter = .url
+            linkURL = ""
+        case .startTitle:
+            linkElementDiverter = .title
+            linkTitle = ""
+        case .endTitle:
+            linkElementDiverter = .na
+        case .endLink:
+            linkElementDiverter = .na
+            finishLink()
+        case .startLinkLabel:
+            linkElementDiverter = .label
+            linkLabel = ""
+        case .endLinkLabel:
+            linkElementDiverter = .na
+            finishLink()
         default:
             writer.append(chunk.text)
         }
+    }
+    
+    var linkTextChunks: [MkdownChunk] = []
+    var linkText = ""
+    var doubleBrackets = false
+    var linkElementDiverter: LinkElementDiverter = .na
+    var linkTitle = ""
+    var linkLabel = ""
+    var linkURL = ""
+    
+    let interNoteDomain = "https://ntnk.app/"
+    var noteIDPrefix = ""
+    var noteIDSuffix = ""
+    var noteIDFormat: NoteIDFormat = .common
+    
+    func initLink() {
+        linkTextChunks = []
+        linkText = ""
+        doubleBrackets = false
+        linkElementDiverter = .na
+        linkTitle = ""
+        linkLabel = ""
+        linkURL = ""
+    }
+    
+    func finishLink() {
+        if doubleBrackets {
+            var formattedID = ""
+            switch noteIDFormat {
+            case .common:
+                formattedID = StringUtils.toCommon(linkText)
+            case .fileName:
+                formattedID = StringUtils.toCommonFileName(linkText)
+            }
+            linkURL = noteIDPrefix + formattedID + noteIDSuffix
+        }
+        if linkURL.count == 0 {
+            if linkLabel.count == 0 {
+                linkLabel = linkText.lowercased()
+            }
+            let refLink = linkDict[linkLabel]
+            if refLink != nil {
+                linkURL = refLink!.link
+                linkTitle = refLink!.title
+            }
+        }
+        writer.startLink(path: linkURL, title: linkTitle)
+        writeChunks(chunksToWrite: linkTextChunks)
+        writer.finishLink()
+        initLink()
+    }
+    
+    enum LinkElementDiverter {
+        case na
+        case text
+        case label
+        case title
+        case url
+    }
+    
+    /// The formatting to be applied to the ID.
+    enum NoteIDFormat {
+        case common
+        case fileName
     }
     
 }

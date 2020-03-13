@@ -11,9 +11,11 @@
 
 import Foundation
 
+/// One chunk of characters from one Markdown line. 
 class MkdownChunk {
     var text = ""
     var type: MkdownChunkType = .plaintext
+    var lineType: MkdownLineType = .ordinaryText
     var startsWithSpace = false
     var endsWithSpace = false
     
@@ -37,17 +39,24 @@ class MkdownChunk {
         return type == .asterisk || type == .underline
     }
     
+    init() {
+        
+    }
+    
+    init(line: MkdownLine) {
+        lineType = line.type
+    }
+    
     func setTextFrom(char: Character) {
         text = String(char)
     }
     
     func display(title: String = "", indenting: Int = 0) {
-        print(" ")
         let indent = String(repeating: " ", count: indenting)
         if title.count > 0 {
+            print(" ")
             print("\(indent)\(title)")
         }
-        print("\(indent)text: \(text)")
-        print("\(indent)type: \(type)")
+        print("\(indent)Chunk type: \(type), text: '\(text)'")
     }
 }
