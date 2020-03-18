@@ -158,7 +158,6 @@ class MkdownLine {
                       previousLine: MkdownLine,
                       previousNonBlankLine: MkdownLine) {
         
-        print("MkdownLine.makeListItem requested type = \(requestedType)")
         // Set the line type to the right sort of list.
         self.type = requestedType
         
@@ -166,30 +165,24 @@ class MkdownLine {
         if requestedType == .orderedItem {
             listTag = "ol"
         }
-        print("  - list tag: \(listTag)")
         
-        // Is this the first item in a new list, or the
-        // continuation of an existing list?
+        // If the previous line was blank, then let's look at the lat non-blank line.
         var lastPossibleListItem = previousLine
         if previousLine.type == .blank {
             lastPossibleListItem = previousNonBlankLine
         }
         
+        // Is this the first item in a new list, or the
+        // continuation of an existing list?
         let listIndex = self.blocks.listPointers.count
-        print("  - list index: \(listIndex)")
         var continueList = false
         var lastList = MkdownBlock()
         var lastListItem = MkdownBlock()
-        print("  - last item lists count: \(lastPossibleListItem.blocks.listPointers.count)")
         if listIndex < lastPossibleListItem.blocks.listPointers.count {
-            print("    - list index < last item lists count")
             lastList = lastPossibleListItem.blocks.getListBlock(atLevel: listIndex)
             lastListItem = lastPossibleListItem.blocks.getListItem(atLevel: listIndex)
-            print("  - last list tag = '\(lastList.tag)'")
-            print("  - last list item tag = '\(lastListItem.tag)'")
             if lastList.tag == listTag && lastListItem.tag == "li" {
                 continueList = true
-                print("  - continue list = true")
             }
         }
         
@@ -202,7 +195,6 @@ class MkdownLine {
                 }
             }
             blocks.append(lastList)
-            print("  - last list item # = \(lastListItem.itemNumber)")
             listItem.itemNumber = lastListItem.itemNumber + 1
         } else {
             let newList = MkdownBlock(listTag)
@@ -210,9 +202,8 @@ class MkdownLine {
             listItem.itemNumber = 1
         }
         blocks.append(listItem)
-        print("  - list item # = \(listItem.itemNumber)")
         
-        if continueList && lastList.listWithParagraphs {
+        /* if continueList && lastList.listWithParagraphs {
             addParagraph()
             let lastBlocks = lastPossibleListItem.blocks
             let lastListIndex = lastBlocks.listPointers[listIndex]
@@ -228,6 +219,17 @@ class MkdownLine {
                 }
             }
         }
+        
+        print("MkdownLine.makeListItem requested type = \(requestedType)")
+        print("  - list tag: \(listTag)")
+        print("  - list index: \(listIndex)")
+        print("  - last item lists count: \(lastPossibleListItem.blocks.listPointers.count)")
+        print("  - last list tag = '\(lastList.tag)'")
+        print("  - last list item tag = '\(lastListItem.tag)'")
+        print("  - continue list = \(continueList)")
+        print("  - last list item # = \(lastListItem.itemNumber)")
+        print("  - list item # = \(listItem.itemNumber)")
+ */
     }
     
     /// Try to continue open list blocks from previous lines, based on this line's indention level.

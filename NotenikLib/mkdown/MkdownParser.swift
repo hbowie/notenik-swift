@@ -476,7 +476,7 @@ class MkdownParser {
         if nextLine.type != .blank {
             lastNonBlankLine = nextLine
         }
-        nextLine.display()
+        // nextLine.display()
     }
     
     func linkLabelExamineChar(_ char: Character) {
@@ -587,19 +587,19 @@ class MkdownParser {
         openBlocks = MkdownBlockStack()
         
         for line in lines {
-            line.display()
+            // line.display()
             
             if !line.followOn {
                 // Close any outstanding blocks that are no longer in effect.
                 var startToClose = 0
-                print("Open Blocks - count = \(openBlocks.count)")
+                // print("Open Blocks - count = \(openBlocks.count)")
                 while startToClose < openBlocks.count {
                     guard startToClose < line.blocks.count else { break }
-                    openBlocks.blocks[startToClose].display(index: startToClose)
+                    // openBlocks.blocks[startToClose].display(index: startToClose)
                     if openBlocks.blocks[startToClose] != line.blocks.blocks[startToClose] {
                         break
                     }
-                    print("  - Blocks match")
+                    // print("  - Blocks match")
                     startToClose += 1
                 }
                 
@@ -608,31 +608,27 @@ class MkdownParser {
                 // Now start any new business.
                 
                 var blockToOpenIndex = openBlocks.count
-                var listWithParagraphsIndex = -3
-                var paraInserted = false
+                var listItemIndex = 0
                 while blockToOpenIndex < line.blocks.count {
-                    var blockToOpen = line.blocks.blocks[blockToOpenIndex]
-                    if blockToOpen.listWithParagraphs {
-                        listWithParagraphsIndex = blockToOpenIndex
-                    } else if blockToOpen.isParagraph && blockToOpenIndex == listWithParagraphsIndex + 2 {
-                        listWithParagraphsIndex = -3
-                    } else if listWithParagraphsIndex >= 0 && blockToOpenIndex == listWithParagraphsIndex + 2 {
-                        let paraBlock = MkdownBlock("p")
-                        listWithParagraphsIndex = -3
-                        blockToOpen = paraBlock
-                        paraInserted = true
+                    let blockToOpen = line.blocks.blocks[blockToOpenIndex]
+                    if blockToOpen.isListItem {
+                        listItemIndex = openBlocks.count
+                    } else if blockToOpen.isParagraph {
+                        listItemIndex = 0
                     }
-                    
                     openBlock(blockToOpen.tag)
                     openBlocks.append(blockToOpen)
-                    if !paraInserted {
-                        blockToOpenIndex += 1
-                    }
+                    blockToOpenIndex += 1
                 }
-                if listWithParagraphsIndex >= 0 {
-                    let paraBlock = MkdownBlock("p")
-                    openBlock(paraBlock.tag)
-                    openBlocks.append(paraBlock)
+                
+                if listItemIndex > 0 {
+                    let listIndex = listItemIndex - 1
+                    let listBlock = openBlocks.blocks[listIndex]
+                    if listBlock.isListTag && listBlock.listWithParagraphs {
+                        let paraBlock = MkdownBlock("p")
+                        openBlock(paraBlock.tag)
+                        openBlocks.append(paraBlock)
+                    }
                 }
             }
             
@@ -658,6 +654,7 @@ class MkdownParser {
     }
     
     func openBlock(_ tag: String) {
+        outputUnwrittenChunks()
         switch tag {
         case "blockquote":
             writer.startBlockQuote()
@@ -824,13 +821,17 @@ class MkdownParser {
         chunks.append(chunk)
     }
     
+    func outputUnwrittenChunks() {
+        if chunks.count > 0 {
+            outputChunks()
+        }
+    }
+    
     /// Now finish evaluation of the chunks and write them out.
     func outputChunks() {
         
         identifyPatterns()
-        
         writeChunks(chunksToWrite: chunks)
-        
         chunks = []
     }
     
@@ -1192,10 +1193,10 @@ class MkdownParser {
     }
     
     func finishLink() {
-        print("MkdownParser.finishLink")
-        print("  - Link Text: \(linkText)")
+        // print("MkdownParser.finishLink")
+        // print("  - Link Text: \(linkText)")
         if doubleBrackets {
-            print("  - Double Brackets")
+            // print("  - Double Brackets")
             var formattedID = ""
             switch noteIDFormat {
             case .common:
@@ -1203,10 +1204,10 @@ class MkdownParser {
             case .fileName:
                 formattedID = StringUtils.toCommonFileName(linkText)
             }
-            print("  - Formatted ID: \(formattedID)")
+            // print("  - Formatted ID: \(formattedID)")
             linkURL = noteIDPrefix + linkText
         }
-        print("  - Link URL: \(linkURL)")
+        // print("  - Link URL: \(linkURL)")
         if linkURL.count == 0 {
             if linkLabel.count == 0 {
                 linkLabel = linkText.lowercased()
