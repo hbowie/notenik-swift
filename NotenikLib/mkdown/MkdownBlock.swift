@@ -11,10 +11,12 @@
 
 import Foundation
 
+/// A block tag enclosing one or more lines of Markdown/HTML. 
 class MkdownBlock: CustomStringConvertible, Equatable, NSCopying {
 
     var tag = ""
     var itemNumber = 0
+    var listWithParagraphs = false
     
     init() {
         
@@ -73,7 +75,14 @@ class MkdownBlock: CustomStringConvertible, Equatable, NSCopying {
     }
     
     func display(index: Int) {
-        print("Block # \(index) Tag: \(tag), Item Number: \(itemNumber)")
+        var displayLine = "Block # \(index) Tag: \(tag)"
+        if tag == "li" {
+            displayLine.append(", Item Number: \(itemNumber)")
+        }
+        if listWithParagraphs {
+            displayLine.append(", List with Paragraphs")
+        }
+        print(displayLine)
     }
     
     static func == (lhs: MkdownBlock, rhs: MkdownBlock) -> Bool {

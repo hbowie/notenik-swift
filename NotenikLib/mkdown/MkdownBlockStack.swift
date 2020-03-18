@@ -11,28 +11,55 @@
 
 import Foundation
 
+/// All of the block tags enclosing one or more lines of Markdown/HTML. 
 class MkdownBlockStack: Equatable {
 
     let nullBlock = MkdownBlock()
+    
     var blocks: [MkdownBlock] = []
+    var count: Int { return blocks.count }
+    var lastIndex: Int { return count - 1 }
     
-    var lastIndex: Int { return blocks.count - 1 }
+    var listPointers: [Int] = []
     
-    var count: Int {
-        return blocks.count
+    /// Return the list block at the requested level (with the first level denoted by zero). 
+    func getListBlock(atLevel: Int) -> MkdownBlock {
+        guard atLevel >= 0 && atLevel < listPointers.count else { return nullBlock }
+        let listPointer = listPointers[atLevel]
+        guard listPointer >= 0 && listPointer < blocks.count else { return nullBlock }
+        let listBlock = blocks[listPointer]
+        guard listBlock.isListTag else { return nullBlock }
+        return listBlock
+    }
+    
+    /// Return the list block at the requested level (with the first level denoted by zero).
+    func getListItem(atLevel: Int) -> MkdownBlock {
+        guard atLevel >= 0 && atLevel < listPointers.count else { return nullBlock }
+        let listItemPointer = listPointers[atLevel] + 1
+        guard listItemPointer >= 0 && listItemPointer < blocks.count else { return nullBlock }
+        let listItemBlock = blocks[listItemPointer]
+        guard listItemBlock.tag == "li" else { return nullBlock }
+        return listItemBlock
     }
     
     func append(_ tag: String) {
-        blocks.append(MkdownBlock(tag))
+        let block = MkdownBlock(tag)
+        append(block)
     }
     
     func append(_ newBlock: MkdownBlock) {
         blocks.append(newBlock)
+        if newBlock.isListTag {
+            listPointers.append(blocks.count - 1)
+        }
     }
     
     func removeLast() {
         if blocks.count > 0 {
-            blocks.removeLast()
+            let lastBlock = blocks.removeLast()
+            if lastBlock.isListTag {
+                listPointers.removeLast()
+            }
         }
     }
     
@@ -40,7 +67,19 @@ class MkdownBlockStack: Equatable {
         if blocks.count == 0 {
             return nullBlock
         } else {
-            return blocks[blocks.count - 1]
+            return blocks[lastIndex]
+        }
+    }
+    
+    /// Does this stack have a paragraph tag as its last block?
+    var hasParaTag: Bool {
+        return last.tag == "p"
+    }
+    
+    /// Add a paragraph block to this stack, if we don't already have one. 
+    func addParaTag() {
+        if !hasParaTag {
+            append("p")
         }
     }
     
@@ -53,47 +92,6 @@ class MkdownBlockStack: Equatable {
         }
     }
     
-    /// Continue a block from a previous line.
-    /// - Parameters:
-    ///   - from: The previous line.
-    ///   - forLevel: 1 for the first level, 2 for the second, etc.
-    func continueBlock(from: MkdownBlockStack, forLevel: Int) -> Bool {
-        var levelCount = 0
-        var index = 0
-        while levelCount < forLevel && index < from.count {
-            var indexInc = 1
-            let indexPlus = index + 1
-            let nextBlock = from.blocks[index]
-            let nextTag = nextBlock.tag
-            switch nextTag {
-            case "pre", "code":
-                break
-            case "li":
-                break
-            default:
-                if (indexPlus < from.count
-                    && nextBlock.isListTag
-                    && from.blocks[indexPlus].isListItem) {
-                    indexInc = 2
-                }
-                levelCount += 1
-                if levelCount == forLevel {
-                    let copy1 = nextBlock.copy() as! MkdownBlock
-                    append(copy1)
-                    if indexInc == 2 {
-                        var copy2: MkdownBlock? = nil
-                        copy2 = from.blocks[indexPlus].copy() as? MkdownBlock
-                        if copy2 != nil {
-                            append(copy2!)
-                        }
-                    }
-                }
-            }
-            index += indexInc
-        }
-        return levelCount == forLevel
-    }
-    
     func display() {
         var i = 0
         for block in blocks {
@@ -102,6 +100,7 @@ class MkdownBlockStack: Equatable {
         }
     }
     
+    /// Test for equality. 
     static func == (lhs: MkdownBlockStack, rhs: MkdownBlockStack) -> Bool {
         guard lhs.blocks.count == rhs.blocks.count else { return false }
         var index = lhs.blocks.count - 1

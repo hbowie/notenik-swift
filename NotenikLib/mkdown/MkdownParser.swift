@@ -225,6 +225,11 @@ class MkdownParser {
                 } else if leadingBullet {
                     if char.isWhitespace {
                         nextLine.leadingBulletAndSpace = true
+                        // Let's provisionally identify this as an unordered item,
+                        // even though it may turn out later to be h2 underline
+                        // or a horizontal rule; at least this will prevent the
+                        // line from being declared a follow-on line.
+                        nextLine.type = .unorderedItem
                     } else {
                         phase = .text
                         nextLine.textFound = true
@@ -237,7 +242,9 @@ class MkdownParser {
                     spaceCount = 0
                     if char == "\t" || char == " " {
                         nextLine.indentLevels += 1
-                        let continuedBlock = nextLine.continueBlock(from: lastLine, forLevel: nextLine.indentLevels)
+                        let continuedBlock = nextLine.continueBlock(previousLine: lastLine,
+                                                                    previousNonBlankLine: lastNonBlankLine,
+                                                                    forLevel: nextLine.indentLevels)
                             // nextLine.indentLevels > 0
                             // nextLine.type != .code
                             // nextLine.indentLevels > currentListLevel
@@ -274,12 +281,18 @@ class MkdownParser {
                 }
             }
             
-            if nextLine.type == .blank {
-                nextLine.type = .ordinaryText
-            }
-            
             // Now look for text
             if phase == .text {
+                if nextLine.type == .blank {
+                    switch lastLine.type {
+                    case .blank:
+                        nextLine.makeOrdinary()
+                    case .ordinaryText, .followOn, .orderedItem, .unorderedItem:
+                        nextLine.makeFollowOn(previousLine: lastLine)
+                    default:
+                        nextLine.makeOrdinary()
+                    }
+                }
                 if !nextLine.textFound {
                      nextLine.textFound = true
                      startText = lastIndex
@@ -433,6 +446,10 @@ class MkdownParser {
             nextLine.text = String(mkdown[startText..<endText])
         }
         
+        if nextLine.type.textMayContinue && nextLine.trailingSpaceCount == 0 {
+            nextLine.text.append(" ")
+        }
+        
         // If the line has no content and no end of line character(s), then ignore it.
         guard !nextLine.isEmpty else { return }
         
@@ -450,12 +467,16 @@ class MkdownParser {
             nextLine.carryBlockquotesForward(lastLine: lastLine)
             nextLine.addParagraph()
         }
+        if nextLine.type == .followOn {
+            
+        }
         
         lines.append(nextLine)
         lastLine = nextLine
         if nextLine.type != .blank {
             lastNonBlankLine = nextLine
         }
+        nextLine.display()
     }
     
     func linkLabelExamineChar(_ char: Character) {
@@ -567,26 +588,52 @@ class MkdownParser {
         
         for line in lines {
             line.display()
-            // Close any outstanding blocks that are no longer in effect.
-            var startToClose = 0
-            while startToClose < openBlocks.count {
-                guard startToClose < line.blocks.count else { break }
-                if openBlocks.blocks[startToClose] != line.blocks.blocks[startToClose] {
-                    break
+            
+            if !line.followOn {
+                // Close any outstanding blocks that are no longer in effect.
+                var startToClose = 0
+                print("Open Blocks - count = \(openBlocks.count)")
+                while startToClose < openBlocks.count {
+                    guard startToClose < line.blocks.count else { break }
+                    openBlocks.blocks[startToClose].display(index: startToClose)
+                    if openBlocks.blocks[startToClose] != line.blocks.blocks[startToClose] {
+                        break
+                    }
+                    print("  - Blocks match")
+                    startToClose += 1
                 }
-                startToClose += 1
-            }
-            
-            closeBlocks(from: startToClose)
-            
-            // Now start any new business.
-            
-            var blockToOpen = openBlocks.count
-            while blockToOpen < line.blocks.count {
-                let tag = line.blocks.blocks[blockToOpen].tag
-                openBlock(tag)
-                openBlocks.append(tag)
-                blockToOpen += 1
+                
+                closeBlocks(from: startToClose)
+                
+                // Now start any new business.
+                
+                var blockToOpenIndex = openBlocks.count
+                var listWithParagraphsIndex = -3
+                var paraInserted = false
+                while blockToOpenIndex < line.blocks.count {
+                    var blockToOpen = line.blocks.blocks[blockToOpenIndex]
+                    if blockToOpen.listWithParagraphs {
+                        listWithParagraphsIndex = blockToOpenIndex
+                    } else if blockToOpen.isParagraph && blockToOpenIndex == listWithParagraphsIndex + 2 {
+                        listWithParagraphsIndex = -3
+                    } else if listWithParagraphsIndex >= 0 && blockToOpenIndex == listWithParagraphsIndex + 2 {
+                        let paraBlock = MkdownBlock("p")
+                        listWithParagraphsIndex = -3
+                        blockToOpen = paraBlock
+                        paraInserted = true
+                    }
+                    
+                    openBlock(blockToOpen.tag)
+                    openBlocks.append(blockToOpen)
+                    if !paraInserted {
+                        blockToOpenIndex += 1
+                    }
+                }
+                if listWithParagraphsIndex >= 0 {
+                    let paraBlock = MkdownBlock("p")
+                    openBlock(paraBlock.tag)
+                    openBlocks.append(paraBlock)
+                }
             }
             
             switch line.type {
@@ -599,7 +646,7 @@ class MkdownParser {
                 writer.horizontalRule()
             case .html:
                 writer.writeLine(line.line)
-            case .ordinaryText:
+            case .followOn, .ordinaryText:
                 textToChunks(line)
             case .orderedItem, .unorderedItem:
                 textToChunks(line)
@@ -1026,8 +1073,8 @@ class MkdownParser {
         if linkElementDiverter != .na {
             switch linkElementDiverter {
             case .text:
-                if chunk.type == .endLinkText {
-                    break
+                if chunk.type == .endLinkText || chunk.type == .endWikiLink1 {
+                    linkElementDiverter = .na
                 } else {
                     linkTextChunks.append(chunk)
                     linkText.append(chunk.text)
@@ -1035,21 +1082,21 @@ class MkdownParser {
                 }
             case .url:
                 if chunk.type == .endLink || chunk.type == .startTitle || chunk.text == " " {
-                    break
+                    linkElementDiverter = .na
                 } else {
                     linkURL.append(chunk.text)
                     return
                 }
             case .title:
                 if chunk.type == .endTitle || chunk.type == .endLink {
-                    break
+                    linkElementDiverter = .na
                 } else {
                     linkTitle.append(chunk.text)
                     return
                 }
             case .label:
                 if chunk.type == .endLinkLabel {
-                    break
+                    linkElementDiverter = .na
                 } else {
                     linkLabel.append(chunk.text.lowercased())
                     return
@@ -1145,7 +1192,10 @@ class MkdownParser {
     }
     
     func finishLink() {
+        print("MkdownParser.finishLink")
+        print("  - Link Text: \(linkText)")
         if doubleBrackets {
+            print("  - Double Brackets")
             var formattedID = ""
             switch noteIDFormat {
             case .common:
@@ -1153,8 +1203,10 @@ class MkdownParser {
             case .fileName:
                 formattedID = StringUtils.toCommonFileName(linkText)
             }
-            linkURL = noteIDPrefix + formattedID + noteIDSuffix
+            print("  - Formatted ID: \(formattedID)")
+            linkURL = noteIDPrefix + linkText
         }
+        print("  - Link URL: \(linkURL)")
         if linkURL.count == 0 {
             if linkLabel.count == 0 {
                 linkLabel = linkText.lowercased()

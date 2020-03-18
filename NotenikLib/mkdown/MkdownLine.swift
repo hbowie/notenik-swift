@@ -14,7 +14,9 @@ import Foundation
 /// One line in Markdown syntax.
 class MkdownLine {
     var line = ""
+    
     var type: MkdownLineType = .blank
+    
     var blocks = MkdownBlockStack()
     var quoteLevel = 0
     var hashCount = 0
@@ -104,6 +106,18 @@ class MkdownLine {
         }
     }
     
+    func makeFollowOn(previousLine: MkdownLine) {
+        type = .followOn
+        blocks = MkdownBlockStack()
+        for block in previousLine.blocks.blocks {
+            self.blocks.append(block)
+        }
+    }
+    
+    var followOn: Bool {
+        return type == .followOn
+    }
+    
     func makeHTML() {
         type = .html
     }
@@ -124,83 +138,139 @@ class MkdownLine {
         }
     }
     
+    /// Make this line an unordered (bulleted) list item.
     func makeUnordered(previousLine: MkdownLine, previousNonBlankLine: MkdownLine) {
-        
-        type = .unorderedItem
-        
-        blocks.append("ul")
-        let liIndex = blocks.count
-        blocks.append("li")
-        blocks.blocks[liIndex].itemNumber = 1
-        
-        var lastPossibleListItem = previousLine
-        if previousLine.type == .blank {
-            lastPossibleListItem = previousNonBlankLine
-        }
-        
-        guard lastPossibleListItem.type == .orderedItem else { return }
-        
-        guard blocks.count == lastPossibleListItem.blocks.count
-            || blocks.count == lastPossibleListItem.blocks.count - 1 else {
-            return
-        }
-        
-        blocks.blocks[liIndex].itemNumber = previousLine.blocks.blocks[liIndex].itemNumber + 1
-        
-        if previousLine.type == .blank {
-            previousLine.blocks.append("ul")
-            previousNonBlankLine.addParagraph()
-            self.addParagraph()
-        }
+        makeListItem(requestedType: .unorderedItem,
+                     previousLine: previousLine,
+                     previousNonBlankLine: previousNonBlankLine)
     }
     
+    /// Make this line an ordered (numbered) list item.
     func makeOrdered(previousLine: MkdownLine, previousNonBlankLine: MkdownLine) {
         
-        type = .orderedItem
+        makeListItem(requestedType: .orderedItem,
+                     previousLine: previousLine,
+                     previousNonBlankLine: previousNonBlankLine)
+    }
+    
+    /// Make this line a list item of the prescribed type.
+    func makeListItem(requestedType: MkdownLineType,
+                      previousLine: MkdownLine,
+                      previousNonBlankLine: MkdownLine) {
         
-        blocks.append("ol")
-        let liIndex = blocks.count
-        blocks.append("li")
-        blocks.blocks[liIndex].itemNumber = 1
+        print("MkdownLine.makeListItem requested type = \(requestedType)")
+        // Set the line type to the right sort of list.
+        self.type = requestedType
         
+        var listTag = "ul"
+        if requestedType == .orderedItem {
+            listTag = "ol"
+        }
+        print("  - list tag: \(listTag)")
+        
+        // Is this the first item in a new list, or the
+        // continuation of an existing list?
         var lastPossibleListItem = previousLine
         if previousLine.type == .blank {
             lastPossibleListItem = previousNonBlankLine
         }
         
-        guard lastPossibleListItem.type == .orderedItem else { return }
-        
-        guard blocks.count == lastPossibleListItem.blocks.count
-            || blocks.count == lastPossibleListItem.blocks.count - 1 else {
-            return
+        let listIndex = self.blocks.listPointers.count
+        print("  - list index: \(listIndex)")
+        var continueList = false
+        var lastList = MkdownBlock()
+        var lastListItem = MkdownBlock()
+        print("  - last item lists count: \(lastPossibleListItem.blocks.listPointers.count)")
+        if listIndex < lastPossibleListItem.blocks.listPointers.count {
+            print("    - list index < last item lists count")
+            lastList = lastPossibleListItem.blocks.getListBlock(atLevel: listIndex)
+            lastListItem = lastPossibleListItem.blocks.getListItem(atLevel: listIndex)
+            print("  - last list tag = '\(lastList.tag)'")
+            print("  - last list item tag = '\(lastListItem.tag)'")
+            if lastList.tag == listTag && lastListItem.tag == "li" {
+                continueList = true
+                print("  - continue list = true")
+            }
         }
         
-        // print("Make Ordered")
-        // print("Current Line:")
-        // display()
-        // print("Previous Line:")
-        // previousLine.display()
-        // print("Previous non-blank line:")
-        // previousNonBlankLine.display()
-        // print("liIndex: \(liIndex)")
-        blocks.blocks[liIndex].itemNumber = lastPossibleListItem.blocks.blocks[liIndex].itemNumber + 1
-        
-        if previousLine.type == .blank {
-            previousLine.blocks.append("ol")
-            previousNonBlankLine.addParagraph()
-            self.addParagraph()
+        let listItem = MkdownBlock("li")
+        if continueList {
+            if previousLine.type == .blank {
+                lastList.listWithParagraphs = true
+                if previousLine.blocks.listPointers.count <= listIndex {
+                    previousLine.blocks.append(lastList)
+                }
+            }
+            blocks.append(lastList)
+            print("  - last list item # = \(lastListItem.itemNumber)")
+            listItem.itemNumber = lastListItem.itemNumber + 1
+        } else {
+            let newList = MkdownBlock(listTag)
+            blocks.append(newList)
+            listItem.itemNumber = 1
         }
+        blocks.append(listItem)
+        print("  - list item # = \(listItem.itemNumber)")
         
+        if continueList && lastList.listWithParagraphs {
+            addParagraph()
+            let lastBlocks = lastPossibleListItem.blocks
+            let lastListIndex = lastBlocks.listPointers[listIndex]
+            let lastItemIndex = lastListIndex + 1
+            if lastItemIndex < lastBlocks.count && lastBlocks.blocks[lastItemIndex].tag == "li" {
+                let lastParaIndex = lastItemIndex + 1
+                if lastParaIndex >= lastBlocks.count {
+                    lastBlocks.addParaTag()
+                } else if lastBlocks.blocks[lastParaIndex].tag == "p" {
+                    // A-OK
+                } else {
+                    lastBlocks.blocks.insert(MkdownBlock("p"), at: lastParaIndex)
+                }
+            }
+        }
     }
     
-    func continueBlock(from: MkdownLine, forLevel: Int) -> Bool {
-        return blocks.continueBlock(from: from.blocks, forLevel: forLevel)
+    /// Try to continue open list blocks from previous lines, based on this line's indention level.
+    /// - Parameters:
+    ///   - previousLine: The line before this one.
+    ///   - previousNonBlankLine: The last non-blank line before this one.
+    ///   - forLevel: The indention level, where 1 means four spaces or a tab.
+    /// - Returns: True if blocks were available and copied for the indicated level.
+    func continueBlock(previousLine: MkdownLine,
+                       previousNonBlankLine: MkdownLine,
+                       forLevel: Int) -> Bool {
+        
+        // Which of the two passed lines should we examine?
+        var lastPossibleListItem = previousLine
+        if previousLine.type == .blank {
+            lastPossibleListItem = previousNonBlankLine
+        }
+        
+        // See whether we have list blocks to continue.
+        let listIndex = forLevel - 1
+        
+        var continueList = false
+        var lastList = MkdownBlock()
+        var lastListItem = MkdownBlock()
+        if listIndex < lastPossibleListItem.blocks.listPointers.count {
+            lastList = lastPossibleListItem.blocks.getListBlock(atLevel: listIndex)
+            lastListItem = lastPossibleListItem.blocks.getListItem(atLevel: listIndex)
+            if lastList.isListTag && lastListItem.isListItem {
+                continueList = true
+                self.blocks.append(lastList)
+                self.blocks.append(lastListItem)
+                if previousLine.type == .blank
+                    && previousLine.blocks.listPointers.count <= listIndex {
+                    previousLine.blocks.append(lastList)
+                    previousLine.blocks.append(lastListItem)
+                }
+            }
+        }
+        return continueList
     }
     
     func addParagraph() {
-        if blocks.last.tag != "p" {
-            blocks.append("p")
-        }
+        blocks.addParaTag()
     }
     
     func display() {
@@ -223,7 +293,7 @@ class MkdownLine {
         if hashCount > 0 {
             print("Hash count: \(hashCount)")
         }
-        if repeatCount > 0 {
+        if repeatCount > 1 {
             print("Repeating char of \(repeatingChar), repeated \(repeatCount) times, only repeating chars? \(onlyRepeating)")
         }
         if headingUnderlining {

@@ -37,9 +37,9 @@ class Markdown {
                 preParser = notenikIO!.collection!.doubleBracketParsing
             }
         }
-        if preParser {
-            md = wikiLinks.parse(textIn: md, io: notenikIO)
-        }
+        // if preParser {
+        //     md = wikiLinks.parse(textIn: md, io: notenikIO)
+        // }
         parserID = AppPrefs.shared.markdownParser
         switch parserID {
         case "down":

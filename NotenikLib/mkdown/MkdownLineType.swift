@@ -12,6 +12,7 @@
 enum MkdownLineType {
     case blank
     case code
+    case followOn
     case h1Underlines
     case h2Underlines
     case heading
@@ -29,6 +30,10 @@ enum MkdownLineType {
     
     var hasText: Bool {
         return self != .blank && self != .h1Underlines && self != .h2Underlines && self != .horizontalRule && self != .linkDefExt && self != .linkDefExt
+    }
+    
+    var textMayContinue: Bool {
+        return self == .orderedItem || self == .ordinaryText || self == .unorderedItem
     }
 }
 
