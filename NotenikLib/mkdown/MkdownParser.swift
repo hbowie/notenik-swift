@@ -642,9 +642,11 @@ class MkdownParser {
                 writer.horizontalRule()
             case .html:
                 writer.writeLine(line.line)
-            case .followOn, .ordinaryText:
+            case .ordinaryText:
                 textToChunks(line)
             case .orderedItem, .unorderedItem:
+                textToChunks(line)
+            case .followOn:
                 textToChunks(line)
             default:
                 break
@@ -743,6 +745,11 @@ class MkdownParser {
         nextChunk = MkdownChunk(line: line)
         var backslashed = false
         var lastChar: Character = " "
+        if line.type == .followOn {
+            nextChunk.startsWithSpace = true
+            nextChunk.endsWithSpace = true
+            nextChunk.text.append(" ")
+        }
         for char in line.text {
             if backslashed {
                 addCharAsChunk(char: char, type: .literal, lastChar: lastChar, line: line)
@@ -1193,10 +1200,7 @@ class MkdownParser {
     }
     
     func finishLink() {
-        // print("MkdownParser.finishLink")
-        // print("  - Link Text: \(linkText)")
         if doubleBrackets {
-            // print("  - Double Brackets")
             var formattedID = ""
             switch noteIDFormat {
             case .common:
@@ -1204,10 +1208,9 @@ class MkdownParser {
             case .fileName:
                 formattedID = StringUtils.toCommonFileName(linkText)
             }
-            // print("  - Formatted ID: \(formattedID)")
-            linkURL = noteIDPrefix + linkText
+            linkURL = noteIDPrefix + formattedID
         }
-        // print("  - Link URL: \(linkURL)")
+
         if linkURL.count == 0 {
             if linkLabel.count == 0 {
                 linkLabel = linkText.lowercased()
