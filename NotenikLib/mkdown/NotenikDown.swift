@@ -1,5 +1,5 @@
 //
-//  MkdownParser.swift
+//  NotenikDown.swift
 //  Notenik
 //
 //  Created by Herb Bowie on 2/25/20.
@@ -12,7 +12,7 @@
 import Foundation
 
 /// A class to parse Mardkown input and do useful things with it.
-class MkdownParser {
+class NotenikDown {
     
     // ===============================================================
     //
@@ -245,6 +245,10 @@ class MkdownParser {
                         let continuedBlock = nextLine.continueBlock(previousLine: lastLine,
                                                                     previousNonBlankLine: lastNonBlankLine,
                                                                     forLevel: nextLine.indentLevels)
+                            // nextLine.indentLevels > 0
+                            // nextLine.type != .code
+                            // nextLine.indentLevels > currentListLevel
+                            // linkLabelPhase != .linkEnd)
                         if continuedBlock {
                             continue
                         } else if nextLine.type != .code {
@@ -472,6 +476,7 @@ class MkdownParser {
         if nextLine.type != .blank {
             lastNonBlankLine = nextLine
         }
+        // nextLine.display()
     }
     
     func linkLabelExamineChar(_ char: Character) {
@@ -568,7 +573,7 @@ class MkdownParser {
     var consecutiveStartCount = 0
     var consecutiveCloseCount = 0
     var leftToClose = 0
-    var start = -1
+    var startIndex = -1
     var matchStart = -1
     
     var openBlocks = MkdownBlockStack()
@@ -582,15 +587,19 @@ class MkdownParser {
         openBlocks = MkdownBlockStack()
         
         for line in lines {
+            // line.display()
             
             if !line.followOn {
                 // Close any outstanding blocks that are no longer in effect.
                 var startToClose = 0
+                // print("Open Blocks - count = \(openBlocks.count)")
                 while startToClose < openBlocks.count {
                     guard startToClose < line.blocks.count else { break }
+                    // openBlocks.blocks[startToClose].display(index: startToClose)
                     if openBlocks.blocks[startToClose] != line.blocks.blocks[startToClose] {
                         break
                     }
+                    // print("  - Blocks match")
                     startToClose += 1
                 }
                 
@@ -730,13 +739,6 @@ class MkdownParser {
         outputChunks()
     }
     
-    // ===========================================================
-    //
-    // Section 2.a - Go through the text in a block and break it
-    // up into chunks.
-    //
-    // ===========================================================
-    
     /// Divide another line of Markdown into chunks.
     func textToChunks(_ line: MkdownLine) {
         
@@ -752,44 +754,35 @@ class MkdownParser {
             if backslashed {
                 addCharAsChunk(char: char, type: .literal, lastChar: lastChar, line: line)
                 backslashed = false
-            } else {
-                switch char {
-                case "\\":
-                    addCharAsChunk(char: char, type: .backSlash, lastChar: lastChar, line: line)
-                    backslashed = true
-                case "*":
-                    addCharAsChunk(char: char, type: .asterisk, lastChar: lastChar, line: line)
-                case "_":
-                    addCharAsChunk(char: char, type: .underline, lastChar: lastChar, line: line)
-                case "<":
-                    addCharAsChunk(char: char, type: .leftAngleBracket, lastChar: lastChar, line: line)
-                case ">":
-                    addCharAsChunk(char: char, type: .rightAngleBracket, lastChar: lastChar, line: line)
-                case "[":
-                    addCharAsChunk(char: char, type: .leftSquareBracket, lastChar: lastChar, line: line)
-                case "]":
-                    addCharAsChunk(char: char, type: .rightSquareBracket, lastChar: lastChar, line: line)
-                case "(":
-                    addCharAsChunk(char: char, type: .leftParen, lastChar: lastChar, line: line)
-                case ")":
-                    addCharAsChunk(char: char, type: .rightParen, lastChar: lastChar, line: line)
-                case "\"":
-                    addCharAsChunk(char: char, type: .doubleQuote, lastChar: lastChar, line: line)
-                case "'":
-                    addCharAsChunk(char: char, type: .singleQuote, lastChar: lastChar, line: line)
-                case "`":
-                    addCharAsChunk(char: char, type: .backtickQuote, lastChar: lastChar, line: line)
-                case "&":
-                    addCharAsChunk(char: char, type: .ampersand, lastChar: lastChar, line: line)
-                case " ":
-                    if nextChunk.text.count == 0 {
-                        nextChunk.startsWithSpace = true
-                    }
-                    nextChunk.endsWithSpace = true
-                    nextChunk.text.append(char)
-                default:
-                    nextChunk.text.append(char)
+            } else if char == "\\" {
+                addCharAsChunk(char: char, type: .backSlash, lastChar: lastChar, line: line)
+                backslashed = true
+            } else if char == "*" {
+                addCharAsChunk(char: char, type: .asterisk, lastChar: lastChar, line: line)
+            } else if char == "_" {
+                addCharAsChunk(char: char, type: .underline, lastChar: lastChar, line: line)
+            } else if char == "<" {
+                addCharAsChunk(char: char, type: .leftAngleBracket, lastChar: lastChar, line: line)
+            } else if char == "[" {
+                addCharAsChunk(char: char, type: .leftSquareBracket, lastChar: lastChar, line: line)
+            } else if char == "]" {
+                addCharAsChunk(char: char, type: .rightSquareBracket, lastChar: lastChar, line: line)
+            } else if char == "(" {
+                addCharAsChunk(char: char, type: .leftParen, lastChar: lastChar, line: line)
+            } else if char == ")" {
+                addCharAsChunk(char: char, type: .rightParen, lastChar: lastChar, line: line)
+            } else if char == "\"" {
+                addCharAsChunk(char: char, type: .doubleQuote, lastChar: lastChar, line: line)
+            } else if char == "'" {
+                addCharAsChunk(char: char, type: .singleQuote, lastChar: lastChar, line: line)
+            } else if char == " " {
+                if nextChunk.text.count == 0 {
+                    nextChunk.startsWithSpace = true
                 }
+                nextChunk.endsWithSpace = true
+                nextChunk.text.append(char)
+            } else {
+                nextChunk.text.append(char)
             }
             if !char.isWhitespace {
                 nextChunk.endsWithSpace = false
@@ -849,54 +842,28 @@ class MkdownParser {
         chunks = []
     }
     
-    // ===========================================================
-    //
-    // Section 2.b - Go through the chunks trying to identify
-    //               significant patterns.
-    //
-    // ===========================================================
-    
-    var withinCodeSpan = false
-    
     /// Scan through our accumulated chunks, looking for meaningful patterns of puncutation.
     func identifyPatterns() {
         
-        withinCodeSpan = false
         var index = 0
         while index < chunks.count {
             let chunk = chunks[index]
-            chunk.display(title: "", indenting: 2)
             let nextIndex = index + 1
             switch chunk.type {
             case .asterisk, .underline:
-                if chunk.lineType == .code { break }
-                if withinCodeSpan { break }
                 scanForEmphasisClosure(forChunkAt: index)
             case .leftAngleBracket:
                 if chunk.lineType == .code { break }
-                if withinCodeSpan { break }
                 if nextIndex >= chunks.count { break }
                 if chunks[nextIndex].startsWithSpace { break }
                 chunk.type = .tagStart
             case .ampersand:
                 if chunk.lineType == .code { break }
-                if withinCodeSpan { break }
                 if nextIndex >= chunks.count { break }
                 if chunks[nextIndex].startsWithSpace { break }
                 chunk.type = .entityStart
             case .leftSquareBracket:
-                if chunk.lineType == .code { break }
-                if withinCodeSpan { break }
                 scanForLinkElements(forChunkAt: index)
-            case .backtickQuote:
-                scanForCodeClosure(forChunkAt: index)
-                if chunk.type == .startCode {
-                    withinCodeSpan = true
-                }
-            case .startCode:
-                withinCodeSpan = true
-            case .endCode:
-                withinCodeSpan = false
             default:
                 break
             }
@@ -906,16 +873,16 @@ class MkdownParser {
     
     /// If we have an asterisk or an underline, look for the closing symbols to end the emphasis span.
     func scanForEmphasisClosure(forChunkAt: Int) {
-        start = forChunkAt
-        startChunk = chunks[start]
-        var next = start + 1
+        startIndex = forChunkAt
+        startChunk = chunks[startIndex]
+        var next = startIndex + 1
         consecutiveStartCount = 1
         leftToClose = 1
         consecutiveCloseCount = 0
         matchStart = -1
         while leftToClose > 0 && next < chunks.count {
             let nextChunk = chunks[next]
-            if nextChunk.type == startChunk.type && next == (start + consecutiveStartCount) {
+            if nextChunk.type == startChunk.type && next == (startIndex + consecutiveStartCount) {
                 consecutiveStartCount += 1
                 leftToClose += 1
             } else if nextChunk.type == startChunk.type {
@@ -944,14 +911,14 @@ class MkdownParser {
                 consecutiveCloseCount = 0
             case 2:
                 startChunk.type = .startStrong1
-                chunks[start + 1].type = .startStrong2
+                chunks[startIndex + 1].type = .startStrong2
                 chunks[matchStart].type = .endStrong1
                 chunks[matchStart + 1].type = .endStrong2
                 consecutiveCloseCount = 0
             case 3:
                 startChunk.type = .startStrong1
-                chunks[start + 1].type = .startStrong2
-                chunks[start + 2].type = .startEmphasis
+                chunks[startIndex + 1].type = .startStrong2
+                chunks[startIndex + 2].type = .startEmphasis
                 chunks[matchStart].type = .endEmphasis
                 chunks[matchStart + 1].type = .endStrong1
                 chunks[matchStart + 2].type = .endStrong2
@@ -962,14 +929,14 @@ class MkdownParser {
             leftToClose = 0
         } else if consecutiveStartCount == 3 {
             if consecutiveCloseCount == 1 {
-                chunks[start + 2].type = .startEmphasis
+                chunks[startIndex + 2].type = .startEmphasis
                 chunks[matchStart].type = .endEmphasis
                 leftToClose = 2
                 consecutiveStartCount = 2
                 consecutiveCloseCount = 0
             } else if consecutiveCloseCount == 2 {
-                chunks[start + 1].type = .startStrong1
-                chunks[start + 2].type = .startStrong2
+                chunks[startIndex + 1].type = .startStrong1
+                chunks[startIndex + 2].type = .startStrong2
                 chunks[matchStart].type = .endStrong1
                 chunks[matchStart + 1].type = .endStrong2
                 leftToClose = 1
@@ -977,133 +944,6 @@ class MkdownParser {
                 consecutiveCloseCount = 0
             }
         }
-    }
-    
-    var possibleClosingTick = -1
-    var literalBackTicks: [Int] = []
-    
-    var tickBeforeSpace = -1
-    var spaceAfterTick = -1
-    var closingTick1 = -1
-    var closingTick2 = -1
-    
-    /// If we have a backtick quote, look for the closing symbols to end the code span.
-    func scanForCodeClosure(forChunkAt: Int) {
-        
-        var doubleTicks = false
-        var doubleTicksPlusSpace = false
-        var doubleTicksSpacePlusTick = false
-        
-        resetTickEndingPointers()
-        
-        possibleClosingTick = -1
-        literalBackTicks = []
-        
-        var next = forChunkAt + 1
-        var lookingForClosingTicks = true
-        while lookingForClosingTicks && next < chunks.count {
-            let nextChunk = chunks[next]
-            if nextChunk.type == .backtickQuote {
-                if next == forChunkAt + 1 {
-                    doubleTicks = true
-                } else if next == forChunkAt + 3 && doubleTicksPlusSpace {
-                    doubleTicksSpacePlusTick = true
-                    tickBeforeSpace = next
-                } else if doubleTicksSpacePlusTick {
-                    if tickBeforeSpace < 0 {
-                        tickBeforeSpace = next
-                        setPossibleClosingTick(next)
-                    } else if next == spaceAfterTick + 1 {
-                        closingTick1 = next
-                        setPossibleClosingTick(next)
-                    } else if next == closingTick1 + 1 {
-                        closingTick2 = next
-                        lookingForClosingTicks = false
-                        possibleClosingTick = -1
-                    }
-                } else if doubleTicks {
-                    if next == closingTick1 + 1 {
-                        closingTick2 = next
-                        lookingForClosingTicks = false
-                        possibleClosingTick = -1
-                    } else {
-                        closingTick1 = next
-                        setPossibleClosingTick(next)
-                    }
-                } else {
-                    closingTick1 = next
-                    lookingForClosingTicks = false
-                }
-            } else if nextChunk.text == " " {
-                if next == forChunkAt + 2 {
-                    doubleTicksPlusSpace = true
-                } else if doubleTicksSpacePlusTick
-                    && tickBeforeSpace > 0
-                    && spaceAfterTick < 0 {
-                    spaceAfterTick = next
-                } else {
-                    checkForPossibleClosingTick()
-                    resetTickEndingPointers()
-                }
-            } else {
-                checkForPossibleClosingTick()
-                resetTickEndingPointers()
-            }
-            next += 1
-        }
-        
-        guard !lookingForClosingTicks else { return }
-        
-        if doubleTicksSpacePlusTick {
-            chunks[forChunkAt].type = .startCode
-            chunks[forChunkAt + 1].type = .backtickQuote2
-            chunks[forChunkAt + 2].type = .skipSpace
-            chunks[forChunkAt + 3].type = .literal
-            chunks[tickBeforeSpace].type = .literal
-            chunks[spaceAfterTick].type = .skipSpace
-            chunks[closingTick1].type = .endCode
-            chunks[closingTick2].type = .backtickQuote2
-            setLiteralBackTicks()
-        } else if doubleTicks {
-            chunks[forChunkAt].type = .startCode
-            chunks[forChunkAt + 1].type = .backtickQuote2
-            chunks[closingTick1].type = .endCode
-            chunks[closingTick2].type = .backtickQuote2
-            setLiteralBackTicks()
-        } else {
-            chunks[forChunkAt].type = .startCode
-            chunks[closingTick1].type = .endCode
-        }
-    }
-    
-    func setLiteralBackTicks() {
-        for index in literalBackTicks {
-            let backTickChunk = chunks[index]
-            if backTickChunk.type == .backtickQuote {
-                backTickChunk.type = .literal
-            }
-        }
-    }
-    
-    func resetTickEndingPointers() {
-        tickBeforeSpace = -1
-        spaceAfterTick = -1
-        closingTick1 = -1
-        closingTick2 = -1
-    }
-    
-    func setPossibleClosingTick(_ tickPosition: Int) {
-        checkForPossibleClosingTick()
-        possibleClosingTick = tickPosition
-    }
-    
-    /// If we have a possible closing backtick that turned out not to be part of a closure, then
-    /// let's add it to our list for possible later action.
-    func checkForPossibleClosingTick() {
-        if possibleClosingTick > 0 {
-            literalBackTicks.append(possibleClosingTick)
-        }
-        possibleClosingTick = -1
     }
     
     /// If we have a left square bracket, scan for other punctuation related to a link.
@@ -1224,40 +1064,15 @@ class MkdownParser {
         }
     }
     
-    // ===========================================================
-    //
-    // Section 2.c - Write the chunks out to the writer.
-    //
-    // ===========================================================
-    
-    var linkTextChunks: [MkdownChunk] = []
-    var linkText = ""
-    var doubleBrackets = false
-    var linkElementDiverter: LinkElementDiverter = .na
-    var linkTitle = ""
-    var linkLabel = ""
-    var linkURL = ""
-    
-    let interNoteDomain = "https://ntnk.app/"
-    var noteIDPrefix = ""
-    var noteIDSuffix = ""
-    var noteIDFormat: NoteIDFormat = .common
-
-    /// Go through the chunks and write each one. 
     func writeChunks(chunksToWrite: [MkdownChunk]) {
-        withinCodeSpan = false
         for chunkToWrite in chunksToWrite {
-            if chunkToWrite.type == .startCode {
-                withinCodeSpan = true
-            } else if chunkToWrite.type == .endCode {
-                withinCodeSpan = false
-            }
             write(chunk: chunkToWrite)
         }
     }
     
-    /// Write out a single chunk.
     func write(chunk: MkdownChunk) {
+        
+        // chunk.display()
         
         // If we're in the middle of a link, then capture the text for its
         // various elements instead of writing anything out in the normal
@@ -1310,12 +1125,6 @@ class MkdownParser {
             break
         case .leftAngleBracket:
             writer.writeLeftAngleBracket()
-        case .rightAngleBracket:
-            if withinCodeSpan {
-                writer.writeRightAngleBracket()
-            } else {
-                writer.write(">")
-            }
         case .startEmphasis:
             writer.startEmphasis()
         case .endEmphasis:
@@ -1362,21 +1171,24 @@ class MkdownParser {
         case .endLinkLabel:
             linkElementDiverter = .na
             finishLink()
-        case .backtickQuote:
-            writer.append("`")
-        case .startCode:
-            writer.startCode()
-        case .endCode:
-            writer.finishCode()
-        case .backtickQuote2:
-            break
-        case .skipSpace:
-            break
         default:
             writer.append(chunk.text)
         }
     }
-        
+    
+    var linkTextChunks: [MkdownChunk] = []
+    var linkText = ""
+    var doubleBrackets = false
+    var linkElementDiverter: LinkElementDiverter = .na
+    var linkTitle = ""
+    var linkLabel = ""
+    var linkURL = ""
+    
+    let interNoteDomain = "https://ntnk.app/"
+    var noteIDPrefix = ""
+    var noteIDSuffix = ""
+    var noteIDFormat: NoteIDFormat = .common
+    
     func initLink() {
         linkTextChunks = []
         linkText = ""

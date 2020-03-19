@@ -260,7 +260,7 @@ class Markedup: CustomStringConvertible {
     func startCode() {
         switch format {
         case .htmlFragment, .htmlDoc, .netscapeBookmarks:
-            writeLine("<code>")
+            write("<code>")
         case .markdown:
             break
         case .opml:
@@ -271,7 +271,7 @@ class Markedup: CustomStringConvertible {
     func finishCode() {
         switch format {
         case .htmlFragment, .htmlDoc, .netscapeBookmarks:
-            writeLine("</code>")
+            write("</code>")
         case .markdown:
             break
         case .opml:
@@ -1029,6 +1029,19 @@ class Markedup: CustomStringConvertible {
             append("<")
         case .opml:
             append("&lt;")
+        }
+        lastCharWasWhiteSpace = false
+        lastCharWasEmDash = false
+    }
+    
+    func writeRightAngleBracket() {
+        switch format {
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
+            append("&gt;")
+        case .markdown:
+            append(">")
+        case .opml:
+            append("&gt;")
         }
         lastCharWasWhiteSpace = false
         lastCharWasEmDash = false

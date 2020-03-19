@@ -26,8 +26,16 @@ enum MkdownChunkType {
     case backSlash
     case literal
     
+    case backtickQuote
+    case startCode
+    case endCode
+    case backtickQuote2
+    case skipSpace
+    
     case leftAngleBracket
     case tagStart
+    
+    case rightAngleBracket
     
     case ampersand
     case entityStart
