@@ -4,7 +4,7 @@ Tags:   block
 
 Link:   https://daringfireball.net/projects/markdown/syntax#precode
 
-Status: 1 - To Do
+Status: 9 - Tested
 
 Seq:    2.5
 
@@ -70,5 +70,3 @@ will turn into:
 Regular Markdown syntax is not processed within code blocks. E.g.,
 asterisks are just literal asterisks within a code block. This means
 it's also easy to use Markdown to write about Markdown's own syntax.
-
-

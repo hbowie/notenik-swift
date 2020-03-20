@@ -616,6 +616,21 @@ class Markedup: CustomStringConvertible {
         }
     }
     
+    func image(text: String, path: String, title: String? = nil) {
+        switch format {
+        case .htmlFragment, .htmlDoc, .netscapeBookmarks:
+            append("<img src=\"\(path)\" alt=\"\(text)\"")
+            if title != nil && title!.count > 0 {
+                append(" title=\"\(title!)\"")
+            }
+            append(">")
+        case .markdown:
+            append("![" + text + "](" + path + ")")
+        case .opml:
+            break
+        }
+    }
+    
     func horizontalRule() {
         switch format {
         case .htmlFragment, .htmlDoc, .netscapeBookmarks:
