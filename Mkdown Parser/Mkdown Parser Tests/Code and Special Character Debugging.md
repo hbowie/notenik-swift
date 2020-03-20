@@ -1,5 +1,7 @@
 Title:  Code and Special Character Debugging
 
+Seq:    8.1
+
 Body: 
 
 In HTML, there are two characters that demand special treatment: `<`

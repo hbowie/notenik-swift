@@ -46,6 +46,9 @@ enum MkdownChunkType {
     case leftParen
     case rightParen
     
+    case exclamationMark
+    case startImage
+    
     case singleQuote
     case doubleQuote
     

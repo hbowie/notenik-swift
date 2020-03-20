@@ -571,6 +571,8 @@ class MkdownParser {
     var start = -1
     var matchStart = -1
     
+    var backslashed = false
+    
     var openBlocks = MkdownBlockStack()
     
     /// Now that we have the input divided into lines, and the lines assigned types,
@@ -741,7 +743,7 @@ class MkdownParser {
     func textToChunks(_ line: MkdownLine) {
         
         nextChunk = MkdownChunk(line: line)
-        var backslashed = false
+        backslashed = false
         var lastChar: Character = " "
         if line.type == .followOn {
             nextChunk.startsWithSpace = true
@@ -749,9 +751,17 @@ class MkdownParser {
             nextChunk.text.append(" ")
         }
         for char in line.text {
-            if backslashed {
-                addCharAsChunk(char: char, type: .literal, lastChar: lastChar, line: line)
-                backslashed = false
+            if line.type == .code {
+                switch char {
+                case "<":
+                    addCharAsChunk(char: char, type: .leftAngleBracket, lastChar: lastChar, line: line)
+                case ">":
+                    addCharAsChunk(char: char, type: .rightAngleBracket, lastChar: lastChar, line: line)
+                case "&":
+                    addCharAsChunk(char: char, type: .ampersand, lastChar: lastChar, line: line)
+                default:
+                    nextChunk.text.append(char)
+                }
             } else {
                 switch char {
                 case "\\":
@@ -781,6 +791,8 @@ class MkdownParser {
                     addCharAsChunk(char: char, type: .backtickQuote, lastChar: lastChar, line: line)
                 case "&":
                     addCharAsChunk(char: char, type: .ampersand, lastChar: lastChar, line: line)
+                case "!":
+                    addCharAsChunk(char: char, type: .exclamationMark, lastChar: lastChar, line: line)
                 case " ":
                     if nextChunk.text.count == 0 {
                         nextChunk.startsWithSpace = true
@@ -788,7 +800,12 @@ class MkdownParser {
                     nextChunk.endsWithSpace = true
                     nextChunk.text.append(char)
                 default:
-                    nextChunk.text.append(char)
+                    if backslashed {
+                        addCharAsChunk(char: char, type: .plaintext, lastChar: lastChar, line: line)
+                        backslashed = false
+                    } else {
+                        nextChunk.text.append(char)
+                    }
                 }
             }
             if !char.isWhitespace {
@@ -865,7 +882,6 @@ class MkdownParser {
         var index = 0
         while index < chunks.count {
             let chunk = chunks[index]
-            chunk.display(title: "", indenting: 2)
             let nextIndex = index + 1
             switch chunk.type {
             case .asterisk, .underline:
@@ -1109,6 +1125,12 @@ class MkdownParser {
     /// If we have a left square bracket, scan for other punctuation related to a link.
     func scanForLinkElements(forChunkAt: Int) {
         
+        // See if this is an image, rather than a hyperlink.
+        var exclamationMark: MkdownChunk?
+        if forChunkAt > 0 && chunks[forChunkAt - 1].type == .exclamationMark {
+            exclamationMark = chunks[forChunkAt - 1]
+        }
+        
         let leftBracket1 = chunks[forChunkAt]
         var leftBracket2: MkdownChunk?
         var rightBracket1: MkdownChunk?
@@ -1208,6 +1230,9 @@ class MkdownParser {
             rightBracket1!.type = .endWikiLink1
             rightBracket2!.type = .endWikiLink2
         } else {
+            if exclamationMark != nil {
+                exclamationMark!.type = .startImage
+            }
             leftBracket1.type = .startLinkText
             rightBracket1!.type = .endLinkText
             if leftParen != nil {
@@ -1226,10 +1251,11 @@ class MkdownParser {
     
     // ===========================================================
     //
-    // Section 2.c - Write the chunks out to the writer.
+    // Section 2.c - Send the chunks to the writer.
     //
     // ===========================================================
     
+    var imageNotLink = false
     var linkTextChunks: [MkdownChunk] = []
     var linkText = ""
     var doubleBrackets = false
@@ -1246,6 +1272,7 @@ class MkdownParser {
     /// Go through the chunks and write each one. 
     func writeChunks(chunksToWrite: [MkdownChunk]) {
         withinCodeSpan = false
+        backslashed = false
         for chunkToWrite in chunksToWrite {
             if chunkToWrite.type == .startCode {
                 withinCodeSpan = true
@@ -1302,82 +1329,93 @@ class MkdownParser {
         
         // Figure out what to do with the next chunk of text,
         // depending on its type.
-        
-        switch chunk.type {
-        case .ampersand:
-            writer.writeAmpersand()
-        case .backSlash:
-            break
-        case .leftAngleBracket:
-            writer.writeLeftAngleBracket()
-        case .rightAngleBracket:
-            if withinCodeSpan {
-                writer.writeRightAngleBracket()
-            } else {
-                writer.write(">")
-            }
-        case .startEmphasis:
-            writer.startEmphasis()
-        case .endEmphasis:
-            writer.finishEmphasis()
-        case .startStrong1:
-            writer.startStrong()
-        case .startStrong2:
-            break
-        case .endStrong1:
-            writer.finishStrong()
-        case .endStrong2:
-            break
-        case .startLinkText:
-            linkTextChunks = []
-            linkText = ""
-            linkElementDiverter = .text
-        case .startWikiLink1:
-            break
-        case .startWikiLink2:
-            linkTextChunks = []
-            linkText = ""
-            linkElementDiverter = .text
-            doubleBrackets = true
-        case .endWikiLink1:
-            break
-        case .endWikiLink2:
-            finishLink()
-        case .endLinkText:
-            linkElementDiverter = .na
-        case .startLink:
-            linkElementDiverter = .url
-            linkURL = ""
-        case .startTitle:
-            linkElementDiverter = .title
-            linkTitle = ""
-        case .endTitle:
-            linkElementDiverter = .na
-        case .endLink:
-            linkElementDiverter = .na
-            finishLink()
-        case .startLinkLabel:
-            linkElementDiverter = .label
-            linkLabel = ""
-        case .endLinkLabel:
-            linkElementDiverter = .na
-            finishLink()
-        case .backtickQuote:
-            writer.append("`")
-        case .startCode:
-            writer.startCode()
-        case .endCode:
-            writer.finishCode()
-        case .backtickQuote2:
-            break
-        case .skipSpace:
-            break
-        default:
+        if backslashed {
             writer.append(chunk.text)
+            backslashed = false
+        } else {
+            switch chunk.type {
+            case .ampersand:
+                writer.writeAmpersand()
+            case .backSlash:
+                if withinCodeSpan {
+                    writer.write("\\")
+                } else {
+                    backslashed = true
+                }
+            case .leftAngleBracket:
+                writer.writeLeftAngleBracket()
+            case .rightAngleBracket:
+                if withinCodeSpan {
+                    writer.writeRightAngleBracket()
+                } else {
+                    writer.write(">")
+                }
+            case .startEmphasis:
+                writer.startEmphasis()
+            case .endEmphasis:
+                writer.finishEmphasis()
+            case .startStrong1:
+                writer.startStrong()
+            case .startStrong2:
+                break
+            case .endStrong1:
+                writer.finishStrong()
+            case .endStrong2:
+                break
+            case .startImage:
+                imageNotLink = true
+            case .startLinkText:
+                linkTextChunks = []
+                linkText = ""
+                linkElementDiverter = .text
+            case .startWikiLink1:
+                break
+            case .startWikiLink2:
+                linkTextChunks = []
+                linkText = ""
+                linkElementDiverter = .text
+                doubleBrackets = true
+            case .endWikiLink1:
+                break
+            case .endWikiLink2:
+                finishLink()
+            case .endLinkText:
+                linkElementDiverter = .na
+            case .startLink:
+                linkElementDiverter = .url
+                linkURL = ""
+            case .startTitle:
+                linkElementDiverter = .title
+                linkTitle = ""
+            case .endTitle:
+                linkElementDiverter = .na
+            case .endLink:
+                linkElementDiverter = .na
+                finishLink()
+            case .startLinkLabel:
+                linkElementDiverter = .label
+                linkLabel = ""
+            case .endLinkLabel:
+                linkElementDiverter = .na
+                finishLink()
+            case .backtickQuote:
+                writer.append("`")
+            case .startCode:
+                writer.startCode()
+            case .endCode:
+                writer.finishCode()
+            case .backtickQuote2:
+                break
+            case .skipSpace:
+                break
+            default:
+                writer.append(chunk.text)
+            }
         }
     }
         
     func initLink() {
+        imageNotLink = false
         linkTextChunks = []
         linkText = ""
         doubleBrackets = false
@@ -1388,6 +1426,8 @@ class MkdownParser {
     }
     
     func finishLink() {
+        
+        // If this is a wiki style link, then format the URL from the text.
         if doubleBrackets {
             var formattedID = ""
             switch noteIDFormat {
@@ -1399,6 +1439,7 @@ class MkdownParser {
             linkURL = noteIDPrefix + formattedID
         }
 
+        // If this is a reference style link, then let's look it up in the dictionary.
         if linkURL.count == 0 {
             if linkLabel.count == 0 {
                 linkLabel = linkText.lowercased()
@@ -1409,9 +1450,14 @@ class MkdownParser {
                 linkTitle = refLink!.title
             }
         }
-        writer.startLink(path: linkURL, title: linkTitle)
-        writeChunks(chunksToWrite: linkTextChunks)
-        writer.finishLink()
+        
+        if imageNotLink {
+            writer.image(text: linkText, path: linkURL, title: linkTitle)
+        } else {
+            writer.startLink(path: linkURL, title: linkTitle)
+            writeChunks(chunksToWrite: linkTextChunks)
+            writer.finishLink()
+        }
         initLink()
     }
     
