@@ -11,7 +11,11 @@
 
 import Foundation
 
-/// A class to parse Mardkown input and do useful things with it.
+/// A class to parse Mardkown input and do useful things with it. To use:
+/// - Initialize a new MkdownParser object.
+/// - Set the mkdown source, if not set as part of initialization.
+/// - Call the parse method.
+/// - Retrieve the generated HTML from the html variable. 
 class MkdownParser {
     
     // ===============================================================
@@ -64,6 +68,8 @@ class MkdownParser {
     var titleEndChar: Character = " "
     
     var refLink = RefLink()
+    
+    var headingNumbers = [0, 0, 0, 0, 0, 0, 0]
     
     // ===========================================================
     //
@@ -266,7 +272,7 @@ class MkdownParser {
                         nextLine.blocks.append("blockquote")
                         continue
                     } else if char == "#" {
-                        _ = nextLine.incrementHeadingLevel()
+                        _ = nextLine.incrementHashCount()
                         continue
                     } else if char == "-" || char == "+" || char == "*" {
                         leadingBullet = true
@@ -398,8 +404,7 @@ class MkdownParser {
         } else if nextLine.horizontalRule {
             nextLine.makeHorizontalRule()
         } else if nextLine.hashCount >= 1 && nextLine.hashCount <= 6 {
-            nextLine.type = .heading
-            nextLine.headingLevel = nextLine.hashCount
+            nextLine.makeHeading(level: nextLine.hashCount, headingNumbers: &headingNumbers)
         } else if nextLine.hashCount > 0 {
             startText = startLine
             nextLine.makeOrdinary()
@@ -435,9 +440,9 @@ class MkdownParser {
         }
         
         if nextLine.type == .h1Underlines {
-            lastLine.makeHeading1()
+            lastLine.makeHeading(level: 1, headingNumbers: &headingNumbers)
         } else if nextLine.type == .h2Underlines {
-            lastLine.makeHeading2()
+            lastLine.makeHeading(level: 2, headingNumbers: &headingNumbers)
         }
         
         // If the line ends with a backslash, treat this like a line break.
@@ -459,9 +464,9 @@ class MkdownParser {
         guard !nextLine.isEmpty else { return }
         
         if nextLine.type == .h1Underlines {
-            lastLine.makeHeading1()
+            lastLine.makeHeading(level: 1, headingNumbers: &headingNumbers)
         } else if nextLine.type == .h2Underlines {
-            lastLine.makeHeading2()
+            lastLine.makeHeading(level: 2, headingNumbers: &headingNumbers)
         }
         
         if lastLine.quoteLevel > 0 && nextLine.type == .ordinaryText && nextLine.quoteLevel == 0 {
@@ -639,6 +644,11 @@ class MkdownParser {
                 chunkAndWrite(line)
                 writer.newLine()
             case .heading:
+                if line.headingNumber > 0 {
+                    let headingNumberChunk = MkdownChunk(line: line)
+                    headingNumberChunk.text = "\(line.headingNumber). "
+                    addChunk(headingNumberChunk)
+                }
                 chunkAndWrite(line)
             case .horizontalRule:
                 writer.horizontalRule()

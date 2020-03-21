@@ -21,6 +21,7 @@ class MkdownLine {
     var quoteLevel = 0
     var hashCount = 0
     var headingLevel = 0
+    var headingNumber = 0
     
     var repeatingChar: Character = " "
     var repeatCount = 0
@@ -62,40 +63,52 @@ class MkdownLine {
         blocks.append("code")
     }
     
-    func makeHeading1() {
+    func makeHeading(level: Int, headingNumbers: inout [Int]) {
+        
+        var clear = headingNumbers.count - 1
+        while clear > level {
+            headingNumbers[clear] = 0
+            clear -= 1
+        }
+        
+        preserveHeadingNumber(level: level, headingNumbers: &headingNumbers)
+        headingNumbers[level] = headingNumber
+        
         type = .heading
-        headingLevel = 1
+        headingLevel = level
         if blocks.last.isHeadingTag || blocks.last.isParagraph {
-            blocks.last.tag = "h1"
+            blocks.last.tag = "h\(level)"
         } else {
-            blocks.append("h1")
+            blocks.append("h\(level)")
         }
     }
     
-    func makeHeading2() {
-        type = .heading
-        headingLevel = 2
-        if blocks.last.isHeadingTag || blocks.last.isParagraph {
-            blocks.last.tag = "h2"
+    /// If this line started with ordered item numbering, then take actions to preserve
+    /// the number.
+    func preserveHeadingNumber(level: Int, headingNumbers: inout [Int]) {
+        
+        guard type == .orderedItem else { return }
+        
+        if headingNumbers[level] > 0 {
+            headingNumber = headingNumbers[level] + 1
         } else {
-            blocks.append("h2")
+            headingNumber = 1
+        }
+        
+        let liIndex = blocks.count - 1
+        let listIndex = blocks.count - 2
+        if liIndex > 0 && blocks.blocks[liIndex].isListItem {
+            blocks.blocks.remove(at: liIndex)
+            if listIndex >= 0 && blocks.blocks[listIndex].tag == "ol" {
+                blocks.blocks.remove(at: listIndex)
+            }
         }
     }
     
     /// Another hash symbol
-    func incrementHeadingLevel() -> Bool {
+    func incrementHashCount() -> Bool {
         hashCount += 1
-        if blocks.last.isHeadingTag {
-            let ok = blocks.incrementHeadingLevel()
-            if !ok {
-                return false
-            }
-        } else {
-            blocks.append("h1")
-        }
-        type = .heading
-        headingLevel += 1
-        return true
+        return hashCount >= 1 && hashCount <= 6
     }
     
     func makeOrdinary() {
@@ -166,7 +179,7 @@ class MkdownLine {
             listTag = "ol"
         }
         
-        // If the previous line was blank, then let's look at the lat non-blank line.
+        // If the previous line was blank, then let's look at the last non-blank line.
         var lastPossibleListItem = previousLine
         if previousLine.type == .blank {
             lastPossibleListItem = previousNonBlankLine
@@ -202,34 +215,6 @@ class MkdownLine {
             listItem.itemNumber = 1
         }
         blocks.append(listItem)
-        
-        /* if continueList && lastList.listWithParagraphs {
-            addParagraph()
-            let lastBlocks = lastPossibleListItem.blocks
-            let lastListIndex = lastBlocks.listPointers[listIndex]
-            let lastItemIndex = lastListIndex + 1
-            if lastItemIndex < lastBlocks.count && lastBlocks.blocks[lastItemIndex].tag == "li" {
-                let lastParaIndex = lastItemIndex + 1
-                if lastParaIndex >= lastBlocks.count {
-                    lastBlocks.addParaTag()
-                } else if lastBlocks.blocks[lastParaIndex].tag == "p" {
-                    // A-OK
-                } else {
-                    lastBlocks.blocks.insert(MkdownBlock("p"), at: lastParaIndex)
-                }
-            }
-        }
-        
-        print("MkdownLine.makeListItem requested type = \(requestedType)")
-        print("  - list tag: \(listTag)")
-        print("  - list index: \(listIndex)")
-        print("  - last item lists count: \(lastPossibleListItem.blocks.listPointers.count)")
-        print("  - last list tag = '\(lastList.tag)'")
-        print("  - last list item tag = '\(lastListItem.tag)'")
-        print("  - continue list = \(continueList)")
-        print("  - last list item # = \(lastListItem.itemNumber)")
-        print("  - list item # = \(listItem.itemNumber)")
- */
     }
     
     /// Try to continue open list blocks from previous lines, based on this line's indention level.
