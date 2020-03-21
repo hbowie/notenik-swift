@@ -20,10 +20,10 @@ class MkdownParser {
     //
     // Initialization: Capture the Markdown text to be parsed.
     //
-    // Section 1: Parse the text and break it into lines, identifying
-    //            the type of each line, along with other metadata.
+    // Phase 1: Parse the text and break it into lines, identifying
+    //          the type of each line, along with other metadata.
     //
-    // Section 2: Go through the lines, generating HTML output. 
+    // Phase 2: Go through the lines, generating HTML output.
     // ===============================================================
     
     var mkdown:    String! = ""
@@ -64,6 +64,13 @@ class MkdownParser {
     var titleEndChar: Character = " "
     
     var refLink = RefLink()
+    
+    // ===========================================================
+    //
+    // Initialization.
+    //
+    // ===========================================================
+
     
     /// Initialize with an empty string.
     init() {
@@ -108,6 +115,8 @@ class MkdownParser {
         }
     }
     
+    
+    /// Perform the parsing.
     func parse() {
         mdToLines()
         linesOut()
@@ -115,7 +124,7 @@ class MkdownParser {
     
     // ===========================================================
     //
-    // Section 1 - Parse the input block of Markdown text, and
+    // Phase 1 - Parse the input block of Markdown text, and
     // break down into lines.
     //
     // ===========================================================
@@ -541,7 +550,7 @@ class MkdownParser {
     
     // ===========================================================
     //
-    // This is the data shared between Section 1 and Section 2.
+    // This is the data shared between Phase 1 and Phase 2.
     //
     // ===========================================================
     
@@ -550,7 +559,7 @@ class MkdownParser {
 
     // ===========================================================
     //
-    // Section 2 - Take the lines and convert them to HTML output.
+    // Phase 2 - Take the lines and convert them to HTML output.
     //
     // ===========================================================
     
@@ -748,7 +757,7 @@ class MkdownParser {
         if line.type == .followOn {
             nextChunk.startsWithSpace = true
             nextChunk.endsWithSpace = true
-            nextChunk.text.append(" ")
+            appendToNextChunk(str: " ", lastChar: " ", line: line)
         }
         for char in line.text {
             if line.type == .code {
@@ -760,7 +769,7 @@ class MkdownParser {
                 case "&":
                     addCharAsChunk(char: char, type: .ampersand, lastChar: lastChar, line: line)
                 default:
-                    nextChunk.text.append(char)
+                    appendToNextChunk(char: char, lastChar: lastChar, line: line)
                 }
             } else {
                 switch char {
@@ -775,6 +784,10 @@ class MkdownParser {
                     addCharAsChunk(char: char, type: .leftAngleBracket, lastChar: lastChar, line: line)
                 case ">":
                     addCharAsChunk(char: char, type: .rightAngleBracket, lastChar: lastChar, line: line)
+                case "@":
+                    addCharAsChunk(char: char, type: .atSign, lastChar: lastChar, line: line)
+                case ":":
+                    addCharAsChunk(char: char, type: .colon, lastChar: lastChar, line: line)
                 case "[":
                     addCharAsChunk(char: char, type: .leftSquareBracket, lastChar: lastChar, line: line)
                 case "]":
@@ -793,18 +806,20 @@ class MkdownParser {
                     addCharAsChunk(char: char, type: .ampersand, lastChar: lastChar, line: line)
                 case "!":
                     addCharAsChunk(char: char, type: .exclamationMark, lastChar: lastChar, line: line)
+                case "-", ".":
+                    bufferRepeatingCharacters(char: char, lastChar: lastChar, line: line)
                 case " ":
                     if nextChunk.text.count == 0 {
                         nextChunk.startsWithSpace = true
                     }
                     nextChunk.endsWithSpace = true
-                    nextChunk.text.append(char)
+                    appendToNextChunk(char: char, lastChar: lastChar, line: line)
                 default:
                     if backslashed {
                         addCharAsChunk(char: char, type: .plaintext, lastChar: lastChar, line: line)
                         backslashed = false
                     } else {
-                        nextChunk.text.append(char)
+                        appendToNextChunk(char: char, lastChar: lastChar, line: line)
                     }
                 }
             }
@@ -813,6 +828,7 @@ class MkdownParser {
             }
             lastChar = char
         }
+        writeCharsFromBuffer(lastChar: lastChar, line: line)
         finishNextChunk(line: line)
         
         if line.endsWithLineBreak {
@@ -821,11 +837,69 @@ class MkdownParser {
         }
     }
     
+    func appendToNextChunk(str: String, lastChar: Character, line: MkdownLine) {
+        writeCharsFromBuffer(lastChar: lastChar, line: line)
+        nextChunk.text.append(str)
+    }
+    
+    func appendToNextChunk(char: Character, lastChar: Character, line: MkdownLine) {
+        writeCharsFromBuffer(lastChar: lastChar, line: line)
+        nextChunk.text.append(char)
+    }
+    
+    var charBuffer: [Character] = []
+    
+    func bufferRepeatingCharacters(char: Character,
+                                   lastChar: Character,
+                                   line: MkdownLine) {
+        if charBuffer.count > 0 && charBuffer.count < 3 && char == charBuffer[0] {
+            charBuffer.append(char)
+            if charBuffer.count == 3 {
+                writeCharsFromBuffer(lastChar: lastChar, line: line)
+            }
+        } else if charBuffer.count > 0 {
+            writeCharsFromBuffer(lastChar: lastChar, line: line)
+        } else {
+            charBuffer.append(char)
+        }
+    }
+    
+    func writeCharsFromBuffer(lastChar: Character, line: MkdownLine) {
+        
+        guard charBuffer.count > 0 else { return }
+        
+        if charBuffer[0] == "-" {
+            if charBuffer.count == 3 {
+                charBuffer = []
+                addCharAsChunk(char: "-", type: .emdash, lastChar: lastChar, line: line)
+            } else if charBuffer.count == 2 {
+                charBuffer = []
+                addCharAsChunk(char: "-", type: .endash, lastChar: lastChar, line: line)
+            } else {
+                nextChunk.text.append(charBuffer[0])
+            }
+        } else if charBuffer[0] == "." {
+            if charBuffer.count == 3 {
+                charBuffer = []
+                addCharAsChunk(char: ".", type: .ellipsis, lastChar: lastChar, line: line)
+            } else if charBuffer.count == 2 {
+                nextChunk.text.append("..")
+            } else {
+                nextChunk.text.append(".")
+            }
+        }
+        
+        charBuffer = []
+    }
+    
     /// Add a character as its own chunk.
     func addCharAsChunk(char: Character,
                         type: MkdownChunkType,
                         lastChar: Character,
                         line: MkdownLine) {
+        if charBuffer.count > 0 {
+            writeCharsFromBuffer(lastChar: lastChar, line: line)
+        }
         if nextChunk.text.count > 0 {
             finishNextChunk(line: line)
         }
@@ -893,7 +967,9 @@ class MkdownParser {
                 if withinCodeSpan { break }
                 if nextIndex >= chunks.count { break }
                 if chunks[nextIndex].startsWithSpace { break }
-                chunk.type = .tagStart
+                if !scanForAutoLink(forChunkAt: index) {
+                    chunk.type = .tagStart
+                }
             case .ampersand:
                 if chunk.lineType == .code { break }
                 if withinCodeSpan { break }
@@ -909,6 +985,8 @@ class MkdownParser {
                 if chunk.type == .startCode {
                     withinCodeSpan = true
                 }
+            case .singleQuote, .doubleQuote:
+                scanForQuotes(forChunkAt: index)
             case .startCode:
                 withinCodeSpan = true
             case .endCode:
@@ -918,6 +996,60 @@ class MkdownParser {
             }
             index += 1
         }
+    }
+    
+    func scanForQuotes(forChunkAt: Int) {
+        
+        let firstChunk = chunks[forChunkAt]
+        if forChunkAt > 0 {
+            let priorChunk = chunks[forChunkAt - 1]
+            if priorChunk.type == .plaintext {
+                let priorChar = priorChunk.text.last
+                if priorChar != nil && priorChar!.isLetter {
+                    firstChunk.type = .apostrophe
+                    return
+                }
+            }
+        }
+        
+        guard forChunkAt + 2 < chunks.count else { return }
+        
+        var next = forChunkAt + 1
+        var matched = false
+        while !matched && next < chunks.count {
+            let nextChunk = chunks[next]
+            if nextChunk.type == firstChunk.type && next > forChunkAt + 1 {
+                matched = true
+                if firstChunk.type == .doubleQuote {
+                    firstChunk.type = .doubleCurlyQuoteOpen
+                    nextChunk.type = .doubleCurlyQuoteClose
+                } else if firstChunk.type == .singleQuote {
+                    firstChunk.type = .singleCurlyQuoteOpen
+                    nextChunk.type = .singleCurlyQuoteClose
+                }
+            }
+            next += 1
+        }
+    }
+    
+    func scanForAutoLink(forChunkAt: Int) -> Bool {
+        guard forChunkAt + 4 < chunks.count else { return false }
+        guard chunks[forChunkAt + 4].type == .rightAngleBracket else { return false }
+        var sep: Character = " "
+        switch chunks[forChunkAt + 2].type {
+        case .atSign:
+            sep = "@"
+        case .colon:
+            sep = ":"
+        default:
+            sep = " "
+        }
+        guard sep == ":" || sep == "@" else { return false }
+        let part1 = chunks[forChunkAt + 1].text
+        if sep == ":" && part1 != "http" && part1 != "https" { return false }
+        chunks[forChunkAt].type = .autoLinkStart
+        chunks[forChunkAt + 4].type = .autoLinkEnd
+        return true
     }
     
     /// If we have an asterisk or an underline, look for the closing symbols to end the emphasis span.
@@ -1268,6 +1400,9 @@ class MkdownParser {
     var noteIDPrefix = ""
     var noteIDSuffix = ""
     var noteIDFormat: NoteIDFormat = .common
+    
+    var autoLink = ""
+    var autoLinkSep: Character = " "
 
     /// Go through the chunks and write each one. 
     func writeChunks(chunksToWrite: [MkdownChunk]) {
@@ -1319,6 +1454,18 @@ class MkdownParser {
                     linkElementDiverter = .na
                 } else {
                     linkLabel.append(chunk.text.lowercased())
+                    return
+                }
+            case .autoLink:
+                if chunk.type == .autoLinkEnd {
+                    linkElementDiverter = .na
+                } else {
+                    autoLink.append(chunk.text)
+                    if chunk.type == .atSign {
+                        autoLinkSep = "@"
+                    } else if chunk.type == .colon {
+                        autoLinkSep = ":"
+                    }
                     return
                 }
             case .na:
@@ -1398,6 +1545,12 @@ class MkdownParser {
             case .endLinkLabel:
                 linkElementDiverter = .na
                 finishLink()
+            case .autoLinkStart:
+                linkElementDiverter = .autoLink
+                autoLink = ""
+                autoLinkSep = " "
+            case .autoLinkEnd:
+                finishAutoLink()
             case .backtickQuote:
                 writer.append("`")
             case .startCode:
@@ -1408,9 +1561,31 @@ class MkdownParser {
                 break
             case .skipSpace:
                 break
+            case .ellipsis:
+                writer.ellipsis()
+            case .endash:
+                writer.writeEnDash()
+            case .emdash:
+                writer.writeEmDash()
+            case .singleCurlyQuoteOpen:
+                writer.leftSingleQuote()
+            case .singleCurlyQuoteClose:
+                writer.rightSingleQuote()
+            case .doubleCurlyQuoteOpen:
+                writer.leftDoubleQuote()
+            case .doubleCurlyQuoteClose:
+                writer.rightDoubleQuote()
             default:
                 writer.append(chunk.text)
             }
+        }
+    }
+    
+    func finishAutoLink() {
+        if autoLinkSep == ":" {
+            writer.link(text: autoLink, path: autoLink)
+        } else {
+            writer.link(text: autoLink, path: "mailto:\(autoLink)")
         }
     }
         
@@ -1467,6 +1642,7 @@ class MkdownParser {
         case label
         case title
         case url
+        case autoLink
     }
     
     /// The formatting to be applied to the ID.

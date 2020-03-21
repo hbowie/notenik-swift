@@ -34,8 +34,13 @@ enum MkdownChunkType {
     
     case leftAngleBracket
     case tagStart
+    case autoLinkStart
     
     case rightAngleBracket
+    case autoLinkEnd
+    
+    case atSign
+    case colon
     
     case ampersand
     case entityStart
@@ -68,4 +73,16 @@ enum MkdownChunkType {
     
     case startTitle
     case endTitle
+    
+    case singleCurlyQuoteOpen
+    case singleCurlyQuoteClose
+    case apostrophe
+    
+    case doubleCurlyQuoteOpen
+    case doubleCurlyQuoteClose
+    
+    case ellipsis
+    
+    case endash
+    case emdash
 }
