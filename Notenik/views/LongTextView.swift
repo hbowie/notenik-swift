@@ -59,7 +59,18 @@ class LongTextView: MacEditView {
         
         textView.isRichText = false
         textView.usesFontPanel = false
-        textView.isAutomaticQuoteSubstitutionEnabled = false
+        if textView.isAutomaticDashSubstitutionEnabled {
+            textView.toggleAutomaticDashSubstitution(nil)
+        }
+        if textView.isAutomaticQuoteSubstitutionEnabled {
+            textView.toggleAutomaticQuoteSubstitution(nil)
+        }
+        if textView.isAutomaticTextCompletionEnabled {
+            textView.toggleAutomaticTextCompletion(nil)
+        }
+        if textView.isAutomaticSpellingCorrectionEnabled {
+            textView.toggleAutomaticSpellingCorrection(nil)
+        }
         
         AppPrefs.shared.setRegularFont(object: textView)
         
