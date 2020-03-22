@@ -19,7 +19,6 @@ class CollectionPrefsViewController: NSViewController {
     
     @IBOutlet var collectionTitle:      NSTextField!
     @IBOutlet var fileExtComboBox:      NSComboBox!
-    @IBOutlet var doubleBracketCkBox:   NSButton!
     @IBOutlet var mirrorAutoIndexCkBox: NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
@@ -193,7 +192,6 @@ class CollectionPrefsViewController: NSViewController {
         setFileExt(collection!.preferredExt)
         setFieldsForCollection()
         setOtherFieldsAllowed(collection!.otherFields)
-        setDoubleBracketParsing(collection!.doubleBracketParsing)
         setMirrorAutoIndex(collection!.mirrorAutoIndex)
     }
     
@@ -258,14 +256,6 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
-    func setDoubleBracketParsing(_ on: Bool) {
-        if on {
-            doubleBracketCkBox.state = .on
-        } else {
-            doubleBracketCkBox.state = .off
-        }
-    }
-    
     func setMirrorAutoIndex(_ on: Bool) {
         if on {
             mirrorAutoIndexCkBox.state = .on
@@ -283,7 +273,6 @@ class CollectionPrefsViewController: NSViewController {
         collection!.title = collectionTitle.stringValue
         collection!.preferredExt = fileExtComboBox.stringValue
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
-        collection!.doubleBracketParsing = doubleBracketCkBox.state == .on
         collection!.mirrorAutoIndex = mirrorAutoIndexCkBox.state == .on
         let dict = collection!.dict
         dict.unlock()

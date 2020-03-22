@@ -37,6 +37,7 @@ enum MkdownChunkType {
     case autoLinkStart
     
     case rightAngleBracket
+    case tagEnd
     case autoLinkEnd
     
     case atSign

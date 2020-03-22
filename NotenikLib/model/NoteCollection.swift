@@ -28,7 +28,6 @@ class NoteCollection {
     var otherFields  = false
     var readOnly     : Bool = false
     var customFields : [SortField] = []
-    var doubleBracketParsing = false
     var hasTimestamp = false
     var isRealmCollection = false
     var noteFileFormat: NoteFileFormat = .toBeDetermined

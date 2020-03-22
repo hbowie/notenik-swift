@@ -337,9 +337,9 @@ class NoteTransformer {
             markedup.append(": ")
             markedup.finishParagraph()
             var format = "o"
-            if io.collection!.doubleBracketParsing {
+            // if io.collection!.doubleBracketParsing {
                 format = "w1o"
-            }
+            // }
             markedup.append("=$\(def.fieldLabel.commonForm)&\(format)$=")
             markedup.newLine()
         } else if def.fieldType is LinkType {

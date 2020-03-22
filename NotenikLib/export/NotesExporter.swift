@@ -200,7 +200,6 @@ class NotesExporter {
         exportCollection.statusConfig = collection.statusConfig
         exportCollection.preferredExt = fileExt
         exportCollection.otherFields = collection.otherFields
-        exportCollection.doubleBracketParsing = collection.doubleBracketParsing
         let caseMods = ["u", "u", "l"]
         for def in dict.list {
             let proper = def.fieldLabel.properForm

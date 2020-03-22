@@ -75,7 +75,7 @@ class AppPrefs {
     
     var newVersionForReview = false
     
-    var _mdParser = "down"
+    var _mdParser = "notenik"
     
     var locale: Locale!
     var languageCode = "en"
@@ -129,7 +129,7 @@ class AppPrefs {
         favoritesColumns = 4
         favoritesRows = 32
         favoritesColumnWidth = "250px"
-        markdownParser = "down"
+        markdownParser = "notenik"
     }
     
     func loadDefaults() {

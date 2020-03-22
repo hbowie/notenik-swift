@@ -180,6 +180,8 @@ class MkdownParser {
                 if char.isWhitespace || char == ">" {
                     possibleTagPending = false
                     switch possibleTag {
+                    case "a":
+                        goodTag = true
                     case "h1", "h2", "h3", "h4", "h5", "h6":
                         goodTag = true
                     case "div", "pre", "p", "table":
@@ -958,6 +960,7 @@ class MkdownParser {
     // ===========================================================
     
     var withinCodeSpan = false
+    var withinTag = false
     
     /// Scan through our accumulated chunks, looking for meaningful patterns of puncutation.
     func identifyPatterns() {
@@ -971,24 +974,31 @@ class MkdownParser {
             case .asterisk, .underline:
                 if chunk.lineType == .code { break }
                 if withinCodeSpan { break }
+                if withinTag { break }
                 scanForEmphasisClosure(forChunkAt: index)
             case .leftAngleBracket:
                 if chunk.lineType == .code { break }
                 if withinCodeSpan { break }
                 if nextIndex >= chunks.count { break }
                 if chunks[nextIndex].startsWithSpace { break }
-                if !scanForAutoLink(forChunkAt: index) {
-                    chunk.type = .tagStart
+                let auto = scanForAutoLink(forChunkAt: index)
+                if !auto {
+                    let inline = scanForInlineTag(forChunkAt: index)
+                    if inline {
+                        withinTag = true
+                    }
                 }
             case .ampersand:
                 if chunk.lineType == .code { break }
                 if withinCodeSpan { break }
+                if withinTag { break }
                 if nextIndex >= chunks.count { break }
                 if chunks[nextIndex].startsWithSpace { break }
                 chunk.type = .entityStart
             case .leftSquareBracket:
                 if chunk.lineType == .code { break }
                 if withinCodeSpan { break }
+                if withinTag { break }
                 scanForLinkElements(forChunkAt: index)
             case .backtickQuote:
                 scanForCodeClosure(forChunkAt: index)
@@ -996,11 +1006,16 @@ class MkdownParser {
                     withinCodeSpan = true
                 }
             case .singleQuote, .doubleQuote:
+                if withinTag { break }
                 scanForQuotes(forChunkAt: index)
             case .startCode:
                 withinCodeSpan = true
             case .endCode:
                 withinCodeSpan = false
+            case .tagStart:
+                withinTag = true
+            case .tagEnd:
+                withinTag = false
             default:
                 break
             }
@@ -1060,6 +1075,24 @@ class MkdownParser {
         chunks[forChunkAt].type = .autoLinkStart
         chunks[forChunkAt + 4].type = .autoLinkEnd
         return true
+    }
+    
+    func scanForInlineTag(forChunkAt: Int) -> Bool {
+        let startChunk = chunks[forChunkAt]
+        var next = forChunkAt + 1
+        while next < chunks.count {
+            let nextChunk = chunks[next]
+            if nextChunk.type == .leftAngleBracket {
+                return false
+            } else if nextChunk.type == .rightAngleBracket {
+                startChunk.type = .tagStart
+                nextChunk.type = .tagEnd
+                return true
+            } else {
+                next += 1
+            }
+        }
+        return false
     }
     
     /// If we have an asterisk or an underline, look for the closing symbols to end the emphasis span.
@@ -1285,6 +1318,7 @@ class MkdownParser {
         var rightQuote: MkdownChunk?
         var rightParen: MkdownChunk?
         var lastChunk = MkdownChunk()
+        var enclosedParens = 0
         
         var doubleBrackets = false
         var textBracketsClosed = false
@@ -1336,11 +1370,13 @@ class MkdownParser {
                 if textBracketsClosed && leftParen == nil {
                     leftParen = chunk
                 } else {
-                    return
+                    enclosedParens += 1
                 }
             case .rightParen:
                 if leftParen == nil {
                     return
+                } else if enclosedParens > 0 {
+                    enclosedParens -= 1
                 } else {
                     rightParen = chunk
                     linkLooking = false

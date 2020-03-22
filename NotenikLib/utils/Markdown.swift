@@ -32,14 +32,6 @@ class Markdown {
     func parse() {
         ok = true
         html = ""
-        if notenikIO != nil {
-            if notenikIO!.collection != nil {
-                preParser = notenikIO!.collection!.doubleBracketParsing
-            }
-        }
-        // if preParser {
-        //     md = wikiLinks.parse(textIn: md, io: notenikIO)
-        // }
         parserID = AppPrefs.shared.markdownParser
         switch parserID {
         case "down":
