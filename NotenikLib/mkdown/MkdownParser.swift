@@ -477,12 +477,6 @@ class MkdownParser {
             startText = startLine
         }
         
-        if nextLine.type == .h1Underlines {
-            lastLine.makeHeading(level: 1, headingNumbers: &headingNumbers)
-        } else if nextLine.type == .h2Underlines {
-            lastLine.makeHeading(level: 2, headingNumbers: &headingNumbers)
-        }
-        
         // If the line ends with a backslash, treat this like a line break.
         if nextLine.type != .code && nextLine.endsWithBackSlash {
             endText = mkdown.index(before: endText)
@@ -515,15 +509,20 @@ class MkdownParser {
             nextLine.carryBlockquotesForward(lastLine: lastLine)
             nextLine.addParagraph()
         }
-        if nextLine.type == .followOn {
-            
-        }
         
-        lines.append(nextLine)
-        lastLine = nextLine
-        if nextLine.type != .blank {
+        switch nextLine.type {
+        case .h1Underlines, .h2Underlines, .linkDef, .linkDefExt:
+            break
+        case .blank:
+            if lastLine.type == .blank { break }
+            lines.append(nextLine)
+            lastLine = nextLine
+        default:
+            lines.append(nextLine)
+            lastLine = nextLine
             lastNonBlankLine = nextLine
         }
+
     }
     
     func linkLabelExamineChar(_ char: Character) {

@@ -22,6 +22,6 @@ Note that this is coded within the body of the Note using normal [Markdown synta
 
 While this method works, and has the advantage of staying within the normal Markdown syntax, it is not the most convenient approach. As an optional alternative, the user may choose to use the wiki-like syntax of enclosing the title of another Note within double square brackets. 
 
-In order to enable this option, the user must first check the "Double Bracket Parsing for Inter-Note Links" checkbox on the Collection Preferences pane. Once this option has been enabled for a Collection, then a link to another Note may be coded by simply enclosing the title of the target Note (or its timestamp!) within double square brackets. 
+In order to enable this option, the user must be using Notenik's own internal Markdown parser. If you are using Notenik's parser, then a link to another Note may be coded by simply enclosing the title of the target Note (or its timestamp!) within double square brackets. 
 
 For example, here's a working link to the [[Overview]] note using this syntax.

@@ -16,4 +16,16 @@ Body:
 
 When you view a Note on the Display tab, you will see the Body Field Value converted to HTML using a Markdown parser. If you haven't used any special Markdown formatting, then the text will simply appear as you entered it. 
 
-Notenik uses the [Down](https://github.com/iwasrobbed/Down) parser as the default for conversion of Markdown to HTML, but [Ink](https://github.com/JohnSundell/Ink) may be specified as an alternate on the Markdown tab of the Application preferences.
+Notenik uses its own internal Markdown parser as the default, but the [Down](https://github.com/iwasrobbed/Down) and [Ink](https://github.com/JohnSundell/Ink) parsers are provided as alternatives that may be selected on the Markdown tab of the Application preferences.
+
+The Notenik parser generally adheres closely to the [Markdown][md] and [SmartyPants][sp] specs from John Gruber. Following are the known exceptions:
+
+* You may use double square brackets enclosing the title of another Note to create a link to that Note.
+* Headings may be auto-numbered in a fashion similar to the usual numbering of ordered items.  
+* Automatic links for email addresses do not perform any randomized decimal and hex entity-encoding of the email addresses. 
+* Backticks-style quotes are not converted to curly quotes. 
+
+Although the two alternative parsers are described in terms of their exceptional speediness, and even though Notenik's own Markdown implementation was focused primarily on the clarity of the Swift code, I have not yet noticed any particular sluggishness of execution when using the Notenik parser. 
+
+[md]: https://daringfireball.net/projects/markdown/
+[sp]: https://daringfireball.net/projects/smartypants/

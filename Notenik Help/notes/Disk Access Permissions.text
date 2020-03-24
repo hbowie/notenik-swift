@@ -28,6 +28,6 @@ Here's how this works.
 
 3. If you use the Open Parent Realm command under the File menu to have Notenik search for its Collections and Scripts within a parent folder, then those Collections and Scripts will be available to be opened, because you have explicitly given Notenik permission to access everything within that parent folder. 
 
-(Note that you can also achieve these same results by using the macOS FInder to drag a folder and drop it onto the Notenik app icon.)
+(Note that you can also achieve these same results by using the macOS Finder to drag a folder and drop it onto the Notenik app icon.)
 
 In general, the rules above will be enough to cover most situations. If they prove too restrictive, though, you can always grant Notenik full disk access in the Security & Privacy pane of System Preferences.

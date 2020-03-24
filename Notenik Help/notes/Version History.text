@@ -8,6 +8,26 @@ Tags:   changes, versions, history, log
 
 Body:
 
+### Version 3.2.0 | 22 Mar 2020
+
+#### 1. Notenik Now Available for High Sierra
+
+The target version for macOS is now 10.13. It was previously set to 10.14. Early reports indicates it works just fine on the earlier version of macOS. 
+
+
+#### 2. Bug Fixes for 3.2.0
+
+The following bugs were fixed in this release. 
+
+- The sharing function now respects a request to share the body only in HTML; previously, the entire Note was shared, disregarding the user's selection.
+
+#### 3. Third Markdown Parser Added
+
+Notenik now has its own internal Markdown parser. I tried to implement pretty much everything in the original [Markdown][md] and [SmartyPants][sp] specs from John Gruber. The other two parsers are still available as options, but the Notenik parser is now the default, since it is now the only way to add links between Notes. 
+
+[md]: https://daringfireball.net/projects/markdown/
+[sp]: https://daringfireball.net/projects/smartypants/
+
 ### Version 3.1.0 | 21 Feb 2020
 
 #### 1. Added T to mark Tasks with Today's Date
