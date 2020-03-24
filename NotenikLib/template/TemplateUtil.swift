@@ -71,7 +71,8 @@ class TemplateUtil {
     let emailSingleQuoteConverter = StringConverter()
     let noBreakConverter = StringConverter()
     let markedup = Markedup(format: .htmlFragment)
-    let wikiLinks = WikiLinks()
+    
+    var wikiStyle: Character = "0"
     
     /// Initialize things.
     init() {
@@ -82,9 +83,6 @@ class TemplateUtil {
         noBreakConverter.addNoBreaks()
         resetGroupValues()
         resetGroupBreaks()
-        wikiLinks.prefix = ""
-        wikiLinks.format = .fileName
-        wikiLinks.suffix = ".html"
     }
     
     func setWebRoot(filePath: String) {
@@ -629,21 +627,8 @@ class TemplateUtil {
             } else if charLower == "v" {
                 varyStage = 1
             } else if charLower == "w" {
-                switch nextChar {
-                case "1":
-                    wikiLinks.prefix = ""
-                    wikiLinks.format = .fileName
-                    wikiLinks.suffix = ".html"
-                    inc = 2
-                case "2":
-                    wikiLinks.prefix = "#"
-                    wikiLinks.format = .fileName
-                    wikiLinks.suffix = ""
-                    inc = 2
-                default:
-                    break
-                }
-                modifiedValue = wikiLinksParse(modifiedValue)
+                wikiStyle = nextChar
+                inc = 2
             } else if charLower == "x" {
                 modifiedValue = xmlConverter.convert(from: modifiedValue)
             } else if char == "y" {
@@ -724,19 +709,26 @@ class TemplateUtil {
         return out
     }
     
-    /// Pre-parse Markdown text to convert special wiki-style inter-note inks
-    /// to some sort of links that Markdown and HTML can work with.
-    func wikiLinksParse(_ textIn: String) -> String {
-        return wikiLinks.parse(textIn: textIn, io: nil)
-    }
-    
     /// Convert Markdown to HTML
     func convertMarkdownToHTML(_ markdown: String) -> String {
-        markedup.flushCode()
-        markedup.startDoc(withTitle: nil, withCSS: nil)
-        markedup.append(markdown: markdown)
-        markedup.finishDoc()
-        return markedup.code
+        switch wikiStyle {
+        case "1":
+            let mkdown = MkdownParser(markdown)
+            mkdown.setWikiLinkFormatting(prefix: "", format: .fileName, suffix: ".html", lookup: nil)
+            mkdown.parse()
+            return mkdown.html
+        case "2":
+            let mkdown = MkdownParser(markdown)
+            mkdown.setWikiLinkFormatting(prefix: "#", format: .fileName, suffix: "", lookup: nil)
+            mkdown.parse()
+            return mkdown.html
+        default:
+            markedup.flushCode()
+            markedup.startDoc(withTitle: nil, withCSS: nil)
+            markedup.append(markdown: markdown)
+            markedup.finishDoc()
+            return markedup.code
+        }
     }
     
     /// Convert Textile to HTML

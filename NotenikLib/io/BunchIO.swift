@@ -370,6 +370,18 @@ class BunchIO: NotenikIO, RowConsumer  {
         return bunch!.getNote(forID: id)
     }
     
+    /// In conformance with MkdownWikiLinkLookup protocol, lookup a title given a timestamp.
+    /// - Parameter title: A wiki link target that is possibly a timestamp instead of a title.
+    /// - Returns: The corresponding title, if the lookup was successful, otherwise the title
+    ///            that was passed as input.
+    func mkdownWikiLinkLookup(title: String) -> String {
+        guard collection != nil && collectionOpen else { return title }
+        guard title.count < 15 && title.count > 11 else { return title }
+        let target = getNote(forTimestamp: title)
+        guard target != nil else { return title }
+        return target!.title.value
+    }
+    
     /// Get the existing note with the specified timestamp, if one exists.
     /// - Parameter stamp: The timestamp we are looking for.
     /// - Returns: The Note with this timestamp, if one exists; otherwise nil.

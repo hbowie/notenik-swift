@@ -80,6 +80,9 @@
 		9C21DB8021F82D9800A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
 		9C21DB8121F82DB500A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
 		9C21DB8221F82DB600A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
+		9C22CD9C242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C22CD9B242801E2003D3305 /* MkdownWikiLinkLookup.swift */; };
+		9C22CD9D242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C22CD9B242801E2003D3305 /* MkdownWikiLinkLookup.swift */; };
+		9C22CD9E242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C22CD9B242801E2003D3305 /* MkdownWikiLinkLookup.swift */; };
 		9C25DFFC22D7824B0062E282 /* ValuePickLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */; };
 		9C25DFFD22D7824B0062E282 /* ValuePickLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */; };
 		9C25E00122D786770062E282 /* ValuePickLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */; };
@@ -730,6 +733,7 @@
 		9C209631240F3DEC009265C7 /* MkdownChunkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownChunkType.swift; sourceTree = "<group>"; };
 		9C21749E22024E2900B4BF48 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../notenik-swift-intro"; sourceTree = "<group>"; };
 		9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplay.swift; sourceTree = "<group>"; };
+		9C22CD9B242801E2003D3305 /* MkdownWikiLinkLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownWikiLinkLookup.swift; sourceTree = "<group>"; };
 		9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuePickLists.swift; sourceTree = "<group>"; };
 		9C25E00222D787260062E282 /* TagsPickList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsPickList.swift; sourceTree = "<group>"; };
 		9C25E00522D787980062E282 /* PickList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickList.swift; sourceTree = "<group>"; };
@@ -1412,6 +1416,7 @@
 		9CA834F92405C09300C2531C /* mkdown */ = {
 			isa = PBXGroup;
 			children = (
+				9C46F9E1242521B9007BD69C /* README.md */,
 				9C896525241026EC00866FD0 /* LinkLabelDefPhase.swift */,
 				9CE6FE552413252200E9EB7A /* MkdownBlock.swift */,
 				9CE6FE592413253700E9EB7A /* MkdownBlockStack.swift */,
@@ -1422,8 +1427,8 @@
 				9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */,
 				9CE6FE4D2412B8F900E9EB7A /* MkdownListType.swift */,
 				9CA8350A2405EA2600C2531C /* MkdownParser.swift */,
+				9C22CD9B242801E2003D3305 /* MkdownWikiLinkLookup.swift */,
 				9C8965212410269300866FD0 /* RefLink.swift */,
-				9C46F9E1242521B9007BD69C /* README.md */,
 			);
 			path = mkdown;
 			sourceTree = "<group>";
@@ -1797,6 +1802,7 @@
 				9C60E75321F651E500C332ED /* Provider.swift in Sources */,
 				9C25E00622D787980062E282 /* PickList.swift in Sources */,
 				9C44126D23634B8A00B3041F /* AnyType.swift in Sources */,
+				9C22CD9C242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */,
 				9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */,
 				9CC088C223ECE58B006F2B99 /* NoteTransformer.swift in Sources */,
 				9CAD6A5222DFA0B000531D90 /* PrefsTabVC.swift in Sources */,
@@ -2100,6 +2106,7 @@
 				9C44126E23634B8A00B3041F /* AnyType.swift in Sources */,
 				9CFCB04A226BCE1700443FFA /* SimpleDate.swift in Sources */,
 				9C60E71621F6518400C332ED /* LogLevel.swift in Sources */,
+				9C22CD9D242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */,
 				9C8A5ADE23DBB8EA00C5A0DA /* Pandoc.swift in Sources */,
 				9CE2170F22A9BC6000EE656C /* LineWithBreak.swift in Sources */,
 				9CB6ECD72365E00C00951820 /* WorkTitleType.swift in Sources */,
@@ -2205,6 +2212,7 @@
 				9C60E78B21F651E500C332ED /* NoteLineParser.swift in Sources */,
 				9C896528241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */,
 				9C02D2B42267F41200587EDF /* CalendarWindowController.swift in Sources */,
+				9C22CD9E242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */,
 				9C5556D822E11E3B0099414E /* ExportWindowController.swift in Sources */,
 				9C535F5923A3FDC300D47282 /* WikiLinks.swift in Sources */,
 				9C60E78521F651E500C332ED /* LineReader.swift in Sources */,

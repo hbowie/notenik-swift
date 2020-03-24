@@ -14,6 +14,7 @@ import Foundation
 /// A class to parse Mardkown input and do useful things with it. To use:
 /// - Initialize a new MkdownParser object.
 /// - Set the mkdown source, if not set as part of initialization.
+/// - Set the wiki link formatting, if needed.
 /// - Call the parse method.
 /// - Retrieve the generated HTML from the html variable. 
 class MkdownParser {
@@ -31,6 +32,14 @@ class MkdownParser {
     // ===============================================================
     
     var mkdown:    String! = ""
+    
+    
+    let interNoteDomain = "https://ntnk.app/"
+    var wikiLinkPrefix = ""
+    var wikiLinkSuffix = ""
+    var wikiLinkFormatting: WikiLinkFormat = .common
+    var wikiLinkLookup: MkdownWikiLinkLookup?
+    
     var nextIndex: String.Index
     
     var nextLine = MkdownLine()
@@ -56,6 +65,7 @@ class MkdownParser {
     var possibleTagPending = false
     var possibleTag = ""
     var goodTag = false
+    var following = false
     
     var openHTMLblockTag = ""
     var openHTMLblock = false
@@ -70,6 +80,7 @@ class MkdownParser {
     var refLink = RefLink()
     
     var headingNumbers = [0, 0, 0, 0, 0, 0, 0]
+    
     
     // ===========================================================
     //
@@ -87,7 +98,7 @@ class MkdownParser {
         endText = nextIndex
         startNumber = nextIndex
         startBullet = nextIndex
-        noteIDPrefix = interNoteDomain
+        wikiLinkPrefix = interNoteDomain
     }
     
     /// Initialize with a string that will be copied.
@@ -100,7 +111,7 @@ class MkdownParser {
         endText = nextIndex
         startNumber = nextIndex
         startBullet = nextIndex
-        noteIDPrefix = interNoteDomain
+        wikiLinkPrefix = interNoteDomain
     }
     
     /// Try to initialize by reading input from a URL.
@@ -114,13 +125,23 @@ class MkdownParser {
             endText = nextIndex
             startNumber = nextIndex
             startBullet = nextIndex
-            noteIDPrefix = interNoteDomain
+            wikiLinkPrefix = interNoteDomain
         } catch {
             print("Error is \(error)")
             return nil
         }
     }
     
+    /// If using wiki-style links, set the formatting options before performing the parse operation.
+    func setWikiLinkFormatting(prefix: String,
+                               format: WikiLinkFormat,
+                               suffix: String,
+                               lookup: MkdownWikiLinkLookup? = nil) {
+        self.wikiLinkPrefix = prefix
+        self.wikiLinkFormatting = format
+        self.wikiLinkSuffix = suffix
+        self.wikiLinkLookup = lookup
+    }
     
     /// Perform the parsing.
     func parse() {
@@ -281,9 +302,13 @@ class MkdownParser {
                         startBullet = lastIndex
                         continue
                     } else if char.isNumber {
-                        leadingNumber = true
-                        startNumber = lastIndex
-                        continue
+                        if following {
+                            phase = .text
+                        } else {
+                            leadingNumber = true
+                            startNumber = lastIndex
+                            continue
+                        }
                     } else if char == "[" && nextLine.indentLevels < 1 {
                         linkLabelPhase = .leftBracket
                         refLink = RefLink()
@@ -316,7 +341,11 @@ class MkdownParser {
                     nextLine.trailingSpaceCount = 0
                 }
                 if char == "\\" {
-                    nextLine.endsWithBackSlash = true
+                    if nextLine.endsWithBackSlash {
+                        nextLine.endsWithBackSlash = false
+                    } else {
+                        nextLine.endsWithBackSlash = true
+                    }
                 } else {
                     nextLine.endsWithBackSlash = false
                 }
@@ -363,6 +392,7 @@ class MkdownParser {
         possibleTag = ""
         possibleTagPending = false
         goodTag = false
+        following = lastLine.type == .ordinaryText || lastLine.type == .followOn
     }
     
     /// Wrap up initial examination of the line and figure out what to do with it.
@@ -411,8 +441,14 @@ class MkdownParser {
             startText = startLine
             nextLine.makeOrdinary()
         } else if nextLine.leadingBulletAndSpace {
-            nextLine.makeUnordered(previousLine: lastLine,
-                                   previousNonBlankLine: lastNonBlankLine)
+            if following {
+                startText = startLine
+                nextLine.leadingBulletAndSpace = false
+                nextLine.type = .followOn
+            } else {
+                nextLine.makeUnordered(previousLine: lastLine,
+                                       previousNonBlankLine: lastNonBlankLine)
+            }
         }
         
         // Check for lines of HTML
@@ -783,6 +819,9 @@ class MkdownParser {
                 default:
                     appendToNextChunk(char: char, lastChar: lastChar, line: line)
                 }
+            } else if backslashed {
+                addCharAsChunk(char: char, type: .literal, lastChar: lastChar, line: line)
+                backslashed = false
             } else {
                 switch char {
                 case "\\":
@@ -827,12 +866,7 @@ class MkdownParser {
                     nextChunk.endsWithSpace = true
                     appendToNextChunk(char: char, lastChar: lastChar, line: line)
                 default:
-                    if backslashed {
-                        addCharAsChunk(char: char, type: .plaintext, lastChar: lastChar, line: line)
-                        backslashed = false
-                    } else {
-                        appendToNextChunk(char: char, lastChar: lastChar, line: line)
-                    }
+                    appendToNextChunk(char: char, lastChar: lastChar, line: line)
                 }
             }
             if !char.isWhitespace {
@@ -1007,6 +1041,7 @@ class MkdownParser {
                 }
             case .singleQuote, .doubleQuote:
                 if withinTag { break }
+                if withinCodeSpan { break }
                 scanForQuotes(forChunkAt: index)
             case .startCode:
                 withinCodeSpan = true
@@ -1442,11 +1477,6 @@ class MkdownParser {
     var linkLabel = ""
     var linkURL = ""
     
-    let interNoteDomain = "https://ntnk.app/"
-    var noteIDPrefix = ""
-    var noteIDSuffix = ""
-    var noteIDFormat: NoteIDFormat = .common
-    
     var autoLink = ""
     var autoLinkSep: Character = " "
 
@@ -1650,14 +1680,7 @@ class MkdownParser {
         
         // If this is a wiki style link, then format the URL from the text.
         if doubleBrackets {
-            var formattedID = ""
-            switch noteIDFormat {
-            case .common:
-                formattedID = StringUtils.toCommon(linkText)
-            case .fileName:
-                formattedID = StringUtils.toCommonFileName(linkText)
-            }
-            linkURL = noteIDPrefix + formattedID
+            linkURL = assembleWikiLink(title: linkText)
         }
 
         // If this is a reference style link, then let's look it up in the dictionary.
@@ -1672,6 +1695,12 @@ class MkdownParser {
             }
         }
         
+        if linkURL.hasPrefix("<") && linkURL.hasSuffix(">") {
+            let linkStart = linkURL.index(after: linkURL.startIndex)
+            let linkEnd = linkURL.index(before: linkURL.endIndex)
+            linkURL = String(linkURL[linkStart..<linkEnd])
+        }
+        
         if imageNotLink {
             writer.image(text: linkText, path: linkURL, title: linkTitle)
         } else {
@@ -1680,6 +1709,22 @@ class MkdownParser {
             writer.finishLink()
         }
         initLink()
+    }
+    
+    func assembleWikiLink(title: String) -> String {
+        var formattedTitle = ""
+        switch wikiLinkFormatting {
+        case .common:
+            formattedTitle = StringUtils.toCommon(title)
+        case .fileName:
+            formattedTitle = StringUtils.toCommonFileName(title)
+        }
+        
+        var link = formattedTitle
+        if wikiLinkLookup != nil {
+            link = wikiLinkLookup!.mkdownWikiLinkLookup(title: formattedTitle)
+        }
+        return wikiLinkPrefix + link + wikiLinkSuffix
     }
     
     enum LinkElementDiverter {
@@ -1692,7 +1737,7 @@ class MkdownParser {
     }
     
     /// The formatting to be applied to the ID.
-    enum NoteIDFormat {
+    enum WikiLinkFormat {
         case common
         case fileName
     }

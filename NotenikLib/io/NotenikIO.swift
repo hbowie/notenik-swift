@@ -12,7 +12,7 @@
 import Foundation
 
 /// Read and write notes from/to some sort of data store. 
-protocol NotenikIO {
+protocol NotenikIO: MkdownWikiLinkLookup {
     
     /// The currently open collection, if any
     var collection: NoteCollection? { get }
