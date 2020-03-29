@@ -67,7 +67,7 @@ class NoteFileInfo {
     /// Create a file name for the file, based on the Note's title
     func genFileName() {
         guard collection.preferredExt.count > 0 else { return }
-        let source = note.noteIDSource
+        let source = note.ID.source
         guard source.count > 0 else { return }
         if note.hasTitle() {
             base = StringUtils.toReadableFilename(note.title.value)
@@ -79,7 +79,7 @@ class NoteFileInfo {
     /// Set the flag indicating whether the file name matches the Note's ID.
     func checkIDSourceMatch() {
         guard base != nil else { return }
-        matchesIDSource = (StringUtils.toCommon(base!) == StringUtils.toCommon(note.noteIDSource))
+        matchesIDSource = (StringUtils.toCommon(base!) == StringUtils.toCommon(note.ID.source))
     }
     
     /// The filename consisting of a base, plus a dot, plus the extension.

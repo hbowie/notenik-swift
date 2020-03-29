@@ -16,6 +16,8 @@ class Note: Comparable, NSCopying {
     
     unowned var collection: NoteCollection
     
+    var ID = NoteID()
+    
     var fields = [:] as [String: NoteField]
     var attachments: [AttachmentName] = []
     
@@ -26,9 +28,12 @@ class Note: Comparable, NSCopying {
     
     /// Initialize with a Collection
     init (collection: NoteCollection) {
-        // self.init()
         self.collection = collection
         fileInfo = NoteFileInfo(note: self)
+    }
+    
+    func setID() {
+        ID.set(from: self)
     }
     
     /// The note's creation date, as reported from the note's environment (file system, etc.)
@@ -51,6 +56,7 @@ class Note: Comparable, NSCopying {
                     let timestamp = TimestampValue(newValue)
                     let timestampField = NoteField(def: timestampDef!, value: timestamp)
                     fields[timestampDef!.fieldLabel.commonForm] = timestampField
+                    setID()
                 }
             }
         }
@@ -152,6 +158,7 @@ class Note: Comparable, NSCopying {
                 field2!.value.set(field!.value.value)
             }
         }
+        note2.setID()
     }
     
     /// Copy attachment file names from this note to another one. 
@@ -183,7 +190,9 @@ class Note: Comparable, NSCopying {
     
     /// Set the Note's Title value
     func setTitle(_ title: String) -> Bool {
-        return setField(label: LabelConstants.title, value: title)
+        let ok = setField(label: LabelConstants.title, value: title)
+        setID()
+        return ok
     }
     
     /// Set the Note's Link value
@@ -246,7 +255,9 @@ class Note: Comparable, NSCopying {
     }
     
     func setTimestamp(_ timestamp: String) -> Bool {
-        return setField(label: LabelConstants.timestamp, value: timestamp)
+        let ok = setField(label: LabelConstants.timestamp, value: timestamp)
+        setID()
+        return ok
     }
     
     /// Return the Note's Artist Value
@@ -463,18 +474,8 @@ class Note: Comparable, NSCopying {
     }
     
     /// Get the unique ID used to identify this note within its collection
-    var noteID: String {
-        return StringUtils.toCommon(noteIDSource)
-    }
-    
-    /// Return the source field value used as a source for creating the Note ID.
-    var noteIDSource: String {
-        switch collection.idRule {
-        case .fromTitle:
-            return title.value
-        default:
-            return title.value
-        }
+    var noteID: NoteID {
+        return ID
     }
     
     /// Return a String containing the current sort key for the Note

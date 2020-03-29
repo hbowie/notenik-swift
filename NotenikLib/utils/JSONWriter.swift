@@ -67,7 +67,7 @@ class JSONWriter {
         startObject()
         var (note, position) = io.firstNote()
         while note != nil {
-            writeKey(note!.noteID)
+            writeKey(note!.ID.identifier)
             startObject()
             let defs = collection.dict.list
             for def in defs {

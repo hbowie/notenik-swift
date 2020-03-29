@@ -379,7 +379,7 @@ class NotesExporter {
     ///   - cleanTags: The cleaned tags for this note, with any suppressed tags removed.
     ///   - note: The Note to be written.
     func writeObject(splitTag: String, cleanTags: String, note: Note) {
-        jsonWriter.writeKey(note.noteID)
+        jsonWriter.writeKey(note.ID.identifier)
         jsonWriter.startObject()
         if split {
             jsonWriter.write(key: LabelConstants.tag, value: splitTag)

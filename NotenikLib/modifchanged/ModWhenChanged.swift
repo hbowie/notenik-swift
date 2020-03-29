@@ -32,6 +32,7 @@ class ModWhenChanged {
                       startingNote: Note,
                       modViews: [ModView],
                       statusConfig: StatusValueConfig) -> (modIfChangedOutcome, Note?) {
+        
         var outcome: modIfChangedOutcome = .notReady
         
         // See if we're ready for this
@@ -88,9 +89,9 @@ class ModWhenChanged {
         }
         
         // Were any fields modified?
-        var existingNote: Note?
         if modified {
             outcome = .modify
+            modNote.setID()
             let modID = modNote.noteID
             
             // If we have a new Note ID, make sure it's unique
@@ -105,10 +106,11 @@ class ModWhenChanged {
                 }
             }
             if newID {
-                existingNote = io.getNote(forID: modID)
-                if existingNote != nil {
-                    outcome = .idAlreadyExists
-                }
+                io.ensureUniqueID(for: modNote)
+                // existingNote = io.getNote(forID: modID)
+                // if existingNote != nil {
+                    // outcome = .idAlreadyExists
+                // }
             }
             if outcome == .modify {
                 if startingNote.sortKey != modNote.sortKey {
@@ -130,7 +132,7 @@ class ModWhenChanged {
         case .noChange:
             return (outcome, nil)
         case .idAlreadyExists:
-            return (outcome, existingNote)
+            return (outcome, nil)
         case .tryAgain:
             return (outcome, nil)
         case .discard:

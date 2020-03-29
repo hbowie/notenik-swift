@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/14/18.
-//  Copyright © 2018 - 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2018 - 2020 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -306,9 +306,9 @@ class FileIO: NotenikIO, RowConsumer {
             }
             collection!.mirror = NoteTransformer(io: self)
             if collection!.mirror == nil {
-                print("No Mirroring")
+                logInfo("No Mirroring")
             } else {
-                print("Mirroring Engaged")
+                logInfo("Mirroring Engaged")
             }
             return collection
         }
@@ -956,6 +956,7 @@ class FileIO: NotenikIO, RowConsumer {
                 _ = newNote.setTimestamp("")
             }
         }
+        ensureUniqueID(for: newNote)
         let added = bunch!.add(note: newNote)
         guard added else { return (nil, NotePosition(index: -1)) }
         newNote.fileInfo.genFileName()
@@ -968,12 +969,28 @@ class FileIO: NotenikIO, RowConsumer {
         }
     }
     
+    /// Check for uniqueness and, if necessary, Increment the suffix
+    /// for this Note's ID until it becomes unique.
+    func ensureUniqueID(for newNote: Note) {
+        var existingNote = bunch!.getNote(forID: newNote.ID)
+        var inc = false
+        while existingNote != nil {
+            _ = newNote.ID.increment()
+            newNote.ID.display()
+            existingNote = bunch!.getNote(forID: newNote.ID)
+            inc = true
+        }
+        if inc {
+            newNote.ID.updateSource(note: newNote)
+        }
+    }
+    
     /// Delete the given note
     ///
     /// - Parameter noteToDelete: The note to be deleted.
     /// - Returns: True if delete was successful, false otherwise.
     func deleteNote(_ noteToDelete: Note) -> Bool {
-        print("FileIO.deleteNote titled \(noteToDelete.title.value)")
+        
         var deleted = false
         
         guard collection != nil && collectionOpen else { return false }
@@ -1061,6 +1078,7 @@ class FileIO: NotenikIO, RowConsumer {
             note.fileInfo.baseDotExt = fileName
         }
         updateEnvDates(note: note, noteURL: noteURL)
+        note.setID()
         return note
     }
     
@@ -1159,6 +1177,15 @@ class FileIO: NotenikIO, RowConsumer {
     func getNote(at index: Int) -> Note? {
         guard collection != nil && collectionOpen else { return nil }
         return bunch!.getNote(at: index)
+    }
+    
+    /// Get the existing note with the specified ID.
+    ///
+    /// - Parameter id: The ID we are looking for.
+    /// - Returns: The Note with this key, if one exists; otherwise nil.
+    func getNote(forID id: NoteID) -> Note? {
+        guard collection != nil && collectionOpen else { return nil }
+        return bunch!.getNote(forID: id)
     }
     
     /// Get the existing note with the specified ID.

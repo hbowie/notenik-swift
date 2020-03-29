@@ -218,7 +218,6 @@ class NoteEditViewController: NSViewController {
     ///   - newNote: A possible new note to start with
     func modIfChanged(newNoteRequested: Bool, newNote: Note?) -> (modIfChangedOutcome, Note?) {
         
-        // print("NoteEditViewController.modIfChanged")
         var outcome: modIfChangedOutcome = .notReady
         
         // See if we're ready for this
@@ -237,7 +236,6 @@ class NoteEditViewController: NSViewController {
                                                           startingNote: inNote!,
                                                           modViews: editViews,
                                                           statusConfig: inNote!.collection.statusConfig)
-        
         // If we tried to add a note but it had a key that already exists, then ask the user for help
         if outcome == .idAlreadyExists {
             let alert = NSAlert()

@@ -16,8 +16,8 @@ import Foundation
 class NoteCrumbs {
     
     var io: NotenikIO
-    var crumbs: [String] = []
-    var lastCrumb: String?
+    var crumbs: [NoteID] = []
+    var lastCrumb: NoteID?
     
     init(io: NotenikIO) {
         self.io = io

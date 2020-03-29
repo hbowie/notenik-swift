@@ -19,6 +19,12 @@ balance among the claims of the various directly affected interest
 groups... stockholders, employees, customers and the public at
 large.
 
+Following is a two-paragraph block quote. 
+
+> Here is the first paragraph. Isn't it grand? I don't know what you think, but I feel that it's just about perfect. 
+> 
+> And here's a second paragraph. 
+
 Here's what I think. 
 
 > Here's what Joe thought. 
@@ -30,5 +36,4 @@ Here's what I think.
 > ## This is a quoted header. 
 >
 > 1. This is a quoted list. 
-> 2. The 2nd item in the list. 
-
+> 2. The 2nd item in the list.

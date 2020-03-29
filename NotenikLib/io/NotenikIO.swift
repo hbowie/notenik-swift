@@ -135,6 +135,10 @@ protocol NotenikIO: MkdownWikiLinkLookup {
     ///            otherwise nil and -1.
     func addNote(newNote: Note) -> (Note?, NotePosition)
     
+    /// Check for uniqueness and, if necessary, Increment the suffix
+    /// for this Note's ID until it becomes unique.
+    func ensureUniqueID(for newNote: Note) 
+    
     /// Delete the given note
     ///
     /// - Parameter oldNote: The note to be deleted.
@@ -161,6 +165,12 @@ protocol NotenikIO: MkdownWikiLinkLookup {
     /// - Parameter at: An index value pointing to a note in the list
     /// - Returns: Either the note at that position, or nil, if the index is out of range.
     func getNote(at: Int) -> Note?
+    
+    /// Get the existing note with the specified ID.
+    ///
+    /// - Parameter id: The ID we are looking for.
+    /// - Returns: The Note with this key, if one exists; otherwise nil.
+    func getNote(forID id: NoteID) -> Note?
     
     /// Get the existing note with the specified ID.
     ///

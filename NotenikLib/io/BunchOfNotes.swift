@@ -74,7 +74,7 @@ class BunchOfNotes {
     /// - Parameter note: The note to be added, whether from a data store or from a user
     /// - Returns: True if the note was added to the collection, false if it could not be added.
     func add(note: Note) -> Bool {
-        let noteID = note.noteID
+        let noteID = note.noteID.identifier
         let existingNote = notesDict[noteID]
         guard existingNote == nil else { return false }
 
@@ -105,7 +105,7 @@ class BunchOfNotes {
     }
     
     func delete(note: Note) ->  Bool {
-        let noteID = note.noteID
+        let noteID = note.noteID.identifier
         let existingNote = notesDict[noteID]
         guard existingNote != nil else { return false }
         
@@ -188,6 +188,14 @@ class BunchOfNotes {
         } else {
             return notesList[index]
         }
+    }
+    
+    /// Get the existing note with the specified ID.
+    ///
+    /// - Parameter id: The ID we are looking for.
+    /// - Returns: The Note with this key, if one exists; otherwise nil.
+    func getNote(forID id: NoteID) -> Note? {
+        return notesDict[id.identifier]
     }
     
     /// Get the existing note with the specified ID.

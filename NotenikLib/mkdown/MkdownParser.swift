@@ -211,6 +211,8 @@ class MkdownParser {
                         goodTag = true
                     case "hr", "blockquote", "address":
                         goodTag = true
+                    case "!--":
+                        goodTag = true
                     default:
                         goodTag = false
                     }
@@ -505,8 +507,10 @@ class MkdownParser {
             nextLine.quoteLevel = lastLine.quoteLevel
         }
         
-        if nextLine.type == .ordinaryText {
+        if nextLine.type == .followOn {
             nextLine.carryBlockquotesForward(lastLine: lastLine)
+        }
+        if nextLine.type == .followOn || nextLine.type == .ordinaryText {
             nextLine.addParagraph()
         }
         

@@ -330,6 +330,21 @@ class BunchIO: NotenikIO, RowConsumer  {
         return (newNote, position)
     }
     
+    /// Check for uniqueness and, if necessary, Increment the suffix
+    /// for this Note's ID until it becomes unique.
+    func ensureUniqueID(for newNote: Note) {
+        var existingNote = bunch!.getNote(forID: newNote.ID)
+        var inc = false
+        while existingNote != nil {
+            _ = newNote.ID.increment()
+            existingNote = bunch!.getNote(forID: newNote.ID)
+            inc = true
+        }
+        if inc {
+            newNote.ID.updateSource(note: newNote)
+        }
+    }
+    
     /// Delete the given note
     ///
     /// - Parameter noteToDelete: The note to be deleted.
@@ -359,6 +374,15 @@ class BunchIO: NotenikIO, RowConsumer  {
     func getNote(at index: Int) -> Note? {
         guard collection != nil && collectionOpen else { return nil }
         return bunch!.getNote(at: index)
+    }
+    
+    /// Get the existing note with the specified ID.
+    ///
+    /// - Parameter id: The ID we are looking for.
+    /// - Returns: The Note with this key, if one exists; otherwise nil.
+    func getNote(forID id: NoteID) -> Note? {
+        guard collection != nil && collectionOpen else { return nil }
+        return bunch!.getNote(forID: id)
     }
     
     /// Get the existing note with the specified ID.
