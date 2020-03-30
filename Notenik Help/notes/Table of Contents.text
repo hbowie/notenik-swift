@@ -8,54 +8,65 @@ Tags:   ToC
 
 Body:
 
-1. [[Table of Contents]]  <br />
-2. [[Overview]]  <br />
-3. [[Getting Started]]  <br />
-3.1 [[Help Using Notenik]]  <br />
-3.2 [[Create a New Collection]]  <br />
-3.3 [[Add, Delete and Update Your Notes]]  <br />
-3.4 [[View Your Notes as a List]]  <br />
-3.5 [[Search for One or More Notes Containing Specified Text]]  <br />
-3.6 [[View the Log]]  <br />
-4. [[Files and Folders]]  <br />
-4.1 [[Each Note is its own Text File]]  <br />
-4.2 [[Notes are Collected into Folders]]  <br />
-4.3 [[Other Files and Subfolders]]  <br />
-4.4 [[Open Parent Realm]]  <br />
-4.5 [[Disk Access Permissions]]  <br />
-4.6 [[Supported Variations in Text File Formats]]  <br />
-4.7 [[Sync Your Notes]]  <br />
-5. [[Fields]]  <br />
-5.1 [[Each Note has a Title and a Body]]  <br />
-5.2 [[Organize Your Notes with Tags]]  <br />
-5.3 [[Add a Link Field to Make a Bookmark]]  <br />
-5.4 [[Sequence Your Notes]]  <br />
-5.5 [[Track the Status of Your Notes]]  <br />
-5.6 [[Date Your Notes]]  <br />
-5.7 [[Specify Date Recurs Rules]]  <br />
-5.8 [[Track Your Tasks]]  <br />
-5.9 [[Add Code Snippets to Your Notes]]  <br />
-5.10 [[Track Authors and Artists]]  <br />
-5.11 [[Timestamp Your Notes]]  <br />
-5.12 [[Use Other Special Fields]]  <br />
-5.13 [[Add Other Fields to Your Notes]]  <br />
-5.14 [[Override Default Fields with a Template file]]  <br />
-5.15 [[A Note File Template]]  <br />
-6. [[Format Your Notes]]  <br />
-6.1 [[Format the Body of a Note using Markdown]]  <br />
-6.2 [[Add Links Between Notes]]  <br />
-7. [[Attach Files to Your Notes]]  <br />
-8. [[Getting Data Into and Out Of Notenik]]  <br />
-8.1 [[Copy, Cut, Paste and Share your Notes]]  <br />
-8.2 [[Import and Export Your Notes]]  <br />
-8.3 [[Export to Notenik vs. Save As]]  <br />
-8.4 [[Favorites to HTML]]  <br />
-8.5 [[Use Report Templates]]  <br />
-8.6 [[Record and Play Scripts]]  <br />
-8.7 [[Mirror Your Notes]]  <br />
-8.8 [[Website Building]]  <br />
-9. [[Reference]]  <br />
-9.1 [[Keyboard Shortcuts]]  <br />
-9.2 [[Version History]]  <br />
-9.3 [[Rights]]  <br />
-9.4 [[Support]]  <br />
+<ol>
+<li><a href="#table-of-contents">Table of Contents</a> <br />
+</li>
+<li><a href="#overview">Overview</a> <br />
+</li>
+<li><a href="#getting-started">Getting Started</a> <br />
+3.1 <a href="#help-using-notenik">Help Using Notenik</a>  <br />
+3.2 <a href="#create-a-new-collection">Create a New Collection</a>  <br />
+3.3 <a href="#add-delete-and-update-your-notes">Add, Delete and Update Your Notes</a>  <br />
+3.4 <a href="#view-your-notes-as-a-list">View Your Notes as a List</a>  <br />
+3.5 <a href="#search-for-one-or-more-notes-containing-specified-text">Search for One or More Notes Containing Specified Text</a>  <br />
+3.6 <a href="#view-the-log">View the Log</a>  <br />
+</li>
+<li><a href="#files-and-folders">Files and Folders</a> <br />
+4.1 <a href="#each-note-is-its-own-text-file">Each Note is its own Text File</a>  <br />
+4.2 <a href="#notes-are-collected-into-folders">Notes are Collected into Folders</a>  <br />
+4.3 <a href="#other-files-and-subfolders">Other Files and Subfolders</a>  <br />
+4.4 <a href="#open-parent-realm">Open Parent Realm</a>  <br />
+4.5 <a href="#disk-access-permissions">Disk Access Permissions</a>  <br />
+4.6 <a href="#supported-variations-in-text-file-formats">Supported Variations in Text File Formats</a>  <br />
+4.7 <a href="#sync-your-notes">Sync Your Notes</a>  <br />
+</li>
+<li><a href="#fields">Fields</a> <br />
+5.1 <a href="#each-note-has-a-title-and-a-body">Each Note has a Title and a Body</a>  <br />
+5.2 <a href="#organize-your-notes-with-tags">Organize Your Notes with Tags</a>  <br />
+5.3 <a href="#add-a-link-field-to-make-a-bookmark">Add a Link Field to Make a Bookmark</a>  <br />
+5.4 <a href="#sequence-your-notes">Sequence Your Notes</a>  <br />
+5.5 <a href="#track-the-status-of-your-notes">Track the Status of Your Notes</a>  <br />
+5.6 <a href="#date-your-notes">Date Your Notes</a>  <br />
+5.7 <a href="#specify-date-recurs-rules">Specify Date Recurs Rules</a>  <br />
+5.8 <a href="#track-your-tasks">Track Your Tasks</a>  <br />
+5.9 <a href="#add-code-snippets-to-your-notes">Add Code Snippets to Your Notes</a>  <br />
+5.10 <a href="#track-authors-and-artists">Track Authors and Artists</a>  <br />
+5.11 <a href="#timestamp-your-notes">Timestamp Your Notes</a>  <br />
+5.12 <a href="#use-other-special-fields">Use Other Special Fields</a>  <br />
+5.13 <a href="#add-other-fields-to-your-notes">Add Other Fields to Your Notes</a>  <br />
+5.14 <a href="#override-default-fields-with-a-template-file">Override Default Fields with a Template file</a>  <br />
+5.15 <a href="#a-note-file-template">A Note File Template</a>  <br />
+</li>
+<li><a href="#format-your-notes">Format Your Notes</a> <br />
+6.1 <a href="#format-the-body-of-a-note-using-markdown">Format the Body of a Note using Markdown</a>  <br />
+6.2 <a href="#add-links-between-notes">Add Links Between Notes</a>  <br />
+</li>
+<li><a href="#attach-files-to-your-notes">Attach Files to Your Notes</a> <br />
+</li>
+<li><a href="#getting-data-into-and-out-of-notenik">Getting Data Into and Out Of Notenik</a> <br />
+8.1 <a href="#copy-cut-paste-and-share-your-notes">Copy, Cut, Paste and Share your Notes</a>  <br />
+8.2 <a href="#import-and-export-your-notes">Import and Export Your Notes</a>  <br />
+8.3 <a href="#export-to-notenik-vs-save-as">Export to Notenik vs. Save As</a>  <br />
+8.4 <a href="#favorites-to-html">Favorites to HTML</a>  <br />
+8.5 <a href="#use-report-templates">Use Report Templates</a>  <br />
+8.6 <a href="#record-and-play-scripts">Record and Play Scripts</a>  <br />
+8.7 <a href="#mirror-your-notes">Mirror Your Notes</a>  <br />
+8.8 <a href="#website-building">Website Building</a>  <br />
+</li>
+<li><a href="#reference">Reference</a> <br />
+9.1 <a href="#keyboard-shortcuts">Keyboard Shortcuts</a>  <br />
+9.2 <a href="#version-history">Version History</a>  <br />
+9.3 <a href="#rights">Rights</a>  <br />
+9.4 <a href="#support">Support</a>  <br />
+</li>
+</ol>

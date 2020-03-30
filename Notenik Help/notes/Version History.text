@@ -8,6 +8,23 @@ Tags:   changes, versions, history, log
 
 Body:
 
+### Version 3.3.0 | 29 Mar 2020
+
+#### 1. Modified Duplicate Handling
+
+Changed the handling of duplicates so that Notenik will automatically add a numeric suffix, or increment one if already present, in order to allow a Note to be added that would otherwise be a duplicate. 
+
+
+#### 2. Fixed HTML Block parsing for Comments
+
+Updated the new internal Markdown parser to recognize HTML comments. 
+
+
+#### 3. Fixed Blockquote Parsing Bug
+
+When a blockquote was continued to a second paragraph, the second paragraph ended up being a blockquote within a blockquote. This has now been fixed. 
+
+
 ### Version 3.2.0 | 22 Mar 2020
 
 #### 1. Notenik Now Available for High Sierra

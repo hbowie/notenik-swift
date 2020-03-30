@@ -16,5 +16,6 @@ In its most basic form, a Note consists of a Title and a Body.
 
 A Title consists of a few words telling you what the Note is about. 
 
-The Body consists of the text of the Note, containing as many words as you like.
+Each Note in a Collection must have a unique Title, however Notenik will automatically append a number, or increment one if already present, in order to allow a Note to be added that would otherwise be a duplicate. 
 
+The Body consists of the text of the Note, containing as many words as you like.
