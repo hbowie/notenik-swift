@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikUtils
+
 /// A singleton object that controls all of the Note Collections that are open. 
 class CollectionJuggler: NSObject, CollectionPrefsOwner {
     

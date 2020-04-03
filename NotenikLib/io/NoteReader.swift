@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A Note Reader that conformes to RowImporter. 
 class NoteReader: RowImporter {
     

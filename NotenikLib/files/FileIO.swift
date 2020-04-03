@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// Retrieve and save Notes from and to files stored locally.
 class FileIO: NotenikIO, RowConsumer {
     

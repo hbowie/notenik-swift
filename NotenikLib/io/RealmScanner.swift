@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 class RealmScanner {
     
     let fileManager = FileManager.default

@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikUtils
+
 class ShareViewController: NSViewController {
     
     // Get the User Defaults Singleton

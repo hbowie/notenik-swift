@@ -11,6 +11,9 @@
 
 import Foundation
 
+import NotenikUtils
+import NotenikMkdown
+
 /// Generate the coding necessary to display a Note in a readable format.
 class NoteDisplay: NSObject {
     
@@ -26,7 +29,7 @@ class NoteDisplay: NSObject {
         let collection = note.collection
         let dict = collection.dict
         let code = Markedup(format: format)
-        code.notenikIO = io
+        // code.notenikIO = io
         code.startDoc(withTitle: note.title.value, withCSS: displayPrefs.bodyCSS)
         var i = 0
         if note.hasTags() {
@@ -69,7 +72,7 @@ class NoteDisplay: NSObject {
     /// - Returns: A String containing the code that can be used to display this field.
     func display(_ field: NoteField, io: NotenikIO) -> String {
         let code = Markedup(format: format)
-        code.notenikIO = io
+        // code.notenikIO = io
         if field.def.fieldLabel.commonForm == LabelConstants.titleCommon {
             code.startParagraph()
             code.startStrong()
@@ -87,7 +90,7 @@ class NoteDisplay: NSObject {
             code.append(field.def.fieldLabel.properForm)
             code.append(": ")
             code.finishParagraph()
-            code.append(markdown: field.value.value)
+            MkdownParser.markdownToMarkedup(markdown: field.value.value, wikiLinkLookup: io, writer: code)
         } else if field.def.fieldLabel.commonForm == LabelConstants.linkCommon {
             code.startParagraph()
             code.append(field.def.fieldLabel.properForm)
@@ -109,7 +112,7 @@ class NoteDisplay: NSObject {
             code.append(field.def.fieldLabel.properForm)
             code.append(": ")
             code.finishParagraph()
-            code.append(markdown: field.value.value)
+            MkdownParser.markdownToMarkedup(markdown: field.value.value, wikiLinkLookup: io, writer: code)
         } else if field.def.fieldType.typeString == LabelConstants.dateType {
             code.startParagraph()
             code.finishParagraph()

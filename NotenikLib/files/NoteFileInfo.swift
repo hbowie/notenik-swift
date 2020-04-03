@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// The file name for a Note stored on disk.
 class NoteFileInfo {
     

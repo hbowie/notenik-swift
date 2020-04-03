@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// Reads a Note Collection with Index fields and produces
 /// a special extract suitable for indexing a collection. 
 class NoteIndexReader: RowImporter {

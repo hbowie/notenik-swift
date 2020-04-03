@@ -11,6 +11,9 @@
 
 import Foundation
 
+import NotenikUtils
+import NotenikMkdown
+
 /// A class that provides mirroring of notes in some alternate format (normally HTML).
 class NoteTransformer {
     
@@ -243,7 +246,7 @@ class NoteTransformer {
         
         // Now let's create a sample mirror template.
         var markedup = Markedup(format: .htmlDoc)
-        markedup.notenikIO = io
+        // markedup.notenikIO = io
         markedup.templateNextRec()
         markedup.templateOutput(filename: "../../=$title&f$=.html")
         markedup.startDoc(withTitle: "=$title$=",
@@ -282,7 +285,6 @@ class NoteTransformer {
         
         // Now let's create a sample index template.
         markedup = Markedup(format: .htmlDoc)
-        markedup.notenikIO = io
         markedup.templateOutput(filename: "../../index.html")
         markedup.startDoc(withTitle: collection.title,
                           withCSS: "\(mirrorFolderName)/\(cssFolderName)/\(cssFileName)",
@@ -360,7 +362,8 @@ class NoteTransformer {
             markedup.append(def.fieldLabel.properForm)
             markedup.append(": ")
             markedup.finishParagraph()
-            markedup.append(markdown: "=$\(def.fieldLabel.commonForm)&o$=")
+            MkdownParser.markdownToMarkedup(markdown: "=$\(def.fieldLabel.commonForm)&o$=",
+                wikiLinkLookup: io, writer: markedup)
         } else {
             markedup.startParagraph()
             markedup.append(def.fieldLabel.properForm)

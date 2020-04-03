@@ -726,11 +726,9 @@ class TemplateUtil {
             mkdown.parse()
             return mkdown.html
         default:
-            markedup.flushCode()
-            markedup.startDoc(withTitle: nil, withCSS: nil)
-            markedup.append(markdown: markdown)
-            markedup.finishDoc()
-            return markedup.code
+            let mkdown = MkdownParser(markdown)
+            mkdown.parse()
+            return mkdown.html
         }
     }
     

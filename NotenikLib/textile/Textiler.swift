@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A class to convert textile to HTML. The Textile code will be broken down into:
 /// * Blocks, separated by blank lines.
 /// * Lines, ended by a carriage return and/or a newline

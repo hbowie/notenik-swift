@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A String Value interpreted as a sequence number, or revision letter, or version number.
 ///
 /// Such a value may contain letters and digits and one or more periods or hyphens or dollar signs.

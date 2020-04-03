@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A single line from an input Notenik file.
 class NoteLineIn {
     

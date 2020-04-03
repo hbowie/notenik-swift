@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// Information about a collection of Notes.
 class NoteCollection {
     

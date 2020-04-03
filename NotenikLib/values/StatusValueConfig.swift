@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// Information about the meaning of status values in the range of 0 through 9
 class StatusValueConfig {
     

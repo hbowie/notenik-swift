@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikUtils
+
 class ExportViewController: NSViewController {
     
     var window: ExportWindowController!

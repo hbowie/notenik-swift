@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A label used to identify a particular field within a collection of items.
 class FieldLabel: CustomStringConvertible {
     

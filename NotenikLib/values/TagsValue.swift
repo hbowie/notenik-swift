@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// One or more tags, each consisting of one or more levels
 class TagsValue: StringValue {
     

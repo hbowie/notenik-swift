@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// One line of a template, along with metadata.
 class TemplateLine {
     

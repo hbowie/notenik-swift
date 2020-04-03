@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// The unique identifier for a Note.
 class NoteID: CustomStringConvertible, Equatable, Comparable {
     

@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// The full name assigned to a Note attachment.
 class AttachmentName: Comparable, NSCopying, CustomStringConvertible {
     

@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A representation of an item's status using both a string label and an integer value
 class StatusValue: StringValue {
     

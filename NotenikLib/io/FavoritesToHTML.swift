@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikUtils
+
 /// Write out an HTML page listing all of the user's favorite bookmarks.
 class FavoritesToHTML {
     

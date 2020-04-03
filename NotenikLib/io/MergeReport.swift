@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A report to be produced by using Notenik
 class MergeReport: CustomStringConvertible {
     

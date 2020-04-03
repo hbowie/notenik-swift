@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 class OutputModule {
     
     var workspace = ScriptWorkspace()

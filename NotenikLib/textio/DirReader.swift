@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// Read a Directory and return its contents as a series of rows. 
 class DirReader: RowImporter {
     

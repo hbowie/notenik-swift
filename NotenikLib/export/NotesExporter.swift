@@ -11,6 +11,9 @@
 
 import Foundation
 
+import NotenikUtils
+import NotenikMkdown
+
 /// An object capable of exporting a collection of notes to any one of several output formats.
 class NotesExporter {
     
@@ -328,7 +331,8 @@ class NotesExporter {
         if webExt {
             // Now add derived fields
             let code = Markedup(format: .htmlFragment)
-            code.append(markdown: note.getFieldAsString(label: LabelConstants.bodyCommon))
+            MkdownParser.markdownToMarkedup(markdown: note.getFieldAsString(label: LabelConstants.bodyCommon),
+                                            wikiLinkLookup: noteIO, writer: code)
             writeField(value: String(describing: code))
             
             if authorDef {
@@ -396,7 +400,8 @@ class NotesExporter {
             
             // Now add derived fields
             let code = Markedup(format: .htmlFragment)
-            code.append(markdown: note.getFieldAsString(label: LabelConstants.bodyCommon))
+            MkdownParser.markdownToMarkedup(markdown: note.getFieldAsString(label: LabelConstants.bodyCommon),
+                                            wikiLinkLookup: noteIO, writer: code)
             jsonWriter.write(key: "Body as HTML", value: String(describing: code))
             
             if authorDef {
@@ -446,7 +451,8 @@ class NotesExporter {
             
             // Now add derived fields
             let code = Markedup(format: .htmlFragment)
-            code.append(markdown: note.getFieldAsString(label: LabelConstants.bodyCommon))
+            MkdownParser.markdownToMarkedup(markdown: note.getFieldAsString(label: LabelConstants.bodyCommon),
+                                            wikiLinkLookup: noteIO, writer: code)
             addOutlineAttribute(label: "Body as HTML", value: String(describing: code))
             
             if authorDef {

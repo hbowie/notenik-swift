@@ -12,6 +12,9 @@
 import Cocoa
 import WebKit
 
+import NotenikUtils
+import NotenikMkdown
+
 /// A Class to allow users to update their font preferences for the Notenik Display Tab
 class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
     
@@ -171,7 +174,8 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
             displayPrefs.css = cssText.string
         }
         code.startDoc(withTitle: nil, withCSS: displayPrefs.bodyCSS)
-        code.append(markdown: "There is nothing worse than a brilliant image of a fuzzy concept.")
+        MkdownParser.markdownToMarkedup(markdown: "There is nothing worse than a brilliant image of a fuzzy concept.",
+                                        wikiLinkLookup: nil, writer: code)
         code.finishDoc()
         let html = String(describing: code)
         let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)

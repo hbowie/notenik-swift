@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A template to be used to create text file output
 /// (such as an HTML file) from a Collection of Notes.
 class Template {

@@ -12,6 +12,8 @@
 import Cocoa
 import WebKit
 
+import NotenikUtils
+
 class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
     
     var wc: CollectionWindowController?

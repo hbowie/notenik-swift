@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A parser for markdown text to look for and usefully convert wiki-style (double-bracket)
 /// links to regular Markdown links.
 class WikiLinks {

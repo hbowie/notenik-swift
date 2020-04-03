@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A class to write a comma-separated values or tab-delimited file
 class DelimitedWriter {
     

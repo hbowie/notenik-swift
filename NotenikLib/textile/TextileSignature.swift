@@ -12,6 +12,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// The signature optionally appearing at the beginning of a Textile block.
 class TextileSignature {
     

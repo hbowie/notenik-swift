@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A sequence of one or more characters with some special meaning in Textile, plus preceding/following text.
 class TextileChunk {
     var preceding = ""
