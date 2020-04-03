@@ -18,7 +18,6 @@ import NotenikMkdown
 // Convert Markdown to HTML, using the user's favorite parser.
 class Markdown {
     
-    var wikiLinks = WikiLinks()
     var notenikIO: NotenikIO?
     var preParser = false
     var md = ""

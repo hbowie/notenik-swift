@@ -31,9 +31,14 @@ class NoteReader: RowImporter {
     }
     
     /// Initialize the class with a Row Consumer
-    func setContext(consumer: RowConsumer, workspace: ScriptWorkspace? = nil) {
+    public func setContext(consumer: RowConsumer, workspace: ScriptWorkspace? = nil) {
         self.consumer = consumer
         self.workspace = workspace
+    }
+    
+    /// Initialize the class with a Row Consumer
+    public func setContext(consumer: RowConsumer) {
+        self.consumer = consumer
     }
 
     /// Read the Collection and break it down into fields and rows, returning each
@@ -41,7 +46,7 @@ class NoteReader: RowImporter {
     ///
     /// - Parameter fileURL: The URL of the Notenik Collection to be read.
     /// - Returns: The number of rows returned.
-    func read(fileURL: URL) {
+    public func read(fileURL: URL) {
         
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()

@@ -754,7 +754,7 @@ class FileIO: NotenikIO, RowConsumer {
     /// - Parameter fileURL: The URL of the file to be imported.
     /// - Returns: The number of rows imported.
     func importRows(importer: RowImporter, fileURL: URL) -> Int {
-        importer.setContext(consumer: self, workspace: nil)
+        importer.setContext(consumer: self)
         notesImported = 0
         guard collection != nil && collectionOpen else { return 0 }
         noteToImport = Note(collection: collection!)

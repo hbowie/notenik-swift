@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A workspace to be shared between the Script Engine and its various modules. 
 class ScriptWorkspace {
     

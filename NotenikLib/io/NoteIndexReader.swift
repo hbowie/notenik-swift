@@ -39,6 +39,11 @@ class NoteIndexReader: RowImporter {
         self.workspace = workspace
     }
     
+    /// Initialize the class with a Row Consumer
+    func setContext(consumer: RowConsumer) {
+        self.consumer = consumer
+    }
+    
     /// Read the Collection and break it down into fields and rows, returning each
     /// to the consumer, one at a time.
     ///

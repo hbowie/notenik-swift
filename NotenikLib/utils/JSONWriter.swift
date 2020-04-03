@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 class JSONWriter {
     
     /// Format with line breaks.

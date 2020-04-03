@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A NotenikIO module that stores all information in memory, without any persistent
 /// backing. Used by RealmIO.
 class BunchIO: NotenikIO, RowConsumer  {
@@ -268,7 +270,7 @@ class BunchIO: NotenikIO, RowConsumer  {
     func importRows(importer: RowImporter, fileURL: URL) -> Int {
         notesImported = 0
         guard collection != nil && collectionOpen else { return 0 }
-        importer.setContext(consumer: self, workspace: nil)
+        importer.setContext(consumer: self)
         noteToImport = Note(collection: collection!)
         _ = importer.read(fileURL: fileURL)
         return notesImported

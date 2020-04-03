@@ -174,7 +174,7 @@ class ScriptEngine: RowConsumer {
         workspace.scriptingStage = .playing
         rowsRead = 0
         reader = DelimitedReader()
-        reader.setContext(consumer: self, workspace: workspace)
+        reader.setContext(consumer: self)
         reader.read(fileURL: scriptURL)
         logInfo("Script execution complete on \(DateUtils.shared.dateTimeToday)")
         lastScriptURL = workspace.scriptURL

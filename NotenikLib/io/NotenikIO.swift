@@ -11,6 +11,7 @@
 
 import Foundation
 
+import NotenikUtils
 import NotenikMkdown
 
 /// Read and write notes from/to some sort of data store. 

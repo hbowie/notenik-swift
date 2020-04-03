@@ -124,9 +124,6 @@
 		9C2D40B622F8C1920074FCCE /* XLSXReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2D40B522F8C1920074FCCE /* XLSXReader.swift */; };
 		9C2D40B722F8C1920074FCCE /* XLSXReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2D40B522F8C1920074FCCE /* XLSXReader.swift */; };
 		9C2D40B822F8C1920074FCCE /* XLSXReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2D40B522F8C1920074FCCE /* XLSXReader.swift */; };
-		9C2D40BA22F8C94C0074FCCE /* RowImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2D40B922F8C94C0074FCCE /* RowImporter.swift */; };
-		9C2D40BB22F8C94C0074FCCE /* RowImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2D40B922F8C94C0074FCCE /* RowImporter.swift */; };
-		9C2D40BC22F8C94C0074FCCE /* RowImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2D40B922F8C94C0074FCCE /* RowImporter.swift */; };
 		9C4018A422838F4F002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
 		9C4018A522838F4F002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
 		9C4018A62283B68B002C2B3D /* DisplayPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */; };
@@ -149,9 +146,6 @@
 		9C52B5882346B0D800CD7517 /* TextileSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C52B5872346B0D800CD7517 /* TextileSignature.swift */; };
 		9C52B5892346B0D800CD7517 /* TextileSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C52B5872346B0D800CD7517 /* TextileSignature.swift */; };
 		9C52B58A2346B0D800CD7517 /* TextileSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C52B5872346B0D800CD7517 /* TextileSignature.swift */; };
-		9C535F5723A3FDC300D47282 /* WikiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C535F5623A3FDC300D47282 /* WikiLinks.swift */; };
-		9C535F5823A3FDC300D47282 /* WikiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C535F5623A3FDC300D47282 /* WikiLinks.swift */; };
-		9C535F5923A3FDC300D47282 /* WikiLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C535F5623A3FDC300D47282 /* WikiLinks.swift */; };
 		9C551C8E22A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
 		9C551C8F22A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
 		9C551C9022A3459C009BA329 /* LogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C551C8D22A3459C009BA329 /* LogEvent.swift */; };
@@ -268,12 +262,6 @@
 		9C60E78021F651E500C332ED /* NoteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73321F651E500C332ED /* NoteType.swift */; };
 		9C60E78121F651E500C332ED /* NoteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73321F651E500C332ED /* NoteType.swift */; };
 		9C60E78221F651E500C332ED /* NoteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73321F651E500C332ED /* NoteType.swift */; };
-		9C60E78321F651E500C332ED /* LineReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73521F651E500C332ED /* LineReader.swift */; };
-		9C60E78421F651E500C332ED /* LineReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73521F651E500C332ED /* LineReader.swift */; };
-		9C60E78521F651E500C332ED /* LineReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73521F651E500C332ED /* LineReader.swift */; };
-		9C60E78621F651E500C332ED /* BigStringReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73621F651E500C332ED /* BigStringReader.swift */; };
-		9C60E78721F651E500C332ED /* BigStringReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73621F651E500C332ED /* BigStringReader.swift */; };
-		9C60E78821F651E500C332ED /* BigStringReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73621F651E500C332ED /* BigStringReader.swift */; };
 		9C60E78921F651E500C332ED /* NoteLineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73721F651E500C332ED /* NoteLineParser.swift */; };
 		9C60E78A21F651E500C332ED /* NoteLineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73721F651E500C332ED /* NoteLineParser.swift */; };
 		9C60E78B21F651E500C332ED /* NoteLineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E73721F651E500C332ED /* NoteLineParser.swift */; };
@@ -330,9 +318,6 @@
 		9C727D6723CD3A5000D04C45 /* NoteDisplayMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C727D6623CD3A5000D04C45 /* NoteDisplayMaster.swift */; };
 		9C727D6823CD3A5000D04C45 /* NoteDisplayMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C727D6623CD3A5000D04C45 /* NoteDisplayMaster.swift */; };
 		9C727D6923CD3A5000D04C45 /* NoteDisplayMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C727D6623CD3A5000D04C45 /* NoteDisplayMaster.swift */; };
-		9C7348422374D90600421598 /* MDHeadReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7348412374D90600421598 /* MDHeadReader.swift */; };
-		9C7348432374D90600421598 /* MDHeadReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7348412374D90600421598 /* MDHeadReader.swift */; };
-		9C7348442374D90600421598 /* MDHeadReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7348412374D90600421598 /* MDHeadReader.swift */; };
 		9C79BDB0226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
 		9C79BDB1226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
 		9C7F27C223BC0A51001381DF /* NoteFileFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7F27C123BC0A51001381DF /* NoteFileFormat.swift */; };
@@ -374,17 +359,11 @@
 		9C86CF0222C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
 		9C86CF0322C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
 		9C86CF0422C15A660035A8FA /* IntValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86CF0122C15A660035A8FA /* IntValue.swift */; };
-		9C8A5ADD23DBB8EA00C5A0DA /* Pandoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */; };
-		9C8A5ADE23DBB8EA00C5A0DA /* Pandoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */; };
-		9C8A5ADF23DBB8EA00C5A0DA /* Pandoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */; };
 		9C8DD75722E3EEC400FF56C1 /* Attachment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C8DD75622E3EEC400FF56C1 /* Attachment.storyboard */; };
 		9C8DD75822E3EEC400FF56C1 /* Attachment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C8DD75622E3EEC400FF56C1 /* Attachment.storyboard */; };
 		9C8FD8D82216302900F16669 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9C8FD8D72216302900F16669 /* README.md */; };
 		9C9094C52249A664002207EB /* NoteDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9094C42249A664002207EB /* NoteDocumentController.swift */; };
 		9C9094C62249A664002207EB /* NoteDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9094C42249A664002207EB /* NoteDocumentController.swift */; };
-		9C96BAA0227669D7008635B3 /* DelimitedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96BA9F227669D7008635B3 /* DelimitedWriter.swift */; };
-		9C96BAA1227669D7008635B3 /* DelimitedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96BA9F227669D7008635B3 /* DelimitedWriter.swift */; };
-		9C96BAA2227669D7008635B3 /* DelimitedWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96BA9F227669D7008635B3 /* DelimitedWriter.swift */; };
 		9C97C1B02278F46100A43913 /* CollectionRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */; };
 		9C97C1B12278F46100A43913 /* CollectionRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */; };
 		9C9810F723BE893E009EA93A /* NoteLineIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9810F623BE893E009EA93A /* NoteLineIn.swift */; };
@@ -514,12 +493,6 @@
 		9CCC5E9F228F0B5500FA6B5C /* BunchIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCC5E9D228F0B5500FA6B5C /* BunchIO.swift */; };
 		9CCC5EA0228F0B5500FA6B5C /* BunchIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCC5E9D228F0B5500FA6B5C /* BunchIO.swift */; };
 		9CCFD62C22AEE0DD00C64D37 /* StringConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFD62B22AEE0DD00C64D37 /* StringConverterTests.swift */; };
-		9CCFEE712270DD5C00F472C5 /* DelimitedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */; };
-		9CCFEE722270DD5C00F472C5 /* DelimitedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */; };
-		9CCFEE732270DD5C00F472C5 /* DelimitedReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */; };
-		9CCFEE752270F52200F472C5 /* RowConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE742270F52200F472C5 /* RowConsumer.swift */; };
-		9CCFEE762270F52200F472C5 /* RowConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE742270F52200F472C5 /* RowConsumer.swift */; };
-		9CCFEE772270F52200F472C5 /* RowConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFEE742270F52200F472C5 /* RowConsumer.swift */; };
 		9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */; };
 		9CD0718F22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */; };
 		9CD19A5923721B0500D97E71 /* NotenikPathType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD19A5823721B0500D97E71 /* NotenikPathType.swift */; };
@@ -535,12 +508,6 @@
 		9CD3588B2293C42B00C9203F /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD358882293C42B00C9203F /* LinkView.swift */; };
 		9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD756D82210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
-		9CD82F632211E456002314E4 /* LineWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F622211E456002314E4 /* LineWriter.swift */; };
-		9CD82F642211E456002314E4 /* LineWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F622211E456002314E4 /* LineWriter.swift */; };
-		9CD82F652211E456002314E4 /* LineWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F622211E456002314E4 /* LineWriter.swift */; };
-		9CD82F672211E4BA002314E4 /* BigStringWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F662211E4BA002314E4 /* BigStringWriter.swift */; };
-		9CD82F682211E4BA002314E4 /* BigStringWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F662211E4BA002314E4 /* BigStringWriter.swift */; };
-		9CD82F692211E4BA002314E4 /* BigStringWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F662211E4BA002314E4 /* BigStringWriter.swift */; };
 		9CD82F6B2211EDC2002314E4 /* NoteLineMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F6A2211EDC2002314E4 /* NoteLineMaker.swift */; };
 		9CD82F6C2211EDC2002314E4 /* NoteLineMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F6A2211EDC2002314E4 /* NoteLineMaker.swift */; };
 		9CD82F6D2211EDC2002314E4 /* NoteLineMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F6A2211EDC2002314E4 /* NoteLineMaker.swift */; };
@@ -549,9 +516,6 @@
 		9CDEE7C222FDDBDA0000E3C1 /* OutputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */; };
 		9CDEE7C322FDDBDA0000E3C1 /* OutputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */; };
 		9CDEE7C422FDDBDA0000E3C1 /* OutputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */; };
-		9CDEE7C722FE36E30000E3C1 /* DirReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C622FE36E30000E3C1 /* DirReader.swift */; };
-		9CDEE7C822FE36E30000E3C1 /* DirReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C622FE36E30000E3C1 /* DirReader.swift */; };
-		9CDEE7C922FE36E30000E3C1 /* DirReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDEE7C622FE36E30000E3C1 /* DirReader.swift */; };
 		9CDF578223469A47004417FA /* TextileBlockPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578123469A47004417FA /* TextileBlockPhase.swift */; };
 		9CDF578323469A47004417FA /* TextileBlockPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578123469A47004417FA /* TextileBlockPhase.swift */; };
 		9CDF578423469A47004417FA /* TextileBlockPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDF578123469A47004417FA /* TextileBlockPhase.swift */; };
@@ -684,7 +648,6 @@
 		9C2AE519220A044800AE8BEE /* TagsNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsNodeType.swift; sourceTree = "<group>"; };
 		9C2AE51D220A1ED700AE8BEE /* BunchOfNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunchOfNotes.swift; sourceTree = "<group>"; };
 		9C2D40B522F8C1920074FCCE /* XLSXReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XLSXReader.swift; sourceTree = "<group>"; };
-		9C2D40B922F8C94C0074FCCE /* RowImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowImporter.swift; sourceTree = "<group>"; };
 		9C4018A322838F4F002C2B3D /* DisplayPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefs.swift; sourceTree = "<group>"; };
 		9C4412672363478D00B3041F /* ArtistType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistType.swift; sourceTree = "<group>"; };
 		9C44126C23634B8A00B3041F /* AnyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyType.swift; sourceTree = "<group>"; };
@@ -693,7 +656,6 @@
 		9C45E8BD2298BC87003F6589 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptEngine.swift; sourceTree = "<group>"; };
 		9C52B5872346B0D800CD7517 /* TextileSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileSignature.swift; sourceTree = "<group>"; };
-		9C535F5623A3FDC300D47282 /* WikiLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikiLinks.swift; sourceTree = "<group>"; };
 		9C551C8D22A3459C009BA329 /* LogEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEvent.swift; sourceTree = "<group>"; };
 		9C553C602266A0D50008D176 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		9C5556D122E115960099414E /* Export.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Export.storyboard; sourceTree = "<group>"; };
@@ -747,8 +709,6 @@
 		9C60E73121F651E500C332ED /* FieldDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldDefinition.swift; sourceTree = "<group>"; };
 		9C60E73221F651E500C332ED /* LabelConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelConstants.swift; sourceTree = "<group>"; };
 		9C60E73321F651E500C332ED /* NoteType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteType.swift; sourceTree = "<group>"; };
-		9C60E73521F651E500C332ED /* LineReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineReader.swift; sourceTree = "<group>"; };
-		9C60E73621F651E500C332ED /* BigStringReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigStringReader.swift; sourceTree = "<group>"; };
 		9C60E73721F651E500C332ED /* NoteLineParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteLineParser.swift; sourceTree = "<group>"; };
 		9C60E73821F651E500C332ED /* FieldDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldDictionary.swift; sourceTree = "<group>"; };
 		9C60E73921F651E500C332ED /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
@@ -782,7 +742,6 @@
 		9C67248422EA1B2D00CB7D39 /* FilterModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterModule.swift; sourceTree = "<group>"; };
 		9C67248B22EA205800CB7D39 /* FilterRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRule.swift; sourceTree = "<group>"; };
 		9C727D6623CD3A5000D04C45 /* NoteDisplayMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayMaster.swift; sourceTree = "<group>"; };
-		9C7348412374D90600421598 /* MDHeadReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDHeadReader.swift; sourceTree = "<group>"; };
 		9C7410B32436B4CB00ABF9D9 /* NotenikUtils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikUtils; path = ../NotenikUtils; sourceTree = "<group>"; };
 		9C7965D92436AF1700E1904E /* NotenikMkdown */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikMkdown; path = ../NotenikMkdown; sourceTree = "<group>"; };
 		9C79BDAF226E368800796E93 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
@@ -800,11 +759,9 @@
 		9C8540C122E8F9F20074E349 /* ScriptAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptAction.swift; sourceTree = "<group>"; };
 		9C857C6323830F1600EDB93C /* FavoritesPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPrefsViewController.swift; sourceTree = "<group>"; };
 		9C86CF0122C15A660035A8FA /* IntValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntValue.swift; sourceTree = "<group>"; };
-		9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pandoc.swift; sourceTree = "<group>"; };
 		9C8DD75622E3EEC400FF56C1 /* Attachment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Attachment.storyboard; sourceTree = "<group>"; };
 		9C8FD8D72216302900F16669 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9C9094C42249A664002207EB /* NoteDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDocumentController.swift; sourceTree = "<group>"; };
-		9C96BA9F227669D7008635B3 /* DelimitedWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelimitedWriter.swift; sourceTree = "<group>"; };
 		9C97C1AF2278F46100A43913 /* CollectionRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionRequestType.swift; sourceTree = "<group>"; };
 		9C9810F623BE893E009EA93A /* NoteLineIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteLineIn.swift; sourceTree = "<group>"; };
 		9C9A025121F65AF00027F364 /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
@@ -857,8 +814,6 @@
 		9CC8336D22B3F65B0006AAE0 /* MarkedupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedupTests.swift; sourceTree = "<group>"; };
 		9CCC5E9D228F0B5500FA6B5C /* BunchIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunchIO.swift; sourceTree = "<group>"; };
 		9CCFD62B22AEE0DD00C64D37 /* StringConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConverterTests.swift; sourceTree = "<group>"; };
-		9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelimitedReader.swift; sourceTree = "<group>"; };
-		9CCFEE742270F52200F472C5 /* RowConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowConsumer.swift; sourceTree = "<group>"; };
 		9CD0718D22550D02000BF467 /* ModIfChangedOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModIfChangedOutcome.swift; sourceTree = "<group>"; };
 		9CD19A5823721B0500D97E71 /* NotenikPathType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotenikPathType.swift; sourceTree = "<group>"; };
 		9CD3261F2233068F00D06B77 /* MacEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacEditView.swift; sourceTree = "<group>"; };
@@ -866,12 +821,9 @@
 		9CD3262722330C8A00D06B77 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		9CD358882293C42B00C9203F /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
 		9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSplitViewController.swift; sourceTree = "<group>"; };
-		9CD82F622211E456002314E4 /* LineWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineWriter.swift; sourceTree = "<group>"; };
-		9CD82F662211E4BA002314E4 /* BigStringWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigStringWriter.swift; sourceTree = "<group>"; };
 		9CD82F6A2211EDC2002314E4 /* NoteLineMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteLineMaker.swift; sourceTree = "<group>"; };
 		9CD9962F23D3CA30004650BE /* CollectionPrefs.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CollectionPrefs.storyboard; sourceTree = "<group>"; };
 		9CDEE7C122FDDBDA0000E3C1 /* OutputModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputModule.swift; sourceTree = "<group>"; };
-		9CDEE7C622FE36E30000E3C1 /* DirReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirReader.swift; sourceTree = "<group>"; };
 		9CDF578123469A47004417FA /* TextileBlockPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileBlockPhase.swift; sourceTree = "<group>"; };
 		9CDF578523469AD0004417FA /* TextileOpeningClosing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileOpeningClosing.swift; sourceTree = "<group>"; };
 		9CDF578923469B4B004417FA /* TextileChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileChunk.swift; sourceTree = "<group>"; };
@@ -1073,8 +1025,6 @@
 			children = (
 				9C5BBC5D23ABF91600589A86 /* JSONWriter.swift */,
 				9C03629D239B0A9900C948DB /* Markdown.swift */,
-				9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */,
-				9C535F5623A3FDC300D47282 /* WikiLinks.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -1405,16 +1355,6 @@
 		9CD82F612211E29E002314E4 /* textio */ = {
 			isa = PBXGroup;
 			children = (
-				9C60E73621F651E500C332ED /* BigStringReader.swift */,
-				9CD82F662211E4BA002314E4 /* BigStringWriter.swift */,
-				9CCFEE702270DD5C00F472C5 /* DelimitedReader.swift */,
-				9C96BA9F227669D7008635B3 /* DelimitedWriter.swift */,
-				9CDEE7C622FE36E30000E3C1 /* DirReader.swift */,
-				9C60E73521F651E500C332ED /* LineReader.swift */,
-				9CD82F622211E456002314E4 /* LineWriter.swift */,
-				9C7348412374D90600421598 /* MDHeadReader.swift */,
-				9CCFEE742270F52200F472C5 /* RowConsumer.swift */,
-				9C2D40B922F8C94C0074FCCE /* RowImporter.swift */,
 				9C2D40B522F8C1920074FCCE /* XLSXReader.swift */,
 			);
 			path = textio;
@@ -1688,7 +1628,6 @@
 				9C67248C22EA205800CB7D39 /* FilterRule.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
-				9C7348422374D90600421598 /* MDHeadReader.swift in Sources */,
 				9CDEE7C222FDDBDA0000E3C1 /* OutputModule.swift in Sources */,
 				9C60E75321F651E500C332ED /* Provider.swift in Sources */,
 				9C25E00622D787980062E282 /* PickList.swift in Sources */,
@@ -1710,12 +1649,10 @@
 				9CB6ECA62364C25A00951820 /* DateType.swift in Sources */,
 				9CDF578E23469BBE004417FA /* TextileBlock.swift in Sources */,
 				9C8540C222E8F9F20074E349 /* ScriptAction.swift in Sources */,
-				9CD82F632211E456002314E4 /* LineWriter.swift in Sources */,
 				9CAD6A4F22DF9ACD00531D90 /* PrefsTabViewController.swift in Sources */,
 				9C60E76821F651E500C332ED /* AuthorValue.swift in Sources */,
 				9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */,
 				9C44539222FCC80200560F72 /* NoteReader.swift in Sources */,
-				9CCFEE712270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
 				9C29DD29226286A100928180 /* CollectionWindow.swift in Sources */,
 				9CED2810224EB39900798621 /* LongTextView.swift in Sources */,
 				9C5556D722E11E3B0099414E /* ExportWindowController.swift in Sources */,
@@ -1730,12 +1667,10 @@
 				9C9094C52249A664002207EB /* NoteDocumentController.swift in Sources */,
 				9CD32624223308C400D06B77 /* StringView.swift in Sources */,
 				9CE32507224D561E0051CA1F /* PrefsWindowController.swift in Sources */,
-				9CD82F672211E4BA002314E4 /* BigStringWriter.swift in Sources */,
 				9CB6ECBE2365D73100951820 /* RecursType.swift in Sources */,
 				9C559D7022E67F940014019C /* AttachmentName.swift in Sources */,
 				9C9810F723BE893E009EA93A /* NoteLineIn.swift in Sources */,
 				9C568DED2322FBF0005D6B0A /* AuthorDataSource.swift in Sources */,
-				9C8A5ADD23DBB8EA00C5A0DA /* Pandoc.swift in Sources */,
 				9C21DB8021F82D9800A5A08C /* NoteDisplay.swift in Sources */,
 				9C2AE512220A030800AE8BEE /* TagsTree.swift in Sources */,
 				9C568DD02322B6CF005D6B0A /* AuthorView.swift in Sources */,
@@ -1778,7 +1713,6 @@
 				9C60E71221F6518400C332ED /* Logger.swift in Sources */,
 				9CB6ECB22364FAEA00951820 /* LinkType.swift in Sources */,
 				9C60E79521F651E500C332ED /* NoteIDRule.swift in Sources */,
-				9C2D40BA22F8C94C0074FCCE /* RowImporter.swift in Sources */,
 				9C2AE51E220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9CE9C98222A6134A008D2B0A /* Template.swift in Sources */,
 				9CD19A5923721B0500D97E71 /* NotenikPathType.swift in Sources */,
@@ -1791,7 +1725,6 @@
 				9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */,
 				9C2AE51A220A044800AE8BEE /* TagsNodeType.swift in Sources */,
 				9C27D9FF22FB55B4008EE0A1 /* IndexCollection.swift in Sources */,
-				9C96BAA0227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9C2D40B622F8C1920074FCCE /* XLSXReader.swift in Sources */,
 				9C60E78921F651E500C332ED /* NoteLineParser.swift in Sources */,
 				9C52B5882346B0D800CD7517 /* TextileSignature.swift in Sources */,
@@ -1800,17 +1733,14 @@
 				9CAD6A4922DF806800531D90 /* TagsExportViewController.swift in Sources */,
 				9CF1193E225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
 				9C27D9FB22FB3FA6008EE0A1 /* IndexTerm.swift in Sources */,
-				9CDEE7C722FE36E30000E3C1 /* DirReader.swift in Sources */,
 				9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */,
 				9C2AE514220A033300AE8BEE /* TagsNode.swift in Sources */,
 				9CF1193B225822870015AE91 /* CollectionPrefsWindowController.swift in Sources */,
 				9CDF57922346A077004417FA /* TextileLine.swift in Sources */,
-				9C60E78321F651E500C332ED /* LineReader.swift in Sources */,
 				9C60E75021F651E500C332ED /* NoteSortParm.swift in Sources */,
 				9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
 				9CE2170722A95EB300EE656C /* TemplateCommand.swift in Sources */,
 				9CAD6A5A22DFBEEB00531D90 /* ExportFormat.swift in Sources */,
-				9C535F5723A3FDC300D47282 /* WikiLinks.swift in Sources */,
 				9CB6ECAA2364F7DB00951820 /* IndexType.swift in Sources */,
 				9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */,
 				9CE60322234558FA000B45E6 /* Textiler.swift in Sources */,
@@ -1826,8 +1756,6 @@
 				9CA0D1F523677CE100ACA52A /* DateAddedType.swift in Sources */,
 				9C568DF5232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */,
 				9CB6ECCA2365DAFE00951820 /* StringType.swift in Sources */,
-				9C60E78621F651E500C332ED /* BigStringReader.swift in Sources */,
-				9CCFEE752270F52200F472C5 /* RowConsumer.swift in Sources */,
 				9C0B643C23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */,
 				9CB6EC992363D5B600951820 /* AllTypes.swift in Sources */,
 				9CC78E6F228358A400640477 /* DisplayPrefsViewController.swift in Sources */,
@@ -1887,7 +1815,6 @@
 				9C60E7C121F6525F00C332ED /* TitleValueTests.swift in Sources */,
 				9C8540AF22E8D78B0074E349 /* NotesList.swift in Sources */,
 				9C60E7BB21F6525F00C332ED /* LongTextValueTests.swift in Sources */,
-				9C2D40BB22F8C94C0074FCCE /* RowImporter.swift in Sources */,
 				9C9A6BB622EA603700E1F127 /* SortModule.swift in Sources */,
 				9C60E74521F651E500C332ED /* NotenikIO.swift in Sources */,
 				9CDEE7C322FDDBDA0000E3C1 /* OutputModule.swift in Sources */,
@@ -1896,9 +1823,6 @@
 				9C568DE22322F3C6005D6B0A /* WorkTitlePickList.swift in Sources */,
 				9C60E7C721F6525F00C332ED /* FieldDefinitionTests.swift in Sources */,
 				9C60E78A21F651E500C332ED /* NoteLineParser.swift in Sources */,
-				9CDEE7C822FE36E30000E3C1 /* DirReader.swift in Sources */,
-				9C60E78421F651E500C332ED /* LineReader.swift in Sources */,
-				9C60E78721F651E500C332ED /* BigStringReader.swift in Sources */,
 				9CA0D1F623677CE100ACA52A /* DateAddedType.swift in Sources */,
 				9C60E77821F651E500C332ED /* StatusValue.swift in Sources */,
 				9CB6ECD32365DE3100951820 /* TitleType.swift in Sources */,
@@ -1916,7 +1840,6 @@
 				9C03629B239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
 				9C60E78121F651E500C332ED /* NoteType.swift in Sources */,
 				9C8540B722E8F0790074E349 /* ScriptModule.swift in Sources */,
-				9C7348432374D90600421598 /* MDHeadReader.swift in Sources */,
 				9C52B5892346B0D800CD7517 /* TextileSignature.swift in Sources */,
 				9C60E7BD21F6525F00C332ED /* DateUtilsTests.swift in Sources */,
 				9CF3DE4D22A6F5330078A6B0 /* MergeReport.swift in Sources */,
@@ -1939,10 +1862,7 @@
 				9C25E00122D786770062E282 /* ValuePickLists.swift in Sources */,
 				9C8540BB22E8F3660074E349 /* InputModule.swift in Sources */,
 				9C60E7BC21F6525F00C332ED /* AuthorValueTests.swift in Sources */,
-				9C96BAA1227669D7008635B3 /* DelimitedWriter.swift in Sources */,
-				9CD82F682211E4BA002314E4 /* BigStringWriter.swift in Sources */,
 				9CB6ECB32364FAEA00951820 /* LinkType.swift in Sources */,
-				9CD82F642211E456002314E4 /* LineWriter.swift in Sources */,
 				9C60E74B21F651E500C332ED /* Realm.swift in Sources */,
 				9C2AE51F220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9CDF578F23469BBE004417FA /* TextileBlock.swift in Sources */,
@@ -1956,7 +1876,6 @@
 				9C60E7C421F6525F00C332ED /* DateValueTests.swift in Sources */,
 				9C0B25E5224D6548003AAF21 /* LogWindowController.swift in Sources */,
 				9C1B9591241824240059729B /* SeqSegment.swift in Sources */,
-				9C535F5823A3FDC300D47282 /* WikiLinks.swift in Sources */,
 				9C10311E229A134E009CCE3B /* AppPrefs.swift in Sources */,
 				9C4018A62283B68B002C2B3D /* DisplayPrefs.swift in Sources */,
 				9C568DDA2322BA21005D6B0A /* AuthorPickList.swift in Sources */,
@@ -1969,7 +1888,6 @@
 				9C60E78D21F651E500C332ED /* FieldDictionary.swift in Sources */,
 				9C44126E23634B8A00B3041F /* AnyType.swift in Sources */,
 				9C60E71621F6518400C332ED /* LogLevel.swift in Sources */,
-				9C8A5ADE23DBB8EA00C5A0DA /* Pandoc.swift in Sources */,
 				9CE2170F22A9BC6000EE656C /* LineWithBreak.swift in Sources */,
 				9CB6ECD72365E00C00951820 /* WorkTitleType.swift in Sources */,
 				9C60E79021F651E500C332ED /* Note.swift in Sources */,
@@ -2010,7 +1928,6 @@
 				9C7F27C323BC0A51001381DF /* NoteFileFormat.swift in Sources */,
 				9CFD350123313D6D004ABA16 /* ArtistValue.swift in Sources */,
 				9C60E75A21F651E500C332ED /* SeqValue.swift in Sources */,
-				9CCFEE722270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
 				9CE9C98722A61499008D2B0A /* TemplateUtil.swift in Sources */,
 				9C25E00422D787260062E282 /* TagsPickList.swift in Sources */,
 				9CF11933225802AA0015AE91 /* ModView.swift in Sources */,
@@ -2034,7 +1951,6 @@
 				9C60E7C521F6525F00C332ED /* StringUtilsTests.swift in Sources */,
 				9C60E7BF21F6525F00C332ED /* StatusValueConfigTests.swift in Sources */,
 				9C60E7BE21F6525F00C332ED /* TagsValueTests.swift in Sources */,
-				9CCFEE762270F52200F472C5 /* RowConsumer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2065,14 +1981,11 @@
 				9C60E78B21F651E500C332ED /* NoteLineParser.swift in Sources */,
 				9C02D2B42267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C5556D822E11E3B0099414E /* ExportWindowController.swift in Sources */,
-				9C535F5923A3FDC300D47282 /* WikiLinks.swift in Sources */,
-				9C60E78521F651E500C332ED /* LineReader.swift in Sources */,
 				9C27D9F922FB3ED1008EE0A1 /* IndexValue.swift in Sources */,
 				9CB6ECC02365D73100951820 /* RecursType.swift in Sources */,
 				9C97C1B12278F46100A43913 /* CollectionRequestType.swift in Sources */,
 				9CB6ECD02365DC3F00951820 /* TagsType.swift in Sources */,
 				9C8540B822E8F0790074E349 /* ScriptModule.swift in Sources */,
-				9C60E78821F651E500C332ED /* BigStringReader.swift in Sources */,
 				9CB37ED724071F7B00C2AC1F /* Markdown.swift in Sources */,
 				9CB6EC9B2363D5B600951820 /* AllTypes.swift in Sources */,
 				9C568DD22322B6CF005D6B0A /* AuthorView.swift in Sources */,
@@ -2106,7 +2019,6 @@
 				9C2AE529220A34D400AE8BEE /* NoteDisplayViewController.swift in Sources */,
 				9C60E78221F651E500C332ED /* NoteType.swift in Sources */,
 				9C857C6523830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
-				9C2D40BC22F8C94C0074FCCE /* RowImporter.swift in Sources */,
 				9C1E0C9322E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
 				9C568DEB2322F701005D6B0A /* WorkTitleView.swift in Sources */,
 				9CB6ECC82365D9E100951820 /* StatusType.swift in Sources */,
@@ -2141,11 +2053,9 @@
 				9CD0718F22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
 				9C60E74021F651E500C332ED /* FieldLabel.swift in Sources */,
 				9C2AE516220A033300AE8BEE /* TagsNode.swift in Sources */,
-				9CD82F692211E4BA002314E4 /* BigStringWriter.swift in Sources */,
 				9CE60324234558FA000B45E6 /* Textiler.swift in Sources */,
 				9C1E0C9622E4F7FA0025C99C /* AttachmentViewController.swift in Sources */,
 				9CDF57982346A22B004417FA /* TextileLineType.swift in Sources */,
-				9C7348442374D90600421598 /* MDHeadReader.swift in Sources */,
 				9C60E75221F651E500C332ED /* NoteSortParm.swift in Sources */,
 				9C4018A522838F4F002C2B3D /* DisplayPrefs.swift in Sources */,
 				9C619A3A231B323B003CFFBE /* WorkTypeView.swift in Sources */,
@@ -2182,7 +2092,6 @@
 				9C727D6923CD3A5000D04C45 /* NoteDisplayMaster.swift in Sources */,
 				9C2AE51C220A044800AE8BEE /* TagsNodeType.swift in Sources */,
 				9C8540C022E8F4310074E349 /* ScriptWorkspace.swift in Sources */,
-				9CCFEE732270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
 				9CB6ECD82365E00C00951820 /* WorkTitleType.swift in Sources */,
 				9CB6ECCC2365DAFE00951820 /* StringType.swift in Sources */,
 				9C60E76421F651E500C332ED /* DateValue.swift in Sources */,
@@ -2212,7 +2121,6 @@
 				9CA420F822C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */,
 				9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */,
 				9CB6ECB82364FC7B00951820 /* LongTextType.swift in Sources */,
-				9C8A5ADF23DBB8EA00C5A0DA /* Pandoc.swift in Sources */,
 				9C822B9F22D6D5D6008EF106 /* TagsView.swift in Sources */,
 				9CA0D1F723677CE100ACA52A /* DateAddedType.swift in Sources */,
 				9C9810F923BE893E009EA93A /* NoteLineIn.swift in Sources */,
@@ -2224,13 +2132,11 @@
 				9CE2171022A9BC6000EE656C /* LineWithBreak.swift in Sources */,
 				9CB337562347BA4A006767A4 /* TextileCharDisposition.swift in Sources */,
 				9C60E75B21F651E500C332ED /* SeqValue.swift in Sources */,
-				9CCFEE772270F52200F472C5 /* RowConsumer.swift in Sources */,
 				9CB6ECA82364C25A00951820 /* DateType.swift in Sources */,
 				9CAD6A4A22DF806800531D90 /* TagsExportViewController.swift in Sources */,
 				9C60E79721F651E500C332ED /* NoteIDRule.swift in Sources */,
 				9C060689228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
 				9C568DDF2322F0D6005D6B0A /* WorkTitleValue.swift in Sources */,
-				9CD82F652211E456002314E4 /* LineWriter.swift in Sources */,
 				9C60E77621F651E500C332ED /* TagsValue.swift in Sources */,
 				9C8540C422E8F9F20074E349 /* ScriptAction.swift in Sources */,
 				9C60E74921F651E500C332ED /* ProviderType.swift in Sources */,
@@ -2242,9 +2148,7 @@
 				9C9A6BB022EA5FBC00E1F127 /* SortField.swift in Sources */,
 				9CB6ECB42364FAEA00951820 /* LinkType.swift in Sources */,
 				9C52B58A2346B0D800CD7517 /* TextileSignature.swift in Sources */,
-				9CDEE7C922FE36E30000E3C1 /* DirReader.swift in Sources */,
 				9CB6ECC42365D86E00951820 /* SeqType.swift in Sources */,
-				9C96BAA2227669D7008635B3 /* DelimitedWriter.swift in Sources */,
 				9C8329FF224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */,
 				9CDF579023469BBE004417FA /* TextileBlock.swift in Sources */,
 			);

@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// The input module for the scripting engine.
 class InputModule: RowConsumer {
     
@@ -109,14 +111,14 @@ class InputModule: RowConsumer {
     
     func openDelimited(openURL: URL) {
         let reader = DelimitedReader()
-        reader.setContext(consumer: self, workspace: workspace)
+        reader.setContext(consumer: self)
         _ = reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
     }
     
     func openDir(openURL: URL) {
         let reader = DirReader()
-        reader.setContext(consumer: self, workspace: workspace)
+        reader.setContext(consumer: self)
         reader.maxDirDepth = workspace.maxDirDepth
         _ = reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
@@ -124,14 +126,14 @@ class InputModule: RowConsumer {
     
     func openMarkdownWithHeaders(openURL: URL) {
         let reader = MDHeadReader()
-        reader.setContext(consumer: self, workspace: workspace)
+        reader.setContext(consumer: self)
         _ = reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
     }
     
     func openXLSX(openURL: URL) {
         let reader = XLSXReader()
-        reader.setContext(consumer: self, workspace: workspace)
+        reader.setContext(consumer: self)
         _ = reader.read(fileURL: openURL)
         logInfo("\(notesInput) rows read from \(openURL.path)")
     }

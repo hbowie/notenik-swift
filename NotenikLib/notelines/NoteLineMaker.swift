@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// Format a note as a series of text lines. 
 class NoteLineMaker {
     

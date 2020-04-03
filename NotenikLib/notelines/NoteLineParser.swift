@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// Read lines in the Notenik format, and create a Note from their content.
 class NoteLineParser {
     

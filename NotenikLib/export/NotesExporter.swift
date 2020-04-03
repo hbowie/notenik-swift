@@ -123,8 +123,11 @@ class NotesExporter {
     /// Open an output file for the export. 
     func open () {
         switch format {
-        case .tabDelimited, .commaSeparated:
-            delimWriter = DelimitedWriter(destination: destination, format: format)
+        case .commaSeparated:
+            delimWriter = DelimitedWriter(destination: destination, format: .commaSeparated)
+            delimOpen()
+        case .tabDelimited:
+            delimWriter = DelimitedWriter(destination: destination, format: .tabDelimited)
             delimOpen()
         case .bookmarks:
             markup = Markedup(format: .netscapeBookmarks)

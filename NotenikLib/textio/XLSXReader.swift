@@ -13,6 +13,8 @@ import Foundation
 
 import CoreXLSX
 
+import NotenikUtils
+
 class XLSXReader: RowImporter {
     
     var consumer:           RowConsumer?
@@ -33,9 +35,14 @@ class XLSXReader: RowImporter {
     }
     
     /// Initialize the class with a Row Consumer
-    func setContext(consumer: RowConsumer, workspace: ScriptWorkspace? = nil) {
+    public func setContext(consumer: RowConsumer, workspace: ScriptWorkspace? = nil) {
         self.consumer = consumer
         self.workspace = workspace
+    }
+    
+    /// Initialize the class with a Row Consumer
+    public func setContext(consumer: RowConsumer) {
+        self.consumer = consumer
     }
     
     /// Read the file and break it down into fields and rows, returning each
