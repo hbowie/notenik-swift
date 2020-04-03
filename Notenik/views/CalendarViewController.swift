@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikUtils
+
 class CalendarViewController: NSViewController {
 
     @IBOutlet var yearTextField: NSTextField!

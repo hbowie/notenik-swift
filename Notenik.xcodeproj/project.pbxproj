@@ -26,6 +26,7 @@
 		9C060687228E0A9300CB8C10 /* RealmScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C060686228E0A9300CB8C10 /* RealmScanner.swift */; };
 		9C060688228E0A9300CB8C10 /* RealmScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C060686228E0A9300CB8C10 /* RealmScanner.swift */; };
 		9C060689228E0A9300CB8C10 /* RealmScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C060686228E0A9300CB8C10 /* RealmScanner.swift */; };
+		9C07F7522436904F00460E14 /* NotenikUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 9C07F7512436904F00460E14 /* NotenikUtils */; };
 		9C096BFD23C3B50400402A06 /* NoteFileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096BFC23C3B50400402A06 /* NoteFileInfo.swift */; };
 		9C096BFE23C3B50400402A06 /* NoteFileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096BFC23C3B50400402A06 /* NoteFileInfo.swift */; };
 		9C096BFF23C3B50400402A06 /* NoteFileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096BFC23C3B50400402A06 /* NoteFileInfo.swift */; };
@@ -68,21 +69,12 @@
 		9C1E0C9622E4F7FA0025C99C /* AttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1E0C9422E4F7FA0025C99C /* AttachmentViewController.swift */; };
 		9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1E0C9722E5306B0025C99C /* AttachmentMasterController.swift */; };
 		9C1E0C9922E5306B0025C99C /* AttachmentMasterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1E0C9722E5306B0025C99C /* AttachmentMasterController.swift */; };
-		9C20962E240F3D03009265C7 /* MkdownChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C20962D240F3D03009265C7 /* MkdownChunk.swift */; };
-		9C20962F240F3D03009265C7 /* MkdownChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C20962D240F3D03009265C7 /* MkdownChunk.swift */; };
-		9C209630240F3D03009265C7 /* MkdownChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C20962D240F3D03009265C7 /* MkdownChunk.swift */; };
-		9C209632240F3DEC009265C7 /* MkdownChunkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C209631240F3DEC009265C7 /* MkdownChunkType.swift */; };
-		9C209633240F3DEC009265C7 /* MkdownChunkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C209631240F3DEC009265C7 /* MkdownChunkType.swift */; };
-		9C209634240F3DEC009265C7 /* MkdownChunkType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C209631240F3DEC009265C7 /* MkdownChunkType.swift */; };
 		9C21749F22024E2900B4BF48 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C21749E22024E2900B4BF48 /* notenik-swift-intro */; };
 		9C2174A022024E2900B4BF48 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C21749E22024E2900B4BF48 /* notenik-swift-intro */; };
 		9C2174A122024E2900B4BF48 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C21749E22024E2900B4BF48 /* notenik-swift-intro */; };
 		9C21DB8021F82D9800A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
 		9C21DB8121F82DB500A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
 		9C21DB8221F82DB600A5A08C /* NoteDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */; };
-		9C22CD9C242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C22CD9B242801E2003D3305 /* MkdownWikiLinkLookup.swift */; };
-		9C22CD9D242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C22CD9B242801E2003D3305 /* MkdownWikiLinkLookup.swift */; };
-		9C22CD9E242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C22CD9B242801E2003D3305 /* MkdownWikiLinkLookup.swift */; };
 		9C25DFFC22D7824B0062E282 /* ValuePickLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */; };
 		9C25DFFD22D7824B0062E282 /* ValuePickLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */; };
 		9C25E00122D786770062E282 /* ValuePickLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */; };
@@ -207,9 +199,6 @@
 		9C60E70221F650B800C332ED /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6FE21F650B800C332ED /* StringUtils.swift */; };
 		9C60E70321F650B800C332ED /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6FE21F650B800C332ED /* StringUtils.swift */; };
 		9C60E70421F650B800C332ED /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6FE21F650B800C332ED /* StringUtils.swift */; };
-		9C60E70521F650B800C332ED /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6FF21F650B800C332ED /* DateUtils.swift */; };
-		9C60E70621F650B800C332ED /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6FF21F650B800C332ED /* DateUtils.swift */; };
-		9C60E70721F650B800C332ED /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6FF21F650B800C332ED /* DateUtils.swift */; };
 		9C60E70821F650B800C332ED /* FileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E70021F650B800C332ED /* FileName.swift */; };
 		9C60E70921F650B800C332ED /* FileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E70021F650B800C332ED /* FileName.swift */; };
 		9C60E70A21F650B800C332ED /* FileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E70021F650B800C332ED /* FileName.swift */; };
@@ -403,15 +392,6 @@
 		9C88E4F723EE025100684284 /* DirContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C88E4F623EE025100684284 /* DirContents.swift */; };
 		9C88E4F823EE025100684284 /* DirContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C88E4F623EE025100684284 /* DirContents.swift */; };
 		9C88E4F923EE025100684284 /* DirContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C88E4F623EE025100684284 /* DirContents.swift */; };
-		9C8965222410269300866FD0 /* RefLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965212410269300866FD0 /* RefLink.swift */; };
-		9C8965232410269300866FD0 /* RefLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965212410269300866FD0 /* RefLink.swift */; };
-		9C8965242410269300866FD0 /* RefLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965212410269300866FD0 /* RefLink.swift */; };
-		9C896526241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C896525241026EC00866FD0 /* LinkLabelDefPhase.swift */; };
-		9C896527241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C896525241026EC00866FD0 /* LinkLabelDefPhase.swift */; };
-		9C896528241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C896525241026EC00866FD0 /* LinkLabelDefPhase.swift */; };
-		9C89652A2410277100866FD0 /* MkdownLinePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965292410277100866FD0 /* MkdownLinePhase.swift */; };
-		9C89652B2410277100866FD0 /* MkdownLinePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965292410277100866FD0 /* MkdownLinePhase.swift */; };
-		9C89652C2410277100866FD0 /* MkdownLinePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8965292410277100866FD0 /* MkdownLinePhase.swift */; };
 		9C8A5ADD23DBB8EA00C5A0DA /* Pandoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */; };
 		9C8A5ADE23DBB8EA00C5A0DA /* Pandoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */; };
 		9C8A5ADF23DBB8EA00C5A0DA /* Pandoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */; };
@@ -447,12 +427,6 @@
 		9CA420F822C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */; };
 		9CA80797229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */; };
 		9CA80798229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */; };
-		9CA835072405CCEE00C2531C /* MkdownLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA835062405CCEE00C2531C /* MkdownLine.swift */; };
-		9CA835082405CCEE00C2531C /* MkdownLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA835062405CCEE00C2531C /* MkdownLine.swift */; };
-		9CA835092405CCEE00C2531C /* MkdownLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA835062405CCEE00C2531C /* MkdownLine.swift */; };
-		9CA8350B2405EA2600C2531C /* MkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA8350A2405EA2600C2531C /* MkdownParser.swift */; };
-		9CA8350C2405EA2600C2531C /* MkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA8350A2405EA2600C2531C /* MkdownParser.swift */; };
-		9CA8350D2405EA2600C2531C /* MkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA8350A2405EA2600C2531C /* MkdownParser.swift */; };
 		9CAD6A4922DF806800531D90 /* TagsExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A4822DF806800531D90 /* TagsExportViewController.swift */; };
 		9CAD6A4A22DF806800531D90 /* TagsExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A4822DF806800531D90 /* TagsExportViewController.swift */; };
 		9CAD6A4F22DF9ACD00531D90 /* PrefsTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A4E22DF9ACD00531D90 /* PrefsTabViewController.swift */; };
@@ -546,6 +520,7 @@
 		9CC2AAD5239EC3E600C85191 /* TimestampValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2AAD3239EC3E600C85191 /* TimestampValue.swift */; };
 		9CC2AAD6239EC3E600C85191 /* TimestampValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2AAD3239EC3E600C85191 /* TimestampValue.swift */; };
 		9CC41CD5229CA61700E92A66 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9CC41CD4229CA61700E92A66 /* Credits.rtf */; };
+		9CC44AF62436A904002B41EF /* NotenikMkdown in Frameworks */ = {isa = PBXBuildFile; productRef = 9CC44AF52436A904002B41EF /* NotenikMkdown */; };
 		9CC78E692283565E00640477 /* DisplayPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CC78E682283565E00640477 /* DisplayPrefs.storyboard */; };
 		9CC78E6A2283565E00640477 /* DisplayPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CC78E682283565E00640477 /* DisplayPrefs.storyboard */; };
 		9CC78E6C2283587300640477 /* DisplayPrefsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC78E6B2283587300640477 /* DisplayPrefsWindowController.swift */; };
@@ -582,9 +557,6 @@
 		9CD3262A22330C8A00D06B77 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3262722330C8A00D06B77 /* ViewFactory.swift */; };
 		9CD358892293C42B00C9203F /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD358882293C42B00C9203F /* LinkView.swift */; };
 		9CD3588B2293C42B00C9203F /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD358882293C42B00C9203F /* LinkView.swift */; };
-		9CD42FA9240C26A000DCCC8D /* MkdownLineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */; };
-		9CD42FAA240C26A000DCCC8D /* MkdownLineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */; };
-		9CD42FAB240C26A000DCCC8D /* MkdownLineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */; };
 		9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD756D82210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD82F632211E456002314E4 /* LineWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD82F622211E456002314E4 /* LineWriter.swift */; };
@@ -641,15 +613,6 @@
 		9CE60322234558FA000B45E6 /* Textiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE60321234558FA000B45E6 /* Textiler.swift */; };
 		9CE60323234558FA000B45E6 /* Textiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE60321234558FA000B45E6 /* Textiler.swift */; };
 		9CE60324234558FA000B45E6 /* Textiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE60321234558FA000B45E6 /* Textiler.swift */; };
-		9CE6FE4E2412B8F900E9EB7A /* MkdownListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE4D2412B8F900E9EB7A /* MkdownListType.swift */; };
-		9CE6FE4F2412B8F900E9EB7A /* MkdownListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE4D2412B8F900E9EB7A /* MkdownListType.swift */; };
-		9CE6FE502412B8F900E9EB7A /* MkdownListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE4D2412B8F900E9EB7A /* MkdownListType.swift */; };
-		9CE6FE562413252200E9EB7A /* MkdownBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE552413252200E9EB7A /* MkdownBlock.swift */; };
-		9CE6FE572413252200E9EB7A /* MkdownBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE552413252200E9EB7A /* MkdownBlock.swift */; };
-		9CE6FE582413252200E9EB7A /* MkdownBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE552413252200E9EB7A /* MkdownBlock.swift */; };
-		9CE6FE5A2413253700E9EB7A /* MkdownBlockStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE592413253700E9EB7A /* MkdownBlockStack.swift */; };
-		9CE6FE5B2413253700E9EB7A /* MkdownBlockStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE592413253700E9EB7A /* MkdownBlockStack.swift */; };
-		9CE6FE5C2413253700E9EB7A /* MkdownBlockStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6FE592413253700E9EB7A /* MkdownBlockStack.swift */; };
 		9CE9C98222A6134A008D2B0A /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98122A6134A008D2B0A /* Template.swift */; };
 		9CE9C98322A6134A008D2B0A /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98122A6134A008D2B0A /* Template.swift */; };
 		9CE9C98422A6134A008D2B0A /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE9C98122A6134A008D2B0A /* Template.swift */; };
@@ -681,9 +644,6 @@
 		9CF96EE0225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */; };
 		9CF96EE1225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */; };
 		9CFCB047226BC7FF00443FFA /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
-		9CFCB049226BCE1700443FFA /* SimpleDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB048226BCE1700443FFA /* SimpleDate.swift */; };
-		9CFCB04A226BCE1700443FFA /* SimpleDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB048226BCE1700443FFA /* SimpleDate.swift */; };
-		9CFCB04B226BE71500443FFA /* SimpleDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB048226BCE1700443FFA /* SimpleDate.swift */; };
 		9CFD350023313D6D004ABA16 /* ArtistValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFD34FF23313D6D004ABA16 /* ArtistValue.swift */; };
 		9CFD350123313D6D004ABA16 /* ArtistValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFD34FF23313D6D004ABA16 /* ArtistValue.swift */; };
 		9CFD350223313D6D004ABA16 /* ArtistValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFD34FF23313D6D004ABA16 /* ArtistValue.swift */; };
@@ -732,11 +692,8 @@
 		9C1E0C9122E4F7D00025C99C /* AttachmentWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentWindowController.swift; sourceTree = "<group>"; };
 		9C1E0C9422E4F7FA0025C99C /* AttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentViewController.swift; sourceTree = "<group>"; };
 		9C1E0C9722E5306B0025C99C /* AttachmentMasterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentMasterController.swift; sourceTree = "<group>"; };
-		9C20962D240F3D03009265C7 /* MkdownChunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownChunk.swift; sourceTree = "<group>"; };
-		9C209631240F3DEC009265C7 /* MkdownChunkType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownChunkType.swift; sourceTree = "<group>"; };
 		9C21749E22024E2900B4BF48 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../notenik-swift-intro"; sourceTree = "<group>"; };
 		9C21DB7F21F82D9800A5A08C /* NoteDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplay.swift; sourceTree = "<group>"; };
-		9C22CD9B242801E2003D3305 /* MkdownWikiLinkLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownWikiLinkLookup.swift; sourceTree = "<group>"; };
 		9C25DFFB22D7824B0062E282 /* ValuePickLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuePickLists.swift; sourceTree = "<group>"; };
 		9C25E00222D787260062E282 /* TagsPickList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsPickList.swift; sourceTree = "<group>"; };
 		9C25E00522D787980062E282 /* PickList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickList.swift; sourceTree = "<group>"; };
@@ -758,7 +715,6 @@
 		9C44539122FCC80200560F72 /* NoteReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteReader.swift; sourceTree = "<group>"; };
 		9C45E8BA2298B87C003F6589 /* BodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyView.swift; sourceTree = "<group>"; };
 		9C45E8BD2298BC87003F6589 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
-		9C46F9E1242521B9007BD69C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9C4C1BAF22E7EE61005997DF /* ScriptEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptEngine.swift; sourceTree = "<group>"; };
 		9C52B5872346B0D800CD7517 /* TextileSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextileSignature.swift; sourceTree = "<group>"; };
 		9C535F5623A3FDC300D47282 /* WikiLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikiLinks.swift; sourceTree = "<group>"; };
@@ -792,7 +748,6 @@
 		9C60E6EF21F64B3C00C332ED /* NotenikUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotenikUITests.swift; sourceTree = "<group>"; };
 		9C60E6F121F64B3C00C332ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C60E6FE21F650B800C332ED /* StringUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
-		9C60E6FF21F650B800C332ED /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		9C60E70021F650B800C332ED /* FileName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileName.swift; sourceTree = "<group>"; };
 		9C60E70121F650B800C332ED /* FileUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		9C60E70F21F6518400C332ED /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -855,8 +810,10 @@
 		9C67248B22EA205800CB7D39 /* FilterRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterRule.swift; sourceTree = "<group>"; };
 		9C727D6623CD3A5000D04C45 /* NoteDisplayMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayMaster.swift; sourceTree = "<group>"; };
 		9C7348412374D90600421598 /* MDHeadReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDHeadReader.swift; sourceTree = "<group>"; };
+		9C7410B32436B4CB00ABF9D9 /* NotenikUtils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikUtils; path = ../NotenikUtils; sourceTree = "<group>"; };
 		9C78888521FB826100452D74 /* MarkedupFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedupFormat.swift; sourceTree = "<group>"; };
 		9C78888921FB950900452D74 /* Markedup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markedup.swift; sourceTree = "<group>"; };
+		9C7965D92436AF1700E1904E /* NotenikMkdown */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikMkdown; path = ../NotenikMkdown; sourceTree = "<group>"; };
 		9C79BDAF226E368800796E93 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		9C7F27C123BC0A51001381DF /* NoteFileFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFileFormat.swift; sourceTree = "<group>"; };
 		9C822B9522D63A11008EF106 /* TagValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValue.swift; sourceTree = "<group>"; };
@@ -873,9 +830,6 @@
 		9C857C6323830F1600EDB93C /* FavoritesPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPrefsViewController.swift; sourceTree = "<group>"; };
 		9C86CF0122C15A660035A8FA /* IntValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntValue.swift; sourceTree = "<group>"; };
 		9C88E4F623EE025100684284 /* DirContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirContents.swift; sourceTree = "<group>"; };
-		9C8965212410269300866FD0 /* RefLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefLink.swift; sourceTree = "<group>"; };
-		9C896525241026EC00866FD0 /* LinkLabelDefPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkLabelDefPhase.swift; sourceTree = "<group>"; };
-		9C8965292410277100866FD0 /* MkdownLinePhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownLinePhase.swift; sourceTree = "<group>"; };
 		9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pandoc.swift; sourceTree = "<group>"; };
 		9C8DD75622E3EEC400FF56C1 /* Attachment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Attachment.storyboard; sourceTree = "<group>"; };
 		9C8FD8D72216302900F16669 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -891,8 +845,6 @@
 		9CA0D1F423677CE100ACA52A /* DateAddedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAddedType.swift; sourceTree = "<group>"; };
 		9CA420F522C2A67D00EEE065 /* FieldComparisonOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldComparisonOperator.swift; sourceTree = "<group>"; };
 		9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewController.swift; sourceTree = "<group>"; };
-		9CA835062405CCEE00C2531C /* MkdownLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownLine.swift; sourceTree = "<group>"; };
-		9CA8350A2405EA2600C2531C /* MkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownParser.swift; sourceTree = "<group>"; };
 		9CAD6A4822DF806800531D90 /* TagsExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsExportViewController.swift; sourceTree = "<group>"; };
 		9CAD6A4E22DF9ACD00531D90 /* PrefsTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsTabViewController.swift; sourceTree = "<group>"; };
 		9CAD6A5122DFA0B000531D90 /* PrefsTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsTabVC.swift; sourceTree = "<group>"; };
@@ -945,7 +897,6 @@
 		9CD32623223308C400D06B77 /* StringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringView.swift; sourceTree = "<group>"; };
 		9CD3262722330C8A00D06B77 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		9CD358882293C42B00C9203F /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
-		9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownLineType.swift; sourceTree = "<group>"; };
 		9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSplitViewController.swift; sourceTree = "<group>"; };
 		9CD82F622211E456002314E4 /* LineWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineWriter.swift; sourceTree = "<group>"; };
 		9CD82F662211E4BA002314E4 /* BigStringWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigStringWriter.swift; sourceTree = "<group>"; };
@@ -967,9 +918,6 @@
 		9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
 		9CE3250F224D5E180051CA1F /* LogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
 		9CE60321234558FA000B45E6 /* Textiler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Textiler.swift; sourceTree = "<group>"; };
-		9CE6FE4D2412B8F900E9EB7A /* MkdownListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownListType.swift; sourceTree = "<group>"; };
-		9CE6FE552413252200E9EB7A /* MkdownBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownBlock.swift; sourceTree = "<group>"; };
-		9CE6FE592413253700E9EB7A /* MkdownBlockStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownBlockStack.swift; sourceTree = "<group>"; };
 		9CE715B0225E887300025C00 /* Notenik Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Notenik Help"; sourceTree = "<group>"; };
 		9CE9C98122A6134A008D2B0A /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		9CE9C98522A61499008D2B0A /* TemplateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateUtil.swift; sourceTree = "<group>"; };
@@ -984,7 +932,6 @@
 		9CF3DE4422A6BAA00078A6B0 /* TemplateLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateLine.swift; sourceTree = "<group>"; };
 		9CF3DE4B22A6F5330078A6B0 /* MergeReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeReport.swift; sourceTree = "<group>"; };
 		9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPrefsOwner.swift; sourceTree = "<group>"; };
-		9CFCB048226BCE1700443FFA /* SimpleDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleDate.swift; sourceTree = "<group>"; };
 		9CFD34FF23313D6D004ABA16 /* ArtistValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistValue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -994,6 +941,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C036298239AE7D500C948DB /* Ink in Frameworks */,
+				9C07F7522436904F00460E14 /* NotenikUtils in Frameworks */,
+				9CC44AF62436A904002B41EF /* NotenikMkdown in Frameworks */,
 				9C036295239AE2A400C948DB /* Down in Frameworks */,
 				9C036292239AE24F00C948DB /* CoreXLSX in Frameworks */,
 			);
@@ -1154,7 +1103,6 @@
 		9C60E6FD21F650B800C332ED /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				9C60E6FF21F650B800C332ED /* DateUtils.swift */,
 				9C88E4F623EE025100684284 /* DirContents.swift */,
 				9C60E70021F650B800C332ED /* FileName.swift */,
 				9C60E70121F650B800C332ED /* FileUtils.swift */,
@@ -1163,7 +1111,6 @@
 				9C78888921FB950900452D74 /* Markedup.swift */,
 				9C78888521FB826100452D74 /* MarkedupFormat.swift */,
 				9C8A5ADC23DBB8EA00C5A0DA /* Pandoc.swift */,
-				9CFCB048226BCE1700443FFA /* SimpleDate.swift */,
 				9CCFD62722AEDA5C00C64D37 /* StringConverter.swift */,
 				9CCFD62022AED9FA00C64D37 /* StringFromTo.swift */,
 				9C60E6FE21F650B800C332ED /* StringUtils.swift */,
@@ -1283,6 +1230,8 @@
 		9C65394E21F91EBB00012184 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9C7410B32436B4CB00ABF9D9 /* NotenikUtils */,
+				9C7965D92436AF1700E1904E /* NotenikMkdown */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1296,7 +1245,6 @@
 				9C096C0023C3F39700402A06 /* files */,
 				9C60E79E21F6520100C332ED /* io */,
 				9C78907C23BBE6880008A077 /* logging */,
-				9CA834F92405C09300C2531C /* mkdown */,
 				9C60E71B21F651E500C332ED /* model */,
 				9CF1192C2257FD170015AE91 /* modifchanged */,
 				9C9810F523BE73E8009EA93A /* notelines */,
@@ -1416,26 +1364,6 @@
 				9C60E73221F651E500C332ED /* LabelConstants.swift */,
 			);
 			path = fields;
-			sourceTree = "<group>";
-		};
-		9CA834F92405C09300C2531C /* mkdown */ = {
-			isa = PBXGroup;
-			children = (
-				9C46F9E1242521B9007BD69C /* README.md */,
-				9C896525241026EC00866FD0 /* LinkLabelDefPhase.swift */,
-				9CE6FE552413252200E9EB7A /* MkdownBlock.swift */,
-				9CE6FE592413253700E9EB7A /* MkdownBlockStack.swift */,
-				9C20962D240F3D03009265C7 /* MkdownChunk.swift */,
-				9C209631240F3DEC009265C7 /* MkdownChunkType.swift */,
-				9CA835062405CCEE00C2531C /* MkdownLine.swift */,
-				9C8965292410277100866FD0 /* MkdownLinePhase.swift */,
-				9CD42FA8240C26A000DCCC8D /* MkdownLineType.swift */,
-				9CE6FE4D2412B8F900E9EB7A /* MkdownListType.swift */,
-				9CA8350A2405EA2600C2531C /* MkdownParser.swift */,
-				9C22CD9B242801E2003D3305 /* MkdownWikiLinkLookup.swift */,
-				9C8965212410269300866FD0 /* RefLink.swift */,
-			);
-			path = mkdown;
 			sourceTree = "<group>";
 		};
 		9CAD6A5422DFA95D00531D90 /* export */ = {
@@ -1601,6 +1529,8 @@
 				9C036291239AE24F00C948DB /* CoreXLSX */,
 				9C036294239AE2A400C948DB /* Down */,
 				9C036297239AE7D500C948DB /* Ink */,
+				9C07F7512436904F00460E14 /* NotenikUtils */,
+				9CC44AF52436A904002B41EF /* NotenikMkdown */,
 			);
 			productName = Notenik;
 			productReference = 9C60E6CE21F64B3B00C332ED /* Notenik.app */;
@@ -1689,6 +1619,8 @@
 				9C036290239AE24F00C948DB /* XCRemoteSwiftPackageReference "CoreXLSX" */,
 				9C036293239AE2A400C948DB /* XCRemoteSwiftPackageReference "Down" */,
 				9C036296239AE7D500C948DB /* XCRemoteSwiftPackageReference "Ink" */,
+				9C07F7502436904F00460E14 /* XCRemoteSwiftPackageReference "NotenikUtils" */,
+				9CC44AF42436A904002B41EF /* XCRemoteSwiftPackageReference "NotenikMkdown" */,
 			);
 			productRefGroup = 9C60E6CF21F64B3B00C332ED /* Products */;
 			projectDirPath = "";
@@ -1766,7 +1698,6 @@
 				9C60E75921F651E500C332ED /* SeqValue.swift in Sources */,
 				9CC2AAD0239EC36B00C85191 /* TimestampType.swift in Sources */,
 				9C60E7A021F6520100C332ED /* FileIO.swift in Sources */,
-				9CE6FE4E2412B8F900E9EB7A /* MkdownListType.swift in Sources */,
 				9CD358892293C42B00C9203F /* LinkView.swift in Sources */,
 				9C60E70221F650B800C332ED /* StringUtils.swift in Sources */,
 				9C10311D229A134E009CCE3B /* AppPrefs.swift in Sources */,
@@ -1777,7 +1708,6 @@
 				9C03629A239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
 				9CE2170E22A9BC6000EE656C /* LineWithBreak.swift in Sources */,
 				9C97C1B02278F46100A43913 /* CollectionRequestType.swift in Sources */,
-				9C60E70521F650B800C332ED /* DateUtils.swift in Sources */,
 				9C60E76521F651E500C332ED /* RatingValue.swift in Sources */,
 				9C8540BA22E8F3660074E349 /* InputModule.swift in Sources */,
 				9C1BE27122EB940E006FDFEC /* ScriptWindowController.swift in Sources */,
@@ -1789,17 +1719,14 @@
 				9CC0F5A8227629C4002683F8 /* BooleanValue.swift in Sources */,
 				9C60E75621F651E500C332ED /* StringValue.swift in Sources */,
 				9C03629E239B0A9900C948DB /* Markdown.swift in Sources */,
-				9CD42FA9240C26A000DCCC8D /* MkdownLineType.swift in Sources */,
 				9CF3DE4522A6BAA00078A6B0 /* TemplateLine.swift in Sources */,
 				9C1E0C9222E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C568DE12322F3C6005D6B0A /* WorkTitlePickList.swift in Sources */,
-				9CE6FE5A2413253700E9EB7A /* MkdownBlockStack.swift in Sources */,
 				9C060687228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
 				9CB337542347BA4A006767A4 /* TextileCharDisposition.swift in Sources */,
 				9C67248C22EA205800CB7D39 /* FilterRule.swift in Sources */,
-				9C20962E240F3D03009265C7 /* MkdownChunk.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9CD0718E22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
 				9C7348422374D90600421598 /* MDHeadReader.swift in Sources */,
@@ -1808,14 +1735,12 @@
 				9C25E00622D787980062E282 /* PickList.swift in Sources */,
 				9C5A6704242E9D47007F6E47 /* NoteID.swift in Sources */,
 				9C44126D23634B8A00B3041F /* AnyType.swift in Sources */,
-				9C22CD9C242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */,
 				9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */,
 				9CC088C223ECE58B006F2B99 /* NoteTransformer.swift in Sources */,
 				9CAD6A5222DFA0B000531D90 /* PrefsTabVC.swift in Sources */,
 				9C88E4F723EE025100684284 /* DirContents.swift in Sources */,
 				9C60E75C21F651E500C332ED /* RecursValue.swift in Sources */,
 				9CDF578223469A47004417FA /* TextileBlockPhase.swift in Sources */,
-				9CE6FE562413252200E9EB7A /* MkdownBlock.swift in Sources */,
 				9C60E74A21F651E500C332ED /* Realm.swift in Sources */,
 				9CF256CD21FD175E00D9F06A /* CollectionWindowController.swift in Sources */,
 				9C1E0C9522E4F7FA0025C99C /* AttachmentViewController.swift in Sources */,
@@ -1828,7 +1753,6 @@
 				9CDF578E23469BBE004417FA /* TextileBlock.swift in Sources */,
 				9C8540C222E8F9F20074E349 /* ScriptAction.swift in Sources */,
 				9CCFD62822AEDA5C00C64D37 /* StringConverter.swift in Sources */,
-				9CA835072405CCEE00C2531C /* MkdownLine.swift in Sources */,
 				9CD82F632211E456002314E4 /* LineWriter.swift in Sources */,
 				9CAD6A4F22DF9ACD00531D90 /* PrefsTabViewController.swift in Sources */,
 				9C60E70B21F650B800C332ED /* FileUtils.swift in Sources */,
@@ -1863,7 +1787,6 @@
 				9CC78E6C2283587300640477 /* DisplayPrefsWindowController.swift in Sources */,
 				9CA420F622C2A67D00EEE065 /* FieldComparisonOperator.swift in Sources */,
 				9CD326202233068F00D06B77 /* MacEditView.swift in Sources */,
-				9CFCB049226BCE1700443FFA /* SimpleDate.swift in Sources */,
 				9C1B9590241824240059729B /* SeqSegment.swift in Sources */,
 				9CE3250D224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
 				9CF96EE0225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */,
@@ -1878,7 +1801,6 @@
 				9C78888621FB826100452D74 /* MarkedupFormat.swift in Sources */,
 				9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */,
 				9C568DDD2322F0D6005D6B0A /* WorkTitleValue.swift in Sources */,
-				9C89652A2410277100866FD0 /* MkdownLinePhase.swift in Sources */,
 				9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */,
 				9C60E76221F651E500C332ED /* DateValue.swift in Sources */,
 				9CB6ECCE2365DC3F00951820 /* TagsType.swift in Sources */,
@@ -1897,7 +1819,6 @@
 				9C27D9F222FB3758008EE0A1 /* NoteIndexReader.swift in Sources */,
 				9C60E77D21F651E500C332ED /* LabelConstants.swift in Sources */,
 				9C619A33231B30A7003CFFBE /* WorkTypeValue.swift in Sources */,
-				9C8965222410269300866FD0 /* RefLink.swift in Sources */,
 				9C9A6BAE22EA5FBC00E1F127 /* SortField.swift in Sources */,
 				9CB6ECD62365E00C00951820 /* WorkTitleType.swift in Sources */,
 				9C60E71221F6518400C332ED /* Logger.swift in Sources */,
@@ -1925,7 +1846,6 @@
 				9CAD6A4922DF806800531D90 /* TagsExportViewController.swift in Sources */,
 				9CF1193E225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
 				9C27D9FB22FB3FA6008EE0A1 /* IndexTerm.swift in Sources */,
-				9C209632240F3DEC009265C7 /* MkdownChunkType.swift in Sources */,
 				9CDEE7C722FE36E30000E3C1 /* DirReader.swift in Sources */,
 				9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */,
 				9C2AE514220A033300AE8BEE /* TagsNode.swift in Sources */,
@@ -1936,7 +1856,6 @@
 				9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
 				9CE2170722A95EB300EE656C /* TemplateCommand.swift in Sources */,
 				9CAD6A5A22DFBEEB00531D90 /* ExportFormat.swift in Sources */,
-				9CA8350B2405EA2600C2531C /* MkdownParser.swift in Sources */,
 				9C535F5723A3FDC300D47282 /* WikiLinks.swift in Sources */,
 				9CB6ECAA2364F7DB00951820 /* IndexType.swift in Sources */,
 				9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */,
@@ -1979,7 +1898,6 @@
 				9C60E77721F651E500C332ED /* StatusValue.swift in Sources */,
 				9C60E70821F650B800C332ED /* FileName.swift in Sources */,
 				9CAD6A5622DFA9C200531D90 /* NotesExporter.swift in Sources */,
-				9C896526241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */,
 				9C8329FD224ABB13007DA6FC /* DefaultDiskLocation.swift in Sources */,
 				9C02D2AE2267D46000587EDF /* DateView.swift in Sources */,
 				9CFD350023313D6D004ABA16 /* ArtistValue.swift in Sources */,
@@ -2034,7 +1952,6 @@
 				9CA0D1F623677CE100ACA52A /* DateAddedType.swift in Sources */,
 				9C60E77821F651E500C332ED /* StatusValue.swift in Sources */,
 				9CB6ECD32365DE3100951820 /* TitleType.swift in Sources */,
-				9CE6FE572413252200E9EB7A /* MkdownBlock.swift in Sources */,
 				9C727D6823CD3A5000D04C45 /* NoteDisplayMaster.swift in Sources */,
 				9CD19A5A23721B0500D97E71 /* NotenikPathType.swift in Sources */,
 				9CDF57972346A22B004417FA /* TextileLineType.swift in Sources */,
@@ -2045,10 +1962,8 @@
 				9C27DA0422FB581D008EE0A1 /* IndexPageRef.swift in Sources */,
 				9C60E77B21F651E500C332ED /* FieldDefinition.swift in Sources */,
 				9CB37ED52407189700C2AC1F /* MkdownParserTests.swift in Sources */,
-				9C8965232410269300866FD0 /* RefLink.swift in Sources */,
 				9C60E71321F6518400C332ED /* Logger.swift in Sources */,
 				9C03629B239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
-				9C20962F240F3D03009265C7 /* MkdownChunk.swift in Sources */,
 				9C60E78121F651E500C332ED /* NoteType.swift in Sources */,
 				9C8540B722E8F0790074E349 /* ScriptModule.swift in Sources */,
 				9C7348432374D90600421598 /* MDHeadReader.swift in Sources */,
@@ -2061,15 +1976,12 @@
 				9C60E75421F651E500C332ED /* Provider.swift in Sources */,
 				9CCFD62C22AEE0DD00C64D37 /* StringConverterTests.swift in Sources */,
 				9C25E00722D787980062E282 /* PickList.swift in Sources */,
-				9C60E70621F650B800C332ED /* DateUtils.swift in Sources */,
 				9C60E7C321F6525F00C332ED /* LineParserTests.swift in Sources */,
 				9C60E73F21F651E500C332ED /* FieldLabel.swift in Sources */,
 				9C27DA0022FB55B4008EE0A1 /* IndexCollection.swift in Sources */,
 				9C60E7B721F6525F00C332ED /* FileUtilsTests.swift in Sources */,
 				9CB6ECDB2365E14700951820 /* WorkTypeType.swift in Sources */,
-				9C896527241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */,
 				9C8540C322E8F9F20074E349 /* ScriptAction.swift in Sources */,
-				9C89652B2410277100866FD0 /* MkdownLinePhase.swift in Sources */,
 				9CCC5E9F228F0B5500FA6B5C /* BunchIO.swift in Sources */,
 				9C27D9F322FB3758008EE0A1 /* NoteIndexReader.swift in Sources */,
 				9C60E75121F651E500C332ED /* NoteSortParm.swift in Sources */,
@@ -2081,7 +1993,6 @@
 				9CD82F682211E4BA002314E4 /* BigStringWriter.swift in Sources */,
 				9CB6ECB32364FAEA00951820 /* LinkType.swift in Sources */,
 				9CD82F642211E456002314E4 /* LineWriter.swift in Sources */,
-				9CD42FAA240C26A000DCCC8D /* MkdownLineType.swift in Sources */,
 				9C60E74B21F651E500C332ED /* Realm.swift in Sources */,
 				9C2AE51F220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9CDF578F23469BBE004417FA /* TextileBlock.swift in Sources */,
@@ -2103,16 +2014,13 @@
 				9C568DDA2322BA21005D6B0A /* AuthorPickList.swift in Sources */,
 				9C60E7B921F6525F00C332ED /* LinkValueTests.swift in Sources */,
 				9C568DDE2322F0D6005D6B0A /* WorkTitleValue.swift in Sources */,
-				9CE6FE4F2412B8F900E9EB7A /* MkdownListType.swift in Sources */,
 				9CB6ECCF2365DC3F00951820 /* TagsType.swift in Sources */,
 				9CC2AAD5239EC3E600C85191 /* TimestampValue.swift in Sources */,
 				9C559D7122E67F940014019C /* AttachmentName.swift in Sources */,
 				9CC8336E22B3F65B0006AAE0 /* MarkedupTests.swift in Sources */,
 				9C60E78D21F651E500C332ED /* FieldDictionary.swift in Sources */,
 				9C44126E23634B8A00B3041F /* AnyType.swift in Sources */,
-				9CFCB04A226BCE1700443FFA /* SimpleDate.swift in Sources */,
 				9C60E71621F6518400C332ED /* LogLevel.swift in Sources */,
-				9C22CD9D242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */,
 				9C8A5ADE23DBB8EA00C5A0DA /* Pandoc.swift in Sources */,
 				9CE2170F22A9BC6000EE656C /* LineWithBreak.swift in Sources */,
 				9CB6ECD72365E00C00951820 /* WorkTitleType.swift in Sources */,
@@ -2132,7 +2040,6 @@
 				9C27D9F822FB3ED1008EE0A1 /* IndexValue.swift in Sources */,
 				9CDF57932346A077004417FA /* TextileLine.swift in Sources */,
 				9CDF578723469AD0004417FA /* TextileOpeningClosing.swift in Sources */,
-				9CE6FE5B2413253700E9EB7A /* MkdownBlockStack.swift in Sources */,
 				9CB6ECBB2365D5EC00951820 /* RatingType.swift in Sources */,
 				9CB37ED624071F4800C2AC1F /* Markdown.swift in Sources */,
 				9CE9C98322A6134A008D2B0A /* Template.swift in Sources */,
@@ -2145,11 +2052,9 @@
 				9CCFD62222AED9FA00C64D37 /* StringFromTo.swift in Sources */,
 				9C60E79C21F651E500C332ED /* NotePosition.swift in Sources */,
 				9CED74FC23356657003F7F2C /* Sequencer.swift in Sources */,
-				9CA835082405CCEE00C2531C /* MkdownLine.swift in Sources */,
 				9CB6ECA32364B02D00951820 /* BooleanType.swift in Sources */,
 				9CC2AAD1239EC36B00C85191 /* TimestampType.swift in Sources */,
 				9C44539322FCC80200560F72 /* NoteReader.swift in Sources */,
-				9CA8350C2405EA2600C2531C /* MkdownParser.swift in Sources */,
 				9C60E6E521F64B3C00C332ED /* NotenikTests.swift in Sources */,
 				9C86CF0322C15A660035A8FA /* IntValue.swift in Sources */,
 				9C60E7A121F6520100C332ED /* FileIO.swift in Sources */,
@@ -2176,7 +2081,6 @@
 				9C9810F823BE893E009EA93A /* NoteLineIn.swift in Sources */,
 				9C67248622EA1B2D00CB7D39 /* FilterModule.swift in Sources */,
 				9C60E74821F651E500C332ED /* ProviderType.swift in Sources */,
-				9C209633240F3DEC009265C7 /* MkdownChunkType.swift in Sources */,
 				9C060688228E0A9300CB8C10 /* RealmScanner.swift in Sources */,
 				9CB6ECCB2365DAFE00951820 /* StringType.swift in Sources */,
 				9CB337552347BA4A006767A4 /* TextileCharDisposition.swift in Sources */,
@@ -2201,7 +2105,6 @@
 				9C1B9592241824240059729B /* SeqSegment.swift in Sources */,
 				9C10311F229A134E009CCE3B /* AppPrefs.swift in Sources */,
 				9C055D4F2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
-				9C8965242410269300866FD0 /* RefLink.swift in Sources */,
 				9C45E8BF2298BC87003F6589 /* CodeView.swift in Sources */,
 				9C60E77321F651E500C332ED /* LinkValue.swift in Sources */,
 				9C60E76D21F651E500C332ED /* StatusValueConfig.swift in Sources */,
@@ -2217,9 +2120,7 @@
 				9CB6ECB02364FA0500951820 /* IntType.swift in Sources */,
 				9C5556DB22E132EC0099414E /* ExportViewController.swift in Sources */,
 				9C60E78B21F651E500C332ED /* NoteLineParser.swift in Sources */,
-				9C896528241026EC00866FD0 /* LinkLabelDefPhase.swift in Sources */,
 				9C02D2B42267F41200587EDF /* CalendarWindowController.swift in Sources */,
-				9C22CD9E242801E2003D3305 /* MkdownWikiLinkLookup.swift in Sources */,
 				9C5556D822E11E3B0099414E /* ExportWindowController.swift in Sources */,
 				9C535F5923A3FDC300D47282 /* WikiLinks.swift in Sources */,
 				9C60E78521F651E500C332ED /* LineReader.swift in Sources */,
@@ -2227,7 +2128,6 @@
 				9CB6ECC02365D73100951820 /* RecursType.swift in Sources */,
 				9C97C1B12278F46100A43913 /* CollectionRequestType.swift in Sources */,
 				9CB6ECD02365DC3F00951820 /* TagsType.swift in Sources */,
-				9C89652C2410277100866FD0 /* MkdownLinePhase.swift in Sources */,
 				9C8540B822E8F0790074E349 /* ScriptModule.swift in Sources */,
 				9C60E78821F651E500C332ED /* BigStringReader.swift in Sources */,
 				9CB37ED724071F7B00C2AC1F /* Markdown.swift in Sources */,
@@ -2238,7 +2138,6 @@
 				9C2AE523220A34B300AE8BEE /* AppDelegate.swift in Sources */,
 				9C67248722EA1B2D00CB7D39 /* FilterModule.swift in Sources */,
 				9C9B6D8523A2DE6400E7E348 /* NoteCrumbs.swift in Sources */,
-				9CD42FAB240C26A000DCCC8D /* MkdownLineType.swift in Sources */,
 				9C0B643A23888D6700869FAA /* TagsMassChangeWindowController.swift in Sources */,
 				9C2AE520220A1ED700AE8BEE /* BunchOfNotes.swift in Sources */,
 				9CF3DE4E22A6F5330078A6B0 /* MergeReport.swift in Sources */,
@@ -2246,15 +2145,12 @@
 				9CE32511224D5E180051CA1F /* LogViewController.swift in Sources */,
 				9C44539422FCC80200560F72 /* NoteReader.swift in Sources */,
 				9CD19A5B23721B0500D97E71 /* NotenikPathType.swift in Sources */,
-				9C209630240F3D03009265C7 /* MkdownChunk.swift in Sources */,
 				9CA80798229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
 				9CAD6A5322DFA0B000531D90 /* PrefsTabVC.swift in Sources */,
 				9C03629C239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
-				9CA835092405CCEE00C2531C /* MkdownLine.swift in Sources */,
 				9C60E77921F651E500C332ED /* StatusValue.swift in Sources */,
 				9C822B9822D63A11008EF106 /* TagValue.swift in Sources */,
 				9CB6ECA42364B02D00951820 /* BooleanType.swift in Sources */,
-				9C209634240F3DEC009265C7 /* MkdownChunkType.swift in Sources */,
 				9C1CB85D22CC26F000F7B055 /* FavoritesToHTML.swift in Sources */,
 				9C1E0C9922E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9C60E77C21F651E500C332ED /* FieldDefinition.swift in Sources */,
@@ -2262,7 +2158,6 @@
 				9CB60BC722651074003B5655 /* ShareViewController.swift in Sources */,
 				9C60E71421F6518400C332ED /* Logger.swift in Sources */,
 				9CD3588B2293C42B00C9203F /* LinkView.swift in Sources */,
-				9CE6FE5C2413253700E9EB7A /* MkdownBlockStack.swift in Sources */,
 				9CDF578823469AD0004417FA /* TextileOpeningClosing.swift in Sources */,
 				9CF96EE1225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */,
 				9CC78E6D2283587300640477 /* DisplayPrefsWindowController.swift in Sources */,
@@ -2302,7 +2197,6 @@
 				9C1B959624182AD70059729B /* SeqStack.swift in Sources */,
 				9CED2811224EB39900798621 /* LongTextView.swift in Sources */,
 				9C2AE518220A033D00AE8BEE /* TagsTree.swift in Sources */,
-				9C60E70721F650B800C332ED /* DateUtils.swift in Sources */,
 				9CD0718F22550D02000BF467 /* ModIfChangedOutcome.swift in Sources */,
 				9C60E74021F651E500C332ED /* FieldLabel.swift in Sources */,
 				9C2AE516220A033300AE8BEE /* TagsNode.swift in Sources */,
@@ -2314,7 +2208,6 @@
 				9C60E75221F651E500C332ED /* NoteSortParm.swift in Sources */,
 				9C4018A522838F4F002C2B3D /* DisplayPrefs.swift in Sources */,
 				9C619A3A231B323B003CFFBE /* WorkTypeView.swift in Sources */,
-				9CA8350D2405EA2600C2531C /* MkdownParser.swift in Sources */,
 				9C568DEF2322FBF0005D6B0A /* AuthorDataSource.swift in Sources */,
 				9C25DFFD22D7824B0062E282 /* ValuePickLists.swift in Sources */,
 				9CDF578C23469B4B004417FA /* TextileChunk.swift in Sources */,
@@ -2322,7 +2215,6 @@
 				9C60E74C21F651E500C332ED /* Realm.swift in Sources */,
 				9C8540B422E8F0330074E349 /* ScriptCommand.swift in Sources */,
 				9C1C761422EDE1A8002B97DA /* TemplateModule.swift in Sources */,
-				9CE6FE502412B8F900E9EB7A /* MkdownListType.swift in Sources */,
 				9CF119302257FDD50015AE91 /* ModWhenChanged.swift in Sources */,
 				9C27DA0122FB55B4008EE0A1 /* IndexCollection.swift in Sources */,
 				9C568DE32322F3C6005D6B0A /* WorkTitlePickList.swift in Sources */,
@@ -2341,7 +2233,6 @@
 				9CD3262A22330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9CD82F6D2211EDC2002314E4 /* NoteLineMaker.swift in Sources */,
 				9CC78E70228358A400640477 /* DisplayPrefsViewController.swift in Sources */,
-				9CE6FE582413252200E9EB7A /* MkdownBlock.swift in Sources */,
 				9CAD6A5022DF9ACD00531D90 /* PrefsTabViewController.swift in Sources */,
 				9CF11934225802AA0015AE91 /* ModView.swift in Sources */,
 				9C60E71721F6518400C332ED /* LogLevel.swift in Sources */,
@@ -2355,7 +2246,6 @@
 				9CCFEE732270DD5C00F472C5 /* DelimitedReader.swift in Sources */,
 				9CB6ECD82365E00C00951820 /* WorkTitleType.swift in Sources */,
 				9CB6ECCC2365DAFE00951820 /* StringType.swift in Sources */,
-				9CFCB04B226BE71500443FFA /* SimpleDate.swift in Sources */,
 				9C60E76421F651E500C332ED /* DateValue.swift in Sources */,
 				9C60E76A21F651E500C332ED /* AuthorValue.swift in Sources */,
 				9C86CF0422C15A660035A8FA /* IntValue.swift in Sources */,
@@ -2768,6 +2658,22 @@
 				minimumVersion = 0.2.0;
 			};
 		};
+		9C07F7502436904F00460E14 /* XCRemoteSwiftPackageReference "NotenikUtils" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hbowie/NotenikUtils.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+		9CC44AF42436A904002B41EF /* XCRemoteSwiftPackageReference "NotenikMkdown" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hbowie/NotenikMkdown.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2785,6 +2691,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9C036296239AE7D500C948DB /* XCRemoteSwiftPackageReference "Ink" */;
 			productName = Ink;
+		};
+		9C07F7512436904F00460E14 /* NotenikUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C07F7502436904F00460E14 /* XCRemoteSwiftPackageReference "NotenikUtils" */;
+			productName = NotenikUtils;
+		};
+		9CC44AF52436A904002B41EF /* NotenikMkdown */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9CC44AF42436A904002B41EF /* XCRemoteSwiftPackageReference "NotenikMkdown" */;
+			productName = NotenikMkdown;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

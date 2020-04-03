@@ -11,6 +11,9 @@
 
 import Foundation
 
+import NotenikUtils
+import NotenikMkdown
+
 /// Persistent data along with utility methods.
 class TemplateUtil {
     

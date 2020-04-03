@@ -13,6 +13,7 @@ import Foundation
 
 import Down
 import Ink
+import NotenikMkdown
 
 // Convert Markdown to HTML, using the user's favorite parser.
 class Markdown {

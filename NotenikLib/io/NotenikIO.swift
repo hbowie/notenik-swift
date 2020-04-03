@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikMkdown
+
 /// Read and write notes from/to some sort of data store. 
 protocol NotenikIO: MkdownWikiLinkLookup {
     

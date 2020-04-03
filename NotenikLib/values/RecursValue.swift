@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A value specifying a rule about how often a note should recur.
 class RecursValue: StringValue {
     
@@ -52,7 +54,7 @@ class RecursValue: StringValue {
      */
     func recur(_ strDate: DateValue) -> String {
         let possibleDate = strDate.date
-        let newDate = SimpleDate(dateValue: strDate)
+        let newDate = SimpleDate(yr: strDate.year, mn: strDate.month, dy: strDate.day)
         if possibleDate == nil {
             return String(describing: strDate)
         } else {

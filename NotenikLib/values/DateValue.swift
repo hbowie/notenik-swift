@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A String value representing a date.
 class DateValue: StringValue {
     
@@ -137,7 +139,7 @@ class DateValue: StringValue {
         } else if dd.count == 0 {
             return "   " + DateUtils.shared.getShortMonthName(for: mm) + " " + yyyy
         } else {
-            let simple = SimpleDate(dateValue: self)
+            let simple = SimpleDate(yr: self.year, mn: self.month, dy: self.day)
             if simple.goodDate {
                 let monthName = DateUtils.shared.getShortMonthName(for: mm)
                 let dayOfWeekName = DateUtils.dayOfWeekNames[simple.dayOfWeek]

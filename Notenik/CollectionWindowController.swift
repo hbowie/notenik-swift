@@ -12,6 +12,8 @@
 import Cocoa
 import StoreKit
 
+import NotenikUtils
+
 /// Controls a window showing a particular Collection of Notes.
 class CollectionWindowController: NSWindowController, CollectionPrefsOwner, AttachmentMasterController {
     
@@ -547,7 +549,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     ///   - note: The note prior to being incremented.
     ///   - modNote: A copy of the note being incremented.
     func incrementDate(noteIO: NotenikIO, note: Note, modNote: Note) {
-        let incDate = SimpleDate(dateValue: note.date)
+        let incDate = SimpleDate(yr: note.date.year, mn: note.date.month, dy: note.date.day)
         if incDate.goodDate {
             incDate.addDays(1)
             let strDate = String(describing: incDate)

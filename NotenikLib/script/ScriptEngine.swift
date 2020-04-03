@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// The core module for playing and recording scripts, and
 /// executing script commands.
 class ScriptEngine: RowConsumer {
