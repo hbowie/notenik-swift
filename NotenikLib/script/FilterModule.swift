@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 class FilterModule {
     
     var workspace = ScriptWorkspace()

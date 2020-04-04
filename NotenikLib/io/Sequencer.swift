@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// Can be used to increment the sequence of one Note and following Notes.
 class Sequencer {
     

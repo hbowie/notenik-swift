@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A Bridge between a User Interface and an Input/Output Module
 class ModWhenChanged {
     

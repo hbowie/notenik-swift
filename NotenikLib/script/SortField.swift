@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 class SortField {
     
     var field = FieldDefinition()

@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 class FilterRule {
     
     var field:  FieldDefinition?

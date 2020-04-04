@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 class SortModule {
     
     var workspace = ScriptWorkspace()

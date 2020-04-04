@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A base value class for plain old strings
 class StringValue: CustomStringConvertible, Equatable, Comparable {
     

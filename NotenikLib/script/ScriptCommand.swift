@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// One command to be executed by the Scripting Engine.
 class ScriptCommand: CustomStringConvertible {
     

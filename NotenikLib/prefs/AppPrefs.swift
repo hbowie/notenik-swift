@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikUtils
+
 /// Act as an intermediary between various Application classes and the UserDefaults
 class AppPrefs {
     

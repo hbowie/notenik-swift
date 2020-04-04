@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 import Down
 import Ink
 import NotenikMkdown

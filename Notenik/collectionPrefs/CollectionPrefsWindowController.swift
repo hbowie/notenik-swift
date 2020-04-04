@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikUtils
+
 class CollectionPrefsWindowController: NSWindowController {
     
     var collectionPrefsViewController: CollectionPrefsViewController?

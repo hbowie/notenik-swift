@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 class TemplateModule {
     
     var workspace = ScriptWorkspace()

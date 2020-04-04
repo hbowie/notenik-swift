@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikUtils
+
 /// A title field value
 class IntValue: StringValue {
     
