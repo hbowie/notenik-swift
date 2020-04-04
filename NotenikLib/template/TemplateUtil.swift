@@ -13,6 +13,7 @@ import Foundation
 
 import NotenikUtils
 import NotenikMkdown
+import NotenikTextile
 
 /// Persistent data along with utility methods.
 class TemplateUtil {

@@ -29,6 +29,24 @@
         }
       },
       {
+        "package": "NotenikMkdown",
+        "repositoryURL": "https://github.com/hbowie/NotenikMkdown.git",
+        "state": {
+          "branch": null,
+          "revision": "6cef99d8762a5c3bec6ab1d6c0e1fe0f9232b405",
+          "version": "0.1.3"
+        }
+      },
+      {
+        "package": "NotenikTextile",
+        "repositoryURL": "https://github.com/hbowie/NotenikTextile.git",
+        "state": {
+          "branch": null,
+          "revision": "6c466fc14ce35085905c02f9d21c2f6ea7f141c9",
+          "version": "0.1.0"
+        }
+      },
+      {
         "package": "XMLCoder",
         "repositoryURL": "https://github.com/maxdesiatov/XMLCoder.git",
         "state": {
