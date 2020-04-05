@@ -38,6 +38,27 @@ class StatusValueConfig {
         set(options)
     }
     
+    /// Get the lowest index for this config. This should be the least complete status. 
+    var lowIndex: Int {
+        var i = 0
+        for option in statusOptions {
+            if option.count > 0 && option != " "  { return i }
+            i += 1
+        }
+        return 0
+    }
+    
+    /// Get the highest index for this config. This should be the most complete status.
+    var highIndex: Int {
+        var i = 10
+        while i > 0 {
+            i -= 1
+            let option = statusOptions[i]
+            if option.count > 0 && option != " " { return i }
+        }
+        return 9
+    }
+    
     
     /// Sets all of the status values from one passed string
     ///
@@ -91,7 +112,7 @@ class StatusValueConfig {
     /// Is this status integer valid?
     func validStatus(_ i : Int) -> Bool {
         let label = get(i)
-        return label.count > 0
+        return label.count > 0 && label != " "
     }
     
     /// Is this status label (or partial label) valid?

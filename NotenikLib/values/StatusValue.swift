@@ -30,6 +30,29 @@ class StatusValue: StringValue {
         set(str: str, config: config)
     }
     
+    /// Toggle between most complete status and least complete.
+    func toggle(config: StatusValueConfig) {
+        var toggleIndex = 0
+        if statusInt >= config.highIndex {
+            toggleIndex = config.lowIndex
+        } else {
+            toggleIndex = config.highIndex
+        }
+        set(i: toggleIndex, config: config)
+    }
+    
+    /// Increment this status to the next valid value. 
+    func increment(config: StatusValueConfig) {
+        var incIndex = 0
+        if statusInt < config.highIndex {
+            incIndex = statusInt + 1
+            while incIndex < 9 && !config.validStatus(incIndex) {
+                incIndex += 1
+            }
+            set(i: incIndex, config: config)
+        }
+    }
+    
     /// Close the Note
     func close(config: StatusValueConfig) {
         let closeIndex = config.statusOptions.count - 1

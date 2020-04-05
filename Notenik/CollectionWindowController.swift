@@ -542,6 +542,28 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
     }
     
+    @IBAction func menuNoteToggleStatus(_ sender: Any) {
+        
+        let (nio, sel) = guardForNoteAction()
+        guard let noteIO = nio, let selNote = sel else { return }
+        guard !pendingMod else { return }
+        let _ = modIfChanged()
+        let modNote = selNote.copy() as! Note
+        modNote.toggleStatus()
+        let _ = recordMods(noteIO: noteIO, note: selNote, modNote: modNote)
+    }
+    
+    @IBAction func menuNoteIncrementStatus(_ sender: Any) {
+        
+        let (nio, sel) = guardForNoteAction()
+        guard let noteIO = nio, let selNote = sel else { return }
+        guard !pendingMod else { return }
+        let _ = modIfChanged()
+        let modNote = selNote.copy() as! Note
+        modNote.incrementStatus()
+        let _ = recordMods(noteIO: noteIO, note: selNote, modNote: modNote)
+    }
+    
     /// Increment the Note's Date field by one day.
     ///
     /// - Parameters:

@@ -177,6 +177,20 @@ class Note: Comparable, NSCopying {
             status.close(config: collection.statusConfig)
         }
     }
+    
+    /// Toggle the Note's status between least complete and most complete.
+    func toggleStatus() {
+        if hasStatus() {
+            status.toggle(config: collection.statusConfig)
+        }
+    }
+    
+    /// Bump this Note's status up to the next valid value for this Collection. 
+    func incrementStatus() {
+        if hasStatus() {
+            status.increment(config: collection.statusConfig)
+        }
+    }
         
     /// Apply the recurs rule to the note
     func recur() {
