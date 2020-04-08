@@ -727,7 +727,8 @@ class TemplateUtil {
             mkdown.parse()
             return mkdown.html
         default:
-            let mkdown = MkdownParser(markdown)
+            let mkdown = Markdown()
+            mkdown.md = markdown
             mkdown.parse()
             return mkdown.html
         }

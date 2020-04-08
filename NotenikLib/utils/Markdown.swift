@@ -21,7 +21,6 @@ import NotenikMkdown
 class Markdown {
     
     var notenikIO: NotenikIO?
-    var preParser = false
     var md = ""
     var html = ""
     var ok = true
