@@ -21,6 +21,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     @IBOutlet var webView: WKWebView!
     
     let urlNavPrevix = "https://ntnk.app/"
+    var bundlePrefix = ""
     
     let noteDisplay = NoteDisplay()
     
@@ -31,6 +32,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         super.viewDidLoad()
         webView.uiDelegate = self
         webView.navigationDelegate = self
+        bundlePrefix = Bundle.main.bundleURL.absoluteString + "#"
     }
     
     /// Display the provided note
@@ -66,11 +68,15 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             decisionHandler(.allow)
             return
         }
-        if !url.starts(with: urlNavPrevix) {
+        var notePath = ""
+        if url.starts(with: urlNavPrevix) {
+            notePath = String(url.dropFirst(urlNavPrevix.count))
+        } else if url.starts(with: bundlePrefix) {
+            notePath = String(url.dropFirst(bundlePrefix.count))
+        } else {
             decisionHandler(.allow)
             return
         }
-        let notePath = url.dropFirst(urlNavPrevix.count)
         let noteID = StringUtils.toCommon(String(notePath))
         guard let io = wc?.notenikIO else {
             decisionHandler(.cancel)
@@ -87,15 +93,6 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         }
         decisionHandler(.cancel)
 
-        /*
-        if let host = navigationAction.request.url?.host {
-            if host.contains("hackingwithswift.com") {
-                decisionHandler(.allow)
-                return
-            }
-        }
- 
-        decisionHandler(.cancel) */
     }
     
 }

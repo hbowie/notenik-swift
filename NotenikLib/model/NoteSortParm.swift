@@ -12,12 +12,13 @@
 import Foundation
 
 enum NoteSortParm : Int {
-    case title        = 0
-    case seqPlusTitle = 1
-    case tasksByDate  = 2
-    case tasksBySeq   = 3
-    case author       = 4
-    case custom       = 5
+    case title         = 0
+    case seqPlusTitle  = 1
+    case tasksByDate   = 2
+    case tasksBySeq    = 3
+    case author        = 4
+    case tagsPlusTitle = 5
+    case custom        = 6
     
     // Get or set with a String containing the raw value
     var str: String {

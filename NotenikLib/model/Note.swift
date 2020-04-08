@@ -509,6 +509,9 @@ class Note: Comparable, NSCopying {
                 + seq.sortKey
                 + date.sortKey
                 + title.sortKey)
+        case .tagsPlusTitle:
+            return (tags.sortKey
+                + title.sortKey)
         case .author:
             var creatorKey = ""
             if hasAuthor() {

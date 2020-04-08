@@ -1197,6 +1197,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         setSortParm(.tasksBySeq)
     }
     
+    @IBAction func sortByTagsAndTitle(_ sender: Any) {
+        setSortParm(.tagsPlusTitle)
+    }
+    
     @IBAction func sortByAuthor(_ sender: Any) {
         setSortParm(.author)
     }

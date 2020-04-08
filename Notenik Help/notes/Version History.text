@@ -8,6 +8,39 @@ Tags:   changes, versions, history, log
 
 Body:
 
+### Version 3.4.0 | 08 Apr 2020
+
+#### 1. Fixed Additional Bugs in new Markdown Parser
+
+There were some edge cases that popped up. 
+
+
+#### 2. Broke Reusable Code out into Separate Libraries
+
+Created the following separate Swift packages. 
+
+* NotenikUtils
+* NotenikTextile
+* NotenikMkdown
+
+Users should not see any impact from this change.
+
+#### 3. Added Sort by Tags Option
+
+Added a new Sort option to allow sorting by the Tags field, plus Title. 
+
+
+#### 4. Added New Note Shortcuts for Status Updates
+
+See these new commands beneath the Note menu:
+
+* Toggle Status - Switches from least complete to most, and back again. 
+* Increment Status - Bump to the next stage in the Collection's lifecycle. 
+
+There are keyboard shortcuts available for both of these. 
+
+Note that these are designed to be used in Display mode, not in Edit mode.
+
 ### Version 3.3.0 | 29 Mar 2020
 
 #### 1. Modified Duplicate Handling

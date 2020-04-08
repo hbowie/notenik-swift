@@ -39,7 +39,8 @@ Following are the keyboard shortcuts available within the app. When combined wit
 * 2 - Sort by Seq + Title
 * 3 - Sort Tasks by Date
 * 4 - Sort Tasks by Seq
-* 5 - Sort by Author
+* 5 - Sort by Tags + Title 
+* 6 - Sort by Author
 * \[ - Prior Note
 * \]  - Next Note
 * → - Scroll to Selected Note
@@ -47,3 +48,5 @@ Following are the keyboard shortcuts available within the app. When combined wit
 * '-' - Decrease Edit Font Size
 * ',' - Display Application Preferences
 * ';' - Display Collection Preferences
+* '\'' - Toggle Status
+* '.' - Increment Status

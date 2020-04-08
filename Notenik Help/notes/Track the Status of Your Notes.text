@@ -33,4 +33,9 @@ The labels may be modified by placing a series of integer + label pairs in the V
 
 See [[Override Default Fields with a Template file]] for more information on the Notes template file to be modified. 
 
+See these commands beneath the Note menu. Note that these are designed to be used in Display mode, not in Edit mode. 
+
+* Toggle Status - Switches from least complete to most, and back again. 
+* Increment Status - Bump to the next stage in the Collection's lifecycle. 
+
 Look under the File menu for an option to Purge Notes that have been Canceled or Completed. You'll be given the option of discarding the purged Notes, or of copying them to another location.

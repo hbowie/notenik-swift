@@ -83,6 +83,10 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
                 cellView.textField?.stringValue = note.date.dMyDate
             } else if tableColumn?.title == "Author" {
                 cellView.textField?.stringValue = note.creatorValue
+            } else if tableColumn?.title == "Tags" {
+                cellView.textField?.stringValue = note.tags.value
+            } else if tableColumn?.title == "Stat" {
+                cellView.textField?.stringValue = String(note.status.getInt())
             }
         }
         
@@ -131,6 +135,10 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
             addDateColumn(at: 2)
             addTitleColumn(at: 3)
             trimColumns(to: 4)
+        case .tagsPlusTitle:
+            addTagsColumn(at: 0)
+            addStatusDigit(at: 1)
+            addTitleColumn(at: 2)
         case .author:
             addAuthorColumn(at: 0)
             addTitleColumn(at: 1)
@@ -158,12 +166,20 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
         addColumn(title: "X", strID: "x-column", at: desiredIndex, min: 12, width: 20, max: 50)
     }
     
+    func addStatusDigit(at desiredIndex: Int) {
+        addColumn(title: "Stat", strID: "status-digit-column", at: desiredIndex, min: 20, width: 30, max: 50)
+    }
+    
     func addDateColumn(at desiredIndex: Int) {
         addColumn(title: "Date", strID: "date-column", at: desiredIndex, min: 100, width: 120, max: 300)
     }
     
     func addAuthorColumn(at desiredIndex: Int) {
         addColumn(title: "Author", strID: "author-column", at: desiredIndex, min: 100, width: 200, max: 1000)
+    }
+    
+    func addTagsColumn(at desiredIndex: Int) {
+        addColumn(title: "Tags", strID: "tags-column", at: desiredIndex, min: 50, width: 100, max: 1200)
     }
     
     /// Add a column, or make sure it already exists, and position it appropriately.
@@ -175,7 +191,6 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
     func addColumn(title: String, strID: String, at desiredIndex: Int, min: Int, width: Int, max: Int) {
         
         let id = NSUserInterfaceItemIdentifier(strID)
-        // let existingIndex = tableView.column(withIdentifier: id)
         var i = 0
         var existingIndex = -1
         while i < tableView.tableColumns.count && existingIndex < 0 {
