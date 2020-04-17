@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class AuthorDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     
     var authorPickList = AuthorPickList()

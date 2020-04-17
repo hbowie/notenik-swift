@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class WorkTitleView: MacEditView {
     
     var workTitleField: NSComboBox!

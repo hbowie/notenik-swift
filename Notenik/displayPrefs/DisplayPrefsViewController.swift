@@ -14,6 +14,7 @@ import WebKit
 
 import NotenikUtils
 import NotenikMkdown
+import NotenikLib
 
 /// A Class to allow users to update their font preferences for the Notenik Display Tab
 class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {

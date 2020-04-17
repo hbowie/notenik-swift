@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class LinkView: MacEditView {
     
     var scrollView: NSScrollView!

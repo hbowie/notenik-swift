@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
     var collectionWindowController: CollectionWindowController?

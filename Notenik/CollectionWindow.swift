@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class CollectionWindow: NSWindow {
     
     var io: NotenikIO?

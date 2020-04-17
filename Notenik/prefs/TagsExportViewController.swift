@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class TagsExportViewController: NSViewController, PrefsTabVC {
 
     let appPrefs = AppPrefs.shared

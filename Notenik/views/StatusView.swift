@@ -8,6 +8,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class StatusView: MacEditView {
     
     var config: StatusValueConfig!

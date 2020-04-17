@@ -8,6 +8,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class AttachmentViewController: NSViewController {
     
     var master: AttachmentMasterController!

@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class WorkTitleDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     
     var workTitlePickList = WorkTitlePickList()

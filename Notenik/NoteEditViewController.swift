@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 /// Controls the view shown to allow the user to edit a note.
 class NoteEditViewController: NSViewController {
     

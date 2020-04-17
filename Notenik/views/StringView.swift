@@ -10,6 +10,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class StringView: MacEditView {
     
     var textField: NSTextField!

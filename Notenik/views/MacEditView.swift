@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 /// A protocol for a class that can be used to allow a user to edit a text field
 protocol MacEditView: ModView {
     

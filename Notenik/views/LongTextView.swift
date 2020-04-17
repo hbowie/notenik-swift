@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class LongTextView: MacEditView {
     
     var scrollView: NSScrollView!

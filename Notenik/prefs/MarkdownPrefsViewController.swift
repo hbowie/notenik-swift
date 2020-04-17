@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class MarkdownPrefsViewController: NSViewController {
 
     @IBOutlet var downButton: NSButton!

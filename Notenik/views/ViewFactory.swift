@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 /// A factory for making UI Views that can be used to edit the values of the
 /// corresponding fields. 
 class ViewFactory {

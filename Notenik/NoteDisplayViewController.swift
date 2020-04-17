@@ -13,6 +13,7 @@ import Cocoa
 import WebKit
 
 import NotenikUtils
+import NotenikLib
 
 class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
     

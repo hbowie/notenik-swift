@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 /// Controls the Scripter View. 
 class ScriptViewController: NSViewController {
     

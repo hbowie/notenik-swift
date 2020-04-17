@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class AuthorView: MacEditView {
     
     var authorField: NSComboBox!

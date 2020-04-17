@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class TagsMassChangeViewController: NSViewController {
     
     var window: TagsMassChangeWindowController?

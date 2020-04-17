@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class ExportWindowController: NSWindowController {
     
     var io: NotenikIO!

@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class WorkTypeView: MacEditView {
     
     var workTypeField: NSComboBox!

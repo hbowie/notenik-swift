@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikLib
+
 /// A controller capable of adding an attachment, given a suffix. 
 protocol AttachmentMasterController {
     

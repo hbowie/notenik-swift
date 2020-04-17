@@ -11,6 +11,8 @@
 
 import Foundation
 
+import NotenikLib
+
 /// A protocol to be implemented by the caller of the CollectionPrefsWindowController. 
 protocol CollectionPrefsOwner {
 

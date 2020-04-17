@@ -12,6 +12,7 @@
 import Cocoa
 
 import NotenikUtils
+import NotenikLib
 
 /// Custom Edit View for a Date
 class DateView: MacEditView {

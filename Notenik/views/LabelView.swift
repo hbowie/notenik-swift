@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class LabelView: MacEditView {
     
     var textField: NSTextField!

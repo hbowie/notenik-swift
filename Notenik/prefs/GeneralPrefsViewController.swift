@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     
     let appPrefs = AppPrefs.shared

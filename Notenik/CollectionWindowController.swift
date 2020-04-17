@@ -13,6 +13,7 @@ import Cocoa
 import StoreKit
 
 import NotenikUtils
+import NotenikLib
 
 /// Controls a window showing a particular Collection of Notes.
 class CollectionWindowController: NSWindowController, CollectionPrefsOwner, AttachmentMasterController {

@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 /// Implement delegate functions for the Tags field on the Edit screen.
 class TagsTokenDelegate: NSObject, NSTokenFieldDelegate, NSTokenFieldCellDelegate {
     

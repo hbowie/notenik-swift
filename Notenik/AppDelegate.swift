@@ -12,6 +12,7 @@
 import Cocoa
 
 import NotenikUtils
+import NotenikLib
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {

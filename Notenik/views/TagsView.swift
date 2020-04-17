@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class TagsView: MacEditView {
     
     var tagsField: NSTokenField!

@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class NoteTagsViewController: NSViewController, NSOutlineViewDataSource, NSOutlineViewDelegate {
     
     var collectionWindowController: CollectionWindowController?

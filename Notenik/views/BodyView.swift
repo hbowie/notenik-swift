@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikLib
+
 class BodyView: MacEditView {
     
     var scrollView: NSScrollView!

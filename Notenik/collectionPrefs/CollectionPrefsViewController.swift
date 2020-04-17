@@ -13,6 +13,8 @@ import Cocoa
 
 import NotenikUtils
 
+import NotenikLib
+
 class CollectionPrefsViewController: NSViewController {
     
     var owner: CollectionPrefsOwner?
