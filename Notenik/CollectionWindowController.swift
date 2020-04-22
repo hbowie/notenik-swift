@@ -405,46 +405,58 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// Paste the passed notes found in the system clipboard.
     @IBAction func paste(_ sender: AnyObject?) {
-        guard let noteIO = guardForCollectionAction() else { return }
-        guard let collection = noteIO.collection else { return }
         let board = NSPasteboard.general
         guard let items = board.pasteboardItems else { return }
+        pasteItems(items)
+    } // end of paste function
+    
+    func pasteItems(_ pbItems: [NSPasteboardItem]) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
         var notesAdded = 0
         var firstNotePasted: Note?
-        for item in items {
+        let urlNameType = NSPasteboard.PasteboardType("public.url-name")
+        let urlType     = NSPasteboard.PasteboardType("public.url")
+        for item in pbItems {
             let str = item.string(forType: NSPasteboard.PasteboardType.string)
-            if str != nil && str!.count > 0 {
+            let url = item.string(forType: urlType)
+            let title = item.string(forType: urlNameType)
+            var note = Note(collection: collection)
+            if url != nil && title != nil {
+                _ = note.setTitle(title!)
+                _ = note.setLink(url!)
+            } else if str != nil {
                 let reader = BigStringReader(str!)
                 let parser = NoteLineParser(collection: collection, reader: reader)
+                note = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)")
+            }
+            if note.hasTitle() {
+                let originalTitle = note.title.value
+                var keyFound = true
+                var dupCount = 1
+                while keyFound {
+                    let id = note.noteID
+                    let existingNote = noteIO.getNote(forID: id)
+                    if existingNote != nil {
+                        dupCount += 1
+                        _ = note.setTitle("\(originalTitle) \(dupCount)")
+                        keyFound = true
+                    } else {
+                        keyFound = false
+                    }
+                }
+                let (pastedNote, _) = noteIO.addNote(newNote: note)
                 notesAdded += 1
-                let note = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)")
-                if note.hasTitle() {
-                    let originalTitle = note.title.value
-                    var keyFound = true
-                    var dupCount = 1
-                    while keyFound {
-                        let id = note.noteID
-                        let existingNote = noteIO.getNote(forID: id)
-                        if existingNote != nil {
-                            dupCount += 1
-                            _ = note.setTitle("\(originalTitle) \(dupCount)")
-                            keyFound = true
-                        } else {
-                            keyFound = false
-                        }
-                    }
-                    let (pastedNote, _) = noteIO.addNote(newNote: note)
-                    if pastedNote != nil && firstNotePasted == nil {
-                        firstNotePasted = pastedNote
-                    }
-                } // End if we got a good note out of the deal
-            } // End if we found a good string
+                if pastedNote != nil && firstNotePasted == nil {
+                    firstNotePasted = pastedNote
+                }
+            }
         } // end for each item
         finishBatchOperation()
         if firstNotePasted != nil {
             select(note: firstNotePasted, position: nil, source: .nav)
         }
-    } // end of paste function
+    }
     
     /// Ask the user to pick a file or folder and set the link field to the local URL
     @IBAction func setLocalLink(_ sender: Any) {

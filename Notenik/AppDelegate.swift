@@ -46,6 +46,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         displayPrefs.setMaster(master: self)
         juggler.docController = docController
         recentDocumentURLs = docController.recentDocumentURLs
+        juggler.addRecentDocsToCollector(recentDocumentURLs)
         stage = "2"
         logger.logDestPrint = false
         logger.logDestUnified = true
@@ -87,6 +88,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     @IBAction func menuFileNewAction(_ sender: NSMenuItem) {
         juggler.userRequestsNewCollection()
+    }
+    
+    @IBAction func displayCollector(_ sender: NSMenuItem) {
+        juggler.displayCollector()
     }
 
     @IBAction func menuFileOpenAction(_ sender: NSMenuItem) {

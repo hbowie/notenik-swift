@@ -46,7 +46,6 @@ class NoteTagsViewController: NSViewController, NSOutlineViewDataSource, NSOutli
     override func viewDidLoad() {
         super.viewDidLoad()
         outlineView.dataSource = self
-        // Do view setup here.
     }
     
     func reload() {

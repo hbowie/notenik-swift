@@ -13,7 +13,9 @@ import Cocoa
 
 import NotenikLib
 
-class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
+class NoteListViewController:   NSViewController,
+                                NSTableViewDataSource,
+                                NSTableViewDelegate {
 
     var collectionWindowController: CollectionWindowController?
     var notenikIO: NotenikIO?
@@ -40,8 +42,26 @@ class NoteListViewController: NSViewController, NSTableViewDataSource, NSTableVi
         }
     }
     
+    /// Initialization after the view loaded.
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
+        tableView.registerForDraggedTypes([NSPasteboard.PasteboardType(kUTTypeBookmark as String),
+                                           NSPasteboard.PasteboardType(kUTTypeURL as String)])
+    }
+    
+    /// Validate a proposed drop operation.
+    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+        return .copy
+    }
+    
+    /// Process one or more dropped items.
+    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+        let pasteboard = info.draggingPasteboard
+        guard let items = pasteboard.pasteboardItems else { return true }
+        if collectionWindowController != nil {
+            collectionWindowController!.pasteItems(items)
+        }
+        return true
     }
     
     override func viewDidAppear() {

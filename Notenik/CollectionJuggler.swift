@@ -24,7 +24,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     // Shorthand references to System Objects
     private let defaults = UserDefaults.standard
-    let home = FileManager.default.homeDirectoryForCurrentUser
+    
+    let collectorTree = CollectorTree()
     
     let appPrefs  = AppPrefs.shared
     let osdir     = OpenSaveDirectory.shared
@@ -35,6 +36,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     let scriptStoryboard: NSStoryboard = NSStoryboard(name: "Script", bundle: nil)
     var scriptWindowController: ScriptWindowController?
+    
+    let collectorStoryboard: NSStoryboard = NSStoryboard(name: "Collector", bundle: nil)
+    var collectorWindowController: CollectorWindowController?
     
     var docController: NoteDocumentController?
     
@@ -57,6 +61,12 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                               category: "CollectionJuggler",
                               level: .error,
                               message: "Couldn't get a Log Window Controller! at startup")
+        }
+    }
+    
+    func addRecentDocsToCollector(_ recentDocumentURLs: [URL]) {
+        for url in recentDocumentURLs {
+            collectorTree.add(url)
         }
     }
     
@@ -121,6 +131,19 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Respond to a user request to create a new collection
     func userRequestsNewCollection() {
         selectCollection(requestType: .new)
+    }
+    
+    /// Display the Collector Window.
+    func displayCollector() {
+        if collectorWindowController == nil {
+            collectorWindowController = collectorStoryboard.instantiateController(withIdentifier: "collectorWC") as? CollectorWindowController
+        }
+        if collectorWindowController == nil {
+            communicateError("Couldn't get a Collector Window Controller")
+        } else {
+            collectorWindowController!.showWindow(self)
+            collectorWindowController!.passCollectorRequesterInfo(tree: collectorTree)
+        }
     }
     
     /// Let the user select a Collection to be opened

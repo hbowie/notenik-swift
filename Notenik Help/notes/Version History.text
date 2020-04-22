@@ -8,6 +8,18 @@ Tags:   changes, versions, history, log
 
 Body:
 
+### Version 3.5.0 | 19 Apr 2020
+
+#### 1. Create New Notes with Drag and Drop
+
+You can now drag a "bookmark" (consisting of a title and a link) into the list view of Notenik in order to add a new Note. Bookmarks can be dragged from the URL field at the top of a browser window, or from a hyperlink within a web page. 
+
+
+#### 2. Broke Additional Reusable Code Out into NotenikLib
+
+This is an internal change only; it should have no impact on users. 
+
+
 ### Version 3.4.0 | 08 Apr 2020
 
 #### 1. Fixed Additional Bugs in new Markdown Parser
