@@ -29,15 +29,6 @@
         }
       },
       {
-        "package": "NotenikLib",
-        "repositoryURL": "https://github.com/hbowie/NotenikLib.git",
-        "state": {
-          "branch": null,
-          "revision": "5d43a0364dd5cdb1836dd64edb854caaa8a62710",
-          "version": "0.1.0"
-        }
-      },
-      {
         "package": "XMLCoder",
         "repositoryURL": "https://github.com/maxdesiatov/XMLCoder.git",
         "state": {

@@ -58,6 +58,18 @@
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.com.powersurgepub.notenik.shared</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>Notenik</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
+	</dict>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>

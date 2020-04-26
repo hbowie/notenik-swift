@@ -25,7 +25,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     // Shorthand references to System Objects
     private let defaults = UserDefaults.standard
     
-    let collectorTree = CollectorTree()
+    var cloudNik: CloudNik!
+    var collectorTree: CollectorTree!
     
     let appPrefs  = AppPrefs.shared
     let osdir     = OpenSaveDirectory.shared
@@ -50,6 +51,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     override private init() {
         super.init()
+        // cloudNik = CloudNik.shared
     }
     
     /// Startup called by AppDelegate
@@ -62,6 +64,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                               level: .error,
                               message: "Couldn't get a Log Window Controller! at startup")
         }
+        collectorTree = CollectorTree()
     }
     
     func addRecentDocsToCollector(_ recentDocumentURLs: [URL]) {
@@ -142,7 +145,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             communicateError("Couldn't get a Collector Window Controller")
         } else {
             collectorWindowController!.showWindow(self)
-            collectorWindowController!.passCollectorRequesterInfo(tree: collectorTree)
+            collectorWindowController!.passCollectorRequesterInfo(juggler: self,
+                                                                  tree: collectorTree)
         }
     }
     
@@ -298,6 +302,23 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         openPanel.canChooseFiles = false
         openPanel.allowsMultipleSelection = false
         return openPanel
+    }
+    
+    func newFolder(folderURL: URL) -> Bool {
+        print("CollectionJuggler.newFolder")
+        print("  - folder url = \(folderURL.absoluteString)")
+        let folderPath = folderURL.path
+        print("  - folder path = \(folderPath)")
+        let alreadyExists = FileManager.default.fileExists(atPath: folderPath)
+        print("  - Folder already exists? \(alreadyExists)")
+        guard !alreadyExists else { return false }
+        do {
+            try FileManager.default.createDirectory(atPath: folderURL.path, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print("  - Attempt to create new directory failed!")
+            return false
+        }
+        return true
     }
     
     /// Now that we have a disk location, let's take other steps

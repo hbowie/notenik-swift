@@ -11,6 +11,8 @@
 
 import Cocoa
 
+import NotenikUtils
+
 class CollectorViewController: NSViewController,
         NSOutlineViewDataSource,
         NSOutlineViewDelegate {
@@ -19,7 +21,11 @@ class CollectorViewController: NSViewController,
 
     @IBOutlet var outlineView: NSOutlineView!
     
+    @IBOutlet var newFolderTextField: NSTextField!
+    
     var tree: CollectorTree?
+    
+    var juggler: CollectionJuggler?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +47,8 @@ class CollectorViewController: NSViewController,
         }
     }
     
-    func passCollectorRequesterInfo(tree: CollectorTree) {
+    func passCollectorRequesterInfo(juggler: CollectionJuggler, tree: CollectorTree) {
+        self.juggler = juggler
         self.tree = tree
         outlineView.reloadData()
     }
@@ -92,7 +99,7 @@ class CollectorViewController: NSViewController,
                     textField.stringValue = "root"
                 case .folder:
                     if node.folder == "" {
-                        textField.stringValue = node.base
+                        textField.stringValue = node.base.name
                     } else {
                         textField.stringValue = node.folder
                     }
@@ -107,14 +114,95 @@ class CollectorViewController: NSViewController,
     
 
     @IBAction func ExpandPushed(_ sender: Any) {
+        guard tree != nil else { return }
+        for node in tree! {
+            if node.hasChildren {
+                outlineView.expandItem(node)
+            }
+        }
     }
     
     @IBAction func collapsePushed(_ sender: Any) {
+        guard tree != nil else { return }
+        for node in tree! {
+            if node.hasChildren {
+                outlineView.collapseItem(node)
+            }
+        }
     }
     
     @IBAction func openPushed(_ sender: Any) {
+        guard juggler != nil else { return }
+        let selRow = outlineView.selectedRow
+        let selItem = outlineView.item(atRow: selRow) as? CollectorNode
+        guard selItem != nil else { return }
+        let selURL = selItem?.url
+        guard selURL != nil else { return }
+        var urls: [URL] = []
+        urls.append(selURL!)
+        _ = juggler!.open(urls: urls)
     }
     
+    @IBAction func outlineDoubleClicked(_ sender: NSOutlineView) {
+        guard juggler != nil else { return }
+        let selItem = sender.item(atRow: sender.clickedRow) as? CollectorNode
+        guard selItem != nil else { return }
+        let selURL = selItem?.url
+        guard selURL != nil else { return }
+        var urls: [URL] = []
+        urls.append(selURL!)
+        _ = juggler!.open(urls: urls)
+    }
+    
+    
     @IBAction func newPushed(_ sender: Any) {
+        print("New Button Pushed")
+        guard juggler != nil else { return }
+        guard tree != nil else { return }
+        let selRow = outlineView.selectedRow
+        let selItem = outlineView.item(atRow: selRow) as? CollectorNode
+        guard selItem != nil else { return }
+        let base = selItem!.base
+        let newFolder = newFolderTextField.stringValue
+        guard newFolder.count > 0 else {
+            communicateError("Please enter the desired name of the new Collection", alert: true)
+            return
+        }
+        print("Base URL = \(base.url.path)")
+        print("New folder is \(newFolder)")
+        let newURL = base.url.appendingPathComponent(newFolder, isDirectory: true)
+        print("New URL = \(newURL.absoluteString)")
+        var ok = juggler!.newFolder(folderURL: newURL)
+        guard ok else {
+            communicateError("New Collection Could Not Be Created with the given Name", alert: true)
+            return
+        }
+
+        ok = juggler!.newCollection(fileURL: newURL)
+        guard ok else {
+            communicateError("New Collection could not be successfully created", alert: true)
+            return
+        }
+        tree!.add(newURL)
+        print("New URL added to board")
+        reload()
+        print("Reload of data complete")
+    }
+    
+    /// Log an error message and optionally display an alert message.
+    func communicateError(_ msg: String, alert: Bool=false) {
+        
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectorViewController",
+                          level: .error,
+                          message: msg)
+        
+        if alert {
+            let dialog = NSAlert()
+            dialog.alertStyle = .warning
+            dialog.messageText = msg
+            dialog.addButton(withTitle: "OK")
+            let _ = dialog.runModal()
+        }
     }
 }

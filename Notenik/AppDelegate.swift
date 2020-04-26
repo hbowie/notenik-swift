@@ -19,7 +19,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
 
     @IBOutlet weak var favsToHTML: NSMenuItem!
     
-    let juggler: CollectionJuggler = CollectionJuggler.shared
+    var appPrefs:     AppPrefs!
+    var displayPrefs: DisplayPrefs!
+    var juggler: CollectionJuggler!
     let logger = Logger.shared
     var stage = "0"
     var launchURLs: [URL] = []
@@ -41,16 +43,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
-        let appPrefs = AppPrefs.shared
-        let displayPrefs = DisplayPrefs.shared
+        appPrefs = AppPrefs.shared
+        displayPrefs = DisplayPrefs.shared
         displayPrefs.setMaster(master: self)
+        juggler = CollectionJuggler.shared
         juggler.docController = docController
         recentDocumentURLs = docController.recentDocumentURLs
-        juggler.addRecentDocsToCollector(recentDocumentURLs)
         stage = "2"
         logger.logDestPrint = false
         logger.logDestUnified = true
         juggler.startup()
+        juggler.addRecentDocsToCollector(recentDocumentURLs)
         var successfulOpens = 0
         if launchURLs.count > 0 {
             successfulOpens = juggler.open(urls: launchURLs)

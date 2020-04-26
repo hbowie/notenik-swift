@@ -88,6 +88,9 @@
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                             </tableColumns>
+                                            <connections>
+                                                <action trigger="doubleAction" selector="outlineDoubleClicked:" target="fZe-4r-K95" id="FpM-3B-ERg"/>
+                                            </connections>
                                         </outlineView>
                                     </subviews>
                                 </clipView>
@@ -182,6 +185,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="newFolderTextField" destination="4bZ-Xg-TKf" id="F0q-Xl-l1Y"/>
                         <outlet property="outlineView" destination="OVa-9p-3f0" id="bti-Fx-7BK"/>
                     </connections>
                 </viewController>

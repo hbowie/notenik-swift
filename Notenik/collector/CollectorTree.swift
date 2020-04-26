@@ -15,43 +15,44 @@ import NotenikUtils
 import NotenikLib
 
 /// A bunch of known Notenik Collections, organized by their location. 
-class CollectorTree {
+class CollectorTree: Sequence {
     
-    let root = CollectorNode()
+    var root: CollectorNode!
+    
+    var baseList: [CollectorBase] = []
     
     let fm = FileManager.default
     let home = FileManager.default.homeDirectoryForCurrentUser
-    var homeFileName: FileName
-    var sandBoxDocs: URL?
-    var sandBoxPath = ""
-    var sandBoxContents: [URL] = []
+    var cloudNik: CloudNik!
     
     init() {
-        homeFileName = FileName(home)
-        let sandBoxURLs = fm.urls(for: .documentDirectory, in: .userDomainMask)
-        if sandBoxURLs.count > 0 {
-            sandBoxDocs = sandBoxURLs[0]
-            sandBoxPath = sandBoxDocs!.path
-            
-            let baseNode = CollectorNode()
-            baseNode.type = .folder
-            baseNode.base = "Sandbox"
-            _ = root.addChild(baseNode)
-            
-        }
-        logInfo("Home Directory for Current User = \(home.path)")
-        logInfo("Sandbox docs path = \(sandBoxPath)")
+        print("Collector Tree init")
+        root = CollectorNode(tree: self)
         
-        if sandBoxDocs != nil {
+        var homeDir = home
+        while homeDir.pathComponents.count > 2 {
+            homeDir.deleteLastPathComponent()
+        }
+        let osBase = CollectorBase(name: "Home ~ ", url: homeDir)
+        baseList.append(osBase)
+        addBase(base: osBase)
+
+        cloudNik = CloudNik.shared
+        if cloudNik.url != nil {
+            let cloudBase = CollectorBase(name: "iCloud Drive", url: cloudNik.url!)
+            baseList.append(cloudBase)
+            addBase(base: cloudBase)
             do {
-                try sandBoxContents = fm.contentsOfDirectory(at: sandBoxDocs!,
+                let iCloudContents = try fm.contentsOfDirectory(at: cloudNik.url!,
                                                              includingPropertiesForKeys: nil,
                                                              options: .skipsHiddenFiles)
-                for doc in sandBoxContents {
-                    add(doc)
+                print("  - \(iCloudContents.count) entries in iCloud")
+                for doc in iCloudContents {
+                    print("  - contents of iCloud Drive = \(doc.path)")
+                    // add(doc)
                 }
             } catch {
-                logError("Error reading contents of Sandbox docs folder")
+                logError("Error reading contents of iCloud drive folder")
             }
         }
     }
@@ -59,8 +60,7 @@ class CollectorTree {
     /// Add another Notenik Collection to the tree.
     func add(_ url: URL) {
         
-        print(" ")
-        print("Adding \(url) to the tree")
+        print("Adding url = \(url.path)")
         
         /// Make sure the passed URL actually points to a Notenik Collection
         var urlPointsToCollection = false
@@ -80,38 +80,22 @@ class CollectorTree {
         
         guard urlPointsToCollection else { return }
         
+        let urlPath = url.path
+        var longestBase = CollectorBase()
+        for base in baseList {
+            if urlPath.starts(with: base.path) && base.count > longestBase.count {
+                longestBase = base
+            }
+        }
         let collectionFileName = FileName(url)
-        if collectionFileName.folders.count > 2
-            && homeFileName.folders.count >= 2
-            && homeFileName.folders[0] == "Users"
-            && collectionFileName.folders[0] == "Users"
-            && homeFileName.folders[1] == collectionFileName.folders[1] {
-            addWithinUserHome(url: url, fileName: collectionFileName)
-        } else {
-            addAwayFromHome(url: url, fileName: collectionFileName)
-        }
+        add(url: url, fileName: collectionFileName, base: longestBase, startingIndex: longestBase.count)
     }
     
-    func addWithinUserHome(url: URL, fileName: FileName) {
-        if fileName.folders.count > 5
-            && fileName.folders[2] == "Library"
-            && fileName.folders[3] == "Mobile Documents"
-            && fileName.folders[4] == "com~apple~CloudDocs" {
-            add(url: url, fileName: fileName, base: "iCloud Drive", startingIndex: 5)
-        } else if fileName.folders.count > 7
-            && fileName.folders[2] == "Library"
-            && fileName.folders[3] == "Containers"
-            && fileName.folders[4] == "com.powersurgepub.notenik.macos"
-            && fileName.folders[5] == "Data"
-            && fileName.folders[6] == "Documents" {
-            add(url: url, fileName: fileName, base: "Sandbox", startingIndex: 7)
-        } else {
-            add(url: url, fileName: fileName, base: "Home", startingIndex: 2)
-        }
-    }
-    
-    func addAwayFromHome(url: URL, fileName: FileName) {
-        add(url: url, fileName: fileName, base: "/", startingIndex: 0)
+    func addBase(base: CollectorBase) {
+        let baseNode = CollectorNode(tree: self)
+        baseNode.type = .folder
+        baseNode.base = base
+        _ = root.addChild(baseNode)
     }
     
     /// Add a new Collection to the tree, along with any nodes leading to it.
@@ -121,41 +105,32 @@ class CollectorTree {
     ///   - base: The base description to be assigned to this collection.
     ///   - startingIndex: An index pointing to the first folder to be used as part
     ///                    of the collection's path.
-    func add(url: URL, fileName: FileName, base: String, startingIndex: Int) {
-        
-        print("  - base = \(base)")
+    func add(url: URL, fileName: FileName, base: CollectorBase, startingIndex: Int) {
         
         // Add base node or obtain it if already added.
-        let baseNode = CollectorNode()
+        let baseNode = CollectorNode(tree: self)
         baseNode.type = .folder
         baseNode.base = base
         var nextParent = root.addChild(baseNode)
         
-        root.display()
-        
         // Now add intervening path folders.
-        var prevParent = nextParent
         let end = fileName.folders.count - 1
         for i in startingIndex ..< end {
-            let nextChild = CollectorNode()
+            let nextChild = CollectorNode(tree: self)
             nextChild.type = .folder
             nextChild.base = base
             nextChild.populatePath(folders: fileName.folders, start: startingIndex, number: i - startingIndex)
             nextChild.folder = fileName.folders[i]
-            prevParent = nextParent
             nextParent = nextParent.addChild(nextChild)
-            prevParent.display()
         }
         
         // Finally, add the actual node representing the collection.
-        let lastChild = CollectorNode(url)
+        let lastChild = CollectorNode(tree: self, url: url)
         lastChild.type = .collection
         lastChild.base = base
         lastChild.populatePath(folders: fileName.folders, start: startingIndex, number: end - startingIndex)
         lastChild.folder = fileName.folders[end]
         _ = nextParent.addChild(lastChild)
-        nextParent.display()
-        lastChild.display()
     }
     
     /// Log an information message.
@@ -172,6 +147,18 @@ class CollectorTree {
                           category: "CollectorTree",
                           level: .error,
                           message: msg)
+    }
+    
+    func makeIterator() -> CollectorIterator {
+        return CollectorIterator(tree: self)
+    }
+    
+    func add(more: [String], to: String) -> String {
+        var added = to
+        for toAdd in more {
+            added = FileUtils.joinPaths(path1: added, path2: toAdd)
+        }
+        return added
     }
     
 }

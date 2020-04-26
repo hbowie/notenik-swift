@@ -11,45 +11,68 @@
 
 import Foundation
 
+import NotenikUtils
+
 class CollectorNode: Comparable, CustomStringConvertible {
     
-    static let thisLessThanThat = -1
-    static let thisGreaterThanThat = 1
-    static let thisEqualsThat = 0
+    let thisLessThanThat = -1
+    let thisGreaterThanThat = 1
+    let thisEqualsThat = 0
     
     private(set) weak var parent:   CollectorNode?
     private(set)      var children: [CollectorNode] = []
     
+                      var tree:     CollectorTree
+    
     var type:     CollectorNodeType = .root
-    var url:      URL?
-    var base    = ""
+    var _url:      URL?
+    var base    = CollectorBase()
     var path:     [String] = []
     var folder  = ""
     
     static func < (lhs: CollectorNode, rhs: CollectorNode) -> Bool {
-        return lhs.compareTo(node2: rhs) == CollectorNode.thisLessThanThat
+        return lhs.compareTo(node2: rhs) == lhs.thisLessThanThat
+    }
+    
+    static func == (lhs: CollectorNode, rhs: CollectorNode) -> Bool {
+        return lhs.compareTo(node2: rhs) == lhs.thisEqualsThat
     }
     
     var description: String {
         if type == .root {
-            return "root"
+            return "tree root"
         } else if folder == "" {
-            return base
+            return base.name
         } else {
             return folder
         }
     }
     
-    static func == (lhs: CollectorNode, rhs: CollectorNode) -> Bool {
-        return lhs.compareTo(node2: rhs) == CollectorNode.thisEqualsThat
+    var url: URL {
+        set {
+            _url = newValue
+        }
+        get {
+            if _url != nil {
+                return _url!
+            }
+            var fileURL = base.url
+            for component in path {
+                fileURL.appendPathComponent(component, isDirectory: true)
+            }
+            if folder.count > 0 {
+                fileURL.appendPathComponent(folder, isDirectory: true)
+            }
+            return fileURL
+        }
     }
     
-    init() {
-        
+    init(tree: CollectorTree) {
+        self.tree = tree
     }
     
-    convenience init(_ url: URL, collection: Bool = false) {
-        self.init()
+    convenience init(tree: CollectorTree, url: URL, collection: Bool = false) {
+        self.init(tree: tree)
         self.url = url
         if collection {
             type = .collection
@@ -62,59 +85,92 @@ class CollectorNode: Comparable, CustomStringConvertible {
     func compareTo(node2: CollectorNode) -> Int {
         
         // Compare node types.
-        if self.type.rawValue < node2.type.rawValue {
-            return CollectorNode.thisLessThanThat
-        } else if self.type.rawValue > node2.type.rawValue {
-            return CollectorNode.thisGreaterThanThat
-        }
+        var result = compareType(node2: node2)
+        guard result == thisEqualsThat else { return result }
         
-        let baseLower1 = self.base.lowercased()
-        let baseLower2 = node2.base.lowercased()
-        if baseLower1 < baseLower2 {
-            return CollectorNode.thisLessThanThat
-        } else if baseLower1 > baseLower2 {
-            return CollectorNode.thisGreaterThanThat
-        } else if self.base < node2.base {
-            return CollectorNode.thisLessThanThat
-        } else if self.base > node2.base {
-            return CollectorNode.thisGreaterThanThat
-        }
+        result = compareBase(node2: node2)
+        guard result == thisEqualsThat else { return result }
             
+        result = comparePath(node2: node2)
+        guard result == thisEqualsThat else { return result }
+
+        return compareFolder(node2: node2)
+    }
+    
+    func compareType(node2: CollectorNode) -> Int {
+        if self.type == node2.type {
+            return thisEqualsThat
+        } else if self.type.rawValue < node2.type.rawValue {
+            return thisLessThanThat
+        } else if self.type.rawValue > node2.type.rawValue {
+            return thisGreaterThanThat
+        }
+        return thisEqualsThat
+    }
+    
+    func compareBase(node2: CollectorNode) -> Int {
+        if self.base.name == node2.base.name {
+            return thisEqualsThat
+        }
+        let baseLower1 = self.base.name.lowercased()
+        let baseLower2 = node2.base.name.lowercased()
+        if baseLower1 < baseLower2 {
+            return thisLessThanThat
+        } else if baseLower1 > baseLower2 {
+            return thisGreaterThanThat
+        } else if self.base.name < node2.base.name {
+            return thisLessThanThat
+        } else if self.base.name > node2.base.name {
+            return thisGreaterThanThat
+        }
+        return thisEqualsThat
+    }
+    
+    func comparePath(node2: CollectorNode) -> Int {
         var i = 0
         while i < self.path.count && i < node2.path.count {
+            if self.path[i] == node2.path[i] {
+                i += 1
+                continue
+            }
             let pathLower1 = self.path[i].lowercased()
-            let pathLower2 = node2.path[i]
+            let pathLower2 = node2.path[i].lowercased()
             if pathLower1 < pathLower2 {
-                return CollectorNode.thisLessThanThat
+                return thisLessThanThat
             } else if pathLower1 > pathLower2 {
-                return CollectorNode.thisGreaterThanThat
+                return thisGreaterThanThat
             } else if self.path[i] < node2.path[i] {
-                return CollectorNode.thisLessThanThat
+                return thisLessThanThat
             } else if self.path[i] > node2.path[i] {
-                return CollectorNode.thisGreaterThanThat
+                return thisGreaterThanThat
             }
             i += 1
         }
         
         if self.path.count < node2.path.count {
-            return CollectorNode.thisLessThanThat
+            return thisLessThanThat
         } else if self.path.count > node2.path.count {
-            return CollectorNode.thisGreaterThanThat
+            return thisGreaterThanThat
         }
-
+        return thisEqualsThat
+    }
+    
+    func compareFolder(node2: CollectorNode) -> Int {
+        if self.folder == node2.folder {
+            return thisEqualsThat
+        }
         let folderLower1 = self.folder.lowercased()
         let folderLower2 = node2.folder.lowercased()
         if folderLower1 < folderLower2 {
-            return CollectorNode.thisLessThanThat
+            return thisLessThanThat
         } else if folderLower1 > folderLower2 {
-            return CollectorNode.thisGreaterThanThat
+            return thisGreaterThanThat
         } else if self.folder < node2.folder {
-            return CollectorNode.thisLessThanThat
+            return thisLessThanThat
         } else if self.folder > node2.folder {
-            return CollectorNode.thisGreaterThanThat
+            return thisGreaterThanThat
         }
-        
-        return CollectorNode.thisEqualsThat
+        return thisEqualsThat
     }
     
     /// Populate the path array with the specified folder range. 
@@ -171,6 +227,10 @@ class CollectorNode: Comparable, CustomStringConvertible {
         }
     }
     
+    var hasChildren: Bool {
+        return children.count > 0
+    }
+    
     /// Return the number of children for which this node is a parent
     var countChildren: Int {
         return children.count
@@ -180,9 +240,7 @@ class CollectorNode: Comparable, CustomStringConvertible {
     func display() {
         print(" ")
         print("  Collector Node")
-        if url != nil {
-            print("    URL = \(url!.absoluteString)")
-        }
+        print("    URL = \(url.absoluteString)")
         print("    Type = \(type)")
         print("    Base = \(base)")
         for segment in path {

@@ -25,7 +25,7 @@ class CollectorWindowController: NSWindowController {
     }
     
     /// Pass needed info from the Collector Requestor
-    func passCollectorRequesterInfo(tree: CollectorTree) {
+    func passCollectorRequesterInfo(juggler: CollectionJuggler, tree: CollectorTree) {
         guard collectorViewController != nil else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectorWindowController",
@@ -33,7 +33,8 @@ class CollectorWindowController: NSWindowController {
                               message: "CollectorWindowController passing Requester Info but view controller is missing")
             return
         }
-        collectorViewController!.passCollectorRequesterInfo(tree: tree)
+        collectorViewController!.passCollectorRequesterInfo(juggler: juggler,
+                                                            tree: tree)
     }
 
 }
