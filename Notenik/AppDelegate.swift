@@ -53,7 +53,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         logger.logDestPrint = false
         logger.logDestUnified = true
         juggler.startup()
-        juggler.addRecentDocsToCollector(recentDocumentURLs)
+        juggler.makeRecentDocsKnown(recentDocumentURLs)
+        juggler.loadKnownFolderDefaults()
         var successfulOpens = 0
         if launchURLs.count > 0 {
             successfulOpens = juggler.open(urls: launchURLs)
@@ -175,7 +176,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+        KnownFolders.shared.saveDefaults()
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

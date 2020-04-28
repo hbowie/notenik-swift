@@ -33,12 +33,6 @@
 		9C0B643A23888D6700869FAA /* TagsMassChangeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B643823888D6700869FAA /* TagsMassChangeWindowController.swift */; };
 		9C0B643C23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B643B23888D9E00869FAA /* TagsMassChangeViewController.swift */; };
 		9C0B643D23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B643B23888D9E00869FAA /* TagsMassChangeViewController.swift */; };
-		9C0F014E244F390A008172DD /* CollectorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F014D244F390A008172DD /* CollectorNode.swift */; };
-		9C0F014F244F390A008172DD /* CollectorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F014D244F390A008172DD /* CollectorNode.swift */; };
-		9C0F0151244F39A6008172DD /* CollectorNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F0150244F39A6008172DD /* CollectorNodeType.swift */; };
-		9C0F0152244F39A6008172DD /* CollectorNodeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F0150244F39A6008172DD /* CollectorNodeType.swift */; };
-		9C0F0154244F3D11008172DD /* CollectorTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F0153244F3D11008172DD /* CollectorTree.swift */; };
-		9C0F0155244F3D11008172DD /* CollectorTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0F0153244F3D11008172DD /* CollectorTree.swift */; };
 		9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49022134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49122134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
@@ -73,8 +67,6 @@
 		9C3F1B57244E81F100CE0D9D /* CollectorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3F1B55244E81F100CE0D9D /* CollectorWindowController.swift */; };
 		9C3F1B59244E823300CE0D9D /* CollectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3F1B58244E823300CE0D9D /* CollectorViewController.swift */; };
 		9C3F1B5A244E823300CE0D9D /* CollectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3F1B58244E823300CE0D9D /* CollectorViewController.swift */; };
-		9C452F3824525DCC003960F3 /* CollectorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C452F3724525DCC003960F3 /* CollectorBase.swift */; };
-		9C452F3924525DCC003960F3 /* CollectorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C452F3724525DCC003960F3 /* CollectorBase.swift */; };
 		9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BA2298B87C003F6589 /* BodyView.swift */; };
 		9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BA2298B87C003F6589 /* BodyView.swift */; };
 		9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BD2298BC87003F6589 /* CodeView.swift */; };
@@ -157,8 +149,6 @@
 		9CB60BC722651074003B5655 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB60BC522651074003B5655 /* ShareViewController.swift */; };
 		9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */; };
 		9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */; };
-		9CC129D92450CD4200880769 /* CollectorIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC129D82450CD4200880769 /* CollectorIterator.swift */; };
-		9CC129DA2450CD4200880769 /* CollectorIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC129D82450CD4200880769 /* CollectorIterator.swift */; };
 		9CC41CD5229CA61700E92A66 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9CC41CD4229CA61700E92A66 /* Credits.rtf */; };
 		9CC44AF62436A904002B41EF /* NotenikMkdown in Frameworks */ = {isa = PBXBuildFile; productRef = 9CC44AF52436A904002B41EF /* NotenikMkdown */; };
 		9CC4B15B2439111B00CB8EB2 /* NotenikTextile in Frameworks */ = {isa = PBXBuildFile; productRef = 9CC4B15A2439111B00CB8EB2 /* NotenikTextile */; };
@@ -233,9 +223,6 @@
 		9C0B643423885E9900869FAA /* TagsMassChange.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagsMassChange.storyboard; sourceTree = "<group>"; };
 		9C0B643823888D6700869FAA /* TagsMassChangeWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsMassChangeWindowController.swift; sourceTree = "<group>"; };
 		9C0B643B23888D9E00869FAA /* TagsMassChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsMassChangeViewController.swift; sourceTree = "<group>"; };
-		9C0F014D244F390A008172DD /* CollectorNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectorNode.swift; sourceTree = "<group>"; };
-		9C0F0150244F39A6008172DD /* CollectorNodeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectorNodeType.swift; sourceTree = "<group>"; };
-		9C0F0153244F3D11008172DD /* CollectorTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectorTree.swift; sourceTree = "<group>"; };
 		9C12D48E22134970003136B2 /* NoteSelectionSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSelectionSource.swift; sourceTree = "<group>"; };
 		9C1BE26A22EB9164006FDFEC /* Script.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Script.storyboard; sourceTree = "<group>"; };
 		9C1BE27022EB940E006FDFEC /* ScriptWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptWindowController.swift; sourceTree = "<group>"; };
@@ -248,7 +235,6 @@
 		9C3F1B51244E7D5A00CE0D9D /* Collector.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Collector.storyboard; sourceTree = "<group>"; };
 		9C3F1B55244E81F100CE0D9D /* CollectorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectorWindowController.swift; sourceTree = "<group>"; };
 		9C3F1B58244E823300CE0D9D /* CollectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectorViewController.swift; sourceTree = "<group>"; };
-		9C452F3724525DCC003960F3 /* CollectorBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectorBase.swift; sourceTree = "<group>"; };
 		9C45E8BA2298B87C003F6589 /* BodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyView.swift; sourceTree = "<group>"; };
 		9C45E8BD2298BC87003F6589 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		9C553C602266A0D50008D176 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
@@ -317,7 +303,6 @@
 		9CB60BC522651074003B5655 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTagsViewController.swift; sourceTree = "<group>"; };
 		9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
-		9CC129D82450CD4200880769 /* CollectorIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectorIterator.swift; sourceTree = "<group>"; };
 		9CC41CD4229CA61700E92A66 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		9CC4B15C2439113900CB8EB2 /* NotenikTextile */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikTextile; path = ../NotenikTextile; sourceTree = "<group>"; };
 		9CC78E682283565E00640477 /* DisplayPrefs.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DisplayPrefs.storyboard; sourceTree = "<group>"; };
@@ -395,11 +380,6 @@
 				9C3F1B51244E7D5A00CE0D9D /* Collector.storyboard */,
 				9C3F1B55244E81F100CE0D9D /* CollectorWindowController.swift */,
 				9C3F1B58244E823300CE0D9D /* CollectorViewController.swift */,
-				9C452F3724525DCC003960F3 /* CollectorBase.swift */,
-				9CC129D82450CD4200880769 /* CollectorIterator.swift */,
-				9C0F014D244F390A008172DD /* CollectorNode.swift */,
-				9C0F0150244F39A6008172DD /* CollectorNodeType.swift */,
-				9C0F0153244F3D11008172DD /* CollectorTree.swift */,
 			);
 			path = collector;
 			sourceTree = "<group>";
@@ -824,13 +804,11 @@
 			files = (
 				9CD358892293C42B00C9203F /* LinkView.swift in Sources */,
 				9C0B643923888D6700869FAA /* TagsMassChangeWindowController.swift in Sources */,
-				9C0F0151244F39A6008172DD /* CollectorNodeType.swift in Sources */,
 				9C03629A239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
 				9C3F1B59244E823300CE0D9D /* CollectorViewController.swift in Sources */,
 				9C1BE27122EB940E006FDFEC /* ScriptWindowController.swift in Sources */,
 				9C79BDB0226E368800796E93 /* LabelView.swift in Sources */,
 				9C1E0C9222E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
-				9CC129D92450CD4200880769 /* CollectorIterator.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
@@ -838,7 +816,6 @@
 				9CAD6A5222DFA0B000531D90 /* PrefsTabVC.swift in Sources */,
 				9CF256CD21FD175E00D9F06A /* CollectionWindowController.swift in Sources */,
 				9C1E0C9522E4F7FA0025C99C /* AttachmentViewController.swift in Sources */,
-				9C452F3824525DCC003960F3 /* CollectorBase.swift in Sources */,
 				9C822BA222D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */,
 				9CAD6A4F22DF9ACD00531D90 /* PrefsTabViewController.swift in Sources */,
 				9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */,
@@ -865,11 +842,9 @@
 				9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */,
 				9C619A38231B323B003CFFBE /* WorkTypeView.swift in Sources */,
 				9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */,
-				9C0F0154244F3D11008172DD /* CollectorTree.swift in Sources */,
 				9CAD6A4922DF806800531D90 /* TagsExportViewController.swift in Sources */,
 				9CF1193E225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
 				9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */,
-				9C0F014E244F390A008172DD /* CollectorNode.swift in Sources */,
 				9CF1193B225822870015AE91 /* CollectionPrefsWindowController.swift in Sources */,
 				9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
 				9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */,
@@ -947,7 +922,6 @@
 				9CE3250E224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
 				9CB60BC722651074003B5655 /* ShareViewController.swift in Sources */,
 				9CD3588B2293C42B00C9203F /* LinkView.swift in Sources */,
-				9C0F0152244F39A6008172DD /* CollectorNodeType.swift in Sources */,
 				9CF96EE1225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */,
 				9CC78E6D2283587300640477 /* DisplayPrefsWindowController.swift in Sources */,
 				9C2AE529220A34D400AE8BEE /* NoteDisplayViewController.swift in Sources */,
@@ -963,7 +937,6 @@
 				9CF1193C225822870015AE91 /* CollectionPrefsWindowController.swift in Sources */,
 				9C1BE27522EB9444006FDFEC /* ScriptViewController.swift in Sources */,
 				9CD756D82210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */,
-				9CC129DA2450CD4200880769 /* CollectorIterator.swift in Sources */,
 				9C568DF6232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */,
 				9CED2811224EB39900798621 /* LongTextView.swift in Sources */,
 				9C1E0C9622E4F7FA0025C99C /* AttachmentViewController.swift in Sources */,
@@ -989,9 +962,6 @@
 				9C0B643D23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */,
 				9CAD6A4A22DF806800531D90 /* TagsExportViewController.swift in Sources */,
 				9CE32508224D561E0051CA1F /* PrefsWindowController.swift in Sources */,
-				9C0F0155244F3D11008172DD /* CollectorTree.swift in Sources */,
-				9C0F014F244F390A008172DD /* CollectorNode.swift in Sources */,
-				9C452F3924525DCC003960F3 /* CollectorBase.swift in Sources */,
 				9C2AE52A220A34D800AE8BEE /* NoteEditViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

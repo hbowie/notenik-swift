@@ -12,6 +12,7 @@
 import Cocoa
 
 import NotenikUtils
+import NotenikLib
 
 class CollectorWindowController: NSWindowController {
     
@@ -25,7 +26,7 @@ class CollectorWindowController: NSWindowController {
     }
     
     /// Pass needed info from the Collector Requestor
-    func passCollectorRequesterInfo(juggler: CollectionJuggler, tree: CollectorTree) {
+    func passCollectorRequesterInfo(juggler: CollectionJuggler, tree: KnownFolders) {
         guard collectorViewController != nil else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectorWindowController",

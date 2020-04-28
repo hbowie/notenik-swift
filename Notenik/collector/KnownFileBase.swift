@@ -1,5 +1,5 @@
 //
-//  CollectorBase.swift
+//  KnownFileBase.swift
 //  Notenik
 //
 //  Created by Herb Bowie on 4/23/20.
@@ -12,7 +12,7 @@
 import Foundation
 
 /// The base upon which more detailed paths can be built. 
-class CollectorBase {
+class KnownFileBase {
     var name = ""
     var url: URL
     

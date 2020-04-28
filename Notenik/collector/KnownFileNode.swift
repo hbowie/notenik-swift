@@ -1,5 +1,5 @@
 //
-//  CollectorNode.swift
+//  KnownFileNode.swift
 //  Notenik
 //
 //  Created by Herb Bowie on 4/21/20.
@@ -13,28 +13,28 @@ import Foundation
 
 import NotenikUtils
 
-class CollectorNode: Comparable, CustomStringConvertible {
+class KnownFileNode: Comparable, CustomStringConvertible {
     
     let thisLessThanThat = -1
     let thisGreaterThanThat = 1
     let thisEqualsThat = 0
     
-    private(set) weak var parent:   CollectorNode?
-    private(set)      var children: [CollectorNode] = []
+    private(set) weak var parent:   KnownFileNode?
+    private(set)      var children: [KnownFileNode] = []
     
-                      var tree:     CollectorTree
+                      var tree:     KnownFiles
     
-    var type:     CollectorNodeType = .root
+    var type:     KnownFileNodeType = .root
     var _url:      URL?
-    var base    = CollectorBase()
+    var base    = KnownFileBase()
     var path:     [String] = []
     var folder  = ""
     
-    static func < (lhs: CollectorNode, rhs: CollectorNode) -> Bool {
+    static func < (lhs: KnownFileNode, rhs: KnownFileNode) -> Bool {
         return lhs.compareTo(node2: rhs) == lhs.thisLessThanThat
     }
     
-    static func == (lhs: CollectorNode, rhs: CollectorNode) -> Bool {
+    static func == (lhs: KnownFileNode, rhs: KnownFileNode) -> Bool {
         return lhs.compareTo(node2: rhs) == lhs.thisEqualsThat
     }
     
@@ -67,11 +67,11 @@ class CollectorNode: Comparable, CustomStringConvertible {
         }
     }
     
-    init(tree: CollectorTree) {
+    init(tree: KnownFiles) {
         self.tree = tree
     }
     
-    convenience init(tree: CollectorTree, url: URL, collection: Bool = false) {
+    convenience init(tree: KnownFiles, url: URL, collection: Bool = false) {
         self.init(tree: tree)
         self.url = url
         if collection {
@@ -82,7 +82,7 @@ class CollectorNode: Comparable, CustomStringConvertible {
     }
     
     /// Compare this Node to another one and determine which is greater.
-    func compareTo(node2: CollectorNode) -> Int {
+    func compareTo(node2: KnownFileNode) -> Int {
         
         // Compare node types.
         var result = compareType(node2: node2)
@@ -97,7 +97,7 @@ class CollectorNode: Comparable, CustomStringConvertible {
         return compareFolder(node2: node2)
     }
     
-    func compareType(node2: CollectorNode) -> Int {
+    func compareType(node2: KnownFileNode) -> Int {
         if self.type == node2.type {
             return thisEqualsThat
         } else if self.type.rawValue < node2.type.rawValue {
@@ -108,7 +108,7 @@ class CollectorNode: Comparable, CustomStringConvertible {
         return thisEqualsThat
     }
     
-    func compareBase(node2: CollectorNode) -> Int {
+    func compareBase(node2: KnownFileNode) -> Int {
         if self.base.name == node2.base.name {
             return thisEqualsThat
         }
@@ -126,7 +126,7 @@ class CollectorNode: Comparable, CustomStringConvertible {
         return thisEqualsThat
     }
     
-    func comparePath(node2: CollectorNode) -> Int {
+    func comparePath(node2: KnownFileNode) -> Int {
         var i = 0
         while i < self.path.count && i < node2.path.count {
             if self.path[i] == node2.path[i] {
@@ -155,7 +155,7 @@ class CollectorNode: Comparable, CustomStringConvertible {
         return thisEqualsThat
     }
     
-    func compareFolder(node2: CollectorNode) -> Int {
+    func compareFolder(node2: KnownFileNode) -> Int {
         if self.folder == node2.folder {
             return thisEqualsThat
         }
@@ -183,9 +183,9 @@ class CollectorNode: Comparable, CustomStringConvertible {
     
     /// Add the passed child node, unless one with the same keys already exists. Pass back
     /// the one added or the equal found.
-    func addChild(_ newChild: CollectorNode) -> CollectorNode {
+    func addChild(_ newChild: KnownFileNode) -> KnownFileNode {
         var i = 0
-        var childNode: CollectorNode?
+        var childNode: KnownFileNode?
         while i < children.count {
             childNode = children[i]
             if newChild == childNode! {
@@ -202,7 +202,7 @@ class CollectorNode: Comparable, CustomStringConvertible {
     }
     
     /// Add a child to this node. 
-    func addChild(_ child: CollectorNode, at: Int) {
+    func addChild(_ child: KnownFileNode, at: Int) {
         child.parent = self
         if at >= children.count {
             children.append(child)
@@ -212,7 +212,7 @@ class CollectorNode: Comparable, CustomStringConvertible {
     }
     
     /// Return the child at the specified index, or nil if bad index
-    func getChild(at index: Int) -> CollectorNode? {
+    func getChild(at index: Int) -> KnownFileNode? {
         if index < 0 || index >= children.count {
             return nil
         } else {

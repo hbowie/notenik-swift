@@ -8,24 +8,24 @@
 
 import Foundation
 
-class CollectorIterator: IteratorProtocol {
+class KnownFilesTreeIterator: IteratorProtocol {
     
-    typealias Element = CollectorNode
+    typealias Element = KnownFileNode
     
-    var tree: CollectorTree
+    var tree: KnownFiles
     var positions: [Int] = []
-    var collectorNode: CollectorNode? = nil
+    var collectorNode: KnownFileNode? = nil
     var depth = 0
     
     /// Initialize with a Collector Tree.
-    init(tree: CollectorTree) {
+    init(tree: KnownFiles) {
         self.tree = tree
         collectorNode = self.tree.root
     }
     
     /// Return the next CollectorNode, or nil at the end.
-    public func next() -> CollectorNode? {
-        var nextNode: CollectorNode? = nil
+    public func next() -> KnownFileNode? {
+        var nextNode: KnownFileNode? = nil
         if collectorNode!.children.count > 0 {
             setPosition(depth: depth, position: 0)
             nextNode = collectorNode!.children[0]

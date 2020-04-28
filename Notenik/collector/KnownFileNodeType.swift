@@ -1,5 +1,5 @@
 //
-//  CollectorNodeType.swift
+//  KnownFileNodeType.swift
 //  Notenik
 //
 //  Created by Herb Bowie on 4/21/20.
@@ -11,7 +11,7 @@
 
 import Foundation
 
-enum CollectorNodeType: Int {
+enum KnownFileNodeType: Int {
     case root       = 0
     case folder     = 1
     case collection = 2

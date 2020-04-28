@@ -26,7 +26,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     private let defaults = UserDefaults.standard
     
     var cloudNik: CloudNik!
-    var collectorTree: CollectorTree!
+    var knownFolders: KnownFolders!
     
     let appPrefs  = AppPrefs.shared
     let osdir     = OpenSaveDirectory.shared
@@ -64,13 +64,18 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                               level: .error,
                               message: "Couldn't get a Log Window Controller! at startup")
         }
-        collectorTree = CollectorTree()
+        knownFolders = KnownFolders.shared
     }
     
-    func addRecentDocsToCollector(_ recentDocumentURLs: [URL]) {
+    func makeRecentDocsKnown(_ recentDocumentURLs: [URL]) {
         for url in recentDocumentURLs {
-            collectorTree.add(url)
+            knownFolders.add(url: url, isCollection: true, fromBookmark: false, suspendReload: true)
         }
+        knownFolders.reload()
+    }
+    
+    func loadKnownFolderDefaults() {
+        knownFolders.loadDefaults()
     }
     
     /// Find a collection to show in the initial window shown upon application launch.
@@ -92,6 +97,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         
         if collection != nil {
             saveCollectionInfo(collection!)
+            KnownFolders.shared.add(collection!, suspendReload: false)
         }
 
         if collection == nil {
@@ -146,7 +152,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         } else {
             collectorWindowController!.showWindow(self)
             collectorWindowController!.passCollectorRequesterInfo(juggler: self,
-                                                                  tree: collectorTree)
+                                                                  tree: knownFolders)
         }
     }
     
@@ -162,6 +168,10 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     /// Proceed with the user request, now that we have a URL
     func proceedWithSelectedURL(requestType: CollectionRequestType, fileURL: URL) {
+        KnownFolders.shared.add(url: fileURL,
+                                isCollection: true,
+                                fromBookmark: false,
+                                suspendReload: false)
         if requestType == .new {
             _ = newCollection(fileURL: fileURL)
         }
@@ -190,6 +200,10 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     }
     
     func openParentRealm(parentURL: URL) {
+        KnownFolders.shared.add(url: parentURL,
+                                isCollection: false,
+                                fromBookmark: false,
+                                suspendReload: false)
         AppPrefs.shared.parentRealmPath = parentURL.path
         appPrefs.parentRealmParentURL = parentURL.deletingLastPathComponent()
         let realmScanner = RealmScanner()
@@ -257,6 +271,10 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         let openOK = openFileWithNewWindow(fileURL: newURL, readOnly: false)
         
         if openOK {
+            KnownFolders.shared.add(url: newURL,
+                                    isCollection: true,
+                                    fromBookmark: false,
+                                    suspendReload: false)
             currentWindow.close()
             let alert = NSAlert()
             alert.alertStyle = .informational
@@ -340,6 +358,10 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         let initOK = io.initCollection(realm: realm, collectionPath: collectionURL.path)
         guard initOK else { return false }
         
+        KnownFolders.shared.add(url: collectionURL,
+                                isCollection: true,
+                                fromBookmark: false,
+                                suspendReload: false)
         io.addDefaultDefinitions()
         
         // Now let the user tailor the starting Collection default values
@@ -435,6 +457,10 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Open the Essential Collection, if we have one
     func openEssentialCollection() {
         guard let essentialURL = appPrefs.essentialURL else { return }
+        KnownFolders.shared.add(url: essentialURL,
+                                isCollection: true,
+                                fromBookmark: false,
+                                suspendReload: false)
         _ = openFileWithNewWindow(fileURL: essentialURL, readOnly: false)
     }
     
@@ -518,6 +544,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             saveCollectionInfo(collection!)
             openOK = assignIOtoWindow(io: io)
         }
+        KnownFolders.shared.add(collection!, suspendReload: false)
         return openOK
     }
     

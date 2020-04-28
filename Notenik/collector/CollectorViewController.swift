@@ -12,10 +12,13 @@
 import Cocoa
 
 import NotenikUtils
+import NotenikLib
 
-class CollectorViewController: NSViewController,
+class CollectorViewController:
+        NSViewController,
         NSOutlineViewDataSource,
-        NSOutlineViewDelegate {
+        NSOutlineViewDelegate,
+        KnownFoldersViewer {
     
     var collectorWindowController: CollectorWindowController?
 
@@ -23,7 +26,7 @@ class CollectorViewController: NSViewController,
     
     @IBOutlet var newFolderTextField: NSTextField!
     
-    var tree: CollectorTree?
+    var tree: KnownFolders?
     
     var juggler: CollectionJuggler?
     
@@ -47,15 +50,16 @@ class CollectorViewController: NSViewController,
         }
     }
     
-    func passCollectorRequesterInfo(juggler: CollectionJuggler, tree: CollectorTree) {
+    func passCollectorRequesterInfo(juggler: CollectionJuggler, tree: KnownFolders) {
         self.juggler = juggler
         self.tree = tree
+        tree.registerViewer(self)
         outlineView.reloadData()
     }
     
     /// How many children does this node have?
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        if let node = item as? CollectorNode {
+        if let node = item as? KnownFolderNode {
             return node.children.count
         }
         if tree == nil {
@@ -67,7 +71,7 @@ class CollectorViewController: NSViewController,
     
     /// Return the child of a node at the given index position.
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        if let node = item as? CollectorNode {
+        if let node = item as? KnownFolderNode {
             return node.getChild(at: index) as Any
         }
         
@@ -76,7 +80,7 @@ class CollectorViewController: NSViewController,
     
     /// Is this node expandable?
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        if let node = item as? CollectorNode {
+        if let node = item as? KnownFolderNode {
             return node.children.count > 0
         }
         
@@ -90,9 +94,17 @@ class CollectorViewController: NSViewController,
         
         var view: NSTableCellView?
         
-        if let node = item as? CollectorNode {
+        if let node = item as? KnownFolderNode {
             let cellID = NSUserInterfaceItemIdentifier("collectorCellView")
             view = outlineView.makeView(withIdentifier: cellID, owner: self) as? NSTableCellView
+            if view != nil {
+                switch node.type {
+                case .root:
+                    view!.toolTip = "Root of Outline View"
+                case .folder, .collection:
+                    view!.toolTip = node.url.path
+                }
+            }
             if let textField = view?.textField {
                 switch node.type {
                 case .root:
@@ -111,7 +123,6 @@ class CollectorViewController: NSViewController,
         }
         return view
     }
-    
 
     @IBAction func ExpandPushed(_ sender: Any) {
         guard tree != nil else { return }
@@ -134,7 +145,7 @@ class CollectorViewController: NSViewController,
     @IBAction func openPushed(_ sender: Any) {
         guard juggler != nil else { return }
         let selRow = outlineView.selectedRow
-        let selItem = outlineView.item(atRow: selRow) as? CollectorNode
+        let selItem = outlineView.item(atRow: selRow) as? KnownFolderNode
         guard selItem != nil else { return }
         let selURL = selItem?.url
         guard selURL != nil else { return }
@@ -145,7 +156,7 @@ class CollectorViewController: NSViewController,
     
     @IBAction func outlineDoubleClicked(_ sender: NSOutlineView) {
         guard juggler != nil else { return }
-        let selItem = sender.item(atRow: sender.clickedRow) as? CollectorNode
+        let selItem = sender.item(atRow: sender.clickedRow) as? KnownFolderNode
         guard selItem != nil else { return }
         let selURL = selItem?.url
         guard selURL != nil else { return }
@@ -160,7 +171,7 @@ class CollectorViewController: NSViewController,
         guard juggler != nil else { return }
         guard tree != nil else { return }
         let selRow = outlineView.selectedRow
-        let selItem = outlineView.item(atRow: selRow) as? CollectorNode
+        let selItem = outlineView.item(atRow: selRow) as? KnownFolderNode
         guard selItem != nil else { return }
         let base = selItem!.base
         let newFolder = newFolderTextField.stringValue
@@ -183,10 +194,6 @@ class CollectorViewController: NSViewController,
             communicateError("New Collection could not be successfully created", alert: true)
             return
         }
-        tree!.add(newURL)
-        print("New URL added to board")
-        reload()
-        print("Reload of data complete")
     }
     
     /// Log an error message and optionally display an alert message.
