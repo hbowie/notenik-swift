@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -178,8 +178,19 @@ Gw
                                     <action selector="shareFormatSelection:" target="C6S-Gq-nNR" id="Mbj-8M-KxH"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SgD-9l-Drn">
+                                <rect key="frame" x="178" y="120" width="126" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="radio" title="Markdown Quote" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="6zG-Zd-EVJ">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="shareFormatSelection:" target="C6S-Gq-nNR" id="HxE-BL-a84"/>
+                                </connections>
+                            </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3xP-05-Fbw">
-                                <rect key="frame" x="178" y="120" width="69" height="18"/>
+                                <rect key="frame" x="178" y="98" width="69" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="radio" title="Notenik" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="vB8-xg-USz">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -200,6 +211,7 @@ Gw
                         <outlet property="formatHTMLFragmentButton" destination="EK6-On-3Ch" id="TFS-5N-utj"/>
                         <outlet property="formatJSONButton" destination="buk-bw-lFd" id="UCR-dc-afv"/>
                         <outlet property="formatMarkdownButton" destination="bTg-7a-2Qd" id="0wL-99-Til"/>
+                        <outlet property="formatMarkdownQuoteButton" destination="SgD-9l-Drn" id="Ywj-zW-QcI"/>
                         <outlet property="formatNotenikButton" destination="3xP-05-Fbw" id="EBc-oR-Jd6"/>
                     </connections>
                 </viewController>

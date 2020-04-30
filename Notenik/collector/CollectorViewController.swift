@@ -24,9 +24,7 @@ class CollectorViewController:
 
     @IBOutlet var outlineView: NSOutlineView!
     
-    @IBOutlet var newFolderTextField: NSTextField!
-    
-    var tree: KnownFolders?
+    var knownFolders: KnownFolders?
     
     var juggler: CollectionJuggler?
     
@@ -52,7 +50,7 @@ class CollectorViewController:
     
     func passCollectorRequesterInfo(juggler: CollectionJuggler, tree: KnownFolders) {
         self.juggler = juggler
-        self.tree = tree
+        self.knownFolders = tree
         tree.registerViewer(self)
         outlineView.reloadData()
     }
@@ -62,10 +60,10 @@ class CollectorViewController:
         if let node = item as? KnownFolderNode {
             return node.children.count
         }
-        if tree == nil {
+        if knownFolders == nil {
             return 0
         } else {
-            return tree!.root.children.count
+            return knownFolders!.root.children.count
         }
     }
     
@@ -75,7 +73,7 @@ class CollectorViewController:
             return node.getChild(at: index) as Any
         }
         
-        return tree!.root.children[index]
+        return knownFolders!.root.children[index]
     }
     
     /// Is this node expandable?
@@ -84,7 +82,7 @@ class CollectorViewController:
             return node.children.count > 0
         }
         
-        return tree!.root.children.count > 0
+        return knownFolders!.root.children.count > 0
     }
     
     /// Return a View for this Node
@@ -105,6 +103,7 @@ class CollectorViewController:
                     view!.toolTip = node.url.path
                 }
             }
+            
             if let textField = view?.textField {
                 switch node.type {
                 case .root:
@@ -118,6 +117,23 @@ class CollectorViewController:
                 case .collection:
                     textField.stringValue = node.folder
                 }
+                
+                if node.known == nil {
+                    // print("No Known Folder for node: \(node)")
+                }
+                if let known = node.known {
+                    if known.isCollection {
+                        let fontSize = NSFont.systemFontSize
+                        textField.font = NSFont.boldSystemFont(ofSize: fontSize)
+                    } else if known.fromBookmark {
+                        let fontSize = NSFont.systemFontSize
+                        let fontMgr = NSFontManager.shared
+                        let oldFont = NSFont.systemFont(ofSize: fontSize)
+                        let italics = fontMgr.convert(oldFont, toHaveTrait: .italicFontMask)
+                        textField.font = italics
+                    }
+                }
+                
                 textField.sizeToFit()
             }
         }
@@ -125,8 +141,8 @@ class CollectorViewController:
     }
 
     @IBAction func ExpandPushed(_ sender: Any) {
-        guard tree != nil else { return }
-        for node in tree! {
+        guard knownFolders != nil else { return }
+        for node in knownFolders! {
             if node.hasChildren {
                 outlineView.expandItem(node)
             }
@@ -134,8 +150,8 @@ class CollectorViewController:
     }
     
     @IBAction func collapsePushed(_ sender: Any) {
-        guard tree != nil else { return }
-        for node in tree! {
+        guard knownFolders != nil else { return }
+        for node in knownFolders! {
             if node.hasChildren {
                 outlineView.collapseItem(node)
             }
@@ -143,57 +159,46 @@ class CollectorViewController:
     }
     
     @IBAction func openPushed(_ sender: Any) {
-        guard juggler != nil else { return }
         let selRow = outlineView.selectedRow
-        let selItem = outlineView.item(atRow: selRow) as? KnownFolderNode
-        guard selItem != nil else { return }
-        let selURL = selItem?.url
-        guard selURL != nil else { return }
-        var urls: [URL] = []
-        urls.append(selURL!)
-        _ = juggler!.open(urls: urls)
+        guard let selItem = outlineView.item(atRow: selRow) as? KnownFolderNode else { return }
+        openURL(knownFolderNode: selItem)
     }
     
     @IBAction func outlineDoubleClicked(_ sender: NSOutlineView) {
-        guard juggler != nil else { return }
-        let selItem = sender.item(atRow: sender.clickedRow) as? KnownFolderNode
-        guard selItem != nil else { return }
-        let selURL = selItem?.url
-        guard selURL != nil else { return }
-        var urls: [URL] = []
-        urls.append(selURL!)
-        _ = juggler!.open(urls: urls)
+        guard let selItem = sender.item(atRow: sender.clickedRow) as? KnownFolderNode else { return }
+        openURL(knownFolderNode: selItem)
     }
     
-    
-    @IBAction func newPushed(_ sender: Any) {
-        print("New Button Pushed")
+    func openURL(knownFolderNode: KnownFolderNode?) {
         guard juggler != nil else { return }
-        guard tree != nil else { return }
+        guard let known = knownFolderNode else { return }
+        let knownURL = known.url
+        var ok = true
+        if let folder = known.known {
+            if folder.fromBookmark {
+                ok = knownURL.startAccessingSecurityScopedResource()
+                if ok {
+                    folder.inUse = true
+                } else {
+                    communicateError("Notenik could not gain access to the folder -- you will need to re-open it.",
+                                     alert: true)
+                }
+            }
+        }
+        if ok {
+            var urls: [URL] = []
+            urls.append(knownURL)
+            _ = juggler!.open(urls: urls)
+        }
+    }
+    
+    @IBAction func removePushed(_ sender: Any) {
+        guard knownFolders != nil else { return }
         let selRow = outlineView.selectedRow
         let selItem = outlineView.item(atRow: selRow) as? KnownFolderNode
         guard selItem != nil else { return }
-        let base = selItem!.base
-        let newFolder = newFolderTextField.stringValue
-        guard newFolder.count > 0 else {
-            communicateError("Please enter the desired name of the new Collection", alert: true)
-            return
-        }
-        print("Base URL = \(base.url.path)")
-        print("New folder is \(newFolder)")
-        let newURL = base.url.appendingPathComponent(newFolder, isDirectory: true)
-        print("New URL = \(newURL.absoluteString)")
-        var ok = juggler!.newFolder(folderURL: newURL)
-        guard ok else {
-            communicateError("New Collection Could Not Be Created with the given Name", alert: true)
-            return
-        }
-
-        ok = juggler!.newCollection(fileURL: newURL)
-        guard ok else {
-            communicateError("New Collection could not be successfully created", alert: true)
-            return
-        }
+        knownFolders!.remove(selItem!)
+        reload()
     }
     
     /// Log an error message and optionally display an alert message.

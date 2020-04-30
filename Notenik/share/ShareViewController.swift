@@ -28,6 +28,7 @@ class ShareViewController: NSViewController {
     let htmlDocValue = "html-doc"
     let htmlFragmentValue = "html-fragment"
     let markkdownValue = "markdown"
+    let markdownQuoteValue = "mdquote"
     let notenikValue = "notenik"
     let jsonValue = "json"
     
@@ -45,6 +46,7 @@ class ShareViewController: NSViewController {
     @IBOutlet var formatHTMLDocButton: NSButton!
     @IBOutlet var formatHTMLFragmentButton: NSButton!
     @IBOutlet var formatMarkdownButton: NSButton!
+    @IBOutlet var formatMarkdownQuoteButton: NSButton!
     @IBOutlet var formatNotenikButton: NSButton!
     @IBOutlet var formatJSONButton: NSButton!
     
@@ -69,6 +71,8 @@ class ShareViewController: NSViewController {
             formatHTMLFragmentButton.state = .on
         } else if formatSelector == markkdownValue {
             formatMarkdownButton.state = .on
+        } else if formatSelector == markdownQuoteValue {
+            formatMarkdownQuoteButton.state = .on
         } else if formatSelector == jsonValue {
             formatJSONButton.state = .on
         } else {
@@ -97,7 +101,24 @@ class ShareViewController: NSViewController {
         }
         
         // Perform selected transformation
-        if contentBodyOnlyButton.state == .on && formatMarkdownButton.state == .on {
+        if formatMarkdownQuoteButton.state == .on {
+            let markedUp = Markedup(format: .markdown)
+            if note!.hasBody() {
+                markedUp.startBlockQuote()
+                markedUp.writeBlockOfLines(note!.body.value)
+                markedUp.finishBlockQuote()
+            }
+            if contentEntireNoteButton.state == .on {
+                let author = note!.author.value
+                if author.count > 0 {
+                    markedUp.newLine()
+                    var authorLine = "-- "
+                    authorLine.append(author)
+                    markedUp.writeLine(authorLine)
+                }
+            }
+            stringToShare = markedUp.code
+        } else if contentBodyOnlyButton.state == .on && formatMarkdownButton.state == .on {
             // No conversion required
             if note!.hasBody() {
                 stringToShare = note!.body.value
@@ -187,6 +208,8 @@ class ShareViewController: NSViewController {
             formatSelector = htmlFragmentValue
         } else if formatMarkdownButton.state == .on {
             formatSelector = markkdownValue
+        } else if formatMarkdownQuoteButton.state == .on {
+            formatSelector = markdownQuoteValue
         } else if formatJSONButton.state == .on {
             formatSelector = jsonValue
         }
