@@ -11,6 +11,7 @@
 
 import Cocoa
 
+import NotenikUtils
 import NotenikLib
 
 class NoteListViewController:   NSViewController,
@@ -45,8 +46,26 @@ class NoteListViewController:   NSViewController,
     /// Initialization after the view loaded.
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.setDraggingSourceOperationMask(.copy, forLocal: false)
         tableView.registerForDraggedTypes([NSPasteboard.PasteboardType(kUTTypeBookmark as String),
-                                           NSPasteboard.PasteboardType(kUTTypeURL as String)])
+                                           NSPasteboard.PasteboardType(kUTTypeURL as String),
+                                           .string])
+    }
+    
+    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+        if let selectedNote = notenikIO?.getNote(at: row) {
+            let maker = NoteLineMaker()
+            let _ = maker.putNote(selectedNote)
+            var str = ""
+            if let writer = maker.writer as? BigStringWriter {
+                str = writer.bigString
+            }
+            return str as NSString
+            // let board = NSPasteboard.general
+            // board.clearContents()
+            // board.setString(str, forType: NSPasteboard.PasteboardType.string)
+        }
+        return nil
     }
     
     /// Validate a proposed drop operation.
@@ -57,11 +76,12 @@ class NoteListViewController:   NSViewController,
     /// Process one or more dropped items.
     func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
         let pasteboard = info.draggingPasteboard
-        guard let items = pasteboard.pasteboardItems else { return true }
+        guard let items = pasteboard.pasteboardItems else { return false }
         if collectionWindowController != nil {
             collectionWindowController!.pasteItems(items)
+            return true
         }
-        return true
+        return false
     }
     
     override func viewDidAppear() {

@@ -418,7 +418,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let urlNameType = NSPasteboard.PasteboardType("public.url-name")
         let urlType     = NSPasteboard.PasteboardType("public.url")
         for item in pbItems {
-            let str = item.string(forType: NSPasteboard.PasteboardType.string)
+            let str = item.string(forType: .string)
             let url = item.string(forType: urlType)
             let title = item.string(forType: urlNameType)
             var note = Note(collection: collection)
@@ -426,9 +426,11 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                 _ = note.setTitle(title!)
                 _ = note.setLink(url!)
             } else if str != nil {
+                print("CollectionWindowController paste next item")
                 let reader = BigStringReader(str!)
                 let parser = NoteLineParser(collection: collection, reader: reader)
-                note = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)")
+                note = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)",
+                    allowDictAdds: false)
             }
             if note.hasTitle() {
                 let originalTitle = note.title.value
