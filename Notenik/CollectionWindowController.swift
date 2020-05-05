@@ -421,16 +421,18 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             let str = item.string(forType: .string)
             let url = item.string(forType: urlType)
             let title = item.string(forType: urlNameType)
-            var note = Note(collection: collection)
+            let note = Note(collection: collection)
             if url != nil && title != nil {
                 _ = note.setTitle(title!)
                 _ = note.setLink(url!)
             } else if str != nil {
-                print("CollectionWindowController paste next item")
+                let tempCollection = NoteCollection()
+                tempCollection.otherFields = true
                 let reader = BigStringReader(str!)
-                let parser = NoteLineParser(collection: collection, reader: reader)
-                note = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)",
-                    allowDictAdds: false)
+                let parser = NoteLineParser(collection: tempCollection, reader: reader)
+                let tempNote = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)",
+                    allowDictAdds: true)
+                tempNote.copyDefinedFields(to: note)
             }
             if note.hasTitle() {
                 let originalTitle = note.title.value

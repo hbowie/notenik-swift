@@ -192,6 +192,28 @@ class CollectorViewController:
         }
     }
     
+    @IBAction func parentPushed(_ sender: Any) {
+        guard juggler != nil else { return }
+        let selRow = outlineView.selectedRow
+        guard let known = outlineView.item(atRow: selRow) as? KnownFolderNode else { return }
+        let knownURL = known.url
+        var ok = true
+        if let folder = known.known {
+            if folder.fromBookmark {
+                ok = knownURL.startAccessingSecurityScopedResource()
+                if ok {
+                    folder.inUse = true
+                } else {
+                    communicateError("Notenik could not gain access to the folder -- you will need to re-open it.",
+                                     alert: true)
+                }
+            }
+        }
+        if ok {
+            juggler!.openParentRealm(parentURL: knownURL)
+        }
+    }
+    
     @IBAction func removePushed(_ sender: Any) {
         guard knownFolders != nil else { return }
         let selRow = outlineView.selectedRow

@@ -148,12 +148,12 @@
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ECq-Qj-Cln">
                                 <rect key="frame" x="314" y="13" width="100" height="32"/>
-                                <buttonCell key="cell" type="push" title="Remove" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="e58-8M-NXV">
+                                <buttonCell key="cell" type="push" title="Parent" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="e58-8M-NXV">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="removePushed:" target="fZe-4r-K95" id="9XP-Wb-U7i"/>
+                                    <action selector="parentPushed:" target="fZe-4r-K95" id="60P-WM-LWJ"/>
                                 </connections>
                             </button>
                         </subviews>
