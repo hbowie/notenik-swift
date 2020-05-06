@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -74,8 +74,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         knownFolders.reload()
     }
     
-    func loadKnownFolderDefaults() {
-        knownFolders.loadDefaults()
+    func loadBookmarkDefaults() {
+        knownFolders.loadBookmarkDefaults()
     }
     
     /// Find a collection to show in the initial window shown upon application launch.
@@ -142,8 +142,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         selectCollection(requestType: .new)
     }
     
-    /// Display the Collector Window.
-    func displayCollector() {
+    /// Display the Bookmarks Window.
+    func displayBookmarksBoard() {
         if collectorWindowController == nil {
             collectorWindowController = collectorStoryboard.instantiateController(withIdentifier: "collectorWC") as? CollectorWindowController
         }

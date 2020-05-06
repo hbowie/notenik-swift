@@ -54,7 +54,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         logger.logDestUnified = true
         juggler.startup()
         juggler.makeRecentDocsKnown(recentDocumentURLs)
-        juggler.loadKnownFolderDefaults()
         var successfulOpens = 0
         if launchURLs.count > 0 {
             successfulOpens = juggler.open(urls: launchURLs)
@@ -94,8 +93,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         juggler.userRequestsNewCollection()
     }
     
-    @IBAction func displayCollector(_ sender: NSMenuItem) {
-        juggler.displayCollector()
+    /// Display a tree view of the recent files and remembered bookmarks.
+    @IBAction func displayBookmarksBoard(_ sender: NSMenuItem) {
+        juggler.displayBookmarksBoard()
+    }
+    
+    /// Load the remembered bookmarks. 
+    @IBAction func loadBookmarks(_ sender: NSMenuItem) {
+        juggler.loadBookmarkDefaults()
     }
 
     @IBAction func menuFileOpenAction(_ sender: NSMenuItem) {

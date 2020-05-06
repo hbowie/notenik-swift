@@ -95,15 +95,21 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1JX-EK-Sqq"/>
-                                        <menuItem title="Collections Board..." keyEquivalent="b" id="1af-nT-gSn">
-                                            <connections>
-                                                <action selector="displayCollector:" target="Voe-Tx-rLC" id="hXn-ou-xTu"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Open Parent Realm..." keyEquivalent="o" id="qGi-li-dJF">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuFileOpenParentRealm:" target="Voe-Tx-rLC" id="mXe-2Q-4cT"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Bookmarks Board..." keyEquivalent="b" id="1af-nT-gSn">
+                                            <connections>
+                                                <action selector="displayBookmarksBoard:" target="Voe-Tx-rLC" id="hXn-ou-xTu"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Load Bookmarks" keyEquivalent="b" id="mrs-wd-gth" userLabel="Load Bookmarks">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="loadBookmarks:" target="Voe-Tx-rLC" id="Xgg-j5-00T"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="uYG-Vh-z53"/>
@@ -1264,7 +1270,7 @@ CA
                                         </tableView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.99293286219081267" horizontal="YES" id="CTE-sV-ET2">
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
                                     <rect key="frame" x="1" y="25" width="448" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -1302,13 +1308,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="240"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="238"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="448" height="238"/>
+                                    <rect key="frame" x="1" y="1" width="448" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="448" height="238"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="236"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
