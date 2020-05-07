@@ -1,6 +1,6 @@
 Title:  Copy, Cut, Paste and Share your Notes
 
-Tags:   copy, cut, paste, share
+Tags:   copy, cut, drag, drop, paste, share
 
 Timestamp: 20191211202744
 
@@ -22,10 +22,14 @@ There are several different actions you can perform with individual notes.
 
 * Duplicate - Use the Duplicate Note command beneath the Note menu to duplicate the currently selected Note within the same Collection. 
 
-* Share menu command - Use the Share command beneath the Note menu to share the contents of the selected Note with several different options: share the Note's body only, or the entire Note; share in plain text format, or in Markdown format, or as an HTML fragment or as an entire HTML document; and copy the result to the system clipboard, or write the result to an output text file. 
+* Share menu command - Use the Share command beneath the Note menu to share the contents of the selected Note with several different options: share the Note's body only, or the entire Note; share in plain text format, or in Markdown format, or as a Markdown blockquote, or as an HTML fragment or as an entire HTML document; and copy the result to the system clipboard, or write the result to an output text file. 
 
 * Share via Toolbar - Use the Share command on the Toolbar to send an entire Note to any of several different destinations (Mail, Message, etc.)
+
+* Drag and Drop - When two Collections are open, the user may drag a Note from the List view of one Collection to the List view of a second Collection and Drop it there. The Note will be added to the second Collection, and will still remain in its original Collection. 
 
 Be aware that the user should be on the Display Tab, and not the Edit tab, in order to perform cut/copy/paste functions since, when on the Edit tab, cut/copy/paste will typically apply to the text within a field, and not to the entire note. 
 
 Also be aware that Note Attachments will not be copied or pasted.
+
+When copying notes from one Collection to another, any fields present in the first Collection but not in the second will be dropped.

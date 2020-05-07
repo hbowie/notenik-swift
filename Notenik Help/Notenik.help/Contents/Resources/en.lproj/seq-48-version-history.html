@@ -9,6 +9,19 @@
 <h1>
 Version History
 </h1>
+<h3>Version 3.6.0 | 06 May 2020</h3>
+<h4>1. Added new Note Sharing Format of Markdown Quote</h4>
+<p>The body of the selected Note will have Markdown blockquoting applied to it. This can be accessed from the Share item beneath the Note menu. </p>
+<h4>2. Bookmarks Retention Now Attempted</h4>
+<p>There are a couple of new commands beneath the File menu. The <code>Bookmarks Board</code> command will open up a window showing folders that have been remembered from previous sessions, and will show these in a hierarchical tree view. At a minimum, this window will show the same folders listed unter the <code>Open Recent</code> menu. The second, related, new command, <code>Load Bookmarks</code>, will attempt to load additional folder references that have been stored in the User Defaults as Security-Scoped Bookmarks. If none of this makes any sense, or seems to offer anything useful, then it can safely be ignored. </p>
+<h4>3. Drag and Drop from One Collection to Another</h4>
+<p>When two Collections are open, the user may now drag a Note from the List view of one Collection to the List view of a second Collection and Drop it there. The Note will be added to the second Collection, and will still remain in its original Collection. Any fields present in the first Collection but not defined in the second will be dropped. </p>
+<h4>4. Bug Fixed When Pasting or Dragging a Note with Dissimilar Fields</h4>
+<p>When pasting a copied Note into a Collection, if the Note to be copied had fields not already in the target Collection, then the paste would fail and the app would crash. </p>
+<p>Dragging and dropping a Note from one Collection to another would cause a similar situation. </p>
+<p>This has been fixed so that additional fields not present in the target Collection will be ignored. </p>
+<h4>5. Improved Apostrophe Handling</h4>
+<p>An apostrophe appearing in the middle of a word, or at the beginning of a word, is no longer treated as if it might be a closing single quote mark. </p>
 <h3>Version 3.5.0 | 19 Apr 2020</h3>
 <h4>1. Create New Notes with Drag and Drop</h4>
 <p>You can now drag a &#8220;bookmark&#8221; (consisting of a title and a link) into the list view of Notenik in order to add a new Note. Bookmarks can be dragged from the URL field at the top of a browser window, or from a hyperlink within a web page. </p>
