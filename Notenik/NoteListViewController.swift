@@ -50,6 +50,16 @@ class NoteListViewController:   NSViewController,
         tableView.registerForDraggedTypes([NSPasteboard.PasteboardType(kUTTypeBookmark as String),
                                            NSPasteboard.PasteboardType(kUTTypeURL as String),
                                            .string])
+        tableView.target = self
+        tableView.doubleAction = #selector(doubleClick(_:))
+    }
+    
+    @objc func doubleClick(_ sender: Any) {
+        guard collectionWindowController != nil else { return }
+        let row = tableView.selectedRow
+        guard row >= 0 else { return }
+        guard let clickedNote = notenikIO?.getNote(at: row) else { return }
+        collectionWindowController!.launchLink(for: clickedNote)
     }
     
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {

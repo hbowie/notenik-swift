@@ -24,6 +24,8 @@ class CollectorViewController:
 
     @IBOutlet var outlineView: NSOutlineView!
     
+    @IBOutlet var newCollectionName: NSTextField!
+    
     var knownFolders: KnownFolders?
     
     var juggler: CollectionJuggler?
@@ -211,6 +213,25 @@ class CollectorViewController:
         }
         if ok {
             juggler!.openParentRealm(parentURL: knownURL)
+        }
+    }
+    
+    @IBAction func newPushed(_ sender: Any) {
+        guard juggler != nil else { return }
+        guard knownFolders != nil else { return }
+        let folderName = newCollectionName.stringValue
+        guard folderName.count > 0 else {
+            communicateError("Please specify a folder name for the new Collection", alert: true)
+            return
+        }
+        let newURL = knownFolders!.createNewCloudFolder(folderName: folderName)
+        guard newURL != nil else {
+            communicateError("New Collection Folder could not be created: see Log for possible details", alert: true)
+            return
+        }
+        let ok = juggler!.newCollection(fileURL: newURL!)
+        if !ok {
+            communicateError("New Collection could not be created: see Log for possible details", alert: true)
         }
     }
     

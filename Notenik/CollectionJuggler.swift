@@ -207,9 +207,11 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         AppPrefs.shared.parentRealmPath = parentURL.path
         appPrefs.parentRealmParentURL = parentURL.deletingLastPathComponent()
         let realmScanner = RealmScanner()
-        realmScanner.openRealm(path: parentURL.path)
-        let io = realmScanner.realmIO
-        _ = assignIOtoWindow(io: io)
+        let ok = realmScanner.openRealm(path: parentURL.path)
+        if ok {
+            let io = realmScanner.realmIO
+            _ = assignIOtoWindow(io: io)
+        }
     }
     
     /// The user has requested us to save the current collection in a new location

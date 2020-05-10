@@ -101,15 +101,9 @@
                                                 <action selector="menuFileOpenParentRealm:" target="Voe-Tx-rLC" id="mXe-2Q-4cT"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Bookmarks Board..." keyEquivalent="b" id="1af-nT-gSn">
+                                        <menuItem title="Collections Board..." keyEquivalent="b" id="1af-nT-gSn" userLabel="Collections Board...">
                                             <connections>
                                                 <action selector="displayBookmarksBoard:" target="Voe-Tx-rLC" id="hXn-ou-xTu"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Load Bookmarks" keyEquivalent="b" id="mrs-wd-gth" userLabel="Load Bookmarks">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="loadBookmarks:" target="Voe-Tx-rLC" id="Xgg-j5-00T"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="uYG-Vh-z53"/>
@@ -290,6 +284,11 @@ CA
                                         <menuItem title="Save Note" keyEquivalent="s" id="YKI-vO-asj" userLabel="Save Note">
                                             <connections>
                                                 <action selector="saveEdits:" target="Ady-hI-5gd" id="Gia-1T-DT2"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Discard Edits" keyEquivalent="d" id="kdc-qt-yfB">
+                                            <connections>
+                                                <action selector="discardEdits:" target="Ady-hI-5gd" id="Irs-CM-Nwg"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="hO4-zP-9EJ"/>
@@ -1308,13 +1307,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="238"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="234"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="448" height="236"/>
+                                    <rect key="frame" x="1" y="1" width="448" height="232"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="448" height="236"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="232"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

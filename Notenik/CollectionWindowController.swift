@@ -1032,6 +1032,25 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         tagsVC!.reload()
     }
     
+    @IBAction func discardEdits(_ sender: Any) {
+        
+        guard io != nil && io!.collectionOpen else { return }
+        
+        if newNoteRequested {
+            let (note, position) = io!.firstNote()
+            crumbs!.refresh()
+            select(note: note, position: position, source: .action)
+        } else {
+            let (note, _) = io!.getSelectedNote()
+            guard note != nil else { return }
+            select(note: note, position: nil, source: .action)
+        }
+        newNoteRequested = false
+        pendingMod = false
+        
+        noteTabs!.tabView.selectFirstTabViewItem(nil)
+    }
+    
     @IBAction func saveEdits(_ sender: Any) {
         if !pendingMod {
             let _ = modIfChanged()
@@ -1165,6 +1184,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     @IBAction func launchLink(_ sender: Any) {
         let (_, sel) = guardForNoteAction()
         guard let noteToUse = sel else { return }
+        launchLink(for: noteToUse)
+    }
+    
+    func launchLink(for noteToUse: Note) {
         let possibleURL = noteToUse.linkAsURL
         guard let url = possibleURL else { return }
         var urlPointsToCollection = false
