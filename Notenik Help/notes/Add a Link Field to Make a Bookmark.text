@@ -4,7 +4,7 @@ Tags:   bookmarks, link, url
 
 Timestamp: 20191120203619
 
-Seq:    21
+Seq:    22
 
 Level:  3
 
@@ -21,4 +21,4 @@ Note that if you use a Link to point to a local folder containing another Noteni
 
 You may use the Set Local Link command under the Note menu to choose a file or folder to be linked; the resulting 'file:///' style of URL will then replace any value previously stored in the Link field for the current Note.
 
-Note that you can drag a bookmark from a Web browser (such as Safari or Chrome) and drop it into an open Collection's List view in order to add that bookmark to the Collection as a new Note. A bookmark can typically be dragged either from the browser's URL field, at the top of the screen, or from a link within a page. The result of such a drag and drop operation will be a new Note with its Title and Link fields populated. 
+Note that you can drag a bookmark from a Web browser (such as Safari or Chrome) and drop it into an open Collection's List view in order to add that bookmark to the Collection as a new Note. A bookmark can typically be dragged either from the browser's URL field, at the top of the screen, or from a link within a page. The result of such a drag and drop operation will be a new Note with its Title and Link fields populated.

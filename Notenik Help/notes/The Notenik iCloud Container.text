@@ -1,0 +1,27 @@
+Title:  The Notenik iCloud Container
+
+Tags:   iCloud
+
+Timestamp: 20200507224011
+
+Seq:    15
+
+Date Added: 2020-05-07 22:40:11 +0000
+
+Body: 
+
+Starting with Version 3.7.0, Notenik has its own iCloud container. 
+
+From the macOS Finder, you can see this container within [iCloud Drive][id], appearing as a folder with the unsurprising name of 'Notenik'. You can tell that this is a container for the app named Notenik, rather than an ordinary folder, by the Notenik app icon overlaid on the normal folder icon. 
+
+Within this Notenik iCloud Container, then, you would normally place one or more of your Notenik Collections, each with its own subfolder. 
+
+Because macOS knows that this folder is really a container for Notenik documents, it gives Notenik some special privileges here: any Collection stored in this folder can always be accessed by the Notenik app, without you having to explicitly select the Collection to be opened each time. 
+
+One easy way to access the Collections within the container is by choosing to open the 'Collections Board' via an item beneath the File menu. Then, after clicking on the disclosure triangle to reveal the contents of 'iCloud Notenik', you will see a list of all the Collections within the Container. Double-click on one of them to open it (or select one and then click on the 'Open' button below). 
+
+You can also use the Collections Board to create a new Collection within the iCloud container by typing in the desired name of the new Collection in the text field at the bottom of the window, then hitting the 'New' button. 
+
+And oh, BTW, if and when a Notenik app for iOS ever appears, this is the folder that will be shared between the Mac and various iOS devices. 
+
+[id]: https://support.apple.com/en-us/HT201104

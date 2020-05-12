@@ -1,5 +1,7 @@
 Title:  Create a New Collection
 
+Tags:   create, new
+
 Timestamp: 20200217235238
 
 Seq:    5
@@ -23,4 +25,3 @@ Each Note file is an ordinary text file, and can be opened using any text editor
 Next select the fields you would like to be made part of each Note. Every Note must have a Title and a Body, and the Tags and Link fields are commonly used, but feel free to use the checkboxes to select whatever other fields might be useful to you. 
 
 When you're done with this screen, click OK to continue, and you'll see your first Note!
-

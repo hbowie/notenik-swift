@@ -4,7 +4,7 @@ Tags:   keys, shortcuts
 
 Timestamp: 20191120203540
 
-Seq:    48
+Seq:    49
 
 Level:  3
 
@@ -15,7 +15,9 @@ Body:
 Following are the keyboard shortcuts available within the app. When combined with the CMD key, these keys can be used as handy shortcuts.
 
 * A - Select All
+* B - Collections Board
 * C - Copy
+* D - Discard Edits
 * E - Open Essential Collection
 * F - Find
 * G - Find Again

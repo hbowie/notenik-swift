@@ -26,9 +26,10 @@ Body:
 4.2 <a href="#notes-are-collected-into-folders">Notes are Collected into Folders</a>  <br />
 4.3 <a href="#other-files-and-subfolders">Other Files and Subfolders</a>  <br />
 4.4 <a href="#open-parent-realm">Open Parent Realm</a>  <br />
-4.5 <a href="#disk-access-permissions">Disk Access Permissions</a>  <br />
-4.6 <a href="#supported-variations-in-text-file-formats">Supported Variations in Text File Formats</a>  <br />
-4.7 <a href="#sync-your-notes">Sync Your Notes</a>  <br />
+4.5 <a href="#the-notenik-icloud-container">The Notenik iCloud Container</a>  <br />
+4.6 <a href="#disk-access-permissions">Disk Access Permissions</a>  <br />
+4.7 <a href="#supported-variations-in-text-file-formats">Supported Variations in Text File Formats</a>  <br />
+4.8 <a href="#sync-your-notes">Sync Your Notes</a>  <br />
 </li>
 <li><a href="#fields">Fields</a> <br />
 5.1 <a href="#each-note-has-a-title-and-a-body">Each Note has a Title and a Body</a>  <br />
@@ -64,8 +65,8 @@ Body:
 8.8 <a href="#website-building">Website Building</a>  <br />
 </li>
 <li><a href="#reference">Reference</a> <br />
-9.1 <a href="#keyboard-shortcuts">Keyboard Shortcuts</a>  <br />
-9.2 <a href="#version-history">Version History</a>  <br />
+9.1 <a href="#version-history">Version History</a>  <br />
+9.2 <a href="#keyboard-shortcuts">Keyboard Shortcuts</a>  <br />
 9.3 <a href="#rights">Rights</a>  <br />
 9.4 <a href="#support">Support</a>  <br />
 </li>
