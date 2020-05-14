@@ -410,6 +410,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         pasteItems(items)
     } // end of paste function
     
+    /// Paste items, whether dragged or pasted.
     func pasteItems(_ pbItems: [NSPasteboardItem]) {
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
@@ -417,14 +418,26 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         var firstNotePasted: Note?
         let urlNameType = NSPasteboard.PasteboardType("public.url-name")
         let urlType     = NSPasteboard.PasteboardType("public.url")
+        let vcardType   = NSPasteboard.PasteboardType(kUTTypeVCard as String)
         for item in pbItems {
             let str = item.string(forType: .string)
+            let vcard = item.string(forType: vcardType)
             let url = item.string(forType: urlType)
             let title = item.string(forType: urlNameType)
             let note = Note(collection: collection)
             if url != nil && title != nil {
                 _ = note.setTitle(title!)
                 _ = note.setLink(url!)
+            } else if vcard != nil {
+                let parser = VCardParser()
+                let cards = parser.parse(vcard!)
+                for vcard in cards {
+                    let contactNote = NoteFromVCard.makeNote(from: vcard, collection: collection)
+                    let addedNote = addPastedNote(contactNote)
+                    if addedNote != nil && firstNotePasted == nil {
+                        firstNotePasted = addedNote
+                    }
+                }
             } else if str != nil {
                 let tempCollection = NoteCollection()
                 tempCollection.otherFields = true
@@ -434,32 +447,36 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                     allowDictAdds: true)
                 tempNote.copyDefinedFields(to: note)
             }
-            if note.hasTitle() {
-                let originalTitle = note.title.value
-                var keyFound = true
-                var dupCount = 1
-                while keyFound {
-                    let id = note.noteID
-                    let existingNote = noteIO.getNote(forID: id)
-                    if existingNote != nil {
-                        dupCount += 1
-                        _ = note.setTitle("\(originalTitle) \(dupCount)")
-                        keyFound = true
-                    } else {
-                        keyFound = false
-                    }
-                }
-                let (pastedNote, _) = noteIO.addNote(newNote: note)
-                notesAdded += 1
-                if pastedNote != nil && firstNotePasted == nil {
-                    firstNotePasted = pastedNote
-                }
+            let addedNote = addPastedNote(note)
+            if addedNote != nil && firstNotePasted == nil {
+                firstNotePasted = addedNote
             }
         } // end for each item
         finishBatchOperation()
         if firstNotePasted != nil {
             select(note: firstNotePasted, position: nil, source: .nav)
         }
+    }
+    
+    func addPastedNote(_ noteToAdd: Note) -> Note? {
+        guard let noteIO = guardForCollectionAction() else { return nil }
+        guard noteToAdd.hasTitle() else { return nil }
+        let originalTitle = noteToAdd.title.value
+        var keyFound = true
+        var dupCount = 1
+        while keyFound {
+            let id = noteToAdd.noteID
+            let existingNote = noteIO.getNote(forID: id)
+            if existingNote != nil {
+                dupCount += 1
+                _ = noteToAdd.setTitle("\(originalTitle) \(dupCount)")
+                keyFound = true
+            } else {
+                keyFound = false
+            }
+        }
+        let (pastedNote, _) = noteIO.addNote(newNote: noteToAdd)
+        return pastedNote
     }
     
     /// Ask the user to pick a file or folder and set the link field to the local URL

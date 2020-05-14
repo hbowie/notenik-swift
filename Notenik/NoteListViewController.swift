@@ -49,7 +49,8 @@ class NoteListViewController:   NSViewController,
         tableView.setDraggingSourceOperationMask(.copy, forLocal: false)
         tableView.registerForDraggedTypes([NSPasteboard.PasteboardType(kUTTypeBookmark as String),
                                            NSPasteboard.PasteboardType(kUTTypeURL as String),
-                                           .string])
+                                           NSPasteboard.PasteboardType.vCard,
+                                           NSPasteboard.PasteboardType.string])
         tableView.target = self
         tableView.doubleAction = #selector(doubleClick(_:))
     }
@@ -71,9 +72,6 @@ class NoteListViewController:   NSViewController,
                 str = writer.bigString
             }
             return str as NSString
-            // let board = NSPasteboard.general
-            // board.clearContents()
-            // board.setString(str, forType: NSPasteboard.PasteboardType.string)
         }
         return nil
     }
