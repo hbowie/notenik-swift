@@ -47,6 +47,8 @@ class NoteListViewController:   NSViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.setDraggingSourceOperationMask(.copy, forLocal: false)
+        // NSPasteboard.PasteboardType(kUTTypeEmailMessage as String)])
+        tableView.registerForDraggedTypes(NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0) })
         tableView.registerForDraggedTypes([NSPasteboard.PasteboardType(kUTTypeBookmark as String),
                                            NSPasteboard.PasteboardType(kUTTypeURL as String),
                                            NSPasteboard.PasteboardType.vCard,
@@ -83,13 +85,27 @@ class NoteListViewController:   NSViewController,
     
     /// Process one or more dropped items.
     func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+        
+        guard collectionWindowController != nil else { return false }
+        
         let pasteboard = info.draggingPasteboard
-        guard let items = pasteboard.pasteboardItems else { return false }
-        if collectionWindowController != nil {
-            collectionWindowController!.pasteItems(items)
+        
+        let items = pasteboard.pasteboardItems
+        var notesPasted = 0
+        
+        if items != nil && items!.count > 0 {
+            notesPasted = collectionWindowController!.pasteItems(items!)
+        }
+        
+        guard notesPasted == 0 else { return true }
+        
+        let filePromises = pasteboard.readObjects(forClasses: [NSFilePromiseReceiver.self], options: nil)
+        if filePromises != nil {
+            collectionWindowController!.pastePromises(filePromises!)
             return true
         }
-        return false
+        
+        return true
     }
     
     override func viewDidAppear() {

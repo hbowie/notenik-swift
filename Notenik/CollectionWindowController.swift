@@ -27,6 +27,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     @IBOutlet var attachmentsMenu: NSMenu!
     
+    let application = NSApplication.shared
     let juggler  = CollectionJuggler.shared
     let appPrefs = AppPrefs.shared
     let osdir    = OpenSaveDirectory.shared
@@ -54,8 +55,12 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     // Is modIfChanged logic in progress? (Test to prevent unintended recursion.)
     var pendingMod = false
     
+    var pendingPromise = false
+    
     var newNote: Note?
     var modInProgress = false
+    
+    var emailPromised = false
     
     var splitViewController: NoteSplitViewController?
     
@@ -179,8 +184,14 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         preferredExt = noteIO.collection!.preferredExt
         
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
-            collectionPrefsController.showWindow(self)
-            collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: noteIO.collection!)
+            if let collectionPrefsWindow = collectionPrefsController.window {
+                let collectionPrefsVC = collectionPrefsWindow.contentViewController as! CollectionPrefsViewController
+                collectionPrefsVC.passCollectionPrefsRequesterInfo(owner: self, collection: noteIO.collection!, window: collectionPrefsController)
+                application.runModal(for: collectionPrefsWindow)
+                collectionPrefsWindow.close()
+            }
+            // collectionPrefsController.showWindow(self)
+            // collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: noteIO.collection!)
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionWindowController",
@@ -200,7 +211,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     func collectionPrefsModified(ok: Bool,
                                  collection: NoteCollection,
                                  window: CollectionPrefsWindowController) {
-        window.close()
+        application.stopModal()
+        // window.close()
         guard ok else { return }
         guard let noteIO = guardForCollectionAction() else { return }
         if noteIO.collection!.preferredExt != preferredExt {
@@ -407,59 +419,175 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     @IBAction func paste(_ sender: AnyObject?) {
         let board = NSPasteboard.general
         guard let items = board.pasteboardItems else { return }
-        pasteItems(items)
+        _ = pasteItems(items)
     } // end of paste function
     
-    /// Paste items, whether dragged or pasted.
-    func pasteItems(_ pbItems: [NSPasteboardItem]) {
-        guard let noteIO = guardForCollectionAction() else { return }
-        guard let collection = noteIO.collection else { return }
+    /// Paste incoming items, whether via drag or paste, returning number of notes added.
+    func pasteItems(_ pbItems: [NSPasteboardItem]) -> Int{
+        
+        // Make sure we're ready to do stuff.
+        guard let noteIO = guardForCollectionAction() else { return 0 }
+        guard let collection = noteIO.collection else { return 0 }
+        
+        // Initialize constants and variables.
         var notesAdded = 0
         var firstNotePasted: Note?
         let urlNameType = NSPasteboard.PasteboardType("public.url-name")
         let urlType     = NSPasteboard.PasteboardType("public.url")
         let vcardType   = NSPasteboard.PasteboardType(kUTTypeVCard as String)
+        
+        // Process each pasteboard item.
         for item in pbItems {
-            let str = item.string(forType: .string)
+            var str = item.string(forType: .string)
+            if str != nil {
+                str = StringUtils.trim(str!)
+            }
             let vcard = item.string(forType: vcardType)
             let url = item.string(forType: urlType)
             let title = item.string(forType: urlNameType)
             let note = Note(collection: collection)
             if url != nil && title != nil {
+                logInfo(msg: "Processing pasted item as URL: \(title!)")
                 _ = note.setTitle(title!)
                 _ = note.setLink(url!)
             } else if vcard != nil {
+                logInfo(msg: "Processing pasted item as VCard")
                 let parser = VCardParser()
                 let cards = parser.parse(vcard!)
                 for vcard in cards {
                     let contactNote = NoteFromVCard.makeNote(from: vcard, collection: collection)
                     let addedNote = addPastedNote(contactNote)
-                    if addedNote != nil && firstNotePasted == nil {
-                        firstNotePasted = addedNote
+                    if addedNote != nil {
+                        notesAdded += 1
+                        if firstNotePasted == nil {
+                            firstNotePasted = addedNote
+                        }
                     }
                 }
-            } else if str != nil {
+            } else if str != nil && str!.count > 0 {
+                logInfo(msg: "Processing pasted item as Note")
                 let tempCollection = NoteCollection()
                 tempCollection.otherFields = true
                 let reader = BigStringReader(str!)
                 let parser = NoteLineParser(collection: tempCollection, reader: reader)
                 let tempNote = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)",
                     allowDictAdds: true)
-                tempNote.copyDefinedFields(to: note)
+                if !tempNote.title.value.hasPrefix("Pasted Note Number ")
+                        || tempNote.hasBody() || tempNote.hasLink() {
+                    tempNote.copyDefinedFields(to: note)
+                }
             }
             let addedNote = addPastedNote(note)
-            if addedNote != nil && firstNotePasted == nil {
-                firstNotePasted = addedNote
+            if addedNote != nil {
+                notesAdded += 1
+                if firstNotePasted == nil {
+                    firstNotePasted = addedNote
+                }
             }
         } // end for each item
         finishBatchOperation()
         if firstNotePasted != nil {
             select(note: firstNotePasted, position: nil, source: .nav)
         }
+        return notesAdded
+    }
+    
+    /// Queue used for reading and writing file promises.
+    private lazy var workQueue: OperationQueue = {
+        let providerQueue = OperationQueue()
+        providerQueue.qualityOfService = .userInitiated
+        return providerQueue
+    }()
+    
+    /// Directory URL used for accepting file promises.
+    private lazy var destinationURL: URL = {
+        let destinationURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("Drops")
+        try? FileManager.default.createDirectory(at: destinationURL, withIntermediateDirectories: true, attributes: nil)
+        return destinationURL
+    }()
+    
+    func pastePromises(_ promises: [Any]) {
+        emailPromised = false
+        for item in promises {
+            let promise = item as? NSFilePromiseReceiver
+            if promise != nil {
+                pendingPromise = true
+                for fileType in promise!.fileTypes {
+                    if fileType == "eml" {
+                        emailPromised = true
+                    }
+                }
+                promise!.receivePromisedFiles(atDestination: self.destinationURL,
+                                              options: [:],
+                                              operationQueue: self.workQueue) { (fileURL, error) in
+                    if let error = error {
+                        self.handlePromiseError(error)
+                    } else {
+                        self.handlePromisedFile(at: fileURL)
+                    }
+                }
+            } // end for each good promise
+        } // end for each promise
+    } // end func pastePromises
+    
+    func handlePromiseError(_ error: Error) {
+        OperationQueue.main.addOperation {
+            self.communicateError("Error fulfilling a file promise: \(error)")
+            /* if let window = self.view.window {
+                self.presentError(error, modalFor: window, delegate: nil, didPresent: nil, contextInfo: nil)
+            } else {
+                self.presentError(error)
+            }
+            self.imageCanvas.isLoading = false */
+        }
+    }
+    
+    func handlePromisedFile(at url: URL) {
+        var str = ""
+        do {
+            str = try String(contentsOf: url, encoding: .utf8)
+            if emailPromised {
+                scanPromisedEmailFile(str: str)
+            }
+        } catch {
+            print("Error trying to read contents of file at \(url.path)")
+        }
+    }
+    
+    func scanPromisedEmailFile(str: String) {
+        guard !pendingMod else { return }
+        guard io != nil && io!.collectionOpen else { return }
+        guard let noteIO = io else { return }
+        guard let collection = noteIO.collection else { return }
+        let msg = EmailMessage()
+        msg.scan(str: str)
+        if msg.subject.count > 0 {
+            let note = Note(collection: collection)
+            _ = note.setTitle(msg.subject)
+            var body = ""
+            if msg.to.count > 0 {
+                body.append("To: \(msg.to)  \n")
+            }
+            if msg.from.count > 0 {
+                body.append("From: \(msg.from)  \n")
+            }
+            if msg.date.count > 0 {
+                body.append("Date: \(msg.date)  \n")
+            }
+            if msg.body.count > 0 {
+                body.append(msg.body)
+            }
+            if body.count > 0 {
+                _ = note.setBody(body)
+            }
+            _ = addPastedNote(note)
+        }
     }
     
     func addPastedNote(_ noteToAdd: Note) -> Note? {
-        guard let noteIO = guardForCollectionAction() else { return nil }
+        guard !pendingMod else { return nil }
+        guard io != nil && io!.collectionOpen else { return nil }
+        guard let noteIO = io else { return nil }
         guard noteToAdd.hasTitle() else { return nil }
         let originalTitle = noteToAdd.title.value
         var keyFound = true
@@ -1043,10 +1171,17 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
     }
     
+    func checkForPromises() {
+        if pendingPromise {
+            reloadViews()
+        }
+    }
+    
     /// Reload the Collection Views when data has changed
     func reloadViews() {
         listVC!.reload()
         tagsVC!.reload()
+        pendingPromise = false
     }
     
     @IBAction func discardEdits(_ sender: Any) {
@@ -1077,8 +1212,14 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     /// Modify the Note if the user changed anything on the Edit Screen
     func modIfChanged() -> modIfChangedOutcome {
         guard editVC != nil else { return .notReady }
-        guard !pendingMod else { return .notReady }
-        guard newNoteRequested || pendingEdits else { return .noChange }
+        guard !pendingMod else {
+            checkForPromises()
+            return .notReady
+        }
+        guard newNoteRequested || pendingEdits else {
+            checkForPromises()
+            return .noChange
+        }
         pendingMod = true
         let (outcome, note) = editVC!.modIfChanged(newNoteRequested: newNoteRequested, newNote: newNote)
         if outcome != .tryAgain {
@@ -1107,6 +1248,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         if outcome == .add || outcome == .deleteAndAdd || outcome == .modify {
             checkForReviewRequest()
         }
+        checkForPromises()
         return outcome
     }
     
@@ -1236,6 +1378,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     @IBAction func reloadDisplayView(_ sender: Any) {
         guard displayVC != nil else { return }
         displayVC!.reload()
+        checkForPromises()
     }
     
     @IBAction func sortByTitle(_ sender: Any) {

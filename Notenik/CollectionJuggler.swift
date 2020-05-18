@@ -24,6 +24,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     // Shorthand references to System Objects
     private let defaults = UserDefaults.standard
+    let application = NSApplication.shared
     
     var cloudNik: CloudNik!
     var knownFolders: KnownFolders!
@@ -159,10 +160,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Let the user select a Collection to be opened
     func selectCollection(requestType: CollectionRequestType) {
         let openPanel = prepCollectionOpenPanel()
-        openPanel.begin { (result) -> Void  in
-            if result == .OK {
-                self.proceedWithSelectedURL(requestType: requestType, fileURL: openPanel.url!)
-            }
+        let result = openPanel.runModal()
+        if result == .OK {
+            proceedWithSelectedURL(requestType: requestType, fileURL: openPanel.url!)
         }
     }
     
@@ -192,10 +192,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = false
         openPanel.allowsMultipleSelection = false
-        openPanel.begin { (result) -> Void  in
-            if result == .OK {
-                self.openParentRealm(parentURL: openPanel.url!)
-            }
+        let result = openPanel.runModal()
+        if result == .OK {
+            self.openParentRealm(parentURL: openPanel.url!)
         }
     }
     
@@ -231,10 +230,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         openPanel.canCreateDirectories = true
         openPanel.canChooseFiles = false
         openPanel.allowsMultipleSelection = false
-        openPanel.begin { (result) -> Void  in
-            if result == .OK {
-                _ = self.saveCollectionAs(currentIO: currentIO, currentWindow: currentWindow, newURL: openPanel.url!)
-            }
+        let result = openPanel.runModal()
+        if result == .OK {
+            _ = self.saveCollectionAs(currentIO: currentIO, currentWindow: currentWindow, newURL: openPanel.url!)
         }
     }
     
@@ -368,8 +366,14 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         
         // Now let the user tailor the starting Collection default values
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
-            collectionPrefsController.showWindow(self)
-            collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io.collection!)
+            if let collectionPrefsWindow = collectionPrefsController.window {
+                let collectionPrefsVC = collectionPrefsWindow.contentViewController as! CollectionPrefsViewController
+                collectionPrefsVC.passCollectionPrefsRequesterInfo(owner: self, collection: io.collection!, window: collectionPrefsController)
+                application.runModal(for: collectionPrefsWindow)
+                collectionPrefsWindow.close()
+            }
+            // collectionPrefsController.showWindow(self)
+            // collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io.collection!)
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionJuggler",
@@ -424,7 +428,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     func collectionPrefsModified(ok: Bool,
                                  collection: NoteCollection,
                                  window: CollectionPrefsWindowController) {
-        window.close()
+        // window.close()
+        application.stopModal()
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
         realm.path = ""
@@ -488,10 +493,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = false
         openPanel.allowsMultipleSelection = false
-        openPanel.begin { (result) -> Void  in
-            if result == .OK {
-                _ = self.openFileWithNewWindow(fileURL: openPanel.url!, readOnly: false)
-            }
+        let result = openPanel.runModal()
+        if result == .OK {
+            _ = self.openFileWithNewWindow(fileURL: openPanel.url!, readOnly: false)
         }
     }
     
@@ -622,10 +626,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.allowsMultipleSelection = false
-        openPanel.begin { (result) -> Void  in
-            if result == .OK {
-                self.launchScript(fileURL: openPanel.url!)
-            }
+        let result = openPanel.runModal()
+        if result == .OK {
+            self.launchScript(fileURL: openPanel.url!)
         }
     }
     
