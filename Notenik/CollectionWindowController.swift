@@ -1142,6 +1142,15 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let (nio, sel) = guardForNoteAction()
         guard let noteIO = nio, let selectedNote = sel else { return }
         
+        if noteIO.notesCount < 2 {
+            let alert = NSAlert()
+            alert.alertStyle = .warning
+            alert.messageText = "A Notenik Collection always needs to have at least one Note"
+            alert.addButton(withTitle: "OK")
+            _ = alert.runModal()
+            return
+        }
+        
         var proceed = true
         if appPrefs.confirmDeletes {
             let alert = NSAlert()
