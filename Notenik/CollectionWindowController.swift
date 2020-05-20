@@ -648,7 +648,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             if !writeOK {
                 communicateError("Attempted write of updated note failed!")
             }
-            noteModified(updatedNote: selNote)
+            displayModifiedNote(updatedNote: selNote)
             reloadViews()
             select(note: selNote, position: nil, source: .action)
         }
@@ -660,7 +660,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let (note, _) = io!.getSelectedNote()
         guard note != nil else { return }
         
-        // if (pendingMod || newNoteRequested) && noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
         if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
             editVC!.closeNote()
         } else {
@@ -674,7 +673,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                                   level: .fault,
                                   message: "Problems adding note titled \(modNote.title)")
             } else {
-                noteModified(updatedNote: addedNote!)
+                displayModifiedNote(updatedNote: addedNote!)
                 reloadViews()
                 select(note: addedNote, position: nil, source: .action)
             }
@@ -708,8 +707,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         
         let (nio, sel) = guardForNoteAction()
         guard let noteIO = nio, let selNote = sel else { return }
-        guard !pendingMod else { return }
-        let _ = modIfChanged()
         let modNote = selNote.copy() as! Note
         modNote.toggleStatus()
         let _ = recordMods(noteIO: noteIO, note: selNote, modNote: modNote)
@@ -719,8 +716,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         
         let (nio, sel) = guardForNoteAction()
         guard let noteIO = nio, let selNote = sel else { return }
-        guard !pendingMod else { return }
-        let _ = modIfChanged()
         let modNote = selNote.copy() as! Note
         modNote.incrementStatus()
         let _ = recordMods(noteIO: noteIO, note: selNote, modNote: modNote)
@@ -751,7 +746,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     func incSeq(noteIO: NotenikIO, note: Note, modNote: Note) {
         let notesInced = Sequencer.incrementSeq(io: noteIO, startingNote: note)
         logInfo(msg: "\(notesInced) Notes had their Seq values incremented")
-        noteModified(updatedNote: note)
+        displayModifiedNote(updatedNote: note)
         editVC!.populateFields(with: note)
         reloadViews()
         select(note: note, position: nil, source: .action)
@@ -774,8 +769,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                               message: "Problems adding note titled \(modNote.title)")
             return false
         } else {
-            noteModified(updatedNote: addedNote!)
-            editVC!.populateFields(with: addedNote!)
+            displayModifiedNote(updatedNote: addedNote!)
+            // editVC!.populateFields(with: addedNote!)
+            editVC!.select(note: addedNote!)
             reloadViews()
             select(note: addedNote, position: nil, source: .action)
             return true
@@ -951,7 +947,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     ///   - source:   An indicator of the source of the selection; if one of the views
     ///               being coordinated is the source, then we don't need to modify it.
     func select(note: Note?, position: NotePosition?, source: NoteSelectionSource) {
-        
         guard notenikIO != nil && notenikIO!.collectionOpen else { return }
         
         var noteToUse: Note? = note
@@ -1248,7 +1243,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             }
             noteTabs!.tabView.selectFirstTabViewItem(nil)
         } else if outcome == .modify {
-            noteModified(updatedNote: note!)
+            displayModifiedNote(updatedNote: note!)
             noteTabs!.tabView.selectFirstTabViewItem(nil)
         } else if outcome != .tryAgain {
             noteTabs!.tabView.selectFirstTabViewItem(nil)
@@ -1261,8 +1256,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         return outcome
     }
     
-    /// Take appropriate actions when the user has modified the note
-    func noteModified(updatedNote: Note) {
+    /// Update outputs showing the data from the updated note.
+    func displayModifiedNote(updatedNote: Note) {
         if displayVC != nil {
             displayVC!.display(note: updatedNote, io: notenikIO!)
         }

@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/21/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -47,7 +47,6 @@ class NoteListViewController:   NSViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.setDraggingSourceOperationMask(.copy, forLocal: false)
-        // NSPasteboard.PasteboardType(kUTTypeEmailMessage as String)])
         tableView.registerForDraggedTypes(NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0) })
         tableView.registerForDraggedTypes([NSPasteboard.PasteboardType(kUTTypeBookmark as String),
                                            NSPasteboard.PasteboardType(kUTTypeURL as String),
@@ -57,6 +56,7 @@ class NoteListViewController:   NSViewController,
         tableView.doubleAction = #selector(doubleClick(_:))
     }
     
+    /// Respond to double-click.
     @objc func doubleClick(_ sender: Any) {
         guard collectionWindowController != nil else { return }
         let row = tableView.selectedRow
@@ -159,6 +159,7 @@ class NoteListViewController:   NSViewController,
         return cellView
     }
     
+    /// Respond to a user selection of a row in the table.
     func tableViewSelectionDidChange(_ notification: Notification) {
         let row = tableView.selectedRow
         guard collectionWindowController != nil && row >= 0 else { return }
