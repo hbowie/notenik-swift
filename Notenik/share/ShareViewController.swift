@@ -114,6 +114,15 @@ class ShareViewController: NSViewController {
                     markedUp.newLine()
                     var authorLine = "-- "
                     authorLine.append(author)
+                    let date = note!.date.value
+                    if date.count > 0 {
+                        authorLine.append(", \(date)")
+                    }
+                    let workType = note!.workType.value
+                    let workTitle = note!.workTitle.value
+                    if workType.count > 0 && workTitle.count > 0 {
+                        authorLine.append(", from the \(workType) titled *\(workTitle)*")
+                    }
                     markedUp.writeLine(authorLine)
                 }
             }
@@ -150,7 +159,15 @@ class ShareViewController: NSViewController {
             let markdown = Markdown()
             markdown.md = note!.body.value
             markdown.parse()
-            stringToShare = markdown.html
+            if format == .htmlDoc {
+                let markedup = Markedup(format: .htmlDoc)
+                markedup.startDoc(withTitle: note!.title.value, withCSS: nil)
+                markedup.append(markdown.html)
+                markedup.finishDoc()
+                stringToShare = markedup.code
+            } else {
+                stringToShare = markdown.html
+            }
         } else {
             let noteDisplay = NoteDisplay()
             noteDisplay.format = format

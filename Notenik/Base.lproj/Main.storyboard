@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="16096"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="16097"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -353,8 +353,8 @@ CA
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="WR1-cf-uMQ"/>
-                                        <menuItem title="Share..." id="VIj-k3-Vo3" userLabel="Share">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Share..." keyEquivalent="s" id="VIj-k3-Vo3" userLabel="Share">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuNoteShare:" target="Ady-hI-5gd" id="xSu-vb-Bgc"/>
                                             </connections>
@@ -1307,13 +1307,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="234"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="232"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="448" height="232"/>
+                                    <rect key="frame" x="1" y="1" width="448" height="230"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="448" height="232"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="230"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
