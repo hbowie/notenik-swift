@@ -8,6 +8,33 @@ Tags:   changes, versions, history, log
 
 Body:
 
+### Version 3.8.0 | 21 May 2020
+
+#### 1. Improved Note Sharing
+
+Added a keyboard shortcut to invoke the Share dialog accessed from the Note menu, and also straightened out some of the Note sharing formats to make them more useful. 
+
+
+#### 2. Made Collection Open/Save Dialogs Modal
+
+When creating a new Collection, or opening an existing one, the screens presented are now modal, which means that they must be dealt with by the user before going back to another screen. This should prevent some common errors from occurring that sometimes resulted when the user ended up going back to the wrong screen before completing a New/Open operation. 
+
+
+#### 3. Cleaned Up Note Delete Logic
+
+There were several visual oddities that might occur when deleting a Note, and these have been corrected. 
+
+
+#### 4. Added Limited Ability to Import Email Messages
+
+You can now drag and drop an email message onto the list view of a Collection, however the email parsing abilities are very minimal at this time, so results will vary considerably. 
+
+
+#### 5. Added Ability to Import VCards
+
+Added some very rudimentary ability to import VCards by dragging contacts from the Apple Contacts app onto the list view of a Collection. 
+
+
 ### Version 3.7.0 | 12 May 2020
 
 #### 1. New Template Option to specify Field values to Pick From
