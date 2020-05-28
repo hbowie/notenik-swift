@@ -61,6 +61,7 @@ class CodeView: MacEditView {
         
         textView.isRichText = false
         textView.usesFontPanel = false
+        textView.allowsUndo = true
         textView.isAutomaticQuoteSubstitutionEnabled = false
         
         AppPrefs.shared.setFixedPitchFont(view: textView)

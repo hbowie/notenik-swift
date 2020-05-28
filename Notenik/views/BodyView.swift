@@ -61,6 +61,7 @@ class BodyView: MacEditView {
         
         textView.isRichText = false
         textView.usesFontPanel = false
+        textView.allowsUndo = true
         if textView.isAutomaticDashSubstitutionEnabled {
             textView.toggleAutomaticDashSubstitution(nil)
         }
