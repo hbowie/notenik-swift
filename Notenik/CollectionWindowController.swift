@@ -1207,6 +1207,13 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         noteTabs!.tabView.selectFirstTabViewItem(nil)
     }
     
+    @IBAction func openEdits(_ sender: Any) {
+        guard noteTabs!.tabView.selectedTabViewItem!.label != "Edit"  else { return }
+        let (_, sel) = guardForNoteAction()
+        guard sel != nil else { return }
+        noteTabs!.tabView.selectTabViewItem(at: 1)
+    }
+    
     @IBAction func saveEdits(_ sender: Any) {
         if !pendingMod {
             let _ = modIfChanged()

@@ -108,6 +108,7 @@
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="uYG-Vh-z53"/>
                                         <menuItem title="Open Essential Collection" keyEquivalent="e" id="hPO-tj-xYR" userLabel="Open Essential Collection">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuFileOpenEssential:" target="Voe-Tx-rLC" id="XiV-JF-fdi"/>
                                             </connections>
@@ -279,6 +280,11 @@ CA
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="duplicateNote:" target="Ady-hI-5gd" id="xgg-V8-mip"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Edit Note" keyEquivalent="e" id="y9m-T4-KCb">
+                                            <connections>
+                                                <action selector="openEdits:" target="Ady-hI-5gd" id="gWv-YC-oJl"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Save Note" keyEquivalent="s" id="YKI-vO-asj" userLabel="Save Note">
@@ -1307,13 +1313,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="232"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="230"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="448" height="230"/>
+                                    <rect key="frame" x="1" y="1" width="448" height="228"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="448" height="230"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="228"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
