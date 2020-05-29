@@ -366,7 +366,7 @@ CA
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="NIf-Fd-fTf"/>
-                                        <menuItem title="Text Edit Note" keyEquivalent="t" toolTip="Open the Current Note in your Preferred Text Editor" id="bpk-dF-vAM" userLabel="Text Edit Note">
+                                        <menuItem title="Text Edit Note..." keyEquivalent="t" toolTip="Open the Current Note in your Preferred Text Editor" id="bpk-dF-vAM" userLabel="Text Edit Note">
                                             <connections>
                                                 <action selector="textEditNote:" target="Ady-hI-5gd" id="6P1-cp-ypG"/>
                                             </connections>
@@ -374,6 +374,13 @@ CA
                                         <menuItem title="Reload Note" keyEquivalent="j" toolTip="Reload the Note from Disk" id="xz4-Re-trG">
                                             <connections>
                                                 <action selector="reloadNote:" target="Ady-hI-5gd" id="fe3-Qc-Z8r"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="mkS-pW-ZeI"/>
+                                        <menuItem title="Show Counts..." keyEquivalent="t" toolTip="Show Character, Line and Word Counts for the Body Field" id="aeA-GW-Noy">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="showCounts:" target="Ady-hI-5gd" id="hjM-jK-lvM"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -1313,13 +1320,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="230"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="226"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="448" height="228"/>
+                                    <rect key="frame" x="1" y="1" width="448" height="224"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="448" height="228"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="224"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

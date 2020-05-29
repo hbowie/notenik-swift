@@ -810,6 +810,18 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
     }
     
+    /// Show the user a window displaying various counts for the body of the current Note.
+    @IBAction func showCounts(_ sender: Any) {
+        let (_, sel) = guardForNoteAction()
+        guard sel != nil else { return }
+        let countsVC = juggler.showCounts(sender)
+        if countsVC != nil {
+            if displayVC != nil {
+                displayVC!.countsVC = countsVC
+            }
+        }
+    }
+    
     /// Respond to the user's request to move forward, backwards, or back to start of list
     @IBAction func navigationClicked(_ sender: NSSegmentedControl) {
         

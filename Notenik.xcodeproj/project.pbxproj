@@ -196,6 +196,12 @@
 		9CF1193F225827650015AE91 /* CollectionPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF1193D225827650015AE91 /* CollectionPrefsViewController.swift */; };
 		9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF256CA21FD0FF000D9F06A /* CollectionJuggler.swift */; };
 		9CF256CD21FD175E00D9F06A /* CollectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF256CC21FD175E00D9F06A /* CollectionWindowController.swift */; };
+		9CF435C42480598500DD7C33 /* Counts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF435C32480598500DD7C33 /* Counts.storyboard */; };
+		9CF435C52480598500DD7C33 /* Counts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF435C32480598500DD7C33 /* Counts.storyboard */; };
+		9CF435C724805C0500DD7C33 /* CountsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C624805C0500DD7C33 /* CountsWindowController.swift */; };
+		9CF435C824805C0500DD7C33 /* CountsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C624805C0500DD7C33 /* CountsWindowController.swift */; };
+		9CF435CA24805C2F00DD7C33 /* CountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C924805C2F00DD7C33 /* CountsViewController.swift */; };
+		9CF435CB24805C2F00DD7C33 /* CountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C924805C2F00DD7C33 /* CountsViewController.swift */; };
 		9CF96EE0225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */; };
 		9CF96EE1225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */; };
 		9CFCB047226BC7FF00443FFA /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
@@ -335,6 +341,9 @@
 		9CF1193D225827650015AE91 /* CollectionPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPrefsViewController.swift; sourceTree = "<group>"; };
 		9CF256CA21FD0FF000D9F06A /* CollectionJuggler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionJuggler.swift; sourceTree = "<group>"; };
 		9CF256CC21FD175E00D9F06A /* CollectionWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindowController.swift; sourceTree = "<group>"; };
+		9CF435C32480598500DD7C33 /* Counts.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Counts.storyboard; sourceTree = "<group>"; };
+		9CF435C624805C0500DD7C33 /* CountsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountsWindowController.swift; sourceTree = "<group>"; };
+		9CF435C924805C2F00DD7C33 /* CountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountsViewController.swift; sourceTree = "<group>"; };
 		9CF54FA8244A2E07001EF927 /* NotenikLib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikLib; path = ../NotenikLib; sourceTree = "<group>"; };
 		9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPrefsOwner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -453,6 +462,7 @@
 				9C1E0C8D22E4F7780025C99C /* attachments */,
 				9CF1193522581ABE0015AE91 /* collectionPrefs */,
 				9C3F1B54244E810400CE0D9D /* collector */,
+				9CF435C22480593700DD7C33 /* counts */,
 				9CC78E672283560F00640477 /* displayPrefs */,
 				9CAD6A5422DFA95D00531D90 /* export */,
 				9C60E70E21F6518400C332ED /* logging */,
@@ -623,6 +633,16 @@
 			path = collectionPrefs;
 			sourceTree = "<group>";
 		};
+		9CF435C22480593700DD7C33 /* counts */ = {
+			isa = PBXGroup;
+			children = (
+				9CF435C32480598500DD7C33 /* Counts.storyboard */,
+				9CF435C624805C0500DD7C33 /* CountsWindowController.swift */,
+				9CF435C924805C2F00DD7C33 /* CountsViewController.swift */,
+			);
+			path = counts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -760,6 +780,7 @@
 				9C5556D222E115960099414E /* Export.storyboard in Resources */,
 				9CC78E692283565E00640477 /* DisplayPrefs.storyboard in Resources */,
 				9C09E1762248601D0046D50D /* notenik.iconset in Resources */,
+				9CF435C42480598500DD7C33 /* Counts.storyboard in Resources */,
 				9C21749F22024E2900B4BF48 /* notenik-swift-intro in Resources */,
 				9C8DD75722E3EEC400FF56C1 /* Attachment.storyboard in Resources */,
 				9CC41CD5229CA61700E92A66 /* Credits.rtf in Resources */,
@@ -799,6 +820,7 @@
 				9C8DD75822E3EEC400FF56C1 /* Attachment.storyboard in Resources */,
 				9CB60BC1226509B2003B5655 /* Share.storyboard in Resources */,
 				9C2AE524220A34BB00AE8BEE /* Main.storyboard in Resources */,
+				9CF435C52480598500DD7C33 /* Counts.storyboard in Resources */,
 				9C0B643623885E9900869FAA /* TagsMassChange.storyboard in Resources */,
 				9CE3250B224D58360051CA1F /* Log.storyboard in Resources */,
 				9C02D2B12267F29400587EDF /* Calendar.storyboard in Resources */,
@@ -820,6 +842,7 @@
 				9C79BDB0226E368800796E93 /* LabelView.swift in Sources */,
 				9C1E0C9222E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
+				9CF435CA24805C2F00DD7C33 /* CountsViewController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */,
@@ -851,6 +874,7 @@
 				9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */,
 				9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */,
 				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
+				9CF435C724805C0500DD7C33 /* CountsWindowController.swift in Sources */,
 				9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */,
 				9C619A38231B323B003CFFBE /* WorkTypeView.swift in Sources */,
 				9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */,
@@ -962,8 +986,10 @@
 				9CD32626223308C400D06B77 /* StringView.swift in Sources */,
 				9CD326222233068F00D06B77 /* MacEditView.swift in Sources */,
 				9C12D49122134970003136B2 /* NoteSelectionSource.swift in Sources */,
+				9CF435C824805C0500DD7C33 /* CountsWindowController.swift in Sources */,
 				9CD3262A22330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9CC78E70228358A400640477 /* DisplayPrefsViewController.swift in Sources */,
+				9CF435CB24805C2F00DD7C33 /* CountsViewController.swift in Sources */,
 				9C3F1B57244E81F100CE0D9D /* CollectorWindowController.swift in Sources */,
 				9CAD6A5022DF9ACD00531D90 /* PrefsTabViewController.swift in Sources */,
 				9C553C622266A0D50008D176 /* StatusView.swift in Sources */,

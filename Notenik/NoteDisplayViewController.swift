@@ -14,10 +14,25 @@ import WebKit
 
 import NotenikUtils
 import NotenikLib
+import NotenikMkdown
 
 class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
     
     var wc: CollectionWindowController?
+    
+    var _countsVC: CountsViewController?
+    
+    var countsVC: CountsViewController? {
+        set {
+            _countsVC = newValue
+            if _countsVC != nil {
+                _countsVC?.updateCounts(counts)
+            }
+        }
+        get {
+            return _countsVC
+        }
+    }
     
     @IBOutlet var webView: WKWebView!
     
@@ -28,6 +43,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     var io: NotenikIO?
     var note: Note?
+    
+    var counts = MkdownCounts()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +72,10 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         guard note != nil else { return }
         guard io != nil else { return }
         let html = noteDisplay.display(note!, io: io!)
+        counts = noteDisplay.counts
+        if countsVC != nil {
+            countsVC!.updateCounts(counts)
+        }
         let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
         if nav == nil {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",

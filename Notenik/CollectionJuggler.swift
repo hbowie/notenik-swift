@@ -656,6 +656,34 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
     }
     
+    let countsStoryboard:          NSStoryboard = NSStoryboard(name: "Counts", bundle: nil)
+    var countsWC:                  CountsWindowController?
+    var countsVC:                  CountsViewController?
+    
+    /// Show the user a window displaying various counts for the body of the current Note.
+    func showCounts(_ sender: Any) -> CountsViewController? {
+        guard appPrefs.notenikParser else {
+            communicateError("You must select the Notenik Parser in the Application Preferences in order to show the Counts window", alert: true)
+            return nil
+        }
+        if countsWC == nil {
+            if let countsWindowController = self.countsStoryboard.instantiateController(withIdentifier: "countsWC") as? CountsWindowController {
+                guard let countsViewController = countsWindowController.contentViewController as? CountsViewController else { return nil }
+                countsWC = countsWindowController
+                countsVC = countsViewController
+            } else {
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .fault,
+                                  message: "Couldn't get a Counts Window Controller!")
+            }
+        }
+        if countsWC != nil {
+            countsWC!.showWindow(sender)
+        }
+        return countsVC
+    }
+    
     /// Log an error message and optionally display an alert message.
     func communicateError(_ msg: String, alert: Bool=false) {
         
