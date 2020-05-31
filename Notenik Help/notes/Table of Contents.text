@@ -51,23 +51,23 @@ Body:
 <li><a href="#format-your-notes">Format Your Notes</a> <br />
 6.1 <a href="#format-the-body-of-a-note-using-markdown">Format the Body of a Note using Markdown</a>  <br />
 6.2 <a href="#add-links-between-notes">Add Links Between Notes</a>  <br />
-</li>
-<li><a href="#attach-files-to-your-notes">Attach Files to Your Notes</a> <br />
+6.3 <a href="#check-word-and-character-counts">Check Word and Character Counts</a>  <br />
+6.4 <a href="#attach-files-to-your-notes">Attach Files to Your Notes</a>  <br />
 </li>
 <li><a href="#getting-data-into-and-out-of-notenik">Getting Data Into and Out Of Notenik</a> <br />
-8.1 <a href="#copy-cut-paste-and-share-your-notes">Copy, Cut, Paste and Share your Notes</a>  <br />
-8.2 <a href="#import-and-export-your-notes">Import and Export Your Notes</a>  <br />
-8.3 <a href="#export-to-notenik-vs-save-as">Export to Notenik vs. Save As</a>  <br />
-8.4 <a href="#favorites-to-html">Favorites to HTML</a>  <br />
-8.5 <a href="#use-report-templates">Use Report Templates</a>  <br />
-8.6 <a href="#record-and-play-scripts">Record and Play Scripts</a>  <br />
-8.7 <a href="#mirror-your-notes">Mirror Your Notes</a>  <br />
-8.8 <a href="#website-building">Website Building</a>  <br />
+7.1 <a href="#copy-cut-paste-and-share-your-notes">Copy, Cut, Paste and Share your Notes</a>  <br />
+7.2 <a href="#import-and-export-your-notes">Import and Export Your Notes</a>  <br />
+7.3 <a href="#export-to-notenik-vs-save-as">Export to Notenik vs. Save As</a>  <br />
+7.4 <a href="#favorites-to-html">Favorites to HTML</a>  <br />
+7.5 <a href="#use-report-templates">Use Report Templates</a>  <br />
+7.6 <a href="#record-and-play-scripts">Record and Play Scripts</a>  <br />
+7.7 <a href="#mirror-your-notes">Mirror Your Notes</a>  <br />
+7.8 <a href="#version-history">Version History</a>  <br />
+7.9 <a href="#website-building">Website Building</a>  <br />
 </li>
 <li><a href="#reference">Reference</a> <br />
-9.1 <a href="#version-history">Version History</a>  <br />
-9.2 <a href="#keyboard-shortcuts">Keyboard Shortcuts</a>  <br />
-9.3 <a href="#rights">Rights</a>  <br />
-9.4 <a href="#support">Support</a>  <br />
+8.1 <a href="#keyboard-shortcuts">Keyboard Shortcuts</a>  <br />
+8.2 <a href="#rights">Rights</a>  <br />
+8.3 <a href="#support">Support</a>  <br />
 </li>
 </ol>

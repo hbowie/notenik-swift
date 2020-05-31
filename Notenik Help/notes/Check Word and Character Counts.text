@@ -1,0 +1,27 @@
+Title:  Check Word and Character Counts
+
+Tags:   body, counts, markdown
+
+Timestamp: 20200529171358
+
+Seq:    38
+
+Level:  3
+
+Date Added: 2020-05-29 17:13:58 +0000
+
+Body: 
+
+Beneath the Note menu there is an option to Show Counts. Selecting this item will display a window showing five separate numbers pertaining to the Body field of the currently selected Note. 
+
+* Total Markdown Size -- This is the total number of characters contained in the body field. 
+* Number of Markdown Lines -- The number of lines in the body field. A line is counted only when ended by a line break or by the end of the Body field. 
+* Number of Words -- The number of words contained in the Body field. 
+* The number of text characters (excluding spaces and punctuation) contained in the Body field. 
+* The average length of each word, calculated by dividing the Number of Text Characters by the Number of Words. 
+
+Counts are only available if you are using the Notenik Markdown parser. 
+
+The Counts window will be refreshed each time you save your edits to a Note, or when a new Note is selected. 
+
+Only one Counts window is ever shown (no matter how many Collections you have open). 
