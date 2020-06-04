@@ -1370,7 +1370,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     }
     
     func launchLink(for noteToUse: Note) {
-        let possibleURL = noteToUse.linkAsURL
+        var possibleURL = noteToUse.linkAsURL
+        if possibleURL == nil {
+            possibleURL = noteToUse.firstLinkAsURL
+        }
         guard let url = possibleURL else { return }
         var urlPointsToCollection = false
         if url.isFileURL && url.hasDirectoryPath {
