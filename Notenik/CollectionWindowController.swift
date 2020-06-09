@@ -1458,7 +1458,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     // ----------------------------------------------------------------------------------
     //
-    // The following section of code contains import, export and archive routines.
+    // The following section of code contains xmlimport, export and archive routines.
     //
     // ----------------------------------------------------------------------------------
     
@@ -1670,6 +1670,43 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let ok = imported > 0
         informUserOfImportExportResults(operation: "import", ok: ok, numberOfNotes: imported, path: importURL.path)
         
+        editVC!.io = noteIO
+        finishBatchOperation()
+    }
+    
+    @IBAction func importXML(_ sender: Any) {
+        
+        // See if we're ready to take action
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        // Ask the user for a location on disk
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Open a input XML"
+        let parent = noteIO.collection!.collectionFullPathURL!.deletingLastPathComponent()
+        openPanel.directoryURL = parent
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.allowsMultipleSelection = false
+        let userChoice = openPanel.runModal()
+        guard userChoice == .OK else { return }
+        
+        guard let importURL = openPanel.url else { return }
+        print("Import XML from \(importURL.path)")
+        
+        let importer = XMLReader()
+        let imports = noteIO.importRows(importer: importer, fileURL: importURL)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionWindowController",
+                          level: .info,
+                          message: "Imported \(imports) notes from \(importURL.path)")
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "Imported \(imports) notes from \(importURL.path)"
+        alert.addButton(withTitle: "OK")
+        _ = alert.runModal()
         editVC!.io = noteIO
         finishBatchOperation()
     }

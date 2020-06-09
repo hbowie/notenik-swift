@@ -142,6 +142,12 @@
                                                             <action selector="importNotenik:" target="Ady-hI-5gd" id="Aaw-Dm-0eU"/>
                                                         </connections>
                                                     </menuItem>
+                                                    <menuItem title="XML" id="7XU-Jb-RTF" userLabel="XML">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="importXML:" target="Ady-hI-5gd" id="4zS-Ie-KtU"/>
+                                                        </connections>
+                                                    </menuItem>
                                                     <menuItem title="XSLX" id="5Gi-ga-5Cg">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
@@ -1035,7 +1041,7 @@ CA
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="41"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="0.0" width="448" height="25"/>
+                                    <rect key="frame" x="1" y="0.0" width="448" height="40"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
@@ -1283,7 +1289,7 @@ CA
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="25" width="448" height="15"/>
+                                    <rect key="frame" x="1" y="24" width="448" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
@@ -1320,13 +1326,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="226"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="224"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="448" height="224"/>
+                                    <rect key="frame" x="1" y="1" width="448" height="222"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="448" height="224"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="222"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1466,11 +1472,11 @@ CA
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="bn0-Un-4db">
-                            <rect key="frame" x="1" y="1" width="433" height="298"/>
+                            <rect key="frame" x="1" y="1" width="448" height="298"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bOQ-ka-7LZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="418" height="283"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="433" height="283"/>
                                 </view>
                             </subviews>
                             <constraints>
@@ -1484,8 +1490,8 @@ CA
                             <rect key="frame" x="-100" y="-100" width="433" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="SIG-iA-YDH">
-                            <rect key="frame" x="434" y="1" width="15" height="298"/>
+                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="SIG-iA-YDH">
+                            <rect key="frame" x="433" y="1" width="16" height="298"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
