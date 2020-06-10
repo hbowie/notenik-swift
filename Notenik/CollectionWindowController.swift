@@ -1694,10 +1694,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard userChoice == .OK else { return }
         
         guard let importURL = openPanel.url else { return }
-        print("Import XML from \(importURL.path)")
         
-        let importer = XMLReader()
-        let imports = noteIO.importRows(importer: importer, fileURL: importURL)
+        let importer = XMLNoteImporter(io: noteIO)
+        let imports = importer.importFrom(importURL)
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionWindowController",
                           level: .info,
