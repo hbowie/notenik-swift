@@ -13,7 +13,9 @@ import Cocoa
 
 import NotenikLib
 
-class NoteTagsViewController: NSViewController, NSOutlineViewDataSource, NSOutlineViewDelegate {
+class NoteTagsViewController: NSViewController,
+                              NSOutlineViewDataSource,
+                              NSOutlineViewDelegate {
     
     var collectionWindowController: CollectionWindowController?
     var notenikIO: NotenikIO?
@@ -51,6 +53,28 @@ class NoteTagsViewController: NSViewController, NSOutlineViewDataSource, NSOutli
     func reload() {
         outlineView.reloadData()
     }
+    
+    @IBAction func doubleClick(_ sender: NSOutlineView) {
+        
+        guard collectionWindowController != nil else { return }
+        
+        let item = sender.item(atRow: sender.clickedRow)
+        guard let node = item as? TagsNode else { return }
+        
+        if node.type == .tag {
+            if sender.isItemExpanded(item) {
+                sender.collapseItem(item)
+            } else {
+                sender.expandItem(item)
+            }
+        } else if node.type == .note {
+            let clickedNote = node.note
+            if clickedNote != nil {
+                collectionWindowController!.launchLink(for: clickedNote!)
+            }
+        }
+    }
+    
     
     /// How many children does this node have?
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
