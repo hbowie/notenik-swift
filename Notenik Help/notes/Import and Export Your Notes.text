@@ -1,6 +1,6 @@
 Title:  Import and Export Your Notes
 
-Tags:   comma-separated, export, import, tab-delimited
+Tags:   comma-separated, export, iWisdom, import, tab-delimited, xml
 
 Timestamp: 20191127194553
 
@@ -26,6 +26,10 @@ Following are the supported formats.
 * Import/Export in CSV Format
 
 	Each Note will be represented as one row/line, and each field will be represented in a separate column. Commas are used to separate columns. This format is suitable for import into MS Excel, for example.
+
+* Import in XML format
+
+	This option allows former users of iWisdom to import the most important fields in their collections into Notenik. Selecting a folder will cause Notenik to try to import all files with the '.xml' extension within that folder and its subfolders. 
 
 * Export in JSON Format
 

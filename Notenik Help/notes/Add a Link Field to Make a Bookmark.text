@@ -13,7 +13,7 @@ Date Added: 2017-10-18 13:48:49
 Body: 
 
 A Link Field within Notenik is intended to hold a URL: a hyperlink to a location on the Web (or to a local file, if you'd prefer to use it that way).
-You can easily Launch a link from within Notenik by clicking on the Launch Link button in the Toolbar, or by selecting Launch Link under the Note menu, or by using the keyboard shortcut CMD-L. 
+You can easily Launch a link from within Notenik by clicking on the Launch Link button in the Toolbar, or by selecting Launch Link under the Note menu, or by using the keyboard shortcut CMD-L, or by double-clicking on the Note's line in the List view or the Tags view. 
 
 Adding a Link to a Note doesn't necessarily reduce the Note to a simple Bookmark, but this is certainly one way to use a Collection of Notes. 
 
@@ -22,3 +22,7 @@ Note that if you use a Link to point to a local folder containing another Noteni
 You may use the Set Local Link command under the Note menu to choose a file or folder to be linked; the resulting 'file:///' style of URL will then replace any value previously stored in the Link field for the current Note.
 
 Note that you can drag a bookmark from a Web browser (such as Safari or Chrome) and drop it into an open Collection's List view in order to add that bookmark to the Collection as a new Note. A bookmark can typically be dragged either from the browser's URL field, at the top of the screen, or from a link within a page. The result of such a drag and drop operation will be a new Note with its Title and Link fields populated.
+
+If you add a Link value without any URL scheme, then the implicit scheme of 'https://' will be assumed. In other words, you need only enter 'Notenik.net' in the link field, but 'https://Notenik.net' is what will be passed to your Web browser when requesting Notenik to open the Link. 
+
+Note than any field label containing the word 'link' will be treated like a Link field, especially in the absence of a field simply labeled 'Link'. 

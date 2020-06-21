@@ -8,6 +8,35 @@ Tags:   changes, versions, history, log
 
 Body:
 
+### Version 4.0.0 | 10 Jun 2020
+
+#### 1. Added Import Option for XML
+
+At a minimum, this will allow former iWisdom users to import their old collections into Notenik. 
+
+
+#### 2. Added Double-Click Actions to the Tags Tab
+
+Double-clicking on a row in the Tags tab will now cause one of two actions:
+
+* If you're double-clicking on a tag, then double-clicking will expand or collapse it;
+* If you're double-clicking on a Note, then double-clicking will attempt to launch whatever is in the Link field for the Note, just as double-clicking does on the List tab.
+
+#### 3. Table of Contents Generation for Markdown
+
+Adding a line containing only '[toc]' within the body field will now cause that line to be replaced by a table of contents containing links to all of the headings following the '[toc]' line. This will only happen if you have chosen to use the Notenik Markdown parser in the Notenik preferences. 
+
+
+#### 4. Additional Support for Link field variants
+
+Any field whose label contains the word 'link' will now be treated as a Link field, and will be shown as a clickable link on the Display tab. Additionally, if a Note does not have a simple 'Link' field, then launching the Note's link, or double-clicking on the Note, will cause the first non-blank link field on the Note to be used. 
+
+
+#### 5. Links need no longer start with https
+
+A Link may now be entered without any URL scheme, so long as the implicit scheme of 'https://' will be sufficient to access the link. 
+
+
 ### Version 3.9.0 | 29 May 2020
 
 #### 1. Added a Counts Window
