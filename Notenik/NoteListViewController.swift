@@ -206,6 +206,10 @@ class NoteListViewController:   NSViewController,
             addTagsColumn(at: 0)
             addStatusDigit(at: 1)
             addTitleColumn(at: 2)
+        case .tagsPlusSeq:
+            addTagsColumn(at: 0)
+            addSeqColumn(at: 1)
+            addTitleColumn(at: 2)
         case .author:
             addAuthorColumn(at: 0)
             addTitleColumn(at: 1)
