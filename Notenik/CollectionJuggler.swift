@@ -52,7 +52,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     override private init() {
         super.init()
-        // cloudNik = CloudNik.shared
     }
     
     /// Startup called by AppDelegate

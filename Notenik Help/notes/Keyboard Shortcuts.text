@@ -4,7 +4,7 @@ Tags:   keys, shortcuts
 
 Timestamp: 20191120203540
 
-Seq:    50
+Seq:    51
 
 Level:  3
 
@@ -41,8 +41,9 @@ Following are the keyboard shortcuts available within the app. When combined wit
 * 2 - Sort by Seq + Title
 * 3 - Sort Tasks by Date
 * 4 - Sort Tasks by Seq
-* 5 - Sort by Tags + Title 
-* 6 - Sort by Author
+* 5 - Sort by Tags + Title  
+* 6 - Sort by Tags + Seq
+* 7 - Sort by Author
 * \[ - Prior Note
 * \]  - Next Note
 * → - Scroll to Selected Note

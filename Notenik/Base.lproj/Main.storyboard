@@ -89,6 +89,16 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
+                                        <menuItem title="Open from iCloud" id="orX-ve-Vg1">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Open from iCloud" id="zeP-2v-kFe">
+                                                <items>
+                                                    <menuItem title="Item" id="2Qu-Du-kHb">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
                                         <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                             <connections>
                                                 <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
@@ -794,6 +804,7 @@ CA
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Notenik" customModuleProvider="target">
                     <connections>
                         <outlet property="favsToHTML" destination="eJv-R5-0H2" id="RKS-zi-0TK"/>
+                        <outlet property="iCloudMenu" destination="zeP-2v-kFe" id="PRu-Cu-We2"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -1331,13 +1342,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="218"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="216"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="448" height="216"/>
+                                    <rect key="frame" x="1" y="1" width="448" height="214"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="448" height="216"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="214"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

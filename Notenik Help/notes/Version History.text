@@ -1,12 +1,35 @@
 Title:  Version History
 
-Seq:    48
+Seq:    50
 
 Level: 3
 
 Tags:   changes, versions, history, log
 
 Body:
+
+### Version 4.1.0 | 26 Jun 2020
+
+#### 1. Fixed Body Field Expansion Bug
+
+Fixed a bug that sometimes prevented the Body field from expanding to use all available space on the Edit Tab
+
+
+#### 2. Added Collection Pref for displaying a Body field label
+
+Added a check box to the Collection preferences to control display of an explicit Body field label on the Display tab. 
+
+This closes issue #20.
+
+#### 3. Added a new Sort Option for Tags Plus Seq Fields
+
+The Sort menu now has a new option, allowing you to sort a Collection by the Tags field plus the Seq field. 
+
+
+#### 4. Fixed a Template Bug
+
+The longtext and pick-from values were not being included in the template file when it was rewritten. 
+
 
 ### Version 4.0.0 | 10 Jun 2020
 

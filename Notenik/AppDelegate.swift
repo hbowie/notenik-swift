@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/21/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -16,10 +16,14 @@ import NotenikLib
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
+    
+    let fm      = FileManager.default
 
     @IBOutlet weak var favsToHTML: NSMenuItem!
+    @IBOutlet weak var iCloudMenu: NSMenu!
     
     var appPrefs:     AppPrefs!
+    var cloudNik:     CloudNik!
     var displayPrefs: DisplayPrefs!
     var juggler: CollectionJuggler!
     let logger = Logger.shared
@@ -54,6 +58,30 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         logger.logDestUnified = true
         juggler.startup()
         juggler.makeRecentDocsKnown(recentDocumentURLs)
+        
+        // Let's build a submenu showing all folders in the iCloud Notenik folder.
+        iCloudMenu.removeAllItems()
+        cloudNik = CloudNik.shared
+        var folders: [String] = []
+        if cloudNik.url != nil {
+            do {
+                let iCloudContents = try fm.contentsOfDirectory(at: cloudNik.url!,
+                                        includingPropertiesForKeys: nil,
+                                                           options: .skipsHiddenFiles)
+                for url in iCloudContents {
+                    let fileName = FileName(url)
+                    folders.append(fileName.folder)
+                }
+            } catch {
+                logError("Error reading contents of iCloud drive folder")
+            }
+        }
+        folders.sort()
+        for folder in folders {
+            let item = NSMenuItem(title: folder, action: #selector(openICloudItem(_:)), keyEquivalent: "")
+            iCloudMenu.addItem(item)
+        }
+        
         var successfulOpens = 0
         if launchURLs.count > 0 {
             successfulOpens = juggler.open(urls: launchURLs)
@@ -67,6 +95,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         
         // Done launching
         appPrefs.appLaunching = false
+    }
+    
+    /// Open an iCloud item that's been selected by the user from the submenu created above.
+    @objc func openICloudItem(_ sender: NSMenuItem) {
+        let urlToOpen = cloudNik.url!.appendingPathComponent(sender.title)
+        _ = juggler.open(urls: [urlToOpen])
     }
     
     /// Standard open when passed a list of URLs. 
@@ -186,6 +220,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
+    }
+    
+    /// Log an information message.
+    func logError(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "AppDelegate",
+                          level: .error,
+                          message: msg)
     }
     
 }
