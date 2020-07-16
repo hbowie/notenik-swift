@@ -18,6 +18,8 @@ You can organize your Notes into as many Collections as you would like, and stor
 
 The Notenik application can open multiple Collections at a time, each in its own window. The Open Recent command under the File menu provides easy access to recently opened Collections. 
 
+The Notenik folder within your iCloud drive is intended specifically for use by the Notenik application, so any Collection created here can easily be opened later, by selecting it from the `Open from iCloud` submenu located beneath the File menu. 
+
 You may use a command under the File menu to designate the current Collection as your Essential Collection. Once identified, this will be the first Collection opened each time the application launches.  
 
 The Save As command under the File menu allows you to save an entire Collection in a new location, with the option to either keep the current location (effectively making a copy) or to delete it (effectively moving the Collection to a new location). 

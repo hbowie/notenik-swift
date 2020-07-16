@@ -8,6 +8,23 @@ Tags:   changes, versions, history, log
 
 Body:
 
+### Version 4.2.0 | 10 Jul 2020
+
+#### 1. Enhanced Wiki Link Functionality
+
+For a Collection using Timestamps, Notenik will now maintain an alias list (stored in a file named 'alias.txt') containing all the wiki link text values that have ever been used to point to another Note in the Collection. Each Alias entry will match the linking text to the timestamp for the linked note. If the title for the linked note is ever changed, the alias file will be used to look up the right note, even if the link to the target note has not been updated. (Might have also fixed a bug or two along the way.)
+
+
+#### 2. Fixed an ifendgroup Template bug
+
+When processing a merge template, ifendgroup commands were not being properly processed after the last note had been processed. 
+
+
+#### 3. Added Open from iCloud item to the File Menu
+
+The File menu now contains a submenu called 'Open from iCloud', allowing the user to open any folder located in the Notenik folder within iCloud drive.  
+
+
 ### Version 4.1.0 | 26 Jun 2020
 
 #### 1. Fixed Body Field Expansion Bug

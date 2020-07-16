@@ -25,3 +25,5 @@ While this method works, and has the advantage of staying within the normal Mark
 In order to enable this option, the user must be using Notenik's own internal Markdown parser. If you are using Notenik's parser, then a link to another Note may be coded by simply enclosing the title of the target Note (or its timestamp!) within double square brackets. 
 
 For example, here's a working link to the [[Overview]] note using this syntax.
+
+If you also enable the timestamp field for a Collection, then you can change the title of a linked Note without changing the referencing wiki link text, and Notenik will remember the association between the old title and the new title, making use of the timestamp field to preserve a unique, unchanging identity for each Note. These associations will be saved in a special file named 'alias.txt', within the Collection folder. This functionality can be useful to make sure you don't end up with broken links between Notes. 
