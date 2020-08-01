@@ -948,6 +948,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         if note.body.value.lowercased().contains(searchForLower) {
             return true
         }
+        if note.author.value.lowercased().contains(searchForLower) {
+            return true
+        }
         return false
     }
     
