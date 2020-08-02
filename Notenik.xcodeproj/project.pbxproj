@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C01E46624D74E1C00AEB4F6 /* BooleanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C01E46524D74E1C00AEB4F6 /* BooleanView.swift */; };
 		9C02D2AE2267D46000587EDF /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
 		9C02D2B02267F29400587EDF /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C02D2AF2267F29400587EDF /* Calendar.storyboard */; };
 		9C02D2B12267F29400587EDF /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C02D2AF2267F29400587EDF /* Calendar.storyboard */; };
@@ -225,6 +226,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C01E46524D74E1C00AEB4F6 /* BooleanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooleanView.swift; sourceTree = "<group>"; };
 		9C02D2AD2267D46000587EDF /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		9C02D2AF2267F29400587EDF /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
 		9C02D2B22267F41200587EDF /* CalendarWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWindowController.swift; sourceTree = "<group>"; };
@@ -598,6 +600,7 @@
 				9C568DEC2322FBF0005D6B0A /* AuthorDataSource.swift */,
 				9C568DCF2322B6CF005D6B0A /* AuthorView.swift */,
 				9C45E8BA2298B87C003F6589 /* BodyView.swift */,
+				9C01E46524D74E1C00AEB4F6 /* BooleanView.swift */,
 				9C02D2AF2267F29400587EDF /* Calendar.storyboard */,
 				9C02D2B22267F41200587EDF /* CalendarWindowController.swift */,
 				9C02D2B52267F5E700587EDF /* CalendarViewController.swift */,
@@ -841,6 +844,7 @@
 				9C1BE27122EB940E006FDFEC /* ScriptWindowController.swift in Sources */,
 				9C79BDB0226E368800796E93 /* LabelView.swift in Sources */,
 				9C1E0C9222E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
+				9C01E46624D74E1C00AEB4F6 /* BooleanView.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
 				9CF435CA24805C2F00DD7C33 /* CountsViewController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,

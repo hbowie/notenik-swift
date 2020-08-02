@@ -42,6 +42,8 @@ class ViewFactory {
             return WorkTypeView()
         } else if def.fieldType.typeString == "work" {
             return WorkTitleView(pickList: pickLists.workTitlePickList)
+        } else if def.fieldType.typeString == "boolean" {
+            return BooleanView()
         } else if def.pickList != nil {
             return PickListView(list: def.pickList!)
         } else {
