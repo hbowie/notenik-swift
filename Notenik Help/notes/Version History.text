@@ -6,7 +6,34 @@ Level: 3
 
 Tags:   changes, versions, history, log
 
-Body:
+Body:   
+ 
+### Version 4.3.0 | 02 Aug 2020
+
+#### 1. Added the Ability to Specify a Boolean Field
+
+Supplying a value of `<bool>` or `<boolean>` for a field in a Collection's template file will produce a field that can have a value of `true` or `false`, and that will be represented on the Edit tab as a checkbox. 
+
+
+#### 2. Included the Author Field in the Search function
+
+The Author field, if present, will now be included in the fields being searched. 
+
+
+#### 3. Added Template Trailing Command
+
+Added a new `trailing` command to the merge template spec. 
+
+
+#### 4. Fixed an End-of-Group bug
+
+A bug in processing the end of a group was preventing the major (or only) end-of-group processing from happening at the end of the input data file. 
+
+
+#### 5. Eliminated trimming of Merge Template Lines
+
+Merge template lines were being trimmed -- that is, leading and trailing spaces and tabs were being removed. That should no longer be occurring. 
+
 
 ### Version 4.2.0 | 10 Jul 2020
 

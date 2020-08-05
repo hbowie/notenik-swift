@@ -1,14 +1,25 @@
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Version History</title>
-<meta name="KEYWORDS" content="changes, history, log, versions">
+	<meta charset="UTF-8">
+	<title>Version History</title>
+	<meta name="KEYWORDS" content="changes, history, log, versions">
 </head>
 <body class="Aside apd-topic" dir="ltr" id="seq-50-version-history" data-istaskopen="false">
 <a name="seq-50-version-history"></a>
 <h1>
-Version History
+	Version History
 </h1>
+<h3 id="version-4.3.0-02-aug-2020">Version 4.3.0 | 02 Aug 2020</h3>
+<h4 id="added-the-ability-to-specify-a-boolean-field">1. Added the Ability to Specify a Boolean Field</h4>
+<p>Supplying a value of <code>&lt;bool&gt;</code> or <code>&lt;boolean&gt;</code> for a field in a Collection's template file will produce a field that can have a value of <code>true</code> or <code>false</code>, and that will be represented on the Edit tab as a checkbox. </p>
+<h4 id="included-the-author-field-in-the-search-function">2. Included the Author Field in the Search function</h4>
+<p>The Author field, if present, will now be included in the fields being searched. </p>
+<h4 id="added-template-trailing-command">3. Added Template Trailing Command</h4>
+<p>Added a new <code>trailing</code> command to the merge template spec. </p>
+<h4 id="fixed-an-end-of-group-bug">4. Fixed an End-of-Group bug</h4>
+<p>A bug in processing the end of a group was preventing the major (or only) end-of-group processing from happening at the end of the input data file. </p>
+<h4 id="eliminated-trimming-of-merge-template-lines">5. Eliminated trimming of Merge Template Lines</h4>
+<p>Merge template lines were being trimmed &#8211; that is, leading and trailing spaces and tabs were being removed. That should no longer be occurring. </p>
 <h3 id="version-4.2.0-10-jul-2020">Version 4.2.0 | 10 Jul 2020</h3>
 <h4 id="enhanced-wiki-link-functionality">1. Enhanced Wiki Link Functionality</h4>
 <p>For a Collection using Timestamps, Notenik will now maintain an alias list (stored in a file named &#8216;alias.txt&#8217;) containing all the wiki link text values that have ever been used to point to another Note in the Collection. Each Alias entry will match the linking text to the timestamp for the linked note. If the title for the linked note is ever changed, the alias file will be used to look up the right note, even if the link to the target note has not been updated. (Might have also fixed a bug or two along the way.) </p>

@@ -13,4 +13,5 @@ Date Added: 2017-10-27 12:55:15
 Body: 
 
 The Search field on the Toolbar allows you to search for the entered text, and display the first Note containing this text in any field being searched. After finding the first occurrence, you may use the Find Again command under the Note menu to search for the next Note containing the specified text.
-The Search function will search each Note's Title, Link, Tags and Body fields for matching text. Case (upper- or lower-) will be ignored for the purposes of the Search.
+
+The Search function will search each Note's Title, Link, Tags and Body fields for matching text. The Author field will also be searched, if present. Case (upper- or lower-) will be ignored for the purposes of the Search.

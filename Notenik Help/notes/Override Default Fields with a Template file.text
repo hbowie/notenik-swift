@@ -1,6 +1,6 @@
 Title:  Override Default Fields with a Template file
 
-Tags:   default, fields, template
+Tags:   default, fields, template, boolean
 
 Timestamp: 20191210005646
 
@@ -27,6 +27,8 @@ The Note template file is formatted using the normal Notenik format, although th
 The file extension used for the template file will be used as the file extension for Notes subsequently created within the Collection. 
 
 By specifying the value `<longtext>` as the value for a field in a template file, the user can indicate that a field is to be treated as a long text field, rather than a one-line text field. A longtext field will provide the user with multiple lines for data entry on the Edit tab, and will honor Markdown syntax when formatting for display on the Display tab.
+
+Supplying a value of `<bool>` or `<boolean>` for a field in a Collection's template file will produce a field that can have a value of `true` or `false`, and that will be represented on the Edit tab as a checkbox.
 
 It's also possible to specify a series of possible values for a field, if you would like to have a list to pick from when filling in a custom field. Here's an example of how you would do this. 
 
