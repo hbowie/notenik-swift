@@ -752,6 +752,21 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         select(note: note, position: nil, source: .action)
     }
     
+    @IBAction func incMajorSeq(_ sender: Any) {
+        let (nio, sel) = guardForNoteAction()
+        guard let noteIO = nio, let selNote = sel else { return }
+        guard selNote.hasSeq() else { return }
+        let sortParm = noteIO.collection!.sortParm
+        guard sortParm == .seqPlusTitle || sortParm == .tasksBySeq else { return }
+        
+        let notesInced = Sequencer.incrementSeq(io: noteIO, startingNote: selNote, incMajor: true)
+        logInfo(msg: "\(notesInced) Notes had their Seq values incremented")
+        displayModifiedNote(updatedNote: selNote)
+        editVC!.populateFields(with: selNote)
+        reloadViews()
+        select(note: selNote, position: nil, source: .action)
+    }
+    
     /// Record modifications made to the Selected Note
     ///
     /// - Parameters:
