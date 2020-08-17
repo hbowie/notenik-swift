@@ -68,9 +68,11 @@ class LongTextView: MacEditView {
         if textView.isAutomaticQuoteSubstitutionEnabled {
             textView.toggleAutomaticQuoteSubstitution(nil)
         }
-        if textView.isAutomaticTextCompletionEnabled {
-            textView.toggleAutomaticTextCompletion(nil)
-        }
+        if #available(OSX 10.12.2, *) {
+            if textView.isAutomaticTextCompletionEnabled {
+                textView.toggleAutomaticTextCompletion(nil)
+            }
+        } 
         if textView.isAutomaticSpellingCorrectionEnabled {
             textView.toggleAutomaticSpellingCorrection(nil)
         }

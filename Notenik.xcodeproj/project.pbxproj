@@ -1174,7 +1174,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MARKETING_VERSION = 4.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1203,7 +1203,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MARKETING_VERSION = 4.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
