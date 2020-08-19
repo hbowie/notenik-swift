@@ -170,12 +170,15 @@ class NoteListViewController:   NSViewController,
         }
     }
     
-    func selectRow(index: Int) {
+    func selectRow(index: Int, andScroll: Bool = false) {
         let indexSet = IndexSet(integer: index)
         tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
+        if andScroll {
+            scrollToSelectedRow()
+        }
     }
     
-    @IBAction func scrollToSelected(_ sender: Any) {
+    func scrollToSelectedRow() {
         let selected = tableView.selectedRow
         tableView.scrollRowToVisible(selected)
     }

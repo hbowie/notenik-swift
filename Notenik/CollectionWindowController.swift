@@ -879,6 +879,11 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         select(note: nextNote, position: nil, source: .nav)
     }
     
+    @IBAction func scrollToSelected(_ sender: Any) {
+        guard listVC != nil else { return }
+        listVC!.scrollToSelectedRow()
+    }
+    
     /// Go to the prior note in the list
     @IBAction func goToPriorNote(_ sender: Any) {
         let (_, sel) = guardForNoteAction()
@@ -909,7 +914,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             }
         }
         if found {
-            select(note: note, position: position, source: .action)
+            select(note: note, position: position, source: .action, andScroll: true)
         } else {
             let alert = NSAlert()
             alert.alertStyle = .warning
@@ -938,7 +943,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             }
         }
         if found {
-            select(note: note, position: position, source: .action)
+            select(note: note, position: position, source: .action, andScroll: true)
         } else {
             let alert = NSAlert()
             alert.alertStyle = .informational
@@ -976,7 +981,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     ///   - position: A position in the collection, if we know what it is.
     ///   - source:   An indicator of the source of the selection; if one of the views
     ///               being coordinated is the source, then we don't need to modify it.
-    func select(note: Note?, position: NotePosition?, source: NoteSelectionSource) {
+    func select(note: Note?, position: NotePosition?, source: NoteSelectionSource, andScroll: Bool = false) {
         guard notenikIO != nil && notenikIO!.collectionOpen else { return }
         
         var noteToUse: Note? = note
@@ -991,7 +996,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
         
         if listVC != nil && source != .list && positionToUse != nil && positionToUse!.index >= 0 {
-            listVC!.selectRow(index: positionToUse!.index)
+            listVC!.selectRow(index: positionToUse!.index, andScroll: andScroll)
         }
         
         guard noteToUse != nil else { return }
