@@ -131,11 +131,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     @IBAction func displayBookmarksBoard(_ sender: NSMenuItem) {
         juggler.displayBookmarksBoard()
     }
-    
-    /// Load the remembered bookmarks. 
-    @IBAction func loadBookmarks(_ sender: NSMenuItem) {
-        juggler.loadBookmarkDefaults()
-    }
 
     @IBAction func menuFileOpenAction(_ sender: NSMenuItem) {
         juggler.userRequestsOpenCollection()
@@ -212,10 +207,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     func displayRefresh() {
         juggler.displayRefresh()
-    }
-    
-    func applicationWillTerminate(_ aNotification: Notification) {
-        KnownFolders.shared.saveDefaults()
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

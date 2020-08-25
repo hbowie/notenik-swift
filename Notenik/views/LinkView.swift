@@ -43,7 +43,7 @@ class LinkView: MacEditView {
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
         scrollView.autoresizingMask = [.width]
-        let height = AppPrefs.shared.getViewHeight(lines: 3.0)
+        let height = AppPrefsCocoa.shared.getViewHeight(lines: 3.0)
         scrollView.heightAnchor.constraint(equalToConstant: height).isActive = true
         scrollView.borderType = .bezelBorder
         
@@ -63,7 +63,7 @@ class LinkView: MacEditView {
         textView.usesFontPanel = false
         textView.isAutomaticQuoteSubstitutionEnabled = false
         
-        AppPrefs.shared.setFixedPitchFont(view: textView)
+        AppPrefsCocoa.shared.setFixedPitchFont(view: textView)
         
         // Add the Text View to the Scroll View
         scrollView.documentView = textView

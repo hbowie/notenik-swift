@@ -70,7 +70,7 @@ class PickListView: MacEditView {
         pickListView.dataSource = list
         pickListView.delegate = list
         pickListView.completes = true
-        AppPrefs.shared.setRegularFont(object: pickListView)
+        AppPrefsCocoa.shared.setRegularFont(object: pickListView)
     }
 
 }

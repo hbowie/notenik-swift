@@ -62,6 +62,7 @@
 		9C2AE528220A34D100AE8BEE /* NoteTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */; };
 		9C2AE529220A34D400AE8BEE /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
 		9C2AE52A220A34D800AE8BEE /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */; };
+		9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */; };
 		9C3F1B52244E7D5A00CE0D9D /* Collector.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C3F1B51244E7D5A00CE0D9D /* Collector.storyboard */; };
 		9C3F1B53244E7D5A00CE0D9D /* Collector.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C3F1B51244E7D5A00CE0D9D /* Collector.storyboard */; };
 		9C3F1B56244E81F100CE0D9D /* CollectorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3F1B55244E81F100CE0D9D /* CollectorWindowController.swift */; };
@@ -246,6 +247,7 @@
 		9C1E0C9722E5306B0025C99C /* AttachmentMasterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentMasterController.swift; sourceTree = "<group>"; };
 		9C21749E22024E2900B4BF48 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../notenik-swift-intro"; sourceTree = "<group>"; };
 		9C29DD28226286A100928180 /* CollectionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindow.swift; sourceTree = "<group>"; };
+		9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrefsCocoa.swift; sourceTree = "<group>"; };
 		9C3F1B51244E7D5A00CE0D9D /* Collector.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Collector.storyboard; sourceTree = "<group>"; };
 		9C3F1B55244E81F100CE0D9D /* CollectorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectorWindowController.swift; sourceTree = "<group>"; };
 		9C3F1B58244E823300CE0D9D /* CollectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectorViewController.swift; sourceTree = "<group>"; };
@@ -550,6 +552,7 @@
 				9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */,
 				9C036299239AFAAB00C948DB /* MarkdownPrefsViewController.swift */,
 				9CAD6A4822DF806800531D90 /* TagsExportViewController.swift */,
+				9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */,
 			);
 			path = prefs;
 			sourceTree = "<group>";
@@ -879,6 +882,7 @@
 				9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */,
 				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
 				9CF435C724805C0500DD7C33 /* CountsWindowController.swift in Sources */,
+				9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */,
 				9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */,
 				9C619A38231B323B003CFFBE /* WorkTypeView.swift in Sources */,
 				9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */,

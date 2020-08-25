@@ -43,7 +43,7 @@ class BodyView: MacEditView {
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
         scrollView.autoresizingMask = [.width, .height]
-        let height = AppPrefs.shared.getViewHeight(lines: 5.0)
+        let height = AppPrefsCocoa.shared.getViewHeight(lines: 5.0)
         scrollView.heightAnchor.constraint(greaterThanOrEqualToConstant: height).isActive = true
         scrollView.borderType = .bezelBorder
         
@@ -77,7 +77,7 @@ class BodyView: MacEditView {
             textView.toggleAutomaticSpellingCorrection(nil)
         }
         
-        AppPrefs.shared.setRegularFont(object: textView)
+        AppPrefsCocoa.shared.setRegularFont(object: textView)
         
         // Add the Text View to the Scroll View
         scrollView.documentView = textView

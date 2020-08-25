@@ -43,7 +43,7 @@ class WorkTitleView: MacEditView {
         workTitleField.dataSource = workTitleDataSource
         workTitleField.delegate = workTitleDataSource
         workTitleField.completes = true
-        AppPrefs.shared.setRegularFont(object: workTitleField)
+        AppPrefsCocoa.shared.setRegularFont(object: workTitleField)
         
     }
     

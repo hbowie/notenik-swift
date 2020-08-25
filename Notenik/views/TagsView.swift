@@ -37,7 +37,7 @@ class TagsView: MacEditView {
     
     func buildView(pickList: TagsPickList) {
         tagsField = NSTokenField(string: "")
-        AppPrefs.shared.setRegularFont(object: tagsField)
+        AppPrefsCocoa.shared.setRegularFont(object: tagsField)
         tagsField.tokenizingCharacterSet = CharacterSet([",",";"])
         tagsTokenDelegate = TagsTokenDelegate(tagsPickList: pickList)
         tagsField.delegate = tagsTokenDelegate

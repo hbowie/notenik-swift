@@ -30,6 +30,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     var knownFolders: KnownFolders!
     
     let appPrefs  = AppPrefs.shared
+    let appPrefsCocoa = AppPrefsCocoa.shared
     let osdir     = OpenSaveDirectory.shared
     
     let storyboard:      NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
@@ -72,10 +73,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             knownFolders.add(url: url, isCollection: true, fromBookmark: false, suspendReload: true)
         }
         knownFolders.reload()
-    }
-    
-    func loadBookmarkDefaults() {
-        knownFolders.loadBookmarkDefaults()
     }
     
     /// Find a collection to show in the initial window shown upon application launch.
@@ -387,18 +384,18 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     /// Increase the font size used on the Edit panel
     func viewIncreaseEditFontSize() {
-        appPrefs.increaseEditFontSize(by: 1.0)
+        appPrefsCocoa.increaseEditFontSize(by: 1.0)
         adjustEditWindows()
     }
     
     /// Decrease the font size used on the Edit Panel
     func viewDecreaseEditFontSize() {
-        appPrefs.decreaseEditFontSize(by: 1.0)
+        appPrefsCocoa.decreaseEditFontSize(by: 1.0)
         adjustEditWindows()
     }
     
     func viewResetEditFontSize() {
-        appPrefs.resetEditFontSize()
+        appPrefsCocoa.resetEditFontSize()
         adjustEditWindows()
     }
     

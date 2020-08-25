@@ -36,7 +36,7 @@ class LabelView: MacEditView {
     
     func buildView() {
         textField = NSTextField(labelWithString: "")
-        AppPrefs.shared.setRegularFont(object: textField)
+        AppPrefsCocoa.shared.setRegularFont(object: textField)
         textField.isSelectable = true
     }
     

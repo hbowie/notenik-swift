@@ -35,7 +35,7 @@ class StringView: MacEditView {
     
     func buildView() {
         textField = NSTextField(string: "")
-        AppPrefs.shared.setRegularFont(object: textField)
+        AppPrefsCocoa.shared.setRegularFont(object: textField)
     }
     
 }

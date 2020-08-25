@@ -45,7 +45,7 @@ class BooleanView: MacEditView {
     
     func buildView() {
         booleanField = NSButton(checkboxWithTitle: "", target: nil, action: nil)
-        AppPrefs.shared.setRegularFont(object: booleanField)
+        AppPrefsCocoa.shared.setRegularFont(object: booleanField)
     }
     
 }

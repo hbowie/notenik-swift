@@ -18,6 +18,7 @@ import NotenikLib
 class DateView: MacEditView {
     
     let appPrefs = AppPrefs.shared
+    let appPrefsCocoa = AppPrefsCocoa.shared
     
     var stack: NSStackView!
     var textField: NSTextField!
@@ -53,17 +54,17 @@ class DateView: MacEditView {
         textField = NSTextField()
         controls.append(textField)
         
-        let todayTitle = appPrefs.makeUserAttributedString(text: "Today")
+        let todayTitle = appPrefsCocoa.makeUserAttributedString(text: "Today")
         todayButton = NSButton(title: "Today", target: self, action: #selector(todayButtonClicked))
         todayButton.attributedTitle = todayTitle
         controls.append(todayButton)
         
-        let calendarTitle = appPrefs.makeUserAttributedString(text: "Calendar")
+        let calendarTitle = appPrefsCocoa.makeUserAttributedString(text: "Calendar")
         calendarButton = NSButton(title: "Calendar", target: self, action: #selector(calendarButtonClicked))
         calendarButton.attributedTitle = calendarTitle
         controls.append(calendarButton)
         
-        let recurTitle = appPrefs.makeUserAttributedString(text: "Recur")
+        let recurTitle = appPrefsCocoa.makeUserAttributedString(text: "Recur")
         recurButton = NSButton(title: "Recur", target: self, action: #selector(recurButtonClicked))
         recurButton.attributedTitle = recurTitle
         controls.append(recurButton)
@@ -71,7 +72,7 @@ class DateView: MacEditView {
         stack = NSStackView(views: controls)
         stack.orientation = .horizontal
         
-        AppPrefs.shared.setRegularFont(object: textField)
+        AppPrefsCocoa.shared.setRegularFont(object: textField)
         
     }
     

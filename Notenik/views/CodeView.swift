@@ -43,7 +43,7 @@ class CodeView: MacEditView {
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
         scrollView.autoresizingMask = [.width, .height]
-        let height = AppPrefs.shared.getViewHeight(lines: 5.0)
+        let height = AppPrefsCocoa.shared.getViewHeight(lines: 5.0)
         scrollView.heightAnchor.constraint(equalToConstant: height).isActive = true
         scrollView.borderType = .bezelBorder
         
@@ -64,7 +64,7 @@ class CodeView: MacEditView {
         textView.allowsUndo = true
         textView.isAutomaticQuoteSubstitutionEnabled = false
         
-        AppPrefs.shared.setFixedPitchFont(view: textView)
+        AppPrefsCocoa.shared.setFixedPitchFont(view: textView)
         
         // Add the Text View to the Scroll View
         scrollView.documentView = textView
