@@ -23,12 +23,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     @IBOutlet weak var iCloudMenu: NSMenu!
     
     var appPrefs:     AppPrefs!
-    var cloudNik:     CloudNik!
     var displayPrefs: DisplayPrefs!
     var juggler: CollectionJuggler!
     let logger = Logger.shared
     var stage = "0"
     var launchURLs: [URL] = []
+    
+    var notenikFolderList: NotenikFolderList!
     
     var docController: NoteDocumentController!
     var recentDocumentURLs: [URL] = []
@@ -61,25 +62,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         
         // Let's build a submenu showing all folders in the iCloud Notenik folder.
         iCloudMenu.removeAllItems()
-        cloudNik = CloudNik.shared
-        var folders: [String] = []
-        if cloudNik.url != nil {
-            do {
-                let iCloudContents = try fm.contentsOfDirectory(at: cloudNik.url!,
-                                        includingPropertiesForKeys: nil,
-                                                           options: .skipsHiddenFiles)
-                for url in iCloudContents {
-                    let fileName = FileName(url)
-                    folders.append(fileName.folder)
-                }
-            } catch {
-                logError("Error reading contents of iCloud drive folder")
+        notenikFolderList = NotenikFolderList.shared
+        for folder in notenikFolderList {
+            if folder.location == .iCloudContainer {
+                let item = NSMenuItem(title: folder.folderName, action: #selector(openICloudItem(_:)), keyEquivalent: "")
+                iCloudMenu.addItem(item)
             }
-        }
-        folders.sort()
-        for folder in folders {
-            let item = NSMenuItem(title: folder, action: #selector(openICloudItem(_:)), keyEquivalent: "")
-            iCloudMenu.addItem(item)
         }
         
         var successfulOpens = 0
@@ -99,8 +87,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     /// Open an iCloud item that's been selected by the user from the submenu created above.
     @objc func openICloudItem(_ sender: NSMenuItem) {
-        let urlToOpen = cloudNik.url!.appendingPathComponent(sender.title)
-        _ = juggler.open(urls: [urlToOpen])
+        let urlToOpen = notenikFolderList.getICloudURLFromFolderName(sender.title)
+        if urlToOpen != nil {
+            _ = juggler.open(urls: [urlToOpen!])
+        }
     }
     
     /// Standard open when passed a list of URLs. 
@@ -125,11 +115,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     @IBAction func menuFileNewAction(_ sender: NSMenuItem) {
         juggler.userRequestsNewCollection()
-    }
-    
-    /// Display a tree view of the recent files and remembered bookmarks.
-    @IBAction func displayBookmarksBoard(_ sender: NSMenuItem) {
-        juggler.displayBookmarksBoard()
     }
 
     @IBAction func menuFileOpenAction(_ sender: NSMenuItem) {

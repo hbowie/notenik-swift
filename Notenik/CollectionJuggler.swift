@@ -26,8 +26,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     private let defaults = UserDefaults.standard
     let application = NSApplication.shared
     
-    var cloudNik: CloudNik!
-    var knownFolders: KnownFolders!
+    var notenikFolderList: NotenikFolderList!
     
     let appPrefs  = AppPrefs.shared
     let appPrefsCocoa = AppPrefsCocoa.shared
@@ -39,9 +38,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     let scriptStoryboard: NSStoryboard = NSStoryboard(name: "Script", bundle: nil)
     var scriptWindowController: ScriptWindowController?
-    
-    let collectorStoryboard: NSStoryboard = NSStoryboard(name: "Collector", bundle: nil)
-    var collectorWindowController: CollectorWindowController?
     
     var docController: NoteDocumentController?
     
@@ -65,14 +61,13 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                               level: .error,
                               message: "Couldn't get a Log Window Controller! at startup")
         }
-        knownFolders = KnownFolders.shared
+        notenikFolderList = NotenikFolderList.shared
     }
     
     func makeRecentDocsKnown(_ recentDocumentURLs: [URL]) {
         for url in recentDocumentURLs {
-            knownFolders.add(url: url, isCollection: true, fromBookmark: false, suspendReload: true)
+            notenikFolderList.add(url: url, type: .collection, location: .undetermined)
         }
-        knownFolders.reload()
     }
     
     /// Find a collection to show in the initial window shown upon application launch.
@@ -94,7 +89,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         
         if collection != nil {
             saveCollectionInfo(collection!)
-            KnownFolders.shared.add(collection!, suspendReload: false)
+            notenikFolderList.add(collection!)
         }
 
         if collection == nil {
@@ -138,21 +133,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     func userRequestsNewCollection() {
         selectCollection(requestType: .new)
     }
-    
-    /// Display the Bookmarks Window.
-    func displayBookmarksBoard() {
-        if collectorWindowController == nil {
-            collectorWindowController = collectorStoryboard.instantiateController(withIdentifier: "collectorWC") as? CollectorWindowController
-        }
-        if collectorWindowController == nil {
-            communicateError("Couldn't get a Collector Window Controller")
-        } else {
-            collectorWindowController!.showWindow(self)
-            collectorWindowController!.passCollectorRequesterInfo(juggler: self,
-                                                                  tree: knownFolders)
-        }
-    }
-    
+        
     /// Let the user select a Collection to be opened
     func selectCollection(requestType: CollectionRequestType) {
         let openPanel = prepCollectionOpenPanel()
@@ -164,10 +145,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     /// Proceed with the user request, now that we have a URL
     func proceedWithSelectedURL(requestType: CollectionRequestType, fileURL: URL) {
-        KnownFolders.shared.add(url: fileURL,
-                                isCollection: true,
-                                fromBookmark: false,
-                                suspendReload: false)
+        notenikFolderList.add(url: fileURL, type: .collection, location: .undetermined)
         if requestType == .new {
             _ = newCollection(fileURL: fileURL)
         }
@@ -195,10 +173,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     }
     
     func openParentRealm(parentURL: URL) {
-        KnownFolders.shared.add(url: parentURL,
-                                isCollection: false,
-                                fromBookmark: false,
-                                suspendReload: false)
+        notenikFolderList.add(url: parentURL, type: .parent, location: .undetermined)
         AppPrefs.shared.parentRealmPath = parentURL.path
         appPrefs.parentRealmParentURL = parentURL.deletingLastPathComponent()
         let realmScanner = RealmScanner()
@@ -267,10 +242,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         let openOK = openFileWithNewWindow(fileURL: newURL, readOnly: false)
         
         if openOK {
-            KnownFolders.shared.add(url: newURL,
-                                    isCollection: true,
-                                    fromBookmark: false,
-                                    suspendReload: false)
+            notenikFolderList.add(url: newURL, type: .collection, location: .undetermined)
             currentWindow.close()
             let alert = NSAlert()
             alert.alertStyle = .informational
@@ -354,10 +326,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         let initOK = io.initCollection(realm: realm, collectionPath: collectionURL.path)
         guard initOK else { return false }
         
-        KnownFolders.shared.add(url: collectionURL,
-                                isCollection: true,
-                                fromBookmark: false,
-                                suspendReload: false)
+        notenikFolderList.add(url: collectionURL, type: .collection, location: .undetermined)
         io.addDefaultDefinitions()
         
         // Now let the user tailor the starting Collection default values
@@ -460,10 +429,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Open the Essential Collection, if we have one
     func openEssentialCollection() {
         guard let essentialURL = appPrefs.essentialURL else { return }
-        KnownFolders.shared.add(url: essentialURL,
-                                isCollection: true,
-                                fromBookmark: false,
-                                suspendReload: false)
+        notenikFolderList.add(url: essentialURL, type: .collection, location: .undetermined)
         _ = openFileWithNewWindow(fileURL: essentialURL, readOnly: false)
     }
     
@@ -546,7 +512,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             saveCollectionInfo(collection!)
             openOK = assignIOtoWindow(io: io)
         }
-        KnownFolders.shared.add(collection!, suspendReload: false)
+        notenikFolderList.add(collection!)
         return openOK
     }
     
