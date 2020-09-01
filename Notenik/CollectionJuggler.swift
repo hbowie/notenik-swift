@@ -291,12 +291,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     }
     
     func newFolder(folderURL: URL) -> Bool {
-        print("CollectionJuggler.newFolder")
-        print("  - folder url = \(folderURL.absoluteString)")
         let folderPath = folderURL.path
-        print("  - folder path = \(folderPath)")
         let alreadyExists = FileManager.default.fileExists(atPath: folderPath)
-        print("  - Folder already exists? \(alreadyExists)")
         guard !alreadyExists else { return false }
         do {
             try FileManager.default.createDirectory(atPath: folderURL.path, withIntermediateDirectories: true, attributes: nil)
@@ -511,8 +507,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             collection!.readOnly = readOnly
             saveCollectionInfo(collection!)
             openOK = assignIOtoWindow(io: io)
+            notenikFolderList.add(collection!)
         }
-        notenikFolderList.add(collection!)
         return openOK
     }
     
@@ -570,6 +566,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Once we've opened a collection, save some info about it so we can use it later
     func saveCollectionInfo(_ collection: NoteCollection) {
         guard let collectionURL = collection.collectionFullPathURL else { return }
+        guard !collection.readOnly else { return }
         if self.docController != nil {
             self.docController!.noteNewRecentDocumentURL(collectionURL)
         }
