@@ -15,7 +15,7 @@ class NoteSplitViewController: NSSplitViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        splitView.autosaveName = "save-me"
     }
     
 }
