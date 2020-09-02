@@ -114,7 +114,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             wc!.select(note: nextNote, position: nil, source: .nav)
         }
         decisionHandler(.cancel)
-
     }
+    
+    
     
 }
