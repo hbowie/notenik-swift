@@ -34,7 +34,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         }
     }
     
-    @IBOutlet var webView: WKWebView!
+    var webView: WKWebView!
+    var webConfig: WKWebViewConfiguration!
     
     let urlNavPrevix = "https://ntnk.app/"
     var bundlePrefix = ""
@@ -46,10 +47,16 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     var counts = MkdownCounts()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        webConfig = WKWebViewConfiguration()
+        webView = WKWebView(frame: .zero, configuration: webConfig)
         webView.uiDelegate = self
         webView.navigationDelegate = self
+        view = webView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         bundlePrefix = Bundle.main.bundleURL.absoluteString + "#"
     }
     
@@ -109,13 +116,12 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             nextNote = io.getNote(forTimestamp: noteID)
         }
         if nextNote == nil {
-            // print("---- Linked Note not found")
+            decisionHandler(.allow)
+            return
         } else {
             wc!.select(note: nextNote, position: nil, source: .nav)
         }
         decisionHandler(.cancel)
     }
-    
-    
     
 }

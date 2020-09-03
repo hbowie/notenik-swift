@@ -18,9 +18,7 @@ Within this Notenik iCloud Container, then, you would normally place one or more
 
 Because macOS knows that this folder is really a container for Notenik documents, it gives Notenik some special privileges here: any Collection stored in this folder can always be accessed by the Notenik app, without you having to explicitly select the Collection to be opened each time. 
 
-One easy way to access the Collections within the container is by choosing to open the 'Collections Board' via an item beneath the File menu. Then, after clicking on the disclosure triangle to reveal the contents of 'iCloud Notenik', you will see a list of all the Collections within the Container. Double-click on one of them to open it (or select one and then click on the 'Open' button below). 
-
-You can also use the Collections Board to create a new Collection within the iCloud container by typing in the desired name of the new Collection in the text field at the bottom of the window, then hitting the 'New' button. 
+You can open any of the Collections within the Notenik iCloud Container by using the 'Open from iCloud' menu beneath the File menu.  
 
 And oh, BTW, if and when a Notenik app for iOS ever appears, this is the folder that will be shared between the Mac and various iOS devices. 
 
