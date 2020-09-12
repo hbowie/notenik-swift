@@ -21,6 +21,9 @@ class CollectionWindow: NSWindow {
         if io != nil {
             io?.closeCollection()
         }
+        if let wc = self.windowController as? CollectionWindowController {
+            wc.windowWillClose()
+        }
         super.close()
     }
 

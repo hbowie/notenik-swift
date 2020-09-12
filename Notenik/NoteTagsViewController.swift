@@ -125,7 +125,6 @@ class NoteTagsViewController: NSViewController,
                 textField.sizeToFit()
             }
         }
-        // More code here
         return view
     }
     

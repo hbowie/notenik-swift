@@ -113,6 +113,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         }
     }
     
+    @IBAction func navBoard(_ sender: NSMenuItem) {
+        juggler.navBoard()
+    }
+    
     @IBAction func menuFileNewAction(_ sender: NSMenuItem) {
         juggler.userRequestsNewCollection()
     }
@@ -126,7 +130,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     @IBAction func menuFileOpenParentRealm(_ sender: Any) {
-        juggler.openParentRealm()
+        _ = juggler.openParentRealm()
     }
     
     @IBAction func scriptPlay(_ sender: Any) {
@@ -195,7 +199,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return true
+        return false
     }
     
     /// Log an information message.

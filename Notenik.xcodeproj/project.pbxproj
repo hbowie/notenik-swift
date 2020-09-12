@@ -63,10 +63,19 @@
 		9C2AE529220A34D400AE8BEE /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
 		9C2AE52A220A34D800AE8BEE /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */; };
 		9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */; };
+		9C3CC8F6250A9C9E002C95D0 /* Navigator.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CC8F5250A9C9E002C95D0 /* Navigator.storyboard */; };
+		9C3CC8F8250AA0F8002C95D0 /* NavigatorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC8F7250AA0F8002C95D0 /* NavigatorWindowController.swift */; };
+		9C3CC8FA250AA136002C95D0 /* NavigatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC8F9250AA136002C95D0 /* NavigatorViewController.swift */; };
 		9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BA2298B87C003F6589 /* BodyView.swift */; };
 		9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BA2298B87C003F6589 /* BodyView.swift */; };
 		9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BD2298BC87003F6589 /* CodeView.swift */; };
 		9C45E8BF2298BC87003F6589 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BD2298BC87003F6589 /* CodeView.swift */; };
+		9C4ED7762506C90D0050800B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4ED7752506C90D0050800B /* AppDelegate.swift */; };
+		9C4ED7782506C90D0050800B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4ED7772506C90D0050800B /* SceneDelegate.swift */; };
+		9C4ED77A2506C90D0050800B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4ED7792506C90D0050800B /* ViewController.swift */; };
+		9C4ED77D2506C90D0050800B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C4ED77B2506C90D0050800B /* Main.storyboard */; };
+		9C4ED77F2506C90E0050800B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C4ED77E2506C90E0050800B /* Assets.xcassets */; };
+		9C4ED7822506C90E0050800B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C4ED7802506C90E0050800B /* LaunchScreen.storyboard */; };
 		9C553C612266A0D50008D176 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553C602266A0D50008D176 /* StatusView.swift */; };
 		9C553C622266A0D50008D176 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553C602266A0D50008D176 /* StatusView.swift */; };
 		9C5556D222E115960099414E /* Export.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C5556D122E115960099414E /* Export.storyboard */; };
@@ -242,8 +251,19 @@
 		9C21749E22024E2900B4BF48 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../notenik-swift-intro"; sourceTree = "<group>"; };
 		9C29DD28226286A100928180 /* CollectionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindow.swift; sourceTree = "<group>"; };
 		9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrefsCocoa.swift; sourceTree = "<group>"; };
+		9C3CC8F5250A9C9E002C95D0 /* Navigator.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Navigator.storyboard; sourceTree = "<group>"; };
+		9C3CC8F7250AA0F8002C95D0 /* NavigatorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorWindowController.swift; sourceTree = "<group>"; };
+		9C3CC8F9250AA136002C95D0 /* NavigatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewController.swift; sourceTree = "<group>"; };
 		9C45E8BA2298B87C003F6589 /* BodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyView.swift; sourceTree = "<group>"; };
 		9C45E8BD2298BC87003F6589 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
+		9C4ED7732506C90D0050800B /* Noteniki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Noteniki.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C4ED7752506C90D0050800B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9C4ED7772506C90D0050800B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		9C4ED7792506C90D0050800B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9C4ED77C2506C90D0050800B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9C4ED77E2506C90E0050800B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9C4ED7812506C90E0050800B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9C4ED7832506C90E0050800B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C553C602266A0D50008D176 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		9C5556D122E115960099414E /* Export.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Export.storyboard; sourceTree = "<group>"; };
 		9C5556D622E11E3B0099414E /* ExportWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportWindowController.swift; sourceTree = "<group>"; };
@@ -344,6 +364,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9C4ED7702506C90D0050800B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9C60E6CB21F64B3B00C332ED /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -386,6 +413,16 @@
 			path = attachments;
 			sourceTree = "<group>";
 		};
+		9C3CC8F2250A980D002C95D0 /* navigator */ = {
+			isa = PBXGroup;
+			children = (
+				9C3CC8F5250A9C9E002C95D0 /* Navigator.storyboard */,
+				9C3CC8F7250AA0F8002C95D0 /* NavigatorWindowController.swift */,
+				9C3CC8F9250AA136002C95D0 /* NavigatorViewController.swift */,
+			);
+			path = navigator;
+			sourceTree = "<group>";
+		};
 		9C4C1BAE22E7EE0A005997DF /* script */ = {
 			isa = PBXGroup;
 			children = (
@@ -394,6 +431,20 @@
 				9C1BE27322EB9444006FDFEC /* ScriptViewController.swift */,
 			);
 			path = script;
+			sourceTree = "<group>";
+		};
+		9C4ED7742506C90D0050800B /* Noteniki */ = {
+			isa = PBXGroup;
+			children = (
+				9C4ED7752506C90D0050800B /* AppDelegate.swift */,
+				9C4ED7772506C90D0050800B /* SceneDelegate.swift */,
+				9C4ED7792506C90D0050800B /* ViewController.swift */,
+				9C4ED77B2506C90D0050800B /* Main.storyboard */,
+				9C4ED77E2506C90E0050800B /* Assets.xcassets */,
+				9C4ED7802506C90E0050800B /* LaunchScreen.storyboard */,
+				9C4ED7832506C90E0050800B /* Info.plist */,
+			);
+			path = Noteniki;
 			sourceTree = "<group>";
 		};
 		9C60E6C521F64B3B00C332ED = {
@@ -405,6 +456,7 @@
 				9CE715B0225E887300025C00 /* Notenik Help */,
 				9C60E6E321F64B3C00C332ED /* NotenikTests */,
 				9C60E6EE21F64B3C00C332ED /* NotenikUITests */,
+				9C4ED7742506C90D0050800B /* Noteniki */,
 				9C60E6CF21F64B3B00C332ED /* Products */,
 				9CAF2B2622664237009E19E2 /* Project Index */,
 				9C65394E21F91EBB00012184 /* Frameworks */,
@@ -417,6 +469,7 @@
 				9C60E6CE21F64B3B00C332ED /* Notenik.app */,
 				9C60E6E021F64B3C00C332ED /* NotenikTests.xctest */,
 				9C60E6EB21F64B3C00C332ED /* NotenikUITests.xctest */,
+				9C4ED7732506C90D0050800B /* Noteniki.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -450,6 +503,7 @@
 				9CC78E672283560F00640477 /* displayPrefs */,
 				9CAD6A5422DFA95D00531D90 /* export */,
 				9C60E70E21F6518400C332ED /* logging */,
+				9C3CC8F2250A980D002C95D0 /* navigator */,
 				9C832A00224ABDBD007DA6FC /* prefs */,
 				9C4C1BAE22E7EE0A005997DF /* script */,
 				9CB60BBE22650975003B5655 /* share */,
@@ -632,6 +686,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		9C4ED7722506C90D0050800B /* Noteniki */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C4ED7862506C90E0050800B /* Build configuration list for PBXNativeTarget "Noteniki" */;
+			buildPhases = (
+				9C4ED76F2506C90D0050800B /* Sources */,
+				9C4ED7702506C90D0050800B /* Frameworks */,
+				9C4ED7712506C90D0050800B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Noteniki;
+			productName = Noteniki;
+			productReference = 9C4ED7732506C90D0050800B /* Noteniki.app */;
+			productType = "com.apple.product-type.application";
+		};
 		9C60E6CD21F64B3B00C332ED /* Notenik */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9C60E6F421F64B3C00C332ED /* Build configuration list for PBXNativeTarget "Notenik" */;
@@ -700,10 +771,13 @@
 		9C60E6C621F64B3B00C332ED /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1170;
 				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "PowerSurge Publishing";
 				TargetAttributes = {
+					9C4ED7722506C90D0050800B = {
+						CreatedOnToolsVersion = 11.7;
+					};
 					9C60E6CD21F64B3B00C332ED = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
@@ -753,11 +827,22 @@
 				9C60E6CD21F64B3B00C332ED /* Notenik */,
 				9C60E6DF21F64B3C00C332ED /* NotenikTests */,
 				9C60E6EA21F64B3C00C332ED /* NotenikUITests */,
+				9C4ED7722506C90D0050800B /* Noteniki */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9C4ED7712506C90D0050800B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C4ED7822506C90E0050800B /* LaunchScreen.storyboard in Resources */,
+				9C4ED77F2506C90E0050800B /* Assets.xcassets in Resources */,
+				9C4ED77D2506C90D0050800B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9C60E6CC21F64B3B00C332ED /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -771,6 +856,7 @@
 				9C8DD75722E3EEC400FF56C1 /* Attachment.storyboard in Resources */,
 				9CC41CD5229CA61700E92A66 /* Credits.rtf in Resources */,
 				9C0B643523885E9900869FAA /* TagsMassChange.storyboard in Resources */,
+				9C3CC8F6250A9C9E002C95D0 /* Navigator.storyboard in Resources */,
 				9CE32504224D48180051CA1F /* Preferences.storyboard in Resources */,
 				9CD9963023D3CA30004650BE /* CollectionPrefs.storyboard in Resources */,
 				9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */,
@@ -814,11 +900,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9C4ED76F2506C90D0050800B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C4ED77A2506C90D0050800B /* ViewController.swift in Sources */,
+				9C4ED7762506C90D0050800B /* AppDelegate.swift in Sources */,
+				9C4ED7782506C90D0050800B /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9C60E6CA21F64B3B00C332ED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				9CD358892293C42B00C9203F /* LinkView.swift in Sources */,
+				9C3CC8F8250AA0F8002C95D0 /* NavigatorWindowController.swift in Sources */,
 				9C0B643923888D6700869FAA /* TagsMassChangeWindowController.swift in Sources */,
 				9C03629A239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
 				9C1BE27122EB940E006FDFEC /* ScriptWindowController.swift in Sources */,
@@ -853,6 +950,7 @@
 				9CA4EE8C246A15BC00059F65 /* PickListDataSource.swift in Sources */,
 				9CE3250D224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
 				9CF96EE0225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */,
+				9C3CC8FA250AA136002C95D0 /* NavigatorViewController.swift in Sources */,
 				9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */,
 				9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */,
 				9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */,
@@ -1006,6 +1104,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		9C4ED77B2506C90D0050800B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C4ED77C2506C90D0050800B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9C4ED7802506C90E0050800B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C4ED7812506C90E0050800B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		9C60E6D721F64B3C00C332ED /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1017,6 +1131,47 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		9C4ED7842506C90E0050800B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W3CJLBABN3;
+				INFOPLIST_FILE = Noteniki/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.Noteniki;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9C4ED7852506C90E0050800B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W3CJLBABN3;
+				INFOPLIST_FILE = Noteniki/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.Noteniki;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		9C60E6F221F64B3C00C332ED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1140,7 +1295,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 96;
+				CURRENT_PROJECT_VERSION = 97;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1153,7 +1308,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 4.5.0;
+				MARKETING_VERSION = 4.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1169,7 +1324,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 96;
+				CURRENT_PROJECT_VERSION = 97;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1182,7 +1337,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 4.5.0;
+				MARKETING_VERSION = 4.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1275,6 +1430,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9C4ED7862506C90E0050800B /* Build configuration list for PBXNativeTarget "Noteniki" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C4ED7842506C90E0050800B /* Debug */,
+				9C4ED7852506C90E0050800B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9C60E6C921F64B3B00C332ED /* Build configuration list for PBXProject "Notenik" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

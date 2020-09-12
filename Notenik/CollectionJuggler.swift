@@ -32,9 +32,10 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     let appPrefsCocoa = AppPrefsCocoa.shared
     let osdir     = OpenSaveDirectory.shared
     
-    let storyboard:      NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
-    let logStoryboard:   NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
+    let storyboard:                NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
+    let logStoryboard:             NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
+    let navStoryboard:             NSStoryboard = NSStoryboard(name: "Navigator", bundle: nil)
     
     let scriptStoryboard: NSStoryboard = NSStoryboard(name: "Script", bundle: nil)
     var scriptWindowController: ScriptWindowController?
@@ -46,6 +47,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     var initialWindow: CollectionWindowController?
     var initialWindowUsed = false
+    
+    var navController: NavigatorWindowController?
     
     override private init() {
         super.init()
@@ -101,6 +104,17 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         _ = assignIOtoWindow(io: io)
     }
     
+    /// Let the user select a folder to be opened.
+    func openFolder() -> Bool {
+        var opens = 0
+        let openPanel = prepCollectionOpenPanel()
+        let result = openPanel.runModal()
+        if result == .OK {
+            opens = open(urls: [openPanel.url!])
+        }
+        return opens > 0
+    }
+    
     /// Figure out what to do with a bunch of passed URLs.
     func open(urls: [URL]) -> Int {
         let tempIO = FileIO()
@@ -122,8 +136,10 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                 communicateError("Item to be opened at \(url.path) could not be used",
                 alert: true)
             case .realm:
-                openParentRealm(parentURL: url)
-                successfulOpens += 1
+                let ok = openParentRealm(parentURL: url)
+                if ok {
+                    successfulOpens += 1
+                }
             }
         }
         return successfulOpens
@@ -152,7 +168,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     }
     
     /// Open a Parent Folder containing one or more Notenik Collections
-    func openParentRealm() {
+    func openParentRealm() -> Bool {
         let openPanel = NSOpenPanel();
         openPanel.title = "Select a Parent Folder containing one or more Collections"
         if appPrefs.parentRealmParentURL != nil {
@@ -168,11 +184,12 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         openPanel.allowsMultipleSelection = false
         let result = openPanel.runModal()
         if result == .OK {
-            self.openParentRealm(parentURL: openPanel.url!)
+            return self.openParentRealm(parentURL: openPanel.url!)
         }
+        return false
     }
     
-    func openParentRealm(parentURL: URL) {
+    func openParentRealm(parentURL: URL) -> Bool {
         notenikFolderList.add(url: parentURL, type: .parent, location: .undetermined)
         AppPrefs.shared.parentRealmPath = parentURL.path
         appPrefs.parentRealmParentURL = parentURL.deletingLastPathComponent()
@@ -182,6 +199,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             let io = realmScanner.realmIO
             _ = assignIOtoWindow(io: io)
         }
+        return ok
     }
     
     /// The user has requested us to save the current collection in a new location
@@ -560,6 +578,44 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
         if window.windowNumber == 0 && window.io == nil {
             initialWindow = window
+        }
+    }
+    
+    /// Take appropriate actions when a Collection window is closing.
+    func windowClosing(window: CollectionWindowController) {
+        var windowCount = 0
+        var index = 0
+        for nextWindow in windows {
+            if nextWindow as AnyObject === window as AnyObject {
+                // Don't add to the count - this window is closing
+            } else if nextWindow.window == nil {
+                // Don't add to the count
+            } else if nextWindow.io == nil {
+                // Don't add to the count
+            } else if nextWindow.io!.collectionOpen {
+                windowCount += 1
+            }
+            index += 1
+        }
+        if windowCount == 0 {
+            navBoard()
+        }
+    }
+    
+    /// Display the Navigation Board.
+    func navBoard() {
+        if navController != nil {
+            navController!.reload()
+            navController!.showWindow(self)
+        } else if let navWC = self.navStoryboard.instantiateController(withIdentifier: "navigatorWC") as? NavigatorWindowController {
+            navWC.juggler = self
+            navWC.showWindow(self)
+            navController = navWC
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionJuggler",
+                              level: .error,
+                              message: "Couldn't get a Navigation Window Controller!")
         }
     }
     

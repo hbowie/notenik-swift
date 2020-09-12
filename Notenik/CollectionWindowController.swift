@@ -177,6 +177,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
     }
     
+    func windowWillClose() {
+        juggler.windowClosing(window: self)
+    }
+    
     /// The user has requested a chance to review and possibly modify the Collection Preferences. 
     @IBAction func menuCollectionPreferences(_ sender: Any) {
         
