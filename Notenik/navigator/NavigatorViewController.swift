@@ -139,7 +139,22 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
         }
     }
     
-    /// Open a folder not visible in the list. 
+    @IBAction func revealSelected(_ sender: Any) {
+        for index in 0..<outlineView.numberOfRows {
+            guard outlineView.isRowSelected(index) else { continue }
+            guard let node = outlineView.item(atRow: index) as? NotenikFolderNode else {
+                continue
+            }
+            guard node.type == .folder else { continue }
+            guard node.desc != NotenikFolderList.helpFolderDesc  else { continue }
+            let selFolder = node.folder
+            if selFolder != nil {
+                _ = NSWorkspace.shared.openFile(selFolder!.path)
+            }
+        }
+    }
+    
+    /// Open a folder not visible in the list.
     @IBAction func openOther(_ sender: Any) {
         guard juggler != nil else { return }
         let success = juggler!.openFolder()
@@ -171,8 +186,7 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
         }
     }
     
-    /// Delete one or more Collections selected in the outline. 
-    @IBAction func deleteCollection(_ sender: Any) {
+    @IBAction func deleteSelected(_ sender: Any) {
         guard juggler != nil else { return }
         for index in 0..<outlineView.numberOfRows {
             guard outlineView.isRowSelected(index) else { continue }
