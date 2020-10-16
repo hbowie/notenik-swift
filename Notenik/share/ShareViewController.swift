@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 4/15/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019-2020 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -27,6 +27,7 @@ class ShareViewController: NSViewController {
     
     let htmlDocValue = "html-doc"
     let htmlFragmentValue = "html-fragment"
+    let htmlBlockquoteValue = "html-blockquote"
     let markkdownValue = "markdown"
     let markdownQuoteValue = "mdquote"
     let notenikValue = "notenik"
@@ -45,6 +46,7 @@ class ShareViewController: NSViewController {
     
     @IBOutlet var formatHTMLDocButton: NSButton!
     @IBOutlet var formatHTMLFragmentButton: NSButton!
+    @IBOutlet var formatHTMLBlockquoteButton: NSButton!
     @IBOutlet var formatMarkdownButton: NSButton!
     @IBOutlet var formatMarkdownQuoteButton: NSButton!
     @IBOutlet var formatNotenikButton: NSButton!
@@ -69,6 +71,8 @@ class ShareViewController: NSViewController {
             formatHTMLDocButton.state = .on
         } else if formatSelector == htmlFragmentValue {
             formatHTMLFragmentButton.state = .on
+        } else if formatSelector == htmlBlockquoteValue {
+            formatHTMLBlockquoteButton.state = .on
         } else if formatSelector == markkdownValue {
             formatMarkdownButton.state = .on
         } else if formatSelector == markdownQuoteValue {
@@ -94,7 +98,8 @@ class ShareViewController: NSViewController {
         
         // Set desired output format
         var format: MarkedupFormat = .htmlDoc
-        if formatHTMLFragmentButton.state == .on {
+        if formatHTMLFragmentButton.state == .on
+            || formatHTMLBlockquoteButton.state == .on {
             format = .htmlFragment
         } else if formatMarkdownButton.state == .on {
             format = .markdown
@@ -165,6 +170,12 @@ class ShareViewController: NSViewController {
                 markedup.append(markdown.html)
                 markedup.finishDoc()
                 stringToShare = markedup.code
+            } else if formatHTMLBlockquoteButton.state == .on {
+                let markedup = Markedup(format: .htmlFragment)
+                markedup.startBlockQuote()
+                markedup.append(markdown.html)
+                markedup.finishBlockQuote()
+                stringToShare = markedup.code
             } else {
                 stringToShare = markdown.html
             }
@@ -223,6 +234,8 @@ class ShareViewController: NSViewController {
             formatSelector = notenikValue
         } else if formatHTMLFragmentButton.state == .on {
             formatSelector = htmlFragmentValue
+        } else if formatHTMLBlockquoteButton.state == .on {
+            formatSelector = htmlBlockquoteValue
         } else if formatMarkdownButton.state == .on {
             formatSelector = markkdownValue
         } else if formatMarkdownQuoteButton.state == .on {
