@@ -25,6 +25,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var fileExtComboBox:      NSComboBox!
     @IBOutlet var mirrorAutoIndexCkBox: NSButton!
     @IBOutlet var bodyLabelCkBox:       NSButton!
+    @IBOutlet var h1TitlesCkBox:        NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
     
@@ -199,6 +200,7 @@ class CollectionPrefsViewController: NSViewController {
         setOtherFieldsAllowed(collection!.otherFields)
         setMirrorAutoIndex(collection!.mirrorAutoIndex)
         setBodyLabel(collection!.bodyLabel)
+        setH1Titles(collection!.h1Titles)
     }
     
     func setFileExt(_ ext: String?) {
@@ -278,6 +280,14 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
+    func setH1Titles(_ on: Bool) {
+        if on {
+            h1TitlesCkBox.state = .on
+        } else {
+            h1TitlesCkBox.state = .off
+        }
+    }
+    
     @objc func checkBoxClicked() {
         // No need to take any immediate action here
     }
@@ -289,6 +299,7 @@ class CollectionPrefsViewController: NSViewController {
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
         collection!.mirrorAutoIndex = (mirrorAutoIndexCkBox.state == .on)
         collection!.bodyLabel = (bodyLabelCkBox.state == .on)
+        collection!.h1Titles = (h1TitlesCkBox.state == .on)
         let dict = collection!.dict
         dict.unlock()
         for checkBox in fieldSelectors {

@@ -1,5 +1,5 @@
 //
-//  TemplateWindowController.swift
+//  CollectionPrefsWindowController.swift
 //  Notenik
 //
 //  Created by Herb Bowie on 4/5/19.
