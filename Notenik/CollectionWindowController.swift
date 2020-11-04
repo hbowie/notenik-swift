@@ -1780,7 +1780,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     }
     
     /// Export the current collection in Notenik format.
-    @IBAction func exportNotenik(_ sender: Any) {
+    @IBAction func oldExportNotenik(_ sender: Any) {
         
         // See if we're ready to take action
         let nio = guardForCollectionAction()
