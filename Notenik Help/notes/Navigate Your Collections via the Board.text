@@ -1,0 +1,36 @@
+Title:  Navigate Your Collections via the Board
+
+Timestamp: 20200911234827
+
+Seq:    19
+
+Level:  3
+
+Date Added: 2020-09-11 23:48:27 +0000
+
+Body: 
+
+The Navigation Board can be summoned via the File menu, or with the indicated keyboard shortcut. 
+
+The Nav Board will also appear automatically if the user closes the last open Collection window. 
+
+The Nav Board shows all easily accessible Collections in an outline, and also offers a series of buttons allowing the user to perform various actions. 
+
+The outline appears to the left of the window. Available Collections are available within three different groups. 
+
++ Help - The Help Notes appear here. 
++ iCloud Container - These are the Collections stored within the [[Notenik iCloud Container]].
++ Recent - These are recently accessed Collections that are stored outside of the iCloud Container.
+
+Click on a disclosure triangle, or double-click on the name of a group, in order to display/hide the Collections within the group. 
+
+Double-click on a Collection to open it, and dismiss the Nav Board. 
+
+Select one or more Collections in the outline, and then press one of the buttons on the right to perform the indicated action on the selected Collections. 
+
+Here is more info on the actions performed by each button. 
+
++ Open Selected -- Open all of the Collections that are currently selected in the outline. 
++ Open Other - If the desired Collection is not available within the outline, then click on this button so that you can select your Collection from your local file system. 
++ Open Parent -- Allows you to perform the [[Open Parent Realm]] action from the Nav Board. 
++ Quit -- Quit the Notenik application. 

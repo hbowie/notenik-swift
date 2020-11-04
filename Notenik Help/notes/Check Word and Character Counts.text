@@ -4,7 +4,7 @@ Tags:   body, counts, markdown
 
 Timestamp: 20200529171358
 
-Seq:    38
+Seq:    39
 
 Level:  3
 
@@ -24,4 +24,4 @@ Counts are only available if you are using the Notenik Markdown parser.
 
 The Counts window will be refreshed each time you save your edits to a Note, or when a new Note is selected. 
 
-Only one Counts window is ever shown (no matter how many Collections you have open). 
+Only one Counts window is ever shown (no matter how many Collections you have open).

@@ -1,10 +1,10 @@
 Title:  Override Default Fields with a Template file
 
-Tags:   default, fields, template, boolean
+Tags:   boolean, default, fields, template
 
 Timestamp: 20191210005646
 
-Seq:    33
+Seq:    34
 
 Level:  3
 
@@ -36,4 +36,4 @@ It's also possible to specify a series of possible values for a field, if you wo
 
 In other words, enter the usual field label, followed by a colon, and then follow that with the literal 'pick-from: ', followed by the possible values, separated using commas or semicolons. 
 
-This template field value will result in a data entry field that allows a direct text entry, but also provides a drop-down list of possible values. 
+This template field value will result in a data entry field that allows a direct text entry, but also provides a drop-down list of possible values.

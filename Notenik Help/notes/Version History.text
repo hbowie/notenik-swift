@@ -1,6 +1,6 @@
 Title:  Version History
 
-Seq:    50
+Seq:    51
 
 Level: 3
 
@@ -8,6 +8,28 @@ Tags:   changes, versions, history, log
 
 Body:   
  
+### Version 4.6.0 | 03 Nov 2020
+
+#### 1. Added support for Markdown footnotes
+
+This should address issue # 36. 
+
+
+#### 2. Added Collection Prefs Option to Display Titles as Level 1 Headings
+
+This should close Issue # 35. 
+
+
+#### 3. Added a Share Option for HTML Blockquotes
+
+When sharing a Note via the Share option beneath the Note menu, there is now an option to format the Body of the selected Note as an HTML fragment enclosed in `blockquote` tags. 
+
+
+#### 4. Added a Navigation Board
+
+The Navigation Board can be summoned via the File menu. It will also appear if the user closes the last open Collection (thus providing a resolution for Issue # 19). The Nav Board shows all easily accessible Collections in an outline, and also offers a series of buttons allowing the user to perform other actions with selected Collections. 
+
+
 ### Version 4.5.0 | 01 Sep 2020
 
 #### 1. Tags now Disappear when they are No Longer Used

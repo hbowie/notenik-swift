@@ -4,7 +4,7 @@ Tags:   link, timestamp, wiki, zettelkasten
 
 Timestamp: 20191212232342
 
-Seq:    37
+Seq:    38
 
 Level:  3
 
@@ -26,4 +26,4 @@ In order to enable this option, the user must be using Notenik's own internal Ma
 
 For example, here's a working link to the [[Overview]] note using this syntax.
 
-If you also enable the timestamp field for a Collection, then you can change the title of a linked Note without changing the referencing wiki link text, and Notenik will remember the association between the old title and the new title, making use of the timestamp field to preserve a unique, unchanging identity for each Note. These associations will be saved in a special file named 'alias.txt', within the Collection folder. This functionality can be useful to make sure you don't end up with broken links between Notes. 
+If you also enable the timestamp field for a Collection, then you can change the title of a linked Note without changing the referencing wiki link text, and Notenik will remember the association between the old title and the new title, making use of the timestamp field to preserve a unique, unchanging identity for each Note. These associations will be saved in a special file named 'alias.txt', within the Collection folder. This functionality can be useful to make sure you don't end up with broken links between Notes.

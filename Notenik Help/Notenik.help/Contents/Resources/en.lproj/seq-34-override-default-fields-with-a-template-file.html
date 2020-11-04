@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Override Default Fields with a Template file</title>
+	<meta name="KEYWORDS" content="boolean, default, fields, template">
+</head>
+<body class="Aside apd-topic" dir="ltr" id="seq-34-override-default-fields-with-a-template-file" data-istaskopen="false">
+<a name="seq-34-override-default-fields-with-a-template-file"></a>
+<h1>
+	Override Default Fields with a Template file
+</h1>
+<p>By default, Notenik shows only four Fields for a Note: Title, Link, Tags and Body. </p>
+<p>When creating a new Collection, you will be presented with the Collection Preferences window automatically, to give you a chance to customize the fields to be used for that new Collection. You may also open the Collection Preferences later in order to add additional fields from the standard list presented in this window. </p>
+<p>Just put a check mark next to whichever fields you'd like to use for that particular Collection. Then click on the OK button to save your template with the indicated fields. </p>
+<p>The selected fields to be used for a Collection are saved within a file named &#8216;template.txt&#8217; or &#8216;template.md&#8217; within a Collection's folder. </p>
+<p>You may also modify this template file manually, using your favorite text editor. </p>
+<p>The Note template file is formatted using the normal Notenik format, although the Field Labels specified need not have any accompanying values. </p>
+<p>The file extension used for the template file will be used as the file extension for Notes subsequently created within the Collection. </p>
+<p>By specifying the value <code>&lt;longtext&gt;</code> as the value for a field in a template file, the user can indicate that a field is to be treated as a long text field, rather than a one-line text field. A longtext field will provide the user with multiple lines for data entry on the Edit tab, and will honor Markdown syntax when formatting for display on the Display tab. </p>
+<p>Supplying a value of <code>&lt;bool&gt;</code> or <code>&lt;boolean&gt;</code> for a field in a Collection's template file will produce a field that can have a value of <code>true</code> or <code>false</code>, and that will be represented on the Edit tab as a checkbox. </p>
+<p>It's also possible to specify a series of possible values for a field, if you would like to have a list to pick from when filling in a custom field. Here's an example of how you would do this. </p>
+<pre>
+<code>Type: pick-from: static, post
+</code></pre>
+<p>In other words, enter the usual field label, followed by a colon, and then follow that with the literal &#8216;pick-from: &#8217;, followed by the possible values, separated using commas or semicolons. </p>
+<p>This template field value will result in a data entry field that allows a direct text entry, but also provides a drop-down list of possible values. </p>
+
+<p>Next Topic: <a href="seq-35-a-note-file-template.html">A Note File Template</a></p>
+</body>
+</html>

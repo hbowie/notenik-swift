@@ -4,7 +4,7 @@ Tags:   bookmarks, link, url
 
 Timestamp: 20191120203619
 
-Seq:    22
+Seq:    23
 
 Level:  3
 
@@ -25,4 +25,4 @@ Note that you can drag a bookmark from a Web browser (such as Safari or Chrome) 
 
 If you add a Link value without any URL scheme, then the implicit scheme of 'https://' will be assumed. In other words, you need only enter 'Notenik.net' in the link field, but 'https://Notenik.net' is what will be passed to your Web browser when requesting Notenik to open the Link. 
 
-Note than any field label containing the word 'link' will be treated like a Link field, especially in the absence of a field simply labeled 'Link'. 
+Note than any field label containing the word 'link' will be treated like a Link field, especially in the absence of a field simply labeled 'Link'.

@@ -1,0 +1,23 @@
+Title:  Display a Note
+
+Tags:   display, prefs
+
+Timestamp: 20201101180628
+
+Seq:    5.1
+
+Level:  3
+
+Date Added: 2020-11-01 18:06:28 +0000
+
+Body: 
+
+The Display tab shows you what your Note looks like. Your note is formatted as a web page, and displayed within Notenik using a built-in web browser. If you click on a hyperlink within the display, then the linked page will replace your Note. If you wish to get back to your Note, then click on the Refresh button in the Toolbar. If your Note has a Link value, then click on the Launch Link button in the Toolbar to see the linked page within your default web browser, instead of Notenik's internal browser.
+
+You can alter the typeface and font size used on the Display tab by selecting the Display Appearance item under the Format menu, or by clicking on the Display Fonts button on the toolbar. You may then pick a typeface and font from the displayed dropdown menus or, if you'd like, enter the CSS you'd like to be used directly, bypassing the limits of these menus. 
+
+The Collection Preferences contain a couple of options for changing the way a Note is formatted on the Display tab.
+
++ Include explicit Body field label on the Display tab? - This is checked by default, but you can uncheck this option if you'd prefer the body to just show up without any header label. 
+
++ Display Note Titles as Level 1 Headings? - The default is to display note titles as paragraphs with strong emphasis, but check this box if you'd prefer them to be displayed within `h1` tags. 
