@@ -8,6 +8,23 @@ Tags:   changes, versions, history, log
 
 Body:   
  
+### Version 4.7.0 | 06 Nov 2020
+
+#### 1. Added support for Citations
+
+Added support for citations, using the MultiMarkdown syntax. 
+
+
+#### 2. Fixed Crashing Bug in Notenik Export logic
+
+The Notenik export routine was consistently crashing. This has been corrected. 
+
+
+#### 3. Fixed Bug in Inline Footnote Generation
+
+When the body only contained inline footnotes, the footnote definitions were never generated. This has now been corrected. 
+
+
 ### Version 4.6.0 | 03 Nov 2020
 
 #### 1. Added support for Markdown footnotes
