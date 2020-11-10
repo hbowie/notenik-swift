@@ -1396,6 +1396,12 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         launchLink(for: noteToUse)
     }
     
+    func launchLinks(_ collector: NoteCollector) {
+        for note in collector.notes {
+            launchLink(for: note)
+        }
+    }
+    
     func launchLink(for noteToUse: Note) {
         var possibleURL = noteToUse.linkAsURL
         if possibleURL == nil {

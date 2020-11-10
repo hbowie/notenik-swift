@@ -78,6 +78,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         
         // Figure out a good collection to open
         let io: NotenikIO = FileIO()
+        let collector = NoteCollector()
+        io.setInspector(collector)
         let realm = io.getDefaultRealm()
         realm.path = ""
         var collection: NoteCollection?
@@ -101,7 +103,18 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             collection?.readOnly = true
         }
         
-        _ = assignIOtoWindow(io: io)
+        let wc = assignIOtoWindow(io: io)
+        if wc != nil {
+            if collection != nil && !collection!.readOnly {
+                if collection!.startupToday {
+                    if appPrefs.networkAvailable {
+                        wc!.launchLinks(collector)
+                        collection!.startedUp()
+                        io.persistCollectionInfo()
+                    }
+                }
+            }
+        }
     }
     
     /// Let the user select a folder to be opened.
@@ -128,8 +141,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                     successfulOpens += 1
                 }
             case .existing:
-                let ok = openFileWithNewWindow(fileURL: url, readOnly: false)
-                if ok {
+                let wc = openFileWithNewWindow(fileURL: url, readOnly: false)
+                if wc != nil {
                     successfulOpens += 1
                 }
             case .hopeless:
@@ -257,9 +270,9 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             return false
         }
         
-        let openOK = openFileWithNewWindow(fileURL: newURL, readOnly: false)
+        let wc = openFileWithNewWindow(fileURL: newURL, readOnly: false)
         
-        if openOK {
+        if wc != nil {
             notenikFolderList.add(url: newURL, type: .collection, location: .undetermined)
             currentWindow.close()
             let alert = NSAlert()
@@ -281,7 +294,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             }
         }
         
-        return openOK
+        return (wc != nil)
     }
     
     /// User clicked Cancel on the Parent Location Window
@@ -407,7 +420,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     func collectionPrefsModified(ok: Bool,
                                  collection: NoteCollection,
                                  window: CollectionPrefsWindowController) {
-        // window.close()
         application.stopModal()
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
@@ -428,7 +440,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         
         saveCollectionInfo(collection)
 
-        ok = assignIOtoWindow(io: io)
+        let wc = assignIOtoWindow(io: io)
+        ok = (wc != nil)
     }
     
     /// Make the given collection the easily accessible Essential collection
@@ -481,7 +494,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     ///   - folderPath: The path to the collection folder.
     ///   - readOnly:   Should this collection be opened read-only?
     /// - Returns: True if open was successful; false otherwise.
-    func openFileWithNewWindow(folderPath: String, readOnly: Bool) -> Bool {
+    func openFileWithNewWindow(folderPath: String, readOnly: Bool) -> CollectionWindowController? {
         let fileURL = URL(fileURLWithPath: folderPath)
         return openFileWithNewWindow(fileURL: fileURL, readOnly: readOnly)
     }
@@ -490,8 +503,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     ///
     /// - Parameter fileURL: A URL pointing to a Notenik folder.
     /// - Returns: True if open was successful, false if not.
-    func openFileWithNewWindow(fileURL: URL, readOnly: Bool) -> Bool {
-        var openOK = false
+    func openFileWithNewWindow(fileURL: URL, readOnly: Bool) -> CollectionWindowController? {
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
         realm.path = ""
@@ -508,7 +520,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             if let windowURL = window.io?.collection?.collectionFullPathURL {
                 if windowURL == collectionURL && window.window != nil {
                     window.window!.makeKeyAndOrderFront(self)
-                    return true
+                    return window
                 }
             }
         }
@@ -524,34 +536,36 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                               message: "Collection successfully opened: \(collection!.title)")
             collection!.readOnly = readOnly
             saveCollectionInfo(collection!)
-            openOK = assignIOtoWindow(io: io)
+            let wc = assignIOtoWindow(io: io)
             notenikFolderList.add(collection!)
+            return wc
         }
-        return openOK
+        return nil
     }
     
     /// Assign an Input/Output module to a new or existing window.
     /// - Parameter io: An I/O module already opened with a Collection.
-    func assignIOtoWindow(io: NotenikIO) -> Bool {
-        var ok = true
+    func assignIOtoWindow(io: NotenikIO) -> CollectionWindowController? {
+        var assignedController: CollectionWindowController?
         if initialWindowUsed {
             if let windowController = self.storyboard.instantiateController(withIdentifier: "collWC") as? CollectionWindowController {
                 windowController.shouldCascadeWindows = true
                 windowController.io = io
                 self.registerWindow(window: windowController)
                 windowController.showWindow(self)
+                assignedController = windowController
             } else {
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                                   category: "CollectionJuggler",
                                   level: .error,
                                   message: "Couldn't get a Window Controller!")
-                ok = false
             }
         } else {
             initialWindow!.io = io
+            assignedController = initialWindow
             initialWindowUsed = true
         }
-        return ok
+        return assignedController
     }
     
     /// Register a window so that we can keep track of it. If we've already got the window
