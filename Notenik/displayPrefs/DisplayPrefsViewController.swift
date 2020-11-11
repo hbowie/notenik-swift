@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 5/8/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019-2020 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -23,35 +23,11 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
     
     var displayPrefs = DisplayPrefs.shared
 
+    @IBOutlet var longListCheckBox: NSButton!
+    
     @IBOutlet var fontComboBox: NSComboBox!
     
-    var fonts: [String] = [
-        "American Typewriter",
-        "Andale Mono",
-        "Arial",
-        "Avenir",
-        "Avenir Next",
-        "Baskerville",
-        "Big Caslon",
-        "Bookman",
-        "Courier",
-        "Courier New",
-        "Futura",
-        "Garamond",
-        "Georgia",
-        "Gill Sans",
-        "Helvetica",
-        "Helvetica Neue",
-        "Hoefler Text",
-        "Lucida Grande",
-        "Menlo",
-        "Palatino",
-        "Tahoma",
-        "Times",
-        "Times New Roman",
-        "Trebuchet",
-        "Verdana"
-    ]
+    let fonts = DisplayFontsDataSource()
     
     @IBOutlet var sizeComboBox: NSComboBox!
     
@@ -64,32 +40,21 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let longFontList = displayPrefs.longFontList
+        fonts.useLongList(longFontList)
+        if longFontList {
+            longListCheckBox.state = .on
+        } else {
+            longListCheckBox.state = .off
+        }
+        
         fontComboBox.usesDataSource = true
-        fontComboBox.dataSource = self
+        fontComboBox.dataSource = fonts
         fontComboBox.hasVerticalScroller = true
         fontComboBox.numberOfVisibleItems = 10
         fontComboBox.reloadData()
         
-        let defaultFont = displayPrefs.font
-        var i = 0
-        var found = false
-        while i < fonts.count && !found {
-            if defaultFont! == fonts[i] {
-                found = true
-                fontComboBox.selectItem(at: i)
-            } else if defaultFont! < fonts[i] {
-                fonts.insert(defaultFont!, at: i)
-                found = true
-                fontComboBox.reloadData()
-                fontComboBox.selectItem(at: i)
-            } else {
-                i += 1
-            }
-        }
-        if !found {
-            fonts.append(defaultFont!)
-            fontComboBox.selectItem(at: i)
-        }
+        _ = setSelectedFont(displayPrefs.font)
         
         sizeComboBox.usesDataSource = true
         sizeComboBox.dataSource = self
@@ -98,8 +63,8 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         sizeComboBox.reloadData()
   
         let defaultSize = displayPrefs.size
-        i = 0
-        found = false
+        var i = 0
+        var found = false
         while i < sizes.count && !found {
             if defaultSize! == sizes[i] {
                 found = true
@@ -130,22 +95,13 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
     }
     
     func numberOfItems(in comboBox: NSComboBox) -> Int {
-        if comboBox == fontComboBox {
-            return fonts.count
-        } else {
-            return sizes.count
-        }
+        return sizes.count
     }
     
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
         guard index >= 0 else { return nil }
-        if comboBox == fontComboBox {
-            guard index < fonts.count else { return nil }
-            return fonts[index]
-        } else {
-            guard index < sizes.count else { return nil }
-            return sizes[index]
-        }
+        guard index < sizes.count else { return nil }
+        return sizes[index]
     }
     
     @IBAction func fontAdjusted(_ sender: Any) {
@@ -186,6 +142,41 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
                               level: .error,
                               message: "load html String returned nil")
         }
+    }
+    
+    @IBAction func longListChecked(_ sender: NSButton) {
+        let originalFont = fontComboBox.stringValue
+        let longList = longListCheckBox.state == .on
+        fonts.useLongList(longList)
+        displayPrefs.longFontList = longList
+        fontComboBox.reloadData()
+        let newFontIndex = setSelectedFont(originalFont)
+        let newFont = fonts.itemAt(newFontIndex)
+        if newFont != nil && newFont != originalFont {
+            displayPrefs.font = newFont!
+            buildCSS()
+            refreshSample(sender)
+        }
+    }
+    
+    func setSelectedFont(_ font: String) -> Int {
+        var fontIndex = fonts.indexFor(font)
+        if fontIndex >= 0 {
+            fontComboBox.selectItem(at: fontIndex)
+            return fontIndex
+        }
+        
+        let defaultFont = displayPrefs.setDefaultFont()
+        fontIndex = fonts.indexFor(defaultFont)
+        if fontIndex >= 0 {
+            fontComboBox.selectItem(at: fontIndex)
+            return fontIndex
+        }
+        
+        fontIndex = 0
+        fontComboBox.selectItem(at: fontIndex)
+        return fontIndex
+
     }
     
     @IBAction func okClicked(_ sender: Any) {
