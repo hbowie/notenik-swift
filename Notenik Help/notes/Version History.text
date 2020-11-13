@@ -8,6 +8,35 @@ Tags:   changes, versions, history, log
 
 Body:   
  
+### Version 4.8.0 | 13 Nov 2020
+
+#### 1. Other Adjustments for Big Sur
+
+Made a few other tweaks for enhanced compatibility with Big Sur. 
+
+
+#### 2. Updated App Icon for Big Sur
+
+Updated app icon shape and background for improved consistency with Big Sur. 
+
+
+#### 3. Show/Hide List Command implemented
+
+This allows the left side of the window, containing the Note list, to be collapsed and restored. 
+
+This should resolve Issue # 39.
+
+#### 4. Display Font Selection List Can Now Include all Available Fonts
+
+A checkbox has been added to the Display Fonts window that, when checked, will result in the list of available fonts being expanded to include all font families available on the user's Mac. If unchecked, the user will only be able to select from a relatively short list of common fonts. 
+
+This should close Issue # 38.
+
+#### 5. Launch at Startup tag enabled
+
+Adding a 'Launch at Startup' tag to a Note will now cause the Note's link to be launched when Notenik starts up. 
+
+
 ### Version 4.7.0 | 06 Nov 2020
 
 #### 1. Added support for Citations
