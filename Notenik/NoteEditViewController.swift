@@ -117,15 +117,15 @@ class NoteEditViewController: NSViewController {
         let row = [labelView, valueView]
         grid.append(row)
         
-        if label.commonForm == LabelConstants.titleCommon {
+        if label.commonForm == NotenikConstants.titleCommon {
             titleView = editView
-        } else if label.commonForm == LabelConstants.dateCommon {
+        } else if label.commonForm == NotenikConstants.dateCommon {
             dateView = editView as? DateView
-        } else if label.commonForm == LabelConstants.recursCommon {
+        } else if label.commonForm == NotenikConstants.recursCommon {
             recursView = editView
-        } else if label.commonForm == LabelConstants.statusCommon {
+        } else if label.commonForm == NotenikConstants.statusCommon {
             statusView = editView as? StatusView
-        } else if label.commonForm == LabelConstants.linkCommon {
+        } else if label.commonForm == NotenikConstants.linkCommon {
             linkView = editView as? LinkView
         }
     }

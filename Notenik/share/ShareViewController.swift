@@ -195,7 +195,7 @@ class ShareViewController: NSViewController {
         if destinationFileButton.state == .on {
             let savePanel = NSSavePanel();
             savePanel.title = "Specify an output file"
-            let parent = note?.collection.collectionFullPathURL
+            let parent = note?.collection.fullPathURL
             if parent != nil {
                 savePanel.directoryURL = parent!
             }

@@ -34,7 +34,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         }
     }
     
-    var webView: WKWebView!
+    var webView: NoteDisplayWebView!
     var webConfig: WKWebViewConfiguration!
     
     let urlNavPrevix = "https://ntnk.app/"
@@ -49,7 +49,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     override func loadView() {
         webConfig = WKWebViewConfiguration()
-        webView = WKWebView(frame: .zero, configuration: webConfig)
+        webView = NoteDisplayWebView(frame: .zero, configuration: webConfig)
         webView.uiDelegate = self
         webView.navigationDelegate = self
         view = webView

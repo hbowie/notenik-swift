@@ -52,6 +52,10 @@
 		9C2174A022024E2900B4BF48 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C21749E22024E2900B4BF48 /* notenik-swift-intro */; };
 		9C2174A122024E2900B4BF48 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C21749E22024E2900B4BF48 /* notenik-swift-intro */; };
 		9C295771255DAFCD0098EA5B /* CoreXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = 9C295770255DAFCD0098EA5B /* CoreXLSX */; };
+		9C29A780256421EA002C5F7A /* NoteDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29A77F256421EA002C5F7A /* NoteDisplayView.swift */; };
+		9C29A78A2564380F002C5F7A /* NoteDisplayWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */; };
+		9C29A79525645A42002C5F7A /* FileDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29A79425645A42002C5F7A /* FileDropView.swift */; };
+		9C29A79B25645B78002C5F7A /* FileAttachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29A79A25645B78002C5F7A /* FileAttachView.swift */; };
 		9C29DD29226286A100928180 /* CollectionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29DD28226286A100928180 /* CollectionWindow.swift */; };
 		9C29DD2A226286A100928180 /* CollectionWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29DD28226286A100928180 /* CollectionWindow.swift */; };
 		9C2AE523220A34B300AE8BEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6D121F64B3B00C332ED /* AppDelegate.swift */; };
@@ -252,6 +256,10 @@
 		9C1E0C9422E4F7FA0025C99C /* AttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentViewController.swift; sourceTree = "<group>"; };
 		9C1E0C9722E5306B0025C99C /* AttachmentMasterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentMasterController.swift; sourceTree = "<group>"; };
 		9C21749E22024E2900B4BF48 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../notenik-swift-intro"; sourceTree = "<group>"; };
+		9C29A77F256421EA002C5F7A /* NoteDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayView.swift; sourceTree = "<group>"; };
+		9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayWebView.swift; sourceTree = "<group>"; };
+		9C29A79425645A42002C5F7A /* FileDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDropView.swift; sourceTree = "<group>"; };
+		9C29A79A25645B78002C5F7A /* FileAttachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAttachView.swift; sourceTree = "<group>"; };
 		9C29DD28226286A100928180 /* CollectionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindow.swift; sourceTree = "<group>"; };
 		9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrefsCocoa.swift; sourceTree = "<group>"; };
 		9C3CC8F5250A9C9E002C95D0 /* Navigator.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Navigator.storyboard; sourceTree = "<group>"; };
@@ -493,7 +501,9 @@
 				9C9A025121F65AF00027F364 /* NoteListViewController.swift */,
 				9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */,
 				9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */,
+				9C29A77F256421EA002C5F7A /* NoteDisplayView.swift */,
 				9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */,
+				9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */,
 				9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */,
 				9C60E6D521F64B3C00C332ED /* Assets.xcassets */,
 				9C21749E22024E2900B4BF48 /* notenik-swift-intro */,
@@ -648,6 +658,8 @@
 				9C02D2B52267F5E700587EDF /* CalendarViewController.swift */,
 				9C45E8BD2298BC87003F6589 /* CodeView.swift */,
 				9C02D2AD2267D46000587EDF /* DateView.swift */,
+				9C29A79A25645B78002C5F7A /* FileAttachView.swift */,
+				9C29A79425645A42002C5F7A /* FileDropView.swift */,
 				9C79BDAF226E368800796E93 /* LabelView.swift */,
 				9CD358882293C42B00C9203F /* LinkView.swift */,
 				9CED280F224EB39900798621 /* LongTextView.swift */,
@@ -932,6 +944,7 @@
 				9CF435CA24805C2F00DD7C33 /* CountsViewController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
+				9C29A780256421EA002C5F7A /* NoteDisplayView.swift in Sources */,
 				9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */,
 				9CA4EE88246A143C00059F65 /* PickListView.swift in Sources */,
 				9CAD6A5222DFA0B000531D90 /* PrefsTabVC.swift in Sources */,
@@ -960,12 +973,15 @@
 				9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */,
 				9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */,
 				9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */,
+				9C29A79525645A42002C5F7A /* FileDropView.swift in Sources */,
 				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
 				9CF435C724805C0500DD7C33 /* CountsWindowController.swift in Sources */,
 				9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */,
+				9C29A78A2564380F002C5F7A /* NoteDisplayWebView.swift in Sources */,
 				9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */,
 				9C619A38231B323B003CFFBE /* WorkTypeView.swift in Sources */,
 				9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */,
+				9C29A79B25645B78002C5F7A /* FileAttachView.swift in Sources */,
 				9CAD6A4922DF806800531D90 /* TagsExportViewController.swift in Sources */,
 				9CF1193E225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
 				9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */,
@@ -1305,7 +1321,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 103;
+				CURRENT_PROJECT_VERSION = 104;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1318,7 +1334,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 4.8.0;
+				MARKETING_VERSION = 4.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1334,7 +1350,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 103;
+				CURRENT_PROJECT_VERSION = 104;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1347,7 +1363,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 4.8.0;
+				MARKETING_VERSION = 4.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

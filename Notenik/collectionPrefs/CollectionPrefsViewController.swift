@@ -67,8 +67,8 @@ class CollectionPrefsViewController: NSViewController {
         self.windowController = window
         setCollectionValues()
 
-        let collectionFileName = FileName(collection.collectionFullPath)
-        pathControl.url = collection.collectionFullPathURL
+        let collectionFileName = FileName(collection.fullPath)
+        pathControl.url = collection.fullPathURL
         
         // The following nonsense attempts to work around a bug
         // that truncates part of the last folder name if it

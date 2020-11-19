@@ -120,6 +120,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     @IBAction func menuFileNewAction(_ sender: NSMenuItem) {
         juggler.userRequestsNewCollection()
     }
+    
+    @IBAction func menuFileNewWebsiteAction(_ sender: NSMenuItem) {
+        juggler.userRequestsNewWebsite()
+    }
 
     @IBAction func menuFileOpenAction(_ sender: NSMenuItem) {
         juggler.userRequestsOpenCollection()

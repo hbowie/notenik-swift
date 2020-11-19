@@ -149,9 +149,9 @@ class ExportViewController: NSViewController {
         
         let savePanel = NSSavePanel();
         savePanel.title = "Specify an output file"
-        let parent = io!.collection!.collectionFullPathURL
+        let parent = io!.collection!.fullPathURL
         if parent != nil {
-            savePanel.directoryURL = parent!
+            savePanel.directoryURL = parent
         }
         savePanel.showsResizeIndicator = true
         savePanel.showsHiddenFiles = false

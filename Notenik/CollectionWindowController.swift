@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2020 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -89,7 +89,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                 return
             }
             crumbs = NoteCrumbs(io: newValue!)
-            window!.representedURL = notenikIO!.collection!.collectionFullPathURL
+            window!.representedURL = notenikIO!.collection!.fullPathURL
             if notenikIO!.collection!.title == "" {
                 window!.title = notenikIO!.collection!.path
             } else {
@@ -620,7 +620,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard let noteIO = io else { return }
         let (note, _) = noteIO.getSelectedNote()
         guard let selNote = note else { return }
-        guard noteIO.collection!.dict.contains(LabelConstants.link) else { return }
+        guard noteIO.collection!.dict.contains(NotenikConstants.link) else { return }
 
         // Ask the user to pick a local file or folder
         let openPanel = NSOpenPanel();
@@ -1076,7 +1076,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         // Ask the user for a location on disk
         let openPanel = NSOpenPanel();
         openPanel.title = "Select an attachment for this Note"
-        let parent = io!.collection!.collectionFullPathURL!.deletingLastPathComponent()
+        let parent = io!.collection!.fullPathURL!.deletingLastPathComponent()
         openPanel.directoryURL = parent
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
@@ -1359,7 +1359,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     /// Reload the current collection from disk
     @IBAction func reloadCollection(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }
-        let url = noteIO.collection!.collectionFullPathURL
+        let path = noteIO.collection!.fullPath
         noteIO.closeCollection()
         newNoteRequested = false
         pendingMod = false
@@ -1367,7 +1367,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let newIO: NotenikIO = FileIO()
         let realm = newIO.getDefaultRealm()
         realm.path = ""
-        let _ = newIO.openCollection(realm: realm, collectionPath: url!.path)
+        let _ = newIO.openCollection(realm: realm, collectionPath: path)
         self.io = newIO
     }
     
@@ -1411,7 +1411,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         var urlPointsToCollection = false
         if url.isFileURL && url.hasDirectoryPath {
             let folderPath = url.path
-            let infoPath = FileUtils.joinPaths(path1: folderPath, path2: FileIO.infoFileName)
+            let infoPath = FileUtils.joinPaths(path1: folderPath,
+                                               path2: NotenikConstants.infoFileName)
             let infoURL = URL(fileURLWithPath: infoPath)
             do {
                 let reachable = try infoURL.checkResourceIsReachable()
@@ -1509,7 +1510,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         
         // Make sure we have a status field for this collection
         let dict = noteIO.collection!.dict
-        if !dict.contains(LabelConstants.status) {
+        if !dict.contains(NotenikConstants.status) {
             let alert = NSAlert()
             alert.alertStyle = .warning
             alert.messageText = "Cannot perform a Purge since the Collection does not use the Status field"
@@ -1562,7 +1563,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionWindowController",
                           level: .info,
-                          message: "\(purgeCount) Notes purged from Collection at \(io!.collection!.collectionFullPath)")
+                          message: "\(purgeCount) Notes purged from Collection at \(io!.collection!.fullPath)")
         reloadViews()
         let (note, position) = io!.firstNote()
         select(note: note, position: position, source: .nav)
@@ -1585,7 +1586,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         // Ask the user for a location on disk
         let openPanel = NSOpenPanel();
         openPanel.title = "Open an input tab- or comma-separated text file"
-        let parent = noteIO.collection!.collectionFullPathURL!.deletingLastPathComponent()
+        let parent = noteIO.collection!.parentURL
         openPanel.directoryURL = parent
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
@@ -1624,7 +1625,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         // Ask the user for a location on disk
         let openPanel = NSOpenPanel();
         openPanel.title = "Open an input XLSX file"
-        let parent = noteIO.collection!.collectionFullPathURL!.deletingLastPathComponent()
+        let parent = noteIO.collection!.parentURL
         openPanel.directoryURL = parent
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
@@ -1719,7 +1720,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         // Ask the user for a location on disk
         let openPanel = NSOpenPanel();
         openPanel.title = "Open a input XML"
-        let parent = noteIO.collection!.collectionFullPathURL!.deletingLastPathComponent()
+        let parent = noteIO.collection!.parentURL
         openPanel.directoryURL = parent
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
@@ -1769,10 +1770,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         
         let savePanel = NSSavePanel();
         savePanel.title = "Specify an output file"
-        let parent = io!.collection!.collectionFullPathURL
-        if parent != nil {
-            savePanel.directoryURL = parent!
-        }
+        let parent = io!.collection!.fullPathURL
+        savePanel.directoryURL = parent
         savePanel.showsResizeIndicator = true
         savePanel.showsHiddenFiles = false
         savePanel.canCreateDirectories = true
@@ -1792,7 +1791,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let nio = guardForCollectionAction()
         guard let noteIO = nio else { return }
         
-        let collectionURL = noteIO.collection!.collectionFullPathURL!
+        let collectionURL = noteIO.collection!.fullPathURL
         
         let openPanel = juggler.prepCollectionOpenPanel()
         let userChoice = openPanel.runModal()
@@ -1804,7 +1803,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         var numberOfNotes = 0
         do {
             try FileManager.default.removeItem(at: exportURL)
-            try FileManager.default.copyItem(at: collectionURL, to: exportURL)
+            try FileManager.default.copyItem(at: collectionURL!, to: exportURL)
             numberOfNotes = noteIO.notesCount
         } catch {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
@@ -2080,7 +2079,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         var ok = template.openTemplate(templateURL: templateURL)
         if ok {
             template.supplyData(notesList: io.notesList,
-                                dataSource: collection.collectionFullPath)
+                                dataSource: collection.fullPath)
             ok = template.generateOutput()
             if ok {
                 let textOutURL = template.util.textOutURL

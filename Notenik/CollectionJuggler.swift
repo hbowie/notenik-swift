@@ -130,21 +130,22 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     /// Figure out what to do with a bunch of passed URLs.
     func open(urls: [URL]) -> Int {
-        let tempIO = FileIO()
         var successfulOpens = 0
         for url in urls {
-            let type = tempIO.checkPathType(path: url.path)
+            let type = FileIO.checkPathType(path: url.path)
             switch type {
             case .empty:
                 let ok = newCollection(fileURL: url)
                 if ok {
                     successfulOpens += 1
                 }
-            case .existing:
+            case .existing, .web:
                 let wc = openFileWithNewWindow(fileURL: url, readOnly: false)
                 if wc != nil {
                     successfulOpens += 1
                 }
+            case .foreign:
+                break
             case .hopeless:
                 communicateError("Item to be opened at \(url.path) could not be used",
                 alert: true)
@@ -156,6 +157,10 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             }
         }
         return successfulOpens
+    }
+    
+    func userRequestsNewWebsite() {
+        selectCollection(requestType: .newWebsite)
     }
     
     /// Respond to a user request to create a new collection
@@ -177,6 +182,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         notenikFolderList.add(url: fileURL, type: .collection, location: .undetermined)
         if requestType == .new {
             _ = newCollection(fileURL: fileURL)
+        } else if requestType == .newWebsite {
+            _ = newWebsite(fileURL: fileURL)
         }
     }
     
@@ -242,7 +249,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     func saveCollectionAs(currentIO: NotenikIO, currentWindow: CollectionWindow, newURL: URL) -> Bool {
         guard currentIO.collectionOpen else { return false }
         guard let oldCollection = currentIO.collection else { return false }
-        guard let oldURL = oldCollection.collectionFullPathURL else { return false }
+        guard let oldURL = oldCollection.fullPathURL else { return false }
         let newFileName = FileName(newURL)
         let newFolderNameLower = newFileName.folder.lowercased()
         if newFolderNameLower == "desktop" || newFolderNameLower == "documents" {
@@ -332,6 +339,21 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             return false
         }
         return true
+    }
+    
+    /// Create a new Collection set up to generate a companion website.
+    func newWebsite(fileURL: URL) -> Bool {
+        let webCollection = WebCollection(fileURL: fileURL)
+        guard webCollection.initCollection() else { return false }
+        
+        notenikFolderList.add(url: webCollection.notesFolderURL, type: .collection, location: .undetermined)
+        
+        saveCollectionInfo(webCollection.io.collection!)
+
+        let wc = assignIOtoWindow(io: webCollection.io)
+        let ok = (wc != nil)
+        
+        return ok
     }
     
     /// Now that we have a disk location, let's take other steps
@@ -427,16 +449,16 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         var ok = io.newCollection(collection: collection)
         guard ok else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik",
-                              category: "MergeInput",
+                              category: "CollectionJuggler",
                               level: .error,
-                              message: "Problems initializing the new collection at " + collection.collectionFullPath)
+                              message: "Problems initializing the new collection at " + collection.fullPath)
             return
         }
         
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionJuggler",
                           level: .info,
-                          message: "New Collection successfully initialized at \(collection.collectionFullPath)")
+                          message: "New Collection successfully initialized at \(collection.fullPath)")
         
         saveCollectionInfo(collection)
 
@@ -449,7 +471,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// - Parameter io: The Notenik Input/Output module accessing the collection that is to become essential
     func makeCollectionEssential(io: NotenikIO) {
         guard let collection = io.collection else { return }
-        guard let collectionURL = collection.collectionFullPathURL else { return }
+        guard let collectionURL = collection.fullPathURL else { return }
         appPrefs.essentialURL = collectionURL
     }
     
@@ -517,7 +539,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         // If the collection is already open, then simply bring
         // that window to the front.
         for window in windows {
-            if let windowURL = window.io?.collection?.collectionFullPathURL {
+            if let windowURL = window.io?.collection?.fullPathURL {
                 if windowURL == collectionURL && window.window != nil {
                     window.window!.makeKeyAndOrderFront(self)
                     return window
@@ -635,7 +657,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     /// Once we've opened a collection, save some info about it so we can use it later
     func saveCollectionInfo(_ collection: NoteCollection) {
-        guard let collectionURL = collection.collectionFullPathURL else { return }
+        guard let collectionURL = collection.fullPathURL else { return }
         guard !collection.readOnly else { return }
         if self.docController != nil {
             self.docController!.noteNewRecentDocumentURL(collectionURL)
