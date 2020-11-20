@@ -1898,6 +1898,16 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         indexAll(collection: collection)
     }
     
+    /// Attempt to launch a top-level index.html file in the user's web browser.
+    @IBAction func browseWebIndex(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let indexURL = noteIO.collection!.fullPathURL!.appendingPathComponent(NotenikConstants.indexFileName)
+        let ok = NSWorkspace.shared.open(indexURL)
+        if !ok {
+            communicateError("File at \(indexURL.path) could not be launched in your web browser", alert: true)
+        }
+    }
+    
     @IBAction func mirrorAllNotesAndIndex(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }
         let collection = noteIO.collection!
