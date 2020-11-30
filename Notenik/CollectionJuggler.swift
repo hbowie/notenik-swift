@@ -177,6 +177,21 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
     }
     
+    func newCollectionInICloud(folderName: String) -> Bool {
+        let folderTrimmed = StringUtils.trim(folderName)
+        guard folderTrimmed.count > 0 else {
+            communicateError("New Folder Name is blank", alert: true)
+            return false
+        }
+        let url = NotenikFolderList.shared.createNewFolderWithinICloudContainer(folderName: folderTrimmed)
+        guard url != nil else {
+            communicateError("Problems cretaing new folder in the iCloud container", alert: true)
+            return false
+        }
+        proceedWithSelectedURL(requestType: .new, fileURL: url!)
+        return true
+    }
+    
     /// Proceed with the user request, now that we have a URL
     func proceedWithSelectedURL(requestType: CollectionRequestType, fileURL: URL) {
         notenikFolderList.add(url: fileURL, type: .collection, location: .undetermined)

@@ -34,6 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     var docController: NoteDocumentController!
     var recentDocumentURLs: [URL] = []
     
+    let newInIcloudStoryboard:      NSStoryboard = NSStoryboard(name: "NewICloud", bundle: nil)
     let prefsStoryboard:            NSStoryboard = NSStoryboard(name: "Preferences", bundle: nil)
     let displayPrefsStoryboard:     NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
     let logStoryboard:              NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
@@ -119,6 +120,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     @IBAction func menuFileNewAction(_ sender: NSMenuItem) {
         juggler.userRequestsNewCollection()
+    }
+    
+    @IBAction func newInICloud(_ sender: Any) {
+        if let newController = self.newInIcloudStoryboard.instantiateController(withIdentifier: "newcloudWC") as? NewICloudWindowController {
+            newController.showWindow(self)
+        } else {
+            logger.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "AppDelegate",
+                              level: .fault,
+                              message: "Couldn't get a New in iCloud Window Controller!")
+        }
     }
     
     @IBAction func menuFileNewWebsiteAction(_ sender: NSMenuItem) {
