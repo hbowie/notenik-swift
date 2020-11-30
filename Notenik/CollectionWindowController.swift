@@ -1331,6 +1331,12 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         juggler.userRequestsSaveAs(currentIO: io!, currentWindow: window)
     }
     
+    @IBAction func moveCollection(_ sender: NSMenuItem) {
+        guard notenikIO != nil && notenikIO!.collectionOpen else { return }
+        guard let window = self.window as? CollectionWindow else { return }
+        juggler.userRequestsMove(currentIO: io!, currentWindow: window)
+    }
+    
     @IBAction func makeCollectionEssential(_ sender: Any) {
         juggler.makeCollectionEssential(io: notenikIO!)
     }
@@ -1850,6 +1856,18 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     // The following functions support note transformation via mirroring, reports. etc.
     //
     // ----------------------------------------------------------------------------------
+    
+    @IBAction func stashNotesInSubfolder(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let collection = noteIO.collection!
+        guard !collection.notesSubFolder else {
+            communicateError("This collection is already stashed in a subfolder",
+                             alert: true)
+            return
+        }
+        guard let window = self.window as? CollectionWindow else { return }
+        _ = juggler.stashNotesInSubfolder(currentIO: noteIO, currentWindow: window)
+    }
     
     @IBAction func genMirrorSample(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }

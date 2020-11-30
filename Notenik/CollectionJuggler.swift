@@ -304,6 +304,96 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         return (wc != nil)
     }
     
+    /// Move the indicated Collection to a new Location.
+    func userRequestsMove(currentIO: NotenikIO, currentWindow: CollectionWindow) {
+        guard currentIO.collectionOpen else { return }
+        
+        // Ask the user for a new location on disk
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Select a New Location for this Notenik Folder"
+        let parent = osdir.directoryURL
+        if parent != nil {
+            openPanel.directoryURL = parent!
+        }
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = true
+        openPanel.canChooseFiles = false
+        openPanel.allowsMultipleSelection = false
+        let result = openPanel.runModal()
+        if result == .OK {
+            _ = self.moveCollection(currentIO: currentIO, currentWindow: currentWindow, newURL: openPanel.url!)
+        }
+    }
+    
+    /// Move the User's Collection to a new location
+    func moveCollection(currentIO: NotenikIO, currentWindow: CollectionWindow, newURL: URL) -> Bool {
+        guard currentIO.collectionOpen else { return false }
+        guard let oldCollection = currentIO.collection else { return false }
+        guard let oldURL = oldCollection.fullPathURL else { return false }
+        let newFileName = FileName(newURL)
+        let newFolderNameLower = newFileName.folder.lowercased()
+        if newFolderNameLower == "desktop" || newFolderNameLower == "documents" {
+            communicateError("Please create a folder within the \(newFileName.folder) folder", alert: true)
+            return false
+        }
+        let empty = FileUtils.isEmpty(newURL.path)
+        if !empty {
+            communicateError("New folder location at \(newURL.path) already contains other files", alert: true)
+            return false
+        }
+        let relo = CollectionRelocation()
+        let ok = relo.copyOrMoveCollection(from: oldURL.path, to: newURL.path, move: true)
+        if !ok {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionJuggler",
+                              level: .error,
+                              message: "Could not Move current Collection to a new folder")
+            return false
+        }
+        
+        let wc = openFileWithNewWindow(fileURL: newURL, readOnly: false)
+        
+        if wc != nil {
+            notenikFolderList.add(url: newURL, type: .collection, location: .undetermined)
+            currentWindow.close()
+        }
+        
+        return (wc != nil)
+    }
+    
+    /// Move the User's Collection to a new location
+    func stashNotesInSubfolder(currentIO: NotenikIO, currentWindow: CollectionWindow) -> Bool {
+        guard let io = currentIO as? FileIO else { return false }
+        guard io.collectionOpen else { return false }
+        guard let collection = io.collection else { return false }
+        guard let url = collection.fullPathURL else { return false }
+        let notesPath = io.makeFilePath(fileName: NotenikConstants.notesFolderName)
+        if FileUtils.isDir(notesPath) {
+            if !FileUtils.isEmpty(notesPath) {
+                communicateError("Cannot stash - notes folder already exists and is not empty")
+                return false
+            }
+        } else {
+            guard FileUtils.ensureFolder(forDir: notesPath) else { return false }
+        }
+
+        let relo = CollectionRelocation()
+        let ok = relo.copyOrMoveCollection(from: collection.fullPath, to: notesPath, move: true)
+        if !ok {
+            communicateError("Could not stash notes in notes subfolder")
+            return false
+        }
+        
+        currentWindow.close()
+        let wc = openFileWithNewWindow(fileURL: url, readOnly: false)
+        if wc != nil {
+            notenikFolderList.add(url: url, type: .collection, location: .undetermined)
+        }
+        return (wc != nil)
+    }
+    
     /// User clicked Cancel on the Parent Location Window
     func parentLocationCancel() {
         // Apparently we're done
