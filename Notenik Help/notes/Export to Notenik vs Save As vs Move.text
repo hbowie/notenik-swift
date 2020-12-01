@@ -1,6 +1,6 @@
-Title:  Export to Notenik vs. Save As
+Title:  Export to Notenik vs. Save As vs. Move
 
-Tags:   export, save
+Tags:   export, save, move
 
 Timestamp: 20200110223242
 
@@ -12,7 +12,7 @@ Date Added: 2020-01-10 22:32:42 +0000
 
 Body: 
 
-The careful observer may at some point wonder why Notenik includes both a 'Save As' command as well as the ability to Export a Collection in the Notenik format. Are these just two ways of accomplishing the same objective? Well, not quite. 
+The careful observer may at some point wonder why Notenik includes both a 'Save As' command as well as the ability to Export a Collection in the Notenik format (not to mention a 'Move' option). Are these just different ways of accomplishing the same thing? Well, not quite. 
 
 It's true that both commands will copy your current Collection of Notes to a new location. However, there are some subtle differences between the two. 
 
@@ -21,6 +21,7 @@ With 'Save As':
 * The command will finish with the new Collection becoming the one that is currently open.
 * The current note files will be copied exactly as-is. 
 * Attachments will be copied as-is. 
+* The original starting Collection will still be available. 
 
 With 'Export to Notenik':
 
@@ -30,4 +31,11 @@ With 'Export to Notenik':
 * Not all Notes may be copied! If there are any Notes with duplicate Titles, then only one will make the move. Check the Log window carefully to see if this problem stranded any of your Notes in the old Collection. 
 * Attachments will be ignored. 
 
-In summary, these are two different tools, and you should be careful to use whichever one is the best fit for your particular situation.
+With 'Move': 
+
+* The command will finish with the new Collection becoming the one that is currently open.
+* As with the Export command, each Note will be rewritten in the new location using the standard Notenik format. 
+* File attachments and other standard Notenik folders will be copied as-is. 
+* If the starting Collection contains any non-standard files or folders then they will be left in place within the original folder; if the original folder ends up empty (because all of its standard contents have been moved), then it will be deleted. 
+
+In summary, these are different tools, and you should be careful to use whichever one is the best fit for your particular situation.

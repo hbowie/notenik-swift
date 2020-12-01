@@ -9,36 +9,38 @@
 <h1>
 	Supported Variations in Text File Formats
 </h1>
-<p>To better support users with existing collections of notes stored in text files, Notenik makes its best effort to recognize and appropriately handle the following variations on the normal Notenik format.</p>
+<p>To better support users with existing collections of notes stored in text files, Notenik makes its best effort to recognize and appropriately handle the following variations on the normal Notenik format. </p>
 <ol>
 <li>
-<p>Markdown - The first line of the file contains a Markdown level 1 heading, which is to be used as the Note’s title. The remainder of the file makes up the body. No metadata, and no field labels.</p>
+<p>Markdown - The first line of the file contains a Markdown level 1 heading, which is to be used as the Note's title. The remainder of the file makes up the body. No metadata, and no field labels. </p>
 </li>
 <li>
-<p>MultiMarkdown - The file may start with metadata, including a title, but there is no explicit label identifying the start of the body; instead, the first blank line indicates the end of the metadata and the start of the body.</p>
+<p>MultiMarkdown - The file may start with metadata, including a title, but there is no explicit label identifying the start of the body; instead, the first blank line indicates the end of the metadata and the start of the body. </p>
 </li>
 <li>
-<p>Plain Text - The title is taken from the file name, and the entire contents of the file makes up the body. No metadata, and no field labels.</p>
+<p>Plain Text - The title is taken from the file name, and the entire contents of the file makes up the body. No metadata, and no field labels.  </p>
 </li>
 </ol>
-<p>Note that these three formats differ from the normal Notenik format in one or more of the following ways:</p>
+<p>Note that these three formats differ from the normal Notenik format in one or more of the following ways: </p>
 <ul>
 <li>
-<p>While Notenik will create a Note’s file name from its title, Notenik expects the title of the note to be explicitly identified in the first line of the file, as in the following example:</p>
-<pre><code>  Title: Supported Variations in Text File Formats
+<p>While Notenik will create a Note's file name from its title, Notenik expects the title of the note to be explicitly identified in the first line of the file, as in the following example: </p>
+<pre>
+<code>Title: Supported Variations in Text File Formats
 </code></pre>
 </li>
 <li>
-<p>Notenik will generally write out a blank line between fields, to aid in readability, which means that the beginning of the body is not triggered by the first blank line.</p>
+<p>Notenik will generally write out a blank line between fields, to aid in readability, which means that the beginning of the body is not triggered by the first blank line. </p>
 </li>
 <li>
-<p>Notenik will explicitly identify the start of the Note’s body with a body label, as in the following example:</p>
-<pre><code>  Body: 
+<p>Notenik will explicitly identify the start of the Note's body with a body label, as in the following example: </p>
+<pre>
+<code>Body: 
 </code></pre>
 </li>
 </ul>
-<p>Notenik will generally be able to determine which of these variations is being used based on the contents of the first few lines of the text file.</p>
-<p>Notenik will also attempt to respect these variations when modifying an existing Note, keeping each Note in its original format.</p>
+<p>Notenik will generally be able to determine which of these variations is being used based on the contents of the first few lines of the text file. </p>
+<p>Notenik will also attempt to respect these variations when modifying an existing Note, keeping each Note in its original format. </p>
 
 <p>Next Topic: <a href="seq-18-sync-your-notes.html">Sync Your Notes</a></p>
 </body>

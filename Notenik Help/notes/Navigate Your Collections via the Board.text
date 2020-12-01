@@ -1,5 +1,7 @@
 Title:  Navigate Your Collections via the Board
 
+Tags:   collection, delete collection
+
 Timestamp: 20200911234827
 
 Seq:    19
@@ -31,6 +33,8 @@ Select one or more Collections in the outline, and then press one of the buttons
 Here is more info on the actions performed by each button. 
 
 + Open Selected -- Open all of the Collections that are currently selected in the outline. 
++ Delete Selected -- Delete the selected Collection. 
++ Reveal Selected -- Reveal the selected Collection in the Finder. 
 + Open Other - If the desired Collection is not available within the outline, then click on this button so that you can select your Collection from your local file system. 
 + Open Parent -- Allows you to perform the [[Open Parent Realm]] action from the Nav Board. 
-+ Quit -- Quit the Notenik application. 
++ Quit -- Quit the Notenik application.

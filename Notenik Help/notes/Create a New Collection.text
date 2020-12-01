@@ -12,9 +12,15 @@ Date Added: 2020-02-17 23:52:38 +0000
 
 Body: 
 
-You can choose to store your Notenik Collections anywhere you would like; storing them within Dropbox or iCloud Drive will allow them to be synced to the cloud and to other devices. If you'd like, you can create a folder named Notenik, and then store multiple Collections as subfolders, but that's not required. 
+Beneath the File menu you will find three different options for creating a New Notenik Collection. 
 
-To create a new Collection, select New from the File menu. This action will open up a standard Mac window for selecting a folder. Use the standard New Folder button in the lower left corner of this window to create an empty folder for your new Collection, then select that newly created folder (all within the same window) and hit the Open button. 
++ **New in iCloud...** - When you select this option, you will be prompted only for a name for your new Collection. Assuming this name is not already in use, a folder with that name will be created for you within Notenik's special iCloud container. 
+
++ **New Elsewhere...** - When you select this option, you will first need to navigate to a location on your hard drive where you would like your new Collection to be stored, and then will need to create a new folder within that location. You will be presented with a standard Mac window for selecting a folder. Use the standard New Folder button in the lower left corner of this window to create an empty folder for your new Collection, then select that newly created folder (all within the same window) and hit the Open button. 
+
++ **New Web Collection...** - This option is similar to `New Elsewhere`, but will create a special Web Collection that can be used to mirror your Notes to HTML pages. 
+
+If you are just getting started with Notenik, and not sure which option to choose, then `New in iCloud` will be your best bet. 
 
 The next thing you will see is a window allowing you to specify certain attributes for your new Collection. 
 

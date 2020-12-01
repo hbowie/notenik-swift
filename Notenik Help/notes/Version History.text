@@ -8,6 +8,33 @@ Tags:   changes, versions, history, log
 
 Body:   
  
+### Version 4.9.0 | 30 Nov 2020
+
+#### 1. Added new File Command to create a New Collection in iCloud
+
+The user will not need to pick a parent folder when using this option. The new Collection will be located in Notenik's special iCloud container. 
+
+
+#### 2. Added New Command to Stash Notes in Subfolder
+
+This command can be found beneath the Transform menu. This command makes an existing Collection compliant with the new structure for a Web Collection by creating a subfolder named 'notes' and them moving the existing Notes into that subfolder. 
+
+
+#### 3. Added New Command to Move a Collection
+
+The Move command can be found beneath the File menu. This command will copy an existing Collection to a new location, and then delete the original Collection. 
+
+
+#### 4. Added Menu Option to Browse a Web Index
+
+This can be found beneath the Transform menu. 
+
+
+#### 5. Added Support for Web Collections
+
+A Web Collection contains a website at the top level, and contains its notes within a subfolder named ‘notes’.
+
+
 ### Version 4.8.0 | 13 Nov 2020
 
 #### 1. Other Adjustments for Big Sur

@@ -16,6 +16,8 @@ Within each Collection folder you will find one file for each Note in the Collec
 
 In addition to the Note files, the following special files and folders may be found within a Collection folder. 
 
+* The Notes may be stashed away in a subfolder named 'notes'. This sort of Collection is known as a Web Collection, because the top level is reserved for generated HTML files, perhaps created using mirroring. In this case, the files and folders described below will be found within the 'notes' folder. 
+
 * Each Collection folder will contain a special file named '- INFO.nnk'. This is a plain text file, in Notenik format, containing some handy metadata about the Collection, such as the last sort sequence set for it. If you sync a Collection to other devices using a service such as iCloud or Dropbox, then this metadata will be synced as well. 
 
 * Each Collection folder will also contain a special file named '- README.txt'. This file simply identifies the folder as a Notenik Collection. 

@@ -3,7 +3,7 @@
     "pins": [
       {
         "package": "CoreXLSX",
-        "repositoryURL": "https://github.com/CoreOffice/CoreXLSX",
+        "repositoryURL": "https://github.com/CoreOffice/CoreXLSX.git",
         "state": {
           "branch": null,
           "revision": "1f5b7bf54ad901ff4126f5655254681a3577a366",
