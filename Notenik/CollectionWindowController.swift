@@ -1414,21 +1414,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             possibleURL = noteToUse.firstLinkAsURL
         }
         guard let url = possibleURL else { return }
-        var urlPointsToCollection = false
-        if url.isFileURL && url.hasDirectoryPath {
-            let folderPath = url.path
-            let infoPath = FileUtils.joinPaths(path1: folderPath,
-                                               path2: NotenikConstants.infoFileName)
-            let infoURL = URL(fileURLWithPath: infoPath)
-            do {
-                let reachable = try infoURL.checkResourceIsReachable()
-                urlPointsToCollection = reachable
-            } catch {
-                urlPointsToCollection = false
-            }
-        }
-        
-        if urlPointsToCollection {
+        let pathType = FileIO.checkPathType(path: url.path)
+        if pathType == .existing || pathType == .web {
             let _ = juggler.openFileWithNewWindow(fileURL: url, readOnly: false)
         } else if url.isFileURL && url.lastPathComponent.hasSuffix(ScriptEngine.scriptExt){
             launchScript(fileURL: url)

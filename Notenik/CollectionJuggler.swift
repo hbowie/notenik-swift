@@ -644,11 +644,11 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         // If the collection is already open, then simply bring
         // that window to the front.
         for window in windows {
-            if let windowURL = window.io?.collection?.fullPathURL {
-                if windowURL == collectionURL && window.window != nil {
-                    window.window!.makeKeyAndOrderFront(self)
-                    return window
-                }
+            guard let windowCollection = window.io?.collection else { continue }
+            guard let windowURL = windowCollection.fullPathURL else { continue }
+            if windowURL == collectionURL && !windowCollection.isRealmCollection && window.window != nil {
+                window.window!.makeKeyAndOrderFront(self)
+                return window
             }
         }
         
