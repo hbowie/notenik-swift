@@ -38,6 +38,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     var notenikIO:           NotenikIO?
     var preferredExt = ""
     var crumbs:              NoteCrumbs?
+    var webLinkFollowed      = false
     var windowNumber         = 0
     
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
@@ -260,6 +261,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let today = DateValue("today")
         var notesToUpdate: [Note] = []
         var (note, position) = io!.firstNote()
+        crumbs!.refresh()
         while note != nil {
             if note!.hasDate() && note!.hasRecurs() && !note!.isDone && note!.daily && note!.date < today {
                 notesToUpdate.append(note!)
@@ -283,6 +285,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         // See if we're ready to take action
         guard let noteIO = guardForCollectionAction() else { return }
         var (note, position) = noteIO.firstNote()
+        crumbs!.refresh()
         var updated = 0
         while note != nil {
             if note!.hasDate() {
@@ -333,6 +336,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let toTags = TagsValue(to)
         
         var (note, position) = noteIO.firstNote()
+        crumbs!.refresh()
         var updated = 0
         while note != nil {
             if note!.hasTags() {
@@ -892,6 +896,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     @IBAction func goToPriorNote(_ sender: Any) {
         let (_, sel) = guardForNoteAction()
         guard let selNote = sel else { return }
+        if webLinkFollowed && displayVC != nil {
+            displayVC!.reload()
+            return
+        }
         
         let priorNote = crumbs!.backup(from: selNote)
         
@@ -911,6 +919,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard let noteIO = guardForCollectionAction() else { return }
         var found = false
         var (note, position) = noteIO.firstNote()
+        crumbs!.refresh()
         while !found && note != nil {
             found = searchNote(note!, for: searchFor)
             if !found {
@@ -1014,7 +1023,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         adjustAttachmentsMenu(noteToUse!)
         
         if crumbs != nil {
-            crumbs!.select(latest: noteToUse!)
+            crumbs!.select(noteToUse!)
         }
     }
     
@@ -1346,6 +1355,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard let noteIO = guardForCollectionAction() else { return }
         var updated = 0
         var (note, position) = noteIO.firstNote()
+        crumbs!.refresh()
         while note != nil {
             let written = noteIO.writeNote(note!)
             if written {
@@ -1559,6 +1569,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                           message: "\(purgeCount) Notes purged from Collection at \(io!.collection!.fullPath)")
         reloadViews()
         let (note, position) = io!.firstNote()
+        crumbs!.refresh()
         select(note: note, position: position, source: .nav)
         
         let alert = NSAlert()
@@ -2193,6 +2204,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     func finishBatchOperation() {
         reloadViews()
         let (note, position) = io!.firstNote()
+        crumbs!.refresh()
         select(note: note, position: position, source: .nav)
     }
 }

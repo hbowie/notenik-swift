@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/21/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019-2020 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -76,6 +76,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     /// Generate the display from the last note provided
     func display() {
+        webLinkFollowed(false)
         guard note != nil else { return }
         guard io != nil else { return }
         let html = noteDisplay.display(note!, io: io!)
@@ -94,6 +95,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = navigationAction.request.url?.absoluteString else {
+            webLinkFollowed(true)
             decisionHandler(.allow)
             return
         }
@@ -102,7 +104,14 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             notePath = String(url.dropFirst(urlNavPrevix.count))
         } else if url.starts(with: bundlePrefix) {
             notePath = String(url.dropFirst(bundlePrefix.count))
+        } else if url.starts(with: "file:///Users/hbowie/Library/Developer/Xcode/") {
+            decisionHandler(.allow)
+            return
+        } else if url.hasSuffix("/Notenik.app/") {
+            decisionHandler(.allow)
+            return
         } else {
+            webLinkFollowed(true)
             decisionHandler(.allow)
             return
         }
@@ -116,12 +125,18 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             nextNote = io.getNote(forTimestamp: noteID)
         }
         if nextNote == nil {
+            webLinkFollowed(true)
             decisionHandler(.allow)
             return
         } else {
             wc!.select(note: nextNote, position: nil, source: .nav)
         }
         decisionHandler(.cancel)
+    }
+    
+    func webLinkFollowed(_ followed: Bool) {
+        guard let controller = wc else { return }
+        controller.webLinkFollowed = followed
     }
     
 }
