@@ -8,6 +8,42 @@ Tags:   changes, versions, history, log
 
 Body:   
  
+### Version 5.0.0 | 08 Dec 2020
+
+#### 1. Reworked Logic for Navigating forwards and backwards
+
+This seems to work more intuitively now. 
+
+
+#### 2. Modified to allow URLs linking to files
+
+URLs starting with 'file:' should now be recognized as valid URLs. 
+
+However, permissions issues may still prevent such links from being usefully resolved, if they link outside of the sandbox to a file for which the app does not have access privileges. 
+
+This should resolve Issue # 42.
+
+#### 3. Fixed Bug in Persisting Custom CSS
+
+Notenik allows custom CSS to be entered in the Display Fonts Preferences, but these custom entries were being overwritten when Notenik was relaunched. This has now been corrected. This should close Issue # 41. 
+
+
+#### 4. Fixed bug handling parentheses within Link text
+
+Parentheses within link text were not getting handled properly. 
+
+
+#### 5. Back/Prior now relaunches a Note after following a link
+
+After following a web link within a Note, the back button, or prior Note command, will now take the user back to the Note display. 
+
+This should close Issue # 43.
+
+#### 6. Fixed Bug in Move Collection Logic
+
+The 'alias.txt' file was not being copied. This has been corrected. 
+
+
 ### Version 4.9.0 | 30 Nov 2020
 
 #### 1. Added new File Command to create a New Collection in iCloud

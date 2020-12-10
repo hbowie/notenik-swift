@@ -1,6 +1,6 @@
 Title:  Other Files and Subfolders
 
-Tags:   files, folders, info, nnk, readme, script, template
+Tags:   files, folders, info, nnk, readme, script, template, alias
 
 Timestamp: 20190830194007
 
@@ -23,6 +23,8 @@ In addition to the Note files, the following special files and folders may be fo
 * Each Collection folder will also contain a special file named '- README.txt'. This file simply identifies the folder as a Notenik Collection. 
 
 * Each Collection folder will normally also contain a 'template.txt' or 'template.md' file identifying the fields used within the Collection. 
+
+* A file named 'alias.txt' may also be present. This file contains information used to prevent wiki-style links from breaking when Notes are renamed. 
 
 * A 'files' folder will contain any Attachments for the Collection. 
 

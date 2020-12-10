@@ -947,6 +947,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard outcome != modIfChangedOutcome.tryAgain else { return }
         var (note, position) = noteIO.getSelectedNote()
         guard note != nil && position.valid else { return }
+        let startingNote = note!
+        let startingPosition = position
         (note, position) = noteIO.nextNote(position)
         var found = false
         while !found && note != nil {
@@ -964,6 +966,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             alert.informativeText = "Searched for case-insensitve match on title, link, tags and body fields"
             alert.addButton(withTitle: "OK")
             let _ = alert.runModal()
+            select(note: startingNote, position: startingPosition, source: .action, andScroll: true)
+            _ = noteIO.selectNote(at: startingPosition.index)
         }
     }
     

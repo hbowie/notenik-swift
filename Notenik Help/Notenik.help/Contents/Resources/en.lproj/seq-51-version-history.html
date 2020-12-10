@@ -9,6 +9,22 @@
 <h1>
 	Version History
 </h1>
+<h3 id="version-5.0.0-08-dec-2020">Version 5.0.0 | 08 Dec 2020</h3>
+<h4 id="reworked-logic-for-navigating-forwards-and-backwards">1. Reworked Logic for Navigating forwards and backwards</h4>
+<p>This seems to work more intuitively now. </p>
+<h4 id="modified-to-allow-urls-linking-to-files">2. Modified to allow URLs linking to files</h4>
+<p>URLs starting with &#8216;file:&#8217; should now be recognized as valid URLs. </p>
+<p>However, permissions issues may still prevent such links from being usefully resolved, if they link outside of the sandbox to a file for which the app does not have access privileges. </p>
+<p>This should resolve Issue # 42. </p>
+<h4 id="fixed-bug-in-persisting-custom-css">3. Fixed Bug in Persisting Custom CSS</h4>
+<p>Notenik allows custom CSS to be entered in the Display Fonts Preferences, but these custom entries were being overwritten when Notenik was relaunched. This has now been corrected. This should close Issue # 41. </p>
+<h4 id="fixed-bug-handling-parentheses-within-link-text">4. Fixed bug handling parentheses within Link text</h4>
+<p>Parentheses within link text were not getting handled properly. </p>
+<h4 id="back-prior-now-relaunches-a-note-after-following-a-link">5. Back/Prior now relaunches a Note after following a link</h4>
+<p>After following a web link within a Note, the back button, or prior Note command, will now take the user back to the Note display. </p>
+<p>This should close Issue # 43. </p>
+<h4 id="fixed-bug-in-move-collection-logic">6. Fixed Bug in Move Collection Logic</h4>
+<p>The &#8216;alias.txt&#8217; file was not being copied. This has been corrected. </p>
 <h3 id="version-4.9.0-30-nov-2020">Version 4.9.0 | 30 Nov 2020</h3>
 <h4 id="added-new-file-command-to-create-a-new-collection-in-icloud">1. Added new File Command to create a New Collection in iCloud</h4>
 <p>The user will not need to pick a parent folder when using this option. The new Collection will be located in Notenik's special iCloud container. </p>
