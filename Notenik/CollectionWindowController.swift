@@ -280,6 +280,32 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         select(note: note, position: position, source: .nav)
     }
     
+    /// If we have tasks that have been completed, but not closed, then close them now.
+    @IBAction func closeAllCompletedTasks(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        var (note, position) = noteIO.firstNote()
+        crumbs!.refresh()
+        var notesToUpdate: [Note] = []
+        let config = noteIO.collection!.statusConfig
+        while note != nil {
+            if note!.hasStatus() {
+                if note!.status.getInt() == config.doneThreshold {
+                    notesToUpdate.append(note!)
+                }
+            }
+            (note, position) = io!.nextNote(position)
+        }
+        for noteToUpdate in notesToUpdate {
+            let modNote = noteToUpdate.copy() as! Note
+            modNote.status.close(config: config)
+            _ = io!.modNote(oldNote: noteToUpdate, newNote: modNote)
+        }
+        finishBatchOperation()
+        reportNumberOfNotesUpdated(notesToUpdate.count)
+    }
+    
     @IBAction func standardizeDatesToYMD(_ sender: Any) {
         
         // See if we're ready to take action
