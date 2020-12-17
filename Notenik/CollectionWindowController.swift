@@ -1454,13 +1454,32 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             possibleURL = noteToUse.firstLinkAsURL
         }
         guard let url = possibleURL else { return }
-        let pathType = FileIO.checkPathType(path: url.path)
-        if pathType == .existing || pathType == .web {
-            let _ = juggler.openFileWithNewWindow(fileURL: url, readOnly: false)
-        } else if url.isFileURL && url.lastPathComponent.hasSuffix(ScriptEngine.scriptExt){
+        print(" ")
+        print("Received link as url from note")
+        print("  - absolute string = \(url.absoluteString)")
+        print("  - description = \(url.description)")
+        print("  - path = \(url.path)")
+        launchLink(url: url)
+    }
+    
+    /// Attempt to launch the passed URL.
+    func launchLink(url: URL) {
+        print("launch link for url: \(url.absoluteString)")
+        let link = NotenikLink(url: url)
+        if link.type == .script {
             launchScript(fileURL: url)
-        } else {
-            NSWorkspace.shared.open(url)
+            return
+        } else if link.type == .folder {
+            link.determineCollectionType()
+            if link.type == .ordinaryCollection || link.type == .webCollection {
+                let _ = juggler.openFileWithNewWindow(fileURL: url, readOnly: false)
+                return
+            }
+        }
+        
+        let ok = NSWorkspace.shared.open(url)
+        if !ok {
+            communicateError("Could not open the requested url: \(url.absoluteString)", alert: true)
         }
     }
     

@@ -1,0 +1,10 @@
+Title:  Mailto link within Body
+
+Timestamp: 20201214175636
+
+Seq:    6
+
+Body: 
+
+Let's send a note to [Herb Bowie](mailto:hbowie@umich.edu).
+

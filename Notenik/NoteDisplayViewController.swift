@@ -37,9 +37,6 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     var webView: NoteDisplayWebView!
     var webConfig: WKWebViewConfiguration!
     
-    let urlNavPrevix = "https://ntnk.app/"
-    var bundlePrefix = ""
-    
     let noteDisplay = NoteDisplay()
     
     var io: NotenikIO?
@@ -57,7 +54,6 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bundlePrefix = Bundle.main.bundleURL.absoluteString + "#"
     }
     
     /// Display the provided note
@@ -94,49 +90,77 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let url = navigationAction.request.url?.absoluteString else {
+        
+        /// Make sure we have the objects we need in order to proceed.
+        guard let url = navigationAction.request.url else {
             webLinkFollowed(true)
             decisionHandler(.allow)
             return
         }
-        var notePath = ""
-        if url.starts(with: urlNavPrevix) {
-            notePath = String(url.dropFirst(urlNavPrevix.count))
-        } else if url.starts(with: bundlePrefix) {
-            notePath = String(url.dropFirst(bundlePrefix.count))
-        } else if url.starts(with: "file:///Users/hbowie/Library/Developer/Xcode/") {
-            decisionHandler(.allow)
-            return
-        } else if url.hasSuffix("/Notenik.app/") {
-            decisionHandler(.allow)
-            return
-        } else {
-            webLinkFollowed(true)
-            decisionHandler(.allow)
-            return
-        }
-        let noteID = StringUtils.toCommon(String(notePath))
-        guard let io = wc?.notenikIO else {
+        guard navigationAction.targetFrame != nil else {
+            wc!.launchLink(url: url)
+            webLinkFollowed(false)
             decisionHandler(.cancel)
             return
         }
-        var nextNote = io.getNote(forID: noteID)
-        if nextNote == nil {
-            nextNote = io.getNote(forTimestamp: noteID)
-        }
-        if nextNote == nil {
+        guard wc != nil else {
             webLinkFollowed(true)
             decisionHandler(.allow)
             return
-        } else {
-            wc!.select(note: nextNote, position: nil, source: .nav)
         }
-        decisionHandler(.cancel)
+        
+        /// Figure out how to handle this sort of URL.
+        let link = NotenikLink(url: url)
+        
+        switch link.type {
+        case .weblink:
+            webLinkFollowed(true)
+            decisionHandler(.allow)
+        case .notenikApp, .xcodeDev:
+            webLinkFollowed(false)
+            decisionHandler(.allow)
+        case .wikiLink:
+            let io = wc?.notenikIO
+            var nextNote = io!.getNote(forID: link.noteID)
+            if nextNote == nil {
+                nextNote = io!.getNote(forTimestamp: link.noteID)
+            }
+            if nextNote == nil {
+                webLinkFollowed(true)
+                decisionHandler(.allow)
+                return
+            } else {
+                webLinkFollowed(false)
+                decisionHandler(.cancel)
+                wc!.select(note: nextNote, position: nil, source: .nav)
+            }
+        default:
+            wc!.launchLink(url: url)
+            webLinkFollowed(false)
+            decisionHandler(.cancel)
+        }
     }
     
     func webLinkFollowed(_ followed: Bool) {
         guard let controller = wc else { return }
         controller.webLinkFollowed = followed
+    }
+    
+    /// Log an error message and optionally display an alert message.
+    func communicateError(_ msg: String, alert: Bool=false) {
+        
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "NoteDisplayViewController",
+                          level: .error,
+                          message: msg)
+        
+        if alert {
+            let dialog = NSAlert()
+            dialog.alertStyle = .warning
+            dialog.messageText = msg
+            dialog.addButton(withTitle: "OK")
+            let _ = dialog.runModal()
+        }
     }
     
 }

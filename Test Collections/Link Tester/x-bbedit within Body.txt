@@ -1,0 +1,10 @@
+Title:  x-bbedit within Body
+
+Timestamp: 20201214190711
+
+Seq:    8
+
+Body: 
+
+<x-bbedit://open?url=file:///Users/hbowie/test.txt>
+

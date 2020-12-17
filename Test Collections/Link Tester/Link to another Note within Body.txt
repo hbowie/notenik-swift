@@ -1,0 +1,10 @@
+Title:  Link to another Note within Body
+
+Timestamp: 20201214175400
+
+Seq:    9
+
+Body: 
+
+See the [[Intro]] for an explanation. 
+

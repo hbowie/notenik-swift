@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/21/19.
-//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2020 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -82,6 +82,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
             favsToHTML.title = "Favourites to HTML..."
         }
         
+        NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(self.handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
+        
         // Done launching
         appPrefs.appLaunching = false
     }
@@ -101,6 +103,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         } else {
             _ = juggler.open(urls: urls)
         }
+    }
+    
+    /// To handle events from Notenik's URL scheme.
+    @objc func handleAppleEvent(event: NSAppleEventDescriptor, replyEvent: NSAppleEventDescriptor) {
+        guard let appleEventDescription = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject)) else {
+            return
+        }
+
+        guard let appleEventURLString = appleEventDescription.stringValue else {
+            return
+        }
+
+        let appleEventURL = URL(string: appleEventURLString)
+
+        print("Received Apple Event URL: \(appleEventURL)")
     }
     
     @IBAction func menuAppPreferences(_ sender: NSMenuItem) {

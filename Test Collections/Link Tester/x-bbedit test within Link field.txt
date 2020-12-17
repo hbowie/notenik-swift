@@ -1,0 +1,7 @@
+Title:  x-bbedit test within Link field
+
+Link:   x-bbedit://open?url=file:///Users/hbowie/test.txt
+
+Timestamp: 20201214190711
+
+Seq:    7

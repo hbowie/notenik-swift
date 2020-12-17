@@ -1,0 +1,7 @@
+Title:  Mailto link within Link field
+
+Link:   mailto:hbowie@mac.com
+
+Timestamp: 20201214175524
+
+Seq:    5

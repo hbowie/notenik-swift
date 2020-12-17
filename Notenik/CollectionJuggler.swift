@@ -132,28 +132,26 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     func open(urls: [URL]) -> Int {
         var successfulOpens = 0
         for url in urls {
-            let type = FileIO.checkPathType(path: url.path)
-            switch type {
-            case .empty:
+            let link = NotenikLink(url: url)
+            link.determineCollectionType()
+            switch link.type {
+            case .emptyFolder:
                 let ok = newCollection(fileURL: url)
                 if ok {
                     successfulOpens += 1
                 }
-            case .existing, .web:
+            case .ordinaryCollection, .webCollection:
                 let wc = openFileWithNewWindow(fileURL: url, readOnly: false)
                 if wc != nil {
                     successfulOpens += 1
                 }
-            case .foreign:
-                break
-            case .hopeless:
-                communicateError("Item to be opened at \(url.path) could not be used",
-                alert: true)
             case .realm:
                 let ok = openParentRealm(parentURL: url)
                 if ok {
                     successfulOpens += 1
                 }
+            default:
+                communicateError("Item to be opened at \(url.path) could not be used", alert: true)
             }
         }
         return successfulOpens
