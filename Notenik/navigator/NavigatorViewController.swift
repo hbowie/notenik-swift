@@ -107,7 +107,7 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
             } else {
                 let clickedFolder = node.folder
                 if clickedFolder != nil {
-                    _ = juggler!.open(urls: [clickedFolder!.url])
+                    _ = juggler!.open(link: clickedFolder!)
                 }
             }
         }
@@ -133,7 +133,7 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
             } else {
                 let clickedFolder = node.folder
                 if clickedFolder != nil {
-                    _ = juggler!.open(urls: [clickedFolder!.url])
+                    _ = juggler!.open(link: clickedFolder!)
                 }
             }
         }
@@ -205,7 +205,7 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
                 let response = alert.runModal()
                 if response == .alertFirstButtonReturn {
                     do {
-                        try FileManager.default.removeItem(at: selFolder!.url)
+                        try FileManager.default.removeItem(at: selFolder!.url!)
                         _ = NotenikFolderList.shared.remove(folder: selFolder!)
                         logInfo(msg: "Deleted Notenik folder located at: '\(selFolder!.path)'")
                     } catch {

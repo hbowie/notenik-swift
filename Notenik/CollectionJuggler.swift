@@ -69,7 +69,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     func makeRecentDocsKnown(_ recentDocumentURLs: [URL]) {
         for url in recentDocumentURLs {
-            notenikFolderList.add(url: url, type: .collection, location: .undetermined)
+            notenikFolderList.add(url: url, type: .ordinaryCollection, location: .undetermined)
         }
     }
     
@@ -134,27 +134,32 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         for url in urls {
             let link = NotenikLink(url: url)
             link.determineCollectionType()
-            switch link.type {
-            case .emptyFolder:
-                let ok = newCollection(fileURL: url)
-                if ok {
-                    successfulOpens += 1
-                }
-            case .ordinaryCollection, .webCollection:
-                let wc = openFileWithNewWindow(fileURL: url, readOnly: false)
-                if wc != nil {
-                    successfulOpens += 1
-                }
-            case .realm:
-                let ok = openParentRealm(parentURL: url)
-                if ok {
-                    successfulOpens += 1
-                }
-            default:
-                communicateError("Item to be opened at \(url.path) could not be used", alert: true)
+            let ok = open(link: link)
+            if ok {
+                successfulOpens += 1
             }
         }
         return successfulOpens
+    }
+    
+    /// Open a single NotenikLink. 
+    func open(link: NotenikLink) -> Bool {
+        link.determineCollectionType()
+        var ok = false
+        switch link.type {
+        case .emptyFolder:
+            ok = newCollection(fileURL: link.url!)
+        case .ordinaryCollection, .webCollection:
+            let wc = openFileWithNewWindow(fileURL: link.url!, readOnly: false)
+            if wc != nil {
+                ok = true
+            }
+        case .realm:
+            ok = openParentRealm(parentURL: link.url!)
+        default:
+            communicateError("Item to be opened at \(link) could not be used", alert: true)
+        }
+        return ok
     }
     
     func userRequestsNewWebsite() {
@@ -192,7 +197,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     /// Proceed with the user request, now that we have a URL
     func proceedWithSelectedURL(requestType: CollectionRequestType, fileURL: URL) {
-        notenikFolderList.add(url: fileURL, type: .collection, location: .undetermined)
+        notenikFolderList.add(url: fileURL, type: .ordinaryCollection, location: .undetermined)
         if requestType == .new {
             _ = newCollection(fileURL: fileURL)
         } else if requestType == .newWebsite {
@@ -223,7 +228,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     }
     
     func openParentRealm(parentURL: URL) -> Bool {
-        notenikFolderList.add(url: parentURL, type: .parent, location: .undetermined)
+        notenikFolderList.add(url: parentURL, type: .realm, location: .undetermined)
         AppPrefs.shared.parentRealmPath = parentURL.path
         appPrefs.parentRealmParentURL = parentURL.deletingLastPathComponent()
         let realmScanner = RealmScanner()
@@ -293,7 +298,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         let wc = openFileWithNewWindow(fileURL: newURL, readOnly: false)
         
         if wc != nil {
-            notenikFolderList.add(url: newURL, type: .collection, location: .undetermined)
+            notenikFolderList.add(url: newURL, type: .ordinaryCollection, location: .undetermined)
             currentWindow.close()
             let alert = NSAlert()
             alert.alertStyle = .informational
@@ -369,7 +374,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         let wc = openFileWithNewWindow(fileURL: newURL, readOnly: false)
         
         if wc != nil {
-            notenikFolderList.add(url: newURL, type: .collection, location: .undetermined)
+            notenikFolderList.add(url: newURL, type: .ordinaryCollection, location: .undetermined)
             currentWindow.close()
         }
         
@@ -402,7 +407,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         currentWindow.close()
         let wc = openFileWithNewWindow(fileURL: url, readOnly: false)
         if wc != nil {
-            notenikFolderList.add(url: url, type: .collection, location: .undetermined)
+            notenikFolderList.add(url: url, type: .webCollection, location: .undetermined)
         }
         return (wc != nil)
     }
@@ -449,7 +454,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         let webCollection = WebCollection(fileURL: fileURL)
         guard webCollection.initCollection() else { return false }
         
-        notenikFolderList.add(url: webCollection.notesFolderURL, type: .collection, location: .undetermined)
+        notenikFolderList.add(url: webCollection.notesFolderURL, type: .ordinaryCollection, location: .undetermined)
         
         saveCollectionInfo(webCollection.io.collection!)
 
@@ -478,7 +483,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         let initOK = io.initCollection(realm: realm, collectionPath: collectionURL.path)
         guard initOK else { return false }
         
-        notenikFolderList.add(url: collectionURL, type: .collection, location: .undetermined)
+        notenikFolderList.add(url: collectionURL, type: .ordinaryCollection, location: .undetermined)
         io.addDefaultDefinitions()
         
         // Now let the user tailor the starting Collection default values
@@ -581,7 +586,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Open the Essential Collection, if we have one
     func openEssentialCollection() {
         guard let essentialURL = appPrefs.essentialURL else { return }
-        notenikFolderList.add(url: essentialURL, type: .collection, location: .undetermined)
+        notenikFolderList.add(url: essentialURL, type: .ordinaryCollection, location: .undetermined)
         _ = openFileWithNewWindow(fileURL: essentialURL, readOnly: false)
     }
     

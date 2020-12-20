@@ -113,7 +113,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         let link = NotenikLink(url: url)
         
         switch link.type {
-        case .weblink:
+        case .weblink, .aboutlink:
             webLinkFollowed(true)
             decisionHandler(.allow)
         case .notenikApp, .xcodeDev:

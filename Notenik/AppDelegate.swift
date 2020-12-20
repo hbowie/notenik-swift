@@ -66,7 +66,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         notenikFolderList = NotenikFolderList.shared
         for folder in notenikFolderList {
             if folder.location == .iCloudContainer {
-                let item = NSMenuItem(title: folder.folderName, action: #selector(openICloudItem(_:)), keyEquivalent: "")
+                let item = NSMenuItem(title: folder.fileOrFolderName, action: #selector(openICloudItem(_:)), keyEquivalent: "")
                 iCloudMenu.addItem(item)
             }
         }
