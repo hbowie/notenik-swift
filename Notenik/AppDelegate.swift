@@ -107,6 +107,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     /// To handle events from Notenik's URL scheme.
     @objc func handleAppleEvent(event: NSAppleEventDescriptor, replyEvent: NSAppleEventDescriptor) {
+        print("Received an Apple Event")
         guard let appleEventDescription = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject)) else {
             return
         }

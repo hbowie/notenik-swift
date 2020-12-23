@@ -1454,11 +1454,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             possibleURL = noteToUse.firstLinkAsURL
         }
         guard let url = possibleURL else { return }
-        print(" ")
-        print("Received link as url from note")
-        print("  - absolute string = \(url.absoluteString)")
-        print("  - description = \(url.description)")
-        print("  - path = \(url.path)")
         launchLink(url: url)
     }
     
