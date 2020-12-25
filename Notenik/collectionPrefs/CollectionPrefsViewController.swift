@@ -53,6 +53,7 @@ class CollectionPrefsViewController: NSViewController {
     var teaserCkBox:     NSButton!
     var bodyCkBox:       NSButton!
     var dateAddedCkBox:  NSButton!
+    var dateModifiedCkBox: NSButton!
     
     var checkBoxInsertionPoint = 0
     
@@ -164,6 +165,10 @@ class CollectionPrefsViewController: NSViewController {
         dateAddedCkBox = NSButton(checkboxWithTitle: "Date Added", target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(dateAddedCkBox)
         stackView.addArrangedSubview(dateAddedCkBox)
+        
+        dateModifiedCkBox = NSButton(checkboxWithTitle: "Date Modified", target: self, action: #selector(checkBoxClicked))
+        fieldSelectors.append(dateModifiedCkBox)
+        stackView.addArrangedSubview(dateModifiedCkBox)
         
         checkBoxInsertionPoint = stackView.arrangedSubviews.count - 1
         
