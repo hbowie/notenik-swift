@@ -106,12 +106,13 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
     
     @IBAction func fontAdjusted(_ sender: Any) {
         displayPrefs.font = fontComboBox.stringValue
-        buildCSS()
-        refreshSample(sender)
     }
     
     @IBAction func sizeAdjusted(_ sender: Any) {
         displayPrefs.size = sizeComboBox.stringValue
+    }
+    
+    @IBAction func generateCSSButtonPushed(_ sender: NSButton) {
         buildCSS()
         refreshSample(sender)
     }
@@ -154,8 +155,6 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         let newFont = fonts.itemAt(newFontIndex)
         if newFont != nil && newFont != originalFont {
             displayPrefs.font = newFont!
-            buildCSS()
-            refreshSample(sender)
         }
     }
     
