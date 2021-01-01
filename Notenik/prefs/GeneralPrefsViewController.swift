@@ -44,7 +44,7 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     
     /// Called when the user is leaving this tab for another one.
     func leavingTab() {
-        
+
     }
     
 }

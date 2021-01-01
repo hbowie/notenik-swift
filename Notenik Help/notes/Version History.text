@@ -8,6 +8,33 @@ Tags:   changes, versions, history, log
 
 Body:   
  
+### Version 5.1.0 | 26 Dec 2020
+
+#### 1. Added Display Prefs Button to Update CSS
+
+Added an explicit button to generate the CSS field in the Display Preferences, since custom CSS was still being overwritten unintentionally. This is a follow-up fix to Issue # 41.
+
+
+#### 2. Added an Optional Date Modified field
+
+This should close Issue # 40.
+
+
+#### 3. Changed Author Sort
+
+Changed Author field to sort by first name first, last name last. Among other effects, this means that the Author pick list now works correctly, as you start to type a name. 
+
+
+#### 4. Sorted out problems with following Links
+
+In particular, application URL links should now be working, both from the Link field, and when found in the body field. 
+
+
+#### 5. Added Function to Close All Completed Tasks
+
+This new command beneath the Collection menu will change all Notes with a status of Completed to a status of Closed. 
+
+
 ### Version 5.0.0 | 08 Dec 2020
 
 #### 1. Reworked Logic for Navigating forwards and backwards

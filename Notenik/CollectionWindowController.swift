@@ -43,6 +43,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
     let shareStoryboard:           NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
+    let mediumPubStoryboard:       NSStoryboard = NSStoryboard(name: "MediumPub", bundle: nil)
     let exportStoryboard:          NSStoryboard = NSStoryboard(name: "Export", bundle: nil)
     let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
     let tagsMassChangeStoryboard:  NSStoryboard = NSStoryboard(name: "TagsMassChange", bundle: nil)
@@ -859,6 +860,29 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         }
     }
     
+    @IBAction func menuNotePublishToMedium(_ sender: Any) {
+        let (_, sel) = guardForNoteAction()
+        guard let selectedNote = sel else { return }
+        if let mediumPubController = self.mediumPubStoryboard.instantiateController(withIdentifier: "mediumpubWC") as? MediumPubWindowController {
+            guard let vc = mediumPubController.contentViewController as? MediumTabViewController else {
+                print("Couldn't get the view controller")
+                return
+            }
+            mediumPubController.note = selectedNote
+            mediumPubController.showWindow(sender)
+            
+            // vc.window = shareController
+            // vc.io = notenikIO!
+            // vc.note = note
+        } else {
+            print("Couldn't get a Medium Publish Controller")
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Medium Publish Window Controller!")
+        }
+    }
+    
     /// Show the user a window displaying various counts for the body of the current Note.
     @IBAction func showCounts(_ sender: Any) {
         let (_, sel) = guardForNoteAction()
@@ -1459,7 +1483,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// Attempt to launch the passed URL.
     func launchLink(url: URL) {
-        print("launch link for url: \(url.absoluteString)")
         let link = NotenikLink(url: url)
         if link.type == .script {
             launchScript(fileURL: url)

@@ -38,4 +38,6 @@ See these commands beneath the Note menu. Note that these are designed to be use
 * Toggle Status - Switches from least complete to most, and back again. 
 * Increment Status - Bump to the next stage in the Collection's lifecycle. 
 
+There's also a command beneath the Collection menu to Close all Completed Tasks, which will look for all tasks with a status of Completed and change them to Closed. 
+
 Look under the File menu for an option to Purge Notes that have been Canceled or Completed. You'll be given the option of discarding the purged Notes, or of copying them to another location.

@@ -21,3 +21,8 @@ You can use whatever Field Labels you want within a Collection, but there are a 
 * Type -- The type of note. Any values may be used to distinguish between different types of notes within a collection.
 
 * Teaser -- An excerpt from the note used as a teaser in a list of notes. The teaser may be formatted using Markdown.
+
+* Date Added -- This field cannot be directly edited by a user in Notenik, since it will automatically be maintained by Notenik, but it will cause the field to be visible at the bottom of a Note's display, and it does make the value available for export, in case you wish to preserve these values across an export/import operation. 
+
+* Date Modified -- Like the Date Added field, this field will be automatically maintained by Notenik, but makes the data available for display and export. 
+
