@@ -4,11 +4,11 @@ Tags:   comma-separated, export, iWisdom, import, tab-delimited, xml
 
 Timestamp: 20191127194553
 
-Seq:    43
+Seq:    44
 
 Level:  3
 
-Date Added: 2017-10-27 12:55:15
+Date Added: 2017-10-27 12:55:15 -0700
 
 Body: 
 
@@ -26,6 +26,10 @@ Following are the supported formats.
 * Import/Export in CSV Format
 
 	Each Note will be represented as one row/line, and each field will be represented in a separate column. Commas are used to separate columns. This format is suitable for import into MS Excel, for example.
+	
+* Import from OmniFocus
+
+	You can use either the plain text or csv exports from OmniFocus. See the next section for further info specific to this topic. 
 
 * Import in XML format
 

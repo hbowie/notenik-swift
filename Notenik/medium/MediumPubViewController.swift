@@ -39,6 +39,7 @@ class MediumPubViewController: NSViewController {
         wc.view()
     }
     
+    /// Update UI based on latest info from the Medium Info block. 
     func mediumUpdate() {
         guard loadOK else { return }
         if info.note != nil {

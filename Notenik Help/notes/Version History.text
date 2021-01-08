@@ -1,6 +1,6 @@
 Title:  Version History
 
-Seq:    51
+Seq:    53
 
 Level: 3
 
@@ -8,6 +8,23 @@ Tags:   changes, versions, history, log
 
 Body:   
  
+### Version 5.2.0 | 04 Jan 2021
+
+#### 1. Fixed an Import Bug
+
+Fixed a bug affecting data import into Notenik. 
+
+
+#### 2. Added Options to Import data from OmniFocus
+
+You can import either CSV data or Plain Text data, but you will probably want to pick the Plain Text option. See the latest version of the User Guide, the Notenik Help, or the Help Notes for a new section on Importing from OmniFocus. 
+
+
+#### 3. Added Ability to Publish to Medium
+
+See the Publish to Medium command beneath the Note menu. 
+
+
 ### Version 5.1.0 | 26 Dec 2020
 
 #### 1. Added Display Prefs Button to Update CSS

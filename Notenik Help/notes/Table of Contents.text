@@ -60,12 +60,14 @@ Body:
 <li><a href="#getting-data-into-and-out-of-notenik">Getting Data Into and Out Of Notenik</a> <br />
 7.1 <a href="#copy-cut-paste-and-share-your-notes">Copy, Cut, Paste and Share your Notes</a>  <br />
 7.2 <a href="#import-and-export-your-notes">Import and Export Your Notes</a>  <br />
-7.3 <a href="#export-to-notenik-vs-save-as-vs-move">Export to Notenik vs. Save As vs. Move</a>  <br />
-7.4 <a href="#favorites-to-html">Favorites to HTML</a>  <br />
-7.5 <a href="#use-report-templates">Use Report Templates</a>  <br />
-7.6 <a href="#record-and-play-scripts">Record and Play Scripts</a>  <br />
-7.7 <a href="#mirror-your-notes">Mirror Your Notes</a>  <br />
-7.8 <a href="#website-building">Website Building</a>  <br />
+7.3 <a href="#import-from-omnifocus">Import from OmniFocus</a>  <br />
+7.4 <a href="#export-to-notenik-vs-save-as-vs-move">Export to Notenik vs. Save As vs. Move</a>  <br />
+7.5 <a href="#publish-to-medium">Publish to Medium</a>  <br />
+7.6 <a href="#favorites-to-html">Favorites to HTML</a>  <br />
+7.7 <a href="#use-report-templates">Use Report Templates</a>  <br />
+7.8 <a href="#record-and-play-scripts">Record and Play Scripts</a>  <br />
+7.9 <a href="#mirror-your-notes">Mirror Your Notes</a>  <br />
+7.10 <a href="#website-building">Website Building</a>  <br />
 </li>
 <li><a href="#reference">Reference</a> <br />
 8.1 <a href="#version-history">Version History</a>  <br />

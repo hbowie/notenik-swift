@@ -33,10 +33,34 @@ class MediumAuthViewController: NSViewController {
         mediumUpdate()
     }
     
+    override func viewWillDisappear() {
+        checkForUserUpdate()
+    }
+    
+    /// Token field updated.
+    @IBAction func tokenAction(_ sender: Any) {
+        checkForUserUpdate()
+    }
+    
     @IBAction func authenticateAction(_ sender: Any) {
         wc.authenticate()
     }
     
+    /// See if the user updated the token field.
+    func checkForUserUpdate() {
+        if tokenField.stringValue != info.authToken {
+            info.authToken = tokenField.stringValue
+            AppPrefs.shared.mediumToken = tokenField.stringValue
+            if info.authToken.isEmpty {
+                info.status = .tokenNeeded
+            } else {
+                info.status = .authenticationNeeded
+            }
+            wc.authenticate()
+        }
+    }
+    
+    /// Update UI based on latest info from the Medium Info block. 
     func mediumUpdate() {
         guard loadOK else { return }
         tokenField.stringValue = info.authToken

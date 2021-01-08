@@ -864,10 +864,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let (_, sel) = guardForNoteAction()
         guard let selectedNote = sel else { return }
         if let mediumPubController = self.mediumPubStoryboard.instantiateController(withIdentifier: "mediumpubWC") as? MediumPubWindowController {
-            guard let vc = mediumPubController.contentViewController as? MediumTabViewController else {
+            /* guard let vc = mediumPubController.contentViewController as? MediumTabViewController else {
                 print("Couldn't get the view controller")
                 return
-            }
+            } */
             mediumPubController.note = selectedNote
             mediumPubController.showWindow(sender)
             
@@ -1653,23 +1653,11 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     @IBAction func importDelimited(_ sender: Any) {
         
         guard let noteIO = guardForCollectionAction() else { return }
-        
-        // Ask the user for a location on disk
-        let openPanel = NSOpenPanel();
-        openPanel.title = "Open an input tab- or comma-separated text file"
-        let parent = noteIO.collection!.parentURL
-        openPanel.directoryURL = parent
-        openPanel.showsResizeIndicator = true
-        openPanel.showsHiddenFiles = false
-        openPanel.canChooseDirectories = false
-        openPanel.canCreateDirectories = false
-        openPanel.canChooseFiles = true
-        openPanel.allowsMultipleSelection = false
-        openPanel.begin { (result) -> Void  in
-            if result == .OK {
-                self.importDelimitedFromURL(openPanel.url!, noteIO: noteIO)
-            }
-        }
+        guard let importURL = promptUserForImportFile(
+                title: "Open an input tab- or comma-separated text file",
+                parent: noteIO.collection!.parentURL)
+            else { return }
+        importDelimitedFromURL(importURL, noteIO: noteIO)
     }
     
     func importDelimitedFromURL(_ fileURL: URL, noteIO: NotenikIO) {
@@ -1688,28 +1676,64 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         finishBatchOperation()
     }
     
+    @IBAction func importCSVfromOmniFocus(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let importURL = promptUserForImportFile(
+                title: "Open a CSV file from OmniFocus",
+                parent: noteIO.collection!.parentURL)
+            else { return }
+        importCSVfromOmniFocus(importURL, noteIO: noteIO)
+    }
+    
+    func importCSVfromOmniFocus(_ fileURL: URL, noteIO: NotenikIO) {
+        let importer = OmniFocusReader()
+        let imports = noteIO.importRows(importer: importer, fileURL: fileURL)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionWindowController",
+                          level: .info,
+                          message: "Imported \(imports) notes from \(fileURL.path)")
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "Imported \(imports) notes from \(fileURL.path)"
+        alert.addButton(withTitle: "OK")
+        _ = alert.runModal()
+        editVC!.io = noteIO
+        finishBatchOperation()
+    }
+    
+    @IBAction func importPlainTextfromOmniFocus(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let importURL = promptUserForImportFile(
+                title: "Open a Plain Text file from OmniFocus",
+                parent: noteIO.collection!.parentURL)
+            else { return }
+        importPlainTextfromOmniFocus(importURL, noteIO: noteIO)
+    }
+    
+    func importPlainTextfromOmniFocus(_ fileURL: URL, noteIO: NotenikIO) {
+        let importer = OmniFocusPlainTextReader()
+        let imports = noteIO.importRows(importer: importer, fileURL: fileURL)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionWindowController",
+                          level: .info,
+                          message: "Imported \(imports) notes from \(fileURL.path)")
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "Imported \(imports) notes from \(fileURL.path)"
+        alert.addButton(withTitle: "OK")
+        _ = alert.runModal()
+        editVC!.io = noteIO
+        finishBatchOperation()
+    }
+    
     @IBAction func importXLSX(_ sender: Any) {
         
-        // See if we're ready to take action
         guard let noteIO = guardForCollectionAction() else { return }
-        
-        // Ask the user for a location on disk
-        let openPanel = NSOpenPanel();
-        openPanel.title = "Open an input XLSX file"
-        let parent = noteIO.collection!.parentURL
-        openPanel.directoryURL = parent
-        openPanel.showsResizeIndicator = true
-        openPanel.showsHiddenFiles = false
-        openPanel.canChooseDirectories = false
-        openPanel.canCreateDirectories = false
-        openPanel.canChooseFiles = true
-        openPanel.allowsMultipleSelection = false
-        openPanel.begin { (result) -> Void  in
-            if result == .OK {
-                self.importXSLXFromURL(openPanel.url!)
-            }
-        }
-
+        guard let importURL = promptUserForImportFile(
+                title: "Open an input XLSX file",
+                parent: noteIO.collection!.parentURL)
+            else { return }
+        importXSLXFromURL(importURL)
     }
     
     func importXSLXFromURL(_ fileURL: URL) {
@@ -1787,23 +1811,11 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         
         // See if we're ready to take action
         guard let noteIO = guardForCollectionAction() else { return }
-        
-        // Ask the user for a location on disk
-        let openPanel = NSOpenPanel();
-        openPanel.title = "Open a input XML"
-        let parent = noteIO.collection!.parentURL
-        openPanel.directoryURL = parent
-        openPanel.showsResizeIndicator = true
-        openPanel.showsHiddenFiles = false
-        openPanel.canChooseDirectories = true
-        openPanel.canCreateDirectories = false
-        openPanel.canChooseFiles = true
-        openPanel.allowsMultipleSelection = false
-        let userChoice = openPanel.runModal()
-        guard userChoice == .OK else { return }
-        
-        guard let importURL = openPanel.url else { return }
-        
+        guard let importURL = promptUserForImportFile(
+                title: "Open an input XML file",
+                parent: noteIO.collection!.parentURL)
+            else { return }
+
         let importer = XMLNoteImporter(io: noteIO)
         let imports = importer.importFrom(importURL)
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
@@ -1817,6 +1829,23 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         _ = alert.runModal()
         editVC!.io = noteIO
         finishBatchOperation()
+    }
+    
+    /// Prompt the user for the location of a file to import.
+    func promptUserForImportFile(title: String, parent: URL?) -> URL? {
+        let openPanel = NSOpenPanel();
+        openPanel.title = title
+        openPanel.directoryURL = parent
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.allowsMultipleSelection = false
+        let userChoice = openPanel.runModal()
+        guard userChoice == .OK else { return nil }
+        guard let importURL = openPanel.url else { return nil }
+        return importURL
     }
     
     @IBAction func favoritesToHTML(_ sender: Any) {

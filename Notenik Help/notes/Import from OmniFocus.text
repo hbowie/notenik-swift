@@ -1,0 +1,37 @@
+Title:  Import from OmniFocus
+
+Tags:   OmniFocus, import
+
+Timestamp: 20210104191228
+
+Seq:    45
+
+Level:  3
+
+Date Added: 2021-01-04 11:12:28 -0800
+
+Body: 
+
+OmniFocus is a much more powerful and sophisticated app than Notenik. And there are many reasons why you might want to use OmniFocus instead of Notenik, or in addition to Notenik. And I have nothing negative to say about the Omni Group, or their apps, or their pricing, or their business model. 
+
+That being said, if you are not using all of OmniFocus' bells and whistles, and would be happy with a simpler Mac app, then you might be interested moving your data from OmniFocus to Notenik. 
+
+OmniFocus has several ways to export its data. However none of them are entirely straightforward or complete, as it turns out. So you have a couple of options in terms of OmniFocus export options that can be imported by Notenik. 
+
++ CSV (comma-separated values) - This format includes Task ID, which Notenik uses to populate the Seq field, but it does not seem to include any recurs data. 
+
++ Plain Text - This format includes recurs data, but does not include Task ID. In general, this seems to be the more complete format (unless Task ID is important to you). 
+
+There are a few general points to keep in mind when exporting data from OmniFocus and importing into Notenik.  
+
++ Notenik will import the tasks as Notes into whatever Collection you currently have open and frontmost. You may wish to create a new Collection specifically for this sort of "to do" data before importing. 
+
++ Make sure your collection already has the fields you will wish to use for this sort of "to do" list. In general, you would want the Date field and the Recurs field to be available, at a minimum, and would want to consider use of the Status field as well. 
+
++ You should be aware that OmniFocus uses a very different data model from Notenik for recurring tasks. Whenever a task recurs in OmniFocus, a new item is created, and the old item is marked complete. This is great if you wish to preserve a historical record of your completions. However Notenik uses a totally different approach: when you close a recurring item, Notenik simply updates the current item with the new date, so there is no historical record. 
+
++ In order to avoid importing a bunch of duplicate tasks, many of which have already been completed, Notenik will refuse to import any tasks that have already been completed. So if that record of closed tasks is important to you, then you should probably not be using Notenik!
+
++ Notenik has no specific fields for Context or for parent Projects, but will attempt to add this sort of data to the Tags for each Note, where appropriate. 
+
+And I think that's it! Feel free to let me know if you have any problems importing your data from OmniFocus. 

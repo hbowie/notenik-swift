@@ -59,8 +59,7 @@ class MediumPubWindowController: NSWindowController, MediumUI {
         tabVC2.wc = self
         tabVC2.info = info
         loadOK = true
-        tabVC1.mediumUpdate()
-        tabVC2.mediumUpdate()
+        mediumUpdate()
     }
     
     var note: Note? {
@@ -88,6 +87,8 @@ class MediumPubWindowController: NSWindowController, MediumUI {
         _ = NSWorkspace.shared.open(url)
     }
     
+    /// Update the UI based on changes in Medium Info. This method is part of the
+    /// MediumUI protocol that is passed to the Medium Integrator. 
     func mediumUpdate() {
         guard loadOK else { return }
         tabVC1.mediumUpdate()

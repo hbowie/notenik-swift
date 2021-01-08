@@ -1,0 +1,23 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Add Links Between Notes</title>
+	<meta name="KEYWORDS" content="link, timestamp, wiki, zettelkasten">
+</head>
+<body class="Aside apd-topic" dir="ltr" id="seq-39-add-links-between-notes" data-istaskopen="false">
+<a name="seq-39-add-links-between-notes"></a>
+<h1>
+	Add Links Between Notes
+</h1>
+<p>Notenik allows the user to create a link from one Note to another Note within the same Collection. </p>
+<p>You may create such a link directly by specifying the domain &#8216;https://ntnk.app/&#8217; followed by the title of the Note you are linking to. </p>
+<p>For example, here's a working link to the <a href="https://ntnk.app/Overview">Overview</a> Note within this Help Collection.  </p>
+<p>Note that this is coded within the body of the Note using normal <a href="https://daringfireball.net/projects/markdown/syntax#link">Markdown syntax for links</a>. What makes this a note-to-note link is the special URL prefix of &#8216;https://ntnk.app/&#8217;. Links to this domain will be intercepted by Notenik and treated as note-to-note links. The string following this prefix will be treated as either a note Title or, if you <a href="https://ntnk.app/timestamp-your-notes">Timestamp your Notes</a>, a Timestamp. A link using a Note title will ignore case (upper or lower), spaces and punctuation, so that, for example, a link to the Note titled &#8216;Timestamp Your Notes&#8217; may be coded as &#8216;https://ntnk.app/timestamp-your-notes&#8217;. </p>
+<p>While this method works, and has the advantage of staying within the normal Markdown syntax, it is not the most convenient approach. As an optional alternative, the user may choose to use the wiki-like syntax of enclosing the title of another Note within double square brackets. </p>
+<p>In order to enable this option, the user must be using Notenik's own internal Markdown parser. If you are using Notenik's parser, then a link to another Note may be coded by simply enclosing the title of the target Note (or its timestamp!) within double square brackets. </p>
+<p>For example, here's a working link to the <a href="https://ntnk.app/overview">Overview</a> note using this syntax. </p>
+<p>If you also enable the timestamp field for a Collection, then you can change the title of a linked Note without changing the referencing wiki link text, and Notenik will remember the association between the old title and the new title, making use of the timestamp field to preserve a unique, unchanging identity for each Note. These associations will be saved in a special file named &#8216;alias.txt&#8217;, within the Collection folder. This functionality can be useful to make sure you don't end up with broken links between Notes. </p>
+
+<p>Next Topic: <a href="seq-40-check-word-and-character-counts.html">Check Word and Character Counts</a></p>
+</body>
+</html>

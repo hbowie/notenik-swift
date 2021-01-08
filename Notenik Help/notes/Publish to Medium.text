@@ -1,0 +1,21 @@
+Title:  Publish to Medium
+
+Tags:   Medium, publish
+
+Timestamp: 20210108225825
+
+Seq:    46.1
+
+Level:  3
+
+Date Added: 2021-01-08 14:58:25 -0800
+
+Body: 
+
+You can publish a Note as a draft to [Medium](https://medium.com) by using the Publish to Medium command beneath the Note menu. 
+
+You will be presented with a new window titled "Medium Integration," containing two tabs. 
+
+The first tab requires you to enter an Integration Token that you will need to acquire for your Medium account. Once you see the message "Authentication Succeeded" then you can proceed to the second tab. 
+
+The second tab allows you to publish a draft of the current Note to Medium. The body of the Note, presumably formatted using Markdown, will be used as the contents of your story. The parsing of Markdown to HTML will be left to Medium.

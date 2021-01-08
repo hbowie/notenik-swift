@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Mirror Your Notes</title>
+	<meta name="KEYWORDS" content="mirror">
+</head>
+<body class="Aside apd-topic" dir="ltr" id="seq-50-mirror-your-notes" data-istaskopen="false">
+<a name="seq-50-mirror-your-notes"></a>
+<h1>
+	Mirror Your Notes
+</h1>
+<p>Notenik has the ability to automatically mirror all the Notes within a Collection to an alternate format (usually HTML), typically stored in the same folder. </p>
+<p>Here's the way this works. </p>
+<ol>
+<li>
+<p>Although it's not essential, it may help if you start by using the Generate Sample Mirror Folder command under the Transform menu. This command will then create a &#8216;mirror&#8217; folder within your frontmost Collection. This folder will then contain useful subfolders and templates that you can use as a starting point. </p>
+</li>
+<li>
+<p>To make further modifications, you will need to use your trusty text editor to modify the supplied templates, and/or create new ones. </p>
+</li>
+<li>
+<p>However it's created, your Collection will need to contain a subfolder named &#8216;mirror&#8217; in order to enable mirroring for that Collection. </p>
+</li>
+<li>
+<p>The &#8216;mirror&#8217; folder should then contain another folder named &#8216;templates&#8217;. </p>
+</li>
+<li>
+<p>At a minimum, to enable mirroring, the &#8216;mirror/templates&#8217; folder should contain one file with both &#8216;note&#8217; and &#8216;mirror&#8217; as part of the filename. The contents of this file should conform to the Notenik <a href="https://notenik.net/template-spec.html">Merge Template File Spec</a>. </p>
+</li>
+<li>
+<p>If Notenik finds the subfolders and file identified above within a Collection being opened, then mirroring will be automatically enabled for that Collection. </p>
+</li>
+<li>
+<p>Whenever you then modify or add a Note within that Collection, mirroring of the Note will happen automatically, in the background, creating whatever alternate format you have specified with your note mirror template file. </p>
+</li>
+<li>
+<p>In addition to mirroring individual Notes, you can create/refresh index pages for your Collection in two different ways. </p>
+<ul>
+<li>
+<p>A simple straightforward index can be built by supplying a second template file, containing the words &#8216;index&#8217; and &#8216;mirror&#8217; as part of the filename. </p>
+</li>
+<li>
+<p>More complex indexing can be done by creating one or more <a href="https://notenik.net/script-spec.html">Merge Script files</a> and placing them within a &#8216;mirror/scripts&#8217; folder. </p>
+</li>
+</ul>
+<p>Whichever approach you choose, indexing will by default not be done automatically, but only when you explicitly request it from one of the relevant options under the Transform menu. This option can be overridden in the Collection Preferences window for a given Collection, allowing indexing to happen automatically whenever a Note is added or updated. </p>
+</li>
+<li>
+<p>In all cases, mirroring will be performed in the background, in parallel with other Notenik actions, which has a few implications: </p>
+<ul>
+<li>
+<p>You won't have to wait for mirroring to be completed before you move on to other tasks within Notenik. </p>
+</li>
+<li>
+<p>The results of mirroring may not be apparent immediately, but only after a few seconds have passed. </p>
+</li>
+<li>
+<p>You won't receive any notification when mirroring has completed, so as not to interrupt any other work you may be doing. </p>
+</li>
+<li>
+<p>If mirroring does not produce the expected results, you may need to consult the log window to see what might have gone wrong. </p>
+</li>
+</ul>
+</li>
+</ol>
+
+<p>Next Topic: <a href="seq-51-website-building.html">Website Building</a></p>
+</body>
+</html>

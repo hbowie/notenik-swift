@@ -116,9 +116,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
             return
         }
 
-        let appleEventURL = URL(string: appleEventURLString)
-
-        print("Received Apple Event URL: \(appleEventURL)")
+        print("Received Apple Event URL: \(appleEventURLString)")
     }
     
     @IBAction func menuAppPreferences(_ sender: NSMenuItem) {
