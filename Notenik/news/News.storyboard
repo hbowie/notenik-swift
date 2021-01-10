@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="i8L-9b-HbS">
+            <objects>
+                <windowController storyboardIdentifier="newsWC" id="f8z-hD-USx" customClass="NewsWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="What's New?" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="N6h-OA-m3G">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="196" y="239" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
+                        <view key="contentView" id="f71-Sj-BzM">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="f8z-hD-USx" id="gqD-aW-Q6n"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="Xw1-TC-Hvc" kind="relationship" relationship="window.shadowedContentViewController" id="B7f-VD-sBv"/>
+                    </connections>
+                </windowController>
+                <customObject id="YQT-iN-sqo" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-19" y="80"/>
+        </scene>
+        <!--News View Controller-->
+        <scene sceneID="TjP-09-m7w">
+            <objects>
+                <viewController id="Xw1-TC-Hvc" customClass="NewsViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <wkWebView key="view" wantsLayer="YES" id="NLE-iC-JVW">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <wkWebViewConfiguration key="configuration">
+                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                            <wkPreferences key="preferences"/>
+                        </wkWebViewConfiguration>
+                    </wkWebView>
+                    <connections>
+                        <outlet property="webView" destination="NLE-iC-JVW" id="DEm-65-Lch"/>
+                    </connections>
+                </viewController>
+                <customObject id="LFh-TZ-bTC" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="688" y="49"/>
+        </scene>
+    </scenes>
+</document>

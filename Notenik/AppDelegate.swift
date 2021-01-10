@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/21/19.
-//  Copyright © 2019 - 2020 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2021 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -38,6 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     let prefsStoryboard:            NSStoryboard = NSStoryboard(name: "Preferences", bundle: nil)
     let displayPrefsStoryboard:     NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
     let logStoryboard:              NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
+    let newsStoryboard:             NSStoryboard = NSStoryboard(name: "News", bundle: nil)
     
     var logController: LogWindowController?
     
@@ -198,6 +199,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     @IBAction func menuWindowScripter(_ sender: Any) {
         juggler.showScriptWindow()
+    }
+    
+    @IBAction func menuWhatsNew(_ sender: Any) {
+        print("What's New?")
+        if let newsController = self.newsStoryboard.instantiateController(withIdentifier: "newsWC") as? NewsWindowController {
+            newsController.showWindow(self)
+        } else {
+            logger.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "AppDelegate",
+                              level: .fault,
+                              message: "Couldn't get a News Window Controller!")
+        }
     }
     
     @IBAction func menuHelpNotenikDotNet(_ sender: NSMenuItem) {

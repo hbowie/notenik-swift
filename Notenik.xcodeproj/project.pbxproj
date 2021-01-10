@@ -34,6 +34,9 @@
 		9C0B643A23888D6700869FAA /* TagsMassChangeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B643823888D6700869FAA /* TagsMassChangeWindowController.swift */; };
 		9C0B643C23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B643B23888D9E00869FAA /* TagsMassChangeViewController.swift */; };
 		9C0B643D23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B643B23888D9E00869FAA /* TagsMassChangeViewController.swift */; };
+		9C10831425AA67B8004B33CA /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C10831325AA67B8004B33CA /* News.storyboard */; };
+		9C10831A25AA784A004B33CA /* NewsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C10831925AA784A004B33CA /* NewsWindowController.swift */; };
+		9C10832025AA78A0004B33CA /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C10831F25AA78A0004B33CA /* NewsViewController.swift */; };
 		9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49022134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49122134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
@@ -257,6 +260,9 @@
 		9C0B643423885E9900869FAA /* TagsMassChange.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagsMassChange.storyboard; sourceTree = "<group>"; };
 		9C0B643823888D6700869FAA /* TagsMassChangeWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsMassChangeWindowController.swift; sourceTree = "<group>"; };
 		9C0B643B23888D9E00869FAA /* TagsMassChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsMassChangeViewController.swift; sourceTree = "<group>"; };
+		9C10831325AA67B8004B33CA /* News.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
+		9C10831925AA784A004B33CA /* NewsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsWindowController.swift; sourceTree = "<group>"; };
+		9C10831F25AA78A0004B33CA /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		9C12D48E22134970003136B2 /* NoteSelectionSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSelectionSource.swift; sourceTree = "<group>"; };
 		9C1BE26A22EB9164006FDFEC /* Script.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Script.storyboard; sourceTree = "<group>"; };
 		9C1BE27022EB940E006FDFEC /* ScriptWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptWindowController.swift; sourceTree = "<group>"; };
@@ -430,6 +436,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C10831225AA66A8004B33CA /* news */ = {
+			isa = PBXGroup;
+			children = (
+				9C10831325AA67B8004B33CA /* News.storyboard */,
+				9C10831925AA784A004B33CA /* NewsWindowController.swift */,
+				9C10831F25AA78A0004B33CA /* NewsViewController.swift */,
+			);
+			path = news;
+			sourceTree = "<group>";
+		};
 		9C1E0C8D22E4F7780025C99C /* attachments */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,6 +552,7 @@
 				9C6D8EA4259AB73C00E7AE38 /* medium */,
 				9C3CC8F2250A980D002C95D0 /* navigator */,
 				9C8693DD257560EF00F045D2 /* newicloud */,
+				9C10831225AA66A8004B33CA /* news */,
 				9C832A00224ABDBD007DA6FC /* prefs */,
 				9C4C1BAE22E7EE0A005997DF /* script */,
 				9CB60BBE22650975003B5655 /* share */,
@@ -905,6 +922,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C10831425AA67B8004B33CA /* News.storyboard in Resources */,
 				9C02D2B02267F29400587EDF /* Calendar.storyboard in Resources */,
 				9C5556D222E115960099414E /* Export.storyboard in Resources */,
 				9CC78E692283565E00640477 /* DisplayPrefs.storyboard in Resources */,
@@ -984,6 +1002,7 @@
 				9C01E46624D74E1C00AEB4F6 /* BooleanView.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
 				9CF435CA24805C2F00DD7C33 /* CountsViewController.swift in Sources */,
+				9C10831A25AA784A004B33CA /* NewsWindowController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9CDB562B259BAE3400AB93A4 /* MediumAuthViewController.swift in Sources */,
@@ -1018,6 +1037,7 @@
 				9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */,
 				9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */,
 				9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */,
+				9C10832025AA78A0004B33CA /* NewsViewController.swift in Sources */,
 				9C29A79525645A42002C5F7A /* FileDropView.swift in Sources */,
 				9C097D5D259AB95A00834A42 /* MediumPubWindowController.swift in Sources */,
 				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
@@ -1369,7 +1389,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 118;
+				CURRENT_PROJECT_VERSION = 119;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1382,7 +1402,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 5.2.0;
+				MARKETING_VERSION = 5.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1398,7 +1418,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 118;
+				CURRENT_PROJECT_VERSION = 119;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1411,7 +1431,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 5.2.0;
+				MARKETING_VERSION = 5.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
