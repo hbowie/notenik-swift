@@ -14,8 +14,10 @@ import Cocoa
 import NotenikLib
 import NotenikUtils
 
-class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutlineViewDelegate {
+class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutlineViewDelegate, NSComboBoxDataSource {
 
+    @IBOutlet var comboPicker: NSComboBox!
+    
     @IBOutlet var outlineView: NSOutlineView!
     
     @IBOutlet var newICloudFolderName: NSTextField!
@@ -24,13 +26,82 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
     
     var juggler: CollectionJuggler?
     
+    var folders: [NavigatorFolder] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         outlineView.dataSource = self
+        loadFolders()
+        comboPicker.usesDataSource = true
+        comboPicker.dataSource = self
     }
     
     func reload() {
         outlineView.reloadData()
+        loadFolders()
+        comboPicker.reloadData()
+    }
+    
+    func loadFolders() {
+        folders = []
+        for folder in NotenikFolderList.shared {
+            let item = NavigatorFolder(link: folder)
+            folders.append(item)
+        }
+        folders.sort()
+    }
+    
+    /// Returns the number of items that the data source manages for the combo box.
+    func numberOfItems(in comboBox: NSComboBox) -> Int {
+      return folders.count
+    }
+        
+    /// Returns the object that corresponds to the item at the specified index in the combo box.
+    func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
+      return folders[index]
+    }
+    
+    /// Returns the first item from the pop-up list that starts with the text the user has typed.
+    func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
+        let lower = string.lowercased()
+        var i = 0
+        while i < folders.count {
+            if folders[i].folder.hasPrefix(lower) {
+                return folders[i].folder
+            }
+            i += 1
+        }
+        return nil
+    }
+    
+    /// Returns the index of the combo box matching the specified string.
+    func comboBox(_ comboBox: NSComboBox, indexOfItemWithStringValue string: String) -> Int {
+        return indexForKey(string)
+    }
+
+    
+    @IBAction func comboSelection(_ sender: NSComboBox) {
+        let str = sender.stringValue
+        let i = indexForKey(str)
+        guard i != NSNotFound else { return }
+        guard let link = folders[i].link else { return }
+        open(link: link)
+    }
+    
+    
+    /// Return the index of the folder with the passed name.
+    /// - Parameter str: The name of the folder.
+    /// - Returns: The index of the matching entry, or NSNotFound if nothing matches.
+    func indexForKey(_ str: String) -> Int {
+        let lower = str.lowercased()
+        var i = 0
+        while i < folders.count {
+            if folders[i].folder == lower {
+                return i
+            }
+            i += 1
+        }
+        return NSNotFound
     }
     
     /// How many children does this node have?
@@ -59,7 +130,6 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
       if let node = item as? NotenikFolderNode {
         return node.type != .folder
       }
-        
       return false
     }
     
@@ -109,6 +179,18 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
                 if clickedFolder != nil {
                     _ = juggler!.open(link: clickedFolder!)
                 }
+            }
+        }
+    }
+    
+    func open(link: NotenikLink) {
+        if link.folder == NotenikFolderList.helpFolderDesc {
+            juggler!.openHelpNotes()
+            closeWindow()
+        } else {
+            let ok = juggler!.open(link: link)
+            if ok {
+                closeWindow()
             }
         }
     }

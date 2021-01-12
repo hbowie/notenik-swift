@@ -87,6 +87,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         
         // Done launching
         appPrefs.appLaunching = false
+        
+        // If this is a new version, display the latest news.
+        if appPrefs.newVersionForNews {
+            displayLatestNews()
+        }
     }
     
     /// Open an iCloud item that's been selected by the user from the submenu created above.
@@ -202,7 +207,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     @IBAction func menuWhatsNew(_ sender: Any) {
-        print("What's New?")
+        displayLatestNews()
+    }
+    
+    func displayLatestNews() {
         if let newsController = self.newsStoryboard.instantiateController(withIdentifier: "newsWC") as? NewsWindowController {
             newsController.showWindow(self)
         } else {
@@ -211,6 +219,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
                               level: .fault,
                               message: "Couldn't get a News Window Controller!")
         }
+        appPrefs.userShownNews()
     }
     
     @IBAction func menuHelpNotenikDotNet(_ sender: NSMenuItem) {
