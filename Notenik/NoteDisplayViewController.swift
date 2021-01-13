@@ -87,6 +87,10 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
                               level: .error,
                               message: "load html String returned nil")
         }
+        
+        // This is just a convenient spot to request that we refresh our
+        // collective idea of what today is. 
+        DateUtils.shared.refreshToday()
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
