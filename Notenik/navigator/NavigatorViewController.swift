@@ -65,12 +65,19 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
     func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
         let lower = string.lowercased()
         var i = 0
+        // var j = -1
         while i < folders.count {
             if folders[i].folder.hasPrefix(lower) {
                 return folders[i].folder
             }
+            // if folders[i].folder.contains(lower) && j < 0 {
+            //     j = i
+            // }
             i += 1
         }
+        // if j >= 0 {
+        //     return folders[j].folder
+        // }
         return nil
     }
     
