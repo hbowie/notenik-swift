@@ -40,10 +40,10 @@ class NewsViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
         var css = displayPrefs.bodyCSS!
         if let bodySizeStr = displayPrefs.size {
             if let bodySize = Int(bodySizeStr) {
-                css.append("\nh1 { font-size: \(bodySize+4)pt }")
-                css.append("\nh2 { font-size: \(bodySize+2)pt }")
-                css.append("\nh3 { font-size: \(bodySize+2)pt }")
-                css.append("\nh4 { font-size: \(bodySize)pt }")
+                css.append("\nh1 { font-weight: 600; font-size: \(bodySize+4)pt }")
+                css.append("\nh2 { font-weight: 600; font-size: \(bodySize+2)pt }")
+                css.append("\nh3 { font-weight: 600; font-size: \(bodySize+2)pt }")
+                css.append("\nh4 { font-weight: 600; font-size: \(bodySize)pt }")
             }
         }
         code.startDoc(withTitle: docTitle, withCSS: css)
