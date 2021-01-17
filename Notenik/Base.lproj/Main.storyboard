@@ -226,6 +226,19 @@
                                                 <action selector="menuCollectionPreferences:" target="Ady-hI-5gd" id="LL2-DD-SPe"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Text Edit Collection's Template file" keyEquivalent="t" id="CyC-bR-puo">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="textEditTemplate:" target="Ady-hI-5gd" id="AYL-I0-VdO"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reload Collection" keyEquivalent="j" toolTip="Reload the Collection from Disk" id="Kz1-Rq-eKi" userLabel="Reload Collection">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="reloadCollection:" target="Ady-hI-5gd" id="zqL-aI-O6s"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="ymo-Y1-T3U"/>
                                         <menuItem title="Catch Up Daily Tasks" keyEquivalent="u" id="3Ch-CE-cpI" userLabel="Catch Up Daily Tasks">
                                             <connections>
                                                 <action selector="menuCatchUpDailyTasks:" target="Ady-hI-5gd" id="ifG-WZ-FUI"/>
@@ -251,12 +264,6 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="clt-WA-lPx"/>
-                                        <menuItem title="Reload Collection" keyEquivalent="j" toolTip="Reload the Collection from Disk" id="Kz1-Rq-eKi" userLabel="Reload Collection">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="reloadCollection:" target="Ady-hI-5gd" id="zqL-aI-O6s"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Normalize Storage" toolTip="Save All Notes to their Standard Format" id="wSC-rn-HOD">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -1109,17 +1116,17 @@ CA
         <scene sceneID="yml-jC-nOt">
             <objects>
                 <viewController id="ckd-wC-xiu" customClass="NoteListViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" id="71N-8b-3wX">
+                    <view key="view" id="71N-8b-3wX">
                         <rect key="frame" x="0.0" y="0.0" width="440" height="41"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="5" height="41"/>
+                                <rect key="frame" x="0.0" y="0.0" width="440" height="41"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="3" height="39"/>
+                                    <rect key="frame" x="1" y="1" width="438" height="24"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
+                                        <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
                                             <rect key="frame" x="0.0" y="0.0" width="1023" height="19"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -1364,10 +1371,10 @@ CA
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="24" width="3" height="16"/>
+                                    <rect key="frame" x="1" y="25" width="438" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.095238095238095233" horizontal="NO" id="pSI-dZ-vUM">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -1401,13 +1408,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="157"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="155"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="155"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="153"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="477" height="155"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="477" height="153"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1530,11 +1537,11 @@ CA
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="bn0-Un-4db">
-                            <rect key="frame" x="1" y="1" width="448" height="298"/>
+                            <rect key="frame" x="1" y="1" width="433" height="298"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bOQ-ka-7LZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="433" height="283"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="418" height="283"/>
                                 </view>
                             </subviews>
                             <constraints>
@@ -1549,7 +1556,7 @@ CA
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="SIG-iA-YDH">
-                            <rect key="frame" x="433" y="1" width="16" height="298"/>
+                            <rect key="frame" x="434" y="1" width="15" height="298"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>

@@ -1426,6 +1426,13 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         reportNumberOfNotesUpdated(updated)
     }
     
+    @IBAction func textEditTemplate(_ sender: Any) {
+        guard let nnkIO = guardForCollectionAction() else { return }
+        guard let fileIO = nnkIO as? FileIO else { return }
+        let templatePath = fileIO.makeTemplateFilePath()
+        NSWorkspace.shared.openFile(templatePath)
+    }
+    
     /// Reload the current collection from disk
     @IBAction func reloadCollection(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }
