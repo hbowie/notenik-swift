@@ -1,6 +1,6 @@
 Title:  Navigate Your Collections via the Board
 
-Tags:   collection, delete collection
+Tags:   collection, delete collection, navigation, board
 
 Timestamp: 20200911234827
 
@@ -17,6 +17,8 @@ The Navigation Board can be summoned via the File menu, or with the indicated ke
 The Nav Board will also appear automatically if the user closes the last open Collection window. 
 
 The Nav Board shows all easily accessible Collections in an outline, and also offers a series of buttons allowing the user to perform various actions. 
+
+A combo box appears at the top left of the board. Type the first few letters of the name of a Collection's folder in order to bring it up, then hit enter/return to select it. 
 
 The outline appears to the left of the window. Available Collections are available within three different groups. 
 

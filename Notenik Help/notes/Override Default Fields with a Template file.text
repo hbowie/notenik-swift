@@ -22,6 +22,8 @@ The selected fields to be used for a Collection are saved within a file named 't
 
 You may also modify this template file manually, using your favorite text editor. 
 
+Beneath the Collection menu the user will find an item to Text Edit the Collection's Template file. If any changes are made to this file, then the following menu item, to Reload the Collection, should be executed next in order to pull in the modified template file. 
+
 The Note template file is formatted using the normal Notenik format, although the Field Labels specified need not have any accompanying values. 
 
 The file extension used for the template file will be used as the file extension for Notes subsequently created within the Collection. 
