@@ -37,6 +37,15 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
     
     @IBOutlet var webView: WKWebView!
     
+    var startingFont = ""
+    var latestFont = ""
+    
+    var startingSize = ""
+    var latestSize = ""
+    
+    var startingCSS = ""
+    var latestCSS = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,6 +64,8 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         fontComboBox.reloadData()
         
         _ = setSelectedFont(displayPrefs.font)
+        startingFont = displayPrefs.font
+        latestFont = displayPrefs.font
         
         sizeComboBox.usesDataSource = true
         sizeComboBox.dataSource = self
@@ -63,6 +74,11 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         sizeComboBox.reloadData()
   
         let defaultSize = displayPrefs.size
+        if defaultSize != nil {
+            startingSize = defaultSize!
+            latestSize = defaultSize!
+        }
+        
         var i = 0
         var found = false
         while i < sizes.count && !found {
@@ -89,6 +105,8 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
             cssText.string = ""
         } else {
             cssText.string = displayPrefs.css!
+            startingCSS = displayPrefs.css!
+            latestCSS = displayPrefs.css!
         }
         
         refreshSample(self)
@@ -105,33 +123,25 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
     }
     
     @IBAction func fontAdjusted(_ sender: Any) {
-        displayPrefs.font = fontComboBox.stringValue
+        latestFont = fontComboBox.stringValue
     }
     
     @IBAction func sizeAdjusted(_ sender: Any) {
-        displayPrefs.size = sizeComboBox.stringValue
+        latestSize = sizeComboBox.stringValue
     }
     
     @IBAction func generateCSSButtonPushed(_ sender: NSButton) {
-        buildCSS()
+        latestCSS = displayPrefs.buildCSS(f: latestFont, s: latestSize)
+        cssText.string = latestCSS
         refreshSample(sender)
     }
     
-    func buildCSS() {
-        displayPrefs.buildCSS()
-        if displayPrefs.css == nil {
-            cssText.string = ""
-        } else {
-            cssText.string = displayPrefs.css!
-        }
-    }
-    
     @IBAction func refreshSample(_ sender: Any) {
-        let code = Markedup(format: .htmlDoc)
-        if cssText.string != displayPrefs.css {
-            displayPrefs.css = cssText.string
+        if cssText.string != latestCSS {
+            latestCSS = cssText.string
         }
-        code.startDoc(withTitle: nil, withCSS: displayPrefs.bodyCSS)
+        let code = Markedup(format: .htmlDoc)
+        code.startDoc(withTitle: nil, withCSS: displayPrefs.buildBodyCSS(latestCSS))
         MkdownParser.markdownToMarkedup(markdown: "There is nothing worse than a brilliant image of a fuzzy concept.",
                                         wikiLinkLookup: nil, writer: code)
         code.finishDoc()
@@ -178,8 +188,22 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
 
     }
     
+    @IBAction func cancelClicked(_ sender: Any) {
+        window.close()
+    }
+    
     @IBAction func okClicked(_ sender: Any) {
-        displayPrefs.css = cssText.string
+        latestFont = fontComboBox.stringValue
+        latestSize = sizeComboBox.stringValue
+        latestCSS = cssText.string
+        if latestCSS == startingCSS {
+            if latestFont != startingFont || latestSize != startingSize {
+                latestCSS = displayPrefs.buildCSS(f: latestFont, s: latestSize)
+            }
+        }
+        displayPrefs.font = latestFont
+        displayPrefs.size = latestSize
+        displayPrefs.css = latestCSS
         window.close()
         displayPrefs.displayRefresh()
     }
