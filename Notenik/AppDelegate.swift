@@ -187,8 +187,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         juggler.viewResetEditFontSize()
     }
     
+    @IBAction func menuOpenIntro(_ sender: Any) {
+        juggler.openIntro()
+    }
+    
     @IBAction func menuOpenHelpNotes(_ sender: NSMenuItem) {
         juggler.openHelpNotes()
+    }
+    
+    @IBAction func menuOpenMarkdownSpec(_ sender: NSMenuItem) {
+        juggler.openMarkdownSpec()
     }
     
     @IBAction func menuWindowLog(_ sender: NSMenuItem) {

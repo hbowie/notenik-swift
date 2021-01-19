@@ -1,0 +1,19 @@
+Title:  Getting Started
+
+Seq:    3
+
+Body: 
+
+Every Note is stored within a Collection. Notenik does not create a Collection for you, so the first thing you will want to do will be to create a new Collection. 
+
+There are several ways to create a new Collection, but let's start with the first item beneath the File menu: `New in iCloud...`, since this will probably be the simplest. 
+
+You will be prompted to name your Collection. This will become the name of a Mac folder in which your first Notes will be stored. (Once it's been created, you can navigate to this folder from the Finder by selecting `iCloud Drive` and then the `Notenik` sub-folder.)
+
+After entering your Collection name, and clicking `OK`, you will then be prompted to specify your Preferences for this specific Collection. 
+
+Feel free to browse through the available options and change anything you like but, for your first Collection, it will be easiest to just accept the defaults and click `OK`.
+
+Once you do that, you will see a new Collection with one Note in it. After adding other Notes, feel free to delete this first Note, if it is no longer needed.
+
+Next: [[Add Some Notes]]

@@ -35,6 +35,8 @@
 		9C0B643A23888D6700869FAA /* TagsMassChangeWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B643823888D6700869FAA /* TagsMassChangeWindowController.swift */; };
 		9C0B643C23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B643B23888D9E00869FAA /* TagsMassChangeViewController.swift */; };
 		9C0B643D23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0B643B23888D9E00869FAA /* TagsMassChangeViewController.swift */; };
+		9C0BF16C25B63C990037BCA9 /* markdown-spec in Resources */ = {isa = PBXBuildFile; fileRef = 9C0BF16B25B63C990037BCA9 /* markdown-spec */; };
+		9C0BF17225B678470037BCA9 /* intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C0BF17125B678470037BCA9 /* intro */; };
 		9C10831425AA67B8004B33CA /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C10831325AA67B8004B33CA /* News.storyboard */; };
 		9C10831A25AA784A004B33CA /* NewsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C10831925AA784A004B33CA /* NewsWindowController.swift */; };
 		9C10832025AA78A0004B33CA /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C10831F25AA78A0004B33CA /* NewsViewController.swift */; };
@@ -263,6 +265,8 @@
 		9C0B643423885E9900869FAA /* TagsMassChange.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagsMassChange.storyboard; sourceTree = "<group>"; };
 		9C0B643823888D6700869FAA /* TagsMassChangeWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsMassChangeWindowController.swift; sourceTree = "<group>"; };
 		9C0B643B23888D9E00869FAA /* TagsMassChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsMassChangeViewController.swift; sourceTree = "<group>"; };
+		9C0BF16B25B63C990037BCA9 /* markdown-spec */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "markdown-spec"; sourceTree = "<group>"; };
+		9C0BF17125B678470037BCA9 /* intro */ = {isa = PBXFileReference; lastKnownFileType = folder; path = intro; sourceTree = "<group>"; };
 		9C10831325AA67B8004B33CA /* News.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = News.storyboard; sourceTree = "<group>"; };
 		9C10831925AA784A004B33CA /* NewsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsWindowController.swift; sourceTree = "<group>"; };
 		9C10831F25AA78A0004B33CA /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
@@ -543,6 +547,8 @@
 				9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */,
 				9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */,
 				9C60E6D521F64B3C00C332ED /* Assets.xcassets */,
+				9C0BF17125B678470037BCA9 /* intro */,
+				9C0BF16B25B63C990037BCA9 /* markdown-spec */,
 				9C21749E22024E2900B4BF48 /* notenik-swift-intro */,
 				9C60E6DA21F64B3C00C332ED /* Info.plist */,
 				9C2BFCB525ACD0BF0030A980 /* notenik-news.html */,
@@ -949,9 +955,11 @@
 				9C8FD8D82216302900F16669 /* README.md in Resources */,
 				9C65B2A023DE28BC00794C59 /* LICENSE.md in Resources */,
 				9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */,
+				9C0BF17225B678470037BCA9 /* intro in Resources */,
 				9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */,
 				9C2BFCB625ACD0BF0030A980 /* notenik-news.html in Resources */,
 				9CE3250A224D58360051CA1F /* Log.storyboard in Resources */,
+				9C0BF16C25B63C990037BCA9 /* markdown-spec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1397,7 +1405,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 125;
+				CURRENT_PROJECT_VERSION = 127;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1426,7 +1434,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 125;
+				CURRENT_PROJECT_VERSION = 127;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -1,0 +1,13 @@
+Title:  Welcome to Notenik!
+
+Body: 
+
+This Introduction to Notenik is itself a Notenik Collection, so you can get used to the user interface as you learn a few basics about the app. 
+
+Notice that to the left of this Note display you will see a List of all the Notes in this Collection. Click on any row in the list to change the display on the right to match the Note you have selected. 
+
+You may also notice a Tags tab on the left. To keep this introduction simple, we're not using any Tags for this Collection, but this tab typically offers an alternate way to organize the Notes in your Collection. 
+
+You will also notice an Edit tab above, next to the Display tab. In one of your Collections, clicking on this tab would allow you to edit a Note. Because this Intro is a special Collection provided with Notenik, you are only allowed to browse this Collection, so the Edit tab does nothing yet.
+
+Next: [[Major Features]]

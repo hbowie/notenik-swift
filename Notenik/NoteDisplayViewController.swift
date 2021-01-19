@@ -150,6 +150,13 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         controller.webLinkFollowed = followed
     }
     
+    func logInfo(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "NoteDisplayViewController",
+                          level: .info,
+                          message: msg)
+    }
+    
     /// Log an error message and optionally display an alert message.
     func communicateError(_ msg: String, alert: Bool=false) {
         

@@ -17,7 +17,9 @@ import NotenikLib
 /// A singleton object that controls all of the Note Collections that are open. 
 class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
-    let notenikSwiftIntroPath = "/notenik-swift-intro"
+    let introPath = "/intro"
+    let userGuidePath = "/notenik-swift-intro"
+    let markdownSpecPath = "/markdown-spec"
     
     // Singleton instance
     static let shared = CollectionJuggler()
@@ -98,7 +100,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
 
         if collection == nil {
-            let path = Bundle.main.resourcePath! + notenikSwiftIntroPath
+            let path = Bundle.main.resourcePath! + introPath
             collection = io.openCollection(realm: realm, collectionPath: path)
             collection?.readOnly = true
         }
@@ -590,9 +592,19 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         _ = openFileWithNewWindow(fileURL: essentialURL, readOnly: false)
     }
     
+    func openIntro() {
+        let path = Bundle.main.resourcePath! + introPath
+        _ = openFileWithNewWindow(folderPath: path, readOnly: true)
+    }
+    
     /// Open the Application's Internal Collection of Help Notes
     func openHelpNotes() {
-        let path = Bundle.main.resourcePath! + notenikSwiftIntroPath
+        let path = Bundle.main.resourcePath! + userGuidePath
+        _ = openFileWithNewWindow(folderPath: path, readOnly: true)
+    }
+    
+    func openMarkdownSpec() {
+        let path = Bundle.main.resourcePath! + markdownSpecPath
         _ = openFileWithNewWindow(folderPath: path, readOnly: true)
     }
     
