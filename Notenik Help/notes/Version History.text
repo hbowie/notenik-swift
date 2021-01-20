@@ -8,6 +8,38 @@ Tags:   changes, versions, history, log
 
 Body:   
  
+### Version 5.4.0 | 19 Jan 2021
+
+#### 1. Added Notenik Introduction for new users
+
+Created a brief Introduction to Notenik to show new users, and re-identified the more complete document as the User Guide (which then matches the nomenclature on the website). 
+
+
+#### 2. Added Support for Code Fencing
+
+Added support for code fencing in the Markdown parser. 
+
+
+#### 3. Added Markdown Spec access beneath the Help menu
+
+A complete spec for the Notenik Markdown parser can now be opened as a read-only Notenik Collection, by selecting `Markdown Spec` beneath the `Help` menu. 
+
+
+#### 4. Reworked Display Fonts Prefs to Make Updates More Intuitive
+
+Changed the logic a bit on the Display Prefs screen to make updating a bit more intuitive. 
+
+
+#### 5. Adjusted Font Weight in What's New Display
+
+Headings were a bit too heavy. 
+
+
+#### 6. Corrected Sharing of Entire Note in Markdown
+
+There were several problems with this option that should all have been corrected now. 
+
+
 ### Version 5.3.0 | 14 Jan 2021
 
 #### 1. Code Refactoring for generation of a unique ID for each Note
@@ -991,12 +1023,5 @@ Merge Templates may now be created, stored in a reports folder, and then run fro
 #### 3. Added Favorites to HTML Function
 
 The File Menu now has a new command to export Favorites to HTML. This allows the user to identify favorite bookmarks using the 'Favorites' tag and then export those favorites to a four-column Web page. 
-
-
-### Version 1.0.0 | 03 Jun 2019
-
-#### 1. Initial Release
-
-This is the initial release of Notenik written in Swift.
 
 

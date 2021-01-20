@@ -20,4 +20,6 @@ This User Guide is available as a web page from the [Notenik](http://www.notenik
 
 But the same content is also available as a Collection of Help Notes, by selecting the corresponding Open Command from Notenik's Help menu. You may find it a little easier to read and navigate in this form, plus you can practice using Notenik as you read the Guide!
 
+A complete spec for the Notenik Markdown parser can also be opened as another read-only Notenik Collection, by selecting `Markdown Spec` beneath the `Help` menu. 
+
 You may also want to see the latest news about Notenik, which is available from the `What's New?` item beneath the Help menu. This window will be show automatically once for each new release. Note that any font changes made to the Note Display tab will also be reflected here. 
