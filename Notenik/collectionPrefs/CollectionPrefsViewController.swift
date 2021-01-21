@@ -102,71 +102,71 @@ class CollectionPrefsViewController: NSViewController {
         stackView.orientation = .vertical
         stackView.alignment = .leading
         
-        titleCkBox = NSButton(checkboxWithTitle: "Title", target: self, action: #selector(checkBoxClicked))
+        titleCkBox = NSButton(checkboxWithTitle: NotenikConstants.title, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(titleCkBox)
         stackView.addArrangedSubview(titleCkBox)
         
-        timestampCkBox = NSButton(checkboxWithTitle: "Timestamp", target: self, action: #selector(checkBoxClicked))
+        timestampCkBox = NSButton(checkboxWithTitle: NotenikConstants.timestamp, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(timestampCkBox)
         stackView.addArrangedSubview(timestampCkBox)
         
-        tagsCkBox = NSButton(checkboxWithTitle: "Tags", target: self, action: #selector(checkBoxClicked))
+        tagsCkBox = NSButton(checkboxWithTitle: NotenikConstants.tags, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(tagsCkBox)
         stackView.addArrangedSubview(tagsCkBox)
         
-        linkCkBox = NSButton(checkboxWithTitle: "Link", target: self, action: #selector(checkBoxClicked))
+        linkCkBox = NSButton(checkboxWithTitle: NotenikConstants.link, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(linkCkBox)
         stackView.addArrangedSubview(linkCkBox)
         
-        statusCkBox = NSButton(checkboxWithTitle: "Status", target: self, action: #selector(checkBoxClicked))
+        statusCkBox = NSButton(checkboxWithTitle: NotenikConstants.status, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(statusCkBox)
         stackView.addArrangedSubview(statusCkBox)
         
-        typeCkBox = NSButton(checkboxWithTitle: "Type", target: self, action: #selector(checkBoxClicked))
+        typeCkBox = NSButton(checkboxWithTitle: NotenikConstants.type, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(typeCkBox)
         stackView.addArrangedSubview(typeCkBox)
         
-        seqCkBox = NSButton(checkboxWithTitle: "Seq", target: self, action: #selector(checkBoxClicked))
+        seqCkBox = NSButton(checkboxWithTitle: NotenikConstants.seq, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(seqCkBox)
         stackView.addArrangedSubview(seqCkBox)
         
-        dateCkBox = NSButton(checkboxWithTitle: "Date", target: self, action: #selector(checkBoxClicked))
+        dateCkBox = NSButton(checkboxWithTitle: NotenikConstants.date, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(dateCkBox)
         stackView.addArrangedSubview(dateCkBox)
         
-        recursCkBox = NSButton(checkboxWithTitle: "Recurs", target: self, action: #selector(checkBoxClicked))
+        recursCkBox = NSButton(checkboxWithTitle: NotenikConstants.recurs, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(recursCkBox)
         stackView.addArrangedSubview(recursCkBox)
         
-        authorCkBox = NSButton(checkboxWithTitle: "Author", target: self, action: #selector(checkBoxClicked))
+        authorCkBox = NSButton(checkboxWithTitle: NotenikConstants.author, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(authorCkBox)
         stackView.addArrangedSubview(authorCkBox)
         
-        ratingCkBox = NSButton(checkboxWithTitle: "Rating", target: self, action: #selector(checkBoxClicked))
+        ratingCkBox = NSButton(checkboxWithTitle: NotenikConstants.rating, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(ratingCkBox)
         stackView.addArrangedSubview(ratingCkBox)
         
-        indexCkBox = NSButton(checkboxWithTitle: "Index", target: self, action: #selector(checkBoxClicked))
+        indexCkBox = NSButton(checkboxWithTitle: NotenikConstants.index, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(indexCkBox)
         stackView.addArrangedSubview(indexCkBox)
         
-        codeCkBox = NSButton(checkboxWithTitle: "Code", target: self, action: #selector(checkBoxClicked))
+        codeCkBox = NSButton(checkboxWithTitle: NotenikConstants.code, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(codeCkBox)
         stackView.addArrangedSubview(codeCkBox)
         
-        teaserCkBox = NSButton(checkboxWithTitle: "Teaser", target: self, action: #selector(checkBoxClicked))
+        teaserCkBox = NSButton(checkboxWithTitle: NotenikConstants.teaser, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(teaserCkBox)
         stackView.addArrangedSubview(teaserCkBox)
         
-        bodyCkBox = NSButton(checkboxWithTitle: "Body", target: self, action: #selector(checkBoxClicked))
+        bodyCkBox = NSButton(checkboxWithTitle: NotenikConstants.body, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(bodyCkBox)
         stackView.addArrangedSubview(bodyCkBox)
         
-        dateAddedCkBox = NSButton(checkboxWithTitle: "Date Added", target: self, action: #selector(checkBoxClicked))
+        dateAddedCkBox = NSButton(checkboxWithTitle: NotenikConstants.dateAdded, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(dateAddedCkBox)
         stackView.addArrangedSubview(dateAddedCkBox)
         
-        dateModifiedCkBox = NSButton(checkboxWithTitle: "Date Modified", target: self, action: #selector(checkBoxClicked))
+        dateModifiedCkBox = NSButton(checkboxWithTitle: NotenikConstants.dateModified, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(dateModifiedCkBox)
         stackView.addArrangedSubview(dateModifiedCkBox)
         
