@@ -1035,7 +1035,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         if note.body.value.lowercased().contains(searchForLower) {
             return true
         }
-        if note.author.value.lowercased().contains(searchForLower) {
+        if note.creator.value.lowercased().contains(searchForLower) {
             return true
         }
         return false
@@ -1227,10 +1227,16 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let outcome = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
         
+        duplicateNote(selectedNote!)
+    }
+    
+    /// Duplicate the passed Note. 
+    func duplicateNote(startingNote: Note) {
+        guard let noteIO = guardForCollectionAction() else { return }
         newNoteRequested = true
-        newNote = Note(collection: notenikIO!.collection!)
-        editVC!.populateFields(with: selectedNote!)
-        noteTabs!.tabView.selectLastTabViewItem(sender)
+        newNote = Note(collection: noteIO.collection!)
+        editVC!.populateFields(with: startingNote)
+        noteTabs!.tabView.selectLastTabViewItem(self)
     }
     
     /// Delete the Note

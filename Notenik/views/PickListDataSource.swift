@@ -43,6 +43,7 @@ class PickListDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     }
     
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
+        guard index >= 0 && index < list.count else { return StringValue("") }
         return list.values[index].value
     }
     

@@ -1,0 +1,27 @@
+Name:   Herb Bowie
+
+Topics: bowies, family, lucky
+
+Web:    https://hbowie.net
+
+Type:   trans
+
+Birth Sequence: F
+
+Birthday: 1957-05-07
+
+Repeats: Every Year
+
+Anniversary: Sep 13, 1980
+
+Stage:  0 - Idea
+
+Description: 
+
+Herb is the author of Notenik. 
+
+body: 
+
+This should not be treated as a field label. 
+
+author: And neither should this.

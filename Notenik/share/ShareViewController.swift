@@ -114,7 +114,7 @@ class ShareViewController: NSViewController {
                 markedUp.finishBlockQuote()
             }
             if contentEntireNoteButton.state == .on {
-                let author = note!.author.value
+                let author = note!.creatorValue
                 if author.count > 0 {
                     markedUp.newLine()
                     var authorLine = "-- "

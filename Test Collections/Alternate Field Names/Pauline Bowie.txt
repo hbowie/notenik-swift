@@ -1,0 +1,38 @@
+Name:   Pauline Bowie
+
+Topics: family
+
+Type:   female
+
+Birth Sequence: 2
+
+Birthday: 16 Mar 1954
+
+Repeats: yearly
+
+Anniversary: 13 Sep 1980
+
+Stage:  4 - In Work
+
+Ix:     Bowie; Hendrickson; 
+
+Example: 
+
+    /// Assign a field type based on a field label and, optionally, a type string. 
+    func assignType(label: FieldLabel, type: String?) -> AnyType {
+
+        for fieldType in fieldTypes {
+            if fieldType.appliesTo(label: label, type: type) {
+                return fieldType
+            }
+        }
+        return stringType
+    }
+
+
+By:     William Shakespeare
+
+Description: 
+
+Wife to [[Herb Bowie]]
+

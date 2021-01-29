@@ -1,0 +1,7 @@
+Name:   Hans
+
+Type:   xxx
+
+Birth Sequence: 4
+
+Stage:  0 - Idea

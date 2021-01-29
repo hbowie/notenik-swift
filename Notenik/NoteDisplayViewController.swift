@@ -75,6 +75,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         webLinkFollowed(false)
         guard note != nil else { return }
         guard io != nil else { return }
+        guard isViewLoaded else { return }
         let html = noteDisplay.display(note!, io: io!)
         counts = noteDisplay.counts
         if countsVC != nil {

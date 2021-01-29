@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/21/19.
-//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2021 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -22,6 +22,8 @@ class NoteListViewController:   NSViewController,
     var notenikIO: NotenikIO?
    
     @IBOutlet var tableView: NSTableView!
+    
+    var shortcutMenu: NSMenu!
     
     var window: CollectionWindowController? {
         get {
@@ -54,6 +56,19 @@ class NoteListViewController:   NSViewController,
                                            NSPasteboard.PasteboardType.string])
         tableView.target = self
         tableView.doubleAction = #selector(doubleClick(_:))
+        
+        shortcutMenu = NSMenu()
+        shortcutMenu.addItem(NSMenuItem(title: "Duplicate", action: #selector(duplicateItem(_:)), keyEquivalent: ""))
+        tableView.menu = shortcutMenu
+    }
+    
+    /// Respond to a contextual menu selection to duplicate the clicked Note.
+    @objc private func duplicateItem(_ sender: AnyObject) {
+        guard collectionWindowController != nil else { return }
+        let row = tableView.clickedRow
+        guard row >= 0 else { return }
+        guard let clickedNote = notenikIO?.getNote(at: row) else { return }
+        collectionWindowController!.duplicateNote(startingNote: clickedNote)
     }
     
     /// Respond to double-click.
@@ -153,6 +168,18 @@ class NoteListViewController:   NSViewController,
                 cellView.textField?.stringValue = note.tags.value
             } else if tableColumn?.title == "Stat" {
                 cellView.textField?.stringValue = String(note.status.getInt())
+            } else if notenikIO != nil && notenikIO!.collection != nil {
+                if tableColumn?.title == notenikIO!.collection!.titleFieldDef.fieldLabel.properForm {
+                    cellView.textField?.stringValue = note.title.value
+                } else if tableColumn?.title == notenikIO!.collection!.tagsFieldDef.fieldLabel.properForm {
+                    cellView.textField?.stringValue = note.tags.value
+                } else if tableColumn?.title == notenikIO!.collection!.dateFieldDef.fieldLabel.properForm {
+                    cellView.textField?.stringValue = note.date.dMyDate
+                } else if tableColumn?.title == notenikIO!.collection!.seqFieldDef.fieldLabel.properForm {
+                    cellView.textField?.stringValue = note.seq.value
+                } else if tableColumn?.title == notenikIO!.collection!.creatorFieldDef.fieldLabel.properForm {
+                    cellView.textField?.stringValue = note.creatorValue
+                }
             }
         }
         
@@ -229,11 +256,23 @@ class NoteListViewController:   NSViewController,
     }
     
     func addTitleColumn(at desiredIndex: Int) {
-        addColumn(title: "Title", strID: "title-column", at: desiredIndex, min: 200, width: 445, max: 1500)
+        guard let collection = notenikIO?.collection else {
+            addColumn(title: "Title", strID: "title-column", at: desiredIndex, min: 200, width: 445, max: 1500)
+            return
+        }
+        addColumn(title: collection.titleFieldDef.fieldLabel.properForm,
+                  strID: "title-column",
+                  at: desiredIndex, min: 200, width: 445, max: 1500)
     }
     
     func addSeqColumn(at desiredIndex: Int) {
-        addColumn(title: "Seq", strID: "seq-column", at: desiredIndex, min: 50, width: 80, max: 250)
+        guard let collection = notenikIO?.collection else {
+            addColumn(title: "Seq", strID: "seq-column", at: desiredIndex, min: 50, width: 80, max: 250)
+            return
+        }
+        addColumn(title: collection.seqFieldDef.fieldLabel.properForm,
+                  strID: "seq-column",
+                  at: desiredIndex, min: 50, width: 80, max: 250)
     }
     
     func addXColumn(at desiredIndex: Int) {
@@ -245,15 +284,33 @@ class NoteListViewController:   NSViewController,
     }
     
     func addDateColumn(at desiredIndex: Int) {
-        addColumn(title: "Date", strID: "date-column", at: desiredIndex, min: 100, width: 120, max: 300)
+        guard let collection = notenikIO?.collection else {
+            addColumn(title: "Date", strID: "date-column", at: desiredIndex, min: 200, width: 445, max: 1500)
+            return
+        }
+        addColumn(title: collection.dateFieldDef.fieldLabel.properForm,
+                  strID: "date-column",
+                  at: desiredIndex, min: 100, width: 120, max: 300)
     }
     
     func addAuthorColumn(at desiredIndex: Int) {
-        addColumn(title: "Author", strID: "author-column", at: desiredIndex, min: 100, width: 200, max: 1000)
+        guard let collection = notenikIO?.collection else {
+            addColumn(title: "Author", strID: "author-column", at: desiredIndex, min: 100, width: 200, max: 1000)
+            return
+        }
+        addColumn(title: collection.creatorFieldDef.fieldLabel.properForm,
+                  strID: "author-column",
+                  at: desiredIndex, min: 100, width: 200, max: 1000)
     }
     
     func addTagsColumn(at desiredIndex: Int) {
-        addColumn(title: "Tags", strID: "tags-column", at: desiredIndex, min: 50, width: 100, max: 1200)
+        guard let collection = notenikIO?.collection else {
+            addColumn(title: "Tags", strID: "tags-column", at: desiredIndex, min: 50, width: 100, max: 1200)
+            return
+        }
+        addColumn(title: collection.tagsFieldDef.fieldLabel.properForm,
+                  strID: "tags-column",
+                  at: desiredIndex, min: 50, width: 100, max: 1200)
     }
     
     /// Add a column, or make sure it already exists, and position it appropriately.

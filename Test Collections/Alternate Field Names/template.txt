@@ -1,0 +1,28 @@
+Name: <title> 
+
+Topics: <tags> 
+
+Web: <link> 
+
+Type: pick-from: female, male
+
+Birth Sequence: <seq> 
+
+Birthday: <date> 
+
+Repeats: <recurs> 
+
+Anniversary: <date> 
+
+Stage: <status> 
+
+Ix: <index> 
+
+Example: <code> 
+
+Teaser: <longtext> 
+
+By: William Shakespeare
+
+Description: <body> 
+
