@@ -4,7 +4,7 @@ Topics: <tags>
 
 Web: <link> 
 
-Type: pick-from: female, male
+Type: <pick-from: female, male>
 
 Birth Sequence: <seq> 
 

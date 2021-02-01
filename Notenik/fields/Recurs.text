@@ -1,0 +1,40 @@
+Title:  Recurs
+
+Tags:   tasks
+
+Seq:    33
+
+Level:  3
+
+Body: 
+
+The word `recurs` can be used as both a label and a type. 
+
+In addition to `recurs` itself, this field type will be inferred for a label of `Every`.
+
+A Collection should have at most one recurs field. 
+
+The recurs field is designed to work hand-in-hand with the first (or only) date field.
+
+The recurs field is meant to imply that the associated task is meant to recur at some regular interval, and to supply the interval of recurrence, stated in plain English. 
+
+Unlike some other task-tracking systems, Notenik will not duplicate a task in order to increment its date according to the recurrence rule; the existing associated Note will simply have its date field incremented. 
+
+When editing, the recurs field will appear as a single line of editable text.
+
+When displayed, the recurs field will appear as it was entered.   
+
+Various user controls may be available to cause a Note's first or only date field to be incremented once, according to the stated recurs rule. 
+
+All of the following are valid expressions of a recurs rule. Note that use of the leading word `Every` is always optional, and is included only for readability. Case (upper or lower) is not significant. 
+
+* Daily
+* Every Weekday
+* Every 3 months
+* Every Tuesday
+* Every other Monday
+* Every month
+* Quarterly
+* Every Year
+* The 15th of every month
+* 2nd Tuesday of every month

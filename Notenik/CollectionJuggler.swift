@@ -17,9 +17,10 @@ import NotenikLib
 /// A singleton object that controls all of the Note Collections that are open. 
 class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
-    let introPath = "/intro"
-    let userGuidePath = "/notenik-swift-intro"
-    let markdownSpecPath = "/markdown-spec"
+    let introPath           = "/intro"
+    let userGuidePath       = "/notenik-swift-intro"
+    let fieldNotesPath      = "/fields"
+    let markdownSpecPath    = "/markdown-spec"
     
     // Singleton instance
     static let shared = CollectionJuggler()
@@ -600,6 +601,12 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     /// Open the Application's Internal Collection of Help Notes
     func openHelpNotes() {
         let path = Bundle.main.resourcePath! + userGuidePath
+        _ = openFileWithNewWindow(folderPath: path, readOnly: true)
+    }
+    
+    /// Open the notes about field labels and types. 
+    func openFieldNotes() {
+        let path = Bundle.main.resourcePath! + fieldNotesPath
         _ = openFileWithNewWindow(folderPath: path, readOnly: true)
     }
     

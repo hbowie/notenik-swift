@@ -1,0 +1,28 @@
+Title:  Field Labels and Types
+
+Tags:   intro
+
+Seq:    1
+
+Level:  1
+
+Body: 
+
+One of the guiding principles for the development of Notenik has been Alan Kay's dictum that: "Simple things should be simple, complex things should be possible."
+
+At its simplest, a Note consists of two fields: a Title and a Body. And Notenik will work with these sorts of notes, stored as simple text documents. 
+
+However Notenik allows many sorts of fields to be stored as part of each Note, with each field identified by its label, and being treated according to its type, assigned either implicitly or explicitly. 
+
+Among the other basic fields, Notenik uses a Tags field to allow a user to organize and view a collection of notes by topic, in addition to a straight linear sequence. 
+
+And then the Web has become so pervasive in our lives that it's often handy to associate a URL with a note, and so a Link field is generally provided for that purpose. 
+
+A default Notenik Collection, then, contains only four fields -- Title, Tags, Link and Body -- with each field being of a distinct type. This is still pretty simple. And really, there's quite a lot you can do with Notenik just by recording notes containing only these four fields. 
+
+However, under the hood, a default Collection containing only these four fields is really just a small and simple subset of the options that are available when it comes to field labels and field types. 
+
+This document will explain the full range of options available to the Notenik user when it comes to fields.
+
+The allowed fields for a Collection are defined in each Collection's template. The template for a Collection defines the field labels and associated types allowed for each Note within that Collection. 
+

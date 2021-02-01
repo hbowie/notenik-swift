@@ -1,10 +1,10 @@
-Name:   Herb Bowie
+Name:   Liberty Valance
 
-Topics: bowies, family, lucky
+Topics: family, lucky
 
 Web:    https://hbowie.net
 
-Type:   trans
+Type:   male
 
 Birth Sequence: F
 
@@ -12,7 +12,7 @@ Birthday: 1957-05-07
 
 Repeats: Every Year
 
-Anniversary: Sep 13, 1980
+Anniversary: July 11, 2010
 
 Stage:  0 - Idea
 

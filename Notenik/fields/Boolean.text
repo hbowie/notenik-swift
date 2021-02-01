@@ -1,0 +1,21 @@
+Title:  Boolean
+
+Seq:    71
+
+Body: 
+
+The word `boolean` can be used as a type. The word `bool` will be recognized as a shorthand identification for this type as well. 
+
+A Collection can have any number of fields of type `boolean`. 
+
+A boolean type will produce a field that can have a value of `true` or `false`, and that will be represented as a checkbox when editing.
+
+Values for a Boolean field type will be interpreted in the following ways:
+
++ Anything starting with the letter 'y' (such as 'yes') will be interpreted as `true`;
++ Anything starting with the letter 'n' (such as 'no') will be interpreted as false;
++ Anything starting with the letter 't' (such as 'true') will be interpreted as `true`;
++ Anything starting with the letter 'f' (such as 'false') will be interpreted as `false`;
++ The word 'on' will be interpreted as `true`;
++ The digit '1' will be interpeted as `true`;
++ Any other value will be interpreted as `false`.

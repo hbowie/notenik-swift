@@ -75,6 +75,7 @@
 		9C2BFCB625ACD0BF0030A980 /* notenik-news.html in Resources */ = {isa = PBXBuildFile; fileRef = 9C2BFCB525ACD0BF0030A980 /* notenik-news.html */; };
 		9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */; };
 		9C341F1C259AB79600E1972C /* MediumPub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C341F1B259AB79600E1972C /* MediumPub.storyboard */; };
+		9C3AFF4D25C63169004B5EF2 /* fields in Resources */ = {isa = PBXBuildFile; fileRef = 9C3AFF4C25C63169004B5EF2 /* fields */; };
 		9C3CC8F6250A9C9E002C95D0 /* Navigator.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CC8F5250A9C9E002C95D0 /* Navigator.storyboard */; };
 		9C3CC8F8250AA0F8002C95D0 /* NavigatorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC8F7250AA0F8002C95D0 /* NavigatorWindowController.swift */; };
 		9C3CC8FA250AA136002C95D0 /* NavigatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC8F9250AA136002C95D0 /* NavigatorViewController.swift */; };
@@ -286,6 +287,7 @@
 		9C2BFCB525ACD0BF0030A980 /* notenik-news.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "notenik-news.html"; sourceTree = "<group>"; };
 		9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrefsCocoa.swift; sourceTree = "<group>"; };
 		9C341F1B259AB79600E1972C /* MediumPub.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MediumPub.storyboard; sourceTree = "<group>"; };
+		9C3AFF4C25C63169004B5EF2 /* fields */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fields; sourceTree = "<group>"; };
 		9C3CC8F5250A9C9E002C95D0 /* Navigator.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Navigator.storyboard; sourceTree = "<group>"; };
 		9C3CC8F7250AA0F8002C95D0 /* NavigatorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorWindowController.swift; sourceTree = "<group>"; };
 		9C3CC8F9250AA136002C95D0 /* NavigatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewController.swift; sourceTree = "<group>"; };
@@ -547,6 +549,7 @@
 				9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */,
 				9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */,
 				9C60E6D521F64B3C00C332ED /* Assets.xcassets */,
+				9C3AFF4C25C63169004B5EF2 /* fields */,
 				9C0BF17125B678470037BCA9 /* intro */,
 				9C0BF16B25B63C990037BCA9 /* markdown-spec */,
 				9C21749E22024E2900B4BF48 /* notenik-swift-intro */,
@@ -960,6 +963,7 @@
 				9C2BFCB625ACD0BF0030A980 /* notenik-news.html in Resources */,
 				9CE3250A224D58360051CA1F /* Log.storyboard in Resources */,
 				9C0BF16C25B63C990037BCA9 /* markdown-spec in Resources */,
+				9C3AFF4D25C63169004B5EF2 /* fields in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1405,7 +1409,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 130;
+				CURRENT_PROJECT_VERSION = 131;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1434,7 +1438,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 130;
+				CURRENT_PROJECT_VERSION = 131;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (

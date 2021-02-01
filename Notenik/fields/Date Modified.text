@@ -1,0 +1,19 @@
+Title:  Date Modified
+
+Seq:    82
+
+Level:  3
+
+Body: 
+
+The phrase `Date Modified` can be used as both a label and a type. 
+
+A Collection should never have more than one field of this type. 
+
+This field contains the last date and time at which the Note was modified. 
+
+This field is system-maintained, and is not editable by the user. 
+
+The field is generally displayed below all user-editable fields, and may be separated from these other fields by a divider. 
+
+The values for this field can be exported and imported, and will then serve the purpose of preserving an original value for this field, rather than reflecting the date and time of the import.

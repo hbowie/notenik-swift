@@ -195,6 +195,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         juggler.openHelpNotes()
     }
     
+    @IBAction func menuOpenFieldNotes(_ sender: Any) {
+        juggler.openFieldNotes()
+    }
+    
     @IBAction func menuOpenMarkdownSpec(_ sender: NSMenuItem) {
         juggler.openMarkdownSpec()
     }

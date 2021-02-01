@@ -1,10 +1,10 @@
-Name:   Ken Bowie
+Name:   John Smith
 
-Topics: bowies, relative
+Topics: relative
 
 Web:    facebook.com
 
-Type:   male
+Type:   yyy
 
 Birth Sequence: H
 

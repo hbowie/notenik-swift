@@ -1,0 +1,27 @@
+Title:  Index
+
+Tags:   web
+
+Seq:    52
+
+Level:  3
+
+Body: 
+
+The word `Index` can be used as both a label and a type.
+
+A Collection should only have one field of type `index`.
+
+This field type allows the user to assign one or more index terms to each Note in a Collection.
+
+There is little visible functionality associated with an `index` field in the main Notenik user interface. 
+
+The purpose of including such a field in a Collection is to allow use of `notenik-index` as an input type in a script. See the [Scripting Spec](https://notenik.net/script-spec.html) for further info. Use of a Collection in this mode results in one input row being generated for each index term, to make it easy to generate a website index. See the [Alphabetical Index for the Big Ideas in Software Development](https://www.softdevbigideas.com/alphabetical-index.html) for an example of such an page. 
+
+Rather than using the Notenik UI, the easiest way to add index entries to a series of Notes is though direct editing of the underlying text files. When working in this mode, a separate `Index` line can be entered for each index term; multiple Index lines should be placed one after the other, without any intervening blank lines. 
+
+When combining multiple terms on a single line, they should be separated by semicolons. 
+
+A reference link for a term may also be included, within parentheses, following the term itself, and before any semicolon separator. 
+
+When editing, the title field will appear as a single line of editable text.

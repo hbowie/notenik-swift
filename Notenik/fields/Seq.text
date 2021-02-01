@@ -1,0 +1,35 @@
+Title:  Seq
+
+Tags:   seq
+
+Seq:    41
+
+Level:  3
+
+Body: 
+
+The word `seq` can be used as both a label and a type. 
+
+In addition to `seq` itself, this field type will be inferred for field labels matching any of the following:
+
++ sequence
++ rev
++ revision
++ version
++ Anything beginning with `seq`
+
+A Collection is not expected to have more than one field of type `seq`. 
+
+A seq field is meant to contain some sort of sequence number, revision letter, version number or priority that can be used to put the Notes of a Collection into some meaningful order. 
+
+A Seq field may contain letters, digits and one or more periods (aka decimal points) or hyphens or a dollar sign (‘$’).
+
+You may wish to assign a unique Seq value to each Note in a Collection, but Notenik does not require this (in other words, it does allow duplicate Seq values to be assigned to different Notes).
+
+When editing, the seq field will appear as a single line of editable text.
+
+When displayed, the seq field will be displayed as entered.   
+
+When used as a sort field, seq values will be padded to cause them to sort into a natural order, rather than a strict character-by-character alphanumeric order.  In other words, a value of `2` will sort before a value of `10`, a value of `b` will sort before `aa`, etc. 
+
+Each segment of this field, when separated by a dot or a dash, will be padded separately.

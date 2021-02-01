@@ -1,0 +1,29 @@
+Title:  Title
+
+Tags:   basics
+
+Seq:    21
+
+Level:  3
+
+Body: 
+
+The word `title` can be used as both a label and a type. 
+
+A Collection must have one and only one field of type `title`, and it should be the *first* field within a Collection. 
+
+When editing, the title field will appear as a single line of editable text.
+
+When displayed, the title field will often be displayed in a bold and/or larger font, and often without being accompanied by its label.   
+
+When used as a sort field, title values will be sorted by their lowest-common-denominator representation (ignoring case, spacing  and punctuation). 
+
+The title field for a Note serves as that Note's unique identifier within its Collection, in three different ways:
+
+1. In its original form, as entered by the user, when presented to the user;
+
+2. In its lowest common denominator form (as described above), when used internally by Notenik;
+
+3. In a lightly transformed form, when creating a file name for the Note, to be used on disk.  
+
+

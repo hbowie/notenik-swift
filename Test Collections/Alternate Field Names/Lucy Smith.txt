@@ -1,4 +1,4 @@
-Name:   Pauline Bowie
+Name:   Lucy Smith
 
 Topics: family
 
@@ -6,15 +6,15 @@ Type:   female
 
 Birth Sequence: 2
 
-Birthday: 16 Mar 1954
+Birthday: 23 Sep 1985
 
 Repeats: yearly
 
-Anniversary: 13 Sep 1980
+Anniversary: 5 Jan 2005
 
 Stage:  4 - In Work
 
-Ix:     Bowie; Hendrickson; 
+Ix:     family; 
 
 Example: 
 
@@ -34,5 +34,5 @@ By:     William Shakespeare
 
 Description: 
 
-Wife to [[Herb Bowie]]
+Lucky Lucy
 
