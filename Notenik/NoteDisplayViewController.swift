@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/21/19.
-//  Copyright © 2019-2020 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019-2021 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -94,6 +94,23 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         DateUtils.shared.refreshToday()
     }
     
+    /// This method gets called when the user requests to open a link in a new window.
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
+        /// Make sure we have the objects we need in order to proceed.
+        guard let url = navigationAction.request.url else {
+            return nil
+        }
+        
+        guard wc != nil else {
+            return nil
+        }
+        
+        wc!.launchLink(url: url)
+        
+        return nil
+    }
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         /// Make sure we have the objects we need in order to proceed.
@@ -102,15 +119,17 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             decisionHandler(.allow)
             return
         }
+        
+        guard wc != nil else {
+            webLinkFollowed(true)
+            decisionHandler(.allow)
+            return
+        }
+        
         guard navigationAction.targetFrame != nil else {
             wc!.launchLink(url: url)
             webLinkFollowed(false)
             decisionHandler(.cancel)
-            return
-        }
-        guard wc != nil else {
-            webLinkFollowed(true)
-            decisionHandler(.allow)
             return
         }
         

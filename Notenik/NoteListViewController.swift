@@ -59,6 +59,9 @@ class NoteListViewController:   NSViewController,
         
         shortcutMenu = NSMenu()
         shortcutMenu.addItem(NSMenuItem(title: "Duplicate", action: #selector(duplicateItem(_:)), keyEquivalent: ""))
+        // shortcutMenu.addItem(NSMenuItem(title: "Increment", action: #selector(incrementItem(_:)), keyEquivalent: ""))
+        shortcutMenu.addItem(NSMenuItem(title: "Launch Link", action: #selector(launchLinkForItem(_:)), keyEquivalent: ""))
+        shortcutMenu.addItem(NSMenuItem(title: "Share...", action: #selector(shareItem(_:)), keyEquivalent: ""))
         tableView.menu = shortcutMenu
     }
     
@@ -69,6 +72,33 @@ class NoteListViewController:   NSViewController,
         guard row >= 0 else { return }
         guard let clickedNote = notenikIO?.getNote(at: row) else { return }
         collectionWindowController!.duplicateNote(startingNote: clickedNote)
+    }
+    
+    /// Respond to a contextual menu selection to increment the clicked Note.
+    @objc private func incrementItem(_ sender: AnyObject) {
+        guard collectionWindowController != nil else { return }
+        let row = tableView.clickedRow
+        guard row >= 0 else { return }
+        guard let clickedNote = notenikIO?.getNote(at: row) else { return }
+        collectionWindowController!.incrementNote(clickedNote)
+    }
+    
+    /// Respond to a contextual menu selection to launch a link for the clicked Note.
+    @objc private func launchLinkForItem(_ sender: AnyObject) {
+        guard collectionWindowController != nil else { return }
+        let row = tableView.clickedRow
+        guard row >= 0 else { return }
+        guard let clickedNote = notenikIO?.getNote(at: row) else { return }
+        collectionWindowController!.launchLink(for: clickedNote)
+    }
+    
+    /// Respond to a contextual menu selection to launch a link for the clicked Note.
+    @objc private func shareItem(_ sender: AnyObject) {
+        guard collectionWindowController != nil else { return }
+        let row = tableView.clickedRow
+        guard row >= 0 else { return }
+        guard let clickedNote = notenikIO?.getNote(at: row) else { return }
+        collectionWindowController!.shareNote(clickedNote)
     }
     
     /// Respond to double-click.

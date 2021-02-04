@@ -718,9 +718,13 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     ///   either the Seq field or the Date field
     @IBAction func menuNoteIncrement(_ sender: Any) {
         
-        let (nio, sel) = guardForNoteAction()
-        guard let noteIO = nio, let selNote = sel else { return }
-        
+        let (_, sel) = guardForNoteAction()
+        guard let selNote = sel else { return }
+        incrementNote(selNote)
+    }
+    
+    func incrementNote(_ selNote: Note) {
+        guard let noteIO = guardForCollectionAction() else { return }
         let modNote = selNote.copy() as! Note
         let sortParm = noteIO.collection!.sortParm
         
@@ -843,14 +847,18 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     }
     
     @IBAction func menuNoteShare(_ sender: Any) {
-        guard io != nil && io!.collectionOpen else { return }
-        let (note, _) = io!.getSelectedNote()
-        guard note != nil else { return }
+        let (_, sel) = guardForNoteAction()
+        guard let selNote = sel else { return }
+        shareNote(selNote)
+    }
+    
+    func shareNote(_ note: Note) {
+        guard let noteIO = guardForCollectionAction() else { return }
         if let shareController = self.shareStoryboard.instantiateController(withIdentifier: "shareWC") as? ShareWindowController {
             guard let vc = shareController.contentViewController as? ShareViewController else { return }
-            shareController.showWindow(sender)
+            shareController.showWindow(self)
             vc.window = shareController
-            vc.io = notenikIO!
+            vc.io = noteIO
             vc.note = note
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
