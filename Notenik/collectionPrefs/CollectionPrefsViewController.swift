@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 4/5/19.
-//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2021 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -28,6 +28,8 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var h1TitlesCkBox:        NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
+    
+    var extPicker: FileExtensionPicker!
     
     var subView:                        NSView?
     
@@ -86,6 +88,7 @@ class CollectionPrefsViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        extPicker = FileExtensionPicker(fileExtComboBox: fileExtComboBox)
         makeViews()
     }
     
@@ -200,31 +203,12 @@ class CollectionPrefsViewController: NSViewController {
         if collectionTitle != nil {
             collectionTitle!.stringValue = collection!.title
         }
-        setFileExt(collection!.preferredExt)
+        extPicker.setFileExt(collection!.preferredExt)
         setFieldsForCollection()
         setOtherFieldsAllowed(collection!.otherFields)
         setMirrorAutoIndex(collection!.mirrorAutoIndex)
         setBodyLabel(collection!.bodyLabel)
         setH1Titles(collection!.h1Titles)
-    }
-    
-    func setFileExt(_ ext: String?) {
-        guard ext != nil && ext != "" else { return }
-        var i = 0
-        var found = false
-        while i < fileExtComboBox.numberOfItems && !found {
-            let validExt = fileExtComboBox.objectValues[i] as! String
-            if ext == validExt {
-                found = true
-                fileExtComboBox.selectItem(at: i)
-            } else {
-                i += 1
-            }
-        }
-        if !found {
-            fileExtComboBox.addItem(withObjectValue: ext!)
-            fileExtComboBox.selectItem(at: i)
-        }
     }
     
     func setFieldsForCollection() {
