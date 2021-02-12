@@ -1,0 +1,59 @@
+<?nextrec?>
+<?output "../../../=$title&f$=.html" ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>=$title$=</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="notes/mirror/css/styles.css" type="text/css" />
+</head>
+<body>
+<h1>=$title$=</h1>
+
+<?if "=$type$=" ?>
+<p>Type: =$type$=</p>
+<?endif?>
+
+<?if "=$tags$=" ?>
+<p><em>=$tags$=</em></p>
+<?endif?>
+
+<?if "=$link$=" ?>
+<p>Link: <a href="=$link$=">=$link$=</a></p>
+<?endif?>
+
+<?if "=$seq$=" ?>
+<p>Seq: =$seq$=</p>
+<?endif?>
+
+<?if "=$date$=" ?>
+<p>Date: =$date$=</p>
+<?endif?>
+
+<?if "=$status$=" ?>
+<p>Status: =$status$=</p>
+<?endif?>
+
+<?if "=$dateadded$=" ?>
+<p>Date Added: =$dateadded$=</p>
+<?endif?>
+
+<?if "=$timestamp$=" ?>
+<p>Timestamp: =$timestamp$=</p>
+<?endif?>
+
+<?if "=$teaser$=" ?>
+<p>Teaser: </p>
+<p>=$teaser&o$= </p>
+<?endif?>
+
+<?if "=$body$=" ?>
+<p>Body: </p>
+=$body&w1o$=
+<?endif?>
+<hr>
+<p><em><a href="index.html">Back to Collection Index</a></em></p>
+</body>
+</html>
+<?loop?>

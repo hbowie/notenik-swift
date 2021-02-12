@@ -58,6 +58,7 @@
 		9C21749F22024E2900B4BF48 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C21749E22024E2900B4BF48 /* notenik-swift-intro */; };
 		9C2174A022024E2900B4BF48 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C21749E22024E2900B4BF48 /* notenik-swift-intro */; };
 		9C2174A122024E2900B4BF48 /* notenik-swift-intro in Resources */ = {isa = PBXBuildFile; fileRef = 9C21749E22024E2900B4BF48 /* notenik-swift-intro */; };
+		9C29A4EA25D1CABC00409BF5 /* models in Resources */ = {isa = PBXBuildFile; fileRef = 9C29A4E925D1CABC00409BF5 /* models */; };
 		9C29A780256421EA002C5F7A /* NoteDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29A77F256421EA002C5F7A /* NoteDisplayView.swift */; };
 		9C29A78A2564380F002C5F7A /* NoteDisplayWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */; };
 		9C29A79525645A42002C5F7A /* FileDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29A79425645A42002C5F7A /* FileDropView.swift */; };
@@ -83,6 +84,11 @@
 		9C45E8BC2298B87C003F6589 /* BodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BA2298B87C003F6589 /* BodyView.swift */; };
 		9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BD2298BC87003F6589 /* CodeView.swift */; };
 		9C45E8BF2298BC87003F6589 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45E8BD2298BC87003F6589 /* CodeView.swift */; };
+		9C46A71525D05CC0006E9C16 /* NewCollection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C46A71425D05CC0006E9C16 /* NewCollection.storyboard */; };
+		9C46A71B25D07062006E9C16 /* NewCollectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A71A25D07062006E9C16 /* NewCollectionWindowController.swift */; };
+		9C46A72125D070BD006E9C16 /* NewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72025D070BD006E9C16 /* NewCollectionViewController.swift */; };
+		9C46A72725D07899006E9C16 /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72625D07899006E9C16 /* NewLocationViewController.swift */; };
+		9C46A72D25D0A6E0006E9C16 /* NewNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72C25D0A6E0006E9C16 /* NewNameViewController.swift */; };
 		9C4ED7762506C90D0050800B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4ED7752506C90D0050800B /* AppDelegate.swift */; };
 		9C4ED7782506C90D0050800B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4ED7772506C90D0050800B /* SceneDelegate.swift */; };
 		9C4ED77A2506C90D0050800B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4ED7792506C90D0050800B /* ViewController.swift */; };
@@ -217,6 +223,7 @@
 		9CE3250E224D5A4D0051CA1F /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */; };
 		9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
 		9CE32511224D5E180051CA1F /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
+		9CE5750125D19E2D000C102C /* NewFieldsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE5750025D19E2D000C102C /* NewFieldsViewController.swift */; };
 		9CED2810224EB39900798621 /* LongTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED280F224EB39900798621 /* LongTextView.swift */; };
 		9CED2811224EB39900798621 /* LongTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED280F224EB39900798621 /* LongTextView.swift */; };
 		9CF1193B225822870015AE91 /* CollectionPrefsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF1193A225822870015AE91 /* CollectionPrefsWindowController.swift */; };
@@ -280,6 +287,7 @@
 		9C1E0C9422E4F7FA0025C99C /* AttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentViewController.swift; sourceTree = "<group>"; };
 		9C1E0C9722E5306B0025C99C /* AttachmentMasterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentMasterController.swift; sourceTree = "<group>"; };
 		9C21749E22024E2900B4BF48 /* notenik-swift-intro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-swift-intro"; path = "../../notenik-swift-intro"; sourceTree = "<group>"; };
+		9C29A4E925D1CABC00409BF5 /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = models; sourceTree = "<group>"; };
 		9C29A77F256421EA002C5F7A /* NoteDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayView.swift; sourceTree = "<group>"; };
 		9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayWebView.swift; sourceTree = "<group>"; };
 		9C29A79425645A42002C5F7A /* FileDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDropView.swift; sourceTree = "<group>"; };
@@ -294,6 +302,11 @@
 		9C3CC8F9250AA136002C95D0 /* NavigatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewController.swift; sourceTree = "<group>"; };
 		9C45E8BA2298B87C003F6589 /* BodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyView.swift; sourceTree = "<group>"; };
 		9C45E8BD2298BC87003F6589 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
+		9C46A71425D05CC0006E9C16 /* NewCollection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NewCollection.storyboard; sourceTree = "<group>"; };
+		9C46A71A25D07062006E9C16 /* NewCollectionWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCollectionWindowController.swift; sourceTree = "<group>"; };
+		9C46A72025D070BD006E9C16 /* NewCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCollectionViewController.swift; sourceTree = "<group>"; };
+		9C46A72625D07899006E9C16 /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
+		9C46A72C25D0A6E0006E9C16 /* NewNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNameViewController.swift; sourceTree = "<group>"; };
 		9C4ED7732506C90D0050800B /* Noteniki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Noteniki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C4ED7752506C90D0050800B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C4ED7772506C90D0050800B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -396,6 +409,7 @@
 		9CE32509224D58360051CA1F /* Log.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Log.storyboard; sourceTree = "<group>"; };
 		9CE3250C224D5A4D0051CA1F /* LogWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
 		9CE3250F224D5E180051CA1F /* LogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
+		9CE5750025D19E2D000C102C /* NewFieldsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFieldsViewController.swift; sourceTree = "<group>"; };
 		9CE715B0225E887300025C00 /* Notenik Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Notenik Help"; sourceTree = "<group>"; };
 		9CED280F224EB39900798621 /* LongTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextView.swift; sourceTree = "<group>"; };
 		9CF1193A225822870015AE91 /* CollectionPrefsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPrefsWindowController.swift; sourceTree = "<group>"; };
@@ -480,6 +494,19 @@
 			path = navigator;
 			sourceTree = "<group>";
 		};
+		9C46A71325D05C58006E9C16 /* filenew */ = {
+			isa = PBXGroup;
+			children = (
+				9C46A71425D05CC0006E9C16 /* NewCollection.storyboard */,
+				9C46A71A25D07062006E9C16 /* NewCollectionWindowController.swift */,
+				9C46A72025D070BD006E9C16 /* NewCollectionViewController.swift */,
+				9C46A72625D07899006E9C16 /* NewLocationViewController.swift */,
+				9C46A72C25D0A6E0006E9C16 /* NewNameViewController.swift */,
+				9CE5750025D19E2D000C102C /* NewFieldsViewController.swift */,
+			);
+			path = filenew;
+			sourceTree = "<group>";
+		};
 		9C4C1BAE22E7EE0A005997DF /* script */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,6 +583,7 @@
 				9C0BF16B25B63C990037BCA9 /* markdown-spec */,
 				9C21749E22024E2900B4BF48 /* notenik-swift-intro */,
 				9C60E6DA21F64B3C00C332ED /* Info.plist */,
+				9C29A4E925D1CABC00409BF5 /* models */,
 				9C2BFCB525ACD0BF0030A980 /* notenik-news.html */,
 				9C58BCF8225EF11B008E57D1 /* Notenik.help */,
 				9C09E1752248601D0046D50D /* notenik.iconset */,
@@ -565,6 +593,7 @@
 				9CF435C22480593700DD7C33 /* counts */,
 				9CC78E672283560F00640477 /* displayPrefs */,
 				9CAD6A5422DFA95D00531D90 /* export */,
+				9C46A71325D05C58006E9C16 /* filenew */,
 				9C60E70E21F6518400C332ED /* logging */,
 				9C6D8EA4259AB73C00E7AE38 /* medium */,
 				9C3CC8F2250A980D002C95D0 /* navigator */,
@@ -950,6 +979,7 @@
 				9C21749F22024E2900B4BF48 /* notenik-swift-intro in Resources */,
 				9C8DD75722E3EEC400FF56C1 /* Attachment.storyboard in Resources */,
 				9C341F1C259AB79600E1972C /* MediumPub.storyboard in Resources */,
+				9C29A4EA25D1CABC00409BF5 /* models in Resources */,
 				9CC41CD5229CA61700E92A66 /* Credits.rtf in Resources */,
 				9C0B643523885E9900869FAA /* TagsMassChange.storyboard in Resources */,
 				9C3CC8F6250A9C9E002C95D0 /* Navigator.storyboard in Resources */,
@@ -965,6 +995,7 @@
 				9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */,
 				9C2BFCB625ACD0BF0030A980 /* notenik-news.html in Resources */,
 				9CE3250A224D58360051CA1F /* Log.storyboard in Resources */,
+				9C46A71525D05CC0006E9C16 /* NewCollection.storyboard in Resources */,
 				9C0BF16C25B63C990037BCA9 /* markdown-spec in Resources */,
 				9C3AFF4D25C63169004B5EF2 /* fields in Resources */,
 			);
@@ -1025,6 +1056,7 @@
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
 				9CF435CA24805C2F00DD7C33 /* CountsViewController.swift in Sources */,
 				9C10831A25AA784A004B33CA /* NewsWindowController.swift in Sources */,
+				9C46A72125D070BD006E9C16 /* NewCollectionViewController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9CDB562B259BAE3400AB93A4 /* MediumAuthViewController.swift in Sources */,
@@ -1042,6 +1074,7 @@
 				9C5556D722E11E3B0099414E /* ExportWindowController.swift in Sources */,
 				9C568DE92322F701005D6B0A /* WorkTitleView.swift in Sources */,
 				9C8693E52575658700F045D2 /* NewICloudWindowController.swift in Sources */,
+				9C46A71B25D07062006E9C16 /* NewCollectionWindowController.swift in Sources */,
 				9CD3262822330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9C568DF223230B17005D6B0A /* WorkTitleDataSource.swift in Sources */,
 				9C9094C52249A664002207EB /* NoteDocumentController.swift in Sources */,
@@ -1055,7 +1088,9 @@
 				9CA4EE8C246A15BC00059F65 /* PickListDataSource.swift in Sources */,
 				9CE3250D224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
 				9CF96EE0225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */,
+				9CE5750125D19E2D000C102C /* NewFieldsViewController.swift in Sources */,
 				9C3CC8FA250AA136002C95D0 /* NavigatorViewController.swift in Sources */,
+				9C46A72D25D0A6E0006E9C16 /* NewNameViewController.swift in Sources */,
 				9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */,
 				9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */,
 				9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */,
@@ -1067,6 +1102,7 @@
 				9CDB5635259BAE9B00AB93A4 /* MediumPubViewController.swift in Sources */,
 				9CF435C724805C0500DD7C33 /* CountsWindowController.swift in Sources */,
 				9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */,
+				9C46A72725D07899006E9C16 /* NewLocationViewController.swift in Sources */,
 				9C29A78A2564380F002C5F7A /* NoteDisplayWebView.swift in Sources */,
 				9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */,
 				9C619A38231B323B003CFFBE /* WorkTypeView.swift in Sources */,

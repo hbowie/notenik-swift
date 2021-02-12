@@ -191,7 +191,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
         let url = NotenikFolderList.shared.createNewFolderWithinICloudContainer(folderName: folderTrimmed)
         guard url != nil else {
-            communicateError("Problems cretaing new folder in the iCloud container", alert: true)
+            communicateError("Problems creating new folder in the iCloud container", alert: true)
             return false
         }
         proceedWithSelectedURL(requestType: .new, fileURL: url!)
@@ -557,7 +557,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
         realm.path = ""
-        var ok = io.newCollection(collection: collection)
+        var ok = io.newCollection(collection: collection, withFirstNote: true)
         guard ok else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik",
                               category: "CollectionJuggler",

@@ -1,0 +1,14 @@
+Title:  Zettelkasten
+
+Tags:   notenik
+
+Link:   https://en.wikipedia.org/wiki/Zettelkasten
+
+Timestamp: 20210209215032
+
+Body: 
+
+The **zettelkasten** (German: "slip box") is a knowledge management and note-taking method used in research and study.
+
+(By the way, you can delete these starting Notes after creating one or two of your own.)
+

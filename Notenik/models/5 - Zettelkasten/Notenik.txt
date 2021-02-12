@@ -1,0 +1,9 @@
+Title:  Notenik
+
+Tags:   notenik
+
+Link:   https://notenik.net
+
+Body: 
+
+When using the default Markdown parser provided by Notenik, one note can easily link to another, providing one of the key attributes of a [[Zettelkasten]]. 

@@ -34,6 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     var docController: NoteDocumentController!
     var recentDocumentURLs: [URL] = []
     
+    let newControllerStoryboard:    NSStoryboard = NSStoryboard(name: "NewCollection", bundle: nil)
     let newInIcloudStoryboard:      NSStoryboard = NSStoryboard(name: "NewICloud", bundle: nil)
     let prefsStoryboard:            NSStoryboard = NSStoryboard(name: "Preferences", bundle: nil)
     let displayPrefsStoryboard:     NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
@@ -138,6 +139,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     @IBAction func navBoard(_ sender: NSMenuItem) {
         juggler.navBoard()
+    }
+    
+    @IBAction func newCollection(_ sender: NSMenuItem) {
+        if let newCollectionController = self.newControllerStoryboard.instantiateController(withIdentifier: "filenewWC") as? NewCollectionWindowController {
+            newCollectionController.showWindow(self)
+        } else {
+            logError("Couldn't get a New Collection Window Controller")
+        }
     }
     
     @IBAction func menuFileNewAction(_ sender: NSMenuItem) {

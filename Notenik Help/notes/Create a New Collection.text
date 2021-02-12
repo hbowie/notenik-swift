@@ -12,22 +12,24 @@ Date Added: 2020-02-17 23:52:38 +0000
 
 Body: 
 
-Beneath the File menu you will find three different options for creating a New Notenik Collection. 
+Beneath the File menu you will find several different options for creating a New Notenik Collection. 
 
-+ **New in iCloud...** - When you select this option, you will be prompted only for a name for your new Collection. Assuming this name is not already in use, a folder with that name will be created for you within Notenik's special iCloud container. 
+As a new user, it is recommended you start with the first option that appears, simply labeled `New Collection...`.
 
-+ **New Elsewhere...** - When you select this option, you will first need to navigate to a location on your hard drive where you would like your new Collection to be stored, and then will need to create a new folder within that location. You will be presented with a standard Mac window for selecting a folder. Use the standard New Folder button in the lower left corner of this window to create an empty folder for your new Collection, then select that newly created folder (all within the same window) and hit the Open button. 
+You will then see a window that will walk you through three different tabs. 
 
-+ **New Web Collection...** - This option is similar to `New Elsewhere`, but will create a special Web Collection that can be used to mirror your Notes to HTML pages. 
++ `Location` - Here you can specify whether you'd like your new Collection to be stored within Notenik's special iCloud container, or somewhere else. If unsure, the first option is the easiest. 
 
-If you are just getting started with Notenik, and not sure which option to choose, then `New in iCloud` will be your best bet. 
++ `Name` - Here you get to specify the name of your new Collection. This will become the name of the folder in which your notes will be stored. 
 
-The next thing you will see is a window allowing you to specify certain attributes for your new Collection. 
++ `Fields` - Here you specify what sort of Notes Collection you would like. Different types of Collections will have different fields available for each Note. On this tab you can pick from one of several different options, starting with the simplest, and working towards more complex options. Pick the one that sounds closest to matching your intentions. Don't worry too much about making a mistake here, because you will be shown a couple of different ways of further customizing your Collection a little farther on. 
 
-The Collections Title will be formed from the folder path containing this Collection. Feel free to tweak this if you'd like. 
+Once you become a little more familiar with the way Notenik works, you may want to go straight to one of the later options for creating a new Collection. 
 
-Each Note file is an ordinary text file, and can be opened using any text editor, in addition to being editable within Notenik. Depending on what application you might wish to be the default text editor for your notes, you may wish to pick some special file extension to be used. If you don't care about this, or this doesn't make any sense to you, then feel free to just ignore this whole paragraph and leave the Preferred File Extension set to txt. 
++ `New in iCloud...` - When you select this option, you will be prompted only for a name for your new Collection. Assuming this name is not already in use, a folder with that name will be created for you within Notenik's special iCloud container. 
 
-Next select the fields you would like to be made part of each Note. Every Note must have a Title and a Body, and the Tags and Link fields are commonly used, but feel free to use the checkboxes to select whatever other fields might be useful to you. 
++ `New Elsewhere...` - When you select this option, you will first need to navigate to a location on your hard drive where you would like your new Collection to be stored, and then will need to create a new folder within that location. You will be presented with a standard Mac window for selecting a folder. Use the standard New Folder button in the lower left corner of this window to create an empty folder for your new Collection, then select that newly created folder (all within the same window) and hit the Open button. 
 
-When you're done with this screen, click OK to continue, and you'll see your first Note!
++ `New Web Collection...` - This option is similar to `New Elsewhere`, but will create a special Web Collection that can be used to mirror your Notes to HTML pages. 
+
+No matter which route you choose, you will later be able to [[Tailor Collection Preferences]] -- including the list of fields supported within your Collection. 
