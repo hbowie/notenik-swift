@@ -198,6 +198,8 @@ class NoteListViewController:   NSViewController,
                 cellView.textField?.stringValue = note.tags.value
             } else if tableColumn?.title == "Stat" {
                 cellView.textField?.stringValue = String(note.status.getInt())
+            } else if tableColumn?.title == "Date Added" {
+                cellView.textField?.stringValue = note.dateAddedValue
             } else if notenikIO != nil && notenikIO!.collection != nil {
                 if tableColumn?.title == notenikIO!.collection!.titleFieldDef.fieldLabel.properForm {
                     cellView.textField?.stringValue = note.title.value
@@ -274,6 +276,10 @@ class NoteListViewController:   NSViewController,
             addAuthorColumn(at: 0)
             addTitleColumn(at: 1)
             trimColumns(to: 2)
+        case .dateAdded:
+            addDateAddedColumn(at: 0)
+            addTitleColumn(at: 1)
+            trimColumns(to: 2)
         case .custom:
             addTitleColumn(at: 0)
             trimColumns(to: 1)
@@ -341,6 +347,10 @@ class NoteListViewController:   NSViewController,
         addColumn(title: collection.tagsFieldDef.fieldLabel.properForm,
                   strID: "tags-column",
                   at: desiredIndex, min: 50, width: 100, max: 1200)
+    }
+    
+    func addDateAddedColumn(at desiredIndex: Int) {
+        addColumn(title: "Date Added", strID: "date-added-column", at: desiredIndex, min: 100, width: 180, max: 250)
     }
     
     /// Add a column, or make sure it already exists, and position it appropriately.

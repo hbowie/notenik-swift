@@ -4,3 +4,4 @@ Notenik Help/includes/
 .DS_Store
 /Notenik.xcodeproj/project.xcworkspace/xcuserdata/hbowie.xcuserdatad/UserInterfaceState.xcuserstate
 WorkspaceSettings.xcsettings
+/Notenik.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved

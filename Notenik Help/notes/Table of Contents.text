@@ -16,11 +16,12 @@ Body:
 <li><a href="#getting-started">Getting Started</a> <br />
 3.1 <a href="#help-using-notenik">Help Using Notenik</a>  <br />
 3.2 <a href="#create-a-new-collection">Create a New Collection</a>  <br />
-3.3 <a href="#display-a-note">Display a Note</a>  <br />
-3.4 <a href="#add-delete-and-update-your-notes">Add, Delete and Update Your Notes</a>  <br />
-3.5 <a href="#view-your-notes-as-a-list">View Your Notes as a List</a>  <br />
-3.6 <a href="#search-for-one-or-more-notes-containing-specified-text">Search for One or More Notes Containing Specified Text</a>  <br />
-3.7 <a href="#view-the-log">View the Log</a>  <br />
+3.3 <a href="#tailor-collection-preferences">Tailor Collection Preferences</a>  <br />
+3.4 <a href="#display-a-note">Display a Note</a>  <br />
+3.5 <a href="#add-delete-and-update-your-notes">Add, Delete and Update Your Notes</a>  <br />
+3.6 <a href="#view-your-notes-as-a-list">View Your Notes as a List</a>  <br />
+3.7 <a href="#search-for-one-or-more-notes-containing-specified-text">Search for One or More Notes Containing Specified Text</a>  <br />
+3.8 <a href="#view-the-log">View the Log</a>  <br />
 </li>
 <li><a href="#files-and-folders">Files and Folders</a> <br />
 4.1 <a href="#each-note-is-its-own-text-file">Each Note is its own Text File</a>  <br />

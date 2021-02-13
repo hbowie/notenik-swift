@@ -15,7 +15,6 @@
 		9C02D2B42267F41200587EDF /* CalendarWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2B22267F41200587EDF /* CalendarWindowController.swift */; };
 		9C02D2B62267F5E700587EDF /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2B52267F5E700587EDF /* CalendarViewController.swift */; };
 		9C02D2B72267F5E700587EDF /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2B52267F5E700587EDF /* CalendarViewController.swift */; };
-		9C036295239AE2A400C948DB /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 9C036294239AE2A400C948DB /* Down */; };
 		9C036298239AE7D500C948DB /* Ink in Frameworks */ = {isa = PBXBuildFile; productRef = 9C036297239AE7D500C948DB /* Ink */; };
 		9C03629A239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C036299239AFAAB00C948DB /* MarkdownPrefsViewController.swift */; };
 		9C03629B239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C036299239AFAAB00C948DB /* MarkdownPrefsViewController.swift */; };
@@ -113,6 +112,7 @@
 		9C568DF5232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */; };
 		9C568DF6232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */; };
 		9C58BCF9225EF11B008E57D1 /* Notenik.help in Resources */ = {isa = PBXBuildFile; fileRef = 9C58BCF8225EF11B008E57D1 /* Notenik.help */; };
+		9C5CBC7925D60AA300D23F4B /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 9C5CBC7825D60AA300D23F4B /* Down */; };
 		9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6D121F64B3B00C332ED /* AppDelegate.swift */; };
 		9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C60E6D521F64B3C00C332ED /* Assets.xcassets */; };
 		9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C60E6D721F64B3C00C332ED /* Main.storyboard */; };
@@ -441,7 +441,7 @@
 				9CC4B15B2439111B00CB8EB2 /* NotenikTextile in Frameworks */,
 				9C07F7522436904F00460E14 /* NotenikUtils in Frameworks */,
 				9CC44AF62436A904002B41EF /* NotenikMkdown in Frameworks */,
-				9C036295239AE2A400C948DB /* Down in Frameworks */,
+				9C5CBC7925D60AA300D23F4B /* Down in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,13 +838,13 @@
 			);
 			name = Notenik;
 			packageProductDependencies = (
-				9C036294239AE2A400C948DB /* Down */,
 				9C036297239AE7D500C948DB /* Ink */,
 				9C07F7512436904F00460E14 /* NotenikUtils */,
 				9CC44AF52436A904002B41EF /* NotenikMkdown */,
 				9CC4B15A2439111B00CB8EB2 /* NotenikTextile */,
 				9C0A347C244A262300B39604 /* NotenikLib */,
 				9C63100E257596E700FCD74A /* CoreXLSX */,
+				9C5CBC7825D60AA300D23F4B /* Down */,
 			);
 			productName = Notenik;
 			productReference = 9C60E6CE21F64B3B00C332ED /* Notenik.app */;
@@ -933,13 +933,13 @@
 			);
 			mainGroup = 9C60E6C521F64B3B00C332ED;
 			packageReferences = (
-				9C036293239AE2A400C948DB /* XCRemoteSwiftPackageReference "Down" */,
 				9C036296239AE7D500C948DB /* XCRemoteSwiftPackageReference "Ink" */,
 				9C07F7502436904F00460E14 /* XCRemoteSwiftPackageReference "NotenikUtils" */,
 				9CC44AF42436A904002B41EF /* XCRemoteSwiftPackageReference "NotenikMkdown" */,
 				9CC4B1592439111B00CB8EB2 /* XCRemoteSwiftPackageReference "NotenikTextile" */,
 				9C0A347B244A262300B39604 /* XCRemoteSwiftPackageReference "NotenikLib" */,
 				9C63100D257596E700FCD74A /* XCRemoteSwiftPackageReference "CoreXLSX" */,
+				9C5CBC7725D60AA300D23F4B /* XCRemoteSwiftPackageReference "Down" */,
 			);
 			productRefGroup = 9C60E6CF21F64B3B00C332ED /* Products */;
 			projectDirPath = "";
@@ -1449,7 +1449,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 132;
+				CURRENT_PROJECT_VERSION = 133;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1462,7 +1462,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 5.5.0;
+				MARKETING_VERSION = 5.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1478,7 +1478,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 132;
+				CURRENT_PROJECT_VERSION = 133;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1491,7 +1491,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 5.5.0;
+				MARKETING_VERSION = 5.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1632,14 +1632,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9C036293239AE2A400C948DB /* XCRemoteSwiftPackageReference "Down" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/iwasrobbed/Down";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
-			};
-		};
 		9C036296239AE7D500C948DB /* XCRemoteSwiftPackageReference "Ink" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JohnSundell/Ink";
@@ -1662,6 +1654,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.1.0;
+			};
+		};
+		9C5CBC7725D60AA300D23F4B /* XCRemoteSwiftPackageReference "Down" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnxnguyen/Down";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.4;
 			};
 		};
 		9C63100D257596E700FCD74A /* XCRemoteSwiftPackageReference "CoreXLSX" */ = {
@@ -1691,11 +1691,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9C036294239AE2A400C948DB /* Down */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9C036293239AE2A400C948DB /* XCRemoteSwiftPackageReference "Down" */;
-			productName = Down;
-		};
 		9C036297239AE7D500C948DB /* Ink */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9C036296239AE7D500C948DB /* XCRemoteSwiftPackageReference "Ink" */;
@@ -1710,6 +1705,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9C0A347B244A262300B39604 /* XCRemoteSwiftPackageReference "NotenikLib" */;
 			productName = NotenikLib;
+		};
+		9C5CBC7825D60AA300D23F4B /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C5CBC7725D60AA300D23F4B /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
 		};
 		9C63100E257596E700FCD74A /* CoreXLSX */ = {
 			isa = XCSwiftPackageProductDependency;

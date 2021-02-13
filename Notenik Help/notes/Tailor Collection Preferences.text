@@ -2,7 +2,13 @@ Title:  Tailor Collection Preferences
 
 Tags:   collection, prefs
 
+Timestamp: 20210211221900
+
 Seq:    5.1
+
+Level:  3
+
+Date Added: 2021-02-11 14:19:00 -0800
 
 Body: 
 
@@ -21,4 +27,3 @@ Each Note file is an ordinary text file, and can be opened using any text editor
 The second tab allows you to choose the fields you would like to include in the Collection. Feel free to check additional ones if they seem useful to you. 
 
 If you would like to further customize the list of fields for a Collection, read how to [[Override Default Fields with a Template file]], consulting the online article on [Field Labels and Types](https://notenik.net/articles/field-labels-and-types.html) as necessary.
-

@@ -8,6 +8,23 @@ Tags:   changes, versions, history, log
 
 Body:   
  
+### Version 5.6.0 | 11 Feb 2021
+
+#### 1. Added a Sort Option for Date Added
+
+Added an option to sort a list in sequence by date added. 
+
+
+#### 2. Simplified Means of Creating a New Collection
+
+There is a new option beneath the File menu that simply prompts the user to create a New Collection. Selecting this option brings up a tabbed window that walks the user through three steps: selecting a parent folder; naming the Collection; and choosing a Collection Type (which in turn implies a set of fields). 
+
+
+#### 3. Changing of File Extensions Enabled
+
+When you change the Preferred File Extension for a Collection, by modifying the Collection Preferences, Notenik will now change the file extensions for all the Notes in the Collection to the new value, instead of only changing the extension of the template file. 
+
+
 ### Version 5.5.0 | 02 Feb 2021
 
 #### 1. Enabled Open Link in New Window for all hyperlinks on the Display Tab

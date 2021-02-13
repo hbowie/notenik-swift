@@ -1560,6 +1560,10 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         setSortParm(.author)
     }
     
+    @IBAction func sortByDateAdded(_ sender: Any) {
+        setSortParm(.dateAdded)
+    }
+    
     @IBAction func sortReverse(_ sender: NSMenuItem) {
         guard let io = notenikIO else { return }
         if io.sortDescending {
