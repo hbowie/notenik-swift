@@ -134,8 +134,13 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             } else {
                 editVC!.io = newValue
             }
-            let (selected, position) = notenikIO!.firstNote()
-            select(note: selected, position: position, source: .nav)
+            
+            var (selected, position) = notenikIO!.getSelectedNote()
+            if selected == nil {
+                (selected, position) = notenikIO!.firstNote()
+            } else {
+                select(note: selected, position: position, source: .nav)
+            }
             
             buildReportsActionMenu()
         }
@@ -454,11 +459,11 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     @IBAction func paste(_ sender: AnyObject?) {
         let board = NSPasteboard.general
         guard let items = board.pasteboardItems else { return }
-        _ = pasteItems(items)
+        _ = pasteItems(items, row: -1, dropOperation: .above)
     } // end of paste function
     
     /// Paste incoming items, whether via drag or paste, returning number of notes added.
-    func pasteItems(_ pbItems: [NSPasteboardItem]) -> Int{
+    func pasteItems(_ pbItems: [NSPasteboardItem], row: Int, dropOperation: NSTableView.DropOperation) -> Int{
         
         // Make sure we're ready to do stuff.
         guard let noteIO = guardForCollectionAction() else { return 0 }
@@ -469,7 +474,9 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         var firstNotePasted: Note?
         let urlNameType = NSPasteboard.PasteboardType("public.url-name")
         let urlType     = NSPasteboard.PasteboardType("public.url")
+        let fileURLType = NSPasteboard.PasteboardType("public.file-url")
         let vcardType   = NSPasteboard.PasteboardType(kUTTypeVCard as String)
+        // let utf8Type    = NSPasteboard.PasteboardType("public.utf8-plain-text")
         
         // Process each pasteboard item.
         for item in pbItems {
@@ -480,7 +487,11 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             let vcard = item.string(forType: vcardType)
             let url = item.string(forType: urlType)
             let title = item.string(forType: urlNameType)
+            let fileRefURL = item.string(forType: fileURLType)
+            // let utf8 = item.string(forType: utf8Type)
+            
             let note = Note(collection: collection)
+            
             if url != nil && title != nil {
                 logInfo(msg: "Processing pasted item as URL: \(title!)")
                 _ = note.setTitle(title!)
@@ -499,6 +510,20 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                         }
                     }
                 }
+            } else if fileRefURL != nil {
+                let fileURL = URL(fileURLWithPath: fileRefURL!).standardized
+                if row >= 0 && dropOperation == .on {
+                    let dropNote = noteIO.getNote(at: row)
+                    if dropNote != nil {
+                        select(note: dropNote, position: nil, source: .action)
+                        addAttachment(urlToAttach: fileURL)
+                        if firstNotePasted == nil {
+                            firstNotePasted = dropNote
+                        }
+                    }
+                }
+            // } else if utf8 != nil && utf8!.count > 0 {
+            //     print("    - utf8: \(utf8!)")
             } else if str != nil && str!.count > 0 {
                 logInfo(msg: "Processing pasted item as Note")
                 let tempCollection = NoteCollection()
@@ -585,7 +610,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                 scanPromisedEmailFile(str: str)
             }
         } catch {
-            print("Error trying to read contents of file at \(url.path)")
+            communicateError("Error trying to read contents of file at \(url.path)")
         }
     }
     
@@ -872,10 +897,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let (_, sel) = guardForNoteAction()
         guard let selectedNote = sel else { return }
         if let mediumPubController = self.mediumPubStoryboard.instantiateController(withIdentifier: "mediumpubWC") as? MediumPubWindowController {
-            /* guard let vc = mediumPubController.contentViewController as? MediumTabViewController else {
-                print("Couldn't get the view controller")
-                return
-            } */
             mediumPubController.note = selectedNote
             mediumPubController.showWindow(sender)
             
@@ -883,7 +904,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             // vc.io = notenikIO!
             // vc.note = note
         } else {
-            print("Couldn't get a Medium Publish Controller")
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionWindowController",
                               level: .fault,
@@ -1139,10 +1159,6 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     /// Prompt the user for an attachment to add and then copy it to the files folder.
     func addAttachment() {
-        let (nio, sel) = guardForNoteAction()
-        guard let noteIO = nio, let selNote = sel else { return }
-        guard let filesFolderPath = noteIO.getAttachmentsLocation() else { return }
-        guard selNote.fileInfo.base != nil else { return }
         
         // Ask the user for a location on disk
         let openPanel = NSOpenPanel();
@@ -1158,9 +1174,15 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let response = openPanel.runModal()
         guard response == .OK else { return }
         guard let urlToAttach = openPanel.url else { return }
-        
+        addAttachment(urlToAttach: urlToAttach)
+    }
+    
+    func addAttachment(urlToAttach: URL) {
+        let (nio, sel) = guardForNoteAction()
+        guard let noteIO = nio, let selNote = sel else { return }
+        guard selNote.fileInfo.base != nil else { return }
+        guard let filesFolderPath = noteIO.getAttachmentsLocation() else { return }
         if let attachmentController = self.attachmentStoryboard.instantiateController(withIdentifier: "attachmentWC") as? AttachmentWindowController {
-            // attachmentController.io = noteIO
             attachmentController.vc.master = self
             attachmentController.vc.setFileToCopy(urlToAttach)
             attachmentController.vc.setStorageFolder(filesFolderPath)

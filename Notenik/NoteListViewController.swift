@@ -59,7 +59,6 @@ class NoteListViewController:   NSViewController,
         
         shortcutMenu = NSMenu()
         shortcutMenu.addItem(NSMenuItem(title: "Duplicate", action: #selector(duplicateItem(_:)), keyEquivalent: ""))
-        // shortcutMenu.addItem(NSMenuItem(title: "Increment", action: #selector(incrementItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Launch Link", action: #selector(launchLinkForItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Share...", action: #selector(shareItem(_:)), keyEquivalent: ""))
         tableView.menu = shortcutMenu
@@ -139,7 +138,7 @@ class NoteListViewController:   NSViewController,
         var notesPasted = 0
         
         if items != nil && items!.count > 0 {
-            notesPasted = collectionWindowController!.pasteItems(items!)
+            notesPasted = collectionWindowController!.pasteItems(items!, row: row, dropOperation: dropOperation)
         }
         
         guard notesPasted == 0 else { return true }
