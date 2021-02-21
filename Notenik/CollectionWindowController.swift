@@ -1256,8 +1256,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard selectedNote != nil else { return }
         let outcome = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
-        
-        duplicateNote(selectedNote!)
+        duplicateNote(startingNote: selectedNote!)
     }
     
     /// Duplicate the passed Note. 
