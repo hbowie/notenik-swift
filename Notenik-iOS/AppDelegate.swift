@@ -1,20 +1,23 @@
 //
 //  AppDelegate.swift
-//  Noteniki
+//  Notenik-iOS
 //
-//  Created by Herb Bowie on 9/7/20.
-//  Copyright © 2020 PowerSurge Publishing. All rights reserved.
+//  Created by Herb Bowie on 2/19/21.
+//
+//  Copyright © 2021 Herb Bowie (https://hbowie.net)
+//
+//  This programming code is published as open source software under the
+//  terms of the MIT License (https://opensource.org/licenses/MIT).
 //
 
 import UIKit
 
-@UIApplicationMain
+import NotenikLib
+
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         return true
     }
 

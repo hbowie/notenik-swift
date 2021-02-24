@@ -1,0 +1,18 @@
+Title:  Major Features
+
+Seq:    1
+
+Body: 
+
+There are, of course, no shortage of note-taking apps available. Here are a few features of Notenik that might convince you to give it a try. 
+
++ No up-front cost, no in-app purchases, no subscription cost; 
++ Privacy: no user info is collected by Notenik, and your Notes are stored on your own Mac, in whatever folder(s) you would like; 
++ Easy to learn and use;
++ Durability and Portability of your Notes: all info is stored in easily accessible plain text files;
++ Flexibility of organization: use as many Collections as you would like, sort each Collection in a variety of ways, assign Tags to your Notes and view a Collection organized by Tags;
++ Flexibility of data: every Note has a Title and a Body, but you can add other fields to your Notes as well, such as sequence fields, dates and links;
++ Built-in support for Markdown, with easy conversion to HTML when needed;
++ Open-source code written in Swift, Apple's modern programming language.
+
+Next: [[Helpful Resources]]

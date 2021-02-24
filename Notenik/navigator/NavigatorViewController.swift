@@ -178,27 +178,17 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
                 sender.expandItem(item)
             }
         } else if node.type == .folder {
-            if node.desc == NotenikFolderList.helpFolderDesc {
-                juggler!.openHelpNotes()
-                closeWindow()
-            } else {
-                let clickedFolder = node.folder
-                if clickedFolder != nil {
-                    _ = juggler!.open(link: clickedFolder!)
-                }
+            let clickedFolder = node.folder
+            if clickedFolder != nil {
+                _ = juggler!.open(link: clickedFolder!)
             }
         }
     }
     
     func open(link: NotenikLink) {
-        if link.folder == NotenikFolderList.helpFolderDesc {
-            juggler!.openHelpNotes()
+        let ok = juggler!.open(link: link)
+        if ok {
             closeWindow()
-        } else {
-            let ok = juggler!.open(link: link)
-            if ok {
-                closeWindow()
-            }
         }
     }
     
@@ -217,13 +207,9 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
                 continue
             }
             guard node.type == .folder else { continue }
-            if node.desc == NotenikFolderList.helpFolderDesc {
-                juggler!.openHelpNotes()
-            } else {
-                let clickedFolder = node.folder
-                if clickedFolder != nil {
-                    _ = juggler!.open(link: clickedFolder!)
-                }
+            let clickedFolder = node.folder
+            if clickedFolder != nil {
+                _ = juggler!.open(link: clickedFolder!)
             }
         }
     }
@@ -235,7 +221,6 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
                 continue
             }
             guard node.type == .folder else { continue }
-            guard node.desc != NotenikFolderList.helpFolderDesc  else { continue }
             let selFolder = node.folder
             if selFolder != nil {
                 _ = NSWorkspace.shared.openFile(selFolder!.path)
@@ -283,7 +268,7 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
                 continue
             }
             guard node.type == .folder else { continue }
-            if node.desc == NotenikFolderList.helpFolderDesc { continue }
+            if node.folder!.location == .appBundle { continue }
             let selFolder = node.folder
             if selFolder != nil {
                 let alert = NSAlert()

@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 - 2020 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2021 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -16,11 +16,6 @@ import NotenikLib
 
 /// A singleton object that controls all of the Note Collections that are open. 
 class CollectionJuggler: NSObject, CollectionPrefsOwner {
-    
-    let introPath           = "/intro"
-    let userGuidePath       = "/notenik-swift-intro"
-    let fieldNotesPath      = "/fields"
-    let markdownSpecPath    = "/markdown-spec"
     
     // Singleton instance
     static let shared = CollectionJuggler()
@@ -101,7 +96,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         }
 
         if collection == nil {
-            let path = Bundle.main.resourcePath! + introPath
+            let path = NotenikFolderList.shared.introNode.folder!.path
             collection = io.openCollection(realm: realm, collectionPath: path)
             collection?.readOnly = true
         }
@@ -147,6 +142,12 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     
     /// Open a single NotenikLink. 
     func open(link: NotenikLink) -> Bool {
+        
+        guard link.location != .appBundle else {
+            let wc = openFileWithNewWindow(fileURL: link.url!, readOnly: true)
+            return wc != nil
+        }
+
         link.determineCollectionType()
         var ok = false
         switch link.type {
@@ -594,24 +595,24 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     }
     
     func openIntro() {
-        let path = Bundle.main.resourcePath! + introPath
+        let path = notenikFolderList.introNode.path
         _ = openFileWithNewWindow(folderPath: path, readOnly: true)
     }
     
     /// Open the Application's Internal Collection of Help Notes
     func openHelpNotes() {
-        let path = Bundle.main.resourcePath! + userGuidePath
+        let path = notenikFolderList.userGuideNode.path
         _ = openFileWithNewWindow(folderPath: path, readOnly: true)
     }
     
     /// Open the notes about field labels and types. 
     func openFieldNotes() {
-        let path = Bundle.main.resourcePath! + fieldNotesPath
+        let path = notenikFolderList.fieldsNode.path
         _ = openFileWithNewWindow(folderPath: path, readOnly: true)
     }
     
     func openMarkdownSpec() {
-        let path = Bundle.main.resourcePath! + markdownSpecPath
+        let path = notenikFolderList.markdownNode.path
         _ = openFileWithNewWindow(folderPath: path, readOnly: true)
     }
     
