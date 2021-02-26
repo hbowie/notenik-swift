@@ -107,6 +107,7 @@
 		9C568DF6232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */; };
 		9C58BCF9225EF11B008E57D1 /* Notenik.help in Resources */ = {isa = PBXBuildFile; fileRef = 9C58BCF8225EF11B008E57D1 /* Notenik.help */; };
 		9C5CBC7925D60AA300D23F4B /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 9C5CBC7825D60AA300D23F4B /* Down */; };
+		9C60B52025E6D7C300371023 /* DisplayNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60B51F25E6D7C300371023 /* DisplayNoteViewController.swift */; };
 		9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6D121F64B3B00C332ED /* AppDelegate.swift */; };
 		9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C60E6D521F64B3C00C332ED /* Assets.xcassets */; };
 		9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C60E6D721F64B3C00C332ED /* Main.storyboard */; };
@@ -226,7 +227,6 @@
 		9CE32511224D5E180051CA1F /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3250F224D5E180051CA1F /* LogViewController.swift */; };
 		9CE3DB5725E0580A006938D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3DB5625E0580A006938D3 /* AppDelegate.swift */; };
 		9CE3DB5925E0580A006938D3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3DB5825E0580A006938D3 /* SceneDelegate.swift */; };
-		9CE3DB5B25E0580A006938D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE3DB5A25E0580A006938D3 /* ViewController.swift */; };
 		9CE3DB5E25E0580A006938D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CE3DB5C25E0580A006938D3 /* Main.storyboard */; };
 		9CE3DB6025E0580B006938D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CE3DB5F25E0580B006938D3 /* Assets.xcassets */; };
 		9CE3DB6325E0580B006938D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CE3DB6125E0580B006938D3 /* LaunchScreen.storyboard */; };
@@ -326,6 +326,7 @@
 		9C568DF123230B17005D6B0A /* WorkTitleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTitleDataSource.swift; sourceTree = "<group>"; };
 		9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTypeDataSource.swift; sourceTree = "<group>"; };
 		9C58BCF8225EF11B008E57D1 /* Notenik.help */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Notenik.help; path = "Notenik Help/Notenik.help"; sourceTree = SOURCE_ROOT; };
+		9C60B51F25E6D7C300371023 /* DisplayNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNoteViewController.swift; sourceTree = "<group>"; };
 		9C60E6CE21F64B3B00C332ED /* Notenik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notenik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C60E6D121F64B3B00C332ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C60E6D521F64B3C00C332ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -414,7 +415,6 @@
 		9CE3DB5425E0580A006938D3 /* Notenik-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notenik-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CE3DB5625E0580A006938D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CE3DB5825E0580A006938D3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9CE3DB5A25E0580A006938D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9CE3DB5D25E0580A006938D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9CE3DB5F25E0580B006938D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9CE3DB6225E0580B006938D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -797,7 +797,7 @@
 				9CE3DB5825E0580A006938D3 /* SceneDelegate.swift */,
 				9CB761DE25E1D44B0059D7CE /* CollectionsViewController.swift */,
 				9CEBB2A825E5815200EEA83D /* NotesListViewController.swift */,
-				9CE3DB5A25E0580A006938D3 /* ViewController.swift */,
+				9C60B51F25E6D7C300371023 /* DisplayNoteViewController.swift */,
 				9CE3DB5F25E0580B006938D3 /* Assets.xcassets */,
 				9CE3DB6125E0580B006938D3 /* LaunchScreen.storyboard */,
 				9CE3DB6425E0580B006938D3 /* Info.plist */,
@@ -1268,8 +1268,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CB761DF25E1D44B0059D7CE /* CollectionsViewController.swift in Sources */,
-				9CE3DB5B25E0580A006938D3 /* ViewController.swift in Sources */,
 				9CEBB2A925E5815200EEA83D /* NotesListViewController.swift in Sources */,
+				9C60B52025E6D7C300371023 /* DisplayNoteViewController.swift in Sources */,
 				9CE3DB5725E0580A006938D3 /* AppDelegate.swift in Sources */,
 				9CE3DB5925E0580A006938D3 /* SceneDelegate.swift in Sources */,
 			);

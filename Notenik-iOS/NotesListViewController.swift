@@ -15,9 +15,11 @@ import UIKit
 import NotenikLib
 import NotenikUtils
 
+/// Display a list of Notes within one Collection. 
 class NotesListViewController: UITableViewController {
     
     let cellIdentifier = "NoteCell"
+    let displayNoteID  = "DisplayNote"
     
     var _fLink: NotenikLink?
     var io: NotenikIO = FileIO()
@@ -30,18 +32,17 @@ class NotesListViewController: UITableViewController {
         set {
             _fLink = newValue
             if newValue != nil {
-                print("folder link set to \(newValue!)")
                 openCollection(notenikLink: newValue!)
             }
         }
     }
         
     func openCollection(notenikLink: NotenikLink) {
-        print("preparing to open collection")
         io = FileIO()
         let realm = io.getDefaultRealm()
         realm.path = ""
-        collection = io.openCollection(realm: realm, collectionPath: notenikLink.path)
+        let readOnly = (notenikLink.location == .appBundle)
+        collection = io.openCollection(realm: realm, collectionPath: notenikLink.path, readOnly: readOnly)
         if collection == nil {
             communicateError("Problems opening the collection at " + notenikLink.path,
                              alert: true)
@@ -61,8 +62,7 @@ class NotesListViewController: UITableViewController {
             title = collection!.title
         }
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
@@ -90,6 +90,21 @@ class NotesListViewController: UITableViewController {
         }
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let note = io.getNote(at: indexPath.row) else { return }
+        performSegue(withIdentifier: displayNoteID, sender: note)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard sender != nil else { return }
+        if segue.identifier == displayNoteID {
+            let target = segue.destination as! DisplayNoteViewController
+            let note = sender as! Note
+            target.note = note
+            target.notenikIO = io
+        }
     }
     
 
@@ -154,14 +169,18 @@ class NotesListViewController: UITableViewController {
                           level: .error,
                           message: msg)
         
-        /*
         if alert {
-            let dialog = NSAlert()
-            dialog.alertStyle = .warning
-            dialog.messageText = msg
-            dialog.addButton(withTitle: "OK")
-            let _ = dialog.runModal()
-        } */
+            let alert = UIAlertController(title: "Error Encountered",
+                                          message: msg,
+                                          preferredStyle: .alert)
+            
+            let action = UIAlertAction(title: "OK",
+                                       style: .default,
+                                       handler: nil)
+            
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        }
     }
 
 }

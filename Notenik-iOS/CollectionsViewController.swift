@@ -13,6 +13,7 @@
 import UIKit
 
 import NotenikLib
+import NotenikUtils
 
 /// Control the list of all available Collections.
 class CollectionsViewController: UITableViewController {
@@ -29,8 +30,11 @@ class CollectionsViewController: UITableViewController {
         rootNode = collections.root
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        self.clearsSelectionOnViewWillAppear = false
+        
+        if !collections.iCloudContainerAvailable {
+            communicateError("Notenik iCloud container is not available", alert: true)
+        }
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
@@ -70,6 +74,36 @@ class CollectionsViewController: UITableViewController {
             if node != nil {
                 target.folderLink = node!.folder
             }
+        }
+    }
+    
+    /// Log an informational message.
+    func logInfo(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.ios",
+                          category: "NotesListViewController",
+                          level: .info,
+                          message: msg)
+    }
+    
+    /// Log an error message and optionally display an alert message.
+    func communicateError(_ msg: String, alert: Bool=false) {
+        
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.ios",
+                          category: "NotesListViewController",
+                          level: .error,
+                          message: msg)
+        
+        if alert {
+            let alert = UIAlertController(title: "Error Encountered",
+                                          message: msg,
+                                          preferredStyle: .alert)
+            
+            let action = UIAlertAction(title: "OK",
+                                       style: .default,
+                                       handler: nil)
+            
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
         }
     }
 

@@ -83,11 +83,11 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         var collection: NoteCollection?
 
         if appPrefs.essentialURL != nil {
-            collection = io.openCollection(realm: realm, collectionPath: appPrefs.essentialURL!.path)
+            collection = io.openCollection(realm: realm, collectionPath: appPrefs.essentialURL!.path, readOnly: false)
         }
 
         if collection == nil && appPrefs.lastURL != nil {
-            collection = io.openCollection(realm: realm, collectionPath: appPrefs.lastURL!.path)
+            collection = io.openCollection(realm: realm, collectionPath: appPrefs.lastURL!.path, readOnly: false)
         }
         
         if collection != nil {
@@ -97,8 +97,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
 
         if collection == nil {
             let path = NotenikFolderList.shared.introNode.folder!.path
-            collection = io.openCollection(realm: realm, collectionPath: path)
-            collection?.readOnly = true
+            collection = io.openCollection(realm: realm, collectionPath: path, readOnly: true)
         }
         
         let wc = assignIOtoWindow(io: io)
@@ -484,7 +483,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             collectionURL = fileURL.deletingLastPathComponent()
         }
         
-        let initOK = io.initCollection(realm: realm, collectionPath: collectionURL.path)
+        let initOK = io.initCollection(realm: realm, collectionPath: collectionURL.path, readOnly: false)
         guard initOK else { return false }
         
         notenikFolderList.add(url: collectionURL, type: .ordinaryCollection, location: .undetermined)
@@ -675,7 +674,7 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
             }
         }
         
-        let collection = io.openCollection(realm: realm, collectionPath: collectionURL.path)
+        let collection = io.openCollection(realm: realm, collectionPath: collectionURL.path, readOnly: readOnly)
         if collection == nil {
             communicateError("Problems opening the collection at " + collectionURL.path,
                              alert: true)  
@@ -684,7 +683,6 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
                               category: "CollectionJuggler",
                               level: .info,
                               message: "Collection successfully opened: \(collection!.title)")
-            collection!.readOnly = readOnly
             saveCollectionInfo(collection!)
             let wc = assignIOtoWindow(io: io)
             notenikFolderList.add(collection!)

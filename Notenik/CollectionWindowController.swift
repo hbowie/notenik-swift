@@ -1472,6 +1472,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     @IBAction func reloadCollection(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }
         let path = noteIO.collection!.fullPath
+        let readOnly = noteIO.collection!.readOnly
         noteIO.closeCollection()
         newNoteRequested = false
         pendingMod = false
@@ -1479,7 +1480,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let newIO: NotenikIO = FileIO()
         let realm = newIO.getDefaultRealm()
         realm.path = ""
-        let _ = newIO.openCollection(realm: realm, collectionPath: path)
+        let _ = newIO.openCollection(realm: realm, collectionPath: path, readOnly: readOnly)
         self.io = newIO
     }
     
@@ -1816,7 +1817,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let importRealm = importIO.getDefaultRealm()
         let importURL = openPanel.url!
         importRealm.path = ""
-        let importCollection = importIO.openCollection(realm: importRealm, collectionPath: importURL.path)
+        let importCollection = importIO.openCollection(realm: importRealm, collectionPath: importURL.path, readOnly: true)
         guard importCollection != nil else {
             blockingAlert(msg: "The import location does not seem to be a valid Notenik Collection",
                           info: "Attempted to import from \(importURL.path)")
