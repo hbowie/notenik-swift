@@ -25,8 +25,10 @@ class CollectionPrefsWindowController: NSWindowController {
         }
     }
     
+    
+    
     /// Pass needed info from the Collection Prefs Requestor
-    func passCollectionPrefsRequesterInfo(owner: CollectionPrefsOwner, collection: NoteCollection) {
+    func passCollectionPrefsRequesterInfo(collection: NoteCollection) {
         guard collectionPrefsViewController != nil else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionPrefsWindowController",
@@ -34,7 +36,7 @@ class CollectionPrefsWindowController: NSWindowController {
                               message: "CollectionPrefsWindowController passsing Requester Info but view controller is missing")
             return
         }
-        collectionPrefsViewController!.passCollectionPrefsRequesterInfo(owner: owner, collection: collection, window: self)
+        collectionPrefsViewController!.passCollectionPrefsRequesterInfo(collection: collection, window: self)
     }
 
 }

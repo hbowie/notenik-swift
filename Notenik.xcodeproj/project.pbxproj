@@ -246,8 +246,6 @@
 		9CF435C824805C0500DD7C33 /* CountsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C624805C0500DD7C33 /* CountsWindowController.swift */; };
 		9CF435CA24805C2F00DD7C33 /* CountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C924805C2F00DD7C33 /* CountsViewController.swift */; };
 		9CF435CB24805C2F00DD7C33 /* CountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C924805C2F00DD7C33 /* CountsViewController.swift */; };
-		9CF96EE0225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */; };
-		9CF96EE1225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */; };
 		9CFC28A725E08C560094B4CB /* intro-ios in Resources */ = {isa = PBXBuildFile; fileRef = 9CFC28A625E08C560094B4CB /* intro-ios */; };
 		9CFCB047226BC7FF00443FFA /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
 /* End PBXBuildFile section */
@@ -432,7 +430,6 @@
 		9CF435C624805C0500DD7C33 /* CountsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountsWindowController.swift; sourceTree = "<group>"; };
 		9CF435C924805C2F00DD7C33 /* CountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountsViewController.swift; sourceTree = "<group>"; };
 		9CF54FA8244A2E07001EF927 /* NotenikLib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikLib; path = ../NotenikLib; sourceTree = "<group>"; };
-		9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPrefsOwner.swift; sourceTree = "<group>"; };
 		9CFC28A625E08C560094B4CB /* intro-ios */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "intro-ios"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -810,7 +807,6 @@
 			isa = PBXGroup;
 			children = (
 				9CD9962F23D3CA30004650BE /* CollectionPrefs.storyboard */,
-				9CF96EDF225BFACD004BA57C /* CollectionPrefsOwner.swift */,
 				9CF1193A225822870015AE91 /* CollectionPrefsWindowController.swift */,
 				9CF1193D225827650015AE91 /* CollectionPrefsViewController.swift */,
 				9C924C6F25CDB80A000DEAB3 /* FileExtensionPicker.swift */,
@@ -1110,7 +1106,6 @@
 				9CD326202233068F00D06B77 /* MacEditView.swift in Sources */,
 				9CA4EE8C246A15BC00059F65 /* PickListDataSource.swift in Sources */,
 				9CE3250D224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
-				9CF96EE0225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */,
 				9CE5750125D19E2D000C102C /* NewFieldsViewController.swift in Sources */,
 				9C3CC8FA250AA136002C95D0 /* NavigatorViewController.swift in Sources */,
 				9C46A72D25D0A6E0006E9C16 /* NewNameViewController.swift in Sources */,
@@ -1217,7 +1212,6 @@
 				9CE3250E224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
 				9CB60BC722651074003B5655 /* ShareViewController.swift in Sources */,
 				9CD3588B2293C42B00C9203F /* LinkView.swift in Sources */,
-				9CF96EE1225BFACD004BA57C /* CollectionPrefsOwner.swift in Sources */,
 				9CC78E6D2283587300640477 /* DisplayPrefsWindowController.swift in Sources */,
 				9C2AE529220A34D400AE8BEE /* NoteDisplayViewController.swift in Sources */,
 				9C857C6523830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,

@@ -16,7 +16,7 @@ import NotenikUtils
 import NotenikLib
 
 /// Controls a window showing a particular Collection of Notes.
-class CollectionWindowController: NSWindowController, CollectionPrefsOwner, AttachmentMasterController {
+class CollectionWindowController: NSWindowController, AttachmentMasterController {
     
     @IBOutlet var shareButton: NSButton!
     
@@ -197,9 +197,12 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
             if let collectionPrefsWindow = collectionPrefsController.window {
                 let collectionPrefsVC = collectionPrefsWindow.contentViewController as! CollectionPrefsViewController
-                collectionPrefsVC.passCollectionPrefsRequesterInfo(owner: self, collection: noteIO.collection!, window: collectionPrefsController)
-                application.runModal(for: collectionPrefsWindow)
-                collectionPrefsWindow.close()
+                collectionPrefsVC.passCollectionPrefsRequesterInfo(collection: noteIO.collection!, window: collectionPrefsController)
+                let returnCode = application.runModal(for: collectionPrefsWindow)
+                if returnCode == NSApplication.ModalResponse.OK {
+                    collectionPrefsModified()
+                }
+                // collectionPrefsWindow.close()
             }
             // collectionPrefsController.showWindow(self)
             // collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: noteIO.collection!)
@@ -219,12 +222,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     ///   - ok: True if they clicked on OK, false if they clicked Cancel.
     ///   - collection: The Collection whose prefs are being modified.
     ///   - window: The Collection Prefs window.
-    func collectionPrefsModified(ok: Bool,
-                                 collection: NoteCollection,
-                                 window: CollectionPrefsWindowController) {
-        application.stopModal()
-        // window.close()
-        guard ok else { return }
+    func collectionPrefsModified() {
         guard let noteIO = guardForCollectionAction() else { return }
         if noteIO.collection!.preferredExt != preferredExt {
             if noteIO is FileIO {
@@ -488,6 +486,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             let url = item.string(forType: urlType)
             let title = item.string(forType: urlNameType)
             let fileRefURL = item.string(forType: fileURLType)
+            
             // let utf8 = item.string(forType: utf8Type)
             
             let note = Note(collection: collection)
@@ -511,6 +510,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                     }
                 }
             } else if fileRefURL != nil {
+                logInfo(msg: "Processing pasted item as File Ref URL")
                 let fileURL = URL(fileURLWithPath: fileRefURL!).standardized
                 if row >= 0 && dropOperation == .on {
                     let dropNote = noteIO.getNote(at: row)
@@ -536,6 +536,8 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
                         || tempNote.hasBody() || tempNote.hasLink() {
                     tempNote.copyDefinedFields(to: note)
                 }
+            } else {
+                logInfo(msg: "Not sure how to handle this pasted item")
             }
             let addedNote = addPastedNote(note)
             if addedNote != nil {
@@ -1181,11 +1183,12 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         let (nio, sel) = guardForNoteAction()
         guard let noteIO = nio, let selNote = sel else { return }
         guard selNote.fileInfo.base != nil else { return }
-        guard let filesFolderPath = noteIO.getAttachmentsLocation() else { return }
+        let filesFolderResource = noteIO.collection!.lib.ensureResource(type: .attachments)
+        guard filesFolderResource.isAvailable else { return }
         if let attachmentController = self.attachmentStoryboard.instantiateController(withIdentifier: "attachmentWC") as? AttachmentWindowController {
             attachmentController.vc.master = self
             attachmentController.vc.setFileToCopy(urlToAttach)
-            attachmentController.vc.setStorageFolder(filesFolderPath)
+            attachmentController.vc.setStorageFolder(filesFolderResource.actualPath)
             attachmentController.vc.setNote(selNote)
             attachmentController.showWindow(self)
         } else {
@@ -1463,8 +1466,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     
     @IBAction func textEditTemplate(_ sender: Any) {
         guard let nnkIO = guardForCollectionAction() else { return }
-        guard let fileIO = nnkIO as? FileIO else { return }
-        let templatePath = fileIO.makeTemplateFilePath()
+        let templatePath = nnkIO.collection!.lib.getPath(type: .template)
         NSWorkspace.shared.openFile(templatePath)
     }
     
@@ -1702,7 +1704,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard let noteIO = guardForCollectionAction() else { return }
         guard let importURL = promptUserForImportFile(
                 title: "Open an input tab- or comma-separated text file",
-                parent: noteIO.collection!.parentURL)
+                parent: noteIO.collection!.lib.getURL(type: .parent))
             else { return }
         importDelimitedFromURL(importURL, noteIO: noteIO)
     }
@@ -1727,7 +1729,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard let noteIO = guardForCollectionAction() else { return }
         guard let importURL = promptUserForImportFile(
                 title: "Open a CSV file from OmniFocus",
-                parent: noteIO.collection!.parentURL)
+                parent: noteIO.collection!.lib.getURL(type: .parent))
             else { return }
         importCSVfromOmniFocus(importURL, noteIO: noteIO)
     }
@@ -1752,7 +1754,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard let noteIO = guardForCollectionAction() else { return }
         guard let importURL = promptUserForImportFile(
                 title: "Open a Plain Text file from OmniFocus",
-                parent: noteIO.collection!.parentURL)
+                parent: noteIO.collection!.lib.getURL(type: .parent))
             else { return }
         importPlainTextfromOmniFocus(importURL, noteIO: noteIO)
     }
@@ -1778,7 +1780,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard let noteIO = guardForCollectionAction() else { return }
         guard let importURL = promptUserForImportFile(
                 title: "Open an input XLSX file",
-                parent: noteIO.collection!.parentURL)
+                parent: noteIO.collection!.lib.getURL(type: .parent))
             else { return }
         importXSLXFromURL(importURL)
     }
@@ -1860,7 +1862,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
         guard let noteIO = guardForCollectionAction() else { return }
         guard let importURL = promptUserForImportFile(
                 title: "Open an input XML file",
-                parent: noteIO.collection!.parentURL)
+                parent: noteIO.collection!.lib.getURL(type: .parent))
             else { return }
 
         let importer = XMLNoteImporter(io: noteIO)
@@ -2001,7 +2003,7 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
     @IBAction func stashNotesInSubfolder(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }
         let collection = noteIO.collection!
-        guard !collection.notesSubFolder else {
+        guard !collection.lib.hasAvailable(type: .notesSubfolder) else {
             communicateError("This collection is already stashed in a subfolder",
                              alert: true)
             return
@@ -2222,15 +2224,15 @@ class CollectionWindowController: NSWindowController, CollectionPrefsOwner, Atta
             found = (sender.title == reportTitle)
             if found {
                 if report.reportType == "tcz" {
-                    if noteIO.reportsFullPath != nil {
-                        let scriptURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
+                    if noteIO.collection!.lib.hasAvailable(type: .reports) {
+                        let scriptURL = noteIO.reports[i].getURL(folderPath: noteIO.collection!.lib.getPath(type: .reports))
                         if scriptURL != nil {
                             launchScript(fileURL: scriptURL!)
                         }
                     }
                 } else {
-                    if noteIO.reportsFullPath != nil {
-                        let templateURL = noteIO.reports[i].getURL(folderPath: noteIO.reportsFullPath!)
+                    if noteIO.collection!.lib.hasAvailable(type: .reports) {
+                        let templateURL = noteIO.reports[i].getURL(folderPath: noteIO.collection!.lib.getPath(type: .reports))
                         _ = runReportWithTemplate(templateURL!)
                     }
                 }

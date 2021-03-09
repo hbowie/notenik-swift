@@ -38,6 +38,18 @@ class NotesListViewController: UITableViewController {
     }
         
     func openCollection(notenikLink: NotenikLink) {
+        
+        do {
+            let items = try FileManager.default.contentsOfDirectory(atPath: notenikLink.path)
+            print("\(items.count) items found in the directory")
+            for item in items {
+                print("Found \(item)")
+            }
+        } catch {
+            print("Could not read the directory")
+            print("Error: \(error)")
+        }
+        
         io = FileIO()
         let realm = io.getDefaultRealm()
         realm.path = ""

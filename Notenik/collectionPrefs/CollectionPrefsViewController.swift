@@ -17,7 +17,8 @@ import NotenikLib
 
 class CollectionPrefsViewController: NSViewController {
     
-    var owner: CollectionPrefsOwner?
+    let application = NSApplication.shared
+    
     var collection: NoteCollection?
     var windowController: CollectionPrefsWindowController?
     
@@ -62,10 +63,10 @@ class CollectionPrefsViewController: NSViewController {
     var otherFieldsCkBox: NSButton!
     
     /// Pass needed info from the Collection Juggler
-    func passCollectionPrefsRequesterInfo(owner: CollectionPrefsOwner,
+    func passCollectionPrefsRequesterInfo(
                          collection: NoteCollection,
                          window: CollectionPrefsWindowController) {
-        self.owner = owner
+        
         self.collection = collection
         self.windowController = window
         setCollectionValues()
@@ -312,11 +313,14 @@ class CollectionPrefsViewController: NSViewController {
         if !collection!.otherFields {
             dict.lock()
         }
-        owner!.collectionPrefsModified(ok: true, collection: collection!, window: windowController!)
+        application.stopModal(withCode: .OK)
+        windowController!.close()
     }
     
     @IBAction func cancelButtonClicked(_ sender: Any) {
-                owner!.collectionPrefsModified(ok: false, collection: collection!, window: windowController!)
+
+        application.stopModal(withCode: .cancel)
+        windowController!.close()
     }
     
     /// Log an error message and optionally display an alert message.

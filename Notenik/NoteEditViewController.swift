@@ -81,6 +81,8 @@ class NoteEditViewController: NSViewController {
         let dict = collection.dict
         let defs = dict.list
         
+        notenikIO!.pickLists.statusConfig = collection.statusConfig
+        
         // Let's build a two-dimensional array of views to be displayed in the grid
 
         editViews = []

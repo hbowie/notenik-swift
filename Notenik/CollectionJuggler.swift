@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 - 2021 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2021 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -15,7 +15,7 @@ import NotenikUtils
 import NotenikLib
 
 /// A singleton object that controls all of the Note Collections that are open. 
-class CollectionJuggler: NSObject, CollectionPrefsOwner {
+class CollectionJuggler: NSObject {
     
     // Singleton instance
     static let shared = CollectionJuggler()
@@ -390,18 +390,19 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         guard io.collectionOpen else { return false }
         guard let collection = io.collection else { return false }
         guard let url = collection.fullPathURL else { return false }
-        let notesPath = io.makeFilePath(fileName: NotenikConstants.notesFolderName)
-        if FileUtils.isDir(notesPath) {
-            if !FileUtils.isEmpty(notesPath) {
+        let notesSubFolder = collection.lib.getResource(type: .notesSubfolder)
+        if notesSubFolder.exists && notesSubFolder.isDirectory {
+            if !notesSubFolder.isEmpty() {
                 communicateError("Cannot stash - notes folder already exists and is not empty")
                 return false
             }
         } else {
-            guard FileUtils.ensureFolder(forDir: notesPath) else { return false }
+            let created = notesSubFolder.ensureExistence()
+            guard created else { return false }
         }
 
         let relo = CollectionRelocation()
-        let ok = relo.copyOrMoveCollection(from: collection.fullPath, to: notesPath, move: true)
+        let ok = relo.copyOrMoveCollection(from: collection.fullPath, to: notesSubFolder.actualPath, move: true)
         if !ok {
             communicateError("Could not stash notes in notes subfolder")
             return false
@@ -493,9 +494,14 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
             if let collectionPrefsWindow = collectionPrefsController.window {
                 let collectionPrefsVC = collectionPrefsWindow.contentViewController as! CollectionPrefsViewController
-                collectionPrefsVC.passCollectionPrefsRequesterInfo(owner: self, collection: io.collection!, window: collectionPrefsController)
-                application.runModal(for: collectionPrefsWindow)
-                collectionPrefsWindow.close()
+                collectionPrefsVC.passCollectionPrefsRequesterInfo(collection: io.collection!, window: collectionPrefsController)
+                let returnCode = application.runModal(for: collectionPrefsWindow)
+                if returnCode == NSApplication.ModalResponse.OK {
+                    collectionPrefsModified(collection: io.collection!)
+                } else {
+                    // ???
+                }
+                // collectionPrefsWindow.close()
             }
             // collectionPrefsController.showWindow(self)
             // collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io.collection!)
@@ -550,10 +556,8 @@ class CollectionJuggler: NSObject, CollectionPrefsOwner {
     ///   - ok: True if they clicked on OK, false if they clicked Cancel.
     ///   - collection: The Collection whose prefs are being modified.
     ///   - window: The Collection Prefs window.
-    func collectionPrefsModified(ok: Bool,
-                                 collection: NoteCollection,
-                                 window: CollectionPrefsWindowController) {
-        application.stopModal()
+    func collectionPrefsModified(collection: NoteCollection) {
+        // application.stopModal()
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
         realm.path = ""

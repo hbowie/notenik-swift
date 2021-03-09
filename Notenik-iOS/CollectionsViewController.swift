@@ -32,7 +32,9 @@ class CollectionsViewController: UITableViewController {
         
         self.clearsSelectionOnViewWillAppear = false
         
-        if !collections.iCloudContainerAvailable {
+        if collections.iCloudContainerAvailable {
+            collections.downloadFolders()
+        } else {
             communicateError("Notenik iCloud container is not available", alert: true)
         }
 
@@ -45,6 +47,10 @@ class CollectionsViewController: UITableViewController {
     /// Return the total number of sections to be included in the table.
     override func numberOfSections(in tableView: UITableView) -> Int {
         return rootNode.countChildren
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return rootNode.children[section].desc
     }
 
     /// Return the number of rows in the given section.
