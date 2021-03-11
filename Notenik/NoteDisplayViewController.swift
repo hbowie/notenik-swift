@@ -81,7 +81,14 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         if countsVC != nil {
             countsVC!.updateCounts(counts)
         }
-        let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
+        // let baseURL = io!.collection!.lib.getURL(type: .notes)
+        var nav: WKNavigation?
+        nav = webView.loadHTMLString(html, baseURL: nil)
+        /* if baseURL != nil {
+            nav = webView.loadHTMLString(html, baseURL: baseURL!)
+        } else {
+            nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
+        } */
         if nav == nil {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "NoteDisplayViewController",

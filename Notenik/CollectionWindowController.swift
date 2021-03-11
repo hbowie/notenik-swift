@@ -1130,7 +1130,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         attachmentsMenu.addItem(addMenuItem)
         
         for attachment in note.attachments {
-            let title = attachment.fullName
+            let title = attachment.suffix
             let menuItem = NSMenuItem(title: title, action: #selector(openOrAddAttachment), keyEquivalent: "")
             attachmentsMenu.addItem(menuItem)
         }
@@ -1140,12 +1140,14 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     @objc func openOrAddAttachment(_ sender: NSMenuItem) {
         
         // See if we're ready to take action
-        guard let noteIO = guardForCollectionAction() else { return }
+        let (nio, sel) = guardForNoteAction()
+        guard let noteIO = nio, let selNote = sel else { return }
         
         if sender.title == addAttachmentTitle {
             addAttachment()
         } else {
-            let attachmentURL = noteIO.getURLforAttachment(fileName: sender.title)
+            let attachmentURL = selNote.getURLforAttachment(attachmentName: sender.title)
+            // let attachmentURL = noteIO.getURLforAttachment(fileName: sender.title)
             
             if attachmentURL != nil {
                 let goodOpen = NSWorkspace.shared.open(attachmentURL!)
@@ -1208,6 +1210,21 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         let added = noteIO.addAttachment(from: file, to: note, with: suffix)
         if added {
             adjustAttachmentsMenu(note)
+            if let imageDef = noteIO.collection?.imageNameFieldDef {
+                let imageField = note.getField(def: imageDef)
+                if imageField == nil || imageField!.value.value.count == 0 {
+                    let ext = file.pathExtension
+                    switch ext {
+                    case "gif", "jpg", "png":
+                        note.setField(label: imageDef.fieldLabel.commonForm, value: suffix)
+                    default:
+                        break
+                    }
+                }
+                
+                
+            }
+            
         } else {
             communicateError("Attachment could not be added - possible duplicate", alert: true)
         }

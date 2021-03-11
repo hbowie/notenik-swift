@@ -18,38 +18,50 @@ import NotenikLib
 class ViewFactory {
     
     static func getEditView(pickLists: ValuePickLists, def: FieldDefinition) -> MacEditView {
+        
         if let pickList = def.pickList as? AuthorPickList {
             return AuthorView(pickList: pickList)
-        } else if def.fieldType.typeString == NotenikConstants.bodyCommon {
+        }
+        
+        switch def.fieldType.typeString {
+        case NotenikConstants.bodyCommon:
             return BodyView()
-        } else if def.fieldType.typeString == NotenikConstants.codeCommon {
-            return CodeView()
-        } else if def.fieldType.typeString == "longtext" {
-            return LongTextView()
-        } else if def.fieldType.typeString == NotenikConstants.linkCommon
-                    || def.fieldType.typeString == NotenikConstants.workLinkCommon {
-            return LinkView()
-        } else if def.fieldType.typeString == NotenikConstants.statusCommon {
-            return StatusView(config: pickLists.statusConfig)
-        } else if def.fieldType.typeString == NotenikConstants.dateCommon {
-            return DateView()
-        } else if def.fieldType.typeString == NotenikConstants.tagsCommon {
-            return TagsView(pickList: pickLists.tagsPickList)
-        } else if def.fieldType.typeString == "label"
-            || def.fieldType.typeString == "dateadded"
-            || def.fieldType.typeString == "datemodified"
-            || def.fieldType.typeString == "timestamp" {
-            return LabelView()
-        } else if def.fieldType.typeString == NotenikConstants.workTypeCommon {
-            return WorkTypeView()
-        } else if def.fieldType.typeString == NotenikConstants.workTitleCommon {
-            return WorkTitleView(pickList: pickLists.workTitlePickList)
-        } else if def.fieldType.typeString == "boolean" {
+        case NotenikConstants.booleanType:
             return BooleanView()
-        } else if def.pickList != nil {
-            return PickListView(list: def.pickList!)
-        } else {
-            return StringView()
+        case NotenikConstants.codeCommon:
+            return CodeView()
+        case NotenikConstants.dateAddedCommon:
+            return LabelView()
+        case NotenikConstants.dateCommon:
+            return DateView()
+        case NotenikConstants.dateModifiedCommon:
+            return LabelView()
+        case NotenikConstants.imageNameCommon:
+            return ImageNameView()
+        case NotenikConstants.labelType:
+            return LabelView()
+        case NotenikConstants.linkCommon, NotenikConstants.workLinkCommon:
+            return LinkView()
+        case NotenikConstants.longTextType:
+            return LongTextView()
+        case NotenikConstants.minutesToReadCommon:
+            return LabelView()
+        case NotenikConstants.statusCommon:
+            return StatusView(config: pickLists.statusConfig)
+        case NotenikConstants.tagsCommon:
+            return TagsView(pickList: pickLists.tagsPickList)
+        case NotenikConstants.timestampCommon:
+            return LabelView()
+        case NotenikConstants.workTitleCommon:
+            return WorkTitleView(pickList: pickLists.workTitlePickList)
+        case NotenikConstants.workTypeCommon:
+            return WorkTypeView()
+        default:
+            if def.pickList != nil {
+                return PickListView(list: def.pickList!)
+            } else {
+                return StringView()
+            }
         }
     }
 }

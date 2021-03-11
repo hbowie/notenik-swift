@@ -199,6 +199,7 @@
 		9CC78E6F228358A400640477 /* DisplayPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC78E6E228358A400640477 /* DisplayPrefsViewController.swift */; };
 		9CC78E70228358A400640477 /* DisplayPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC78E6E228358A400640477 /* DisplayPrefsViewController.swift */; };
 		9CC8336E22B3F65B0006AAE0 /* MarkedupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC8336D22B3F65B0006AAE0 /* MarkedupTests.swift */; };
+		9CCBE7B425F7F4550001443B /* ImageNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCBE7B325F7F4550001443B /* ImageNameView.swift */; };
 		9CCFD62C22AEE0DD00C64D37 /* StringConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFD62B22AEE0DD00C64D37 /* StringConverterTests.swift */; };
 		9CD326202233068F00D06B77 /* MacEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* MacEditView.swift */; };
 		9CD326222233068F00D06B77 /* MacEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* MacEditView.swift */; };
@@ -395,6 +396,7 @@
 		9CC78E6B2283587300640477 /* DisplayPrefsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefsWindowController.swift; sourceTree = "<group>"; };
 		9CC78E6E228358A400640477 /* DisplayPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefsViewController.swift; sourceTree = "<group>"; };
 		9CC8336D22B3F65B0006AAE0 /* MarkedupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedupTests.swift; sourceTree = "<group>"; };
+		9CCBE7B325F7F4550001443B /* ImageNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNameView.swift; sourceTree = "<group>"; };
 		9CCFD62B22AEE0DD00C64D37 /* StringConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConverterTests.swift; sourceTree = "<group>"; };
 		9CD3261F2233068F00D06B77 /* MacEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacEditView.swift; sourceTree = "<group>"; };
 		9CD32623223308C400D06B77 /* StringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringView.swift; sourceTree = "<group>"; };
@@ -766,6 +768,7 @@
 				9C02D2AD2267D46000587EDF /* DateView.swift */,
 				9C29A79A25645B78002C5F7A /* FileAttachView.swift */,
 				9C29A79425645A42002C5F7A /* FileDropView.swift */,
+				9CCBE7B325F7F4550001443B /* ImageNameView.swift */,
 				9C79BDAF226E368800796E93 /* LabelView.swift */,
 				9CD358882293C42B00C9203F /* LinkView.swift */,
 				9CED280F224EB39900798621 /* LongTextView.swift */,
@@ -1100,6 +1103,7 @@
 				9CD32624223308C400D06B77 /* StringView.swift in Sources */,
 				9CDB563F259BB03A00AB93A4 /* MediumTabViewController.swift in Sources */,
 				9CE32507224D561E0051CA1F /* PrefsWindowController.swift in Sources */,
+				9CCBE7B425F7F4550001443B /* ImageNameView.swift in Sources */,
 				9C568DED2322FBF0005D6B0A /* AuthorDataSource.swift in Sources */,
 				9C568DD02322B6CF005D6B0A /* AuthorView.swift in Sources */,
 				9CC78E6C2283587300640477 /* DisplayPrefsWindowController.swift in Sources */,

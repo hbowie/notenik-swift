@@ -41,6 +41,7 @@ class NoteEditViewController: NSViewController {
     var recursView: MacEditView?
     var statusView: StatusView?
     var linkView:   LinkView?
+    var imageNameView: ImageNameView?
     
     var window: CollectionWindowController? {
         get {
@@ -91,6 +92,7 @@ class NoteEditViewController: NSViewController {
         recursView = nil
         statusView = nil
         linkView = nil
+        imageNameView = nil
         
         // Build the label and value views for each field in the dictionary
         for def in defs {
@@ -188,6 +190,10 @@ class NoteEditViewController: NSViewController {
         for def in defs {
             let field = note.getField(def: def)
             var fieldView = editViews[i]
+            if fieldView is ImageNameView {
+                let imageNameView = fieldView as! ImageNameView
+                imageNameView.customizeForNote(note)
+            }
             if field == nil {
                 fieldView.text = ""
             } else {
