@@ -58,7 +58,7 @@ class ImageNameView: MacEditView {
         lister.addItem(withTitle: noFileSelected)
         for attachment in note.attachments {
             switch attachment.ext {
-            case ".jpg", ".png", ".gif":
+            case ".jpg", ".jpeg", ".png", ".gif":               
                 lister.addItem(withTitle: attachment.suffix)
             default:
                 continue

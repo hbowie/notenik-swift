@@ -727,7 +727,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         } else {
             let modNote = note!.copy() as! Note
             modNote.close()
-            let (_, _) = io!.deleteSelectedNote()
+            let (_, _) = io!.deleteSelectedNote(preserveAttachments: true)
             let (addedNote, _) = io!.addNote(newNote: modNote)
             if addedNote == nil {
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
@@ -841,7 +841,8 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     ///   - modNote: The note with modifications.
     /// - Returns: True if changes were recorded successfully; false otherwise.
     func recordMods (noteIO: NotenikIO, note: Note, modNote: Note) -> Bool {
-        let (_, _) = noteIO.deleteSelectedNote()
+        guard noteIO.reattach(from: note, to: modNote) else { return false }
+        let (_, _) = noteIO.deleteSelectedNote(preserveAttachments: true)
         let (addedNote, _) = noteIO.addNote(newNote: modNote)
         if addedNote == nil {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
@@ -1140,8 +1141,8 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     @objc func openOrAddAttachment(_ sender: NSMenuItem) {
         
         // See if we're ready to take action
-        let (nio, sel) = guardForNoteAction()
-        guard let noteIO = nio, let selNote = sel else { return }
+        let (_, sel) = guardForNoteAction()
+        guard let selNote = sel else { return }
         
         if sender.title == addAttachmentTitle {
             addAttachment()
@@ -1163,7 +1164,6 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     
     /// Prompt the user for an attachment to add and then copy it to the files folder.
     func addAttachment() {
-        
         // Ask the user for a location on disk
         let openPanel = NSOpenPanel();
         openPanel.title = "Select an attachment for this Note"
@@ -1215,8 +1215,12 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
                 if imageField == nil || imageField!.value.value.count == 0 {
                     let ext = file.pathExtension
                     switch ext {
-                    case "gif", "jpg", "png":
-                        note.setField(label: imageDef.fieldLabel.commonForm, value: suffix)
+                    case "gif", "jpg", "jpeg", "png":
+                        _ = note.setField(label: imageDef.fieldLabel.commonForm, value: suffix)
+                        _ = noteIO.writeNote(note)
+                        displayModifiedNote(updatedNote: note)
+                        editVC!.populateFields(with: note)
+                        reloadViews()
                     default:
                         break
                     }
@@ -1324,7 +1328,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         }
         if proceed {
             pendingEdits = false
-            let (nextNote, nextPosition) = noteIO.deleteSelectedNote()
+            let (nextNote, nextPosition) = noteIO.deleteSelectedNote(preserveAttachments: false)
             reloadViews()
             if nextNote != nil {
                 select(note: nextNote, position: nextPosition, source: .action)
