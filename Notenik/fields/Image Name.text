@@ -1,0 +1,11 @@
+Title:  Image Name
+
+Seq:    55
+
+Level:  3
+
+Body: 
+
+The phrase `Image Name` can be used as both a label and a type.
+
+Notenik will allow the user to select an image name from the list of attachments available for the currently selected Note. Only attachments with likely file extensions will be included. 

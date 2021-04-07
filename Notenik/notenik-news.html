@@ -1,4 +1,32 @@
 <hr />
+<h2>2021 Apr 07 &mdash; macOS version 5.8.1 released</h2>
+
+<h4 id="attempting-to-fix-a-crash-occurring-when-using-merge-templates">1. Attempting to Fix a Crash Occurring when using Merge Templates</h4>
+<p>I say &#8220;attempting&#8221; because the crash does not occur in my development build, but only in the version once released to the Mac App Store. </p>
+
+
+<hr />
+<h2>2021 Mar 28 &mdash; macOS version 5.8.0 released</h2>
+
+<h4 id="fixed-a-bug-that-was-resulting-in-a-double-descending-sort">1. Fixed a Bug that was resulting in a double descending sort</h4>
+<p>When sorting via the Scripting module, the sort was honoring both the direction specified in the script commands, as well as the direction specified most recently in the Collection preferences. If both were set to descending, then the result would be a double-negative, resulting in an ascending sort. This has been fixed. </p>
+<h4 id="added-page-type-as-an-additional-column-for-notenik-index-scripting-input">2. Added Page Type as an additional column for notenik-index scripting input</h4>
+<p>If the Collection has a Type field, then this will appear in the Page Type column generated when using the notenik-index scripting input type. </p>
+<h4 id="tweaked-the-linked-tags-template-variable-modifier">3. Tweaked the Linked Tags Template Variable Modifier</h4>
+<p>One or more CSS classes can now be specified, to be applied to the link generated for each tag. These should be specified following the path, with an intervening semicolon to separate the two. </p>
+<h4 id="added-an-author-name-variable-modifier">4. Added an Author Name Variable Modifier</h4>
+<p>Use the letter &#8220;A&#8221;, followed by a &#8220;1&#8221; or a &#8220;2&#8221;, to replace the full name with the last name only, or with the last name first, followed by a comma and the first name. </p>
+<h4 id="added-copyfile-template-command">5. Added copyfile template command</h4>
+<p>A <code>copyfile</code> command can now be used, as part of a merge template, to copy an accompanying file (typically an image file identified by the new Image Name field) to an appropriate output destination, from which it can be accessed by an output web page. </p>
+<h4 id="added-image-name-field-label-and-type">6. Added Image Name field label and type</h4>
+<p>The user can now specify the name to be associated with a Note, by selecting from a list of available attachments. </p>
+<h4 id="added-minutes-to-read-field-label-and-type">7. Added Minutes to Read field label and type</h4>
+<p>The value will be calculated automatically, based on the number of words found in the body field, figuring 200 words per minute, then rounding to the nearest whole number. </p>
+<h4 id="refactoring-of-file-input-output-routines">8. Refactoring of file input/output routines</h4>
+<p>Extensive refactoring of file input and output routines to isolate actual interactions with the file system. </p>
+
+
+<hr />
 <h2>2021 Feb 21 &mdash; macOS version 5.7.0 released</h2>
 
 <h4 id="fixed-a-bug-that-prevented-note-duplication">1. Fixed a bug that prevented Note Duplication</h4>

@@ -22,4 +22,4 @@ For display purposes, links will generally be styled as a link, and will be clic
 
 The first link field encountered within a Note will be considered the Note's primary link field, and will be acted upon by any special buttons/commands designed to open that Note's link. These actions will typically open the link within the user's preferred Web browser (such as Safari or Chrome). 
 
-Remember that a link stored in its own field is a somewhat different animal from a link coded using Markdown syntax within a Note's body. 
+Remember that a link stored in its own field is a somewhat different animal from a link coded using Markdown syntax within a Note's body.
