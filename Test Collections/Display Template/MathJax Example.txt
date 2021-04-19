@@ -1,0 +1,12 @@
+Title:  MathJax Example
+
+Link:   https://www.mathjax.org/#gettingstarted
+
+Status: 0 - Idea
+
+Date Modified: 2021-04-18 16:23:41 -0700
+
+Body: 
+
+When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
+\[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]

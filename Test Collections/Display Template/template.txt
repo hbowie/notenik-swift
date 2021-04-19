@@ -1,0 +1,34 @@
+Title: <title> 
+
+Tags: <tags> 
+
+Link: <link> 
+
+Timestamp:  
+
+Status: 0 - Idea; 1 - Proposed; 2 - Approved; 3 - Planned; 4 - In Work; 5 - Held; 6 - Completed; 7 - Follow-Up; 8 - Canceled; 9 - Closed;  
+
+Type:  
+
+Seq: <seq> 
+
+Date: <date> 
+
+Recurs: <recurs> 
+
+Author: <author> 
+
+Rating: <rating> 
+
+Index: <index> 
+
+Code: <code> 
+
+Teaser: <longtext> 
+
+Date Added: <dateadded> 
+
+Date Modified: <datemodified> 
+
+Body:  
+

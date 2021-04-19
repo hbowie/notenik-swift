@@ -1,0 +1,37 @@
+Title:  A Second Note
+
+Tags:   delightful, wonderful
+
+Link:   https://practopian.org	
+
+Status: 4 - In Work
+
+Type:   Blog
+
+Seq:    23
+
+Date:   18 Apr 2021
+
+Recurs: Every so often
+
+Author: Herb Bowie
+
+Rating: 5 Stars
+
+Index:  Bowie, Herb; 
+
+Code: 
+
+func doStuff() {
+
+}
+
+Teaser: 
+
+It's going to be really great!
+
+Date Modified: 2021-04-18 13:41:22 -0700
+
+Body: 
+
+Finally, we get to the body of the piece!

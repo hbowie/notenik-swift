@@ -2287,6 +2287,21 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         return ok
     }
     
+    @IBAction func genDisplaySample(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let sampler = NoteDisplaySample()
+        let ok = sampler.genSampleFiles(io: noteIO)
+        if ok {
+            communicateSuccess("Sample Display Template Successfully Generated",
+                               info: "Edit \(ResourceFileSys.displayHTMLFileName)"
+                               + " and \(ResourceFileSys.displayCSSFileName)"
+                               + " files as needed",
+                               alert: true)
+        } else {
+            communicateError("Sample Display Template and CSS files could not be created")
+        }
+    }
+    
     // ----------------------------------------------------------------------------------
     //
     // The following section of code contains internal utility routines.
@@ -2316,6 +2331,34 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         let outcome = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return nil }
         return io
+    }
+    
+    /// Communicate success to the user.
+    /// - Parameters:
+    ///   - msg: The primary message to be delivered.
+    ///   - info: Optional additional informative text.
+    ///   - alert: Generate an alert in addition to a log message?
+    func communicateSuccess(_ msg: String, info: String? = nil, alert: Bool=false) {
+        if alert {
+            let alert = NSAlert()
+            alert.alertStyle = .informational
+            alert.messageText = msg
+            if info != nil && info!.count > 0 {
+                alert.informativeText = info!
+            }
+            alert.addButton(withTitle: "OK")
+            _ = alert.runModal()
+        }
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionWindowController",
+                          level: .info,
+                          message: msg)
+        if info != nil && info!.count > 0 {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .info,
+                              message: info!)
+        }
     }
     
     func logInfo(msg: String) {

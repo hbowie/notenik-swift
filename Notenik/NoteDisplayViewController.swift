@@ -102,7 +102,10 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     }
     
     /// This method gets called when the user requests to open a link in a new window.
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+    func webView(_ webView: WKWebView,
+                 createWebViewWith configuration: WKWebViewConfiguration,
+                 for navigationAction: WKNavigationAction,
+                 windowFeatures: WKWindowFeatures) -> WKWebView? {
         
         /// Make sure we have the objects we need in order to proceed.
         guard let url = navigationAction.request.url else {
@@ -118,7 +121,9 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         return nil
     }
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         /// Make sure we have the objects we need in order to proceed.
         guard let url = navigationAction.request.url else {

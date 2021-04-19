@@ -1,0 +1,81 @@
+<?nextrec?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>=$title$=</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+body {
+tab-size: 4; font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14pt }
+</style>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6">
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<?allfields?>
+<!-- For Detailed Formatting Control, Uncomment these lines:
+<?if "=$tags$=" ?>
+<p><em>=$tags$=</em></p>
+<?endif?>
+<p><strong>=$title&h$=</strong></p>
+
+<?if "=$link$=" ?>
+<p>Link: <a href="=$link$=">=$link$=</a></p>
+<?endif?>
+
+<?if "=$status$=" ?>
+<p>Status: =$status$=</p>
+<?endif?>
+
+<?if "=$type$=" ?>
+<p>Type: =$type$=</p>
+<?endif?>
+
+<?if "=$seq$=" ?>
+<p>Seq: =$seq$=</p>
+<?endif?>
+
+<?if "=$date$=" ?>
+<p>Date: =$date$=</p>
+<?endif?>
+
+<?if "=$recurs$=" ?>
+<p>Recurs: =$recurs$=</p>
+<?endif?>
+
+<?if "=$author$=" ?>
+<p>Author: =$author$=</p>
+<?endif?>
+
+<?if "=$rating$=" ?>
+<p>Rating: =$rating$=</p>
+<?endif?>
+
+<?if "=$index$=" ?>
+<p>Index: =$index$=</p>
+<?endif?>
+
+<?if "=$code$=" ?>
+<p>Code: </p>
+<pre><code>
+=$code$=
+</code></pre>
+<?endif?>
+
+<?if "=$teaser$=" ?>
+<p>Teaser: </p>
+=$teaser&o$=
+<?endif?>
+
+<?if "=$body$=" ?>
+<p>Body: </p>
+=$bodyw1o$=
+<?endif?>
+-->
+</body>
+</html>
+<?loop?>
