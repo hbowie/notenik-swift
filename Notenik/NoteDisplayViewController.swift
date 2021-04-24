@@ -150,7 +150,11 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         
         switch link.type {
         case .weblink, .aboutlink:
-            webLinkFollowed(true)
+            if String(describing: url) == "about:blank" {
+                webLinkFollowed(false)
+            } else {
+                webLinkFollowed(true)
+            }
             decisionHandler(.allow)
         case .notenikApp, .xcodeDev:
             webLinkFollowed(false)
