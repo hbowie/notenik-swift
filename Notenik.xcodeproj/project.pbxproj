@@ -211,6 +211,8 @@
 		9CD3588B2293C42B00C9203F /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD358882293C42B00C9203F /* LinkView.swift */; };
 		9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD756D82210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
+		9CD9058926362F70000851E8 /* MicroBlog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD9058826362F70000851E8 /* MicroBlog.storyboard */; };
+		9CD9058F26363053000851E8 /* MicroBlogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD9058E26363053000851E8 /* MicroBlogWindowController.swift */; };
 		9CD9963023D3CA30004650BE /* CollectionPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD9962F23D3CA30004650BE /* CollectionPrefs.storyboard */; };
 		9CD9963123D3CA30004650BE /* CollectionPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD9962F23D3CA30004650BE /* CollectionPrefs.storyboard */; };
 		9CDB562B259BAE3400AB93A4 /* MediumAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB562A259BAE3400AB93A4 /* MediumAuthViewController.swift */; };
@@ -241,6 +243,7 @@
 		9CF1193F225827650015AE91 /* CollectionPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF1193D225827650015AE91 /* CollectionPrefsViewController.swift */; };
 		9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF256CA21FD0FF000D9F06A /* CollectionJuggler.swift */; };
 		9CF256CD21FD175E00D9F06A /* CollectionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF256CC21FD175E00D9F06A /* CollectionWindowController.swift */; };
+		9CF365812637688300EAE129 /* MicroBlogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF365802637688300EAE129 /* MicroBlogViewController.swift */; };
 		9CF435C42480598500DD7C33 /* Counts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF435C32480598500DD7C33 /* Counts.storyboard */; };
 		9CF435C52480598500DD7C33 /* Counts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF435C32480598500DD7C33 /* Counts.storyboard */; };
 		9CF435C724805C0500DD7C33 /* CountsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C624805C0500DD7C33 /* CountsWindowController.swift */; };
@@ -403,6 +406,8 @@
 		9CD3262722330C8A00D06B77 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		9CD358882293C42B00C9203F /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
 		9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSplitViewController.swift; sourceTree = "<group>"; };
+		9CD9058826362F70000851E8 /* MicroBlog.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MicroBlog.storyboard; sourceTree = "<group>"; };
+		9CD9058E26363053000851E8 /* MicroBlogWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroBlogWindowController.swift; sourceTree = "<group>"; };
 		9CD9962F23D3CA30004650BE /* CollectionPrefs.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CollectionPrefs.storyboard; sourceTree = "<group>"; };
 		9CDB562A259BAE3400AB93A4 /* MediumAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumAuthViewController.swift; sourceTree = "<group>"; };
 		9CDB5634259BAE9B00AB93A4 /* MediumPubViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumPubViewController.swift; sourceTree = "<group>"; };
@@ -428,6 +433,7 @@
 		9CF1193D225827650015AE91 /* CollectionPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPrefsViewController.swift; sourceTree = "<group>"; };
 		9CF256CA21FD0FF000D9F06A /* CollectionJuggler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionJuggler.swift; sourceTree = "<group>"; };
 		9CF256CC21FD175E00D9F06A /* CollectionWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindowController.swift; sourceTree = "<group>"; };
+		9CF365802637688300EAE129 /* MicroBlogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroBlogViewController.swift; sourceTree = "<group>"; };
 		9CF435C32480598500DD7C33 /* Counts.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Counts.storyboard; sourceTree = "<group>"; };
 		9CF435C624805C0500DD7C33 /* CountsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountsWindowController.swift; sourceTree = "<group>"; };
 		9CF435C924805C2F00DD7C33 /* CountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountsViewController.swift; sourceTree = "<group>"; };
@@ -601,6 +607,7 @@
 				9C46A71325D05C58006E9C16 /* filenew */,
 				9C60E70E21F6518400C332ED /* logging */,
 				9C6D8EA4259AB73C00E7AE38 /* medium */,
+				9CD9058726362E54000851E8 /* microblog */,
 				9C3CC8F2250A980D002C95D0 /* navigator */,
 				9C8693DD257560EF00F045D2 /* newicloud */,
 				9C10831225AA66A8004B33CA /* news */,
@@ -786,6 +793,16 @@
 				9C619A37231B323B003CFFBE /* WorkTypeView.swift */,
 			);
 			path = views;
+			sourceTree = "<group>";
+		};
+		9CD9058726362E54000851E8 /* microblog */ = {
+			isa = PBXGroup;
+			children = (
+				9CD9058826362F70000851E8 /* MicroBlog.storyboard */,
+				9CD9058E26363053000851E8 /* MicroBlogWindowController.swift */,
+				9CF365802637688300EAE129 /* MicroBlogViewController.swift */,
+			);
+			path = microblog;
 			sourceTree = "<group>";
 		};
 		9CE3DB5525E0580A006938D3 /* Notenik-iOS */ = {
@@ -1015,6 +1032,7 @@
 				9C0BF17225B678470037BCA9 /* intro in Resources */,
 				9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */,
 				9C2BFCB625ACD0BF0030A980 /* notenik-news.html in Resources */,
+				9CD9058926362F70000851E8 /* MicroBlog.storyboard in Resources */,
 				9CE3250A224D58360051CA1F /* Log.storyboard in Resources */,
 				9C46A71525D05CC0006E9C16 /* NewCollection.storyboard in Resources */,
 				9C0BF16C25B63C990037BCA9 /* markdown-spec in Resources */,
@@ -1093,6 +1111,7 @@
 				9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */,
 				9C29DD29226286A100928180 /* CollectionWindow.swift in Sources */,
 				9CED2810224EB39900798621 /* LongTextView.swift in Sources */,
+				9CD9058F26363053000851E8 /* MicroBlogWindowController.swift in Sources */,
 				9C5556D722E11E3B0099414E /* ExportWindowController.swift in Sources */,
 				9C568DE92322F701005D6B0A /* WorkTitleView.swift in Sources */,
 				9C8693E52575658700F045D2 /* NewICloudWindowController.swift in Sources */,
@@ -1123,6 +1142,7 @@
 				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
 				9CDB5635259BAE9B00AB93A4 /* MediumPubViewController.swift in Sources */,
 				9CF435C724805C0500DD7C33 /* CountsWindowController.swift in Sources */,
+				9CF365812637688300EAE129 /* MicroBlogViewController.swift in Sources */,
 				9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */,
 				9C46A72725D07899006E9C16 /* NewLocationViewController.swift in Sources */,
 				9C29A78A2564380F002C5F7A /* NoteDisplayWebView.swift in Sources */,

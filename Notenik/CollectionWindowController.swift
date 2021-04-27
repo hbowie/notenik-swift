@@ -44,6 +44,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
     let shareStoryboard:           NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
     let mediumPubStoryboard:       NSStoryboard = NSStoryboard(name: "MediumPub", bundle: nil)
+    let microBlogStoryboard:       NSStoryboard = NSStoryboard(name: "MicroBlog", bundle: nil)
     let exportStoryboard:          NSStoryboard = NSStoryboard(name: "Export", bundle: nil)
     let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
     let tagsMassChangeStoryboard:  NSStoryboard = NSStoryboard(name: "TagsMassChange", bundle: nil)
@@ -902,6 +903,24 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         if let mediumPubController = self.mediumPubStoryboard.instantiateController(withIdentifier: "mediumpubWC") as? MediumPubWindowController {
             mediumPubController.note = selectedNote
             mediumPubController.showWindow(sender)
+            
+            // vc.window = shareController
+            // vc.io = notenikIO!
+            // vc.note = note
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Medium Publish Window Controller!")
+        }
+    }
+    
+    @IBAction func menuNotePublishToMicroBlog(_ sender: Any) {
+        let (_, sel) = guardForNoteAction()
+        guard let selectedNote = sel else { return }
+        if let microBlogController = self.microBlogStoryboard.instantiateController(withIdentifier: "microblogWC") as? MicroBlogWindowController {
+            microBlogController.note = selectedNote
+            microBlogController.showWindow(sender)
             
             // vc.window = shareController
             // vc.io = notenikIO!

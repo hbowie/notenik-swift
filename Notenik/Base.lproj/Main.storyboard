@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -457,6 +457,19 @@ CA
                                             <connections>
                                                 <action selector="menuNotePublishToMedium:" target="Ady-hI-5gd" id="mwo-Yg-uQM"/>
                                             </connections>
+                                        </menuItem>
+                                        <menuItem title="Publish" id="ORb-S5-8DY">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Publish" id="qEb-aP-Q1t">
+                                                <items>
+                                                    <menuItem title="To Micro.blog..." id="WbY-EQ-W9y">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="menuNotePublishToMicroBlog:" target="Ady-hI-5gd" id="SS0-Tr-wHv"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="NIf-Fd-fTf"/>
                                         <menuItem title="Text Edit Note..." keyEquivalent="t" toolTip="Open the Current Note in your Preferred Text Editor" id="bpk-dF-vAM" userLabel="Text Edit Note">
@@ -990,7 +1003,7 @@ CA
                                         <action selector="launchLink:" target="Oky-zY-oP4" id="bpu-hT-ocE"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="DFDC60A3-7B44-45B7-884F-821DB14F1234" label="Save" paletteLabel="Save" sizingBehavior="auto" id="0br-Uy-6m2">
+                                <toolbarItem implicitItemIdentifier="DFDC60A3-7B44-45B7-884F-821DB14F1234" label="Save" paletteLabel="Save" title="OK" sizingBehavior="auto" id="0br-Uy-6m2">
                                     <nil key="toolTip"/>
                                     <button key="view" verticalHuggingPriority="750" id="fbp-L5-Kpu">
                                         <rect key="frame" x="0.0" y="14" width="35" height="23"/>
@@ -1049,7 +1062,7 @@ CA
                                         <action selector="searchNow:" target="B8D-0N-5wS" id="BY9-wS-fUM"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="4E1A6904-9894-48EC-92D9-176C140AD28D" label="Attachments" paletteLabel="Attachments" sizingBehavior="auto" id="f6I-c6-rBh" userLabel="Attachments">
+                                <toolbarItem implicitItemIdentifier="4E1A6904-9894-48EC-92D9-176C140AD28D" label="Attachments" paletteLabel="Attachments" title="files..." sizingBehavior="auto" id="f6I-c6-rBh" userLabel="Attachments">
                                     <nil key="toolTip"/>
                                     <popUpButton key="view" verticalHuggingPriority="750" id="L3h-8b-Jqt">
                                         <rect key="frame" x="0.0" y="14" width="149" height="25"/>
@@ -1155,13 +1168,13 @@ CA
             <objects>
                 <viewController id="ckd-wC-xiu" customClass="NoteListViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="71N-8b-3wX">
-                        <rect key="frame" x="0.0" y="0.0" width="240" height="41"/>
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="41"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="40" height="41"/>
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="41"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="38" height="24"/>
+                                    <rect key="frame" x="1" y="1" width="198" height="24"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
@@ -1441,7 +1454,7 @@ CA
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="25" width="38" height="15"/>
+                                    <rect key="frame" x="1" y="25" width="198" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.095238095238095233" horizontal="NO" id="pSI-dZ-vUM">
@@ -1478,13 +1491,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="121"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="114"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="119"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="112"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="477" height="119"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="477" height="112"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
