@@ -4,7 +4,7 @@ Tags:   OmniFocus, import
 
 Timestamp: 20210104191228
 
-Seq:    45
+Seq:    46
 
 Level:  3
 
@@ -34,4 +34,4 @@ There are a few general points to keep in mind when exporting data from OmniFocu
 
 + Notenik has no specific fields for Context or for parent Projects, but will attempt to add this sort of data to the Tags for each Note, where appropriate. 
 
-And I think that's it! Feel free to let me know if you have any problems importing your data from OmniFocus. 
+And I think that's it! Feel free to let me know if you have any problems importing your data from OmniFocus.

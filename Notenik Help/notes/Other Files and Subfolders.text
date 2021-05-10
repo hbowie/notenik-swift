@@ -26,6 +26,10 @@ In addition to the Note files, the following special files and folders may be fo
 
 * A file named 'alias.txt' may also be present. This file contains information used to prevent wiki-style links from breaking when Notes are renamed. 
 
+* A file named 'display.css' can be used to override the default CSS values used on the Display tab. 
+
+* A file named 'display.html' can be used to override the HTML template used to generate the Display tab. 
+
 * A 'files' folder will contain any Attachments for the Collection. 
 
 * a 'mirror' folder will contain templates, scripts and css used to mirror the collection to an alternate format (such as HTML). 
