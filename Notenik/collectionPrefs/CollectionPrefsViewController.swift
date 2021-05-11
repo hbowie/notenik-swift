@@ -24,6 +24,7 @@ class CollectionPrefsViewController: NSViewController {
     
     @IBOutlet var collectionTitle:      NSTextField!
     @IBOutlet var fileExtComboBox:      NSComboBox!
+    @IBOutlet var collectionShortcut:   NSTextField!
     @IBOutlet var mirrorAutoIndexCkBox: NSButton!
     @IBOutlet var bodyLabelCkBox:       NSButton!
     @IBOutlet var h1TitlesCkBox:        NSButton!
@@ -204,6 +205,11 @@ class CollectionPrefsViewController: NSViewController {
         if collectionTitle != nil {
             collectionTitle!.stringValue = collection!.title
         }
+        
+        if collectionShortcut != nil {
+            collectionShortcut!.stringValue = collection!.shortcut
+        }
+        
         extPicker.setFileExt(collection!.preferredExt)
         setFieldsForCollection()
         setOtherFieldsAllowed(collection!.otherFields)
@@ -285,6 +291,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBAction func okButtonClicked(_ sender: Any) {
         guard collection != nil else { return }
         collection!.title = collectionTitle.stringValue
+        collection!.shortcut = collectionShortcut.stringValue
         collection!.preferredExt = fileExtComboBox.stringValue
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
         collection!.mirrorAutoIndex = (mirrorAutoIndexCkBox.state == .on)
