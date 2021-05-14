@@ -34,6 +34,7 @@ class CollectionJuggler: NSObject {
     let logStoryboard:             NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
     let navStoryboard:             NSStoryboard = NSStoryboard(name: "Navigator", bundle: nil)
+    let quickActionStoryBoard:     NSStoryboard = NSStoryboard(name: "QuickAction", bundle: nil)
     
     let scriptStoryboard: NSStoryboard = NSStoryboard(name: "Script", bundle: nil)
     var scriptWindowController: ScriptWindowController?
@@ -47,6 +48,7 @@ class CollectionJuggler: NSObject {
     var initialWindowUsed = false
     
     var navController: NavigatorWindowController?
+    var quickActionController: QuickActionWindowController?
     
     override private init() {
         super.init()
@@ -131,8 +133,8 @@ class CollectionJuggler: NSObject {
         for url in urls {
             let link = NotenikLink(url: url)
             link.determineCollectionType()
-            let ok = open(link: link)
-            if ok {
+            let wc = open(link: link)
+            if wc != nil {
                 successfulOpens += 1
             }
         }
@@ -140,29 +142,24 @@ class CollectionJuggler: NSObject {
     }
     
     /// Open a single NotenikLink. 
-    func open(link: NotenikLink) -> Bool {
+    func open(link: NotenikLink) -> CollectionWindowController? {
         
         guard link.location != .appBundle else {
-            let wc = openFileWithNewWindow(fileURL: link.url!, readOnly: true)
-            return wc != nil
+            return openFileWithNewWindow(fileURL: link.url!, readOnly: true)
         }
 
         link.determineCollectionType()
-        var ok = false
         switch link.type {
         case .emptyFolder:
-            ok = newCollection(fileURL: link.url!)
+            return newCollection(fileURL: link.url!)
         case .ordinaryCollection, .webCollection:
-            let wc = openFileWithNewWindow(fileURL: link.url!, readOnly: false)
-            if wc != nil {
-                ok = true
-            }
+            return openFileWithNewWindow(fileURL: link.url!, readOnly: false)
         case .realm:
-            ok = openParentRealm(parentURL: link.url!)
+            return openParentRealm(parentURL: link.url!)
         default:
             communicateError("Item to be opened at \(link) could not be used", alert: true)
         }
-        return ok
+        return nil
     }
     
     func userRequestsNewWebsite() {
@@ -209,7 +206,7 @@ class CollectionJuggler: NSObject {
     }
     
     /// Open a Parent Folder containing one or more Notenik Collections
-    func openParentRealm() -> Bool {
+    func openParentRealm() -> CollectionWindowController? {
         let openPanel = NSOpenPanel();
         openPanel.title = "Select a Parent Folder containing one or more Collections"
         if appPrefs.parentRealmParentURL != nil {
@@ -227,10 +224,10 @@ class CollectionJuggler: NSObject {
         if result == .OK {
             return self.openParentRealm(parentURL: openPanel.url!)
         }
-        return false
+        return nil
     }
     
-    func openParentRealm(parentURL: URL) -> Bool {
+    func openParentRealm(parentURL: URL) -> CollectionWindowController? {
         notenikFolderList.add(url: parentURL, type: .realm, location: .undetermined)
         AppPrefs.shared.parentRealmPath = parentURL.path
         appPrefs.parentRealmParentURL = parentURL.deletingLastPathComponent()
@@ -238,9 +235,9 @@ class CollectionJuggler: NSObject {
         let ok = realmScanner.openRealm(path: parentURL.path)
         if ok {
             let io = realmScanner.realmIO
-            _ = assignIOtoWindow(io: io)
+            return assignIOtoWindow(io: io)
         }
-        return ok
+        return nil
     }
     
     /// The user has requested us to save the current collection in a new location
@@ -470,7 +467,7 @@ class CollectionJuggler: NSObject {
     
     /// Now that we have a disk location, let's take other steps
     /// to create a new collection.
-    func newCollection(fileURL: URL) -> Bool {
+    func newCollection(fileURL: URL) -> CollectionWindowController? {
         
         // Create and populate a starting NoteCollection object
         let io: NotenikIO = FileIO()
@@ -485,7 +482,7 @@ class CollectionJuggler: NSObject {
         }
         
         let initOK = io.initCollection(realm: realm, collectionPath: collectionURL.path, readOnly: false)
-        guard initOK else { return false }
+        guard initOK else { return nil }
         
         notenikFolderList.add(url: collectionURL, type: .ordinaryCollection, location: .undetermined)
         io.addDefaultDefinitions()
@@ -497,23 +494,20 @@ class CollectionJuggler: NSObject {
                 collectionPrefsVC.passCollectionPrefsRequesterInfo(collection: io.collection!, window: collectionPrefsController)
                 let returnCode = application.runModal(for: collectionPrefsWindow)
                 if returnCode == NSApplication.ModalResponse.OK {
-                    collectionPrefsModified(collection: io.collection!)
+                    return collectionPrefsModified(collection: io.collection!)
                 } else {
                     // ???
                 }
-                // collectionPrefsWindow.close()
             }
-            // collectionPrefsController.showWindow(self)
-            // collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: io.collection!)
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionJuggler",
                               level: .error,
                               message: "Couldn't get a Collection Prefs Window Controller!")
-            return false
+            return nil
         }
         
-        return true
+        return nil
     }
     
     
@@ -556,18 +550,17 @@ class CollectionJuggler: NSObject {
     ///   - ok: True if they clicked on OK, false if they clicked Cancel.
     ///   - collection: The Collection whose prefs are being modified.
     ///   - window: The Collection Prefs window.
-    func collectionPrefsModified(collection: NoteCollection) {
-        // application.stopModal()
+    func collectionPrefsModified(collection: NoteCollection) -> CollectionWindowController? {
         let io: NotenikIO = FileIO()
         let realm = io.getDefaultRealm()
         realm.path = ""
-        var ok = io.newCollection(collection: collection, withFirstNote: true)
+        let ok = io.newCollection(collection: collection, withFirstNote: true)
         guard ok else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik",
                               category: "CollectionJuggler",
                               level: .error,
                               message: "Problems initializing the new collection at " + collection.fullPath)
-            return
+            return nil
         }
         
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
@@ -577,8 +570,7 @@ class CollectionJuggler: NSObject {
         
         saveCollectionInfo(collection)
 
-        let wc = assignIOtoWindow(io: io)
-        ok = (wc != nil)
+        return assignIOtoWindow(io: io)
     }
     
     /// Make the given collection the easily accessible Essential collection
@@ -778,10 +770,21 @@ class CollectionJuggler: NSObject {
             navWC.showWindow(self)
             navController = navWC
         } else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "CollectionJuggler",
-                              level: .error,
-                              message: "Couldn't get a Navigation Window Controller!")
+            communicateError("Couldn't get a Navigation Window Controller!", alert: true)
+        }
+    }
+    
+    /// Display the Quick Action Storyboard.
+    func quickAction() {
+        if quickActionController != nil {
+            quickActionController!.restart()
+            quickActionController!.showWindow(self)
+        } else if let quickWC = self.quickActionStoryBoard.instantiateController(withIdentifier: "quickWC") as? QuickActionWindowController {
+            quickWC.juggler = self
+            quickWC.showWindow(self)
+            quickActionController = quickWC
+        } else {
+            communicateError("Couldn't get a Quick Action Window Controller", alert: true)
         }
     }
     

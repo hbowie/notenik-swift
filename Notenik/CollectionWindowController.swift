@@ -255,6 +255,61 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         }
     }
     
+    func updateNote(title: String, bodyText: String) {
+        print("CollectionWindowController.updateNote")
+        guard title.count > 0 else {
+            print("  - title is blank")
+            return
+        }
+        print("  - title = \(title)")
+        print("  - body text = \(bodyText)")
+        guard let noteIO = guardForCollectionAction() else { return }
+        let titleID = StringUtils.toCommon(title)
+        let noteToUpdate = noteIO.getNote(forID: titleID)
+        if noteToUpdate == nil {
+            print("  - Note to Update not found")
+            newNote(title: title, bodyText: bodyText)
+        } else {
+            print("  - Note to Update titled \(noteToUpdate!.title.value)")
+            updateNote(noteToUpdate: noteToUpdate!, bodyText: bodyText)
+        }
+    }
+    
+    func updateNote(noteToUpdate: Note, bodyText: String) {
+        
+        guard bodyText.count > 0 else { return }
+        guard let _ = guardForCollectionAction() else { return }
+        select(note: noteToUpdate, position: nil, source: .action)
+        let (_, sel) = guardForNoteAction()
+        guard let selectedNote = sel else { return }
+        var body = selectedNote.body.value
+        let updatedNote = selectedNote.copy() as! Note
+        body.append("\n\n")
+        body.append(bodyText)
+        guard updatedNote.setBody(body) else { return }
+        newNoteRequested = false
+        editVC!.populateFields(with: updatedNote)
+        noteTabs!.tabView.selectTabViewItem(at: 1)
+        guard let window = self.window else { return }
+        guard let titleView = editVC?.titleView else { return }
+        window.makeFirstResponder(titleView.view)
+    }
+    
+    func newNote(title: String, bodyText: String) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        newNoteRequested = true
+        newNote = Note(collection: noteIO.collection!)
+        _ = newNote!.setTitle(title)
+        _ = newNote!.setBody(bodyText)
+        editVC!.populateFields(with: newNote!)
+        noteTabs!.tabView.selectTabViewItem(at: 1)
+        guard let window = self.window else { return }
+        guard let titleView = editVC?.titleView else { return }
+        window.makeFirstResponder(titleView.view)
+    }
+    
     /// If we have past due daily tasks, then update the dates to make them current
     @IBAction func menuCatchUpDailyTasks(_ sender: Any) {
         
@@ -1388,9 +1443,15 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     }
     
     @IBAction func openEdits(_ sender: Any) {
+        print("CollectionViewController.openEdits")
+        print("  - selected tab label = \(noteTabs!.tabView.selectedTabViewItem!.label)")
         guard noteTabs!.tabView.selectedTabViewItem!.label != "Edit"  else { return }
         let (_, sel) = guardForNoteAction()
+        if sel == nil {
+            print("  - selected note is nil")
+        }
         guard sel != nil else { return }
+        print("  - selecting note tab at 1")
         noteTabs!.tabView.selectTabViewItem(at: 1)
     }
     

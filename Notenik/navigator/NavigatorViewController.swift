@@ -186,8 +186,8 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
     }
     
     func open(link: NotenikLink) {
-        let ok = juggler!.open(link: link)
-        if ok {
+        let wc = juggler!.open(link: link)
+        if wc != nil {
             closeWindow()
         }
     }
@@ -240,8 +240,8 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
     /// Let the user select a folder to open as a parent realm.
     @IBAction func openParentRealm(_ sender: Any) {
         guard juggler != nil else { return }
-        let success = juggler!.openParentRealm()
-        if success {
+        let parentWC = juggler!.openParentRealm()
+        if parentWC != nil {
             closeWindow()
         }
     }

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="ZCm-oz-hOm">
+            <objects>
+                <windowController storyboardIdentifier="quickWC" id="BZk-tl-DiX" customClass="QuickActionWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Quick Action" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="mOF-RH-EhO">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+                        <view key="contentView" id="cQk-S5-cCI">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="BZk-tl-DiX" id="fjf-kK-nOp"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="p4w-Zd-lbL" kind="relationship" relationship="window.shadowedContentViewController" id="nuR-OO-ipQ"/>
+                    </connections>
+                </windowController>
+                <customObject id="Lbz-NL-Uxj" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-186" y="-20"/>
+        </scene>
+        <!--Quick Action View Controller-->
+        <scene sceneID="Tsi-X9-M3H">
+            <objects>
+                <viewController id="p4w-Zd-lbL" customClass="QuickActionViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="hRR-Yd-MiJ">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="364"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ni0-1c-CXz">
+                                <rect key="frame" x="13" y="13" width="76" height="32"/>
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a1x-I9-KU8">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="cancel:" target="p4w-Zd-lbL" id="WMZ-f4-9wn"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rjy-er-JQG">
+                                <rect key="frame" x="414" y="13" width="53" height="32"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="A0p-oJ-LcW">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="okToProceed:" target="p4w-Zd-lbL" id="eT7-GB-CE0"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jl9-Zy-pu3">
+                                <rect key="frame" x="20" y="328" width="125" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Collection Shortcut:" id="4No-Bl-O82">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xby-u7-CGk">
+                                <rect key="frame" x="152" y="322" width="311" height="25"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="5" id="zBH-Ka-Kmy">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </comboBoxCell>
+                                <connections>
+                                    <action selector="shortcutAction:" target="p4w-Zd-lbL" id="CMk-rc-9iB"/>
+                                </connections>
+                            </comboBox>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pp3-H3-Vph">
+                                <rect key="frame" x="20" y="304" width="67" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Note Title:" id="tWF-Ym-9Mq">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Waw-zQ-jJl">
+                                <rect key="frame" x="20" y="270" width="443" height="25"/>
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="5" id="c02-UV-80s">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </comboBoxCell>
+                                <connections>
+                                    <action selector="noteTitleAction:" target="p4w-Zd-lbL" id="Aoe-x5-1lo"/>
+                                </connections>
+                            </comboBox>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mZE-j6-DUs">
+                                <rect key="frame" x="20" y="250" width="69" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Body text: " id="Qae-Gz-PL0">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ekJ-yO-CSb">
+                                <rect key="frame" x="20" y="72" width="438" height="170"/>
+                                <clipView key="contentView" drawsBackground="NO" id="ai9-Cm-sin">
+                                    <rect key="frame" x="0.0" y="0.0" width="423" height="170"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" continuousSpellChecking="YES" allowsUndo="YES" smartInsertDelete="YES" id="mYg-T5-LX3">
+                                            <rect key="frame" x="0.0" y="0.0" width="423" height="170"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="423" height="170"/>
+                                            <size key="maxSize" width="438" height="10000000"/>
+                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="P9F-DG-Mpr">
+                                    <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="CD5-V7-dR9">
+                                    <rect key="frame" x="423" y="0.0" width="15" height="170"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Waw-zQ-jJl" firstAttribute="leading" secondItem="hRR-Yd-MiJ" secondAttribute="leading" constant="20" symbolic="YES" id="0Xt-vB-8X7"/>
+                            <constraint firstItem="Waw-zQ-jJl" firstAttribute="top" secondItem="pp3-H3-Vph" secondAttribute="bottom" constant="11" id="4Fd-9Y-J4f"/>
+                            <constraint firstItem="ni0-1c-CXz" firstAttribute="top" secondItem="ekJ-yO-CSb" secondAttribute="bottom" constant="32" id="7Yp-of-B3p"/>
+                            <constraint firstItem="jl9-Zy-pu3" firstAttribute="leading" secondItem="pp3-H3-Vph" secondAttribute="leading" id="8pM-kW-ebd"/>
+                            <constraint firstAttribute="trailing" secondItem="xby-u7-CGk" secondAttribute="trailing" constant="20" symbolic="YES" id="HSJ-hk-DkL"/>
+                            <constraint firstItem="jl9-Zy-pu3" firstAttribute="leading" secondItem="hRR-Yd-MiJ" secondAttribute="leading" constant="22" id="KM6-cN-LKN"/>
+                            <constraint firstItem="ni0-1c-CXz" firstAttribute="baseline" secondItem="rjy-er-JQG" secondAttribute="baseline" id="Knq-aX-7qa"/>
+                            <constraint firstItem="pp3-H3-Vph" firstAttribute="leading" secondItem="mZE-j6-DUs" secondAttribute="leading" id="L9Y-9x-2Tz"/>
+                            <constraint firstItem="mZE-j6-DUs" firstAttribute="top" secondItem="Waw-zQ-jJl" secondAttribute="bottom" constant="8" symbolic="YES" id="MlJ-6c-grV"/>
+                            <constraint firstItem="jl9-Zy-pu3" firstAttribute="baseline" secondItem="xby-u7-CGk" secondAttribute="baseline" id="NEo-wM-3PL"/>
+                            <constraint firstAttribute="bottom" secondItem="ni0-1c-CXz" secondAttribute="bottom" constant="20" symbolic="YES" id="Rpd-uO-yam"/>
+                            <constraint firstItem="Waw-zQ-jJl" firstAttribute="leading" secondItem="ekJ-yO-CSb" secondAttribute="leading" id="XsN-bH-C4a"/>
+                            <constraint firstItem="ekJ-yO-CSb" firstAttribute="top" secondItem="mZE-j6-DUs" secondAttribute="bottom" constant="8" symbolic="YES" id="XtI-Na-9BD"/>
+                            <constraint firstItem="Waw-zQ-jJl" firstAttribute="trailing" secondItem="rjy-er-JQG" secondAttribute="trailing" id="YgU-id-clQ"/>
+                            <constraint firstItem="ekJ-yO-CSb" firstAttribute="leading" secondItem="ni0-1c-CXz" secondAttribute="leading" id="h1o-tz-wG9"/>
+                            <constraint firstItem="jl9-Zy-pu3" firstAttribute="top" secondItem="hRR-Yd-MiJ" secondAttribute="top" constant="20" symbolic="YES" id="qRY-L7-u3t"/>
+                            <constraint firstItem="xby-u7-CGk" firstAttribute="leading" secondItem="jl9-Zy-pu3" secondAttribute="trailing" constant="9" id="rat-L6-vFh"/>
+                            <constraint firstItem="xby-u7-CGk" firstAttribute="trailing" secondItem="Waw-zQ-jJl" secondAttribute="trailing" id="ss1-hA-8pc"/>
+                            <constraint firstItem="pp3-H3-Vph" firstAttribute="top" secondItem="jl9-Zy-pu3" secondAttribute="bottom" constant="8" symbolic="YES" id="vpz-10-t4f"/>
+                            <constraint firstAttribute="trailing" secondItem="ekJ-yO-CSb" secondAttribute="trailing" constant="22" id="zBj-Hm-d5d"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bodyTextView" destination="mYg-T5-LX3" id="TjQ-K2-Oag"/>
+                        <outlet property="noteTitleComboBox" destination="Waw-zQ-jJl" id="Dcq-yr-QQT"/>
+                        <outlet property="shortcutComboBox" destination="xby-u7-CGk" id="uZx-fr-598"/>
+                    </connections>
+                </viewController>
+                <customObject id="pHt-Oq-a2V" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-186" y="484"/>
+        </scene>
+    </scenes>
+</document>

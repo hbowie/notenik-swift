@@ -66,6 +66,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         // Let's build a submenu showing all folders in the iCloud Notenik folder.
         iCloudMenu.removeAllItems()
         notenikFolderList = NotenikFolderList.shared
+        notenikFolderList.loadShortcutsFromPrefs()
         for folder in notenikFolderList {
             if folder.location == .iCloudContainer {
                 let item = NSMenuItem(title: folder.fileOrFolderName, action: #selector(openICloudItem(_:)), keyEquivalent: "")
@@ -139,6 +140,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     @IBAction func navBoard(_ sender: NSMenuItem) {
         juggler.navBoard()
+    }
+    
+    @IBAction func quickAction(_ sender: NSMenuItem) {
+        juggler.quickAction()
     }
     
     @IBAction func newCollection(_ sender: NSMenuItem) {
@@ -275,6 +280,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return false
+    }
+    
+    func applicationWillTerminate(_ notification: Notification) {
+        notenikFolderList.savePrefs()
     }
     
     /// Log an information message.

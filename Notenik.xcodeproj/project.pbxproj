@@ -200,6 +200,10 @@
 		9CC78E70228358A400640477 /* DisplayPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC78E6E228358A400640477 /* DisplayPrefsViewController.swift */; };
 		9CC8336E22B3F65B0006AAE0 /* MarkedupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC8336D22B3F65B0006AAE0 /* MarkedupTests.swift */; };
 		9CCBE7B425F7F4550001443B /* ImageNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCBE7B325F7F4550001443B /* ImageNameView.swift */; };
+		9CCE7C63264AE8FD003818DF /* QuickAction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CCE7C62264AE8FD003818DF /* QuickAction.storyboard */; };
+		9CCE7C65264AEB1E003818DF /* QuickActionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCE7C64264AEB1E003818DF /* QuickActionWindowController.swift */; };
+		9CCE7C67264AEB47003818DF /* QuickActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCE7C66264AEB47003818DF /* QuickActionViewController.swift */; };
+		9CCE7C69264B1FA7003818DF /* QuickActionFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCE7C68264B1FA7003818DF /* QuickActionFolder.swift */; };
 		9CCFD62C22AEE0DD00C64D37 /* StringConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFD62B22AEE0DD00C64D37 /* StringConverterTests.swift */; };
 		9CD326202233068F00D06B77 /* MacEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* MacEditView.swift */; };
 		9CD326222233068F00D06B77 /* MacEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3261F2233068F00D06B77 /* MacEditView.swift */; };
@@ -400,6 +404,10 @@
 		9CC78E6E228358A400640477 /* DisplayPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefsViewController.swift; sourceTree = "<group>"; };
 		9CC8336D22B3F65B0006AAE0 /* MarkedupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedupTests.swift; sourceTree = "<group>"; };
 		9CCBE7B325F7F4550001443B /* ImageNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNameView.swift; sourceTree = "<group>"; };
+		9CCE7C62264AE8FD003818DF /* QuickAction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuickAction.storyboard; sourceTree = "<group>"; };
+		9CCE7C64264AEB1E003818DF /* QuickActionWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionWindowController.swift; sourceTree = "<group>"; };
+		9CCE7C66264AEB47003818DF /* QuickActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionViewController.swift; sourceTree = "<group>"; };
+		9CCE7C68264B1FA7003818DF /* QuickActionFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionFolder.swift; sourceTree = "<group>"; };
 		9CCFD62B22AEE0DD00C64D37 /* StringConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConverterTests.swift; sourceTree = "<group>"; };
 		9CD3261F2233068F00D06B77 /* MacEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacEditView.swift; sourceTree = "<group>"; };
 		9CD32623223308C400D06B77 /* StringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringView.swift; sourceTree = "<group>"; };
@@ -612,6 +620,7 @@
 				9C8693DD257560EF00F045D2 /* newicloud */,
 				9C10831225AA66A8004B33CA /* news */,
 				9C832A00224ABDBD007DA6FC /* prefs */,
+				9CCE7C61264AE8AB003818DF /* quick */,
 				9C4C1BAE22E7EE0A005997DF /* script */,
 				9CB60BBE22650975003B5655 /* share */,
 				9CB06CB522CCF4A200887778 /* tags */,
@@ -759,6 +768,17 @@
 				9C7DDD90255B36AA00065812 /* DisplayFontsDataSource.swift */,
 			);
 			path = displayPrefs;
+			sourceTree = "<group>";
+		};
+		9CCE7C61264AE8AB003818DF /* quick */ = {
+			isa = PBXGroup;
+			children = (
+				9CCE7C62264AE8FD003818DF /* QuickAction.storyboard */,
+				9CCE7C64264AEB1E003818DF /* QuickActionWindowController.swift */,
+				9CCE7C66264AEB47003818DF /* QuickActionViewController.swift */,
+				9CCE7C68264B1FA7003818DF /* QuickActionFolder.swift */,
+			);
+			path = quick;
 			sourceTree = "<group>";
 		};
 		9CD3261E2233063100D06B77 /* views */ = {
@@ -1036,6 +1056,7 @@
 				9CE3250A224D58360051CA1F /* Log.storyboard in Resources */,
 				9C46A71525D05CC0006E9C16 /* NewCollection.storyboard in Resources */,
 				9C0BF16C25B63C990037BCA9 /* markdown-spec in Resources */,
+				9CCE7C63264AE8FD003818DF /* QuickAction.storyboard in Resources */,
 				9C3AFF4D25C63169004B5EF2 /* fields in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1086,6 +1107,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CD358892293C42B00C9203F /* LinkView.swift in Sources */,
+				9CCE7C65264AEB1E003818DF /* QuickActionWindowController.swift in Sources */,
 				9C3CC8F8250AA0F8002C95D0 /* NavigatorWindowController.swift in Sources */,
 				9C0B643923888D6700869FAA /* TagsMassChangeWindowController.swift in Sources */,
 				9C03629A239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
@@ -1137,12 +1159,14 @@
 				9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */,
 				9C10832025AA78A0004B33CA /* NewsViewController.swift in Sources */,
 				9C29A79525645A42002C5F7A /* FileDropView.swift in Sources */,
+				9CCE7C69264B1FA7003818DF /* QuickActionFolder.swift in Sources */,
 				9C924C7025CDB80A000DEAB3 /* FileExtensionPicker.swift in Sources */,
 				9C097D5D259AB95A00834A42 /* MediumPubWindowController.swift in Sources */,
 				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
 				9CDB5635259BAE9B00AB93A4 /* MediumPubViewController.swift in Sources */,
 				9CF435C724805C0500DD7C33 /* CountsWindowController.swift in Sources */,
 				9CF365812637688300EAE129 /* MicroBlogViewController.swift in Sources */,
+				9CCE7C67264AEB47003818DF /* QuickActionViewController.swift in Sources */,
 				9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */,
 				9C46A72725D07899006E9C16 /* NewLocationViewController.swift in Sources */,
 				9C29A78A2564380F002C5F7A /* NoteDisplayWebView.swift in Sources */,

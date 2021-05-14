@@ -291,7 +291,10 @@ class CollectionPrefsViewController: NSViewController {
     @IBAction func okButtonClicked(_ sender: Any) {
         guard collection != nil else { return }
         collection!.title = collectionTitle.stringValue
-        collection!.shortcut = collectionShortcut.stringValue
+        if collectionShortcut.stringValue != collection!.shortcut {
+            collection!.shortcut = StringUtils.toCommon(collectionShortcut.stringValue)
+            NotenikFolderList.shared.updateWithShortcut(linkStr: collection!.fullPath, shortcut: collection!.shortcut)
+        }
         collection!.preferredExt = fileExtComboBox.stringValue
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
         collection!.mirrorAutoIndex = (mirrorAutoIndexCkBox.state == .on)
