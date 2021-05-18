@@ -12,7 +12,7 @@ Date Added: 2017-10-27 12:55:15 -0700
 
 Body: 
 
-Following are the keyboard shortcuts available within the app. When combined with the CMD key, these keys can be used as handy shortcuts.
+Following are the keyboard shortcuts available within the app. Unless another modifier key is indicated, combine each key with the CMD key in order to invoke the indicated command. 
 
 * A - Select All
 * B - Nav Board
@@ -30,6 +30,7 @@ Following are the keyboard shortcuts available within the app. When combined wit
 * N - New Note
 * O - Open
 * Q - Quit Notenik
+* Ctrl-Q - Quick Action
 * R - View Scripter Window
 * S - Save Note
 * T - Text Edit Note

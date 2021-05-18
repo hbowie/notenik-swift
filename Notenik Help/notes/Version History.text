@@ -8,6 +8,18 @@ Tags:   changes, versions, history, log
 
 Body:   
  
+### Version 6.0.0 | 13 May 2021
+
+#### 1. Added Quick Action Window
+
+Use the Quick Action command beneath the File menu to open the Quick Action window. From here you can enter a Collection shortcut in order to open the desired Collection. You can also use this new window to select a Note within a Collection, and/or to add a new Note.
+
+
+#### 2. Added Collection Shortcuts
+
+You can now specify a shortcut for a Collection in its Collection Prefs window. 
+
+
 ### Version 5.9.0 | 10 May 2021
 
 #### 1. Merge Templates No Longer Write Unmodified Files

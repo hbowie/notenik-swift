@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 7/26/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2021 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -12,6 +12,7 @@
 import Cocoa
 
 import NotenikLib
+import NotenikUtils
 
 /// Controls the Scripter View. 
 class ScriptViewController: NSViewController {
@@ -19,9 +20,13 @@ class ScriptViewController: NSViewController {
     var window: ScriptWindowController!
     
     var scripter = ScriptEngine()
+    
+    var dispatchQ = DispatchQueue(label: "com.powersurgepub.notenik.script.queue",
+                                  qos: .userInitiated)
 
     @IBOutlet var parentView:     NSView!
     @IBOutlet var gridView: NSGridView!
+    @IBOutlet var progressIndicator: NSProgressIndicator!
     @IBOutlet var scrollingTextView: NSScrollView!
     
     @IBOutlet var modulePopUp:    NSPopUpButton!
@@ -43,7 +48,7 @@ class ScriptViewController: NSViewController {
         command.modifier = "input"
         command.setValue(fileURL: scriptURL)
         scripter.playCommand(command)
-        updateLogView()
+        updateLogView(workspace: scripter.workspace)
         
         modulePopUp.selectItem(at: 0)
         modulePopUpSelected(self)
@@ -53,16 +58,19 @@ class ScriptViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // AppPrefs.shared.setRegularFont(object: scriptPath)
         
         gridView.translatesAutoresizingMaskIntoConstraints = false
         gridView.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 8).isActive = true
         gridView.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -8).isActive = true
         gridView.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 8).isActive = true
-        //gridView!.bottomAnchor.constraint(equalTo: parentView.bottomAnchor, constant: -8).isActive = true
+        
+        progressIndicator.translatesAutoresizingMaskIntoConstraints = false
+        progressIndicator.topAnchor.constraint(equalTo: gridView.bottomAnchor, constant: 8).isActive = true
+        progressIndicator.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 8).isActive = true
+        progressIndicator.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -8).isActive = true
         
         scrollingTextView.translatesAutoresizingMaskIntoConstraints = false
-        scrollingTextView.topAnchor.constraint(equalTo: gridView.bottomAnchor, constant: 8).isActive = true
+        scrollingTextView.topAnchor.constraint(equalTo: progressIndicator.bottomAnchor, constant: 8).isActive = true
         scrollingTextView.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 8).isActive = true
         scrollingTextView.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -8).isActive = true
         scrollingTextView.bottomAnchor.constraint(equalTo: parentView.bottomAnchor, constant: -8).isActive = true
@@ -290,8 +298,16 @@ class ScriptViewController: NSViewController {
         command.modifier = modifierPopUp.titleOfSelectedItem!
         command.object = objectComboBox.stringValue
         command.value = valueComboBox.stringValue
-        scripter.playCommand(command)
-        updateLogView()
+        
+        if command.module == .script
+            && command.action == .play
+            && scripter.workspace.scriptURL != nil {
+            dispatchScriptPlayer(scriptURL: scripter.workspace.scriptURL!)
+        } else {
+            scripter.playCommand(command)
+        }
+        
+        updateLogView(workspace: scripter.workspace)
         if command.module == .script {
             if command.action == .open {
                 if command.modifier == "input" {
@@ -305,8 +321,34 @@ class ScriptViewController: NSViewController {
         }
     }
     
-    func updateLogView() {
-        scriptLog.string = scripter.workspace.scriptLog
+    func dispatchScriptPlayer(scriptURL: URL) {
+        let player = ScriptPlayer()
+        let fileName = scriptURL.path
+        progressIndicator.startAnimation(self)
+        player.scripter.workspace.writeLineToLog("Asynchronous Script Execution Starting...")
+        updateLogView(workspace: player.scripter.workspace)
+        logInfo(msg: "Asynchronous Script Execution Starting...")
+        dispatchQ.async { [weak self] in
+            player.playScript(fileName: fileName)
+            DispatchQueue.main.async { [weak self] in
+                player.scripter.workspace.writeLineToLog("Asynchronous Script Execution Ended.")
+                self?.updateLogView(workspace: player.scripter.workspace)
+                self?.logInfo(msg: "Script Execution Completed")
+                self?.progressIndicator.stopAnimation(self)
+                CollectionJuggler.shared.showScriptWindow()
+            }
+        }
+    }
+    
+    func updateLogView(workspace: ScriptWorkspace) {
+        scriptLog.string = workspace.scriptLog
+    }
+    
+    func logInfo(msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "ScriptViewController",
+                          level: .info,
+                          message: msg)
     }
     
 }

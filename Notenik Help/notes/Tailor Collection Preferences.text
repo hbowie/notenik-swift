@@ -24,6 +24,8 @@ The default Collections Title will be formed from the folder path containing thi
 
 Each Note file is an ordinary text file, and can be opened using any text editor, in addition to being editable within Notenik. Depending on what application you might wish to be the default text editor for your notes, you may wish to pick some special file extension to be used. (If you don't care about this, or this doesn't make any sense to you, then feel free to just ignore this whole paragraph and leave the Preferred File Extension set to the normal default of `txt`.) 
 
+Enter a shortcut for a Collection in order to easily identify and open it later. (See the article [Collection Shortcuts and the Quick Action Window](https://lnotenik.net/articles/collection-shortcuts-and-the-quick-action-window.html) for further info.)
+
 The second tab allows you to choose the fields you would like to include in the Collection. Feel free to check additional ones if they seem useful to you. 
 
 If you would like to further customize the list of fields for a Collection, read how to [[Override Default Fields with a Template file]], consulting the online article on [Field Labels and Types](https://notenik.net/articles/field-labels-and-types.html) as necessary.

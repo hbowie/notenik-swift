@@ -827,7 +827,6 @@ class CollectionJuggler: NSObject {
     func showScriptWindow() {
         ensureScriptController()
         guard scriptWindowController != nil else { return }
-        // scriptController!.selectScriptTab()
         scriptWindowController!.showWindow(self)
     }
     

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,11 +31,20 @@
             <objects>
                 <viewController id="2il-i0-ztz" customClass="ScriptViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="FwF-R6-HEg">
-                        <rect key="frame" x="0.0" y="0.0" width="743" height="422"/>
+                        <rect key="frame" x="0.0" y="0.0" width="713" height="460"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <gridView fixedFrame="YES" xPlacement="leading" yPlacement="bottom" rowAlignment="none" translatesAutoresizingMaskIntoConstraints="NO" id="5gP-Zh-eaP">
-                                <rect key="frame" x="20" y="360" width="613" height="42"/>
+                            <gridView xPlacement="leading" yPlacement="bottom" rowAlignment="none" translatesAutoresizingMaskIntoConstraints="NO" id="5gP-Zh-eaP">
+                                <rect key="frame" x="20" y="398" width="613" height="42"/>
+                                <constraints>
+                                    <constraint firstItem="IIa-1e-6GB" firstAttribute="baseline" secondItem="8PD-38-haB" secondAttribute="firstBaseline" id="0EU-df-uTA"/>
+                                    <constraint firstItem="PXE-oI-hgi" firstAttribute="firstBaseline" secondItem="Z2S-kY-jcQ" secondAttribute="firstBaseline" id="3NK-Ak-MRQ"/>
+                                    <constraint firstItem="8PD-38-haB" firstAttribute="centerY" secondItem="Z2S-kY-jcQ" secondAttribute="centerY" id="Nga-kW-Z6k"/>
+                                    <constraint firstItem="8PD-38-haB" firstAttribute="leading" secondItem="IIa-1e-6GB" secondAttribute="trailing" constant="6" id="XJM-JA-KeL"/>
+                                    <constraint firstItem="5bG-Jk-4yK" firstAttribute="firstBaseline" secondItem="PXE-oI-hgi" secondAttribute="firstBaseline" id="Ylu-Ti-ezc"/>
+                                    <constraint firstItem="8W0-nd-8MM" firstAttribute="leading" secondItem="OQy-iZ-DrS" secondAttribute="trailing" constant="72" id="cLd-e1-JaA"/>
+                                    <constraint firstItem="OHX-Tk-6tV" firstAttribute="firstBaseline" secondItem="5bG-Jk-4yK" secondAttribute="firstBaseline" id="kBo-da-QNP"/>
+                                </constraints>
                                 <rows>
                                     <gridRow id="sov-LG-FP5"/>
                                     <gridRow id="w5Z-lG-NdE"/>
@@ -113,7 +122,7 @@
                                     <gridCell row="sov-LG-FP5" column="PXO-7I-tir" id="kwa-Oz-mFn"/>
                                     <gridCell row="w5Z-lG-NdE" column="Hdy-BX-SxW" id="qEV-qg-ikp">
                                         <popUpButton key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OHX-Tk-6tV">
-                                            <rect key="frame" x="-3" y="-4" width="93" height="25"/>
+                                            <rect key="frame" x="-3" y="-4" width="93" height="24"/>
                                             <popUpButtonCell key="cell" type="push" title="template" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="xuL-ON-RV7" id="cKM-4Q-Iwf">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
@@ -132,7 +141,7 @@
                                     </gridCell>
                                     <gridCell row="w5Z-lG-NdE" column="DbW-8b-UwG" id="hdv-53-KHD">
                                         <popUpButton key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5bG-Jk-4yK">
-                                            <rect key="frame" x="93" y="-4" width="93" height="25"/>
+                                            <rect key="frame" x="93" y="-4" width="93" height="24"/>
                                             <popUpButtonCell key="cell" type="push" title="generate" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="bX6-8G-Y5v" id="Iax-mP-iBw">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
@@ -151,7 +160,7 @@
                                     </gridCell>
                                     <gridCell row="w5Z-lG-NdE" column="LTj-si-RgQ" id="6NR-yZ-bq1">
                                         <popUpButton key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PXE-oI-hgi">
-                                            <rect key="frame" x="189" y="-4" width="110" height="25"/>
+                                            <rect key="frame" x="189" y="-4" width="110" height="24"/>
                                             <popUpButtonCell key="cell" type="push" title="descending" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="7MI-yY-S53" id="SBU-YY-v4o">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
@@ -169,7 +178,7 @@
                                         </popUpButton>
                                     </gridCell>
                                     <gridCell row="w5Z-lG-NdE" column="oUm-Ay-xOD" id="9ut-Ku-9kO">
-                                        <comboBox key="contentView" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IIa-1e-6GB">
+                                        <comboBox key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IIa-1e-6GB">
                                             <rect key="frame" x="318" y="-4" width="103" height="25"/>
                                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="2Sy-dO-Bux">
                                                 <font key="font" metaFont="system"/>
@@ -218,7 +227,7 @@
                                     </gridCell>
                                     <gridCell row="w5Z-lG-NdE" column="PXO-7I-tir" id="5Rq-yG-zzu">
                                         <button key="contentView" toolTip="Execute the Command Line" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z2S-kY-jcQ">
-                                            <rect key="frame" x="569" y="-7" width="51" height="32"/>
+                                            <rect key="frame" x="569" y="-7" width="51" height="31"/>
                                             <buttonCell key="cell" type="push" title="Go" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dNd-Yc-SnT">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -230,9 +239,11 @@
                                     </gridCell>
                                 </gridCells>
                             </gridView>
-                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLH-CE-pmH">
+                            <progressIndicator maxValue="100" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="fW8-Ef-H5a">
+                                <rect key="frame" x="20" y="364" width="673" height="20"/>
+                            </progressIndicator>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLH-CE-pmH">
                                 <rect key="frame" x="20" y="20" width="673" height="329"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="YaK-vq-M8u">
                                     <rect key="frame" x="0.0" y="0.0" width="658" height="329"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -258,6 +269,17 @@
                                 </scroller>
                             </scrollView>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="fW8-Ef-H5a" firstAttribute="leading" secondItem="hLH-CE-pmH" secondAttribute="leading" id="2gK-b5-eOB"/>
+                            <constraint firstItem="fW8-Ef-H5a" firstAttribute="top" secondItem="5gP-Zh-eaP" secondAttribute="bottom" constant="15" id="3GC-3L-bka"/>
+                            <constraint firstItem="fW8-Ef-H5a" firstAttribute="trailing" secondItem="hLH-CE-pmH" secondAttribute="trailing" id="5tJ-z9-e3H"/>
+                            <constraint firstAttribute="trailing" secondItem="fW8-Ef-H5a" secondAttribute="trailing" constant="20" symbolic="YES" id="7Cv-9m-3Yh"/>
+                            <constraint firstAttribute="bottom" secondItem="hLH-CE-pmH" secondAttribute="bottom" constant="20" symbolic="YES" id="NAI-bB-u8B"/>
+                            <constraint firstItem="5gP-Zh-eaP" firstAttribute="leading" secondItem="fW8-Ef-H5a" secondAttribute="leading" id="Oyw-w6-aXx"/>
+                            <constraint firstItem="5gP-Zh-eaP" firstAttribute="leading" secondItem="FwF-R6-HEg" secondAttribute="leading" constant="20" symbolic="YES" id="r3T-qB-jlb"/>
+                            <constraint firstItem="hLH-CE-pmH" firstAttribute="top" secondItem="fW8-Ef-H5a" secondAttribute="bottom" constant="16" id="ve4-lX-v68"/>
+                            <constraint firstItem="5gP-Zh-eaP" firstAttribute="top" secondItem="FwF-R6-HEg" secondAttribute="top" constant="20" symbolic="YES" id="yug-4b-yUu"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="actionPopUp" destination="5bG-Jk-4yK" id="p3p-IS-dWU"/>
@@ -266,6 +288,7 @@
                         <outlet property="modulePopUp" destination="OHX-Tk-6tV" id="Plx-ve-x9f"/>
                         <outlet property="objectComboBox" destination="IIa-1e-6GB" id="Cd7-00-Uqn"/>
                         <outlet property="parentView" destination="FwF-R6-HEg" id="wZU-DQ-FOG"/>
+                        <outlet property="progressIndicator" destination="fW8-Ef-H5a" id="iMz-mM-xME"/>
                         <outlet property="scriptLog" destination="nDj-q9-yWf" id="zne-F4-0Cw"/>
                         <outlet property="scrollingTextView" destination="hLH-CE-pmH" id="7F0-fV-3dP"/>
                         <outlet property="valueComboBox" destination="8PD-38-haB" id="I0Y-NY-MTf"/>
@@ -273,7 +296,7 @@
                 </viewController>
                 <customObject id="Uf2-VW-a4G" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="28.5" y="505"/>
+            <point key="canvasLocation" x="13.5" y="524"/>
         </scene>
     </scenes>
 </document>
