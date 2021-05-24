@@ -131,14 +131,21 @@ class CollectionJuggler: NSObject {
     func open(urls: [URL]) -> Int {
         var successfulOpens = 0
         for url in urls {
-            let link = NotenikLink(url: url)
-            link.determineCollectionType()
-            let wc = open(link: link)
-            if wc != nil {
+            let ok = open(url: url)
+            if ok {
                 successfulOpens += 1
             }
         }
         return successfulOpens
+    }
+    
+    /// Open a single URL.
+    func open(url: URL) -> Bool {
+        let link = NotenikLink(url: url)
+        link.determineCollectionType()
+        let wc = open(link: link)
+        guard wc != nil else { return false }
+        return true
     }
     
     /// Open a single NotenikLink. 
@@ -156,6 +163,9 @@ class CollectionJuggler: NSObject {
             return openFileWithNewWindow(fileURL: link.url!, readOnly: false)
         case .realm:
             return openParentRealm(parentURL: link.url!)
+        case .notenikScheme:
+            let actor = CustomURLActor()
+            _ = actor.act(on: link.str)
         default:
             communicateError("Item to be opened at \(link) could not be used", alert: true)
         }
@@ -444,7 +454,7 @@ class CollectionJuggler: NSObject {
         do {
             try FileManager.default.createDirectory(atPath: folderURL.path, withIntermediateDirectories: true, attributes: nil)
         } catch {
-            print("  - Attempt to create new directory failed!")
+            communicateError("Attempt to create new directory failed")
             return false
         }
         return true

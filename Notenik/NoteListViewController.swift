@@ -61,6 +61,7 @@ class NoteListViewController:   NSViewController,
         shortcutMenu.addItem(NSMenuItem(title: "Duplicate", action: #selector(duplicateItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Launch Link", action: #selector(launchLinkForItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Share...", action: #selector(shareItem(_:)), keyEquivalent: ""))
+        shortcutMenu.addItem(NSMenuItem(title: "Copy Notenik URL", action: #selector(copyItemInternalURL(_:)), keyEquivalent: ""))
         tableView.menu = shortcutMenu
     }
     
@@ -98,6 +99,27 @@ class NoteListViewController:   NSViewController,
         guard row >= 0 else { return }
         guard let clickedNote = notenikIO?.getNote(at: row) else { return }
         collectionWindowController!.shareNote(clickedNote)
+    }
+    
+    /// Respond to a request to copy a note's internal url to the clipboard.
+    @objc private func copyItemInternalURL(_ sender: AnyObject) {
+        guard let io = notenikIO else { return }
+        guard let collection = io.collection else { return }
+        let row = tableView.clickedRow
+        guard row >= 0 else { return }
+        guard let clickedNote = io.getNote(at: row) else { return }
+        var str = "notenik://open?"
+        if collection.shortcut.count > 0 {
+            str.append("shortcut=\(collection.shortcut)")
+        } else {
+            let folderURL = URL(fileURLWithPath: collection.fullPath)
+            let encodedPath = String(folderURL.absoluteString.dropFirst(7))
+            str.append("path=\(encodedPath)")
+        }
+        str.append("&id=\(clickedNote.id)")
+        let board = NSPasteboard.general
+        board.clearContents()
+        board.setString(str, forType: NSPasteboard.PasteboardType.string)
     }
     
     /// Respond to double-click.

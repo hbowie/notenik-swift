@@ -2441,6 +2441,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         }
     }
     
+    /// Send an informational message to the log. 
     func logInfo(msg: String) {
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionWindowController",

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C00AD632658158A002B6A0F /* CustomURLActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C00AD622658158A002B6A0F /* CustomURLActor.swift */; };
 		9C01E46624D74E1C00AEB4F6 /* BooleanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C01E46524D74E1C00AEB4F6 /* BooleanView.swift */; };
 		9C02D2AE2267D46000587EDF /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
 		9C02D2B02267F29400587EDF /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C02D2AF2267F29400587EDF /* Calendar.storyboard */; };
@@ -276,6 +277,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C00AD622658158A002B6A0F /* CustomURLActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomURLActor.swift; sourceTree = "<group>"; };
 		9C01E46524D74E1C00AEB4F6 /* BooleanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooleanView.swift; sourceTree = "<group>"; };
 		9C02D2AD2267D46000587EDF /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		9C02D2AF2267F29400587EDF /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
@@ -585,6 +587,7 @@
 				9C60E6D121F64B3B00C332ED /* AppDelegate.swift */,
 				9C9094C42249A664002207EB /* NoteDocumentController.swift */,
 				9CF256CA21FD0FF000D9F06A /* CollectionJuggler.swift */,
+				9C00AD622658158A002B6A0F /* CustomURLActor.swift */,
 				9CF256CC21FD175E00D9F06A /* CollectionWindowController.swift */,
 				9C29DD28226286A100928180 /* CollectionWindow.swift */,
 				9C12D48E22134970003136B2 /* NoteSelectionSource.swift */,
@@ -1151,6 +1154,7 @@
 				9CD326202233068F00D06B77 /* MacEditView.swift in Sources */,
 				9CA4EE8C246A15BC00059F65 /* PickListDataSource.swift in Sources */,
 				9CE3250D224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
+				9C00AD632658158A002B6A0F /* CustomURLActor.swift in Sources */,
 				9CE5750125D19E2D000C102C /* NewFieldsViewController.swift in Sources */,
 				9C3CC8FA250AA136002C95D0 /* NavigatorViewController.swift in Sources */,
 				9C46A72D25D0A6E0006E9C16 /* NewNameViewController.swift in Sources */,
@@ -1485,7 +1489,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 143;
+				CURRENT_PROJECT_VERSION = 144;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1498,7 +1502,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 6.0.0;
+				MARKETING_VERSION = 6.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1514,7 +1518,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 143;
+				CURRENT_PROJECT_VERSION = 144;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1527,7 +1531,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 6.0.0;
+				MARKETING_VERSION = 6.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

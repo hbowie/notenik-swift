@@ -9,6 +9,23 @@
 <h1>
 	Version History
 </h1>
+<h3 id="version-6.1.0-19-may-2021">Version 6.1.0 | 19 May 2021</h3>
+<h4 id="browse-command-added-to-scripting-engine">1. Browse Command added to Scripting Engine</h4>
+<p>The new Browse command can be placed at the end of a web generation script, and then set to open the <code>localhost</code> url pointing to the website just generated. </p>
+<h4 id="script-execution-now-runs-asynchronously">2. Script Execution Now Runs Asynchronously</h4>
+<p>Script execution in the Scripter window now runs asynchronously, with an indeterminate progress bar animated to show that something is happening. No more spinning beach ball! </p>
+<h3 id="version-6.0.0-13-may-2021">Version 6.0.0 | 13 May 2021</h3>
+<h4 id="added-quick-action-window">1. Added Quick Action Window</h4>
+<p>Use the Quick Action command beneath the File menu to open the Quick Action window. From here you can enter a Collection shortcut in order to open the desired Collection. You can also use this new window to select a Note within a Collection, and/or to add a new Note. </p>
+<h4 id="added-collection-shortcuts">2. Added Collection Shortcuts</h4>
+<p>You can now specify a shortcut for a Collection in its Collection Prefs window. </p>
+<h3 id="version-5.9.0-10-may-2021">Version 5.9.0 | 10 May 2021</h3>
+<h4 id="merge-templates-no-longer-write-unmodified-files">1. Merge Templates No Longer Write Unmodified Files</h4>
+<p>Before writing an output file from a Merge Template operation and overwriting an existing file, Notenik will now first read the existing file, and compare it to the file about to be written. If the contents are identical, then Notenik will skip the write operation. This helps to preserve last modified dates, which in turn helps to prevent unnecessary FTP operations when updating a website. </p>
+<h4 id="added-new-customization-options-for-the-display-tab">2. Added New Customization Options for the Display Tab</h4>
+<p>The layout and appearance of the Display tab can now be modified by supplying a <code>display.css</code> file within a Notes Collection, or by supplying a <code>display.html</code> template file. </p>
+<h4 id="added-allfields-command-to-merge-templates">3. Added allfields command to Merge Templates</h4>
+<p>The <code>&lt;?allfields?&gt;</code> command can now be used to insert all of the fields from an input record/note into the output, formatted into HTML in the same way that they would be on the Display tab within Notenik. </p>
 <h3 id="version-5.8.1-07-apr-2021">Version 5.8.1 | 07 Apr 2021</h3>
 <h4 id="attempting-to-fix-a-crash-occurring-when-using-merge-templates">1. Attempting to Fix a Crash Occurring when using Merge Templates</h4>
 <p>I say &#8220;attempting&#8221; because the crash does not occur in my development build, but only in the version once released to the Mac App Store. </p>
@@ -521,6 +538,6 @@ Body starts here.
 <h4 id="added-favorites-to-html-function">3. Added Favorites to HTML Function</h4>
 <p>The File Menu now has a new command to export Favorites to HTML. This allows the user to identify favorite bookmarks using the &#8216;Favorites&#8217; tag and then export those favorites to a four-column Web page. </p>
 
-<p>Next Topic: <a href="seq-54-keyboard-shortcuts.html">Keyboard Shortcuts</a></p>
+<p>Next Topic: <a href="seq-55-keyboard-shortcuts.html">Keyboard Shortcuts</a></p>
 </body>
 </html>

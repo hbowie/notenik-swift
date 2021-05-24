@@ -85,6 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
             favsToHTML.title = "Favourites to HTML..."
         }
         
+        // Register our app to handle Apple events.
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(self.handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
         
         // Done launching
@@ -115,16 +116,26 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     /// To handle events from Notenik's URL scheme.
     @objc func handleAppleEvent(event: NSAppleEventDescriptor, replyEvent: NSAppleEventDescriptor) {
-        print("Received an Apple Event")
+        logInfo("Received an Apple Event")
         guard let appleEventDescription = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject)) else {
+            logError("Could not get Apple Event Description")
             return
         }
 
         guard let appleEventURLString = appleEventDescription.stringValue else {
+            logError("Could not get Apple Event URL String")
+            return
+        }
+        
+        guard let appleEventURL = URL(string: appleEventURLString) else {
+            logError("Could not make a valid URL from: \(appleEventURLString)")
             return
         }
 
-        print("Received Apple Event URL: \(appleEventURLString)")
+        logInfo("Apple Event passed URL: \(appleEventURL)")
+        
+        _ = juggler.open(url: appleEventURL)
+        
     }
     
     @IBAction func menuAppPreferences(_ sender: NSMenuItem) {
@@ -284,9 +295,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     func applicationWillTerminate(_ notification: Notification) {
         notenikFolderList.savePrefs()
+        
+        // Stop handling Apple Events
+        NSAppleEventManager.shared().removeEventHandler(forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
     }
     
-    /// Log an information message.
+    /// Log an informative message.
+    func logInfo(_ msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "AppDelegate",
+                          level: .info,
+                          message: msg)
+    }
+    
+    /// Log an error message.
     func logError(_ msg: String) {
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "AppDelegate",

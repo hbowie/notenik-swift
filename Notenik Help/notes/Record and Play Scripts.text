@@ -38,7 +38,7 @@ Note that there are Script commands that can be entered here that will not be fo
 
 * open — Use the Modifier field to specify either an input or an output file, and use the Value field to specify the location of the script file to be read or written. 
 
-* play — After opening an input file, you can execute the play command to play the Script file previously specified. 
+* play — After opening an input file, you can execute the play command to play the Script file previously specified. Script execution will occur on a separate thread, leaving the primary User Interface active. An animated progress bar will indicate that something is happening. 
 
 * record — Use this command to begin recording a new Script file after previously opening that file as output. 
 

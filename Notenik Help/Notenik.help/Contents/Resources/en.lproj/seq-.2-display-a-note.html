@@ -20,6 +20,16 @@
 <p>Display Note Titles as Level 1 Headings? - The default is to display note titles as paragraphs with strong emphasis, but check this box if you'd prefer them to be displayed within <code>h1</code> tags. </p>
 </li>
 </ul>
+<p>The layout and appearance of the Display tab for a particular Collection can be further customized by the addition of either of the following special files to the folder containing a Collection's notes. </p>
+<ul>
+<li>
+<p><code>display.css</code> &#8211; Enter whatever custom CSS you would like to alter the appearance of a Note on the Display tab. </p>
+</li>
+<li>
+<p><code>display.html</code> &#8211; Enter a Merge Template (following the <a href="https://notenik.net/template-spec.html">Template File Spec</a>) to alter the layout of the Display tab in any way you would like. If this file is present, then it should contain the CSS to be used (rather than putting it into the separate file mentioned above). This file should start with a <code>&lt;?nextrec?&gt;</code> command and end with a <code>&lt;?loop?&gt;</code> command, and should not include an <code>&lt;?output?&gt;</code> command. </p>
+</li>
+</ul>
+<p>Note that you may use the <code>Generate Sample Display Template</code> command beneath the <code>Collection</code> menu to have Notenik generate samples of both of these files. You may then delete one or the other, and modify the remaining file, to achieve your desired effects. </p>
 
 <p>Next Topic: <a href="seq-06-add-delete-and-update-your-notes.html">Add, Delete and Update Your Notes</a></p>
 </body>
