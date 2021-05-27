@@ -95,6 +95,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         if appPrefs.newVersionForNews {
             displayLatestNews()
         }
+        
     }
     
     /// Open an iCloud item that's been selected by the user from the submenu created above.

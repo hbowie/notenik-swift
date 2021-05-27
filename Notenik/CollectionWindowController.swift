@@ -702,6 +702,15 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         }
     }
     
+    func addNewNote(_ noteToAdd: Note) -> Note? {
+        let addedNote = addPastedNote(noteToAdd)
+        finishBatchOperation()
+        if addedNote != nil {
+            select(note: addedNote, position: nil, source: .action)
+        }
+        return addedNote
+    }
+    
     func addPastedNote(_ noteToAdd: Note) -> Note? {
         guard !pendingMod else { return nil }
         guard io != nil && io!.collectionOpen else { return nil }

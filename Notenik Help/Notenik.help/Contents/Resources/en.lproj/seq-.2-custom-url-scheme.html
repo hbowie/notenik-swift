@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Custom URL Scheme</title>
+	<meta name="KEYWORDS" content="custom url, shortcuts, url">
+</head>
+<body class="Aside apd-topic" dir="ltr" id="seq-.2-custom-url-scheme" data-istaskopen="false">
+<a name="seq-.2-custom-url-scheme"></a>
+<h1>
+	Custom URL Scheme
+</h1>
+<p>Notenik has its own custom URL scheme, which can be invoked by other apps as a means of integrating Notenik with these other applications. </p>
+<p>Note that URLs must in general be <a href="https://en.wikipedia.org/wiki/Percent-encoding">percent encoded</a>. The most common encoding is done by replacing each space with <code>%20</code>. </p>
+<p>The following commands are supported. </p>
+<h3 id="open">Open </h3>
+<p>Following is a sample URL:  </p>
+<pre>
+<code>notenik://open?shortcut=todo&amp;id=pickupmilk
+</code></pre>
+<p>Let's break this down: </p>
+<ul>
+<li><code>notenik://</code> - The custom scheme that will invoke the Notenik app. </li>
+<li><code>open</code> - The Notenik command to open a Collection and optionally a specific Note within the Collection. </li>
+<li><code>?</code> - A question mark indicates the end of the command and the beginning of the query string. </li>
+<li><code>shortcut=todo</code> - The shortcut identifying the Collection to be opened. Note that shortcuts are defined in such a way that they will generally <em>not</em> need to be percent encoded. </li>
+<li><code>path=Users/user1/Sites/site1</code> - Specifying the complete path would be an alternate way of identifying the Collection to be opened. Path values generally <em>will</em> require percent encoding. </li>
+<li><code>&amp;</code> - An ampersand is used to separate each <code>label=value</code> parameter from the next. </li>
+<li><code>id=pickupmilk</code> - The ID identifying the Note to be selected for Display. Note than a Note ID is defined in such a way (removing spaces, etc.) that it will <em>not</em> need to be percent encoded. </li>
+</ul>
+<p>An easy way to obtain a complete URL that can be used to later open a specific Note is to right-click the Note's row on the List tab within Notenik, and then select <code>Copy Notenik URL</code> from the contextual menu that will pop up. This will copy a complete Notenik URL to the clipboard, from which it can then be pasted into another location. </p>
+<h3 id="add">Add</h3>
+<p>Following is a sample URL:  </p>
+<pre>
+<code>notenik://add?shortcut=todo&amp;title=Pick%20up%20milk&amp;body=You%20gotta
+</code></pre>
+<p>Again, let's break this down. </p>
+<ul>
+<li><code>notenik://</code> - The custom scheme that will invoke the Notenik app. </li>
+<li><code>add</code> - The Notenik command to add a new Note to an existing Collection. </li>
+<li><code>?</code> - A question mark indicates the end of the command and the beginning of the query string. </li>
+<li><code>shortcut=todo</code> - The shortcut identifying the Collection to which the new Note is to be added. </li>
+<li><code>path=Users/user1/Sites/site1</code> - Again, specifying the complete path would be an alternate way of identifying the Collection to be used. </li>
+<li><code>&amp;</code> - An ampersand is used to separate each <code>label=value</code> parameter from the next. </li>
+<li><code>title=Pick%20up%20milk</code> - The title for the new Note. This will amost always require percent encoding, as in this example. </li>
+<li><code>&amp;</code> - An ampersand is used to separate each <code>label=value</code> parameter from the next. </li>
+<li><code>body=You%20gotta</code> - The body of the new Note. Again, this will almost always require percent encoding. </li>
+</ul>
+<p>Other fields may also be specified for a new Note, using a similar <em>label=value</em> convention. </p>
+
+<p>Next Topic: <a href="seq-53-reference.html">Reference</a></p>
+</body>
+</html>
