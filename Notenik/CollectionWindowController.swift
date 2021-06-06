@@ -304,6 +304,91 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         window.makeFirstResponder(titleView.view)
     }
     
+    /// Renumber the Collection's sequence numbers based on the level and position of each note.
+    @IBAction func renumberSeqBasedOnLevel(_ sender: Any) {
+
+        // Make sure we're in a position to perform this operation.
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        let dict = collection.dict
+        
+        let levelDef = collection.levelFieldDef
+        guard dict.contains(levelDef) else {
+            communicateError("The Collection must contain a Level field before it can be Renumbered by Level", alert: true)
+            return
+        }
+        
+        let seqDef = collection.seqFieldDef
+        guard dict.contains(seqDef) else {
+            communicateError("The Collection must contain a Seq field before it can be Renumbered", alert: true)
+            return
+        }
+        
+        let sortParm = collection.sortParm
+        guard sortParm == .seqPlusTitle else {
+            communicateError("First Sort by Seq + Title before attempting to Renumber", alert: true)
+            return
+        }
+        
+        // Go through the Collection, dentifying Notes that need updating.
+        let low = collection.levelConfig.low
+        let high = collection.levelConfig.high
+        var first = true
+        
+        var numbers: [Int] = []
+        while numbers.count <= high {
+            numbers.append(0)
+        }
+        var lastLevel = 0
+        var startNumberingAt = low
+        var notesToUpdate: [Note] = []
+        var updatedSeqs: [String] = []
+        var (note, position) = noteIO.firstNote()
+        while note != nil {
+            let noteLevel = note!.level.getInt()
+            
+            if first && !note!.hasSeq() && noteLevel == low {
+                startNumberingAt = low + 1
+            } else {
+                while lastLevel > noteLevel {
+                    numbers[lastLevel] = 0
+                    lastLevel -= 1
+                }
+                numbers[noteLevel] += 1
+                var newSeq = ""
+                var i = startNumberingAt
+                while i <= noteLevel {
+                    if newSeq.count > 0 {
+                        newSeq.append(".")
+                    }
+                    newSeq.append(String(numbers[i]))
+                    i += 1
+                }
+                if newSeq != note!.seq.value {
+                    notesToUpdate.append(note!)
+                    updatedSeqs.append(newSeq)
+                }
+            }
+            first = false
+            (note, position) = io!.nextNote(position)
+        }
+        
+        // Perform the updates.
+        var updateIndex = 0
+        while updateIndex < notesToUpdate.count {
+            let originalNote = notesToUpdate[updateIndex]
+            let newSeq = updatedSeqs[updateIndex]
+            let modNote = originalNote.copy() as! Note
+            _ = modNote.setSeq(newSeq)
+            _ = noteIO.modNote(oldNote: originalNote, newNote: modNote)
+            updateIndex += 1
+        }
+        
+        // Now let the user see the results.
+        finishBatchOperation()
+        reportNumberOfNotesUpdated(notesToUpdate.count)
+    }
+    
     /// If we have past due daily tasks, then update the dates to make them current
     @IBAction func menuCatchUpDailyTasks(_ sender: Any) {
         
