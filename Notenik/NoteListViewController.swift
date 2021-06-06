@@ -145,7 +145,11 @@ class NoteListViewController:   NSViewController,
     }
     
     /// Validate a proposed drop operation.
-    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+    func tableView(_ tableView: NSTableView,
+                   validateDrop info: NSDraggingInfo,
+                   proposedRow row: Int,
+                   proposedDropOperation dropOperation: NSTableView.DropOperation)
+                    -> NSDragOperation {
         return .copy
     }
     
@@ -206,7 +210,23 @@ class NoteListViewController:   NSViewController,
         
         if let note = notenikIO?.getNote(at: row) {
             if tableColumn?.title == "Title" {
-                cellView.textField?.stringValue = note.title.value
+                let title = note.title.value
+                var displayValue = ""
+                if let collection = notenikIO?.collection {
+                    if collection.sortParm == .seqPlusTitle {
+                        if note.hasLevel() {
+                            let config = collection.levelConfig
+                            let levelValue = note.level
+                            let level = levelValue.getInt()
+                            let indent = level - config.low
+                            if indent > 0 {
+                                displayValue = String(repeating: "  ", count: indent)
+                            }
+                        }
+                    }
+                }
+                displayValue.append(title)
+                cellView.textField?.stringValue = displayValue
             } else if tableColumn?.title == "Seq" {
                 cellView.textField?.stringValue = note.seq.value
             } else if tableColumn?.title == "X" {

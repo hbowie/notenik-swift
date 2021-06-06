@@ -40,6 +40,7 @@ class NoteEditViewController: NSViewController {
     var dateView:   DateView?
     var recursView: MacEditView?
     var statusView: StatusView?
+    var levelView:  LevelView?
     var linkView:   LinkView?
     var imageNameView: ImageNameView?
     
@@ -83,6 +84,7 @@ class NoteEditViewController: NSViewController {
         let defs = dict.list
         
         notenikIO!.pickLists.statusConfig = collection.statusConfig
+        notenikIO!.pickLists.levelConfig = collection.levelConfig
         
         // Let's build a two-dimensional array of views to be displayed in the grid
 
@@ -91,6 +93,7 @@ class NoteEditViewController: NSViewController {
         dateView = nil
         recursView = nil
         statusView = nil
+        levelView = nil
         linkView = nil
         imageNameView = nil
         
@@ -129,6 +132,8 @@ class NoteEditViewController: NSViewController {
             recursView = editView
         } else if label.commonForm == NotenikConstants.statusCommon {
             statusView = editView as? StatusView
+        } else if label.commonForm == NotenikConstants.levelCommon {
+            levelView = editView as? LevelView
         } else if label.commonForm == NotenikConstants.linkCommon {
             linkView = editView as? LinkView
         }
@@ -245,7 +250,8 @@ class NoteEditViewController: NSViewController {
         (outcome, outNote) = modWhenChanged!.modIfChanged(newNoteRequested: newNoteRequested,
                                                           startingNote: inNote!,
                                                           modViews: editViews,
-                                                          statusConfig: inNote!.collection.statusConfig)
+                                                          statusConfig: inNote!.collection.statusConfig,
+                                                          levelConfig: inNote!.collection.levelConfig)
         // If we tried to add a note but it had a key that already exists, then ask the user for help
         if outcome == .idAlreadyExists {
             let alert = NSAlert()

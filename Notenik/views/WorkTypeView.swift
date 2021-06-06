@@ -25,7 +25,8 @@ class WorkTypeView: MacEditView {
     var text: String {
         get {
             if workTypeField.indexOfSelectedItem >= 0 {
-                return dataSource.types[workTypeField.indexOfSelectedItem]
+                let selectedItem = dataSource.types.itemAt(index: workTypeField.indexOfSelectedItem)
+                return selectedItem!
             } else {
                 return workTypeField.stringValue
             }
@@ -33,9 +34,9 @@ class WorkTypeView: MacEditView {
         set {
             var found = false
             var i = 0
-            let newLower = newValue.lowercased()
-            while !found && i < dataSource.types.count {
-                if newLower == dataSource.types[i].lowercased() {
+            let newLower = newValue
+            while !found && i < dataSource.count {
+                if newLower == dataSource.types.itemAt(index: i) {
                     workTypeField.selectItem(at: i)
                     found = true
                 } else {

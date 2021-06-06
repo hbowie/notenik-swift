@@ -75,6 +75,7 @@
 		9C2AE52A220A34D800AE8BEE /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */; };
 		9C2BFCB625ACD0BF0030A980 /* notenik-news.html in Resources */ = {isa = PBXBuildFile; fileRef = 9C2BFCB525ACD0BF0030A980 /* notenik-news.html */; };
 		9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */; };
+		9C310E68266ADB4B001C3A6E /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C310E67266ADB4B001C3A6E /* LevelView.swift */; };
 		9C341F1C259AB79600E1972C /* MediumPub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C341F1B259AB79600E1972C /* MediumPub.storyboard */; };
 		9C3AFF4D25C63169004B5EF2 /* fields in Resources */ = {isa = PBXBuildFile; fileRef = 9C3AFF4C25C63169004B5EF2 /* fields */; };
 		9C3CC8F6250A9C9E002C95D0 /* Navigator.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CC8F5250A9C9E002C95D0 /* Navigator.storyboard */; };
@@ -312,6 +313,7 @@
 		9C29DD28226286A100928180 /* CollectionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindow.swift; sourceTree = "<group>"; };
 		9C2BFCB525ACD0BF0030A980 /* notenik-news.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "notenik-news.html"; sourceTree = "<group>"; };
 		9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrefsCocoa.swift; sourceTree = "<group>"; };
+		9C310E67266ADB4B001C3A6E /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
 		9C341F1B259AB79600E1972C /* MediumPub.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MediumPub.storyboard; sourceTree = "<group>"; };
 		9C3AFF4C25C63169004B5EF2 /* fields */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fields; sourceTree = "<group>"; };
 		9C3CC8F5250A9C9E002C95D0 /* Navigator.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Navigator.storyboard; sourceTree = "<group>"; };
@@ -800,6 +802,7 @@
 				9C29A79425645A42002C5F7A /* FileDropView.swift */,
 				9CCBE7B325F7F4550001443B /* ImageNameView.swift */,
 				9C79BDAF226E368800796E93 /* LabelView.swift */,
+				9C310E67266ADB4B001C3A6E /* LevelView.swift */,
 				9CD358882293C42B00C9203F /* LinkView.swift */,
 				9CED280F224EB39900798621 /* LongTextView.swift */,
 				9CD3261F2233068F00D06B77 /* MacEditView.swift */,
@@ -1158,6 +1161,7 @@
 				9CE5750125D19E2D000C102C /* NewFieldsViewController.swift in Sources */,
 				9C3CC8FA250AA136002C95D0 /* NavigatorViewController.swift in Sources */,
 				9C46A72D25D0A6E0006E9C16 /* NewNameViewController.swift in Sources */,
+				9C310E68266ADB4B001C3A6E /* LevelView.swift in Sources */,
 				9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */,
 				9CBC386621FFA94800BA7900 /* NoteTagsViewController.swift in Sources */,
 				9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */,
@@ -1489,7 +1493,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 146;
+				CURRENT_PROJECT_VERSION = 148;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1518,7 +1522,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 146;
+				CURRENT_PROJECT_VERSION = 148;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -40,6 +40,8 @@ class ViewFactory {
             return ImageNameView()
         case NotenikConstants.labelType:
             return LabelView()
+        case NotenikConstants.levelCommon:
+            return LevelView(config: pickLists.levelConfig)
         case NotenikConstants.linkCommon, NotenikConstants.workLinkCommon:
             return LinkView()
         case NotenikConstants.longTextType:

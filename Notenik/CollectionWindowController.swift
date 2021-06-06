@@ -256,21 +256,15 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     }
     
     func updateNote(title: String, bodyText: String) {
-        print("CollectionWindowController.updateNote")
         guard title.count > 0 else {
-            print("  - title is blank")
             return
         }
-        print("  - title = \(title)")
-        print("  - body text = \(bodyText)")
         guard let noteIO = guardForCollectionAction() else { return }
         let titleID = StringUtils.toCommon(title)
         let noteToUpdate = noteIO.getNote(forID: titleID)
         if noteToUpdate == nil {
-            print("  - Note to Update not found")
             newNote(title: title, bodyText: bodyText)
         } else {
-            print("  - Note to Update titled \(noteToUpdate!.title.value)")
             updateNote(noteToUpdate: noteToUpdate!, bodyText: bodyText)
         }
     }
