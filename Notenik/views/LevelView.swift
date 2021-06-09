@@ -14,6 +14,7 @@ import Cocoa
 
 import NotenikLib
 
+/// A UI representation of a Level field.
 class LevelView: MacEditView {
     
     var config: IntWithLabelConfig!
@@ -26,14 +27,14 @@ class LevelView: MacEditView {
     var text: String {
         get {
             if menu.titleOfSelectedItem != nil {
-                return config.intWithLabel(forLabel: menu.titleOfSelectedItem!)
+                return config.intWithLabel(forIntOrLabel: menu.titleOfSelectedItem!)
             } else {
                 return ""
             }
         }
         set {
             let configIndex = config.get(newValue)
-            let title = config.label(forInt: configIndex)
+            let title = config.intWithLabel(forInt: configIndex)
             menu.selectItem(withTitle: title)
         }
     }
@@ -47,12 +48,11 @@ class LevelView: MacEditView {
         
         // Set up the Menu
         menu = NSPopUpButton()
-        for label in config.labels {
-            if label.count > 0 {
-                menu.addItem(withTitle: label)
-                let menuItem = menu.item(at: menu.numberOfItems - 1)
-                menuItem!.attributedTitle = AppPrefsCocoa.shared.makeUserAttributedString(text: label)
-            }
+        for index in config.low...config.high {
+            let intWithLabel = config.intWithLabel(forInt: index)
+            menu.addItem(withTitle: intWithLabel)
+            let menuItem = menu.item(at: menu.numberOfItems - 1)
+            menuItem!.attributedTitle = AppPrefsCocoa.shared.makeUserAttributedString(text: intWithLabel)
         }
         AppPrefsCocoa.shared.setRegularFont(object: menu!.menu!)
     }

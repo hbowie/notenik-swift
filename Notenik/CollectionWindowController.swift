@@ -304,9 +304,30 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         window.makeFirstResponder(titleView.view)
     }
     
+    // -----------------------------------------------------------
+    //
+    // MARK: Batch operations performed on the entire Collection.
+    //
+    // -----------------------------------------------------------
+    
+    let levelsHead = "levels-outline"
+    
     /// Renumber the Collection's sequence numbers based on the level and position of each note.
     @IBAction func renumberSeqBasedOnLevel(_ sender: Any) {
-
+        outlineUpdatesBasedOnLevel(updateSeq: true, updateTags: false)
+    }
+    
+    @IBAction func replaceTagsBasedOnLevel(_ sender: Any) {
+        outlineUpdatesBasedOnLevel(updateSeq: false, updateTags: true)
+    }
+    
+    @IBAction func updateSeqAndTagsBasedOnLevel(_ sender: Any) {
+        outlineUpdatesBasedOnLevel(updateSeq: true, updateTags: true)
+    }
+    
+    /// Update Seq and/or Tags field based on outline structure (based on seq + level).
+    func outlineUpdatesBasedOnLevel(updateSeq: Bool, updateTags: Bool) {
+        
         // Make sure we're in a position to perform this operation.
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
@@ -314,19 +335,19 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         
         let levelDef = collection.levelFieldDef
         guard dict.contains(levelDef) else {
-            communicateError("The Collection must contain a Level field before it can be Renumbered by Level", alert: true)
+            communicateError("The Collection must contain a Level field before it can be Renumbered or Retagged", alert: true)
             return
         }
         
         let seqDef = collection.seqFieldDef
         guard dict.contains(seqDef) else {
-            communicateError("The Collection must contain a Seq field before it can be Renumbered", alert: true)
+            communicateError("The Collection must contain a Seq field before it can be Renumbered or Retagged", alert: true)
             return
         }
         
         let sortParm = collection.sortParm
         guard sortParm == .seqPlusTitle else {
-            communicateError("First Sort by Seq + Title before attempting to Renumber", alert: true)
+            communicateError("First Sort by Seq + Title before attempting to Renumber or Retag", alert: true)
             return
         }
         
@@ -339,53 +360,144 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         while numbers.count <= high {
             numbers.append(0)
         }
+        
+        var parents: [String] = []
+        while parents.count <= high {
+            parents.append("")
+        }
+        
         var lastLevel = 0
         var startNumberingAt = low
+        var tagStart = low
         var notesToUpdate: [Note] = []
         var updatedSeqs: [String] = []
+        var updatedTags: [String] = []
+        
         var (note, position) = noteIO.firstNote()
         while note != nil {
+            
+            // Process the next note.
             let noteLevel = note!.level.getInt()
             
+            // Calculate the new seq value.
+            var newSeq = ""
             if first && !note!.hasSeq() && noteLevel == low {
                 startNumberingAt = low + 1
+                tagStart = low + 1
             } else {
                 while lastLevel > noteLevel {
                     numbers[lastLevel] = 0
+                    parents[lastLevel] = ""
                     lastLevel -= 1
                 }
+                lastLevel = noteLevel
                 numbers[noteLevel] += 1
-                var newSeq = ""
                 var i = startNumberingAt
                 while i <= noteLevel {
-                    if newSeq.count > 0 {
-                        newSeq.append(".")
+                    if numbers[i] > 0 {
+                        if newSeq.count > 0 { newSeq.append(".") }
+                        newSeq.append(String(numbers[i]))
                     }
-                    newSeq.append(String(numbers[i]))
                     i += 1
                 }
-                if newSeq != note!.seq.value {
-                    notesToUpdate.append(note!)
-                    updatedSeqs.append(newSeq)
+            }
+            
+            // Generate the new tags.
+            var levelsTagForThisLevel = ""
+            if updateSeq {
+                if noteLevel >= startNumberingAt {
+                    levelsTagForThisLevel.append(String(numbers[noteLevel]))
+                    if levelsTagForThisLevel.count > 0 {
+                        levelsTagForThisLevel.append(" ")
+                    }
                 }
             }
+            levelsTagForThisLevel.append(note!.title.value)
+            parents[noteLevel] = levelsTagForThisLevel
+            
+            var newLevelTags = ""
+            newLevelTags.append(levelsHead)
+            var tagEnd = noteLevel
+            if tagEnd == high {
+                tagEnd = noteLevel - 1
+            }
+            if tagEnd < low {
+                tagEnd = low
+            }
+            var j = tagStart
+            while j <= tagEnd {
+                if parents[j].count > 0 {
+                    if newLevelTags.count > 0 { newLevelTags.append(".") }
+                    newLevelTags.append(parents[j])
+                }
+                j += 1
+            }
+            
+            // Now generate the new tags, preserving any non-level related tags assigned by the user.
+            var newTags = ""
+            let currTags = note!.tags
+            var replaced = false
+            for tagValue in currTags.tags {
+                let tag = tagValue.value
+                if tag.hasPrefix(levelsHead) {
+                    if newTags.count > 0 { newTags.append(",") }
+                    newTags.append(newLevelTags)
+                    replaced = true
+                } else {
+                    if newTags.count > 0 { newTags.append(",") }
+                    newTags.append(tag)
+                }
+            }
+            if !replaced {
+                if newTags.count > 0 { newTags.append(",") }
+                newTags.append(newLevelTags)
+            }
+            
+            // Now store any updates, so that we can apply them later.
+            var updateNote = false
+            
+            if updateSeq && newSeq != note!.seq.value {
+                updateNote = true
+            }
+            
+            if updateTags && newLevelTags != note!.tags.value {
+                updateNote = true
+            }
+            
+            if updateNote {
+                notesToUpdate.append(note!)
+                if updateSeq {
+                    updatedSeqs.append(newSeq)
+                }
+                if updateTags {
+                    updatedTags.append(newTags)
+                }
+            }
+            
             first = false
             (note, position) = io!.nextNote(position)
         }
         
-        // Perform the updates.
+        // Now perform the updates.
         var updateIndex = 0
         while updateIndex < notesToUpdate.count {
             let originalNote = notesToUpdate[updateIndex]
-            let newSeq = updatedSeqs[updateIndex]
             let modNote = originalNote.copy() as! Note
-            _ = modNote.setSeq(newSeq)
+            if updateSeq {
+                let newSeq = updatedSeqs[updateIndex]
+                _ = modNote.setSeq(newSeq)
+            }
+            if updateTags {
+                let newTags = updatedTags[updateIndex]
+                _ = modNote.setTags(newTags)
+            }
             _ = noteIO.modNote(oldNote: originalNote, newNote: modNote)
             updateIndex += 1
         }
         
         // Now let the user see the results.
         finishBatchOperation()
+        reloadCollection(self)
         reportNumberOfNotesUpdated(notesToUpdate.count)
     }
     
@@ -1424,7 +1536,11 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         if selection != nil && selection!.hasSeq() {
             let incSeq = SeqValue(selection!.seq.value)
             incSeq.increment(onLeft: false)
-            let _ = newNote!.setSeq(incSeq.value)
+            _ = newNote!.setSeq(incSeq.value)
+        }
+        
+        if selection != nil && selection!.hasLevel() {
+            _ = newNote!.setLevel(selection!.level.value)
         }
         
         editVC!.populateFields(with: newNote!)
