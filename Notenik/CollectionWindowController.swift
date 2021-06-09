@@ -412,7 +412,8 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
                     }
                 }
             }
-            levelsTagForThisLevel.append(note!.title.value)
+            let tagTitle = TagsValue.tagify(note!.title.value)
+            levelsTagForThisLevel.append(tagTitle)
             parents[noteLevel] = levelsTagForThisLevel
             
             var newLevelTags = ""

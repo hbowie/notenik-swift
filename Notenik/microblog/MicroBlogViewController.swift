@@ -71,8 +71,8 @@ class MicroBlogViewController: NSViewController, MicroBlogUI {
     }
     
     @IBAction func publish(_ sender: Any) {
-        guard let note = info.note else { return }
-        guard checkNameAndToken() else { return }
+        // guard let note = info.note else { return }
+        // guard checkNameAndToken() else { return }
     }
     
     @IBAction func done(_ sender: Any) {

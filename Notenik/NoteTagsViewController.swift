@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/28/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -118,7 +118,7 @@ class NoteTagsViewController: NSViewController,
                 case .root:
                     textField.stringValue = notenikIO!.collection!.path
                 case .tag:
-                    textField.stringValue = node.tag!
+                    textField.stringValue = node.tag!.forDisplay
                 case .note:
                     textField.stringValue = node.note!.title.value
                 }
@@ -137,10 +137,25 @@ class NoteTagsViewController: NSViewController,
         guard outcome != modIfChangedOutcome.tryAgain else { return }
         
         let selectedIndex = outlineView.selectedRow
-        if let node = outlineView.item(atRow: selectedIndex) as? TagsNode {
-            if node.type == TagsNodeType.note {
-                collectionWindowController!.select(note: node.note!, position: nil, source: .tree)
+        guard let node = outlineView.item(atRow: selectedIndex) as? TagsNode else { return }
+        switch node.type {
+        case .note:
+            collectionWindowController!.select(note: node.note!, position: nil, source: .tree)
+        case .tag:
+            var nextChildNode: TagsNode = node
+            var childrenExhausted = false
+            while nextChildNode.type != .note && !childrenExhausted {
+                if nextChildNode.children.count == 0 {
+                    childrenExhausted = true
+                } else {
+                    nextChildNode = nextChildNode.children[0]
+                }
             }
+            if nextChildNode.type == .note {
+                collectionWindowController!.select(note: nextChildNode.note!, position: nil, source: .tree)
+            }
+        case .root:
+            break
         }
     }
     
