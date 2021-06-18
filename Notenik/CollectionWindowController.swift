@@ -1648,15 +1648,9 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     }
     
     @IBAction func openEdits(_ sender: Any) {
-        print("CollectionViewController.openEdits")
-        print("  - selected tab label = \(noteTabs!.tabView.selectedTabViewItem!.label)")
         guard noteTabs!.tabView.selectedTabViewItem!.label != "Edit"  else { return }
         let (_, sel) = guardForNoteAction()
-        if sel == nil {
-            print("  - selected note is nil")
-        }
         guard sel != nil else { return }
-        print("  - selecting note tab at 1")
         noteTabs!.tabView.selectTabViewItem(at: 1)
     }
     

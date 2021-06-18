@@ -8,6 +8,19 @@ Tags:   changes, versions, history, log
 
 Body:   
  
+### Version 6.3.0 | 05 Jun 2021
+
+#### 1. Added Level as New Field Label and Type
+
+`Level` has been added as a new field label and type. 
+
+
+#### 2. Updates to Work List Field Type
+
+I added 'Podcast' as another choice, when specifying the type of work being referenced or quoted. 
+
+I also modified the logic so that you can use either a leading lower-case letter, or leading upper-case, when entering a work type value. Whichever one is used, and chosen, the value stored will be with leading upper-case.
+
 ### Version 6.2.0 | 26 May 2021
 
 #### 1. Added Custom URL Scheme for Notenik
