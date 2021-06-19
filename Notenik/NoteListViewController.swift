@@ -248,7 +248,7 @@ class NoteListViewController:   NSViewController,
                     cellView.textField?.stringValue = note.tags.value
                 } else if tableColumn?.title == notenikIO!.collection!.dateFieldDef.fieldLabel.properForm {
                     cellView.textField?.stringValue = note.date.dMyDate
-                } else if tableColumn?.title == notenikIO!.collection!.seqFieldDef.fieldLabel.properForm {
+                } else if notenikIO!.collection!.seqFieldDef != nil && tableColumn?.title == notenikIO!.collection!.seqFieldDef!.fieldLabel.properForm {
                     cellView.textField?.stringValue = note.seq.value
                 } else if tableColumn?.title == notenikIO!.collection!.creatorFieldDef.fieldLabel.properForm {
                     cellView.textField?.stringValue = note.creatorValue
@@ -343,13 +343,15 @@ class NoteListViewController:   NSViewController,
     }
     
     func addSeqColumn(at desiredIndex: Int) {
-        guard let collection = notenikIO?.collection else {
+        if notenikIO != nil
+            && notenikIO!.collection != nil
+            && notenikIO!.collection!.seqFieldDef != nil {
+            addColumn(title: notenikIO!.collection!.seqFieldDef!.fieldLabel.properForm,
+                      strID: "seq-column",
+                      at: desiredIndex, min: 50, width: 80, max: 250)
+        } else {
             addColumn(title: "Seq", strID: "seq-column", at: desiredIndex, min: 50, width: 80, max: 250)
-            return
         }
-        addColumn(title: collection.seqFieldDef.fieldLabel.properForm,
-                  strID: "seq-column",
-                  at: desiredIndex, min: 50, width: 80, max: 250)
     }
     
     func addXColumn(at desiredIndex: Int) {

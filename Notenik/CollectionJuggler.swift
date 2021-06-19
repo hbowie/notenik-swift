@@ -167,7 +167,7 @@ class CollectionJuggler: NSObject {
             let actor = CustomURLActor()
             _ = actor.act(on: link.str)
         default:
-            communicateError("Item to be opened at \(link) could not be used", alert: true)
+            communicateError("Item to be opened at \(link) could not be used, possibly due to expired permissions", alert: true)
         }
         return nil
     }

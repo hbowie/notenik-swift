@@ -28,6 +28,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var mirrorAutoIndexCkBox: NSButton!
     @IBOutlet var bodyLabelCkBox:       NSButton!
     @IBOutlet var h1TitlesCkBox:        NSButton!
+    @IBOutlet var streamlinedCkBox:     NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
     
@@ -221,6 +222,7 @@ class CollectionPrefsViewController: NSViewController {
         setMirrorAutoIndex(collection!.mirrorAutoIndex)
         setBodyLabel(collection!.bodyLabel)
         setH1Titles(collection!.h1Titles)
+        setStreamlined(collection!.streamlined)
     }
     
     func setFieldsForCollection() {
@@ -289,6 +291,14 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
+    func setStreamlined(_ on: Bool) {
+        if on {
+            streamlinedCkBox.state = .on
+        } else {
+            streamlinedCkBox.state = .off
+        }
+    }
+    
     @objc func checkBoxClicked() {
         // No need to take any immediate action here
     }
@@ -305,6 +315,7 @@ class CollectionPrefsViewController: NSViewController {
         collection!.mirrorAutoIndex = (mirrorAutoIndexCkBox.state == .on)
         collection!.bodyLabel = (bodyLabelCkBox.state == .on)
         collection!.h1Titles = (h1TitlesCkBox.state == .on)
+        collection!.streamlined = (streamlinedCkBox.state == .on)
         let dict = collection!.dict
         dict.unlock()
         for checkBox in fieldSelectors {

@@ -339,8 +339,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             return
         }
         
-        let seqDef = collection.seqFieldDef
-        guard dict.contains(seqDef) else {
+        guard collection.seqFieldDef != nil else {
             communicateError("The Collection must contain a Seq field before it can be Renumbered or Retagged", alert: true)
             return
         }
