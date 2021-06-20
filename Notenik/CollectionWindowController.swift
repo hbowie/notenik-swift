@@ -1535,7 +1535,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         
         if selection != nil && selection!.hasSeq() {
             let incSeq = SeqValue(selection!.seq.value)
-            incSeq.increment(onLeft: false)
+            incSeq.increment()
             _ = newNote!.setSeq(incSeq.value)
         }
         
