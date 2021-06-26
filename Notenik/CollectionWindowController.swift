@@ -501,6 +501,31 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         reportNumberOfNotesUpdated(notesToUpdate.count)
     }
     
+    /// Read Index Terms and generate an index to the Collection in Markdown format.
+    @IBAction func generateIndex(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        let (selNote, position) = noteIO.getSelectedNote()
+        
+        let indexBuilder = IndexBuilder(noteIO: noteIO)
+        let code = indexBuilder.build()
+        let pb = NSPasteboard.general
+        pb.clearContents()
+        _ = pb.setString(code, forType: .string)
+        finishBatchOperation()
+        self.select(note: selNote, position: position, source: .nav, andScroll: true)
+        
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        if indexBuilder.termCount == 0 {
+            alert.messageText = "No Index Terms Were Found"
+        } else {
+            alert.messageText = "\(indexBuilder.termCount) Terms and \(indexBuilder.pageCount) Note References were copied to the Clipboard"
+        }
+        alert.addButton(withTitle: "OK")
+        let _ = alert.runModal()
+    }
+    
     /// If we have past due daily tasks, then update the dates to make them current
     @IBAction func menuCatchUpDailyTasks(_ sender: Any) {
         
