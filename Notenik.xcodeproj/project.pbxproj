@@ -167,6 +167,8 @@
 		9C924C7025CDB80A000DEAB3 /* FileExtensionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C924C6F25CDB80A000DEAB3 /* FileExtensionPicker.swift */; };
 		9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025121F65AF00027F364 /* NoteListViewController.swift */; };
 		9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
+		9C9B4351268AA368000977F2 /* - INFO.nnk in Resources */ = {isa = PBXBuildFile; fileRef = 9C9B4350268AA368000977F2 /* - INFO.nnk */; };
+		9C9B4353268AA40A000977F2 /* notenik-KB in Resources */ = {isa = PBXBuildFile; fileRef = 9C9B4352268AA40A000977F2 /* notenik-KB */; };
 		9CA4EE88246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
 		9CA4EE89246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
 		9CA4EE8A246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
@@ -387,6 +389,8 @@
 		9C924C6F25CDB80A000DEAB3 /* FileExtensionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionPicker.swift; sourceTree = "<group>"; };
 		9C9A025121F65AF00027F364 /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
+		9C9B4350268AA368000977F2 /* - INFO.nnk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "- INFO.nnk"; path = "../../notenik-swift-intro/- INFO.nnk"; sourceTree = "<group>"; };
+		9C9B4352268AA40A000977F2 /* notenik-KB */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-KB"; path = "../../notenik-KB"; sourceTree = "<group>"; };
 		9CA4EE87246A143B00059F65 /* PickListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickListView.swift; sourceTree = "<group>"; };
 		9CA4EE8B246A15BC00059F65 /* PickListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickListDataSource.swift; sourceTree = "<group>"; };
 		9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewController.swift; sourceTree = "<group>"; };
@@ -602,6 +606,8 @@
 				9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */,
 				9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */,
 				9C60E6D521F64B3C00C332ED /* Assets.xcassets */,
+				9C9B4350268AA368000977F2 /* - INFO.nnk */,
+				9C9B4352268AA40A000977F2 /* notenik-KB */,
 				9C3AFF4C25C63169004B5EF2 /* fields */,
 				9C0BF17125B678470037BCA9 /* intro */,
 				9C0BF16B25B63C990037BCA9 /* markdown-spec */,
@@ -1057,7 +1063,9 @@
 				9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */,
 				9C0BF17225B678470037BCA9 /* intro in Resources */,
 				9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */,
+				9C9B4351268AA368000977F2 /* - INFO.nnk in Resources */,
 				9C2BFCB625ACD0BF0030A980 /* notenik-news.html in Resources */,
+				9C9B4353268AA40A000977F2 /* notenik-KB in Resources */,
 				9CD9058926362F70000851E8 /* MicroBlog.storyboard in Resources */,
 				9CE3250A224D58360051CA1F /* Log.storyboard in Resources */,
 				9C46A71525D05CC0006E9C16 /* NewCollection.storyboard in Resources */,

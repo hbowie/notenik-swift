@@ -599,6 +599,12 @@ class CollectionJuggler: NSObject {
         _ = openFileWithNewWindow(fileURL: essentialURL, readOnly: false)
     }
     
+    /// Open the Notenik Knowledge Base.
+    func openKB() {
+        let path = notenikFolderList.kbNode.path
+        _ = openFileWithNewWindow(folderPath: path, readOnly: true)
+    }
+    
     func openIntro() {
         let path = notenikFolderList.introNode.path
         _ = openFileWithNewWindow(folderPath: path, readOnly: true)

@@ -213,6 +213,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         juggler.viewResetEditFontSize()
     }
     
+    @IBAction func menuOpenKB(_ sender: Any) {
+        juggler.openKB()
+    }
+    
     @IBAction func menuOpenIntro(_ sender: Any) {
         juggler.openIntro()
     }
