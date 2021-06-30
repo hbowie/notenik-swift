@@ -1371,6 +1371,13 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         return false
     }
     
+    /// Select the first Note in the list. 
+    func selectFirstNote() {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let (firstNote, firstPosition) = noteIO.firstNote()
+        select(note: firstNote, position: firstPosition, source: .nav)
+    }
+    
     /// React to the selection of a note, coordinating the various views as needed.
     ///
     /// - Parameters:

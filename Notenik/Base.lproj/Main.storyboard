@@ -903,36 +903,6 @@ CA
                                                 <action selector="menuOpenKB:" target="Voe-Tx-rLC" id="oHm-8s-Yk2"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="What's New?" id="RF7-QX-IQC">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="menuWhatsNew:" target="Voe-Tx-rLC" id="vl3-bo-zIk"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Introduction" id="wKr-4I-h8O">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="menuOpenIntro:" target="Voe-Tx-rLC" id="D5n-MI-dvw"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="User Guide" id="Sro-v0-iUk" userLabel="Open Help Notes">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="menuOpenHelpNotes:" target="Voe-Tx-rLC" id="Kfp-kT-M62"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Field Labels and Types" id="3T7-pR-2Sl">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="menuOpenFieldNotes:" target="Voe-Tx-rLC" id="saS-cP-qNb"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Markdown Spec" id="J2x-iE-Vl1" userLabel="Markdown Spec">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="menuOpenMarkdownSpec:" target="Voe-Tx-rLC" id="qpM-rf-fc9"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="W1W-7X-I33"/>
                                         <menuItem title="Notenik.net" id="YxM-hp-SS4" userLabel="Notenik.net">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -944,13 +914,6 @@ CA
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuHelpRateOnAppStore:" target="Voe-Tx-rLC" id="gLm-G6-dhf"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="IkT-bD-EsU"/>
-                                        <menuItem title="Traditional Mac Help" id="FKE-Sm-Kum">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -1058,7 +1021,7 @@ CA
                                 <toolbarItem implicitItemIdentifier="235825DF-62CE-415D-9E37-BB1B331BFDED" label="Reports" paletteLabel="Reports" image="NSActionTemplate" sizingBehavior="auto" id="2Vv-Jk-PYc">
                                     <nil key="toolTip"/>
                                     <popUpButton key="view" verticalHuggingPriority="750" id="H5N-5T-GaK">
-                                        <rect key="frame" x="0.0" y="14" width="54" height="25"/>
+                                        <rect key="frame" x="0.0" y="14" width="50" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSActionTemplate" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="rmD-ov-eYo" id="393-D3-gTY">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1103,7 +1066,7 @@ CA
                                 <toolbarItem implicitItemIdentifier="4E1A6904-9894-48EC-92D9-176C140AD28D" label="Attachments" paletteLabel="Attachments" title="files..." sizingBehavior="auto" id="f6I-c6-rBh" userLabel="Attachments">
                                     <nil key="toolTip"/>
                                     <popUpButton key="view" verticalHuggingPriority="750" id="L3h-8b-Jqt">
-                                        <rect key="frame" x="0.0" y="14" width="149" height="25"/>
+                                        <rect key="frame" x="0.0" y="14" width="145" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <popUpButtonCell key="cell" type="roundTextured" title="files..." bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="OoK-b7-aod" id="ETi-ku-HDh">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1210,13 +1173,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="42" height="105"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="131"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="40" height="103"/>
+                                    <rect key="frame" x="1" y="1" width="428" height="114"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
-                                            <rect key="frame" x="0.0" y="0.0" width="1090" height="78"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1090" height="89"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1491,11 +1454,11 @@ CA
                                         </tableView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="88" width="40" height="16"/>
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.16163141993957703" horizontal="YES" id="CTE-sV-ET2">
+                                    <rect key="frame" x="1" y="115" width="428" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.095238095238095233" horizontal="NO" id="pSI-dZ-vUM">
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -1529,13 +1492,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="78"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="73"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="76"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="71"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="477" height="76"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="477" height="71"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1658,11 +1621,11 @@ CA
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="bn0-Un-4db">
-                            <rect key="frame" x="1" y="1" width="448" height="298"/>
+                            <rect key="frame" x="1" y="1" width="433" height="298"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bOQ-ka-7LZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="433" height="283"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="418" height="283"/>
                                 </view>
                             </subviews>
                             <constraints>
@@ -1677,7 +1640,7 @@ CA
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="SIG-iA-YDH">
-                            <rect key="frame" x="433" y="1" width="16" height="298"/>
+                            <rect key="frame" x="434" y="1" width="15" height="298"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>

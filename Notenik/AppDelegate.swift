@@ -91,11 +91,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         // Done launching
         appPrefs.appLaunching = false
         
-        // If this is a new version, display the latest news.
-        if appPrefs.newVersionForNews {
-            displayLatestNews()
-        }
-        
     }
     
     /// Open an iCloud item that's been selected by the user from the submenu created above.
@@ -217,22 +212,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         juggler.openKB()
     }
     
-    @IBAction func menuOpenIntro(_ sender: Any) {
-        juggler.openIntro()
-    }
-    
-    @IBAction func menuOpenHelpNotes(_ sender: NSMenuItem) {
-        juggler.openHelpNotes()
-    }
-    
-    @IBAction func menuOpenFieldNotes(_ sender: Any) {
-        juggler.openFieldNotes()
-    }
-    
-    @IBAction func menuOpenMarkdownSpec(_ sender: NSMenuItem) {
-        juggler.openMarkdownSpec()
-    }
-    
     @IBAction func menuWindowLog(_ sender: NSMenuItem) {
         if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
             logController.showWindow(self)
@@ -246,22 +225,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     @IBAction func menuWindowScripter(_ sender: Any) {
         juggler.showScriptWindow()
-    }
-    
-    @IBAction func menuWhatsNew(_ sender: Any) {
-        displayLatestNews()
-    }
-    
-    func displayLatestNews() {
-        if let newsController = self.newsStoryboard.instantiateController(withIdentifier: "newsWC") as? NewsWindowController {
-            newsController.showWindow(self)
-        } else {
-            logger.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "AppDelegate",
-                              level: .fault,
-                              message: "Couldn't get a News Window Controller!")
-        }
-        appPrefs.userShownNews()
     }
     
     @IBAction func menuHelpNotenikDotNet(_ sender: NSMenuItem) {

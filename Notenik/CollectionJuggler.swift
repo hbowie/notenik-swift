@@ -98,8 +98,9 @@ class CollectionJuggler: NSObject {
         }
 
         if collection == nil {
-            let path = NotenikFolderList.shared.introNode.folder!.path
+            let path = NotenikFolderList.shared.kbNode.folder!.path
             collection = io.openCollection(realm: realm, collectionPath: path, readOnly: true)
+            _ = io.firstNote()
         }
         
         let wc = assignIOtoWindow(io: io)
@@ -602,29 +603,10 @@ class CollectionJuggler: NSObject {
     /// Open the Notenik Knowledge Base.
     func openKB() {
         let path = notenikFolderList.kbNode.path
-        _ = openFileWithNewWindow(folderPath: path, readOnly: true)
-    }
-    
-    func openIntro() {
-        let path = notenikFolderList.introNode.path
-        _ = openFileWithNewWindow(folderPath: path, readOnly: true)
-    }
-    
-    /// Open the Application's Internal Collection of Help Notes
-    func openHelpNotes() {
-        let path = notenikFolderList.userGuideNode.path
-        _ = openFileWithNewWindow(folderPath: path, readOnly: true)
-    }
-    
-    /// Open the notes about field labels and types. 
-    func openFieldNotes() {
-        let path = notenikFolderList.fieldsNode.path
-        _ = openFileWithNewWindow(folderPath: path, readOnly: true)
-    }
-    
-    func openMarkdownSpec() {
-        let path = notenikFolderList.markdownNode.path
-        _ = openFileWithNewWindow(folderPath: path, readOnly: true)
+        let kbwc = openFileWithNewWindow(folderPath: path, readOnly: true)
+        if kbwc != nil {
+            kbwc!.selectFirstNote()
+        }
     }
     
     /// Respond to a user request to open another Collection. Present the user
