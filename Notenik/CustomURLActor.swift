@@ -43,6 +43,10 @@ class CustomURLActor {
             communicateError("Could not extract a command from this URL: \(customURL)")
             return false
         }
+        if command == "help" {
+            juggler.openKB()
+            return true
+        }
         guard let query = url.query else {
             communicateError("Could not extract query parameters from this URL: \(customURL)")
             return false
