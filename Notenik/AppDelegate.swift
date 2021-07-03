@@ -209,7 +209,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     @IBAction func menuOpenKB(_ sender: Any) {
-        juggler.openKB()
+        _ = juggler.openKB()
     }
     
     @IBAction func menuWindowLog(_ sender: NSMenuItem) {

@@ -601,12 +601,13 @@ class CollectionJuggler: NSObject {
     }
     
     /// Open the Notenik Knowledge Base.
-    func openKB() {
+    func openKB() -> CollectionWindowController? {
         let path = notenikFolderList.kbNode.path
         let kbwc = openFileWithNewWindow(folderPath: path, readOnly: true)
         if kbwc != nil {
             kbwc!.selectFirstNote()
         }
+        return kbwc
     }
     
     /// Respond to a user request to open another Collection. Present the user

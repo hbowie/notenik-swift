@@ -83,6 +83,7 @@
 		9C46A72125D070BD006E9C16 /* NewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72025D070BD006E9C16 /* NewCollectionViewController.swift */; };
 		9C46A72725D07899006E9C16 /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72625D07899006E9C16 /* NewLocationViewController.swift */; };
 		9C46A72D25D0A6E0006E9C16 /* NewNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72C25D0A6E0006E9C16 /* NewNameViewController.swift */; };
+		9C5083D826911B89001DB2CF /* notenik-KB in Resources */ = {isa = PBXBuildFile; fileRef = 9C5083D726911B89001DB2CF /* notenik-KB */; };
 		9C553C612266A0D50008D176 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553C602266A0D50008D176 /* StatusView.swift */; };
 		9C553C622266A0D50008D176 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553C602266A0D50008D176 /* StatusView.swift */; };
 		9C5556D222E115960099414E /* Export.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C5556D122E115960099414E /* Export.storyboard */; };
@@ -159,7 +160,6 @@
 		9C924C7025CDB80A000DEAB3 /* FileExtensionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C924C6F25CDB80A000DEAB3 /* FileExtensionPicker.swift */; };
 		9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025121F65AF00027F364 /* NoteListViewController.swift */; };
 		9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
-		9C9B4353268AA40A000977F2 /* notenik-KB in Resources */ = {isa = PBXBuildFile; fileRef = 9C9B4352268AA40A000977F2 /* notenik-KB */; };
 		9CA4EE88246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
 		9CA4EE89246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
 		9CA4EE8A246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
@@ -314,6 +314,7 @@
 		9C46A72025D070BD006E9C16 /* NewCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCollectionViewController.swift; sourceTree = "<group>"; };
 		9C46A72625D07899006E9C16 /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
 		9C46A72C25D0A6E0006E9C16 /* NewNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNameViewController.swift; sourceTree = "<group>"; };
+		9C5083D726911B89001DB2CF /* notenik-KB */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "notenik-KB"; sourceTree = "<group>"; };
 		9C553C602266A0D50008D176 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		9C5556D122E115960099414E /* Export.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Export.storyboard; sourceTree = "<group>"; };
 		9C5556D622E11E3B0099414E /* ExportWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportWindowController.swift; sourceTree = "<group>"; };
@@ -374,7 +375,6 @@
 		9C924C6F25CDB80A000DEAB3 /* FileExtensionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionPicker.swift; sourceTree = "<group>"; };
 		9C9A025121F65AF00027F364 /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
-		9C9B4352268AA40A000977F2 /* notenik-KB */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-KB"; path = "../../notenik-KB"; sourceTree = "<group>"; };
 		9CA4EE87246A143B00059F65 /* PickListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickListView.swift; sourceTree = "<group>"; };
 		9CA4EE8B246A15BC00059F65 /* PickListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickListDataSource.swift; sourceTree = "<group>"; };
 		9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewController.swift; sourceTree = "<group>"; };
@@ -590,11 +590,11 @@
 				9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */,
 				9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */,
 				9C60E6D521F64B3C00C332ED /* Assets.xcassets */,
-				9C9B4352268AA40A000977F2 /* notenik-KB */,
 				9C60E6DA21F64B3C00C332ED /* Info.plist */,
 				9C29A4E925D1CABC00409BF5 /* models */,
 				9C09E1752248601D0046D50D /* notenik.iconset */,
 				9C60E6DB21F64B3C00C332ED /* Notenik.entitlements */,
+				9C5083D726911B89001DB2CF /* notenik-KB */,
 				9C1E0C8D22E4F7780025C99C /* attachments */,
 				9CF1193522581ABE0015AE91 /* collectionPrefs */,
 				9CF435C22480593700DD7C33 /* counts */,
@@ -1037,10 +1037,10 @@
 				9C65B2A023DE28BC00794C59 /* LICENSE.md in Resources */,
 				9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */,
 				9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */,
-				9C9B4353268AA40A000977F2 /* notenik-KB in Resources */,
 				9CD9058926362F70000851E8 /* MicroBlog.storyboard in Resources */,
 				9CE3250A224D58360051CA1F /* Log.storyboard in Resources */,
 				9C46A71525D05CC0006E9C16 /* NewCollection.storyboard in Resources */,
+				9C5083D826911B89001DB2CF /* notenik-KB in Resources */,
 				9CCE7C63264AE8FD003818DF /* QuickAction.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

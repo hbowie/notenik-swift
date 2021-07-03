@@ -43,34 +43,66 @@ class CustomURLActor {
             communicateError("Could not extract a command from this URL: \(customURL)")
             return false
         }
-        if command == "help" {
-            juggler.openKB()
-            return true
-        }
-        guard let query = url.query else {
-            communicateError("Could not extract query parameters from this URL: \(customURL)")
-            return false
+        var query = ""
+        let possibleQuery = url.query
+        if possibleQuery != nil {
+            query = possibleQuery!
         }
         var labels: [String] = []
         var values: [String] = []
         let parameters = query.components(separatedBy: "&")
         for parm in parameters {
-            let parmSplit = parm.components(separatedBy: "=")
-            guard parmSplit.count == 2 else { continue }
-            labels.append(parmSplit[0])
-            guard let value = parmSplit[1].removingPercentEncoding else { continue }
-            values.append(value)
+            if parm.count > 0 {
+                let parmSplit = parm.components(separatedBy: "=")
+                guard parmSplit.count == 2 else { continue }
+                labels.append(parmSplit[0])
+                guard let value = parmSplit[1].removingPercentEncoding else { continue }
+                values.append(value)
+            }
         }
         switch command {
-        case "open":
-            processOpenCommand(labels: labels, values: values)
         case "add":
             processAddCommand(labels: labels, values: values)
+        case "help":
+            processHelpCommand(labels: labels, values: values)
+        case "open":
+            processOpenCommand(labels: labels, values: values)
         default:
             communicateError("Invalid Command: \(command)")
             return false
         }
         return true
+    }
+    
+    func processHelpCommand(labels: [String], values: [String]) {
+        var cwc = juggler.openKB()
+        if cwc == nil {
+            communicateError("Notenik Knowledge Base could not be opened")
+        } else {
+            var i = 0
+            while i < labels.count {
+                processHelpParm(label: labels[i],
+                                value: values[i],
+                                cwc: &cwc!)
+                i += 1
+            }
+        }
+    }
+    
+    func processHelpParm(label: String,
+                         value: String,
+                         cwc: inout CollectionWindowController) {
+        switch label {
+        case "id":
+            guard let io = cwc.io else { return }
+            guard let note = io.getNote(forID: value) else {
+                communicateError("Note could not be found with this ID: \(value)")
+                return
+            }
+            cwc.select(note: note, position: nil, source: .action)
+        default:
+            communicateError("Help Query Parameter of \(label) not recognized")
+        }
     }
     
     func processOpenCommand(labels: [String], values: [String]) {
