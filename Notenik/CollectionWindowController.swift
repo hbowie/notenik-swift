@@ -15,6 +15,8 @@ import StoreKit
 import NotenikUtils
 import NotenikLib
 
+import ZipArchive
+
 /// Controls a window showing a particular Collection of Notes.
 class CollectionWindowController: NSWindowController, AttachmentMasterController {
     
@@ -1767,6 +1769,33 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         guard notenikIO != nil && notenikIO!.collectionOpen else { return }
         guard let window = self.window as? CollectionWindow else { return }
         juggler.userRequestsMove(currentIO: io!, currentWindow: window)
+    }
+    
+    /// Backup the Collection to a Zip file.
+    @IBAction func backupToZip(_ sender: NSMenuItem) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+        let nowStr = formatter.string(from: now)
+        let defaultName = "\(noteIO.collection!.title) backup on \(nowStr).zip"
+        
+        let savePanel = NSSavePanel();
+        savePanel.title = "Specify an output file"
+        let parent = io!.collection!.fullPathURL
+        savePanel.directoryURL = parent
+        savePanel.showsResizeIndicator = true
+        savePanel.showsHiddenFiles = false
+        savePanel.canCreateDirectories = true
+        savePanel.nameFieldStringValue = defaultName
+        let userChoice = savePanel.runModal()
+        if userChoice == .OK {
+            let zipPath = savePanel.url!.path
+            SSZipArchive.createZipFile(atPath: zipPath, withContentsOfDirectory: noteIO.collection!.fullPath)
+            communicateSuccess("Backup file generated", info: "At \(zipPath)", alert: true)
+        }
     }
     
     @IBAction func makeCollectionEssential(_ sender: Any) {

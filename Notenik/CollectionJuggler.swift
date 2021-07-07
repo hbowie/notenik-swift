@@ -610,6 +610,19 @@ class CollectionJuggler: NSObject {
         return kbwc
     }
     
+    func whatIsNew() {
+        let path = notenikFolderList.kbNode.path
+        guard let kbwc = openFileWithNewWindow(folderPath: path, readOnly: true) else { return }
+        guard let io = kbwc.io else { return }
+        guard let note = io.getNote(forID: "versionhistory") else {
+            communicateError("Knowledge Base Version History could not be found")
+            return
+        }
+        let position = io.positionOfNote(note)
+        let (nextNote, nextPosition) = io.nextNote(position)
+        kbwc.select(note: nextNote, position: nextPosition, source: .action)
+    }
+    
     /// Respond to a user request to open another Collection. Present the user
     /// with an Open Panel to allow the selection of a folder containing an
     /// existing Notenik Collection. 

@@ -212,6 +212,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         _ = juggler.openKB()
     }
     
+    @IBAction func menuWhatIsNew(_ sender: Any) {
+        juggler.whatIsNew()
+    }
+    
     @IBAction func menuWindowLog(_ sender: NSMenuItem) {
         if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
             logController.showWindow(self)
