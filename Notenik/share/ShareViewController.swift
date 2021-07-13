@@ -181,8 +181,9 @@ class ShareViewController: NSViewController {
             }
         } else {
             let noteDisplay = NoteDisplay()
-            noteDisplay.format = format
-            stringToShare = noteDisplay.display(note!, io: io!)
+            let parms = DisplayParms()
+            parms.format = format
+            stringToShare = noteDisplay.display(note!, io: io!, parms: parms)
         }
         
         // Write the string to an output destination

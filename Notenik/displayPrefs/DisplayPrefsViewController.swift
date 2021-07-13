@@ -143,7 +143,7 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         let code = Markedup(format: .htmlDoc)
         code.startDoc(withTitle: nil, withCSS: displayPrefs.buildBodyCSS(latestCSS))
         MkdownParser.markdownToMarkedup(markdown: "There is nothing worse than a brilliant image of a fuzzy concept.",
-                                        wikiLinkLookup: nil, writer: code)
+                                        mkdownContext: nil, writer: code)
         code.finishDoc()
         let html = String(describing: code)
         let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)

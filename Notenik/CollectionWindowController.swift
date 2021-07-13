@@ -502,32 +502,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         reloadCollection(self)
         reportNumberOfNotesUpdated(notesToUpdate.count)
     }
-    
-    /// Read Index Terms and generate an index to the Collection in Markdown format.
-    @IBAction func generateIndex(_ sender: Any) {
         
-        guard let noteIO = guardForCollectionAction() else { return }
-        let (selNote, position) = noteIO.getSelectedNote()
-        
-        let indexBuilder = IndexBuilder(noteIO: noteIO)
-        let code = indexBuilder.build()
-        let pb = NSPasteboard.general
-        pb.clearContents()
-        _ = pb.setString(code, forType: .string)
-        finishBatchOperation()
-        self.select(note: selNote, position: position, source: .nav, andScroll: true)
-        
-        let alert = NSAlert()
-        alert.alertStyle = .informational
-        if indexBuilder.termCount == 0 {
-            alert.messageText = "No Index Terms Were Found"
-        } else {
-            alert.messageText = "\(indexBuilder.termCount) Terms and \(indexBuilder.pageCount) Note References were copied to the Clipboard"
-        }
-        alert.addButton(withTitle: "OK")
-        let _ = alert.runModal()
-    }
-    
     /// If we have past due daily tasks, then update the dates to make them current
     @IBAction func menuCatchUpDailyTasks(_ sender: Any) {
         
@@ -2268,6 +2243,34 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         if genOK {
             NSWorkspace.shared.open(fileURL)
         }
+    }
+    
+    /// Generate a Web Book of CSS and HTML pages, containing the entire Collection.
+    @IBAction func generateWebBook(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        let dialog = NSOpenPanel()
+        
+        dialog.title                   = "Choose an Output Folder for your Web Book"
+        dialog.showsResizeIndicator    = true
+        dialog.showsHiddenFiles        = false
+        dialog.allowsMultipleSelection = false
+        dialog.canChooseDirectories    = true
+        dialog.canChooseFiles          = false
+        dialog.canCreateDirectories    = true
+        
+        let response = dialog.runModal()
+         
+        if response == .OK {
+            let bookURL = dialog.url!
+            let maker = WebBookMaker(input: noteIO.collection!.fullPathURL!, output: bookURL)
+            if maker != nil {
+                let filesWritten = maker!.generate()
+                informUserOfImportExportResults(operation: "Generate Web Book", ok: true, numberOfNotes: filesWritten, path: bookURL.path)
+            }
+        }
+        
     }
     
     /// Ask the user where to save the export file

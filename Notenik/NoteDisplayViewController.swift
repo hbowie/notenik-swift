@@ -76,7 +76,17 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         guard note != nil else { return }
         guard io != nil else { return }
         guard isViewLoaded else { return }
-        let html = noteDisplay.display(note!, io: io!)
+        
+        let parms = DisplayParms()
+        let collection = note!.collection
+        parms.cssString = collection.displayCSS
+        parms.setCSS(useFirst: collection.displayCSS, useSecond: DisplayPrefs.shared.bodyCSS)
+        parms.displayTemplate = collection.displayTemplate
+        parms.format = .htmlDoc
+        parms.sortParm = collection.sortParm
+        parms.streamlined = collection.streamlined
+        
+        let html = noteDisplay.display(note!, io: io!, parms: parms)
         counts = noteDisplay.counts
         if countsVC != nil {
             countsVC!.updateCounts(counts)
