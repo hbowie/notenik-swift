@@ -182,6 +182,9 @@ class ShareViewController: NSViewController {
         } else {
             let noteDisplay = NoteDisplay()
             let parms = DisplayParms()
+            let collection = note!.collection
+            parms.mathJax = collection.mathJax
+            parms.localMj = false
             parms.format = format
             stringToShare = noteDisplay.display(note!, io: io!, parms: parms)
         }

@@ -29,6 +29,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var bodyLabelCkBox:       NSButton!
     @IBOutlet var h1TitlesCkBox:        NSButton!
     @IBOutlet var streamlinedCkBox:     NSButton!
+    @IBOutlet var mathJaxCkBox:         NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
     
@@ -223,6 +224,7 @@ class CollectionPrefsViewController: NSViewController {
         setBodyLabel(collection!.bodyLabel)
         setH1Titles(collection!.h1Titles)
         setStreamlined(collection!.streamlined)
+        setMathJax(collection!.mathJax)
     }
     
     func setFieldsForCollection() {
@@ -299,6 +301,14 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
+    func setMathJax(_ on: Bool) {
+        if on {
+            mathJaxCkBox.state = .on
+        } else {
+            mathJaxCkBox.state = .off
+        }
+    }
+    
     @objc func checkBoxClicked() {
         // No need to take any immediate action here
     }
@@ -316,6 +326,7 @@ class CollectionPrefsViewController: NSViewController {
         collection!.bodyLabel = (bodyLabelCkBox.state == .on)
         collection!.h1Titles = (h1TitlesCkBox.state == .on)
         collection!.streamlined = (streamlinedCkBox.state == .on)
+        collection!.mathJax = (mathJaxCkBox.state == .on)
         let dict = collection!.dict
         dict.unlock()
         for checkBox in fieldSelectors {

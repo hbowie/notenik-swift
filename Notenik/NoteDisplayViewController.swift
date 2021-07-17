@@ -44,6 +44,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     var counts = MkdownCounts()
     
+    var parms = DisplayParms()
+    
     override func loadView() {
         webConfig = WKWebViewConfiguration()
         webView = NoteDisplayWebView(frame: .zero, configuration: webConfig)
@@ -54,6 +56,15 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        parms.localMj = true
+        parms.localMjUrl = Bundle.main.url(forResource: "MathJax/es5/tex-mml-chtml",
+                                           withExtension: "js")
+        if parms.localMjUrl == nil {
+            print("Couldn't get a local MathJax URL")
+        } else {
+            print("MathJax URL path = \(parms.localMjUrl!.path)")
+            print("MathJax URL abs str = \(parms.localMjUrl!.absoluteString)")
+        }
     }
     
     /// Display the provided note
@@ -77,7 +88,6 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         guard io != nil else { return }
         guard isViewLoaded else { return }
         
-        let parms = DisplayParms()
         let collection = note!.collection
         parms.cssString = collection.displayCSS
         parms.setCSS(useFirst: collection.displayCSS, useSecond: DisplayPrefs.shared.bodyCSS)
@@ -85,6 +95,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         parms.format = .htmlDoc
         parms.sortParm = collection.sortParm
         parms.streamlined = collection.streamlined
+        parms.mathJax = collection.mathJax
         
         let html = noteDisplay.display(note!, io: io!, parms: parms)
         counts = noteDisplay.counts
@@ -93,7 +104,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         }
         // let baseURL = io!.collection!.lib.getURL(type: .notes)
         var nav: WKNavigation?
-        nav = webView.loadHTMLString(html, baseURL: nil)
+        nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
         /* if baseURL != nil {
             nav = webView.loadHTMLString(html, baseURL: baseURL!)
         } else {

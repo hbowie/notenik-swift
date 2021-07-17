@@ -14,8 +14,8 @@
             filePath = "../NotenikLib/Sources/NotenikLib/transform/NoteTransformer.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "375"
-            endingLineNumber = "375"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "genFieldDisplay(def:io:markedup:)"
             landmarkType = "7">
          </BreakpointContent>

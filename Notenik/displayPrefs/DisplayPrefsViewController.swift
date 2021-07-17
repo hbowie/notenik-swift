@@ -46,6 +46,8 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
     var startingCSS = ""
     var latestCSS = ""
     
+    var mkdownOptions = MkdownOptions()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -143,7 +145,7 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         let code = Markedup(format: .htmlDoc)
         code.startDoc(withTitle: nil, withCSS: displayPrefs.buildBodyCSS(latestCSS))
         MkdownParser.markdownToMarkedup(markdown: "There is nothing worse than a brilliant image of a fuzzy concept.",
-                                        mkdownContext: nil, writer: code)
+                                        options: mkdownOptions, mkdownContext: nil, writer: code)
         code.finishDoc()
         let html = String(describing: code)
         let nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
