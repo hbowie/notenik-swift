@@ -60,11 +60,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         parms.localMjUrl = Bundle.main.url(forResource: "MathJax/es5/tex-mml-chtml",
                                            withExtension: "js")
         if parms.localMjUrl == nil {
-            print("Couldn't get a local MathJax URL")
-        } else {
-            print("MathJax URL path = \(parms.localMjUrl!.path)")
-            print("MathJax URL abs str = \(parms.localMjUrl!.absoluteString)")
-        }
+            communicateError("Couldn't get a local MathJax URL")
+        } 
     }
     
     /// Display the provided note
