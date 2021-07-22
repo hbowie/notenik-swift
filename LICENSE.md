@@ -27,6 +27,7 @@ Note that this project makes use of the following supporting libraries, each of 
 * [CoreXLSX](https://github.com/MaxDesiatov/CoreXLSX)
 * [Down](https://github.com/iwasrobbed/Down)
 * [Ink](https://github.com/JohnSundell/Ink)
+* [MathJax](https://www.mathjax.org)
 * [Pandoc](https://github.com/jgm/pandoc)
 * [XMLCoder](https://github.com/MaxDesiatov/XMLCoder)
 * [ZIPFoundation](https://github.com/weichsel/ZIPFoundation)
