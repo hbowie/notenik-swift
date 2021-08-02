@@ -1,0 +1,12 @@
+Title:  Notenik
+
+Tags:   Software.Groovy
+
+Short ID: note
+
+Link:   https://notenik.net
+
+Body: 
+
+A note-taking system cunningly devised by Herb Bowie
+

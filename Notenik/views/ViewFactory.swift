@@ -48,6 +48,8 @@ class ViewFactory {
             return LongTextView()
         case NotenikConstants.minutesToReadCommon:
             return LabelView()
+        case NotenikConstants.shortIdCommon:
+            return ShortIdView()
         case NotenikConstants.statusCommon:
             return StatusView(config: pickLists.statusConfig)
         case NotenikConstants.tagsCommon:

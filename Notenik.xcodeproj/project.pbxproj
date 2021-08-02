@@ -141,6 +141,7 @@
 		9C6ACB4A25E07C6000BDA49E /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 9C6ACB4925E07C6000BDA49E /* Down */; };
 		9C7132DD2692328B00A3034F /* notenik-KB in Resources */ = {isa = PBXBuildFile; fileRef = 9C7132DC2692328B00A3034F /* notenik-KB */; };
 		9C7132E026923A2300A3034F /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 9C7132DF26923A2300A3034F /* ZipArchive */; };
+		9C71414A26AF5DDA0033DF47 /* ShortIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C71414926AF5DDA0033DF47 /* ShortIdView.swift */; };
 		9C79BDB0226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
 		9C79BDB1226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
 		9C7DDD91255B36AA00065812 /* DisplayFontsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7DDD90255B36AA00065812 /* DisplayFontsDataSource.swift */; };
@@ -362,6 +363,7 @@
 		9C619A37231B323B003CFFBE /* WorkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTypeView.swift; sourceTree = "<group>"; };
 		9C65B29F23DE28BC00794C59 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		9C7132DC2692328B00A3034F /* notenik-KB */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-KB"; path = "../../Notenik Docs/notenik-KB"; sourceTree = "<group>"; };
+		9C71414926AF5DDA0033DF47 /* ShortIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortIdView.swift; sourceTree = "<group>"; };
 		9C7410B32436B4CB00ABF9D9 /* NotenikUtils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikUtils; path = ../NotenikUtils; sourceTree = "<group>"; };
 		9C7965D92436AF1700E1904E /* NotenikMkdown */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikMkdown; path = ../NotenikMkdown; sourceTree = "<group>"; };
 		9C79BDAF226E368800796E93 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
@@ -801,6 +803,7 @@
 				9C568DE82322F701005D6B0A /* WorkTitleView.swift */,
 				9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */,
 				9C619A37231B323B003CFFBE /* WorkTypeView.swift */,
+				9C71414926AF5DDA0033DF47 /* ShortIdView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1104,6 +1107,7 @@
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
 				9CF435CA24805C2F00DD7C33 /* CountsViewController.swift in Sources */,
 				9C10831A25AA784A004B33CA /* NewsWindowController.swift in Sources */,
+				9C71414A26AF5DDA0033DF47 /* ShortIdView.swift in Sources */,
 				9C46A72125D070BD006E9C16 /* NewCollectionViewController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
@@ -1473,7 +1477,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 165;
+				CURRENT_PROJECT_VERSION = 169;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1486,7 +1490,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 6.7.2;
+				MARKETING_VERSION = 6.8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1502,7 +1506,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 165;
+				CURRENT_PROJECT_VERSION = 169;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1515,7 +1519,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 6.7.2;
+				MARKETING_VERSION = 6.8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

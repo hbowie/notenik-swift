@@ -25,6 +25,8 @@ class ExportViewController: NSViewController {
     let outline   = "OPML"
     let tabDelim  = "Tab-Delimited"
     let bookmarks = "Netscape Bookmark File"
+    let concatHtml = "Concatenated HTML"
+    let concatMd  = "Concatenated Markdown"
     let osdir     = OpenSaveDirectory.shared
     
     let csv     = "csv"
@@ -53,6 +55,8 @@ class ExportViewController: NSViewController {
         formatPopup.addItem(withTitle: notenik)
         formatPopup.addItem(withTitle: bookmarks)
         formatPopup.addItem(withTitle: outline)
+        formatPopup.addItem(withTitle: concatHtml)
+        formatPopup.addItem(withTitle: concatMd)
         formatPopup.selectItem(at: 0)
         
         fileExtCombo.removeAllItems()
@@ -84,6 +88,12 @@ class ExportViewController: NSViewController {
             } else if selectedFormat.title == outline {
                 fileExtCombo.selectItem(withObjectValue: opml)
                 splitTagsCheckBox.state = .off
+            } else if selectedFormat.title == concatHtml {
+                fileExtCombo.selectItem(withObjectValue: html)
+                splitTagsCheckBox.state = .off
+            } else if selectedFormat.title == concatMd {
+                fileExtCombo.selectItem(withObjectValue: md)
+                splitTagsCheckBox.state = .off
             }
         }
     }
@@ -110,6 +120,10 @@ class ExportViewController: NSViewController {
             format = .notenik
         case outline:
             format = .opml
+        case concatHtml:
+            format = .concatHtml
+        case concatMd:
+            format = .concatMarkdown
         default:
             format = .commaSeparated
         }
