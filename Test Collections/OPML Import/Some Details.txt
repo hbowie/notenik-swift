@@ -1,0 +1,9 @@
+Title:  Some Details
+
+Seq:    1.2.1.1
+
+Level:  4 - 
+
+Body: 
+
+And here is a real paragraph & some funny characters. It’s a good thing that 2 < 3 &&  6 > 5. “I don’t think I could stand it otherwise.”

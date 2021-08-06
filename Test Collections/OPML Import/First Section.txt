@@ -1,0 +1,7 @@
+Title:  First Section
+
+Tags:   Equality
+
+Seq:    1.1
+
+Level:  2 - 

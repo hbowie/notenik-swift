@@ -42,27 +42,47 @@ class NoteListViewController:   NSViewController,
             notenikIO = newValue
             guard notenikIO != nil && notenikIO!.collection != nil else { return }
             setSortParm(notenikIO!.collection!.sortParm)
+            modShortcutMenuForCollection()
         }
     }
     
     /// Initialization after the view loaded.
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Setup for drag and drop.
         tableView.setDraggingSourceOperationMask(.copy, forLocal: false)
         tableView.registerForDraggedTypes(NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0) })
         tableView.registerForDraggedTypes([NSPasteboard.PasteboardType(kUTTypeBookmark as String),
                                            NSPasteboard.PasteboardType(kUTTypeURL as String),
                                            NSPasteboard.PasteboardType.vCard,
                                            NSPasteboard.PasteboardType.string])
+        
         tableView.target = self
         tableView.doubleAction = #selector(doubleClick(_:))
         
+        // Setup the popup menu for rows in the list. 
         shortcutMenu = NSMenu()
         shortcutMenu.addItem(NSMenuItem(title: "Duplicate", action: #selector(duplicateItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Launch Link", action: #selector(launchLinkForItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Share...", action: #selector(shareItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Copy Notenik URL", action: #selector(copyItemInternalURL(_:)), keyEquivalent: ""))
         tableView.menu = shortcutMenu
+    }
+    
+    func modShortcutMenuForCollection() {
+        if notenikIO!.collection!.seqFieldDef != nil && notenikIO!.collection!.levelFieldDef != nil {
+            shortcutMenu.addItem(NSMenuItem.separator())
+            shortcutMenu.addItem(NSMenuItem(title: "New Child", action: #selector(newChildForItem(_:)), keyEquivalent: ""))
+        }
+    }
+    
+    @objc private func newChildForItem(_ sender: AnyObject) {
+        guard collectionWindowController != nil else { return }
+        let row = tableView.clickedRow
+        guard row >= 0 else { return }
+        guard let clickedNote = notenikIO?.getNote(at: row) else { return }
+        collectionWindowController!.newChild(parent: clickedNote)
     }
     
     /// Respond to a contextual menu selection to duplicate the clicked Note.
@@ -131,7 +151,16 @@ class NoteListViewController:   NSViewController,
         collectionWindowController!.launchLink(for: clickedNote)
     }
     
-    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+    // -----------------------------------------------------------
+    //
+    // MARK: Drag and Drop logic.
+    //
+    // -----------------------------------------------------------
+    
+    /// Write a selected item to the pasteboard.
+    func tableView(_ tableView: NSTableView,
+                   pasteboardWriterForRow row: Int)
+                        -> NSPasteboardWriting? {
         if let selectedNote = notenikIO?.getNote(at: row) {
             let maker = NoteLineMaker()
             let _ = maker.putNote(selectedNote)
@@ -154,7 +183,11 @@ class NoteListViewController:   NSViewController,
     }
     
     /// Process one or more dropped items.
-    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+    func tableView(_ tableView: NSTableView,
+                   acceptDrop info: NSDraggingInfo,
+                   row: Int,
+                   dropOperation: NSTableView.DropOperation)
+                    -> Bool {
         
         guard collectionWindowController != nil else { return false }
         
@@ -182,17 +215,23 @@ class NoteListViewController:   NSViewController,
         super.viewDidAppear()
     }
     
+    /// Reload the Table's Data.
+    func reload() {
+        tableView.reloadData()
+    }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Methods for NSTableViewDataSource
+    //
+    // -----------------------------------------------------------
+    
     func numberOfRows(in tableView: NSTableView) -> Int {
         if let notesCount = notenikIO?.notesCount {
             return notesCount
         } else {
             return 0
         }
-    }
-    
-    /// Reload the Table's Data.
-    func reload() {
-        tableView.reloadData()
     }
     
     /// Supply the value for a particular cell in the table.
@@ -222,7 +261,7 @@ class NoteListViewController:   NSViewController,
                             if indent > 0 {
                                 displayValue = String(repeating: "  ", count: indent)
                             }
-                        }
+                        } 
                     }
                 }
                 displayValue.append(title)
@@ -282,6 +321,12 @@ class NoteListViewController:   NSViewController,
         let selected = tableView.selectedRow
         tableView.scrollRowToVisible(selected)
     }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Change the Table View for different Sort selections.
+    //
+    // -----------------------------------------------------------
     
     func setSortParm(_ sortParm: NoteSortParm) {
 

@@ -333,10 +333,8 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         // Make sure we're in a position to perform this operation.
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
-        let dict = collection.dict
         
-        let levelDef = collection.levelFieldDef
-        guard dict.contains(levelDef) else {
+        guard collection.levelFieldDef != nil else {
             communicateError("The Collection must contain a Level field before it can be Renumbered or Retagged", alert: true)
             return
         }
@@ -710,7 +708,10 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     } // end of paste function
     
     /// Paste incoming items, whether via drag or paste, returning number of notes added.
-    func pasteItems(_ pbItems: [NSPasteboardItem], row: Int, dropOperation: NSTableView.DropOperation) -> Int{
+    func pasteItems(_ pbItems: [NSPasteboardItem],
+                    row: Int,
+                    dropOperation: NSTableView.DropOperation)
+                        -> Int {
         
         // Make sure we're ready to do stuff.
         guard let noteIO = guardForCollectionAction() else { return 0 }
@@ -788,11 +789,32 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             } else {
                 logInfo(msg: "Not sure how to handle this pasted item")
             }
-            let addedNote = addPastedNote(note)
-            if addedNote != nil {
-                notesAdded += 1
-                if firstNotePasted == nil {
-                    firstNotePasted = addedNote
+            var updateExisting = false
+            var existingNote: Note?
+            if dropOperation == .above && collection.seqFieldDef != nil {
+                existingNote = noteIO.getNote(forID: note.noteID)
+                if existingNote != nil {
+                    if existingNote!.body.value == note.body.value {
+                        updateExisting = true
+                    }
+                }
+            }
+
+            if updateExisting {
+                let moved = moveNote(note: existingNote!, row: row)
+                if moved != nil {
+                    notesAdded += 1
+                    if firstNotePasted == nil {
+                        firstNotePasted = moved
+                    }
+                }
+            } else {
+                let addedNote = addPastedNote(note)
+                if addedNote != nil {
+                    notesAdded += 1
+                    if firstNotePasted == nil {
+                        firstNotePasted = addedNote
+                    }
                 }
             }
         } // end for each item
@@ -801,6 +823,10 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             select(note: firstNotePasted, position: nil, source: .nav)
         }
         return notesAdded
+    }
+    
+    func moveNote(note: Note, row: Int) -> Note? {
+        return nil
     }
     
     /// Queue used for reading and writing file promises.
@@ -1579,6 +1605,27 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         noteTabs!.tabView.selectLastTabViewItem(self)
     }
     
+    func newChild(parent: Note) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        newNoteRequested = true
+        newNote = Note(collection: noteIO.collection!)
+        
+        let parentLevel = parent.level.getInt()
+        let childLevel = parentLevel + 1
+        _ = newNote!.setLevel(childLevel)
+        
+        let incSeq = SeqValue(parent.seq.value)
+        incSeq.newChild()
+        _ = newNote!.setSeq(incSeq.value)
+        
+        editVC!.populateFields(with: newNote!)
+        noteTabs!.tabView.selectTabViewItem(at: 1)
+        guard let window = self.window else { return }
+        guard let titleView = editVC?.titleView else { return }
+        window.makeFirstResponder(titleView.view)
+    }
+    
     /// Delete the Note
     @IBAction func deleteNote(_ sender: Any) {
         
@@ -2201,6 +2248,30 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             else { return }
 
         let importer = XMLNoteImporter(io: noteIO)
+        let imports = importer.importFrom(importURL)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionWindowController",
+                          level: .info,
+                          message: "Imported \(imports) notes from \(importURL.path)")
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "Imported \(imports) notes from \(importURL.path)"
+        alert.addButton(withTitle: "OK")
+        _ = alert.runModal()
+        editVC!.io = noteIO
+        finishBatchOperation()
+    }
+    
+    @IBAction func importOPML(_ sender: Any) {
+        
+        // See if we're ready to take action
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let importURL = promptUserForImportFile(
+                title: "Open an input OPML file",
+                parent: noteIO.collection!.lib.getURL(type: .parent))
+            else { return }
+
+        let importer = OPMLImporter(io: noteIO)
         let imports = importer.importFrom(importURL)
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionWindowController",
