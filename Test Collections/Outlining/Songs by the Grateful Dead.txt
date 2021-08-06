@@ -1,0 +1,7 @@
+Title:  Songs by the Grateful Dead
+
+Status: 0 - Idea
+
+Seq:    1.2
+
+Level:  3

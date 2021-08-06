@@ -1,0 +1,7 @@
+Title:  A Section about Songs
+
+Status: 0 - Idea
+
+Seq:    1
+
+Level:  2

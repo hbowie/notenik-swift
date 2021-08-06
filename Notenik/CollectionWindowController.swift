@@ -781,7 +781,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
                 let reader = BigStringReader(str!)
                 let parser = NoteLineParser(collection: tempCollection, reader: reader)
                 let tempNote = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)",
-                    allowDictAdds: true)
+                                              allowDictAdds: true)
                 if !tempNote.title.value.hasPrefix("Pasted Note Number ")
                         || tempNote.hasBody() || tempNote.hasLink() {
                     tempNote.copyDefinedFields(to: note)
@@ -823,10 +823,6 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             select(note: firstNotePasted, position: nil, source: .nav)
         }
         return notesAdded
-    }
-    
-    func moveNote(note: Note, row: Int) -> Note? {
-        return nil
     }
     
     /// Queue used for reading and writing file promises.
@@ -928,6 +924,34 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             select(note: addedNote, position: nil, source: .action)
         }
         return addedNote
+    }
+    
+    func moveNote(note: Note, row: Int) -> Note? {
+        guard let noteIO = guardForCollectionAction() else { return nil }
+
+        let position = noteIO.positionOfNote(note)
+        _ = noteIO.selectNote(at: position.index)
+        let modNote = note.copy() as! Note
+        let level = note.level.getInt()
+        var priorSeq = SeqValue("")
+        var priorLevel = 0
+        if row > 0 {
+            let priorIndex = row - 1
+            let priorNote = noteIO.getNote(at: priorIndex)
+            if priorNote != nil {
+                priorSeq = priorNote!.seq
+                priorLevel = priorNote!.level.getInt()
+            }
+        }
+        let modSeq = SeqValue(priorSeq.value)
+        if level > priorLevel {
+            modSeq.newChild()
+        } else {
+            modSeq.increment()
+        }
+        _ = modNote.setSeq(modSeq.value)
+        let _ = recordMods(noteIO: noteIO, note: note, modNote: modNote)
+        return note
     }
     
     func addPastedNote(_ noteToAdd: Note) -> Note? {
