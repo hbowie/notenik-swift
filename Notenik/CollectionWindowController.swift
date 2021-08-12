@@ -142,7 +142,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             if selected == nil {
                 (selected, position) = notenikIO!.firstNote()
             } else {
-                select(note: selected, position: position, source: .nav)
+                select(note: selected, position: position, source: .nav, andScroll: true)
             }
             
             buildReportsActionMenu()
@@ -275,7 +275,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         
         guard bodyText.count > 0 else { return }
         guard let _ = guardForCollectionAction() else { return }
-        select(note: noteToUpdate, position: nil, source: .action)
+        select(note: noteToUpdate, position: nil, source: .action, andScroll: true)
         let (_, sel) = guardForNoteAction()
         guard let selectedNote = sel else { return }
         var body = selectedNote.body.value
@@ -528,7 +528,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         }
         reloadViews()
         (note, position) = io!.firstNote()
-        select(note: note, position: position, source: .nav)
+        select(note: note, position: position, source: .nav, andScroll: true)
     }
     
     /// If we have tasks that have been completed, but not closed, then close them now.
@@ -765,7 +765,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
                 if row >= 0 && dropOperation == .on {
                     let dropNote = noteIO.getNote(at: row)
                     if dropNote != nil {
-                        select(note: dropNote, position: nil, source: .action)
+                        select(note: dropNote, position: nil, source: .action, andScroll: true)
                         addAttachment(urlToAttach: fileURL)
                         if firstNotePasted == nil {
                             firstNotePasted = dropNote
@@ -820,7 +820,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         } // end for each item
         finishBatchOperation()
         if firstNotePasted != nil {
-            select(note: firstNotePasted, position: nil, source: .nav)
+            select(note: firstNotePasted, position: nil, source: .nav, andScroll: true)
         }
         return notesAdded
     }
@@ -921,7 +921,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         let addedNote = addPastedNote(noteToAdd)
         finishBatchOperation()
         if addedNote != nil {
-            select(note: addedNote, position: nil, source: .action)
+            select(note: addedNote, position: nil, source: .action, andScroll: true)
         }
         return addedNote
     }
@@ -1020,7 +1020,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             }
             displayModifiedNote(updatedNote: selNote)
             reloadViews()
-            select(note: selNote, position: nil, source: .action)
+            select(note: selNote, position: nil, source: .action, andScroll: true)
         }
     }
     
@@ -1123,7 +1123,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         displayModifiedNote(updatedNote: note)
         editVC!.populateFields(with: note)
         reloadViews()
-        select(note: note, position: nil, source: .action)
+        select(note: note, position: nil, source: .action, andScroll: true)
     }
     
     @IBAction func incMajorSeq(_ sender: Any) {
@@ -1138,7 +1138,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         displayModifiedNote(updatedNote: selNote)
         editVC!.populateFields(with: selNote)
         reloadViews()
-        select(note: selNote, position: nil, source: .action)
+        select(note: selNote, position: nil, source: .action, andScroll: true)
     }
     
     /// Record modifications made to the Selected Note
@@ -1163,7 +1163,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             // editVC!.populateFields(with: addedNote!)
             editVC!.select(note: addedNote!)
             reloadViews()
-            select(note: addedNote, position: nil, source: .action)
+            select(note: addedNote, position: nil, source: .action, andScroll: true)
             return true
         }
     }
@@ -1281,7 +1281,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         guard let noteIO = nio else { return }
         let (note, position) = noteIO.firstNote()
         crumbs!.refresh()
-        select(note: note, position: position, source: .nav)
+        select(note: note, position: position, source: .nav, andScroll: true)
     }
     
     /// Go to the next note in the list
@@ -1291,7 +1291,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         
         let nextNote = crumbs!.advance(from: selNote)
 
-        select(note: nextNote, position: nil, source: .nav)
+        select(note: nextNote, position: nil, source: .nav, andScroll: true)
     }
     
     @IBAction func scrollToSelected(_ sender: Any) {
@@ -1310,7 +1310,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         
         let priorNote = crumbs!.backup(from: selNote)
         
-        select(note: priorNote, position: nil, source: .nav)
+        select(note: priorNote, position: nil, source: .nav, andScroll: true)
     }
     
     @IBAction func findNote(_ sender: Any) {
@@ -1402,7 +1402,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     func selectFirstNote() {
         guard let noteIO = guardForCollectionAction() else { return }
         let (firstNote, firstPosition) = noteIO.firstNote()
-        select(note: firstNote, position: firstPosition, source: .nav)
+        select(note: firstNote, position: firstPosition, source: .nav, andScroll: true)
     }
     
     /// React to the selection of a note, coordinating the various views as needed.
@@ -1689,7 +1689,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             let (nextNote, nextPosition) = noteIO.deleteSelectedNote(preserveAttachments: false)
             reloadViews()
             if nextNote != nil {
-                select(note: nextNote, position: nextPosition, source: .action)
+                select(note: nextNote, position: nextPosition, source: .action, andScroll: true)
             }
         }
     }
@@ -1714,11 +1714,11 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         if newNoteRequested {
             let (note, position) = io!.firstNote()
             crumbs!.refresh()
-            select(note: note, position: position, source: .action)
+            select(note: note, position: position, source: .action, andScroll: true)
         } else {
             let (note, _) = io!.getSelectedNote()
             guard note != nil else { return }
-            select(note: note, position: nil, source: .action)
+            select(note: note, position: nil, source: .action, andScroll: true)
         }
         newNoteRequested = false
         pendingMod = false
@@ -1763,7 +1763,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         }
         if outcome == .add || outcome == .deleteAndAdd {
             reloadViews()
-            select(note: note, position: nil, source: .action)
+            select(note: note, position: nil, source: .action, andScroll: true)
             if note != nil {
                 mirrorNote(note!)
             }
@@ -1907,7 +1907,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         guard let noteIO = nio, let selNote = sel else { return }
         guard let reloaded = noteIO.reloadNote(selNote) else { return }
         reloadViews()
-        select(note: reloaded, position: nil, source: .action)
+        select(note: reloaded, position: nil, source: .action, andScroll: true)
     }
     
     /// Launch a Note's Link
@@ -2092,7 +2092,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         reloadViews()
         let (note, position) = io!.firstNote()
         crumbs!.refresh()
-        select(note: note, position: position, source: .nav)
+        select(note: note, position: position, source: .nav, andScroll: true)
         
         let alert = NSAlert()
         alert.alertStyle = .informational
@@ -2852,6 +2852,6 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         reloadViews()
         let (note, position) = io!.firstNote()
         crumbs!.refresh()
-        select(note: note, position: position, source: .nav)
+        select(note: note, position: position, source: .action, andScroll: true)
     }
 }

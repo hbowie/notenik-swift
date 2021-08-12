@@ -620,7 +620,7 @@ class CollectionJuggler: NSObject {
         }
         let position = io.positionOfNote(note)
         let (nextNote, nextPosition) = io.nextNote(position)
-        kbwc.select(note: nextNote, position: nextPosition, source: .action)
+        kbwc.select(note: nextNote, position: nextPosition, source: .action, andScroll: true)
     }
     
     /// Respond to a user request to open another Collection. Present the user

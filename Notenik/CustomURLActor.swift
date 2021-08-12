@@ -99,7 +99,7 @@ class CustomURLActor {
                 communicateError("Note could not be found with this ID: \(value)")
                 return
             }
-            cwc.select(note: note, position: nil, source: .action)
+            cwc.select(note: note, position: nil, source: .action, andScroll: true)
         default:
             communicateError("Help Query Parameter of \(label) not recognized")
         }
@@ -134,7 +134,7 @@ class CustomURLActor {
                 communicateError("Note could not be found with this ID: \(value)")
                 return
             }
-            controller.select(note: note, position: nil, source: .action)
+            controller.select(note: note, position: nil, source: .action, andScroll: true)
         default:
             communicateError("Open Query Parameter of '\(label)' not recognized")
         }
@@ -146,7 +146,7 @@ class CustomURLActor {
         if id.count == 0 { return true }
         guard let io = wc.io else { return false }
         guard let note = io.getNote(forID: id) else { return false }
-        wc.select(note: note, position: nil, source: .action)
+        wc.select(note: note, position: nil, source: .action, andScroll: true)
         return true
     }
     

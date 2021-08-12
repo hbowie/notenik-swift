@@ -5,6 +5,7 @@ This is a note-taking application written in Swift. The initial platform is macO
 
 Some of the Notenik code is now broken out into separate packages. 
 
+* [NotenikLib](https://github.com/hbowie/NotenikLib)
 * [NotenikUtils](https://github.com/hbowie/NotenikUtils)
 * [NotenikTextile](https://github.com/hbowie/NotenikTextile)
 * [NotenikMkdown](https://github.com/hbowie/NotenikMkdown)

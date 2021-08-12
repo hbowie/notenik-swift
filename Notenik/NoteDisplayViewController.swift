@@ -190,7 +190,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             } else {
                 webLinkFollowed(false)
                 decisionHandler(.cancel)
-                wc!.select(note: nextNote, position: nil, source: .nav)
+                wc!.select(note: nextNote, position: nil, source: .action, andScroll: true)
             }
         default:
             wc!.launchLink(url: url)
