@@ -96,6 +96,10 @@ class ShareViewController: NSViewController {
         
         guard note != nil && window != nil && io != nil else { return }
         
+        let displayParms = DisplayParms()
+        displayParms.setFrom(note: note!)
+        let mkdownOptions = displayParms.genMkdownOptions()
+        
         // Set desired output format
         var format: MarkedupFormat = .htmlDoc
         if formatHTMLFragmentButton.state == .on
@@ -163,11 +167,11 @@ class ShareViewController: NSViewController {
         } else if contentBodyOnlyButton.state == .on {
             let markdown = Markdown()
             markdown.md = note!.body.value
-            markdown.parse()
+            let html = markdown.parse(markdown: note!.body.value, options: mkdownOptions)
             if format == .htmlDoc {
                 let markedup = Markedup(format: .htmlDoc)
                 markedup.startDoc(withTitle: note!.title.value, withCSS: nil)
-                markedup.append(markdown.html)
+                markedup.append(html)
                 markedup.finishDoc()
                 stringToShare = markedup.code
             } else if formatHTMLBlockquoteButton.state == .on {

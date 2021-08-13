@@ -144,7 +144,7 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         }
         let code = Markedup(format: .htmlDoc)
         code.startDoc(withTitle: nil, withCSS: displayPrefs.buildBodyCSS(latestCSS))
-        MkdownParser.markdownToMarkedup(markdown: "There is nothing worse than a brilliant image of a fuzzy concept.",
+        Markdown.markdownToMarkedup(markdown: "There is nothing worse than a brilliant image of a fuzzy concept.",
                                         options: mkdownOptions, mkdownContext: nil, writer: code)
         code.finishDoc()
         let html = String(describing: code)
