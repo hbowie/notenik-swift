@@ -248,7 +248,8 @@ class NoteListViewController:   NSViewController,
         guard let cellView = anyView as? NSTableCellView else { return nil }
         
         if let note = notenikIO?.getNote(at: row) {
-            if tableColumn?.title == "Title" {
+            if tableColumn?.title == "Title" ||
+                    tableColumn?.title == note.collection.titleFieldDef.fieldLabel.properForm {
                 let title = note.title.value
                 var displayValue = ""
                 if let collection = notenikIO?.collection {
