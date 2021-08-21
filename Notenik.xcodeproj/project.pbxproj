@@ -177,6 +177,8 @@
 		9CAD6A5022DF9ACD00531D90 /* PrefsTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A4E22DF9ACD00531D90 /* PrefsTabViewController.swift */; };
 		9CAD6A5222DFA0B000531D90 /* PrefsTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A5122DFA0B000531D90 /* PrefsTabVC.swift */; };
 		9CAD6A5322DFA0B000531D90 /* PrefsTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD6A5122DFA0B000531D90 /* PrefsTabVC.swift */; };
+		9CAE23F526D1659B0002FCCD /* LookupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAE23F426D1659B0002FCCD /* LookupView.swift */; };
+		9CAE23F726D166CB0002FCCD /* LookupDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAE23F626D166CB0002FCCD /* LookupDataSource.swift */; };
 		9CB37ED52407189700C2AC1F /* MkdownParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB37ED42407189700C2AC1F /* MkdownParserTests.swift */; };
 		9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CB60BBF226509B2003B5655 /* Share.storyboard */; };
 		9CB60BC1226509B2003B5655 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CB60BBF226509B2003B5655 /* Share.storyboard */; };
@@ -386,6 +388,8 @@
 		9CAD6A4822DF806800531D90 /* TagsExportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsExportViewController.swift; sourceTree = "<group>"; };
 		9CAD6A4E22DF9ACD00531D90 /* PrefsTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsTabViewController.swift; sourceTree = "<group>"; };
 		9CAD6A5122DFA0B000531D90 /* PrefsTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsTabVC.swift; sourceTree = "<group>"; };
+		9CAE23F426D1659B0002FCCD /* LookupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookupView.swift; sourceTree = "<group>"; };
+		9CAE23F626D166CB0002FCCD /* LookupDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookupDataSource.swift; sourceTree = "<group>"; };
 		9CB37ED42407189700C2AC1F /* MkdownParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkdownParserTests.swift; sourceTree = "<group>"; };
 		9CB60BBF226509B2003B5655 /* Share.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
 		9CB60BC222650A89003B5655 /* ShareWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareWindowController.swift; sourceTree = "<group>"; };
@@ -791,6 +795,8 @@
 				9C310E67266ADB4B001C3A6E /* LevelView.swift */,
 				9CD358882293C42B00C9203F /* LinkView.swift */,
 				9CED280F224EB39900798621 /* LongTextView.swift */,
+				9CAE23F626D166CB0002FCCD /* LookupDataSource.swift */,
+				9CAE23F426D1659B0002FCCD /* LookupView.swift */,
 				9CD3261F2233068F00D06B77 /* MacEditView.swift */,
 				9CA4EE8B246A15BC00059F65 /* PickListDataSource.swift */,
 				9CA4EE87246A143B00059F65 /* PickListView.swift */,
@@ -1103,6 +1109,7 @@
 				9C1BE27122EB940E006FDFEC /* ScriptWindowController.swift in Sources */,
 				9C79BDB0226E368800796E93 /* LabelView.swift in Sources */,
 				9C1E0C9222E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
+				9CAE23F726D166CB0002FCCD /* LookupDataSource.swift in Sources */,
 				9C01E46624D74E1C00AEB4F6 /* BooleanView.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,
 				9CF435CA24805C2F00DD7C33 /* CountsViewController.swift in Sources */,
@@ -1163,6 +1170,7 @@
 				9C46A72725D07899006E9C16 /* NewLocationViewController.swift in Sources */,
 				9C29A78A2564380F002C5F7A /* NoteDisplayWebView.swift in Sources */,
 				9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */,
+				9CAE23F526D1659B0002FCCD /* LookupView.swift in Sources */,
 				9C619A38231B323B003CFFBE /* WorkTypeView.swift in Sources */,
 				9CBC386821FFA9C200BA7900 /* NoteEditViewController.swift in Sources */,
 				9C29A79B25645B78002C5F7A /* FileAttachView.swift in Sources */,
@@ -1477,7 +1485,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 173;
+				CURRENT_PROJECT_VERSION = 176;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1490,7 +1498,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 6.9.3;
+				MARKETING_VERSION = 7.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1506,7 +1514,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 173;
+				CURRENT_PROJECT_VERSION = 176;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1519,7 +1527,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 6.9.3;
+				MARKETING_VERSION = 7.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

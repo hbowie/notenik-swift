@@ -46,6 +46,8 @@ class ViewFactory {
             return LinkView()
         case NotenikConstants.longTextType:
             return LongTextView()
+        case NotenikConstants.lookupType:
+            return LookupView(def: def)
         case NotenikConstants.minutesToReadCommon:
             return LabelView()
         case NotenikConstants.shortIdCommon:
