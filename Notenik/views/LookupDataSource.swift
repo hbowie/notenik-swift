@@ -21,14 +21,16 @@ class LookupDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     var notesList: NotesList?
     
     var fieldDef: FieldDefinition?
+    var lookupField: NSComboBox?
     
     override init() {
         super.init()
     }
     
-    convenience init(def: FieldDefinition) {
+    convenience init(def: FieldDefinition, field: NSComboBox) {
         self.init()
         self.fieldDef = def
+        self.lookupField = field
         loadNotesList()
     }
     

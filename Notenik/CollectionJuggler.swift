@@ -661,9 +661,10 @@ class CollectionJuggler: NSObject {
     /// - Parameter fileURL: A URL pointing to a Notenik folder.
     /// - Returns: True if open was successful, false if not.
     func openFileWithNewWindow(fileURL: URL, readOnly: Bool) -> CollectionWindowController? {
-        let io: NotenikIO = FileIO()
-        let realm = io.getDefaultRealm()
-        realm.path = ""
+        
+        // let io: NotenikIO = FileIO()
+        // let realm = io.getDefaultRealm()
+        // realm.path = ""
         var collectionURL: URL
         if FileUtils.isDir(fileURL.path) {
             collectionURL = fileURL
@@ -682,21 +683,13 @@ class CollectionJuggler: NSObject {
             }
         }
         
-        let collection = io.openCollection(realm: realm, collectionPath: collectionURL.path, readOnly: readOnly)
-        if collection == nil {
-            communicateError("Problems opening the collection at " + collectionURL.path,
-                             alert: true)  
-        } else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "CollectionJuggler",
-                              level: .info,
-                              message: "Collection successfully opened: \(collection!.title)")
-            saveCollectionInfo(collection!)
-            let wc = assignIOtoWindow(io: io)
-            notenikFolderList.add(collection!)
-            return wc
-        }
-        return nil
+        guard let io = MultiFileIO.shared.getFileIO(fileURL: fileURL, readOnly: readOnly) else { return nil }
+        guard let collection = io.collection else { return nil }
+        saveCollectionInfo(collection)
+        let wc = assignIOtoWindow(io: io)
+        notenikFolderList.add(collection)
+        return wc
+
     }
     
     /// Assign an Input/Output module to a new or existing window.

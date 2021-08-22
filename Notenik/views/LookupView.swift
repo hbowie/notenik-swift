@@ -41,7 +41,7 @@ class LookupView: MacEditView {
     func buildView() {
         lookupField = NSComboBox(string: "")
         lookupField.usesDataSource = true
-        lookupDataSource = LookupDataSource(def: fieldDef)
+        lookupDataSource = LookupDataSource(def: fieldDef, field: lookupField)
         lookupField.dataSource = lookupDataSource
         lookupField.delegate = lookupDataSource
         lookupField.completes = true
