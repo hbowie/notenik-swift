@@ -75,14 +75,6 @@ class NoteListViewController:   NSViewController,
             shortcutMenu.addItem(NSMenuItem.separator())
             shortcutMenu.addItem(NSMenuItem(title: "New Child", action: #selector(newChildForItem(_:)), keyEquivalent: ""))
         }
-        if notenikIO!.collection!.hasLookupFields {
-            shortcutMenu.addItem(NSMenuItem.separator())
-            for def in notenikIO!.collection!.dict.list {
-                if def.fieldType.typeString == NotenikConstants.lookupType && !def.lookupFrom.isEmpty {
-                    shortcutMenu.addItem(NSMenuItem(title: "Edit \(def.fieldLabel.properForm) note", action: #selector(editLookup(_:)), keyEquivalent: ""))
-                }
-            }
-        }
     }
     
     @objc private func newChildForItem(_ sender: AnyObject) {
@@ -91,50 +83,6 @@ class NoteListViewController:   NSViewController,
         guard row >= 0 else { return }
         guard let clickedNote = notenikIO?.getNote(at: row) else { return }
         collectionWindowController!.newChild(parent: clickedNote)
-    }
-    
-    /// Allow the user to edit the Collection in which we're looking up reference info.
-    @objc private func editLookup(_ sender: AnyObject) {
-        
-        // Make sure we have the stuff we're going to need.
-        guard collectionWindowController != nil else { return }
-        guard let io = notenikIO else { return }
-        
-        // Extract the field name from the sender's title.
-        let menuItem = sender as! NSMenuItem
-        let menuItemTitle = menuItem.title
-        let start = menuItemTitle.startIndex
-        let end = menuItemTitle.endIndex
-        let startOfFieldName = menuItemTitle.index(start, offsetBy: 5)
-        let endOfFieldName = menuItemTitle.index(end, offsetBy: -5)
-        let fieldName = String(menuItemTitle[startOfFieldName..<endOfFieldName])
-        
-        
-        // Now let's get the full field definition for the field name.
-        guard let def = io.collection?.dict.getDef(fieldName) else { return }
-        
-        // And get the shortcut from the field definition.
-        let shortcut = def.lookupFrom
-        guard let lookupIO = MultiFileIO.shared.getFileIO(shortcut: shortcut) else { return }
-        guard let lookupURL = lookupIO.collection?.fullPathURL else { return }
- 
-        // Now get the necessary info about the row that was clicked.
-        let row = tableView.clickedRow
-        guard row >= 0 else { return }
-        guard let clickedNote = notenikIO?.getNote(at: row) else { return }
-        guard let fieldValue = clickedNote.getField(def: def) else { return }
-        
-        guard let lookupWC = CollectionJuggler.shared.openFileWithNewWindow(fileURL: lookupURL, readOnly: false) else { return }
-        
-        // guard let io = kbwc.io else { return }
-        // guard let note = io.getNote(forID: "versionhistory") else {
-        //     communicateError("Knowledge Base Version History could not be found")
-        //     return
-        // }
-        // let position = io.positionOfNote(note)
-        // let (nextNote, nextPosition) = io.nextNote(position)
-        // kbwc.select(note: nextNote, position: nextPosition, source: .action, andScroll: true)
-
     }
     
     /// Respond to a contextual menu selection to duplicate the clicked Note.
