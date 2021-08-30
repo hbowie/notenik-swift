@@ -39,6 +39,7 @@ class ShareViewController: NSViewController {
     var window: ShareWindowController?
     var io: NotenikIO?
     var note: Note?
+    var searchPhrase: String?
     var stringToShare = "No data available"
 
     @IBOutlet var contentBodyOnlyButton: NSButton!
@@ -184,13 +185,20 @@ class ShareViewController: NSViewController {
                 stringToShare = markdown.html
             }
         } else {
+            // Format the entire Note as HTML. 
             let noteDisplay = NoteDisplay()
-            let parms = DisplayParms()
-            let collection = note!.collection
-            parms.mathJax = collection.mathJax
-            parms.localMj = false
-            parms.format = format
-            stringToShare = noteDisplay.display(note!, io: io!, parms: parms)
+            // let collection = note!.collection
+            // displayParms.mathJax = collection.mathJax
+            displayParms.localMj = false
+            displayParms.format = format
+            let displayString = noteDisplay.display(note!, io: io!, parms: displayParms)
+            if format == .htmlDoc && searchPhrase != nil && searchPhrase!.count > 0 {
+                stringToShare = StringUtils.highlightPhraseInHTML(phrase: searchPhrase!,
+                                                                  html: displayString,
+                                                                  klass: "search-results")
+            } else {
+                stringToShare = displayString
+            }
         }
         
         // Write the string to an output destination

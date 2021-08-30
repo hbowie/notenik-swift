@@ -1209,6 +1209,11 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             vc.window = shareController
             vc.io = noteIO
             vc.note = note
+            var searchPhrase: String?
+            if displayVC != nil {
+                searchPhrase = displayVC!.searchPhrase
+            }
+            vc.searchPhrase = searchPhrase
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionWindowController",
@@ -1347,7 +1352,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             }
         }
         if found {
-            select(note: note, position: position, source: .action, andScroll: true)
+            select(note: note, position: position, source: .action, andScroll: true, searchPhrase: searchFor)
         } else {
             let alert = NSAlert()
             alert.alertStyle = .warning
@@ -1378,7 +1383,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             }
         }
         if found {
-            select(note: note, position: position, source: .action, andScroll: true)
+            select(note: note, position: position, source: .action, andScroll: true, searchPhrase: searchFor)
         } else {
             let alert = NSAlert()
             alert.alertStyle = .informational
@@ -1425,7 +1430,11 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     ///   - position: A position in the collection, if we know what it is.
     ///   - source:   An indicator of the source of the selection; if one of the views
     ///               being coordinated is the source, then we don't need to modify it.
-    func select(note: Note?, position: NotePosition?, source: NoteSelectionSource, andScroll: Bool = false) {
+    func select(note: Note?,
+                position: NotePosition?,
+                source: NoteSelectionSource,
+                andScroll: Bool = false,
+                searchPhrase: String? = nil) {
         guard notenikIO != nil && notenikIO!.collectionOpen else { return }
         
         var noteToUse: Note? = note
@@ -1446,7 +1455,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         guard noteToUse != nil else { return }
         
         if displayVC != nil {
-            displayVC!.display(note: noteToUse!, io: notenikIO!)
+            displayVC!.display(note: noteToUse!, io: notenikIO!, searchPhrase: searchPhrase)
         }
         if editVC != nil {
             editVC!.select(note: noteToUse!)

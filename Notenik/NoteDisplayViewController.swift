@@ -41,6 +41,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     var io: NotenikIO?
     var note: Note?
+    var searchPhrase: String?
     
     var counts = MkdownCounts()
     
@@ -65,9 +66,10 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     }
     
     /// Display the provided note
-    func display(note: Note, io: NotenikIO) {
+    func display(note: Note, io: NotenikIO, searchPhrase: String? = nil) {
         self.io = io
         self.note = note
+        self.searchPhrase = searchPhrase
         display()
     }
     
@@ -87,7 +89,15 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         
         parms.setFrom(note: note!)
         
-        let html = noteDisplay.display(note!, io: io!, parms: parms)
+        let displayHTML = noteDisplay.display(note!, io: io!, parms: parms)
+        var html = ""
+        if searchPhrase == nil || searchPhrase!.isEmpty {
+            html = displayHTML
+        } else {
+            html = StringUtils.highlightPhraseInHTML(phrase: searchPhrase!,
+                                                     html: displayHTML,
+                                                     klass: "search-results")
+        }
         counts = noteDisplay.counts
         if countsVC != nil {
             countsVC!.updateCounts(counts)
