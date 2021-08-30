@@ -463,6 +463,12 @@ CA
                                                 <action selector="setLocalLink:" target="Ady-hI-5gd" id="VcW-BQ-9uq"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Wikipedia Link" id="KZr-6j-yqt">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="wikipediaLink:" target="Ady-hI-5gd" id="eeI-td-w2p"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Launch Link" keyEquivalent="l" id="Lj6-TD-r8R">
                                             <connections>
                                                 <action selector="launchLink:" target="Ady-hI-5gd" id="6xi-F3-2Tf"/>
@@ -1191,13 +1197,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="30" height="53"/>
+                                <rect key="frame" x="0.0" y="0.0" width="330" height="105"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="28" height="36"/>
+                                    <rect key="frame" x="1" y="1" width="328" height="88"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
-                                            <rect key="frame" x="0.0" y="0.0" width="1090" height="11"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1090" height="63"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1472,8 +1478,8 @@ CA
                                         </tableView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="37" width="28" height="15"/>
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.27165354330708663" horizontal="YES" id="CTE-sV-ET2">
+                                    <rect key="frame" x="1" y="89" width="328" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
@@ -1510,13 +1516,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="46"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="36"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="44"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="34"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="477" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="477" height="34"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

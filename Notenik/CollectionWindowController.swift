@@ -1024,6 +1024,19 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         }
     }
     
+    @IBAction func wikipediaLink(_ sender: Any) {
+        guard io != nil && io!.collectionOpen else { return }
+        let (note, _) = io!.getSelectedNote()
+        guard note != nil else { return }
+        if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
+            editVC!.wikipediaLink()
+        } else {
+            let modNote = note!.copy() as! Note
+            _ = modNote.setLink(StringUtils.wikify(note!.title.value))
+            let _ = recordMods(noteIO: io!, note: note!, modNote: modNote)
+        }
+    }
+    
     /// Close the note, either by applying the recurs rule, or changing the status to 9
     @IBAction func menuNoteClose(_ sender: Any) {
         guard io != nil && io!.collectionOpen else { return }

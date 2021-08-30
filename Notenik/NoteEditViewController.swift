@@ -12,6 +12,7 @@
 import Cocoa
 
 import NotenikLib
+import NotenikUtils
 
 /// Controls the view shown to allow the user to edit a note.
 class NoteEditViewController: NSViewController {
@@ -126,6 +127,8 @@ class NoteEditViewController: NSViewController {
         
         if label.commonForm == NotenikConstants.titleCommon {
             titleView = editView
+        } else if def.fieldType.typeString == NotenikConstants.titleCommon {
+            titleView = editView
         } else if label.commonForm == NotenikConstants.dateCommon {
             dateView = editView as? DateView
         } else if label.commonForm == NotenikConstants.recursCommon {
@@ -135,6 +138,8 @@ class NoteEditViewController: NSViewController {
         } else if label.commonForm == NotenikConstants.levelCommon {
             levelView = editView as? LevelView
         } else if label.commonForm == NotenikConstants.linkCommon {
+            linkView = editView as? LinkView
+        } else if def.fieldType.typeString == NotenikConstants.linkCommon {
             linkView = editView as? LinkView
         }
     }
@@ -224,6 +229,18 @@ class NoteEditViewController: NSViewController {
         } else if statusView != nil {
             statusView!.close()
         }
+    }
+    
+    func wikipediaLink() {
+        guard titleView != nil else {
+            return
+        }
+        let title = titleView!.text
+        guard !title.isEmpty else { return }
+        guard linkView != nil else {
+            return
+        }
+        linkView!.text = StringUtils.wikify(title)
     }
     
     /// Modify the Note if the user has changed anything
