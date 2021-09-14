@@ -81,11 +81,9 @@ class NoteTagsViewController: NSViewController,
         if let node = item as? TagsNode {
             return node.children.count
         }
-        if notenikIO == nil {
-            return 0
-        } else {
-            return notenikIO!.getTagsNodeRoot()!.children.count
-        }
+        guard notenikIO != nil else { return 0 }
+        guard notenikIO!.getTagsNodeRoot() != nil else { return 0 }
+        return notenikIO!.getTagsNodeRoot()!.children.count
     }
     
     /// Return the child of a node at the given index position.
