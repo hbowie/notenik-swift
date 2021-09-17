@@ -232,7 +232,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     @IBAction func menuHelpNotenikDotNet(_ sender: NSMenuItem) {
-        let url = URL(string: "https://notenik.net")
+        let url = URL(string: "https://notenik.app")
         if url != nil {
             NSWorkspace.shared.open(url!)
         }

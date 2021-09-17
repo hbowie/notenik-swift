@@ -184,6 +184,9 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             let io = wc?.notenikIO
             var nextNote = io!.getNote(forID: link.noteID)
             if nextNote == nil {
+                nextNote = io!.getNote(forID: (link.noteID + "s"))
+            }
+            if nextNote == nil {
                 nextNote = io!.getNote(forTimestamp: link.noteID)
             }
             if nextNote == nil {
