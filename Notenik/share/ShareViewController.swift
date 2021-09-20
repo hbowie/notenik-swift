@@ -128,7 +128,11 @@ class ShareViewController: NSViewController {
                     if date.count > 0 {
                         authorLine.append(", \(date)")
                     }
-                    let workType = note!.workType.value
+                    let workTypeField = FieldGrabber.getField(note: note!, label: note!.collection.workTypeFieldDef.fieldLabel.commonForm)
+                    var workType = ""
+                    if workTypeField != nil {
+                        workType = workTypeField!.value.value
+                    }
                     let workTitle = note!.workTitle.value
                     if workType.count > 0 && workTitle.count > 0 {
                         authorLine.append(", from the \(workType) titled *\(workTitle)*")

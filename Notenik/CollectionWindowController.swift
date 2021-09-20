@@ -2444,6 +2444,47 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         informUserOfImportExportResults(operation: "export", ok: ok, numberOfNotes: numberOfNotes, path: exportURL.path)
     }
     
+    /// Export the Collection to a CSV file and request that it be opned by the user's
+    /// default app for this kind of file.
+    @IBAction func quickExportAndOpen(_ sender: Any) {
+        
+        // See if everything is copacetic.
+        let nio = guardForCollectionAction()
+        guard let noteIO = nio else { return }
+        
+        // Make sure we have a folder in which to place the export file.
+        guard let collectionURL = noteIO.collection!.fullPathURL else { return }
+        guard let exportFolder = FileUtils.ensureFolder(parentURL: collectionURL, folder: "quick-export") else {
+            return
+        }
+        
+        // Assign a standard file name.
+        let destination = exportFolder.appendingPathComponent("export").appendingPathExtension("csv")
+        
+        // Now let's export.
+        let exporter = NotesExporter()
+        let notesExported = exporter.export(noteIO: noteIO,
+                                            format: .commaSeparated,
+                                            useTagsExportPrefs: false,
+                                            split: false,
+                                            addWebExtensions: false,
+                                            destination: destination,
+                                            ext: "csv")
+        var ok = notesExported > 0
+        informUserOfImportExportResults(operation: "export",
+                                        ok: ok,
+                                        numberOfNotes: notesExported,
+                                        path: destination.path)
+        
+        guard ok else { return }
+        
+        // Now let's have an app open it.
+        ok = NSWorkspace.shared.open(destination)
+        if !ok {
+            communicateError("File at \(destination) could not be opened by a default app", alert: true)
+        }
+    }
+    
     /// Let the user know the results of an import/export operation
     ///
     /// - Parameters:
