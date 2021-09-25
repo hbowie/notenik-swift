@@ -71,6 +71,8 @@ class LookupDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     /// matching the specified string.
     func comboBox(_ comboBox: NSComboBox, indexOfItemWithStringValue string: String) -> Int {
         guard notesList != nil else { return NSNotFound }
+        guard io != nil else { return NSNotFound }
+        guard io!.collection != nil else { return NSNotFound }
         var i = 0
         while i < notesList!.count {
             if notesList![i].title.value == string {

@@ -710,12 +710,45 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     /// Paste incoming items, whether via drag or paste, returning number of notes added.
     func pasteItems(_ pbItems: [NSPasteboardItem],
                     row: Int,
-                    dropOperation: NSTableView.DropOperation)
-                        -> Int {
+                    dropOperation: NSTableView.DropOperation) -> Int {
         
         // Make sure we're ready to do stuff.
         guard let noteIO = guardForCollectionAction() else { return 0 }
         guard let collection = noteIO.collection else { return 0 }
+        
+        var newLevel: Int?
+        var newSeq: SeqValue?
+                            
+        // Gen Seq and Level, if appropriate
+        if row > 0 && dropOperation == .above && collection.sortParm == .seqPlusTitle {
+            var seqAbove = SeqValue("")
+            let noteAbove = noteIO.getNote(at: row - 1)
+            var levelAbove = 0
+            if noteAbove != nil {
+                seqAbove = noteAbove!.seq
+                levelAbove = noteAbove!.level.getInt()
+                newLevel = noteAbove!.level.getInt()
+            }
+            let noteBelow = noteIO.getNote(at: row)
+            if noteBelow != nil {
+                let belowLevel = noteBelow!.level.getInt()
+                if newLevel == nil {
+                    newLevel = belowLevel
+                } else if belowLevel > newLevel! {
+                    newLevel = belowLevel
+                }
+            }
+            if noteAbove != nil {
+                newSeq = SeqValue(seqAbove.value)
+            }
+            if newSeq != nil {
+                if newLevel != nil && newLevel! > levelAbove {
+                    newSeq!.newChild()
+                } else {
+                    newSeq!.increment()
+                }
+            }
+        }
         
         // Initialize constants and variables.
         var notesAdded = 0
@@ -809,6 +842,12 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
                     }
                 }
             } else {
+                if newLevel != nil {
+                    _ = note.setLevel(newLevel!)
+                }
+                if newSeq != nil {
+                    _ = note.setSeq(newSeq!.value)
+                }
                 let addedNote = addPastedNote(note)
                 if addedNote != nil {
                     notesAdded += 1
