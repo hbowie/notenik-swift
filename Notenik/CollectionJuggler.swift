@@ -245,6 +245,9 @@ class CollectionJuggler: NSObject {
         let realmScanner = RealmScanner()
         let ok = realmScanner.openRealm(path: parentURL.path)
         if ok {
+            if self.docController != nil {
+                self.docController!.noteNewRecentDocumentURL(parentURL)
+            }
             let io = realmScanner.realmIO
             return assignIOtoWindow(io: io)
         }
