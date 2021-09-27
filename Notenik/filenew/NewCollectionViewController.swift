@@ -209,6 +209,7 @@ class NewCollectionViewController: NSTabViewController {
                     }
                 }
             }
+            wc!.menuCollectionPreferences(self)
         }
         
         closeWindow()

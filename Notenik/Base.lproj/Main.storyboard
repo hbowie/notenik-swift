@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -67,25 +67,6 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="newCollection:" target="Voe-Tx-rLC" id="EyQ-BT-Xxc"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="5nw-Ed-J5A"/>
-                                        <menuItem title="New in iCloud..." toolTip="Create a New Collection in Notenik's default location" id="0yq-KX-InD">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="newInICloud:" target="Voe-Tx-rLC" id="b72-jW-cJZ"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="New Elsewhere..." toolTip="Create a New Collection anywhere you like" id="Was-JA-tGl">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="menuFileNewAction:" target="Voe-Tx-rLC" id="QKw-wB-CYX"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="New Web Collection..." toolTip="Create a New Collection that will be mirrored to HTML" id="6TW-78-lec">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="menuFileNewWebsiteAction:" target="Voe-Tx-rLC" id="MnH-3b-Mhf"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="9kU-pU-TjF"/>
@@ -1204,13 +1185,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="250" height="105"/>
+                                <rect key="frame" x="0.0" y="0.0" width="170" height="131"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="248" height="88"/>
+                                    <rect key="frame" x="1" y="1" width="168" height="114"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
-                                            <rect key="frame" x="0.0" y="0.0" width="1090" height="63"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1090" height="89"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1486,7 +1467,7 @@ CA
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="89" width="248" height="15"/>
+                                    <rect key="frame" x="1" y="115" width="168" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
@@ -1523,13 +1504,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="30"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="25"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="28"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="23"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="477" height="28"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="477" height="23"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
