@@ -123,6 +123,7 @@ class CollectionJuggler: NSObject {
         let openPanel = prepCollectionOpenPanel()
         let result = openPanel.runModal()
         if result == .OK {
+            MultiFileIO.shared.registerBookmark(url: openPanel.url!)
             opens = open(urls: [openPanel.url!])
         }
         return opens > 0
@@ -187,6 +188,7 @@ class CollectionJuggler: NSObject {
         let openPanel = prepCollectionOpenPanel()
         let result = openPanel.runModal()
         if result == .OK {
+            MultiFileIO.shared.registerBookmark(url: openPanel.url!)
             proceedWithSelectedURL(requestType: requestType, fileURL: openPanel.url!)
         }
     }
@@ -233,6 +235,7 @@ class CollectionJuggler: NSObject {
         openPanel.allowsMultipleSelection = false
         let result = openPanel.runModal()
         if result == .OK {
+            MultiFileIO.shared.registerBookmark(url: openPanel.url!)
             return self.openParentRealm(parentURL: openPanel.url!)
         }
         return nil
@@ -273,6 +276,7 @@ class CollectionJuggler: NSObject {
         openPanel.allowsMultipleSelection = false
         let result = openPanel.runModal()
         if result == .OK {
+            MultiFileIO.shared.registerBookmark(url: openPanel.url!)
             _ = self.saveCollectionAs(currentIO: currentIO, currentWindow: currentWindow, newURL: openPanel.url!)
         }
     }
@@ -355,6 +359,7 @@ class CollectionJuggler: NSObject {
         openPanel.allowsMultipleSelection = false
         let result = openPanel.runModal()
         if result == .OK {
+            MultiFileIO.shared.registerBookmark(url: openPanel.url!)
             _ = self.moveCollection(currentIO: currentIO, currentWindow: currentWindow, newURL: openPanel.url!)
         }
     }
@@ -644,6 +649,7 @@ class CollectionJuggler: NSObject {
         openPanel.allowsMultipleSelection = false
         let result = openPanel.runModal()
         if result == .OK {
+            MultiFileIO.shared.registerBookmark(url: openPanel.url!)
             _ = self.openFileWithNewWindow(fileURL: openPanel.url!, readOnly: false)
         }
     }

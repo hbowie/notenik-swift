@@ -1044,6 +1044,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         guard userChoice == .OK else { return }
         
         // Now let's make the appropriate updates
+        MultiFileIO.shared.registerBookmark(url: openPanel.url!)
         let localLink = openPanel.url!.absoluteString
         if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
             editVC!.setLink(localLink)
@@ -2125,6 +2126,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             let openPanel = juggler.prepCollectionOpenPanel()
             openPanel.begin { (result) -> Void  in
                 if result == .OK {
+                    MultiFileIO.shared.registerBookmark(url: openPanel.url!)
                     self.purge(archiveURL: openPanel.url!)
                 }
             }
@@ -2446,6 +2448,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         savePanel.nameFieldStringValue = fileName + "." + fileExt
         let userChoice = savePanel.runModal()
         if userChoice == .OK {
+            MultiFileIO.shared.registerBookmark(url: savePanel.url!)
             return savePanel.url
         } else {
             return nil

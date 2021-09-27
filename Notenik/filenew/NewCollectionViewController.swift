@@ -124,6 +124,7 @@ class NewCollectionViewController: NSTabViewController {
         let response = dialog.runModal()
          
         if response == .OK {
+            MultiFileIO.shared.registerBookmark(url: dialog.url!)
             return dialog.url
         } else {
             return nil

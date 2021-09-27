@@ -196,6 +196,7 @@ class ExportViewController: NSViewController {
         openPanel.allowsMultipleSelection = false
         let response = openPanel.runModal()
         if response == .OK {
+            MultiFileIO.shared.registerBookmark(url: openPanel.url!)
             return openPanel.url
         } else {
             return nil
