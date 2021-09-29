@@ -34,8 +34,8 @@ class CalendarViewController: NSViewController {
     var dateView: DateView?
     
     let gregCalendar = Calendar(identifier: .gregorian)
-    var year = 2019
-    var month = 04
+    var year = 2021
+    var month = 09
     var daysInMonth = 30
     var day = 17
     
@@ -46,6 +46,7 @@ class CalendarViewController: NSViewController {
     /// Populate our view with its initial data.
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.year = 2021
         loaded = true
         displayYear()
         displayMonth()
@@ -102,7 +103,6 @@ class CalendarViewController: NSViewController {
     /// Put together the Calendar grid
     func formatCalendar() {
         
-
         // Let's start with the header row showing the day of week abbreviations
         var j = 1
         while j <= 7 {
