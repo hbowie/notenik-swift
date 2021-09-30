@@ -37,11 +37,12 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     let filesTitle = "files..."
     let addAttachmentTitle = "Add Attachment..."
     
-    var notenikIO:           NotenikIO?
-    var preferredExt = ""
-    var crumbs:              NoteCrumbs?
-    var webLinkFollowed      = false
-    var windowNumber         = 0
+    var notenikIO:          NotenikIO?
+    var preferredExt        = ""
+    var crumbs:             NoteCrumbs?
+    var webLinkFollowed     = false
+    var windowNumber        = 0
+    var undoMgr:            UndoManager?
     
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
     let shareStoryboard:           NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
@@ -162,6 +163,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
             splitViewController = contentViewController as? NoteSplitViewController
         }
         if splitViewController != nil {
+            undoMgr = splitViewController!.undoManager
             collectionItem = splitViewController!.splitViewItems[0]
             noteItem = splitViewController!.splitViewItems[1]
             collectionTabs = collectionItem?.viewController as? NSTabViewController
@@ -1748,12 +1750,36 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         }
         if proceed {
             pendingEdits = false
+            if undoMgr != nil {
+                let undoNote = selectedNote.copy() as! Note
+                undoMgr!.registerUndo(withTarget: self) {
+                    targetSelf in targetSelf.restoreNote(undoNote)
+                }
+                undoMgr!.setActionName("Delete Note")
+            }
             let (nextNote, nextPosition) = noteIO.deleteSelectedNote(preserveAttachments: false)
             reloadViews()
             if nextNote != nil {
                 select(note: nextNote, position: nextPosition, source: .action, andScroll: true)
             }
         }
+    }
+    
+    
+    func restoreNote(_ note: Note) {
+        let noteIO = guardForCollectionAction()
+        if noteIO == nil { return }
+        undoMgr!.registerUndo(withTarget: self) {
+            targetSelf in targetSelf.redoDelete(note)
+        }
+        _ = addNewNote(note)
+    }
+    
+    func redoDelete(_ note: Note) {
+        let noteIO = guardForCollectionAction()
+        if noteIO == nil { return }
+        select(note: note, position: nil, source: .action, andScroll: true, searchPhrase: nil)
+        deleteNote(self)
     }
     
     func checkForPromises() {
