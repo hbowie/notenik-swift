@@ -89,7 +89,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         
         parms.setFrom(note: note!)
         
-        let displayHTML = noteDisplay.display(note!, io: io!, parms: parms)
+        let (displayHTML, wikiAdds) = noteDisplay.display(note!, io: io!, parms: parms)
         var html = ""
         if searchPhrase == nil || searchPhrase!.isEmpty {
             html = displayHTML
@@ -115,6 +115,10 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
                               category: "NoteDisplayViewController",
                               level: .error,
                               message: "load html String returned nil")
+        }
+        
+        if wikiAdds && wc != nil {
+            wc!.reloadViews()
         }
         
         // This is just a convenient spot to request that we refresh our
