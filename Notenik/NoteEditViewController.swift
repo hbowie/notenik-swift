@@ -113,6 +113,10 @@ class NoteEditViewController: NSViewController {
     }
     
     func makeEditRow(collection: NoteCollection, def: FieldDefinition) {
+        
+        guard def.fieldType.typeString != NotenikConstants.backlinksCommon else { return }
+        guard def.fieldType.typeString != NotenikConstants.wikilinksCommon else { return }
+        
         let label = def.fieldLabel
         let labelView = makeLabelView(with: label)
         
@@ -198,6 +202,8 @@ class NoteEditViewController: NSViewController {
         let defs = dict.list
         var i = 0
         for def in defs {
+            guard def.fieldType.typeString != NotenikConstants.backlinksCommon else { continue }
+            guard def.fieldType.typeString != NotenikConstants.wikilinksCommon else { continue }
             let field = note.getField(def: def)
             var fieldView = editViews[i]
             if fieldView is ImageNameView {

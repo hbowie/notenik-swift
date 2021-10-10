@@ -44,6 +44,7 @@ class CollectionPrefsViewController: NSViewController {
     var fieldSelectors:  [NSButton] = []
     
     var titleCkBox:      NSButton!
+    var akaCkBox:        NSButton!
     var timestampCkBox:  NSButton!
     var tagsCkBox:       NSButton!
     var linkCkBox:       NSButton!
@@ -61,6 +62,7 @@ class CollectionPrefsViewController: NSViewController {
     var bodyCkBox:       NSButton!
     var dateAddedCkBox:  NSButton!
     var dateModifiedCkBox: NSButton!
+    var backlinksCkBox:  NSButton!
     
     var checkBoxInsertionPoint = 0
     
@@ -113,6 +115,10 @@ class CollectionPrefsViewController: NSViewController {
         titleCkBox = NSButton(checkboxWithTitle: NotenikConstants.title, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(titleCkBox)
         stackView.addArrangedSubview(titleCkBox)
+        
+        akaCkBox = NSButton(checkboxWithTitle: NotenikConstants.aka, target: self, action: #selector(checkBoxClicked))
+        fieldSelectors.append(akaCkBox)
+        stackView.addArrangedSubview(akaCkBox)
         
         timestampCkBox = NSButton(checkboxWithTitle: NotenikConstants.timestamp, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(timestampCkBox)
@@ -181,6 +187,12 @@ class CollectionPrefsViewController: NSViewController {
         dateModifiedCkBox = NSButton(checkboxWithTitle: NotenikConstants.dateModified, target: self, action: #selector(checkBoxClicked))
         fieldSelectors.append(dateModifiedCkBox)
         stackView.addArrangedSubview(dateModifiedCkBox)
+        
+        backlinksCkBox = NSButton(checkboxWithTitle: NotenikConstants.backlinks,
+                                  target: self,
+                                  action: #selector(checkBoxClicked))
+        fieldSelectors.append(backlinksCkBox)
+        stackView.addArrangedSubview(backlinksCkBox)
         
         checkBoxInsertionPoint = stackView.arrangedSubviews.count - 1
         
@@ -339,12 +351,20 @@ class CollectionPrefsViewController: NSViewController {
                                         label: checkBox.title)
                 if added == nil {
                     communicateError("Trouble adding definition to dictionary", alert: true)
+                } else if checkBox.title == NotenikConstants.backlinks {
+                    _ = dict.addDef(typeCatalog: collection!.typeCatalog, label: NotenikConstants.wikilinks)
                 }
             } else if def != nil && checkBox.state == NSControl.StateValue.on {
                 // Definition already in dictionary and requested
             } else if def != nil && checkBox.state == NSControl.StateValue.off {
                 // Removing definition
                 _ = dict.removeDef(def!)
+                if checkBox.title == NotenikConstants.backlinks {
+                    let def2 = dict.getDef(NotenikConstants.wikilinks)
+                    if def2 != nil {
+                        _ = dict.removeDef(def2!)
+                    }
+                }
             }
         }
         if !collection!.otherFields {

@@ -314,6 +314,37 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     //
     // -----------------------------------------------------------
     
+    @IBAction func generateBacklinks(_ sender: Any) {
+
+        // Make sure we're in a position to perform this operation.
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        guard collection.backlinksDef != nil else {
+            communicateError("Backlinks must first be defined as a field for this Collection",
+                             alert: true)
+            return
+        }
+        
+        let mogi = Transmogrifier(io: noteIO)
+        let backlinks = mogi.generateBacklinks()
+        
+        // Now let the user see the results.
+        finishBatchOperation()
+        reloadCollection(self)
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        if backlinks == 0 {
+            alert.messageText = "No Backlinks were generated"
+        } else if backlinks == 1 {
+            alert.messageText = "1 Backlinks was generated"
+        } else {
+            alert.messageText = "\(backlinks) Backlinks were generated"
+        }
+        alert.addButton(withTitle: "OK")
+        let _ = alert.runModal()
+        
+    }
+    
     let levelsHead = "levels-outline"
     
     /// Renumber the Collection's sequence numbers based on the level and position of each note.
@@ -337,18 +368,21 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         guard let collection = noteIO.collection else { return }
         
         guard collection.levelFieldDef != nil else {
-            communicateError("The Collection must contain a Level field before it can be Renumbered or Retagged", alert: true)
+            communicateError("The Collection must contain a Level field before it can be Renumbered or Retagged",
+                             alert: true)
             return
         }
         
         guard collection.seqFieldDef != nil else {
-            communicateError("The Collection must contain a Seq field before it can be Renumbered or Retagged", alert: true)
+            communicateError("The Collection must contain a Seq field before it can be Renumbered or Retagged",
+                             alert: true)
             return
         }
         
         let sortParm = collection.sortParm
         guard sortParm == .seqPlusTitle else {
-            communicateError("First Sort by Seq + Title before attempting to Renumber or Retag", alert: true)
+            communicateError("First Sort by Seq + Title before attempting to Renumber or Retag",
+                             alert: true)
             return
         }
         
@@ -1441,6 +1475,9 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     func searchNote(_ note: Note, for searchFor: String) -> Bool {
         let searchForLower = searchFor.lowercased()
         if note.title.value.lowercased().contains(searchForLower) {
+            return true
+        }
+        if note.aka.value.lowercased().contains(searchForLower) {
             return true
         }
         if note.link.value.lowercased().contains(searchForLower) {

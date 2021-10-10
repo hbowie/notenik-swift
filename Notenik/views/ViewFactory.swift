@@ -24,6 +24,10 @@ class ViewFactory {
         }
         
         switch def.fieldType.typeString {
+        case NotenikConstants.akaCommon:
+            return AKAView()
+        case NotenikConstants.backlinksCommon:
+            return LabelView()
         case NotenikConstants.bodyCommon:
             return BodyView()
         case NotenikConstants.booleanType:
@@ -57,6 +61,8 @@ class ViewFactory {
         case NotenikConstants.tagsCommon:
             return TagsView(pickList: pickLists.tagsPickList)
         case NotenikConstants.timestampCommon:
+            return LabelView()
+        case NotenikConstants.wikilinksCommon:
             return LabelView()
         case NotenikConstants.workTitleCommon:
             return WorkTitleView(pickList: pickLists.workTitlePickList)
