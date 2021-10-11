@@ -86,6 +86,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         guard note != nil else { return }
         guard io != nil else { return }
         guard isViewLoaded else { return }
+        guard let collection = io!.collection else { return }
         
         parms.setFrom(note: note!)
         
@@ -102,14 +103,57 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         if countsVC != nil {
             countsVC!.updateCounts(counts)
         }
-        // let baseURL = io!.collection!.lib.getURL(type: .notes)
+        
+        // See if any derived Note fields need to be updated.
+        if AppPrefs.shared.parseUsingNotenik && (collection.minutesToReadDef != nil || collection.wikilinksDef != nil || collection.backlinksDef != nil) {
+            
+            var modified = false
+            let modNote = note!.copy() as! Note
+            
+            // See if Minutes to Read have changed.
+            if collection.minutesToReadDef != nil {
+                let newMinutes = MinutesToReadValue(with: counts)
+                let oldMinutes = modNote.getField(def: collection.minutesToReadDef!)
+                if oldMinutes == nil || oldMinutes!.value != newMinutes {
+                    let minutesField = NoteField(def: collection.minutesToReadDef!, value: newMinutes)
+                    _ = modNote.setField(minutesField)
+                    modified = true
+                }
+            }
+            
+            // See if extracted Wiki Links have changed.
+            if collection.wikilinksDef != nil && noteDisplay.wikilinks != nil {
+                let newLinks = noteDisplay.wikilinks!.links
+                let trans = Transmogrifier(io: io!)
+                let mods = trans.updateLinks(for: modNote, links: newLinks)
+                if mods {
+                    modified = true
+                }
+            }
+            
+            if modified {
+                let (updatedNote, _) = io!.modNote(oldNote: note!, newNote: modNote)
+                if updatedNote == nil {
+                    communicateError("Attempt to modify derived values failed")
+                } else {
+                    let (displayHTML, _) = noteDisplay.display(updatedNote!, io: io!, parms: parms)
+                    if searchPhrase == nil || searchPhrase!.isEmpty {
+                        html = displayHTML
+                    } else {
+                        html = StringUtils.highlightPhraseInHTML(phrase: searchPhrase!,
+                                                                 html: displayHTML,
+                                                                 klass: "search-results")
+                    }
+                    counts = noteDisplay.counts
+                    if countsVC != nil {
+                        countsVC!.updateCounts(counts)
+                    }
+                }
+            }
+        }
+        
         var nav: WKNavigation?
         nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
-        /* if baseURL != nil {
-            nav = webView.loadHTMLString(html, baseURL: baseURL!)
-        } else {
-            nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
-        } */
         if nav == nil {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "NoteDisplayViewController",
