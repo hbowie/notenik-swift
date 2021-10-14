@@ -234,6 +234,9 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             if nextNote == nil {
                 nextNote = io!.getNote(forID: (link.noteID + "s"))
             }
+            if nextNote == nil && io!.collection!.akaFieldDef != nil {
+                nextNote = io!.getNote(alsoKnownAs: link.noteID)
+            }
             if nextNote == nil {
                 nextNote = io!.getNote(forTimestamp: link.noteID)
             }
