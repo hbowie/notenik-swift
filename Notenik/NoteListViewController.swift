@@ -24,6 +24,8 @@ class NoteListViewController:   NSViewController,
     @IBOutlet var tableView: NSTableView!
     
     var shortcutMenu: NSMenu!
+    var newChildSepIndex = -1
+    var newChildIndex = -1
     
     var window: CollectionWindowController? {
         get {
@@ -71,8 +73,20 @@ class NoteListViewController:   NSViewController,
     }
     
     func modShortcutMenuForCollection() {
+        
+        if newChildIndex >= 0 {
+            shortcutMenu.removeItem(at: newChildIndex)
+            newChildIndex = -1
+        }
+        if newChildSepIndex >= 0 {
+            shortcutMenu.removeItem(at: newChildSepIndex)
+            newChildSepIndex = -1
+        }
+
         if notenikIO!.collection!.seqFieldDef != nil && notenikIO!.collection!.levelFieldDef != nil {
+            newChildSepIndex = shortcutMenu.numberOfItems
             shortcutMenu.addItem(NSMenuItem.separator())
+            newChildIndex = shortcutMenu.numberOfItems
             shortcutMenu.addItem(NSMenuItem(title: "New Child", action: #selector(newChildForItem(_:)), keyEquivalent: ""))
         }
     }
