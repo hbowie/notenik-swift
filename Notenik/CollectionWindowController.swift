@@ -24,6 +24,8 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     
     @IBOutlet var searchField: NSSearchField!
     
+    var searchOptions = SearchOptions()
+    
     /// The Reports Action Menu.
     @IBOutlet var actionMenu: NSMenu!
     
@@ -51,6 +53,7 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
     let exportStoryboard:          NSStoryboard = NSStoryboard(name: "Export", bundle: nil)
     let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
     let tagsMassChangeStoryboard:  NSStoryboard = NSStoryboard(name: "TagsMassChange", bundle: nil)
+    let advSearchStoryboard:       NSStoryboard = NSStoryboard(name: "AdvSearch", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -1407,45 +1410,86 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         select(note: priorNote, position: nil, source: .nav, andScroll: true)
     }
     
+    /// Respond to a user request for an Advanced Search.
+    @IBAction func advSearch(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        if let advSearchController = self.advSearchStoryboard.instantiateController(withIdentifier: "AdvSearchWC") as? AdvSearchWindowController {
+            guard let vc = advSearchController.contentViewController as? AdvSearchViewController else { return }
+            advSearchController.showWindow(self)
+            vc.window = advSearchController
+            vc.noteIO = noteIO
+            vc.collectionController = self
+            vc.searchOptions = searchOptions
+            // var searchPhrase: String?
+            // if displayVC != nil {
+                // searchPhrase = displayVC!.searchPhrase
+            // }
+            // vc.searchPhrase = searchPhrase
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get an Advanced Search Window Controller!")
+        }
+    }
+    
+    /// Start an Advanced Search using the options provided by the user.
+    /// - Parameter options: The options as specified by the user.
+    func advSearchNow(options: SearchOptions) {
+        self.searchOptions = options
+        self.searchField.stringValue = searchOptions.searchText
+        searchUsingOptions()
+    }
+    
+    /// Respond to the Find command.
+    /// - Parameter sender: The control that triggered this method.
     @IBAction func findNote(_ sender: Any) {
         guard let confirmedWindow = self.window else { return }
         confirmedWindow.makeFirstResponder(searchField)
     }
     
+    /// Search for the first matching Note using the search field.
+    /// - Parameter sender: The Search field.
     @IBAction func searchNow(_ sender: Any) {
         guard let searchField = sender as? NSSearchField else { return }
-        let searchString = searchField.stringValue
-        let searchFor = searchString
-        guard searchString.count > 0 else { return }
+        searchOptions.searchText = searchField.stringValue
+        searchUsingOptions()
+    }
+    
+    func searchUsingOptions() {
+        guard !searchOptions.searchText.isEmpty else { return }
         guard let noteIO = guardForCollectionAction() else { return }
         var found = false
         var (note, position) = noteIO.firstNote()
         crumbs!.refresh()
         while !found && note != nil {
-            found = searchNote(note!, for: searchFor)
+            found = searchNoteUsingOptions(note!)
             if !found {
                 (note, position) = noteIO.nextNote(position)
             }
         }
         if found {
-            select(note: note, position: position, source: .action, andScroll: true, searchPhrase: searchFor)
+            select(note: note,
+                   position: position,
+                   source: .action,
+                   andScroll: true,
+                   searchPhrase: searchOptions.searchText)
         } else {
             let alert = NSAlert()
             alert.alertStyle = .warning
-            alert.messageText = "No Note found containing search string '\(searchFor)'"
-            alert.informativeText = "Searched for case-insensitve match on title, link, tags and body fields"
-            
+            alert.messageText = "No Note found containing search string '\(searchOptions.searchText)'"
+            alert.informativeText = "Searched for match using current advanced options"
             alert.addButton(withTitle: "OK")
             let _ = alert.runModal()
         }
     }
     
     @IBAction func searchForNext(_ sender: Any) {
-        let searchString = searchField.stringValue
-        let searchFor = searchString
-        guard let noteIO = notenikIO else { return }
-        let outcome = modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return }
+        if !searchField.stringValue.isEmpty && searchField.stringValue != searchOptions.searchText {
+            searchOptions.searchText = searchField.stringValue
+        }
+        guard !searchOptions.searchText.isEmpty else { return }
+        guard let noteIO = guardForCollectionAction() else { return }
         var (note, position) = noteIO.getSelectedNote()
         guard note != nil && position.valid else { return }
         let startingNote = note!
@@ -1453,18 +1497,22 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         (note, position) = noteIO.nextNote(position)
         var found = false
         while !found && note != nil {
-            found = searchNote(note!, for: searchFor)
+            found = searchNoteUsingOptions(note!)
             if !found {
                 (note, position) = noteIO.nextNote(position)
             }
         }
         if found {
-            select(note: note, position: position, source: .action, andScroll: true, searchPhrase: searchFor)
+            select(note: note,
+                   position: position,
+                   source: .action,
+                   andScroll: true,
+                   searchPhrase: searchOptions.searchText)
         } else {
             let alert = NSAlert()
             alert.alertStyle = .informational
-            alert.messageText = "No more notes found containing search string '\(searchFor)'"
-            alert.informativeText = "Searched for case-insensitve match on title, link, tags and body fields"
+            alert.messageText = "No further notes found containing search string '\(searchOptions.searchText)'"
+            alert.informativeText = "Searched for match using current advanced options"
             alert.addButton(withTitle: "OK")
             let _ = alert.runModal()
             select(note: startingNote, position: startingPosition, source: .action, andScroll: true)
@@ -1472,27 +1520,67 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         }
     }
     
-    func searchNote(_ note: Note, for searchFor: String) -> Bool {
-        let searchForLower = searchFor.lowercased()
-        if note.title.value.lowercased().contains(searchForLower) {
-            return true
+    /// Search the fields of this Note, using search options, to see if a
+    /// selected field contains the search string.
+    /// - Parameter note: The note whose fields are to be searched.
+    /// - Returns: True if we found a match; false otherwise.
+    func searchNoteUsingOptions(_ note: Note) -> Bool {
+        var searchFor = searchOptions.searchText
+        if !searchOptions.caseSensitive {
+            searchFor = searchOptions.searchText.lowercased()
         }
-        if note.aka.value.lowercased().contains(searchForLower) {
-            return true
+        var matched = false
+        
+        matched = searchOneFieldUsingOptions(fieldSelected: searchOptions.titleField,
+                                             noteField: note.title.value,
+                                             searchFor: searchFor)
+        if matched { return true }
+        
+        if note.collection.akaFieldDef != nil {
+            matched = searchOneFieldUsingOptions(fieldSelected: searchOptions.akaField,
+                                                 noteField: note.aka.value,
+                                                 searchFor: searchFor)
+            if matched { return true }
         }
-        if note.link.value.lowercased().contains(searchForLower) {
-            return true
+        
+        matched = searchOneFieldUsingOptions(fieldSelected: searchOptions.tagsField,
+                                             noteField: note.tags.value,
+                                             searchFor: searchFor)
+        if matched { return true }
+        
+        matched = searchOneFieldUsingOptions(fieldSelected: searchOptions.linkField,
+                                             noteField: note.link.value,
+                                             searchFor: searchFor)
+        if matched { return true }
+        
+        matched = searchOneFieldUsingOptions(fieldSelected: searchOptions.authorField,
+                                             noteField: note.author.value,
+                                             searchFor: searchFor)
+        if matched { return true }
+        
+        matched = searchOneFieldUsingOptions(fieldSelected: searchOptions.bodyField,
+                                             noteField: note.body.value,
+                                             searchFor: searchFor)
+
+        return matched
+    }
+    
+    /// Check next Note field to see if it meets the search criteria.
+    /// - Parameters:
+    ///   - fieldSelected: Did the user select this field for comparison purposes?
+    ///   - noteField: The String value from the Note field.
+    ///   - searchFor: The String value we're looking for (lowercased if case-insensitive)
+    /// - Returns: True if a match, false otherwise.
+    func searchOneFieldUsingOptions(fieldSelected: Bool,
+                                    noteField: String,
+                                    searchFor: String) -> Bool {
+        
+        guard fieldSelected else { return false }
+        var noteFieldToCompare = noteField
+        if !searchOptions.caseSensitive {
+            noteFieldToCompare = noteField.lowercased()
         }
-        if note.tags.value.lowercased().contains(searchForLower) {
-            return true
-        }
-        if note.body.value.lowercased().contains(searchForLower) {
-            return true
-        }
-        if note.creator.value.lowercased().contains(searchForLower) {
-            return true
-        }
-        return false
+        return noteFieldToCompare.contains(searchFor)
     }
     
     /// Select the first Note in the list. 

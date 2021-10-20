@@ -27,6 +27,12 @@
                                                 <action selector="menuAppPreferences:" target="Voe-Tx-rLC" id="Ti1-i7-9mW"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Display Appearance..." id="jx2-zC-2G6" userLabel="Display Appearance">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="displayPrefs:" target="Ady-hI-5gd" id="Ig0-Dk-gDj"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                                         <menuItem title="Services" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -264,6 +270,60 @@
                                                 <action selector="reloadCollection:" target="Ady-hI-5gd" id="zqL-aI-O6s"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="fb1-f3-Rxt"/>
+                                        <menuItem title="Sort" id="8j6-a0-reh">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Sort" id="LhB-sl-AeY">
+                                                <items>
+                                                    <menuItem title="Title" keyEquivalent="1" id="AMx-X7-4qO">
+                                                        <connections>
+                                                            <action selector="sortByTitle:" target="Ady-hI-5gd" id="4r8-j0-bTL"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Seq + Title" keyEquivalent="2" id="AqV-1z-Chz">
+                                                        <connections>
+                                                            <action selector="sortBySeqAndTitle:" target="Ady-hI-5gd" id="zd3-ok-Fbp"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Tasks by Date" keyEquivalent="3" id="TVl-XT-DvZ">
+                                                        <connections>
+                                                            <action selector="sortTasksByDate:" target="Ady-hI-5gd" id="bSf-pJ-MAX"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Tasks by Seq" keyEquivalent="4" id="9dt-Jm-PLc">
+                                                        <connections>
+                                                            <action selector="sortTasksBySeq:" target="Ady-hI-5gd" id="Qjf-Vt-FE2"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Tags + Title" keyEquivalent="5" id="fPl-JQ-qYd">
+                                                        <connections>
+                                                            <action selector="sortByTagsAndTitle:" target="Ady-hI-5gd" id="Ks2-k5-CjK"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Tags + Seq" keyEquivalent="6" id="XNz-FJ-O7F">
+                                                        <connections>
+                                                            <action selector="sortByTagsAndSeq:" target="Ady-hI-5gd" id="TRt-6e-qI6"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Author" keyEquivalent="7" id="lwc-Eb-pHy">
+                                                        <connections>
+                                                            <action selector="sortByAuthor:" target="Ady-hI-5gd" id="i2m-Da-ick"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Date Added" keyEquivalent="8" id="d50-T0-gWX" userLabel="Date Added">
+                                                        <connections>
+                                                            <action selector="sortByDateAdded:" target="Ady-hI-5gd" id="07I-sz-WsT"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Reverse" id="b6d-Jk-63r">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="sortReverse:" target="Ady-hI-5gd" id="jwC-PP-cp1"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="ymo-Y1-T3U"/>
                                         <menuItem title="Catch Up Daily Tasks" keyEquivalent="u" id="3Ch-CE-cpI" userLabel="Catch Up Daily Tasks">
                                             <connections>
@@ -330,54 +390,40 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Sort" id="8j6-a0-reh">
+                            <menuItem title="Nav" id="dLq-1G-gJa">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Sort" id="LhB-sl-AeY">
+                                <menu key="submenu" title="Nav" id="4yX-W2-chZ">
                                     <items>
-                                        <menuItem title="Title" keyEquivalent="1" id="AMx-X7-4qO">
+                                        <menuItem title="Go To Next Note" keyEquivalent="]" id="IvG-LL-jYe" userLabel="Go To Next Note">
                                             <connections>
-                                                <action selector="sortByTitle:" target="Ady-hI-5gd" id="4r8-j0-bTL"/>
+                                                <action selector="goToNextNote:" target="Ady-hI-5gd" id="TKQ-6h-RVt"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Seq + Title" keyEquivalent="2" id="AqV-1z-Chz">
+                                        <menuItem title="Go To Prior Note" keyEquivalent="[" id="UOV-EN-ZWW" userLabel="Go To Prior Note">
                                             <connections>
-                                                <action selector="sortBySeqAndTitle:" target="Ady-hI-5gd" id="zd3-ok-Fbp"/>
+                                                <action selector="goToPriorNote:" target="Ady-hI-5gd" id="Xyb-mG-qYl"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Tasks by Date" keyEquivalent="3" id="TVl-XT-DvZ">
+                                        <menuItem title="Scroll to Selected Note" keyEquivalent="" id="M8F-LB-WOU" userLabel="Scroll to Selected Note">
                                             <connections>
-                                                <action selector="sortTasksByDate:" target="Ady-hI-5gd" id="bSf-pJ-MAX"/>
+                                                <action selector="scrollToSelected:" target="Ady-hI-5gd" id="iQa-OJ-Ymh"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Tasks by Seq" keyEquivalent="4" id="9dt-Jm-PLc">
+                                        <menuItem isSeparatorItem="YES" id="5ZL-zp-Wne"/>
+                                        <menuItem title="Find" keyEquivalent="f" id="O5R-wR-C3l" userLabel="Find">
                                             <connections>
-                                                <action selector="sortTasksBySeq:" target="Ady-hI-5gd" id="Qjf-Vt-FE2"/>
+                                                <action selector="findNote:" target="Ady-hI-5gd" id="997-as-N8H"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Tags + Title" keyEquivalent="5" id="fPl-JQ-qYd">
+                                        <menuItem title="Advanced Search..." keyEquivalent="f" id="dRa-3A-SnJ">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
-                                                <action selector="sortByTagsAndTitle:" target="Ady-hI-5gd" id="Ks2-k5-CjK"/>
+                                                <action selector="advSearch:" target="Ady-hI-5gd" id="jlo-su-m0k"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Tags + Seq" keyEquivalent="6" id="XNz-FJ-O7F">
+                                        <menuItem title="Find Again" keyEquivalent="g" id="Sis-fg-Ibk" userLabel="Find Again">
                                             <connections>
-                                                <action selector="sortByTagsAndSeq:" target="Ady-hI-5gd" id="TRt-6e-qI6"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Author" keyEquivalent="7" id="lwc-Eb-pHy">
-                                            <connections>
-                                                <action selector="sortByAuthor:" target="Ady-hI-5gd" id="i2m-Da-ick"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Date Added" keyEquivalent="8" id="d50-T0-gWX" userLabel="Date Added">
-                                            <connections>
-                                                <action selector="sortByDateAdded:" target="Ady-hI-5gd" id="07I-sz-WsT"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Reverse" id="b6d-Jk-63r">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="sortReverse:" target="Ady-hI-5gd" id="jwC-PP-cp1"/>
+                                                <action selector="searchForNext:" target="Ady-hI-5gd" id="UmC-9P-PSt"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -466,33 +512,6 @@ CA
                                         <menuItem title="Launch Link" keyEquivalent="l" id="Lj6-TD-r8R">
                                             <connections>
                                                 <action selector="launchLink:" target="Ady-hI-5gd" id="6xi-F3-2Tf"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="5ZL-zp-Wne"/>
-                                        <menuItem title="Go To Next Note" keyEquivalent="]" id="IvG-LL-jYe" userLabel="Go To Next Note">
-                                            <connections>
-                                                <action selector="goToNextNote:" target="Ady-hI-5gd" id="TKQ-6h-RVt"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Go To Prior Note" keyEquivalent="[" id="UOV-EN-ZWW" userLabel="Go To Prior Note">
-                                            <connections>
-                                                <action selector="goToPriorNote:" target="Ady-hI-5gd" id="Xyb-mG-qYl"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Scroll to Selected Note" keyEquivalent="" id="M8F-LB-WOU" userLabel="Scroll to Selected Note">
-                                            <connections>
-                                                <action selector="scrollToSelected:" target="Ady-hI-5gd" id="iQa-OJ-Ymh"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="aKs-Gn-B6L"/>
-                                        <menuItem title="Find" keyEquivalent="f" id="O5R-wR-C3l" userLabel="Find">
-                                            <connections>
-                                                <action selector="findNote:" target="Ady-hI-5gd" id="997-as-N8H"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Find Again" keyEquivalent="g" id="Sis-fg-Ibk" userLabel="Find Again">
-                                            <connections>
-                                                <action selector="searchForNext:" target="Ady-hI-5gd" id="UmC-9P-PSt"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="WR1-cf-uMQ"/>
@@ -751,19 +770,6 @@ CA
                                                     </menuItem>
                                                 </items>
                                             </menu>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
-                            <menuItem title="Format" id="jxT-CU-nIS">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Format" id="GEO-Iw-cKr">
-                                    <items>
-                                        <menuItem title="Display Appearance" id="jx2-zC-2G6" userLabel="Display Appearance">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="displayPrefs:" target="Ady-hI-5gd" id="Ig0-Dk-gDj"/>
-                                            </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
@@ -1191,9 +1197,9 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="110" height="183"/>
+                                <rect key="frame" x="0.0" y="0.0" width="30" height="183"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="108" height="166"/>
+                                    <rect key="frame" x="1" y="1" width="28" height="166"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
@@ -1473,7 +1479,7 @@ CA
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="167" width="108" height="15"/>
+                                    <rect key="frame" x="1" y="167" width="28" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
@@ -1510,9 +1516,9 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="21"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="15"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="19"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="13"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">

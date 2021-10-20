@@ -164,6 +164,10 @@
 		9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025121F65AF00027F364 /* NoteListViewController.swift */; };
 		9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
 		9C9D441B271119E800BB7B07 /* AKAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9D441A271119E800BB7B07 /* AKAView.swift */; };
+		9C9E47FD271F5BB60094FEA5 /* AdvSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C9E47FC271F5BB60094FEA5 /* AdvSearch.storyboard */; };
+		9C9E47FF271F602C0094FEA5 /* AdvSearchWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E47FE271F602C0094FEA5 /* AdvSearchWindowController.swift */; };
+		9C9E4801271F60980094FEA5 /* AdvSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E4800271F60980094FEA5 /* AdvSearchViewController.swift */; };
+		9C9E4803271F7AE70094FEA5 /* SearchOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E4802271F7AE70094FEA5 /* SearchOptions.swift */; };
 		9CA4EE88246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
 		9CA4EE89246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
 		9CA4EE8A246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
@@ -384,6 +388,10 @@
 		9C9A025121F65AF00027F364 /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
 		9C9D441A271119E800BB7B07 /* AKAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AKAView.swift; sourceTree = "<group>"; };
+		9C9E47FC271F5BB60094FEA5 /* AdvSearch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdvSearch.storyboard; sourceTree = "<group>"; };
+		9C9E47FE271F602C0094FEA5 /* AdvSearchWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvSearchWindowController.swift; sourceTree = "<group>"; };
+		9C9E4800271F60980094FEA5 /* AdvSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvSearchViewController.swift; sourceTree = "<group>"; };
+		9C9E4802271F7AE70094FEA5 /* SearchOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOptions.swift; sourceTree = "<group>"; };
 		9CA4EE87246A143B00059F65 /* PickListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickListView.swift; sourceTree = "<group>"; };
 		9CA4EE8B246A15BC00059F65 /* PickListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickListDataSource.swift; sourceTree = "<group>"; };
 		9CA80796229EE97100C5D673 /* GeneralPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefsViewController.swift; sourceTree = "<group>"; };
@@ -604,6 +612,7 @@
 				9C7132DC2692328B00A3034F /* notenik-KB */,
 				9C09E1752248601D0046D50D /* notenik.iconset */,
 				9C60E6DB21F64B3C00C332ED /* Notenik.entitlements */,
+				9C9E47FB271F5B760094FEA5 /* advsearch */,
 				9C1E0C8D22E4F7780025C99C /* attachments */,
 				9CF1193522581ABE0015AE91 /* collectionPrefs */,
 				9CF435C22480593700DD7C33 /* counts */,
@@ -724,6 +733,17 @@
 				9C8693EA257565AB00F045D2 /* NewICloudViewController.swift */,
 			);
 			path = newicloud;
+			sourceTree = "<group>";
+		};
+		9C9E47FB271F5B760094FEA5 /* advsearch */ = {
+			isa = PBXGroup;
+			children = (
+				9C9E47FC271F5BB60094FEA5 /* AdvSearch.storyboard */,
+				9C9E47FE271F602C0094FEA5 /* AdvSearchWindowController.swift */,
+				9C9E4800271F60980094FEA5 /* AdvSearchViewController.swift */,
+				9C9E4802271F7AE70094FEA5 /* SearchOptions.swift */,
+			);
+			path = advsearch;
 			sourceTree = "<group>";
 		};
 		9CAD6A5422DFA95D00531D90 /* export */ = {
@@ -1052,6 +1072,7 @@
 				9C8FD8D82216302900F16669 /* README.md in Resources */,
 				9C65B2A023DE28BC00794C59 /* LICENSE.md in Resources */,
 				9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */,
+				9C9E47FD271F5BB60094FEA5 /* AdvSearch.storyboard in Resources */,
 				9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */,
 				9CD9058926362F70000851E8 /* MicroBlog.storyboard in Resources */,
 				9CE3250A224D58360051CA1F /* Log.storyboard in Resources */,
@@ -1104,6 +1125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C9E4803271F7AE70094FEA5 /* SearchOptions.swift in Sources */,
 				9CD358892293C42B00C9203F /* LinkView.swift in Sources */,
 				9CCE7C65264AEB1E003818DF /* QuickActionWindowController.swift in Sources */,
 				9C3CC8F8250AA0F8002C95D0 /* NavigatorWindowController.swift in Sources */,
@@ -1138,6 +1160,7 @@
 				9C568DE92322F701005D6B0A /* WorkTitleView.swift in Sources */,
 				9C8693E52575658700F045D2 /* NewICloudWindowController.swift in Sources */,
 				9C46A71B25D07062006E9C16 /* NewCollectionWindowController.swift in Sources */,
+				9C9E47FF271F602C0094FEA5 /* AdvSearchWindowController.swift in Sources */,
 				9CD3262822330C8A00D06B77 /* ViewFactory.swift in Sources */,
 				9C568DF223230B17005D6B0A /* WorkTitleDataSource.swift in Sources */,
 				9C9094C52249A664002207EB /* NoteDocumentController.swift in Sources */,
@@ -1187,6 +1210,7 @@
 				9C8693EB257565AB00F045D2 /* NewICloudViewController.swift in Sources */,
 				9C7DDD91255B36AA00065812 /* DisplayFontsDataSource.swift in Sources */,
 				9CA80797229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
+				9C9E4801271F60980094FEA5 /* AdvSearchViewController.swift in Sources */,
 				9CB60BC622651074003B5655 /* ShareViewController.swift in Sources */,
 				9C568DF5232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */,
 				9C0B643C23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */,
@@ -1489,7 +1513,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 200;
+				CURRENT_PROJECT_VERSION = 201;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1502,7 +1526,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 7.4.3;
+				MARKETING_VERSION = 7.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1518,7 +1542,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 200;
+				CURRENT_PROJECT_VERSION = 201;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1531,7 +1555,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 7.4.3;
+				MARKETING_VERSION = 7.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
