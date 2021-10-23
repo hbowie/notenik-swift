@@ -42,6 +42,8 @@ class ViewFactory {
             return LabelView()
         case NotenikConstants.imageNameCommon:
             return ImageNameView()
+        case NotenikConstants.klassCommon:
+            return KlassView()
         case NotenikConstants.labelType:
             return LabelView()
         case NotenikConstants.levelCommon:

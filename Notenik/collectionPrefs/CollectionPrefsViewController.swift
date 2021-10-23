@@ -35,9 +35,9 @@ class CollectionPrefsViewController: NSViewController {
     
     var extPicker: FileExtensionPicker!
     
-    var subView:                        NSView?
+    @IBOutlet var horizontalStack: NSStackView!
     
-    var stackView:       NSStackView!
+    var stackView: NSStackView!
     
     var fieldsLabel:     NSTextField!
     
@@ -52,6 +52,7 @@ class CollectionPrefsViewController: NSViewController {
     var typeCkBox:       NSButton!
     var seqCkBox:        NSButton!
     var levelCkBox:      NSButton!
+    var klassCkBox:      NSButton!
     var dateCkBox:       NSButton!
     var recursCkBox:     NSButton!
     var authorCkBox:     NSButton!
@@ -64,9 +65,19 @@ class CollectionPrefsViewController: NSViewController {
     var dateModifiedCkBox: NSButton!
     var backlinksCkBox:  NSButton!
     
-    var checkBoxInsertionPoint = 0
-    
     var otherFieldsCkBox: NSButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        extPicker = FileExtensionPicker(fileExtComboBox: fileExtComboBox)
+        makeViews()
+    }
+    
+    /// Create the fields we need.
+    func makeViews() {
+        collectionTitle.maximumNumberOfLines = 3
+        // makeStackViews()
+    }
     
     /// Pass needed info from the Collection Juggler
     func passCollectionPrefsRequesterInfo(
@@ -76,6 +87,7 @@ class CollectionPrefsViewController: NSViewController {
         self.collection = collection
         self.windowController = window
         setCollectionValues()
+        makeStackViews()
 
         let collectionFileName = FileName(collection.fullPath)
         pathControl.url = collection.fullPathURL
@@ -93,131 +105,6 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        extPicker = FileExtensionPicker(fileExtComboBox: fileExtComboBox)
-        makeViews()
-    }
-    
-    /// Create the fields we need and stack them up vertically
-    func makeViews() {
-        
-        collectionTitle.maximumNumberOfLines = 3
-        makeStackView()
-    }
-    
-    func makeStackView() {
-        
-        stackView = NSStackView()
-        stackView.orientation = .vertical
-        stackView.alignment = .leading
-        
-        titleCkBox = NSButton(checkboxWithTitle: NotenikConstants.title, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(titleCkBox)
-        stackView.addArrangedSubview(titleCkBox)
-        
-        akaCkBox = NSButton(checkboxWithTitle: NotenikConstants.aka, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(akaCkBox)
-        stackView.addArrangedSubview(akaCkBox)
-        
-        timestampCkBox = NSButton(checkboxWithTitle: NotenikConstants.timestamp, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(timestampCkBox)
-        stackView.addArrangedSubview(timestampCkBox)
-        
-        tagsCkBox = NSButton(checkboxWithTitle: NotenikConstants.tags, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(tagsCkBox)
-        stackView.addArrangedSubview(tagsCkBox)
-        
-        linkCkBox = NSButton(checkboxWithTitle: NotenikConstants.link, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(linkCkBox)
-        stackView.addArrangedSubview(linkCkBox)
-        
-        statusCkBox = NSButton(checkboxWithTitle: NotenikConstants.status, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(statusCkBox)
-        stackView.addArrangedSubview(statusCkBox)
-        
-        typeCkBox = NSButton(checkboxWithTitle: NotenikConstants.type, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(typeCkBox)
-        stackView.addArrangedSubview(typeCkBox)
-        
-        seqCkBox = NSButton(checkboxWithTitle: NotenikConstants.seq, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(seqCkBox)
-        stackView.addArrangedSubview(seqCkBox)
-        
-        levelCkBox = NSButton(checkboxWithTitle: NotenikConstants.level, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(levelCkBox)
-        stackView.addArrangedSubview(levelCkBox)
-        
-        dateCkBox = NSButton(checkboxWithTitle: NotenikConstants.date, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(dateCkBox)
-        stackView.addArrangedSubview(dateCkBox)
-        
-        recursCkBox = NSButton(checkboxWithTitle: NotenikConstants.recurs, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(recursCkBox)
-        stackView.addArrangedSubview(recursCkBox)
-        
-        authorCkBox = NSButton(checkboxWithTitle: NotenikConstants.author, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(authorCkBox)
-        stackView.addArrangedSubview(authorCkBox)
-        
-        ratingCkBox = NSButton(checkboxWithTitle: NotenikConstants.rating, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(ratingCkBox)
-        stackView.addArrangedSubview(ratingCkBox)
-        
-        indexCkBox = NSButton(checkboxWithTitle: NotenikConstants.index, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(indexCkBox)
-        stackView.addArrangedSubview(indexCkBox)
-        
-        codeCkBox = NSButton(checkboxWithTitle: NotenikConstants.code, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(codeCkBox)
-        stackView.addArrangedSubview(codeCkBox)
-        
-        teaserCkBox = NSButton(checkboxWithTitle: NotenikConstants.teaser, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(teaserCkBox)
-        stackView.addArrangedSubview(teaserCkBox)
-        
-        bodyCkBox = NSButton(checkboxWithTitle: NotenikConstants.body, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(bodyCkBox)
-        stackView.addArrangedSubview(bodyCkBox)
-        
-        dateAddedCkBox = NSButton(checkboxWithTitle: NotenikConstants.dateAdded, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(dateAddedCkBox)
-        stackView.addArrangedSubview(dateAddedCkBox)
-        
-        dateModifiedCkBox = NSButton(checkboxWithTitle: NotenikConstants.dateModified, target: self, action: #selector(checkBoxClicked))
-        fieldSelectors.append(dateModifiedCkBox)
-        stackView.addArrangedSubview(dateModifiedCkBox)
-        
-        backlinksCkBox = NSButton(checkboxWithTitle: NotenikConstants.backlinks,
-                                  target: self,
-                                  action: #selector(checkBoxClicked))
-        fieldSelectors.append(backlinksCkBox)
-        stackView.addArrangedSubview(backlinksCkBox)
-        
-        checkBoxInsertionPoint = stackView.arrangedSubviews.count - 1
-        
-        otherFieldsCkBox = NSButton(checkboxWithTitle: "Other fields allowed?", target: self, action: #selector(checkBoxClicked))
-        stackView.addArrangedSubview(otherFieldsCkBox)
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        if subView == nil {
-            parentView.addSubview(stackView)
-        } else {
-            parentView.replaceSubview(subView!, with: stackView)
-        }
-        subView = stackView
-        
-        // Pin the grid to the edges of our main view
-        stackView!.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 8).isActive = true
-        stackView!.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -8).isActive = true
-        stackView!.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 8).isActive = true
-        stackView!.bottomAnchor.constraint(equalTo: parentView.bottomAnchor, constant: -8).isActive = true
-        
-        setCollectionValues()
-        
-    }
-    
     func setCollectionValues() {
         guard collection != nil else { return }
         
@@ -230,8 +117,6 @@ class CollectionPrefsViewController: NSViewController {
         }
         
         extPicker.setFileExt(collection!.preferredExt)
-        setFieldsForCollection()
-        setOtherFieldsAllowed(collection!.otherFields)
         setMirrorAutoIndex(collection!.mirrorAutoIndex)
         setBodyLabel(collection!.bodyLabel)
         setH1Titles(collection!.h1Titles)
@@ -239,7 +124,121 @@ class CollectionPrefsViewController: NSViewController {
         setMathJax(collection!.mathJax)
     }
     
+    func makeStackViews() {
+        
+        // Make sure our containers are empty
+        // before we start to fill them.
+        while horizontalStack.arrangedSubviews.count > 0 {
+            let view = horizontalStack.arrangedSubviews[0]
+            horizontalStack.removeArrangedSubview(view)
+        }
+        fieldSelectors = []
+        
+        // Start our first vertical stack.
+        startNextVerticalStack()
+        
+        titleCkBox = NSButton(checkboxWithTitle: NotenikConstants.title, target: self, action: #selector(checkBoxClicked))
+        addToStack(titleCkBox)
+        
+        akaCkBox = NSButton(checkboxWithTitle: NotenikConstants.aka, target: self, action: #selector(checkBoxClicked))
+        addToStack(akaCkBox)
+        
+        timestampCkBox = NSButton(checkboxWithTitle: NotenikConstants.timestamp, target: self, action: #selector(checkBoxClicked))
+        addToStack(timestampCkBox)
+        
+        tagsCkBox = NSButton(checkboxWithTitle: NotenikConstants.tags, target: self, action: #selector(checkBoxClicked))
+        addToStack(tagsCkBox)
+        
+        linkCkBox = NSButton(checkboxWithTitle: NotenikConstants.link, target: self, action: #selector(checkBoxClicked))
+        addToStack(linkCkBox)
+        
+        statusCkBox = NSButton(checkboxWithTitle: NotenikConstants.status, target: self, action: #selector(checkBoxClicked))
+        addToStack(statusCkBox)
+        
+        typeCkBox = NSButton(checkboxWithTitle: NotenikConstants.type, target: self, action: #selector(checkBoxClicked))
+        addToStack(typeCkBox)
+        
+        seqCkBox = NSButton(checkboxWithTitle: NotenikConstants.seq, target: self, action: #selector(checkBoxClicked))
+        addToStack(seqCkBox)
+        
+        levelCkBox = NSButton(checkboxWithTitle: NotenikConstants.level, target: self, action: #selector(checkBoxClicked))
+        addToStack(levelCkBox)
+        
+        klassCkBox = NSButton(checkboxWithTitle: NotenikConstants.klass, target: self, action: #selector(checkBoxClicked))
+        addToStack(klassCkBox)
+        
+        dateCkBox = NSButton(checkboxWithTitle: NotenikConstants.date, target: self, action: #selector(checkBoxClicked))
+        addToStack(dateCkBox)
+        
+        recursCkBox = NSButton(checkboxWithTitle: NotenikConstants.recurs, target: self, action: #selector(checkBoxClicked))
+        addToStack(recursCkBox)
+        
+        authorCkBox = NSButton(checkboxWithTitle: NotenikConstants.author, target: self, action: #selector(checkBoxClicked))
+        addToStack(authorCkBox)
+        
+        ratingCkBox = NSButton(checkboxWithTitle: NotenikConstants.rating, target: self, action: #selector(checkBoxClicked))
+        addToStack(ratingCkBox)
+        
+        indexCkBox = NSButton(checkboxWithTitle: NotenikConstants.index, target: self, action: #selector(checkBoxClicked))
+        addToStack(indexCkBox)
+        
+        codeCkBox = NSButton(checkboxWithTitle: NotenikConstants.code, target: self, action: #selector(checkBoxClicked))
+        addToStack(codeCkBox)
+        
+        teaserCkBox = NSButton(checkboxWithTitle: NotenikConstants.teaser, target: self, action: #selector(checkBoxClicked))
+        addToStack(teaserCkBox)
+        
+        dateAddedCkBox = NSButton(checkboxWithTitle: NotenikConstants.dateAdded, target: self, action: #selector(checkBoxClicked))
+        addToStack(dateAddedCkBox)
+        
+        dateModifiedCkBox = NSButton(checkboxWithTitle: NotenikConstants.dateModified, target: self, action: #selector(checkBoxClicked))
+        addToStack(dateModifiedCkBox)
+        
+        backlinksCkBox = NSButton(checkboxWithTitle: NotenikConstants.backlinks,
+                                  target: self,
+                                  action: #selector(checkBoxClicked))
+        addToStack(backlinksCkBox)
+        
+        bodyCkBox = NSButton(checkboxWithTitle: NotenikConstants.body, target: self, action: #selector(checkBoxClicked))
+        addToStack(bodyCkBox)
+        
+        // checkBoxInsertionPoint = stackView.arrangedSubviews.count - 1
+        setFieldsForCollection()
+        
+        otherFieldsCkBox = NSButton(checkboxWithTitle: "Other fields allowed?", target: self, action: #selector(checkBoxClicked))
+        addToStack(otherFieldsCkBox, fieldSelector: false)
+        
+        setOtherFieldsAllowed(collection!.otherFields)
+
+        finishNextVerticalStack()
+        
+    }
+    
+    func addToStack(_ checkbox: NSButton, fieldSelector: Bool = true) {
+        if fieldSelector {
+            fieldSelectors.append(checkbox)
+        }
+        stackView.addArrangedSubview(checkbox)
+        if stackView.arrangedSubviews.count >= 15 {
+            finishNextVerticalStack()
+            startNextVerticalStack()
+        }
+    }
+    
+    func startNextVerticalStack() {
+        stackView = NSStackView()
+        stackView.orientation = .vertical
+        stackView.alignment = .leading
+    }
+    
+    func finishNextVerticalStack() {
+        guard stackView.arrangedSubviews.count > 0 else { return }
+        horizontalStack.addArrangedSubview(stackView)
+    }
+    
     func setFieldsForCollection() {
+        
+        guard collection != nil else { return }
         
         // Start by turning all the check boxes off
         for button in fieldSelectors {
@@ -263,9 +262,10 @@ class CollectionPrefsViewController: NSViewController {
             if looking {
                 let newCheckBox = NSButton(checkboxWithTitle: def.fieldLabel.properForm, target: self, action: #selector(checkBoxClicked))
                 newCheckBox.state = NSControl.StateValue.on
-                fieldSelectors.append(newCheckBox)
-                stackView.insertArrangedSubview(newCheckBox, at: checkBoxInsertionPoint)
-                checkBoxInsertionPoint += 1
+                addToStack(newCheckBox)
+                // fieldSelectors.append(newCheckBox)
+                // stackView.insertArrangedSubview(newCheckBox, at: checkBoxInsertionPoint)
+                // checkBoxInsertionPoint += 1
             }
         } // End outer loop, going through all existing field definitions
         

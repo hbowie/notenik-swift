@@ -83,6 +83,8 @@
 		9C46A72125D070BD006E9C16 /* NewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72025D070BD006E9C16 /* NewCollectionViewController.swift */; };
 		9C46A72725D07899006E9C16 /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72625D07899006E9C16 /* NewLocationViewController.swift */; };
 		9C46A72D25D0A6E0006E9C16 /* NewNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72C25D0A6E0006E9C16 /* NewNameViewController.swift */; };
+		9C4A45A82723464400BE3202 /* KlassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4A45A72723464400BE3202 /* KlassView.swift */; };
+		9C4A45AA272346BD00BE3202 /* KlassDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4A45A9272346BD00BE3202 /* KlassDataSource.swift */; };
 		9C4AE8D626A205EB00CD4EB4 /* MathJax in Resources */ = {isa = PBXBuildFile; fileRef = 9C4AE8D526A205EB00CD4EB4 /* MathJax */; };
 		9C553C612266A0D50008D176 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553C602266A0D50008D176 /* StatusView.swift */; };
 		9C553C622266A0D50008D176 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C553C602266A0D50008D176 /* StatusView.swift */; };
@@ -324,6 +326,8 @@
 		9C46A72025D070BD006E9C16 /* NewCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCollectionViewController.swift; sourceTree = "<group>"; };
 		9C46A72625D07899006E9C16 /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
 		9C46A72C25D0A6E0006E9C16 /* NewNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNameViewController.swift; sourceTree = "<group>"; };
+		9C4A45A72723464400BE3202 /* KlassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlassView.swift; sourceTree = "<group>"; };
+		9C4A45A9272346BD00BE3202 /* KlassDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlassDataSource.swift; sourceTree = "<group>"; };
 		9C4AE8D526A205EB00CD4EB4 /* MathJax */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MathJax; path = ../../MathJax; sourceTree = "<group>"; };
 		9C553C602266A0D50008D176 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		9C5556D122E115960099414E /* Export.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Export.storyboard; sourceTree = "<group>"; };
@@ -814,6 +818,8 @@
 				9C29A79A25645B78002C5F7A /* FileAttachView.swift */,
 				9C29A79425645A42002C5F7A /* FileDropView.swift */,
 				9CCBE7B325F7F4550001443B /* ImageNameView.swift */,
+				9C4A45A9272346BD00BE3202 /* KlassDataSource.swift */,
+				9C4A45A72723464400BE3202 /* KlassView.swift */,
 				9C79BDAF226E368800796E93 /* LabelView.swift */,
 				9C310E67266ADB4B001C3A6E /* LevelView.swift */,
 				9CD358882293C42B00C9203F /* LinkView.swift */,
@@ -1132,8 +1138,10 @@
 				9C0B643923888D6700869FAA /* TagsMassChangeWindowController.swift in Sources */,
 				9C03629A239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
 				9C1BE27122EB940E006FDFEC /* ScriptWindowController.swift in Sources */,
+				9C4A45A82723464400BE3202 /* KlassView.swift in Sources */,
 				9C79BDB0226E368800796E93 /* LabelView.swift in Sources */,
 				9C1E0C9222E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
+				9C4A45AA272346BD00BE3202 /* KlassDataSource.swift in Sources */,
 				9CAE23F726D166CB0002FCCD /* LookupDataSource.swift in Sources */,
 				9C01E46624D74E1C00AEB4F6 /* BooleanView.swift in Sources */,
 				9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */,

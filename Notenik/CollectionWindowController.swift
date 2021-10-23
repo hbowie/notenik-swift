@@ -18,7 +18,7 @@ import NotenikLib
 import ZipArchive
 
 /// Controls a window showing a particular Collection of Notes.
-class CollectionWindowController: NSWindowController, AttachmentMasterController {
+class CollectionWindowController: NSWindowController, NSWindowDelegate, AttachmentMasterController {
     
     @IBOutlet var shareButton: NSButton!
     
@@ -158,6 +158,13 @@ class CollectionWindowController: NSWindowController, AttachmentMasterController
         shareButton.sendAction(on: .leftMouseDown)
         getWindowComponents()
         juggler.registerWindow(window: self)
+        window!.delegate = self
+    }
+    
+    func saveBeforeClose() {
+        if !pendingMod {
+            let _ = modIfChanged()
+        }
     }
     
     /// Let's grab the key components of the window and store them for easier access later

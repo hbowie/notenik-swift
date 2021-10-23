@@ -18,8 +18,11 @@ class CollectionWindow: NSWindow {
     var io: NotenikIO?
     
     override func close() {
+        if let wc = self.windowController as? CollectionWindowController {
+            wc.saveBeforeClose()
+        }
         if io != nil {
-            io?.closeCollection()
+            io!.closeCollection()
         }
         if let wc = self.windowController as? CollectionWindowController {
             wc.windowWillClose()
