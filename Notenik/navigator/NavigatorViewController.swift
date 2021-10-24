@@ -253,9 +253,11 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
         if folderName.count == 0 {
             juggler!.userRequestsNewCollection()
         } else {
-            let url = NotenikFolderList.shared.createNewFolderWithinICloudContainer(folderName: folderName)
+            let (url, errorMsg) = NotenikFolderList.shared.createNewFolderWithinICloudContainer(folderName: folderName)
             if url != nil {
                 juggler!.proceedWithSelectedURL(requestType: .new, fileURL: url!)
+            } else if errorMsg != nil {
+                communicateError(errorMsg!, alert: true)
             }
         }
     }

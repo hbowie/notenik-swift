@@ -1,7 +1,7 @@
 Notenik for Swift
 -----------------
 
-This is a note-taking application written in Swift. The initial platform is macOS. The executable Notenik application is available from the Mac App Store. Complete documentation is available as a separate [GitHub project](https://github.com/hbowie/notenik-KB). 
+This is a note-taking application written in Swift. The initial platform is macOS. The executable Notenik application is available from the Mac App Store. Complete documentation is available as a separate [GitHub project](https://github.com/hbowie/notenik-KB). The app has its own website at [Notenik.app](https://notenik.app).
 
 Some of the Notenik code is now broken out into separate packages. 
 

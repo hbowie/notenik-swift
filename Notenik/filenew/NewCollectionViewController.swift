@@ -72,6 +72,13 @@ class NewCollectionViewController: NSTabViewController {
             lastTab = tab.label
             return go
         case name:
+            if parentURL == nil
+                && locationVC.parentInICloud
+                && NotenikFolderList.shared.iCloudContainerURL == nil {
+                communicateError("iCloud Container is not available", alert: true)
+                locationVC.userSelectedParent.state = .on
+                return false
+            }
             if lastTab == location || parentURL == nil {
                 determineLocation()
             }
@@ -137,6 +144,7 @@ class NewCollectionViewController: NSTabViewController {
         collectionName = nameVC.collectionName
         collectionURL = nil
         guard collectionName.count > 0 else {
+            communicateError("You must specify a folder name before proceeding", alert: true)
             return
         }
         
@@ -155,10 +163,16 @@ class NewCollectionViewController: NSTabViewController {
     
     func newCollectionInICloud() -> Bool {
         
-        collectionURL = NotenikFolderList.shared.createNewFolderWithinICloudContainer(folderName: collectionName)
+        var errorMsg: String?
+        (collectionURL, errorMsg) = NotenikFolderList.shared.createNewFolderWithinICloudContainer(folderName: collectionName)
         if collectionURL == nil {
-            communicateError("Problems creating new folder in the iCloud container", alert: true)
-            return false
+            if errorMsg != nil {
+                communicateError(errorMsg!, alert: true)
+                return false
+            } else {
+                communicateError("Problems creating new folder in the iCloud container", alert: true)
+                return false
+            }
         }
         return true
     }

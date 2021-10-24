@@ -199,10 +199,15 @@ class CollectionJuggler: NSObject {
             communicateError("New Folder Name is blank", alert: true)
             return false
         }
-        let url = NotenikFolderList.shared.createNewFolderWithinICloudContainer(folderName: folderTrimmed)
+        let (url, errorMsg) = NotenikFolderList.shared.createNewFolderWithinICloudContainer(folderName: folderTrimmed)
         guard url != nil else {
-            communicateError("Problems creating new folder in the iCloud container", alert: true)
-            return false
+            if errorMsg == nil {
+                communicateError("Problems creating new folder in the iCloud container", alert: true)
+                return false
+            } else {
+                communicateError(errorMsg!, alert: true)
+                return false
+            }
         }
         proceedWithSelectedURL(requestType: .new, fileURL: url!)
         return true
