@@ -43,7 +43,13 @@ class ViewFactory {
         case NotenikConstants.imageNameCommon:
             return ImageNameView()
         case NotenikConstants.klassCommon:
-            return KlassView()
+            if let pickList = def.pickList as? KlassPickList {
+                return KlassView(pickList: pickList)
+            } else {
+                let defaultList = KlassPickList()
+                defaultList.setDefaults()
+                return KlassView(pickList: defaultList)
+            }
         case NotenikConstants.labelType:
             return LabelView()
         case NotenikConstants.levelCommon:

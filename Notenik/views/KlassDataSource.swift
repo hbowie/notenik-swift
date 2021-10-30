@@ -12,10 +12,15 @@ import NotenikLib
 
 class KlassDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     
-    var klassList = KlassList.shared
+    var klassList = KlassPickList()
     
     override init() {
         super.init()
+    }
+    
+    init(pickList: KlassPickList) {
+        super.init()
+        klassList = pickList
     }
     
     public var count: Int {
@@ -31,13 +36,18 @@ class KlassDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     }
     
     public func itemAt(index: Int) -> String? {
-        return klassList.itemAt(index: index)
+        return klassList.stringAt(index: index)
     }
     
     /// Returns the first item from the pop-up list that starts with
     /// the text the user has typed.
     func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
-        return klassList.startsWith(prefix: string)
+        let value = klassList.startsWith(prefix: string)
+        if value == nil {
+            return nil
+        } else {
+            return value!.value
+        }
     }
     
     /// Returns the index of the combo box item

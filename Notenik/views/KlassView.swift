@@ -17,7 +17,7 @@ import NotenikLib
 class KlassView: MacEditView {
     
     var klassField: NSComboBox!
-    let dataSource = KlassDataSource()
+    var dataSource = KlassDataSource()
     
     var view: NSView {
         return klassField
@@ -50,15 +50,15 @@ class KlassView: MacEditView {
         }
     }
     
-    init() {
-        buildView()
+    init(pickList: KlassPickList) {
+        buildView(pickList: pickList)
     }
     
     /// Build the ComboBox allowing the user to select a type of work.
-    func buildView() {
-
+    func buildView(pickList: KlassPickList) {
         klassField = NSComboBox(string: "")
         klassField.usesDataSource = true
+        dataSource = KlassDataSource(pickList: pickList)
         klassField.dataSource = dataSource
         klassField.delegate = dataSource
         klassField.completes = true
