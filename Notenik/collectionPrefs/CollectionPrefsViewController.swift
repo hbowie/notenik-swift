@@ -21,6 +21,7 @@ class CollectionPrefsViewController: NSViewController {
     
     var collection: NoteCollection?
     var windowController: CollectionPrefsWindowController?
+    var defsRemoved = DefsRemoved()
     
     @IBOutlet var collectionTitle:      NSTextField!
     @IBOutlet var fileExtComboBox:      NSComboBox!
@@ -82,10 +83,12 @@ class CollectionPrefsViewController: NSViewController {
     /// Pass needed info from the Collection Juggler
     func passCollectionPrefsRequesterInfo(
                          collection: NoteCollection,
-                         window: CollectionPrefsWindowController) {
+                         window: CollectionPrefsWindowController,
+                         defsRemoved: DefsRemoved) {
         
         self.collection = collection
         self.windowController = window
+        self.defsRemoved = defsRemoved
         setCollectionValues()
         makeStackViews()
 
@@ -339,6 +342,7 @@ class CollectionPrefsViewController: NSViewController {
         collection!.h1Titles = (h1TitlesCkBox.state == .on)
         collection!.streamlined = (streamlinedCkBox.state == .on)
         collection!.mathJax = (mathJaxCkBox.state == .on)
+        defsRemoved.clear()
         let dict = collection!.dict
         dict.unlock()
         for checkBox in fieldSelectors {
@@ -358,10 +362,12 @@ class CollectionPrefsViewController: NSViewController {
                 // Definition already in dictionary and requested
             } else if def != nil && checkBox.state == NSControl.StateValue.off {
                 // Removing definition
+                defsRemoved.append(def!)
                 _ = dict.removeDef(def!)
                 if checkBox.title == NotenikConstants.backlinks {
                     let def2 = dict.getDef(NotenikConstants.wikilinks)
                     if def2 != nil {
+                        defsRemoved.append(def2!)
                         _ = dict.removeDef(def2!)
                     }
                 }
@@ -369,6 +375,9 @@ class CollectionPrefsViewController: NSViewController {
         }
         if !collection!.otherFields {
             dict.lock()
+        }
+        if defsRemoved.count > 0 {
+            print("CollectionPrefsViewController: \(defsRemoved.count) field definitions removed")
         }
         application.stopModal(withCode: .OK)
         windowController!.close()

@@ -41,6 +41,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     var notenikIO:          NotenikIO?
     var preferredExt        = ""
+    var defsRemoved         = DefsRemoved()
     var crumbs:             NoteCrumbs?
     var webLinkFollowed     = false
     var windowNumber        = 0
@@ -208,11 +209,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard let noteIO = guardForCollectionAction() else { return }
         preferredExt = noteIO.collection!.preferredExt
-        
+        defsRemoved.clear()
+                
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
             if let collectionPrefsWindow = collectionPrefsController.window {
                 let collectionPrefsVC = collectionPrefsWindow.contentViewController as! CollectionPrefsViewController
-                collectionPrefsVC.passCollectionPrefsRequesterInfo(collection: noteIO.collection!, window: collectionPrefsController)
+                collectionPrefsVC.passCollectionPrefsRequesterInfo(collection: noteIO.collection!,
+                                                                   window: collectionPrefsController,
+                                                                   defsRemoved: defsRemoved)
                 let returnCode = application.runModal(for: collectionPrefsWindow)
                 if returnCode == NSApplication.ModalResponse.OK {
                     collectionPrefsModified()
@@ -238,10 +242,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///   - collection: The Collection whose prefs are being modified.
     ///   - window: The Collection Prefs window.
     func collectionPrefsModified() {
+        print("CollectionWindowController.collectionPrefsModified")
         guard let noteIO = guardForCollectionAction() else { return }
-        if noteIO.collection!.preferredExt != preferredExt {
-            if noteIO is FileIO {
-                let fileIO = noteIO as! FileIO
+        if noteIO is FileIO {
+            let fileIO = noteIO as! FileIO
+            if noteIO.collection!.preferredExt != preferredExt {
                 let renameOK = fileIO.changePreferredExt(from: preferredExt,
                                                          to: fileIO.collection!.preferredExt)
                 if !renameOK {
@@ -249,8 +254,47 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 }
             }
         }
+        removeFields()
         noteIO.persistCollectionInfo()
         reloadCollection(self)
+    }
+    
+    func removeFields() {
+        print("  - removeFields with count = \(defsRemoved.count)")
+        guard defsRemoved.count > 0 else { return }
+        print("\(defsRemoved.count) definitions removed")
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        crumbs!.refresh()
+        var notesToUpdate: [Note] = []
+        var (note, position) = noteIO.firstNote()
+        while note != nil {
+            var noteUpdated = false
+            for def in defsRemoved.list {
+                let field = note!.getField(def: def)
+                if field != nil {
+                    noteUpdated = true
+                }
+            }
+            if noteUpdated {
+                notesToUpdate.append(note!)
+            }
+            (note, position) = noteIO.nextNote(position)
+        }
+        for noteToUpdate in notesToUpdate {
+            let modNote = noteToUpdate.copy() as! Note
+            for def in defsRemoved.list {
+                let field = modNote.getField(def: def)
+                if field != nil {
+                    modNote.removeField(def: def)
+                }
+            }
+            _ = io!.modNote(oldNote: noteToUpdate, newNote: modNote)
+        }
+        finishBatchOperation()
+        if notesToUpdate.count > 0 {
+            reportNumberOfNotesUpdated(notesToUpdate.count)
+        }
     }
     
     /// The user has requested an export of this Collection. 

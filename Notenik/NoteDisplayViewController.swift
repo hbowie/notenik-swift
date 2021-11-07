@@ -34,6 +34,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         }
     }
     
+    var stackView: NSStackView!
+    var imageView: NSImageView!
     var webView: NoteDisplayWebView!
     var webConfig: WKWebViewConfiguration!
     
@@ -48,11 +50,20 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     var parms = DisplayParms()
     
     override func loadView() {
+        
+        stackView = NSStackView()
+        stackView.orientation = .vertical
+        
+        imageView = NSImageView()
+        stackView.addArrangedSubview(imageView)
+        
         webConfig = WKWebViewConfiguration()
         webView = NoteDisplayWebView(frame: .zero, configuration: webConfig)
         webView.uiDelegate = self
         webView.navigationDelegate = self
-        view = webView
+        stackView.addArrangedSubview(webView)
+        
+        view = stackView
     }
     
     override func viewDidLoad() {
@@ -87,6 +98,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         guard io != nil else { return }
         guard isViewLoaded else { return }
         guard let collection = io!.collection else { return }
+        
+        displayImage()
         
         parms.setFrom(note: note!)
         
@@ -153,7 +166,9 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         }
         
         var nav: WKNavigation?
-        nav = webView.loadHTMLString(html, baseURL: Bundle.main.bundleURL)
+        nav = webView.loadHTMLString(html,
+                                     baseURL: Bundle.main.bundleURL)
+//                                     baseURL: io!.collection!.fullPathURL)
         if nav == nil {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "NoteDisplayViewController",
@@ -168,6 +183,32 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         // This is just a convenient spot to request that we refresh our
         // collective idea of what today is. 
         DateUtils.shared.refreshToday()
+    }
+    
+    func displayImage() -> Bool {
+        guard let collection = io!.collection else { return false }
+        guard let lib = collection.lib else { return false }
+        guard let def = collection.imageNameFieldDef else { return false }
+        guard let imageField = note!.getField(def: def) else { return false }
+        let imageName = imageField.value.value
+        guard imageName.count > 0 else { return false }
+
+        let filesFolderResource = lib.ensureResource(type: .attachments)
+        guard filesFolderResource.isAvailable else { return false }
+        let filesURL = filesFolderResource.url
+        
+        var imageFullName = ""
+        for attachment in note!.attachments {
+            if attachment.suffix.lowercased() == imageName.lowercased() {
+                imageFullName = attachment.fullName
+            }
+        }
+        guard imageFullName.count > 0 else { return false }
+        
+        guard let imageURL = filesURL?.appendingPathComponent(imageFullName) else { return false }
+        guard let image = NSImage(contentsOf: imageURL) else { return false }
+        // imageView.image = image
+        return true
     }
     
     /// This method gets called when the user requests to open a link in a new window.

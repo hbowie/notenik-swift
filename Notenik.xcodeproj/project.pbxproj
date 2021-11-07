@@ -23,6 +23,7 @@
 		9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
 		9C055D4F2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
 		9C05BD6225AE461500EEC1D4 /* NavigatorFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C05BD6125AE461500EEC1D4 /* NavigatorFolder.swift */; };
+		9C06454E2730C4C7008943A5 /* DefsRemoved.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C06454D2730C4C7008943A5 /* DefsRemoved.swift */; };
 		9C07F7522436904F00460E14 /* NotenikUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 9C07F7512436904F00460E14 /* NotenikUtils */; };
 		9C097D5D259AB95A00834A42 /* MediumPubWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C097D5B259AB95A00834A42 /* MediumPubWindowController.swift */; };
 		9C09E1762248601D0046D50D /* notenik.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 9C09E1752248601D0046D50D /* notenik.iconset */; };
@@ -292,6 +293,7 @@
 		9C036299239AFAAB00C948DB /* MarkdownPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownPrefsViewController.swift; sourceTree = "<group>"; };
 		9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTabsViewController.swift; sourceTree = "<group>"; };
 		9C05BD6125AE461500EEC1D4 /* NavigatorFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorFolder.swift; sourceTree = "<group>"; };
+		9C06454D2730C4C7008943A5 /* DefsRemoved.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefsRemoved.swift; sourceTree = "<group>"; };
 		9C097D5B259AB95A00834A42 /* MediumPubWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumPubWindowController.swift; sourceTree = "<group>"; };
 		9C09E1752248601D0046D50D /* notenik.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = notenik.iconset; sourceTree = "<group>"; };
 		9C0B643423885E9900869FAA /* TagsMassChange.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagsMassChange.storyboard; sourceTree = "<group>"; };
@@ -878,6 +880,7 @@
 				9CF1193A225822870015AE91 /* CollectionPrefsWindowController.swift */,
 				9CF1193D225827650015AE91 /* CollectionPrefsViewController.swift */,
 				9C924C6F25CDB80A000DEAB3 /* FileExtensionPicker.swift */,
+				9C06454D2730C4C7008943A5 /* DefsRemoved.swift */,
 			);
 			path = collectionPrefs;
 			sourceTree = "<group>";
@@ -1197,6 +1200,7 @@
 				9C924C7025CDB80A000DEAB3 /* FileExtensionPicker.swift in Sources */,
 				9C097D5D259AB95A00834A42 /* MediumPubWindowController.swift in Sources */,
 				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
+				9C06454E2730C4C7008943A5 /* DefsRemoved.swift in Sources */,
 				9CDB5635259BAE9B00AB93A4 /* MediumPubViewController.swift in Sources */,
 				9CF435C724805C0500DD7C33 /* CountsWindowController.swift in Sources */,
 				9CF365812637688300EAE129 /* MicroBlogViewController.swift in Sources */,

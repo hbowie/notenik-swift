@@ -515,7 +515,10 @@ class CollectionJuggler: NSObject {
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
             if let collectionPrefsWindow = collectionPrefsController.window {
                 let collectionPrefsVC = collectionPrefsWindow.contentViewController as! CollectionPrefsViewController
-                collectionPrefsVC.passCollectionPrefsRequesterInfo(collection: io.collection!, window: collectionPrefsController)
+                let defsRemoved = DefsRemoved()
+                collectionPrefsVC.passCollectionPrefsRequesterInfo(collection: io.collection!,
+                                                                   window: collectionPrefsController,
+                                                                   defsRemoved: defsRemoved)
                 let returnCode = application.runModal(for: collectionPrefsWindow)
                 if returnCode == NSApplication.ModalResponse.OK {
                     return collectionPrefsModified(collection: io.collection!)
