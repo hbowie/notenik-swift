@@ -2258,6 +2258,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         setSortParm(.dateAdded)
     }
     
+    @IBAction func sortByDateModified(_ sender: Any) {
+        setSortParm(.dateModified)
+    }
+    
     @IBAction func sortReverse(_ sender: NSMenuItem) {
         guard let io = notenikIO else { return }
         if io.sortDescending {
