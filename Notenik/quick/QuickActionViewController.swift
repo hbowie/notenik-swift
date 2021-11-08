@@ -17,6 +17,8 @@ import NotenikUtils
 
 class QuickActionViewController: NSViewController, NSComboBoxDataSource {
     
+    let prefs = AppPrefs.shared
+    
     var juggler: CollectionJuggler?
     var window:  QuickActionWindowController!
     
@@ -38,6 +40,7 @@ class QuickActionViewController: NSViewController, NSComboBoxDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         todayFormatter.dateFormat = "yyyy-MM-dd EEEE"
+        shortcutComboBox.stringValue = prefs.lastShortcut
         loadFolders()
         shortcutComboBox.usesDataSource = true
         shortcutComboBox.dataSource = self
@@ -49,7 +52,7 @@ class QuickActionViewController: NSViewController, NSComboBoxDataSource {
     func restart() {
         loadFolders()
         shortcutComboBox.reloadData()
-        shortcutComboBox.stringValue = ""
+        shortcutComboBox.stringValue = prefs.lastShortcut
         shortcutComboBox.becomeFirstResponder()
         collectionWC = nil
         loadNoteTitles()
@@ -125,6 +128,7 @@ class QuickActionViewController: NSViewController, NSComboBoxDataSource {
         let str = sender.stringValue
         let i = indexForFolderShortcut(str)
         guard i != NSNotFound else { return }
+        prefs.lastShortcut = str
         guard let link = folders[i].link else { return }
         collectionWC = open(link: link)
         loadNoteTitles()
@@ -167,6 +171,7 @@ class QuickActionViewController: NSViewController, NSComboBoxDataSource {
     
     @IBAction func okToProceed(_ sender: Any) {
         let str = shortcutComboBox.stringValue
+        prefs.lastShortcut = str
         let i = indexForFolderShortcut(str)
         guard i != NSNotFound else { return }
         guard let link = folders[i].link else { return }
