@@ -55,6 +55,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
     let tagsMassChangeStoryboard:  NSStoryboard = NSStoryboard(name: "TagsMassChange", bundle: nil)
     let advSearchStoryboard:       NSStoryboard = NSStoryboard(name: "AdvSearch", bundle: nil)
+    let newFromKlassStoryboard:     NSStoryboard = NSStoryboard(name: "NewFromKlass", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -231,7 +232,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                               level: .fault,
                               message: "Couldn't get a Collection Prefs Window Controller!")
         }
-        
     }
     
     /// Let the calling class know that the user has completed modifications
@@ -242,7 +242,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///   - collection: The Collection whose prefs are being modified.
     ///   - window: The Collection Prefs window.
     func collectionPrefsModified() {
-        print("CollectionWindowController.collectionPrefsModified")
         guard let noteIO = guardForCollectionAction() else { return }
         if noteIO is FileIO {
             let fileIO = noteIO as! FileIO
@@ -260,9 +259,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     func removeFields() {
-        print("  - removeFields with count = \(defsRemoved.count)")
+
         guard defsRemoved.count > 0 else { return }
-        print("\(defsRemoved.count) definitions removed")
         guard let noteIO = guardForCollectionAction() else { return }
         
         crumbs!.refresh()
@@ -313,6 +311,78 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    /// Prepare a new note, with default fields and values taken from a class template
+    /// - Parameter sender: Requested via a menu item.
+    @IBAction func menuNewFromKlass(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        
+        guard let klassFieldDef = collection.klassFieldDef else {
+            communicateError("Collection does not define a Class field", alert: true)
+            return
+        }
+        
+        guard collection.klassDefs.count > 0 else {
+            communicateError("Collection does not have a class folder with templates", alert: true)
+            return
+        }
+        
+        if let newFromKlassController =
+            self.newFromKlassStoryboard.instantiateController(withIdentifier: "newFromKlassWC") as? NewFromClassWindowController {
+            newFromKlassController.showWindow(self)
+            newFromKlassController.noteIO = noteIO
+            newFromKlassController.collectionWC = self
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a New from Klass Window Controller!")
+        }
+    }
+    
+    /// Allow the user to add a new Class template.
+    /// - Parameter sender: Requested via a menu item.
+    @IBAction func newKlassTemplate(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        guard let klassFieldDef = collection.klassFieldDef else {
+            communicateError("Collection does not define a Class field", alert: true)
+            return
+        }
+        guard let lib = collection.lib else { return }
+        let klassFolderResource = lib.ensureResource(type: .klassFolder)
+        guard klassFolderResource.isAvailable else { return }
+        
+        let savePanel = NSSavePanel()
+        savePanel.title = "Save and Edit New Class Template"
+        savePanel.nameFieldLabel = "Class name: "
+        savePanel.directoryURL = klassFolderResource.url
+        print("Class folder URL: \(klassFolderResource.url!)")
+        savePanel.nameFieldStringValue = "classname." + collection.preferredExt
+        var allowedFileTypes: [String] = []
+        allowedFileTypes.append(collection.preferredExt)
+        savePanel.allowedFileTypes = allowedFileTypes
+        let userChoice = savePanel.runModal()
+        guard userChoice == .OK else { return }
+        guard let url = savePanel.url else { return }
+        let klassName = url.deletingPathExtension().lastPathComponent
+        var klassTemplate = ""
+        for def in collection.dict.list {
+            if def.fieldLabel.commonForm == klassFieldDef.fieldLabel.commonForm {
+                klassTemplate.append("\(def.fieldLabel.properForm): \(klassName)\n\n")
+            } else {
+                klassTemplate.append("\(def.fieldLabel.properForm): \n\n")
+            }
+        }
+        do {
+            try klassTemplate.write(to: url, atomically: true, encoding: .utf8)
+            NSWorkspace.shared.open(url)
+        } catch {
+            communicateError("Problems writing the file", alert: true)
+        }
+    }
+    
     func updateNote(title: String, bodyText: String) {
         guard title.count > 0 else {
             return
@@ -340,11 +410,21 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         body.append(bodyText)
         guard updatedNote.setBody(body) else { return }
         newNoteRequested = false
-        editVC!.populateFields(with: updatedNote)
+        populateEditFields(with: updatedNote)
         noteTabs!.tabView.selectTabViewItem(at: 1)
         guard let window = self.window else { return }
         guard let titleView = editVC?.titleView else { return }
         window.makeFirstResponder(titleView.view)
+    }
+    
+    func populateEditFields(with note: Note) {
+        if note.collection.klassFieldDef != nil {
+            let klassName = note.klass.value
+            if !klassName.isEmpty {
+                editVC!.configureEditView(noteIO: io!, klassName: klassName)
+            }
+        }
+        editVC!.populateFields(with: note)
     }
     
     func newNote(title: String, bodyText: String) {
@@ -355,6 +435,37 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         newNote = Note(collection: noteIO.collection!)
         _ = newNote!.setTitle(title)
         _ = newNote!.setBody(bodyText)
+        populateEditFields(with: newNote!)
+        noteTabs!.tabView.selectTabViewItem(at: 1)
+        guard let window = self.window else { return }
+        guard let titleView = editVC?.titleView else { return }
+        window.makeFirstResponder(titleView.view)
+    }
+    
+    func newNote(klassDef: KlassDef) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        newNoteRequested = true
+        newNote = Note(collection: noteIO.collection!)
+        let templateNote = klassDef.defaultValues!
+        _ = newNote!.setKlass(klassDef.name)
+        for (_, field) in templateNote.fields {
+            if !field.value.value.isEmpty {
+                switch field.def.fieldType.typeString {
+                case NotenikConstants.titleCommon:
+                    break
+                case NotenikConstants.dateModifiedCommon:
+                    break
+                case NotenikConstants.dateAddedCommon:
+                    break
+                default:
+                    _ = newNote!.setField(label: field.def.fieldLabel.properForm, value: field.value.value)
+                }
+            }
+        }
+        setFollowing()
+        editVC!.configureEditView(noteIO: noteIO, klassName: klassDef.name)
         editVC!.populateFields(with: newNote!)
         noteTabs!.tabView.selectTabViewItem(at: 1)
         guard let window = self.window else { return }
@@ -1143,7 +1254,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             if !setOK {
                 communicateError("Attempt to set link value for selected note failed!")
             }
-            editVC!.populateFields(with: selNote)
+            populateEditFields(with: selNote)
             let writeOK = noteIO.writeNote(selNote)
             if !writeOK {
                 communicateError("Attempted write of updated note failed!")
@@ -1264,7 +1375,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let notesInced = Sequencer.incrementSeq(io: noteIO, startingNote: note)
         logInfo(msg: "\(notesInced) Notes had their Seq values incremented")
         displayModifiedNote(updatedNote: note)
-        editVC!.populateFields(with: note)
+        populateEditFields(with: note)
         reloadViews()
         select(note: note, position: nil, source: .action, andScroll: true)
     }
@@ -1279,7 +1390,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let notesInced = Sequencer.incrementSeq(io: noteIO, startingNote: selNote, incMajor: true)
         logInfo(msg: "\(notesInced) Notes had their Seq values incremented")
         displayModifiedNote(updatedNote: selNote)
-        editVC!.populateFields(with: selNote)
+        populateEditFields(with: selNote)
         reloadViews()
         select(note: selNote, position: nil, source: .action, andScroll: true)
     }
@@ -1792,7 +1903,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                         _ = note.setField(label: imageDef.fieldLabel.commonForm, value: suffix)
                         _ = noteIO.writeNote(note)
                         displayModifiedNote(updatedNote: note)
-                        editVC!.populateFields(with: note)
+                        populateEditFields(with: note)
                         reloadViews()
                     default:
                         break
@@ -1827,26 +1938,34 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let outcome = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
         
-        let (selection, _) = notenikIO!.getSelectedNote()
-        
         newNoteRequested = true
         newNote = Note(collection: notenikIO!.collection!)
         
-        if selection != nil && selection!.hasSeq() {
-            let incSeq = SeqValue(selection!.seq.value)
-            incSeq.increment()
-            _ = newNote!.setSeq(incSeq.value)
-        }
+        setFollowing()
         
-        if selection != nil && selection!.hasLevel() {
-            _ = newNote!.setLevel(selection!.level.value)
-        }
-        
-        editVC!.populateFields(with: newNote!)
+        populateEditFields(with: newNote!)
         noteTabs!.tabView.selectTabViewItem(at: 1)
         guard let window = self.window else { return }
         guard let titleView = editVC?.titleView else { return }
         window.makeFirstResponder(titleView.view)
+    }
+    
+    func setFollowing() {
+        guard let io = notenikIO else { return }
+        guard io.collectionOpen else { return }
+        let (selection, _) = io.getSelectedNote()
+        guard let sel = selection else { return }
+        guard let following = newNote else { return }
+        
+        if following.collection.seqFieldDef != nil && sel.hasSeq() {
+            let incSeq = SeqValue(sel.seq.value)
+            incSeq.increment()
+            _ = following.setSeq(incSeq.value)
+        }
+        
+        if following.collection.levelFieldDef != nil && sel.hasLevel() && !following.hasLevel() {
+            _ = following.setLevel(sel.level.value)
+        }
     }
     
     /// Duplicate the Selected Note
@@ -1865,7 +1984,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let noteIO = guardForCollectionAction() else { return }
         newNoteRequested = true
         newNote = Note(collection: noteIO.collection!)
-        editVC!.populateFields(with: startingNote)
+        populateEditFields(with: startingNote)
         noteTabs!.tabView.selectLastTabViewItem(self)
     }
     
@@ -1883,7 +2002,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         incSeq.newChild()
         _ = newNote!.setSeq(incSeq.value)
         
-        editVC!.populateFields(with: newNote!)
+        populateEditFields(with: newNote!)
         noteTabs!.tabView.selectTabViewItem(at: 1)
         guard let window = self.window else { return }
         guard let titleView = editVC?.titleView else { return }
@@ -1974,8 +2093,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     @IBAction func discardEdits(_ sender: Any) {
         
         guard io != nil && io!.collectionOpen else { return }
-        
+        pendingMod = false
+        pendingEdits = false
         if newNoteRequested {
+            newNoteRequested = false
             let (note, position) = io!.firstNote()
             crumbs!.refresh()
             select(note: note, position: position, source: .action, andScroll: true)
@@ -1984,9 +2105,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             guard note != nil else { return }
             select(note: note, position: nil, source: .action, andScroll: true)
         }
-        newNoteRequested = false
-        pendingMod = false
-        
         noteTabs!.tabView.selectFirstTabViewItem(nil)
     }
     
@@ -2023,7 +2141,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             pendingEdits = false
         }
         if outcome == .add || outcome == .deleteAndAdd || outcome == .modify {
-            editVC!.populateFields(with: note!)
+            populateEditFields(with: note!)
         }
         if outcome == .add || outcome == .deleteAndAdd {
             reloadViews()

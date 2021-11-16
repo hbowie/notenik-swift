@@ -558,8 +558,9 @@ class CollectionJuggler: NSObject {
     /// Adjust all the open windows to reflect any changes in the UI appearance.
     func adjustEditWindows() {
         for window in windows {
+            guard let noteIO = window.io else { continue }
             window.editVC!.containerViewBuilt = false
-            window.editVC!.makeEditView()
+            window.editVC!.configureEditView(noteIO: noteIO, klassName: nil)
             window.editVC!.populateFieldsWithSelectedNote()
         }
     }

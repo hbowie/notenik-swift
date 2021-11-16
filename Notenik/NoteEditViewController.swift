@@ -30,6 +30,7 @@ class NoteEditViewController: NSViewController {
     var initialViewLoaded  = false
     var containerViewBuilt = false
     
+    var editDefs:  [FieldDefinition] = []
     var editViews: [MacEditView] = []
     var grid:      [[NSView]] = []
     var gridView:  NSGridView!
@@ -62,7 +63,7 @@ class NoteEditViewController: NSViewController {
             notenikIO = newValue
             containerViewBuilt = false
             guard notenikIO != nil && notenikIO!.collection != nil else { return }
-            makeEditView()
+            configureEditView(noteIO: notenikIO!, klassName: nil)
             modWhenChanged = ModWhenChanged(io: notenikIO!)
         }
     }
@@ -70,22 +71,32 @@ class NoteEditViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialViewLoaded = true
-        makeEditView()
+        guard notenikIO != nil && notenikIO!.collection != nil else { return }
+        configureEditView(noteIO: notenikIO!, klassName: nil)
     }
     
-    /// Let's build the grid view to be used for editing the contents of a note
-    func makeEditView() {
+    func configureEditView(noteIO: NotenikIO, klassName: String? = nil) {
+        guard initialViewLoaded else { return }
+        guard let collection = noteIO.collection else { return }
+        containerViewBuilt = false
+        var fieldDefs = collection.dict.list
+        if collection.klassFieldDef != nil && klassName != nil && !klassName!.isEmpty {
+            for klass in collection.klassDefs {
+                if klass.name == klassName! {
+                    fieldDefs = klass.fieldDefs
+                    break
+                }
+            }
+        }
+        editDefs = []
+        for def in fieldDefs {
+            if def.fieldType.userEditable {
+                editDefs.append(def)
+            }
+        }
         
-        // Make sure we have everything we need
-        guard let collection = io?.collection else { return }
-        guard io!.collectionOpen else { return }
-        guard initialViewLoaded && !containerViewBuilt else { return }
-        
-        let dict = collection.dict
-        let defs = dict.list
-        
-        notenikIO!.pickLists.statusConfig = collection.statusConfig
-        notenikIO!.pickLists.levelConfig = collection.levelConfig
+        noteIO.pickLists.statusConfig = collection.statusConfig
+        noteIO.pickLists.levelConfig = collection.levelConfig
         
         // Let's build a two-dimensional array of views to be displayed in the grid
 
@@ -99,7 +110,7 @@ class NoteEditViewController: NSViewController {
         imageNameView = nil
         
         // Build the label and value views for each field in the dictionary
-        for def in defs {
+        for def in editDefs {
             makeEditRow(collection: collection, def: def)
         }
         
@@ -185,7 +196,12 @@ class NoteEditViewController: NSViewController {
         guard initialViewLoaded && containerViewBuilt else { return }
         
         selectedNote = note
-        
+        if io!.collection!.klassFieldDef != nil {
+            let klassName = note.klass.value
+            if !klassName.isEmpty {
+                configureEditView(noteIO: io!, klassName: klassName)
+            }
+        }
         populateFieldsWithSelectedNote()
     }
     
@@ -198,12 +214,8 @@ class NoteEditViewController: NSViewController {
     
     /// Populate the Edit View fields with values from the given Note
     func populateFields(with note: Note) {
-        let dict = note.collection.dict
-        let defs = dict.list
         var i = 0
-        for def in defs {
-            guard def.fieldType.typeString != NotenikConstants.backlinksCommon else { continue }
-            guard def.fieldType.typeString != NotenikConstants.wikilinksCommon else { continue }
+        for def in editDefs {
             let field = note.getField(def: def)
             var fieldView = editViews[i]
             if fieldView is ImageNameView {
@@ -272,6 +284,7 @@ class NoteEditViewController: NSViewController {
         var outNote: Note?
         (outcome, outNote) = modWhenChanged!.modIfChanged(newNoteRequested: newNoteRequested,
                                                           startingNote: inNote!,
+                                                          editDefs: editDefs,
                                                           modViews: editViews,
                                                           statusConfig: inNote!.collection.statusConfig,
                                                           levelConfig: inNote!.collection.levelConfig)

@@ -99,7 +99,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         guard isViewLoaded else { return }
         guard let collection = io!.collection else { return }
         
-        displayImage()
+        _ = displayImage()
         
         parms.setFrom(note: note!)
         

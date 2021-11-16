@@ -20,6 +20,7 @@ class CustomURLActor {
     
     let folders = NotenikFolderList.shared
     let juggler = CollectionJuggler.shared
+    let multi   = MultiFileIO.shared
     
     init() {
         
@@ -204,7 +205,7 @@ class CustomURLActor {
     func openCollection(shortcut: String?, path: String?) -> CollectionWindowController? {
         var link: NotenikLink?
         if shortcut != nil && shortcut!.count > 0 {
-            link = folders.getFolderFor(shortcut: shortcut!)
+            link = getFolderForShortcut(shortcut!)
         }
         if link == nil && path != nil {
             link = folders.getFolderFor(path: path!)
@@ -218,6 +219,16 @@ class CustomURLActor {
         }
         guard let collectionLink = link else { return nil }
         return juggler.open(link: collectionLink)
+    }
+    
+    func getFolderForShortcut(_ shortcut: String) -> NotenikLink? {
+        
+        let multiEntry = multi.entries[shortcut]
+        if multiEntry == nil {
+            return folders.getFolderFor(shortcut: shortcut)
+        } else {
+            return multiEntry!.link
+        }
     }
     
     /// Send an informational message to the log.

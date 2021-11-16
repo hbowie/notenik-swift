@@ -38,8 +38,8 @@ class CollectionPrefsWindowController: NSWindowController {
             return
         }
         collectionPrefsViewController!.passCollectionPrefsRequesterInfo(collection: collection,
-                                                                        window: self,
-                                                                        defsRemoved: defsRemoved)
+                                              window: self,
+                                              defsRemoved: defsRemoved)
     }
 
 }
