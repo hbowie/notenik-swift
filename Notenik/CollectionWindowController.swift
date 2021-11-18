@@ -152,6 +152,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             }
             
             buildReportsActionMenu()
+            
+            if notenikIO != nil {
+                if let collection = notenikIO!.collection {
+                    if collection.duplicates > 0 {
+                        communicateError("Duplicates found within the Collection folder -- see Log for details", alert: true)
+                    }
+                }
+            }
         }
     }
 
