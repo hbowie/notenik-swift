@@ -24,8 +24,8 @@ class NoteListViewController:   NSViewController,
     @IBOutlet var tableView: NSTableView!
     
     var shortcutMenu: NSMenu!
-    var newChildSepIndex = -1
     var newChildIndex = -1
+    var newFromKlassIndex = -1
     
     var window: CollectionWindowController? {
         get {
@@ -65,29 +65,37 @@ class NoteListViewController:   NSViewController,
         
         // Setup the popup menu for rows in the list. 
         shortcutMenu = NSMenu()
-        shortcutMenu.addItem(NSMenuItem(title: "Duplicate", action: #selector(duplicateItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Launch Link", action: #selector(launchLinkForItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Share...", action: #selector(shareItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Copy Notenik URL", action: #selector(copyItemInternalURL(_:)), keyEquivalent: ""))
+        shortcutMenu.addItem(NSMenuItem.separator())
+        shortcutMenu.addItem(NSMenuItem(title: "Duplicate", action: #selector(duplicateItem(_:)), keyEquivalent: ""))
         tableView.menu = shortcutMenu
     }
     
     func modShortcutMenuForCollection() {
         
-        if newChildIndex >= 0 {
-            shortcutMenu.removeItem(at: newChildIndex)
-            newChildIndex = -1
+        if newFromKlassIndex >= 0 {
+            if shortcutMenu.numberOfItems > newFromKlassIndex {
+                shortcutMenu.removeItem(at: newFromKlassIndex)
+            }
+            newFromKlassIndex = -1
         }
-        if newChildSepIndex >= 0 {
-            shortcutMenu.removeItem(at: newChildSepIndex)
-            newChildSepIndex = -1
+        if newChildIndex >= 0 {
+            if shortcutMenu.numberOfItems > newChildIndex {
+                shortcutMenu.removeItem(at: newChildIndex)
+            }
+            newChildIndex = -1
         }
 
         if notenikIO!.collection!.seqFieldDef != nil && notenikIO!.collection!.levelFieldDef != nil {
-            newChildSepIndex = shortcutMenu.numberOfItems
-            shortcutMenu.addItem(NSMenuItem.separator())
             newChildIndex = shortcutMenu.numberOfItems
             shortcutMenu.addItem(NSMenuItem(title: "New Child", action: #selector(newChildForItem(_:)), keyEquivalent: ""))
+        }
+        
+        if notenikIO!.collection!.klassDefs.count > 0 {
+            newFromKlassIndex = shortcutMenu.numberOfItems
+            shortcutMenu.addItem(withTitle: "New from Class...", action: #selector(newFromKlass(_:)), keyEquivalent: "")
         }
     }
     
@@ -97,6 +105,16 @@ class NoteListViewController:   NSViewController,
         guard row >= 0 else { return }
         guard let clickedNote = notenikIO?.getNote(at: row) else { return }
         collectionWindowController!.newChild(parent: clickedNote)
+    }
+    
+    @objc private func newFromKlass(_ sender: AnyObject) {
+        guard collectionWindowController != nil else { return }
+        let row = tableView.clickedRow
+        var clickedNote: Note?
+        if row >= 0 {
+            clickedNote = notenikIO!.getNote(at: row)
+        }
+        collectionWindowController!.newFromKlass(currentNote: clickedNote)
     }
     
     /// Respond to a contextual menu selection to duplicate the clicked Note.

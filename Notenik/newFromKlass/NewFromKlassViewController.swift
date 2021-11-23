@@ -34,7 +34,6 @@ class NewFromKlassViewController: NSViewController {
             io = newValue
             collection = io?.collection
             if collection != nil {
-                let klassFieldDef = collection!.klassFieldDef
                 klassComboBox.removeAllItems()
                 for klassDef in collection!.klassDefs {
                     klassComboBox.addItem(withObjectValue: klassDef.name)

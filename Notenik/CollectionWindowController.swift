@@ -325,7 +325,34 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
         
-        guard let klassFieldDef = collection.klassFieldDef else {
+        guard collection.klassFieldDef != nil else {
+            communicateError("Collection does not define a Class field", alert: true)
+            return
+        }
+        
+        guard collection.klassDefs.count > 0 else {
+            communicateError("Collection does not have a class folder with templates", alert: true)
+            return
+        }
+        
+        if let newFromKlassController =
+            self.newFromKlassStoryboard.instantiateController(withIdentifier: "newFromKlassWC") as? NewFromClassWindowController {
+            newFromKlassController.showWindow(self)
+            newFromKlassController.noteIO = noteIO
+            newFromKlassController.collectionWC = self
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a New from Klass Window Controller!")
+        }
+    }
+    
+    public func newFromKlass(currentNote: Note?) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        
+        guard collection.klassFieldDef != nil else {
             communicateError("Collection does not define a Class field", alert: true)
             return
         }
