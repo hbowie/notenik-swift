@@ -95,7 +95,6 @@ class NewWithOptionsViewController: NSViewController {
     }
     
     func setCurrentNote(_ note: Note) {
-        print("setCurrentNote to Note titled \(note.title.value)")
         currKlass = note.klass
         if !currKlass!.value.isEmpty {
             klassComboBox.stringValue = currKlass!.value
@@ -107,16 +106,11 @@ class NewWithOptionsViewController: NSViewController {
         }
         currSeq = note.seq
         
-        print("  - Class = \(currKlass!.value)")
-        print("  - Level = \(currLevel!.value)")
-        print("  - Seq = \(currSeq!.value)")
-        
         adjustSeq()
     }
 
     
     @IBAction func levelSelected(_ sender: Any) {
-        print("Level Selected, index = \(levelPopup.indexOfSelectedItem), value = \(levelPopup.stringValue)")
         adjustSeq()
     }
     
