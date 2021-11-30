@@ -25,7 +25,7 @@ class NoteListViewController:   NSViewController,
     
     var shortcutMenu: NSMenu!
     var newChildIndex = -1
-    var newFromKlassIndex = -1
+    var newWithOptionsIndex = -1
     
     var window: CollectionWindowController? {
         get {
@@ -75,28 +75,35 @@ class NoteListViewController:   NSViewController,
     
     func modShortcutMenuForCollection() {
         
-        if newFromKlassIndex >= 0 {
-            if shortcutMenu.numberOfItems > newFromKlassIndex {
-                shortcutMenu.removeItem(at: newFromKlassIndex)
+        if newWithOptionsIndex >= 0 {
+            if shortcutMenu.numberOfItems > newWithOptionsIndex {
+                shortcutMenu.removeItem(at: newWithOptionsIndex)
             }
-            newFromKlassIndex = -1
+            newWithOptionsIndex = -1
         }
+        
         if newChildIndex >= 0 {
             if shortcutMenu.numberOfItems > newChildIndex {
                 shortcutMenu.removeItem(at: newChildIndex)
             }
             newChildIndex = -1
         }
+        
+        guard let collection = notenikIO?.collection else { return }
 
-        if notenikIO!.collection!.seqFieldDef != nil && notenikIO!.collection!.levelFieldDef != nil {
+        if collection.seqFieldDef != nil && collection.levelFieldDef != nil {
             newChildIndex = shortcutMenu.numberOfItems
             shortcutMenu.addItem(NSMenuItem(title: "New Child", action: #selector(newChildForItem(_:)), keyEquivalent: ""))
         }
         
-        if notenikIO!.collection!.klassDefs.count > 0 {
-            newFromKlassIndex = shortcutMenu.numberOfItems
-            shortcutMenu.addItem(withTitle: "New from Class...", action: #selector(newFromKlass(_:)), keyEquivalent: "")
+        if (collection.klassFieldDef != nil
+               && collection.klassDefs.count > 0)
+                || collection.levelFieldDef != nil
+                || collection.seqFieldDef != nil {
+            newWithOptionsIndex = shortcutMenu.numberOfItems
+            shortcutMenu.addItem(withTitle: "New with Options...", action: #selector(newWithOptions(_:)), keyEquivalent: "")
         }
+    
     }
     
     @objc private func newChildForItem(_ sender: AnyObject) {
@@ -107,14 +114,14 @@ class NoteListViewController:   NSViewController,
         collectionWindowController!.newChild(parent: clickedNote)
     }
     
-    @objc private func newFromKlass(_ sender: AnyObject) {
+    @objc private func newWithOptions(_ sender: AnyObject) {
         guard collectionWindowController != nil else { return }
         let row = tableView.clickedRow
         var clickedNote: Note?
         if row >= 0 {
             clickedNote = notenikIO!.getNote(at: row)
         }
-        collectionWindowController!.newFromKlass(currentNote: clickedNote)
+        collectionWindowController!.newWithOptions(currentNote: clickedNote)
     }
     
     /// Respond to a contextual menu selection to duplicate the clicked Note.

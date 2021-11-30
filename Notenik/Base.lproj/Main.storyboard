@@ -442,6 +442,12 @@
                                                 <action selector="newNote:" target="Ady-hI-5gd" id="0DJ-E7-uxz"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="New Note w/Options..." keyEquivalent="n" id="Fuk-wZ-arQ">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="menuNewNoteWithOptions:" target="Ady-hI-5gd" id="oJ2-Yq-yzk"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Delete Note" id="0Jv-3J-PYF" userLabel="Delete Note">
                                             <string key="keyEquivalent" base64-UTF8="YES">
 CA
@@ -473,12 +479,6 @@ CA
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="JXX-fc-Ecy"/>
-                                        <menuItem title="New Note w/Class..." keyEquivalent="n" id="Fuk-wZ-arQ">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="menuNewFromKlass:" target="Ady-hI-5gd" id="GHq-3y-kSi"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="New Class Template..." id="iWq-lm-aYH">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -520,8 +520,8 @@ CA
                                                 <action selector="setLocalLink:" target="Ady-hI-5gd" id="VcW-BQ-9uq"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Wikipedia Link" id="KZr-6j-yqt">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Wikipedia Link" keyEquivalent="l" id="KZr-6j-yqt">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="wikipediaLink:" target="Ady-hI-5gd" id="eeI-td-w2p"/>
                                             </connections>
@@ -1214,13 +1214,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="250" height="105"/>
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="79"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="248" height="88"/>
+                                    <rect key="frame" x="1" y="1" width="148" height="62"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
-                                            <rect key="frame" x="0.0" y="0.0" width="1157" height="63"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1157" height="37"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1528,7 +1528,7 @@ CA
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="89" width="248" height="15"/>
+                                    <rect key="frame" x="1" y="63" width="148" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
@@ -1565,13 +1565,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="295"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="288"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="293"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="286"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="477" height="293"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="477" height="286"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

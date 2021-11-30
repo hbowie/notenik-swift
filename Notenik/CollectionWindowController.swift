@@ -55,7 +55,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
     let tagsMassChangeStoryboard:  NSStoryboard = NSStoryboard(name: "TagsMassChange", bundle: nil)
     let advSearchStoryboard:       NSStoryboard = NSStoryboard(name: "AdvSearch", bundle: nil)
-    let newFromKlassStoryboard:     NSStoryboard = NSStoryboard(name: "NewFromKlass", bundle: nil)
+    let newWithOptionsStoryboard:     NSStoryboard = NSStoryboard(name: "NewWithOptions", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -321,52 +321,52 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     /// Prepare a new note, with default fields and values taken from a class template
     /// - Parameter sender: Requested via a menu item.
-    @IBAction func menuNewFromKlass(_ sender: Any) {
+    @IBAction func menuNewNoteWithOptions(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
         
-        guard collection.klassFieldDef != nil else {
-            communicateError("Collection does not define a Class field", alert: true)
+        let errorMsg = NewWithOptionsWindowController.checkEligibility(collection: collection)
+        guard errorMsg.isEmpty else {
+            communicateError(errorMsg, alert: true)
             return
         }
         
-        guard collection.klassDefs.count > 0 else {
-            communicateError("Collection does not have a class folder with templates", alert: true)
-            return
-        }
-        
-        if let newFromKlassController =
-            self.newFromKlassStoryboard.instantiateController(withIdentifier: "newFromKlassWC") as? NewFromClassWindowController {
-            newFromKlassController.showWindow(self)
-            newFromKlassController.noteIO = noteIO
-            newFromKlassController.collectionWC = self
+        let (note, _) = noteIO.getSelectedNote()
+        if let newWithOptionsController =
+            self.newWithOptionsStoryboard.instantiateController(withIdentifier: "newWithOptionsWC") as? NewWithOptionsWindowController {
+            newWithOptionsController.showWindow(self)
+            newWithOptionsController.noteIO = noteIO
+            newWithOptionsController.collectionWC = self
+            if note != nil {
+                newWithOptionsController.setCurrentNote(note!)
+            }
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionWindowController",
                               level: .fault,
-                              message: "Couldn't get a New from Klass Window Controller!")
+                              message: "Couldn't get a New With Options Window Controller!")
         }
     }
     
-    public func newFromKlass(currentNote: Note?) {
+    public func newWithOptions(currentNote: Note?) {
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
         
-        guard collection.klassFieldDef != nil else {
-            communicateError("Collection does not define a Class field", alert: true)
+        let errorMsg = NewWithOptionsWindowController.checkEligibility(collection: collection)
+        guard errorMsg.isEmpty else {
+            communicateError(errorMsg, alert: true)
             return
         }
         
-        guard collection.klassDefs.count > 0 else {
-            communicateError("Collection does not have a class folder with templates", alert: true)
-            return
-        }
-        
-        if let newFromKlassController =
-            self.newFromKlassStoryboard.instantiateController(withIdentifier: "newFromKlassWC") as? NewFromClassWindowController {
-            newFromKlassController.showWindow(self)
-            newFromKlassController.noteIO = noteIO
-            newFromKlassController.collectionWC = self
+        let (note, _) = noteIO.getSelectedNote()
+        if let newWithOptionsController =
+            self.newWithOptionsStoryboard.instantiateController(withIdentifier: "newWithOptionsWC") as? NewWithOptionsWindowController {
+            newWithOptionsController.showWindow(self)
+            newWithOptionsController.noteIO = noteIO
+            newWithOptionsController.collectionWC = self
+            if note != nil {
+                newWithOptionsController.setCurrentNote(note!)
+            }
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionWindowController",
@@ -393,7 +393,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         savePanel.title = "Save and Edit New Class Template"
         savePanel.nameFieldLabel = "Class name: "
         savePanel.directoryURL = klassFolderResource.url
-        print("Class folder URL: \(klassFolderResource.url!)")
         savePanel.nameFieldStringValue = "classname." + collection.preferredExt
         var allowedFileTypes: [String] = []
         allowedFileTypes.append(collection.preferredExt)
@@ -506,6 +505,87 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let window = self.window else { return }
         guard let titleView = editVC?.titleView else { return }
         window.makeFirstResponder(titleView.view)
+    }
+    
+    func newNote(title: String? = nil,
+                 bodyText: String? = nil,
+                 klassName: String? = nil,
+                 level: String? = nil,
+                 seq:   String? = nil) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        
+        newNoteRequested = true
+        newNote = Note(collection: noteIO.collection!)
+        
+        if title != nil && !title!.isEmpty {
+            _ = newNote!.setTitle(title!)
+        }
+        
+        applyKlassTemplate(noteIO: noteIO, klassName: klassName)
+        
+        if level != nil && !level!.isEmpty && collection.levelFieldDef != nil {
+            _ = newNote!.setLevel(level!)
+        }
+        
+        if seq != nil && !seq!.isEmpty && collection.seqFieldDef != nil {
+            _ = newNote!.setSeq(seq!)
+        }
+        
+        if bodyText != nil && !bodyText!.isEmpty {
+            _ = newNote!.setBody(bodyText!)
+        }
+        
+        if level == nil && seq == nil {
+            setFollowing()
+        }
+        editVC!.configureEditView(noteIO: noteIO, klassName: klassName)
+        editVC!.populateFields(with: newNote!)
+        noteTabs!.tabView.selectTabViewItem(at: 1)
+        guard let window = self.window else { return }
+        guard let titleView = editVC?.titleView else { return }
+        window.makeFirstResponder(titleView.view)
+
+    }
+    
+    func applyKlassTemplate(noteIO: NotenikIO, klassName: String?) {
+        guard let name = klassName else { return }
+        guard !name.isEmpty else { return }
+        guard let collection = noteIO.collection else { return }
+        
+        _ = newNote!.setKlass(name)
+        let klassDefs = collection.klassDefs
+        
+        var defFound = false
+        var klassDef: KlassDef?
+        for nextDef in klassDefs {
+            if name == nextDef.name {
+                collection.lastNewKlass = name
+                defFound = true
+                klassDef = nextDef
+                break
+            }
+        }
+        
+        guard defFound else { return }
+        
+        let templateNote = klassDef!.defaultValues!
+
+        for (_, field) in templateNote.fields {
+            if !field.value.value.isEmpty {
+                switch field.def.fieldType.typeString {
+                case NotenikConstants.titleCommon:
+                    break
+                case NotenikConstants.dateModifiedCommon:
+                    break
+                case NotenikConstants.dateAddedCommon:
+                    break
+                default:
+                    _ = newNote!.setField(label: field.def.fieldLabel.properForm, value: field.value.value)
+                }
+            }
+        }
     }
     
     // -----------------------------------------------------------
@@ -1944,8 +2024,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                         break
                     }
                 }
-                
-                
             }
             
         } else {
@@ -1988,6 +2066,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     func setFollowing() {
         guard let io = notenikIO else { return }
         guard io.collectionOpen else { return }
+        guard let collection = io.collection else { return }
+        guard collection.seqFieldDef != nil else { return }
         let (selection, _) = io.getSelectedNote()
         guard let sel = selection else { return }
         guard let following = newNote else { return }
