@@ -127,6 +127,7 @@ class NewCollectionViewController: NSTabViewController {
         dialog.allowsMultipleSelection = false
         dialog.canChooseDirectories    = true
         dialog.canChooseFiles          = false
+        dialog.canCreateDirectories    = true
         
         let response = dialog.runModal()
          
