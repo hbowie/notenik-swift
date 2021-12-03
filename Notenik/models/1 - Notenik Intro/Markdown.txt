@@ -1,0 +1,23 @@
+Title:  Markdown
+
+Tags:   links, markdown
+
+Seq:    9
+
+Body: 
+
+Within the Body of each Note, you can use the Markdown formatting syntax to add formatting to your Note. The formatting will be visible when you return to the `Display` tab. 
+
+Almost all of the [Markdown standard syntax][df] is available, along with many [common extensions][mg] that have been developed over the years. 
+
+[df]: https://daringfireball.net/projects/markdown/syntax 
+
+[mg]: https://www.markdownguide.org/extended-syntax/
+
+Markdown allows an author to embed hyperlinks into their text. When you see such a link on the Display tab, you have a couple of options. 
+
++ Simply click on the link, and the Note you're seeing on the Display tab will be replaced by the linked web page, assuming it is accessible. To get back to the display of your Note, hit the `Refresh` button on the Toolbar (or the back button, for that matter). 
+
++ Control click on the linked text, and select `Open Link in New Window` to see the link opened in your Web browser (Safari, Chrome, etc.). 
+
+

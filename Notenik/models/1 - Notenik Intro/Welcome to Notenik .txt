@@ -1,0 +1,15 @@
+Title:  Welcome to Notenik!
+
+Tags:   welcome
+
+Link:   https://notenik.app
+
+Seq:    1
+
+Body: 
+
+Thanks for downloading and installing my Notenik app!
+
+This Collection of Notes can serve as a brief introduction to the application, but it can also serve as your first working Collection of Notes, if you would like. Feel free to modify it in any way that suits your needs or your interests. 
+
+When you're ready to move to the next Note, just click on the `Next` link below.

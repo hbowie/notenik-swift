@@ -1,0 +1,15 @@
+Title:  Collections and Fields
+
+Tags:   collections, fields
+
+Seq:    2
+
+Body: 
+
+Before exploring Notenik's User Interface with you, I'd like to briefly touch on a couple of ways in which Notenik may be different from other note-taking apps you might be used to. 
+
++ **Collections** -- Rather than assuming that you want all of your Notes to be stored in a single repository, Notenik groups your Notes into Collections. You can have as many or as few Collections as you would like, and each Collection may be stored anywhere you like. 
+
++ **Fields** -- Each Note has multiple fields, of different types. At a minimum, a Note will have a Title and a Body. But many other field names, and field types, are possible. And each different Collection of Notes can have a different set of fields defined and available for each Note in that Collection.
+
+So, with those two important concepts in our hip pocket, let's begin exploring the Notenik user interface. 
