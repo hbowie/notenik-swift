@@ -217,6 +217,9 @@ class NoteEditViewController: NSViewController {
         var i = 0
         for def in editDefs {
             let field = note.getField(def: def)
+            guard i < editViews.count else {
+                continue
+            }
             var fieldView = editViews[i]
             if fieldView is ImageNameView {
                 let imageNameView = fieldView as! ImageNameView
