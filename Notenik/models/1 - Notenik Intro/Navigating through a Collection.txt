@@ -4,6 +4,10 @@ Tags:   navigation, search
 
 Seq:    6
 
+Image Name: screenshot
+
+Image Caption: Searching for 'left side'
+
 Body: 
 
 If you look beneath the `Nav` menu, you'll find a number of ways to navigate through a Collection, in addition to scrolling and clicking within the List tab. 
@@ -22,4 +26,4 @@ If you look beneath the `Nav` menu, you'll find a number of ways to navigate thr
 
 Again, feel free to take advantage of the keyboard shortcuts associated with each of these menu options.
 
-Also, note that the three leftmost buttons on the toolbar allow you to navigate home (to the first Note), to the prior Note, and to the next Note. 
+Also, note that the three leftmost buttons on the toolbar allow you to navigate home (to the first Note), to the prior Note, and to the next Note.

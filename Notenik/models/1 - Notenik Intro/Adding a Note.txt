@@ -1,3 +1,13 @@
 Title:  Adding a Note
 
+Tags:   notes
+
 Seq:    13
+
+Body: 
+
+To add a new Note, click on the `+` (plus sign) in the toolbar, or select `New Note` beneath the `Note` menu. 
+
+You will then be taken to the `Edit` tab, where you can enter the Title of the new Note, along with other fields. 
+
+Each Note in a Collection must have its own unique Title, so be sure and enter something that will differentiate your new Note from other Notes in the same Collection. 

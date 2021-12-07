@@ -4,6 +4,8 @@ Tags:   list, sort
 
 Seq:    5
 
+Image Name: screenshot
+
 Body: 
 
 Beneath the Toolbar (which we'll talk about later), you'll see that the Collection window is divided into two sides. The left side shows all of the Notes in your Collection, while the right side focuses on one Note at a time. 
@@ -14,4 +16,4 @@ If you look beneath the `Collection` menu, and then beneath the `Sort` menu, you
 
 Note that a number of different Sort options are available, but that the sorting is not infinitely configurable. You can't, for example, simply click on a column heading to sort by that particular field. This is simply a design choice: one that makes Notenik more flexible than the typical note-taking application, but less flexible than a full-fledged database or spreadsheet app. 
 
-You'll see that clicking on a row on the List tab will bring up the corresponding Note on the right. 
+You'll see that clicking on a row on the List tab will bring up the corresponding Note on the right.

@@ -4,6 +4,8 @@ Tags:   fields, prefs, streamlined reading
 
 Seq:    3
 
+Image Name: screenshot
+
 Body: 
 
 Much of the power behind Notenik is available through its menu structure. As you explore Notenik's menus, be sure and pay attention to the keyboard shortcuts that are available for many of the commands. As you make increasing use of Notenik, you'll find that these shortcuts can become real time-savers. 

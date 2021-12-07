@@ -6,5 +6,9 @@ Link: <link>
 
 Seq: <seq> 
 
+Image Name: 
+
+Image Caption: 
+
 Body:  
 

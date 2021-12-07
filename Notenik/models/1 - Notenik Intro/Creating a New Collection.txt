@@ -1,3 +1,17 @@
 Title:  Creating a New Collection
 
 Seq:    15
+
+Body: 
+
+To create a New Collection, select `New Collection...` beneath the `File` menu. 
+
+You will then be walked through a series of screens. 
+
++ The first screen will ask you to specify the general **Location** of your new Collection. 
+
+	+ If you are signed into iCloud, then you can select `The Notenik folder within iCloud Drive`, which is generally the easiest option. 
+
+	+ Otherwise you can select `A location of your choosing`, which will allow you to locate your new Collection folder anywhere you like within your file system (in your `Documents` folder, for example). If you choose this option, you will then see a standard macOS Open dialog, allowing you to choose the parent folder in which your new Collection will be created. 
+
++ Next you'll be prompted for the name of your new Collection. This will become the name of the folder in which your Notes will be stored. 

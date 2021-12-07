@@ -1,10 +1,12 @@
 Title:  The Link Field
 
+Tags:   fields, links
+
 Seq:    12
 
 Body: 
 
-I've already talked about the ability to use Markdown within the body of a Note to embed hyperlinks. 
+I've already talked about the ability to use [[Markdown]] within the body of a Note to embed hyperlinks. 
 
 But you can also enter a URL (aka a *Web Link*) into a special Link field. 
 
@@ -14,4 +16,4 @@ You can also use the `Launch Link` button on the toolbar to open a link in this 
 
 And you can also use the `Launch Link` command beneath the `Note` menu to open the Web address entered into a Link field. 
 
-In all of these cases, the link will be opened in your Web browser, and not within Notenik itself. 
+In all of these cases, the link will be opened in your Web browser, and not within Notenik itself.

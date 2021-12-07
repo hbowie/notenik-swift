@@ -4,6 +4,8 @@ Tags:   display, fonts, prefs
 
 Seq:    7
 
+Image Name: screenshot
+
 Body: 
 
 If you turn your attention to the right side of the Collection window, then the first tab you'll see is titled `Display`. This is, of course, where you are currently reading all of this information about Notenik. 
@@ -12,7 +14,7 @@ In general, the Display tab will show all of the non-blank fields contained with
 
 If you are using the Streamlined Reading option, though (as we are now), then some non-blank fields will also be suppressed as well, in order to focus more attention on the Title and Body of each Note. 
 
-If you open up the Collection Preferences again, you'll find a couple of other options you can use to tailor the appearance of the Display tab. 
+If you open up the [[Collection Preferences]] again, you'll find a couple of other options you can use to tailor the appearance of the Display tab. 
 
 + `Include explicit Body field label on Display?` -- By default, Notenik treats the Body field like any other field, and displays the field label preceding the field value. If you'd rather not see any explicit identification of the Body field, then you can uncheck this option. 
 
