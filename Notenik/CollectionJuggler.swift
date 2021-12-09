@@ -23,12 +23,19 @@ class CollectionJuggler: NSObject {
     // Shorthand references to System Objects
     private let defaults = UserDefaults.standard
     let application = NSApplication.shared
+    let fm = FileManager.default
     
     var notenikFolderList: NotenikFolderList!
     
     let appPrefs  = AppPrefs.shared
     let appPrefsCocoa = AppPrefsCocoa.shared
     let osdir     = OpenSaveDirectory.shared
+    
+    let modelsPath = "/models"
+    let introModelPath = "/1 - Notenik Intro"
+    var introModelFullPath = ""
+
+    let introFolderName = "Intro"
     
     let storyboard:                NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
     let logStoryboard:             NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
@@ -84,12 +91,20 @@ class CollectionJuggler: NSObject {
         realm.path = ""
         var collection: NoteCollection?
 
-        if appPrefs.essentialURL != nil {
+        if collection == nil && appPrefs.essentialURL != nil {
             collection = io.openCollection(realm: realm, collectionPath: appPrefs.essentialURL!.path, readOnly: false)
         }
 
         if collection == nil && appPrefs.lastURL != nil {
             collection = io.openCollection(realm: realm, collectionPath: appPrefs.lastURL!.path, readOnly: false)
+        }
+        
+        if collection == nil {
+            let collectionPath = loadNotenikIntro()
+            if !collectionPath.isEmpty {
+                collection = io.openCollection(realm: realm, collectionPath: collectionPath, readOnly: false)
+                _ = io.firstNote()
+            }
         }
         
         if collection != nil {
@@ -98,7 +113,7 @@ class CollectionJuggler: NSObject {
         }
 
         if collection == nil {
-            let path = NotenikFolderList.shared.kbNode.folder!.path
+            let path = notenikFolderList.kbNode.folder!.path
             collection = io.openCollection(realm: realm, collectionPath: path, readOnly: true)
             _ = io.firstNote()
         }
@@ -115,6 +130,20 @@ class CollectionJuggler: NSObject {
                 }
             }
         }
+    }
+    
+    func loadNotenikIntro() -> String {
+        guard notenikFolderList.iCloudContainerAvailable else { return "" }
+        guard let iCloudContainer = notenikFolderList.iCloudContainerURL else { return "" }
+        let introURL = iCloudContainer.appendingPathComponent(introFolderName)
+        guard !fm.fileExists(atPath: introURL.path) else { return "" }
+        let (collectionURL, _) = notenikFolderList.createNewFolderWithinICloudContainer(folderName: introFolderName)
+        guard collectionURL != nil else { return "" }
+        introModelFullPath = Bundle.main.resourcePath! + modelsPath + introModelPath
+        let relo = CollectionRelocation()
+        let ok = relo.copyOrMoveCollection(from: introModelFullPath, to: collectionURL!.path, move: false)
+        guard ok else { return "" }
+        return collectionURL!.path
     }
     
     /// Let the user select a folder to be opened.

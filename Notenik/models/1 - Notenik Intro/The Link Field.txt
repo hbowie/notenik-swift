@@ -4,6 +4,8 @@ Tags:   fields, links
 
 Seq:    12
 
+Image Name: screenshot
+
 Body: 
 
 I've already talked about the ability to use [[Markdown]] within the body of a Note to embed hyperlinks. 

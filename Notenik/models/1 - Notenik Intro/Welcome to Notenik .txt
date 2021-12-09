@@ -10,7 +10,7 @@ Thanks for your interest in Notenik!
 
 This brief intro can be accessed in several different ways. 
 
-1. You can read it as a Web Book published on the [Notenik.app](https://notenik.app) website. 
+1. You can read it as a Web Book published on the [Notenik.app](https://notenik.app/intro/EPUB/html/welcome-to-notenik.html) website. 
 
 2. You can read it from within Notenik, after launching the app for the first time on your Mac. 
 

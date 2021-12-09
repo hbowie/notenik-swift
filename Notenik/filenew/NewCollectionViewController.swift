@@ -122,6 +122,8 @@ class NewCollectionViewController: NSTabViewController {
         let dialog = NSOpenPanel()
         
         dialog.title                   = "Choose a parent Folder"
+        dialog.message = "Choose the Location for your Collection(s)"
+        dialog.prompt                  = "Choose Parent Folder"
         dialog.showsResizeIndicator    = true
         dialog.showsHiddenFiles        = false
         dialog.allowsMultipleSelection = false

@@ -1,3 +1,11 @@
 Title:  Consult the Knowledge Base
 
+Tags:   help, knowledge base
+
 Seq:    16
+
+Body: 
+
+Hopefully this brief Notenik Intro has given you a general idea of how the application works. 
+
+Notenik has many more capabilities, though, and for further information, as well as general reference, it will be best to consult the full Notenik Knowledge Base. The Knowledge Base is itself a Notenik Collection. You can find this published as a Web Book on the [Notenik.app](https://notenik.app/knowledge-base/EPUB/html/notenik-knowledge-base.html) website, but the best way to access it is from [within Notenik](notenik://help), by selecting `Notenik Knowledge Base` beneath the `Help` menu. 

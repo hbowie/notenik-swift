@@ -1,5 +1,7 @@
 Title:  Creating a New Collection
 
+Tags:   collections, collections.new, new collection
+
 Seq:    15
 
 Body: 
@@ -14,4 +16,10 @@ You will then be walked through a series of screens.
 
 	+ Otherwise you can select `A location of your choosing`, which will allow you to locate your new Collection folder anywhere you like within your file system (in your `Documents` folder, for example). If you choose this option, you will then see a standard macOS Open dialog, allowing you to choose the parent folder in which your new Collection will be created. 
 
-+ Next you'll be prompted for the name of your new Collection. This will become the name of the folder in which your Notes will be stored. 
++ Next you'll be prompted for the **Name** of your new Collection. This will become the name of the folder in which your Notes will be stored. 
+
++ Then you'll be able to choose the set of **Fields** that will be available within your Collection. You'll be able to select a general type of Collection, and each type will have a set of associated fields. 
+
++ At this point, your new Collection will be created, and you will be presented with the Collection Preferences screen. You can use this screen to add or remove fields, and/or modify the other Collection settings. 
+
+Once you hit the `OK` button, your new Collection will be ready for use.

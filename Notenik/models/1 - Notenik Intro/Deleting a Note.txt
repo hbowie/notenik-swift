@@ -1,9 +1,11 @@
 Title:  Deleting a Note
 
+Tags:   delete, notes
+
 Seq:    14
 
 Body: 
 
 To delete a Note, click on the `-` (minus sign) in the toolbar, or select `Delete Note` beneath the `Note` menu. 
 
-You will receive a message asking for confirmation before the selected Note is deleted (unless you have turned this option off in the Application Preferences). 
+You will receive a message asking for confirmation before the selected Note is deleted (unless you have turned this option off in the Application Preferences).

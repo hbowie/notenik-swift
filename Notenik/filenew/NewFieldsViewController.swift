@@ -36,19 +36,21 @@ class NewFieldsViewController: NSViewController {
                 let menuItem = listOfModels.item(withTitle: model)
                 if menuItem != nil {
                     switch model {
-                    case "1 - Basic Notes":
+                    case "1 - Notenik Intro":
+                        menuItem!.toolTip = "A Brief Introduction to Notenik"
+                    case "2 - Basic Notes":
                         menuItem!.toolTip = "Each Note will have a Title, Tags & Body"
-                    case "2 - Web Links":
+                    case "3 - Web Links":
                         menuItem!.toolTip = "Each Note will have a Link field, as well as Title, Tags & Body"
-                    case "3 - To Do":
+                    case "4 - To Do":
                         menuItem!.toolTip = "Each Note will represent a task, with a Date, a Status, and optional Recurs rule, in addition to the more common fields."
-                    case "4 - Sequenced List":
+                    case "5 - Sequenced List":
                         menuItem!.toolTip = "Each Note gets a sequence number, and you can sort the entire list by those numbers."
-                    case "5 - Zettelkasten":
+                    case "6 - Zettelkasten":
                         menuItem!.toolTip = "Zettelkasten is a fancy term for a collection of thoughts that can link to one another."
-                    case "6 - Blog":
+                    case "7 - Blog":
                         menuItem!.toolTip = "Each Note becomes a Blog Post"
-                    case "7 - Commonplace book":
+                    case "8 - Commonplace book":
                         menuItem!.toolTip = "Each Note contains a notable quotation"
                     default:
                         break
