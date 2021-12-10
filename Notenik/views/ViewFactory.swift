@@ -26,6 +26,8 @@ class ViewFactory {
         switch def.fieldType.typeString {
         case NotenikConstants.akaCommon:
             return AKAView()
+        case NotenikConstants.attribCommon:
+            return LongTextView()
         case NotenikConstants.backlinksCommon:
             return LabelView()
         case NotenikConstants.bodyCommon:
