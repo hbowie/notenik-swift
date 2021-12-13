@@ -44,6 +44,8 @@ class ViewFactory {
             return LabelView()
         case NotenikConstants.imageNameCommon:
             return ImageNameView()
+        case NotenikConstants.includeChildrenCommon:
+            return IncludeChildrenView()
         case NotenikConstants.klassCommon:
             if let pickList = def.pickList as? KlassPickList {
                 return KlassView(pickList: pickList)

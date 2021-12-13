@@ -69,6 +69,7 @@
 		9C2AE528220A34D100AE8BEE /* NoteTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386521FFA94800BA7900 /* NoteTagsViewController.swift */; };
 		9C2AE529220A34D400AE8BEE /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
 		9C2AE52A220A34D800AE8BEE /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */; };
+		9C2BDBC72764188200E2041C /* IncludeChildrenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2BDBC62764188200E2041C /* IncludeChildrenView.swift */; };
 		9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */; };
 		9C310E68266ADB4B001C3A6E /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C310E67266ADB4B001C3A6E /* LevelView.swift */; };
 		9C341F1C259AB79600E1972C /* MediumPub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C341F1B259AB79600E1972C /* MediumPub.storyboard */; };
@@ -318,6 +319,7 @@
 		9C29A79425645A42002C5F7A /* FileDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDropView.swift; sourceTree = "<group>"; };
 		9C29A79A25645B78002C5F7A /* FileAttachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAttachView.swift; sourceTree = "<group>"; };
 		9C29DD28226286A100928180 /* CollectionWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionWindow.swift; sourceTree = "<group>"; };
+		9C2BDBC62764188200E2041C /* IncludeChildrenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncludeChildrenView.swift; sourceTree = "<group>"; };
 		9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrefsCocoa.swift; sourceTree = "<group>"; };
 		9C310E67266ADB4B001C3A6E /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
 		9C341F1B259AB79600E1972C /* MediumPub.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MediumPub.storyboard; sourceTree = "<group>"; };
@@ -837,6 +839,7 @@
 				9C29A79A25645B78002C5F7A /* FileAttachView.swift */,
 				9C29A79425645A42002C5F7A /* FileDropView.swift */,
 				9CCBE7B325F7F4550001443B /* ImageNameView.swift */,
+				9C2BDBC62764188200E2041C /* IncludeChildrenView.swift */,
 				9C4A45A9272346BD00BE3202 /* KlassDataSource.swift */,
 				9C4A45A72723464400BE3202 /* KlassView.swift */,
 				9C79BDAF226E368800796E93 /* LabelView.swift */,
@@ -1218,6 +1221,7 @@
 				9CCE7C69264B1FA7003818DF /* QuickActionFolder.swift in Sources */,
 				9C924C7025CDB80A000DEAB3 /* FileExtensionPicker.swift in Sources */,
 				9C097D5D259AB95A00834A42 /* MediumPubWindowController.swift in Sources */,
+				9C2BDBC72764188200E2041C /* IncludeChildrenView.swift in Sources */,
 				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
 				9C06454E2730C4C7008943A5 /* DefsRemoved.swift in Sources */,
 				9CDB5635259BAE9B00AB93A4 /* MediumPubViewController.swift in Sources */,

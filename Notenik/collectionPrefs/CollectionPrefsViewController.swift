@@ -54,6 +54,7 @@ class CollectionPrefsViewController: NSViewController {
     var seqCkBox:        NSButton!
     var levelCkBox:      NSButton!
     var klassCkBox:      NSButton!
+    var includeChildrenCkBox: NSButton!
     var dateCkBox:       NSButton!
     var recursCkBox:     NSButton!
     var authorCkBox:     NSButton!
@@ -170,6 +171,9 @@ class CollectionPrefsViewController: NSViewController {
         
         klassCkBox = NSButton(checkboxWithTitle: NotenikConstants.klass, target: self, action: #selector(checkBoxClicked))
         addToStack(klassCkBox)
+        
+        includeChildrenCkBox = NSButton(checkboxWithTitle: NotenikConstants.includeChildren, target: self, action: #selector(checkBoxClicked))
+        addToStack(includeChildrenCkBox)
         
         dateCkBox = NSButton(checkboxWithTitle: NotenikConstants.date, target: self, action: #selector(checkBoxClicked))
         addToStack(dateCkBox)
