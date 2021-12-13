@@ -372,6 +372,8 @@ class NoteListViewController:   NSViewController,
     
     func setSortParm(_ sortParm: NoteSortParm) {
 
+        guard let collection = notenikIO?.collection else { return }
+        
         switch sortParm {
         case .title:
             addTitleColumn(at: 0)
@@ -412,6 +414,15 @@ class NoteListViewController:   NSViewController,
             addDateModifiedColumn(at: 0)
             addTitleColumn(at: 1)
             trimColumns(to: 2)
+        case .datePlusSeq:
+            if collection.seqFieldDef == nil {
+                addDateColumn(at: 0)
+                addTitleColumn(at: 1)
+            } else {
+                addDateColumn(at: 0)
+                addSeqColumn(at: 1)
+                addTitleColumn(at: 2)
+            }
         case .custom:
             addTitleColumn(at: 0)
             trimColumns(to: 1)
