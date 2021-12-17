@@ -2850,8 +2850,15 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     @IBAction func generateWebBook(_ sender: Any) {
         
         guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
         
         let dialog = NSOpenPanel()
+        
+        if !collection.webBookPath.isEmpty {
+            let webBookURL = URL(fileURLWithPath: collection.webBookPath)
+            let parent = webBookURL.deletingLastPathComponent()
+            dialog.directoryURL = parent
+        }
         
         dialog.title                   = "Choose an Output Folder for your Web Book"
         dialog.showsResizeIndicator    = true
@@ -2865,13 +2872,82 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
          
         if response == .OK {
             let bookURL = dialog.url!
-            let maker = WebBookMaker(input: noteIO.collection!.fullPathURL!, output: bookURL)
+            let maker = WebBookMaker(input: noteIO.collection!.fullPathURL!, output: bookURL, epub: true)
             if maker != nil {
+                collection.webBookPath = bookURL.path
+                collection.webBookAsEPUB = true
                 let filesWritten = maker!.generate()
                 informUserOfImportExportResults(operation: "Generate Web Book", ok: true, numberOfNotes: filesWritten, path: bookURL.path)
             }
         }
         
+    }
+    
+    @IBAction func publishWebBookAsSite(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        
+        let dialog = NSOpenPanel()
+        
+        if !collection.webBookPath.isEmpty {
+            let webBookURL = URL(fileURLWithPath: collection.webBookPath)
+            let parent = webBookURL.deletingLastPathComponent()
+            dialog.directoryURL = parent
+        }
+        
+        dialog.title                   = "Choose an Output Folder for your Web Book"
+        dialog.showsResizeIndicator    = true
+        dialog.showsHiddenFiles        = false
+        dialog.allowsMultipleSelection = false
+        dialog.canChooseDirectories    = true
+        dialog.canChooseFiles          = false
+        dialog.canCreateDirectories    = true
+        
+        let response = dialog.runModal()
+         
+        if response == .OK {
+            let bookURL = dialog.url!
+            let maker = WebBookMaker(input: noteIO.collection!.fullPathURL!, output: bookURL, epub: false)
+            if maker != nil {
+                collection.webBookPath = bookURL.path
+                collection.webBookAsEPUB = false
+                let filesWritten = maker!.generate()
+                informUserOfImportExportResults(operation: "Generate Web Book", ok: true, numberOfNotes: filesWritten, path: bookURL.path)
+            }
+        }
+        
+    }
+    
+    @IBAction func webBookIndexRedirect(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        guard !collection.webBookPath.isEmpty else { return }
+        guard !collection.webBookPath.isEmpty else { return }
+        
+        let dialog = NSSavePanel()
+        let webBookURL = URL(fileURLWithPath: collection.webBookPath)
+        let parent = webBookURL.deletingLastPathComponent()
+        dialog.directoryURL = parent
+        dialog.nameFieldStringValue    = "index.html"
+        dialog.title                   = "Web Book Index Redirect"
+        dialog.message                 = "Create Redirect to Web Book"
+        dialog.prompt                  = "Write File"
+        dialog.showsResizeIndicator    = true
+        dialog.showsHiddenFiles        = false
+        dialog.canCreateDirectories    = true
+        let response = dialog.runModal()
+        guard response == .OK else { return }
+
+        guard let maker = WebBookMaker(input: noteIO.collection!.fullPathURL!,
+                                       output: webBookURL,
+                                       epub: collection.webBookAsEPUB) else {
+            return
+        }
+        let errorMsg = maker.webBookIndexRedirect(dialog.url!)
+        if errorMsg != nil && !errorMsg!.isEmpty {
+            communicateError(errorMsg!, alert: true)
+        }
     }
     
     /// Ask the user where to save the export file
