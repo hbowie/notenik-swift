@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="xYB-Fb-TwN">
+            <objects>
+                <windowController storyboardIdentifier="seqModWC" id="InO-he-b0b" customClass="SeqModWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="fba-WK-qrB">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+                        <view key="contentView" id="Bjw-ty-oef">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="InO-he-b0b" id="n0q-Zk-hO7"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="YVj-33-4S8" kind="relationship" relationship="window.shadowedContentViewController" id="qeu-Xo-qc2"/>
+                    </connections>
+                </windowController>
+                <customObject id="H0G-I4-jLN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-96" y="-150"/>
+        </scene>
+        <!--Seq Mod View Controller-->
+        <scene sceneID="fBC-Iq-GlS">
+            <objects>
+                <viewController id="YVj-33-4S8" customClass="SeqModViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="tmc-6g-Sx9">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nbD-Pq-PA7">
+                                <rect key="frame" x="18" y="234" width="124" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Range to renumber:" id="5t2-dJ-slv">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rmJ-qH-HSb">
+                                <rect key="frame" x="148" y="234" width="314" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" id="SK7-el-nVF">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JsQ-qy-t43">
+                                <rect key="frame" x="18" y="204" width="116" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="New Starting Seq:" id="Aqa-Hl-n2c">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kDa-Dz-psS">
+                                <rect key="frame" x="150" y="201" width="310" height="21"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="qNU-zJ-1Pc">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qSq-r2-DQP">
+                                <rect key="frame" x="13" y="13" width="76" height="32"/>
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mvU-U6-v20">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="cancel:" target="YVj-33-4S8" id="5JM-uz-tTe"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VHh-jY-hBg">
+                                <rect key="frame" x="414" y="13" width="53" height="32"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Pd6-Hj-1Km">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="ok:" target="YVj-33-4S8" id="oJ0-CA-Cf5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="rmJ-qH-HSb" firstAttribute="leading" secondItem="kDa-Dz-psS" secondAttribute="leading" id="1aK-8B-Gmx"/>
+                            <constraint firstItem="JsQ-qy-t43" firstAttribute="baseline" secondItem="kDa-Dz-psS" secondAttribute="baseline" id="3x2-fv-XUA"/>
+                            <constraint firstItem="nbD-Pq-PA7" firstAttribute="leading" secondItem="JsQ-qy-t43" secondAttribute="leading" id="5bR-7M-Nmf"/>
+                            <constraint firstAttribute="bottom" secondItem="qSq-r2-DQP" secondAttribute="bottom" constant="20" symbolic="YES" id="7yE-mH-QLh"/>
+                            <constraint firstItem="JsQ-qy-t43" firstAttribute="leading" secondItem="qSq-r2-DQP" secondAttribute="leading" id="80A-qk-YuF"/>
+                            <constraint firstItem="qSq-r2-DQP" firstAttribute="baseline" secondItem="VHh-jY-hBg" secondAttribute="baseline" id="A77-PS-PBa"/>
+                            <constraint firstItem="kDa-Dz-psS" firstAttribute="top" secondItem="rmJ-qH-HSb" secondAttribute="bottom" constant="12" id="DSP-Ha-ApP"/>
+                            <constraint firstItem="rmJ-qH-HSb" firstAttribute="trailing" secondItem="kDa-Dz-psS" secondAttribute="trailing" id="EcF-FK-mf1"/>
+                            <constraint firstItem="kDa-Dz-psS" firstAttribute="trailing" secondItem="VHh-jY-hBg" secondAttribute="trailing" id="SgV-8b-S2t"/>
+                            <constraint firstItem="rmJ-qH-HSb" firstAttribute="leading" secondItem="nbD-Pq-PA7" secondAttribute="trailing" constant="10" id="VNk-YG-ttQ"/>
+                            <constraint firstItem="nbD-Pq-PA7" firstAttribute="baseline" secondItem="rmJ-qH-HSb" secondAttribute="baseline" id="X9k-t7-pZ0"/>
+                            <constraint firstAttribute="trailing" secondItem="rmJ-qH-HSb" secondAttribute="trailing" constant="20" symbolic="YES" id="en9-Rp-ilX"/>
+                            <constraint firstItem="nbD-Pq-PA7" firstAttribute="top" secondItem="tmc-6g-Sx9" secondAttribute="top" constant="20" symbolic="YES" id="iug-b4-rhh"/>
+                            <constraint firstItem="kDa-Dz-psS" firstAttribute="leading" secondItem="JsQ-qy-t43" secondAttribute="trailing" constant="18" id="qtg-vq-2t6"/>
+                            <constraint firstItem="nbD-Pq-PA7" firstAttribute="leading" secondItem="tmc-6g-Sx9" secondAttribute="leading" constant="20" symbolic="YES" id="ydk-pH-qZH"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="newStartingSeq" destination="kDa-Dz-psS" id="8xk-JW-le5"/>
+                        <outlet property="rangeToRenumber" destination="rmJ-qH-HSb" id="U5S-Th-5VP"/>
+                    </connections>
+                </viewController>
+                <customObject id="93a-nQ-OM9" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-96" y="369"/>
+        </scene>
+    </scenes>
+</document>

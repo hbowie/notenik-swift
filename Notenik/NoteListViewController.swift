@@ -26,6 +26,7 @@ class NoteListViewController:   NSViewController,
     var shortcutMenu: NSMenu!
     var newChildIndex = -1
     var newWithOptionsIndex = -1
+    var seqModIndex = -1
     
     var window: CollectionWindowController? {
         get {
@@ -89,7 +90,20 @@ class NoteListViewController:   NSViewController,
             newChildIndex = -1
         }
         
+        if seqModIndex >= 0 {
+            if shortcutMenu.numberOfItems > seqModIndex {
+                shortcutMenu.removeItem(at: seqModIndex)
+            }
+            seqModIndex = -1
+        }
+        
         guard let collection = notenikIO?.collection else { return }
+        
+        if collection.seqFieldDef != nil
+            && (collection.sortParm == .seqPlusTitle || collection.sortParm == .tasksBySeq) {
+            seqModIndex = shortcutMenu.numberOfItems
+            shortcutMenu.addItem(withTitle: "Modify Seq...", action: #selector(seqModify(_:)), keyEquivalent: "")
+        }
 
         if collection.seqFieldDef != nil && collection.levelFieldDef != nil {
             newChildIndex = shortcutMenu.numberOfItems
@@ -104,6 +118,46 @@ class NoteListViewController:   NSViewController,
             shortcutMenu.addItem(withTitle: "New with Options...", action: #selector(newWithOptions(_:)), keyEquivalent: "")
         }
     
+    }
+    
+    @objc private func seqModify(_ sender: AnyObject) {
+ 
+        guard collectionWindowController != nil else { return }
+        guard tableView.numberOfSelectedRows > 0 else { return }
+        guard let collection = notenikIO?.collection else { return }
+        
+        guard collection.seqFieldDef != nil && (collection.sortParm == .seqPlusTitle || collection.sortParm == .tasksBySeq) else {
+            return
+        }
+
+        var lowIndex = tableView.selectedRow
+        var highIndex = tableView.selectedRow
+        var rowToTest = tableView.selectedRow - 1
+        var stillSelected = true
+        while rowToTest >= 0 && stillSelected {
+            if tableView.isRowSelected(rowToTest) {
+                lowIndex = rowToTest
+                rowToTest -= 1
+            } else {
+                stillSelected = false
+            }
+        }
+        rowToTest = tableView.selectedRow + 1
+        stillSelected = true
+        while rowToTest < tableView.numberOfRows && stillSelected {
+            if tableView.isRowSelected(rowToTest) {
+                highIndex = rowToTest
+                rowToTest += 1
+            } else {
+                stillSelected = false
+            }
+        }
+        
+        if tableView.clickedRow > highIndex || tableView.clickedRow < lowIndex {
+            return
+        }
+        
+        collectionWindowController!.seqModify(startingRow: lowIndex, endingRow: highIndex)
     }
     
     @objc private func newChildForItem(_ sender: AnyObject) {

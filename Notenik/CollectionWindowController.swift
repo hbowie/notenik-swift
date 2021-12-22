@@ -56,6 +56,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let tagsMassChangeStoryboard:  NSStoryboard = NSStoryboard(name: "TagsMassChange", bundle: nil)
     let advSearchStoryboard:       NSStoryboard = NSStoryboard(name: "AdvSearch", bundle: nil)
     let newWithOptionsStoryboard:     NSStoryboard = NSStoryboard(name: "NewWithOptions", bundle: nil)
+    let seqModStoryboard:          NSStoryboard = NSStoryboard(name: "SeqMod", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -372,6 +373,30 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                               category: "CollectionWindowController",
                               level: .fault,
                               message: "Couldn't get a New from Klass Window Controller!")
+        }
+    }
+    
+    func seqModify(startingRow: Int, endingRow: Int) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        if let seqModController = self.seqModStoryboard.instantiateController(withIdentifier: "seqModWC") as? SeqModWindowController {
+            seqModController.showWindow(self)
+            seqModController.noteIO = noteIO
+            seqModController.collectionWC = self
+            seqModController.setRange(startingRow: startingRow, endingRow: endingRow)
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos", category: "CollectionWindowController", level: .fault, message: "Couldn't get a Seq Mod Window Controller")
+        }
+    }
+    
+    public func seqModified(modStartingNote: Note?) {
+        newNoteRequested = false
+        pendingEdits = false
+        reloadCollection(self)
+        if modStartingNote != nil {
+            select(note: modStartingNote!, position: nil, source: .nav, andScroll: true)
+        } else {
+            let (note, position) = io!.firstNote()
+            select(note: note, position: position, source: .nav, andScroll: true)
         }
     }
     
@@ -1487,7 +1512,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///   - note: The note prior to being incremented.
     ///   - modNote: A copy of the note being incremented.
     func incSeq(noteIO: NotenikIO, note: Note, modNote: Note) {
-        let notesInced = Sequencer.incrementSeq(io: noteIO, startingNote: note)
+        guard let sequencer = Sequencer(io: noteIO) else { return }
+        let notesInced = sequencer.incrementSeq(startingNote: note)
         logInfo(msg: "\(notesInced) Notes had their Seq values incremented")
         displayModifiedNote(updatedNote: note)
         populateEditFields(with: note)
@@ -1499,10 +1525,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let (nio, sel) = guardForNoteAction()
         guard let noteIO = nio, let selNote = sel else { return }
         guard selNote.hasSeq() else { return }
-        let sortParm = noteIO.collection!.sortParm
-        guard sortParm == .seqPlusTitle || sortParm == .tasksBySeq else { return }
+        guard let sequencer = Sequencer(io: noteIO) else { return }
         
-        let notesInced = Sequencer.incrementSeq(io: noteIO, startingNote: selNote, incMajor: true)
+        let notesInced = sequencer.incrementSeq(startingNote: selNote, incMajor: true)
         logInfo(msg: "\(notesInced) Notes had their Seq values incremented")
         displayModifiedNote(updatedNote: selNote)
         populateEditFields(with: selNote)

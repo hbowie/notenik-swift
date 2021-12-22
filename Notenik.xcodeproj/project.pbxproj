@@ -105,6 +105,9 @@
 		9C568DF323230B17005D6B0A /* WorkTitleDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C568DF123230B17005D6B0A /* WorkTitleDataSource.swift */; };
 		9C568DF5232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */; };
 		9C568DF6232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */; };
+		9C5BE16A277163FA0013C0D3 /* SeqMod.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C5BE169277163FA0013C0D3 /* SeqMod.storyboard */; };
+		9C5BE16C277166E60013C0D3 /* SeqModWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5BE16B277166E60013C0D3 /* SeqModWindowController.swift */; };
+		9C5BE16E277167070013C0D3 /* SeqModViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5BE16D277167070013C0D3 /* SeqModViewController.swift */; };
 		9C5CBC7925D60AA300D23F4B /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 9C5CBC7825D60AA300D23F4B /* Down */; };
 		9C60B52025E6D7C300371023 /* DisplayNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60B51F25E6D7C300371023 /* DisplayNoteViewController.swift */; };
 		9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E6D121F64B3B00C332ED /* AppDelegate.swift */; };
@@ -345,6 +348,9 @@
 		9C568DEC2322FBF0005D6B0A /* AuthorDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorDataSource.swift; sourceTree = "<group>"; };
 		9C568DF123230B17005D6B0A /* WorkTitleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTitleDataSource.swift; sourceTree = "<group>"; };
 		9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTypeDataSource.swift; sourceTree = "<group>"; };
+		9C5BE169277163FA0013C0D3 /* SeqMod.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SeqMod.storyboard; sourceTree = "<group>"; };
+		9C5BE16B277166E60013C0D3 /* SeqModWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeqModWindowController.swift; sourceTree = "<group>"; };
+		9C5BE16D277167070013C0D3 /* SeqModViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeqModViewController.swift; sourceTree = "<group>"; };
 		9C60B51F25E6D7C300371023 /* DisplayNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayNoteViewController.swift; sourceTree = "<group>"; };
 		9C60E6CE21F64B3B00C332ED /* Notenik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notenik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C60E6D121F64B3B00C332ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -574,6 +580,16 @@
 			path = script;
 			sourceTree = "<group>";
 		};
+		9C5BE168277163C30013C0D3 /* seqmod */ = {
+			isa = PBXGroup;
+			children = (
+				9C5BE169277163FA0013C0D3 /* SeqMod.storyboard */,
+				9C5BE16B277166E60013C0D3 /* SeqModWindowController.swift */,
+				9C5BE16D277167070013C0D3 /* SeqModViewController.swift */,
+			);
+			path = seqmod;
+			sourceTree = "<group>";
+		};
 		9C60E6C521F64B3B00C332ED = {
 			isa = PBXGroup;
 			children = (
@@ -643,6 +659,7 @@
 				9C832A00224ABDBD007DA6FC /* prefs */,
 				9CCE7C61264AE8AB003818DF /* quick */,
 				9C4C1BAE22E7EE0A005997DF /* script */,
+				9C5BE168277163C30013C0D3 /* seqmod */,
 				9CB60BBE22650975003B5655 /* share */,
 				9CB06CB522CCF4A200887778 /* tags */,
 				9CD3261E2233063100D06B77 /* views */,
@@ -1109,6 +1126,7 @@
 				9C46A71525D05CC0006E9C16 /* NewCollection.storyboard in Resources */,
 				9C7132DD2692328B00A3034F /* notenik-KB in Resources */,
 				9CCE7C63264AE8FD003818DF /* QuickAction.storyboard in Resources */,
+				9C5BE16A277163FA0013C0D3 /* SeqMod.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1223,12 +1241,14 @@
 				9C097D5D259AB95A00834A42 /* MediumPubWindowController.swift in Sources */,
 				9C2BDBC72764188200E2041C /* IncludeChildrenView.swift in Sources */,
 				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
+				9C5BE16C277166E60013C0D3 /* SeqModWindowController.swift in Sources */,
 				9C06454E2730C4C7008943A5 /* DefsRemoved.swift in Sources */,
 				9CDB5635259BAE9B00AB93A4 /* MediumPubViewController.swift in Sources */,
 				9CF435C724805C0500DD7C33 /* CountsWindowController.swift in Sources */,
 				9CF365812637688300EAE129 /* MicroBlogViewController.swift in Sources */,
 				9CCE7C67264AEB47003818DF /* QuickActionViewController.swift in Sources */,
 				9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */,
+				9C5BE16E277167070013C0D3 /* SeqModViewController.swift in Sources */,
 				9C46A72725D07899006E9C16 /* NewLocationViewController.swift in Sources */,
 				9C29A78A2564380F002C5F7A /* NoteDisplayWebView.swift in Sources */,
 				9CE32510224D5E180051CA1F /* LogViewController.swift in Sources */,
