@@ -73,6 +73,7 @@
 		9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */; };
 		9C310E68266ADB4B001C3A6E /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C310E67266ADB4B001C3A6E /* LevelView.swift */; };
 		9C341F1C259AB79600E1972C /* MediumPub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C341F1B259AB79600E1972C /* MediumPub.storyboard */; };
+		9C36EC792773CB7400ECD847 /* BodyViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C36EC782773CB7400ECD847 /* BodyViewDelegate.swift */; };
 		9C3CC8F6250A9C9E002C95D0 /* Navigator.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CC8F5250A9C9E002C95D0 /* Navigator.storyboard */; };
 		9C3CC8F8250AA0F8002C95D0 /* NavigatorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC8F7250AA0F8002C95D0 /* NavigatorWindowController.swift */; };
 		9C3CC8FA250AA136002C95D0 /* NavigatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CC8F9250AA136002C95D0 /* NavigatorViewController.swift */; };
@@ -326,6 +327,7 @@
 		9C2F96C324F4702200C4B8A2 /* AppPrefsCocoa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrefsCocoa.swift; sourceTree = "<group>"; };
 		9C310E67266ADB4B001C3A6E /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
 		9C341F1B259AB79600E1972C /* MediumPub.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MediumPub.storyboard; sourceTree = "<group>"; };
+		9C36EC782773CB7400ECD847 /* BodyViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyViewDelegate.swift; sourceTree = "<group>"; };
 		9C3CC8F5250A9C9E002C95D0 /* Navigator.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Navigator.storyboard; sourceTree = "<group>"; };
 		9C3CC8F7250AA0F8002C95D0 /* NavigatorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorWindowController.swift; sourceTree = "<group>"; };
 		9C3CC8F9250AA136002C95D0 /* NavigatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewController.swift; sourceTree = "<group>"; };
@@ -847,6 +849,7 @@
 				9C568DEC2322FBF0005D6B0A /* AuthorDataSource.swift */,
 				9C568DCF2322B6CF005D6B0A /* AuthorView.swift */,
 				9C45E8BA2298B87C003F6589 /* BodyView.swift */,
+				9C36EC782773CB7400ECD847 /* BodyViewDelegate.swift */,
 				9C01E46524D74E1C00AEB4F6 /* BooleanView.swift */,
 				9C02D2AF2267F29400587EDF /* Calendar.storyboard */,
 				9C02D2B22267F41200587EDF /* CalendarWindowController.swift */,
@@ -1270,6 +1273,7 @@
 				9C85994E273EE4F6008758EF /* NewWithOptionsWindowController.swift in Sources */,
 				9C568DF5232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */,
 				9C0B643C23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */,
+				9C36EC792773CB7400ECD847 /* BodyViewDelegate.swift in Sources */,
 				9CC78E6F228358A400640477 /* DisplayPrefsViewController.swift in Sources */,
 				9C822B9D22D6D5D6008EF106 /* TagsView.swift in Sources */,
 				9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */,
@@ -1569,7 +1573,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 218;
+				CURRENT_PROJECT_VERSION = 220;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1582,7 +1586,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 7.8.1;
+				MARKETING_VERSION = 7.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1598,7 +1602,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 218;
+				CURRENT_PROJECT_VERSION = 220;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1611,7 +1615,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 7.8.1;
+				MARKETING_VERSION = 7.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -120,6 +120,7 @@ class NoteListViewController:   NSViewController,
     
     }
     
+    /// Modify the seq values for a range of notes.
     @objc private func seqModify(_ sender: AnyObject) {
  
         guard collectionWindowController != nil else { return }
@@ -130,9 +131,29 @@ class NoteListViewController:   NSViewController,
             return
         }
 
-        var lowIndex = tableView.selectedRow
-        var highIndex = tableView.selectedRow
-        var rowToTest = tableView.selectedRow - 1
+        // Get the full range of selected notes.
+        let (lowIndex, highIndex) = getRangeOfSelectedRows()
+        guard lowIndex >= 0 else { return }
+        // Make sure the user clicked somewhere within this range.
+        if tableView.clickedRow > highIndex || tableView.clickedRow < lowIndex {
+            return 
+        }
+        
+        collectionWindowController!.seqModify(startingRow: lowIndex, endingRow: highIndex)
+    }
+    
+    /// Get a possible range of selected rows from the table view.
+    /// - Returns: The first (lowest) row selected, and the highest row selected,
+    /// or a pair of negative values is no valid selection.
+    func getRangeOfSelectedRows() -> (Int, Int) {
+
+        let selectedRow = tableView.selectedRow
+        if selectedRow < 0 { return (-1, -1) }
+        
+        var lowIndex = selectedRow
+        var highIndex = selectedRow
+        
+        var rowToTest = selectedRow - 1
         var stillSelected = true
         while rowToTest >= 0 && stillSelected {
             if tableView.isRowSelected(rowToTest) {
@@ -142,6 +163,7 @@ class NoteListViewController:   NSViewController,
                 stillSelected = false
             }
         }
+        
         rowToTest = tableView.selectedRow + 1
         stillSelected = true
         while rowToTest < tableView.numberOfRows && stillSelected {
@@ -153,11 +175,7 @@ class NoteListViewController:   NSViewController,
             }
         }
         
-        if tableView.clickedRow > highIndex || tableView.clickedRow < lowIndex {
-            return
-        }
-        
-        collectionWindowController!.seqModify(startingRow: lowIndex, endingRow: highIndex)
+        return (lowIndex, highIndex)
     }
     
     @objc private func newChildForItem(_ sender: AnyObject) {
@@ -406,6 +424,7 @@ class NoteListViewController:   NSViewController,
     }
     
     func selectRow(index: Int, andScroll: Bool = false) {
+        print("NoteListViewController.selectRow at index = \(index)")
         let indexSet = IndexSet(integer: index)
         tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
         if andScroll {

@@ -388,15 +388,17 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
-    public func seqModified(modStartingNote: Note?) {
+    public func seqModified(modStartingNote: Note?, reselect: Bool = true) {
         newNoteRequested = false
         pendingEdits = false
         reloadCollection(self)
-        if modStartingNote != nil {
-            select(note: modStartingNote!, position: nil, source: .nav, andScroll: true)
-        } else {
-            let (note, position) = io!.firstNote()
-            select(note: note, position: position, source: .nav, andScroll: true)
+        if reselect {
+            if modStartingNote != nil {
+                select(note: modStartingNote!, position: nil, source: .nav, andScroll: true)
+            } else {
+                let (note, position) = io!.firstNote()
+                select(note: note, position: position, source: .nav, andScroll: true)
+            }
         }
     }
     
@@ -650,8 +652,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
     }
     
-    let levelsHead = "levels-outline"
-    
     /// Renumber the Collection's sequence numbers based on the level and position of each note.
     @IBAction func renumberSeqBasedOnLevel(_ sender: Any) {
         outlineUpdatesBasedOnLevel(updateSeq: true, updateTags: false)
@@ -678,168 +678,22 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             return
         }
         
-        guard collection.seqFieldDef != nil else {
-            communicateError("The Collection must contain a Seq field before it can be Renumbered or Retagged",
+        guard let sequencer = Sequencer(io: noteIO) else {
+            communicateError("Collection must be sorted by Seq before it can be renumbered or retagged",
                              alert: true)
             return
         }
         
-        let sortParm = collection.sortParm
-        guard sortParm == .seqPlusTitle else {
-            communicateError("First Sort by Seq + Title before attempting to Renumber or Retag",
-                             alert: true)
-            return
-        }
-        
-        // Go through the Collection, dentifying Notes that need updating.
-        let low = collection.levelConfig.low
-        let high = collection.levelConfig.high
-        var first = true
-        
-        var numbers: [Int] = []
-        while numbers.count <= high {
-            numbers.append(0)
-        }
-        
-        var parents: [String] = []
-        while parents.count <= high {
-            parents.append("")
-        }
-        
-        var lastLevel = 0
-        var startNumberingAt = low
-        var tagStart = low
-        var notesToUpdate: [Note] = []
-        var updatedSeqs: [String] = []
-        var updatedTags: [String] = []
-        
-        var (note, position) = noteIO.firstNote()
-        while note != nil {
-            
-            // Process the next note.
-            let noteLevel = note!.level.getInt()
-            
-            // Calculate the new seq value.
-            var newSeq = ""
-            if first && !note!.hasSeq() && noteLevel == low {
-                startNumberingAt = low + 1
-                tagStart = low + 1
-            } else {
-                while lastLevel > noteLevel {
-                    numbers[lastLevel] = 0
-                    parents[lastLevel] = ""
-                    lastLevel -= 1
-                }
-                lastLevel = noteLevel
-                numbers[noteLevel] += 1
-                var i = startNumberingAt
-                while i <= noteLevel {
-                    if numbers[i] > 0 {
-                        if newSeq.count > 0 { newSeq.append(".") }
-                        newSeq.append(String(numbers[i]))
-                    }
-                    i += 1
-                }
-            }
-            
-            // Generate the new tags.
-            var levelsTagForThisLevel = ""
-            if updateSeq {
-                if noteLevel >= startNumberingAt {
-                    levelsTagForThisLevel.append(String(numbers[noteLevel]))
-                    if levelsTagForThisLevel.count > 0 {
-                        levelsTagForThisLevel.append(" ")
-                    }
-                }
-            }
-            let tagTitle = TagsValue.tagify(note!.title.value)
-            levelsTagForThisLevel.append(tagTitle)
-            parents[noteLevel] = levelsTagForThisLevel
-            
-            var newLevelTags = ""
-            newLevelTags.append(levelsHead)
-            var tagEnd = noteLevel
-            if tagEnd == high {
-                tagEnd = noteLevel - 1
-            }
-            if tagEnd < low {
-                tagEnd = low
-            }
-            var j = tagStart
-            while j <= tagEnd {
-                if parents[j].count > 0 {
-                    if newLevelTags.count > 0 { newLevelTags.append(".") }
-                    newLevelTags.append(parents[j])
-                }
-                j += 1
-            }
-            
-            // Now generate the new tags, preserving any non-level related tags assigned by the user.
-            var newTags = ""
-            let currTags = note!.tags
-            var replaced = false
-            for tagValue in currTags.tags {
-                let tag = tagValue.value
-                if tag.hasPrefix(levelsHead) {
-                    if newTags.count > 0 { newTags.append(",") }
-                    newTags.append(newLevelTags)
-                    replaced = true
-                } else {
-                    if newTags.count > 0 { newTags.append(",") }
-                    newTags.append(tag)
-                }
-            }
-            if !replaced {
-                if newTags.count > 0 { newTags.append(",") }
-                newTags.append(newLevelTags)
-            }
-            
-            // Now store any updates, so that we can apply them later.
-            var updateNote = false
-            
-            if updateSeq && newSeq != note!.seq.value {
-                updateNote = true
-            }
-            
-            if updateTags && newLevelTags != note!.tags.value {
-                updateNote = true
-            }
-            
-            if updateNote {
-                notesToUpdate.append(note!)
-                if updateSeq {
-                    updatedSeqs.append(newSeq)
-                }
-                if updateTags {
-                    updatedTags.append(newTags)
-                }
-            }
-            
-            first = false
-            (note, position) = io!.nextNote(position)
-        }
-        
-        // Now perform the updates.
-        var updateIndex = 0
-        while updateIndex < notesToUpdate.count {
-            let originalNote = notesToUpdate[updateIndex]
-            let modNote = originalNote.copy() as! Note
-            if updateSeq {
-                let newSeq = updatedSeqs[updateIndex]
-                _ = modNote.setSeq(newSeq)
-            }
-            if updateTags {
-                let newTags = updatedTags[updateIndex]
-                _ = modNote.setTags(newTags)
-            }
-            _ = noteIO.modNote(oldNote: originalNote, newNote: modNote)
-            updateIndex += 1
+        let (numberOfUpdates, errorMsg) = sequencer.outlineUpdatesBasedOnLevel(updateSeq: updateSeq,
+                                                                               updateTags: updateTags)
+        if !errorMsg.isEmpty {
+            communicateError(errorMsg, alert: true)
         }
         
         // Now let the user see the results.
         finishBatchOperation()
         reloadCollection(self)
-        reportNumberOfNotesUpdated(notesToUpdate.count)
+        reportNumberOfNotesUpdated(numberOfUpdates)
     }
         
     /// If we have past due daily tasks, then update the dates to make them current
@@ -1057,22 +911,22 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let noteIO = guardForCollectionAction() else { return 0 }
         guard let collection = noteIO.collection else { return 0 }
         
-        var newLevel: Int?
+        var newLevel: LevelValue?
         var newSeq: SeqValue?
                             
         // Gen Seq and Level, if appropriate
         if row > 0 && dropOperation == .above && collection.sortParm == .seqPlusTitle {
             var seqAbove = SeqValue("")
             let noteAbove = noteIO.getNote(at: row - 1)
-            var levelAbove = 0
+            var levelAbove: LevelValue = LevelValue()
             if noteAbove != nil {
                 seqAbove = noteAbove!.seq
-                levelAbove = noteAbove!.level.getInt()
-                newLevel = noteAbove!.level.getInt()
+                levelAbove = noteAbove!.level
+                newLevel = noteAbove!.level
             }
             let noteBelow = noteIO.getNote(at: row)
             if noteBelow != nil {
-                let belowLevel = noteBelow!.level.getInt()
+                let belowLevel = noteBelow!.level
                 if newLevel == nil {
                     newLevel = belowLevel
                 } else if belowLevel > newLevel! {
@@ -1080,14 +934,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 }
             }
             if noteAbove != nil {
-                newSeq = SeqValue(seqAbove.value)
+                newSeq = seqAbove.dupe()
             }
-            if newSeq != nil {
-                if newLevel != nil && newLevel! > levelAbove {
-                    newSeq!.newChild()
-                } else {
-                    newSeq!.increment()
-                }
+            if newSeq != nil && newLevel != nil {
+                newSeq!.incByLevels(originalLevel: levelAbove, newLevel: newLevel!)
             }
         }
         
@@ -1312,22 +1162,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let position = noteIO.positionOfNote(note)
         _ = noteIO.selectNote(at: position.index)
         let modNote = note.copy() as! Note
-        let level = note.level.getInt()
+        let level = note.level
         var priorSeq = SeqValue("")
-        var priorLevel = 0
+        var priorLevel: LevelValue?
         if row > 0 {
             let priorIndex = row - 1
             let priorNote = noteIO.getNote(at: priorIndex)
             if priorNote != nil {
                 priorSeq = priorNote!.seq
-                priorLevel = priorNote!.level.getInt()
+                priorLevel = priorNote!.level
             }
         }
-        let modSeq = SeqValue(priorSeq.value)
-        if level > priorLevel {
-            modSeq.newChild()
-        } else {
-            modSeq.increment()
+        let modSeq = priorSeq.dupe()
+        if priorLevel != nil {
+            modSeq.incByLevels(originalLevel: priorLevel!, newLevel: level)
         }
         _ = modNote.setSeq(modSeq.value)
         let _ = recordMods(noteIO: noteIO, note: note, modNote: modNote)
@@ -1513,12 +1361,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///   - modNote: A copy of the note being incremented.
     func incSeq(noteIO: NotenikIO, note: Note, modNote: Note) {
         guard let sequencer = Sequencer(io: noteIO) else { return }
-        let notesInced = sequencer.incrementSeq(startingNote: note)
+        let (notesInced, firstModNote) = sequencer.incrementSeq(startingNote: note)
         logInfo(msg: "\(notesInced) Notes had their Seq values incremented")
-        displayModifiedNote(updatedNote: note)
-        populateEditFields(with: note)
-        reloadViews()
-        select(note: note, position: nil, source: .action, andScroll: true)
+        if firstModNote != nil {
+            displayModifiedNote(updatedNote: firstModNote!)
+            populateEditFields(with: firstModNote!)
+            reloadViews()
+            select(note: firstModNote!, position: nil, source: .action, andScroll: true)
+        }
     }
     
     @IBAction func incMajorSeq(_ sender: Any) {
@@ -1527,12 +1377,80 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard selNote.hasSeq() else { return }
         guard let sequencer = Sequencer(io: noteIO) else { return }
         
-        let notesInced = sequencer.incrementSeq(startingNote: selNote, incMajor: true)
+        let (notesInced, firstModNote) = sequencer.incrementSeq(startingNote: selNote, incMajor: true)
         logInfo(msg: "\(notesInced) Notes had their Seq values incremented")
-        displayModifiedNote(updatedNote: selNote)
-        populateEditFields(with: selNote)
-        reloadViews()
-        select(note: selNote, position: nil, source: .action, andScroll: true)
+        if firstModNote != nil {
+            displayModifiedNote(updatedNote: firstModNote!)
+            populateEditFields(with: firstModNote!)
+            reloadViews()
+            select(note: firstModNote!, position: nil, source: .action, andScroll: true)
+        }
+    }
+    
+    @IBAction func indentNote(_ sender: Any) {
+        indentBy(1)
+    }
+    
+    @IBAction func outdentNote(_ sender: Any) {
+        indentBy(-1)
+    }
+    
+    /// Indent or outdent by the specified number of levels (positive or negative).
+    func indentBy(_ indentLevels: Int) {
+        
+        guard indentLevels != 0 else { return }
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        
+        let (lowIndex, highIndex) = listVC!.getRangeOfSelectedRows()
+        guard lowIndex >= 0 else { return }
+        guard let selNote = noteIO.getNote(at: lowIndex) else { return }
+        
+        var newSeq: SeqValue?
+        var maxSeqLevel: Int = -1
+        if selNote.hasSeq() && lowIndex > 0 {
+            let priorNote = noteIO.getNote(at: lowIndex - 1)
+            if priorNote != nil && priorNote!.hasSeq() {
+                newSeq = priorNote!.seq.dupe()
+                maxSeqLevel = selNote.seq.maxLevel
+                newSeq!.incAtLevel(level: maxSeqLevel + indentLevels, removingDeeperLevels: true)
+            }
+        }
+        
+        // If we're indenting a range of notes, then use the Sequencer.
+        if highIndex > lowIndex && newSeq != nil {
+            if let sequencer = Sequencer(io: io!) {
+                let modStartingNote = sequencer.renumberRange(startingRow: lowIndex, endingRow: highIndex, newSeqValue: newSeq!.value)
+                seqModified(modStartingNote: modStartingNote, reselect: true)
+                return
+            }
+        }
+        
+        // Continue with a single Note to indent.
+        let modNote = selNote.copy() as! Note
+        var noteModified = false
+        
+        if modNote.hasLevel() {
+            let newLevel = modNote.level.dupe()
+            newLevel.add(levelsToAdd: indentLevels, config: collection.levelConfig)
+            noteModified = modNote.setLevel(newLevel)
+        }
+        
+        if newSeq != nil {
+            let seqMod = modNote.setSeq(newSeq!.value)
+            if seqMod {
+                noteModified = true
+            }
+        }
+        
+        if noteModified {
+            let (note, position) = noteIO.modNote(oldNote: selNote, newNote: modNote)
+            if (note == nil) || (position.invalid) {
+                communicateError("Trouble updating Note titled \(modNote.title.value)")
+            }
+            reloadViews()
+            select(note: modNote, position: nil, source: .action, andScroll: true)
+        }
     }
     
     /// Record modifications made to the Selected Note
@@ -1904,6 +1822,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 source: NoteSelectionSource,
                 andScroll: Bool = false,
                 searchPhrase: String? = nil) {
+        
         guard notenikIO != nil && notenikIO!.collectionOpen else { return }
         
         var noteToUse: Note? = note
@@ -1911,6 +1830,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         if note != nil && (position == nil || position!.invalid) {
             positionToUse = notenikIO!.positionOfNote(note!)
+            if positionToUse == nil {
+                print("  - position is nil")
+            } else {
+                positionToUse!.display()
+            }
         }
         
         if note == nil && position != nil && position!.valid {
@@ -2098,7 +2022,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let following = newNote else { return }
         
         if following.collection.seqFieldDef != nil && sel.hasSeq() {
-            let incSeq = SeqValue(sel.seq.value)
+            let incSeq = sel.seq.dupe()
             incSeq.increment()
             _ = following.setSeq(incSeq.value)
         }
@@ -2129,18 +2053,24 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     func newChild(parent: Note) {
+
         guard let noteIO = guardForCollectionAction() else { return }
         
         newNoteRequested = true
         newNote = Note(collection: noteIO.collection!)
         
-        let parentLevel = parent.level.getInt()
-        let childLevel = parentLevel + 1
-        _ = newNote!.setLevel(childLevel)
+        if parent.hasLevel() {
+            let parentLevel = parent.level.getInt()
+            let childLevel = parentLevel + 1
+            _ = newNote!.setLevel(childLevel)
+        }
         
-        let incSeq = SeqValue(parent.seq.value)
-        incSeq.newChild()
-        _ = newNote!.setSeq(incSeq.value)
+        if parent.hasSeq() {
+            let incSeq = parent.seq.dupe()
+            let incLevel = parent.seq.maxLevel + 1
+            incSeq.incAtLevel(level: incLevel, removingDeeperLevels: false)
+            _ = newNote!.setSeq(incSeq.value)
+        }
         
         populateEditFields(with: newNote!)
         noteTabs!.tabView.selectTabViewItem(at: 1)
@@ -2183,20 +2113,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 proceed = false
             }
         }
-        if proceed {
-            pendingEdits = false
-            if undoMgr != nil {
-                let undoNote = selectedNote.copy() as! Note
-                undoMgr!.registerUndo(withTarget: self) {
-                    targetSelf in targetSelf.restoreNote(undoNote)
-                }
-                undoMgr!.setActionName("Delete Note")
+        guard proceed else { return }
+
+        pendingEdits = false
+        if undoMgr != nil {
+            let undoNote = selectedNote.copy() as! Note
+            undoMgr!.registerUndo(withTarget: self) {
+                targetSelf in targetSelf.restoreNote(undoNote)
             }
-            let (nextNote, nextPosition) = noteIO.deleteSelectedNote(preserveAttachments: false)
-            reloadViews()
-            if nextNote != nil {
-                select(note: nextNote, position: nextPosition, source: .action, andScroll: true)
-            }
+            undoMgr!.setActionName("Delete Note")
+        }
+        let (nextNote, nextPosition) = noteIO.deleteSelectedNote(preserveAttachments: false)
+        reloadViews()
+        if nextNote != nil {
+            select(note: nextNote, position: nextPosition, source: .action, andScroll: true)
         }
     }
     
