@@ -78,8 +78,6 @@ class NewWithOptionsViewController: NSViewController {
                     for index in levelConfig.low...levelConfig.high {
                         let intWithLabel = levelConfig.intWithLabel(forInt: index)
                         levelPopup.addItem(withTitle: intWithLabel)
-                        // let menuItem = menu.item(at: menu.numberOfItems - 1)
-                        // menuItem!.attributedTitle = AppPrefsCocoa.shared.makeUserAttributedString(text: intWithLabel)
                     }
                 }
                 
@@ -101,8 +99,9 @@ class NewWithOptionsViewController: NSViewController {
         }
         currLevel = note.level
         let currLevelInt = currLevel!.getInt()
-        if currLevelInt > 0 && currLevelInt <= levelPopup.numberOfItems {
-            levelPopup.selectItem(at: currLevelInt - 1)
+        let levelIndex = currLevelInt - levelConfig.low
+        if levelIndex >= 0 && levelIndex < levelPopup.numberOfItems {
+            levelPopup.selectItem(at: levelIndex)
         }
         currSeq = note.seq
         
@@ -133,18 +132,11 @@ class NewWithOptionsViewController: NSViewController {
     }
     
     func adjustSeq() {
-        let newSeq = SeqValue(currSeq!.value)
-        let newLevelInt = levelPopup.indexOfSelectedItem + 1
+        let newSeq = currSeq!.dupe()
+        let newLevelInt = levelPopup.indexOfSelectedItem + levelConfig.low
         let newLevel = LevelValue(i: newLevelInt,
                                   config: collection!.levelConfig)
-
-        if newLevel > currLevel! {
-            newSeq.newChild()
-        } else if newLevel < currLevel! {
-            newSeq.dropLevelAndInc()
-        } else {
-            newSeq.increment()
-        }
+        newSeq.incByLevels(originalLevel: currLevel!, newLevel: newLevel)
         seqField.stringValue = newSeq.value
     }
     
