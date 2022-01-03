@@ -1179,7 +1179,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         _ = modNote.setSeq(modSeq.value)
         let _ = recordMods(noteIO: noteIO, note: note, modNote: modNote)
-        return note
+        return modNote
     }
     
     func addPastedNote(_ noteToAdd: Note) -> Note? {
