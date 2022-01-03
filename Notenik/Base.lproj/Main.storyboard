@@ -221,31 +221,6 @@
                                                 <action selector="favoritesToHTML:" target="Ady-hI-5gd" id="sJ4-2u-JcD"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Web Book" id="KTG-kj-uhE">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Web Book" id="WUh-vS-QVC">
-                                                <items>
-                                                    <menuItem title="Publish Web Book as EPUB..." id="5ny-I1-h7J">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="generateWebBook:" target="Ady-hI-5gd" id="e98-ua-ClQ"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Publish Web Book as Site..." id="b6C-Vg-2Sh">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="publishWebBookAsSite:" target="Ady-hI-5gd" id="0dg-sj-xmX"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Web Book Index Redirect..." id="ohW-mC-2p6">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="webBookIndexRedirect:" target="Ady-hI-5gd" id="3Vx-fV-eYp"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="z5M-Bz-NL7"/>
                                         <menuItem title="Purge..." id="EEu-OA-BXX">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -1253,13 +1228,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="330" height="157"/>
+                                <rect key="frame" x="0.0" y="0.0" width="290" height="79"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="328" height="140"/>
+                                    <rect key="frame" x="1" y="1" width="288" height="62"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
-                                            <rect key="frame" x="0.0" y="0.0" width="1157" height="115"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1157" height="37"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1567,7 +1542,7 @@ CA
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="141" width="328" height="15"/>
+                                    <rect key="frame" x="1" y="63" width="288" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
@@ -1604,13 +1579,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="267"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="264"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="265"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="262"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="477" height="265"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="477" height="262"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

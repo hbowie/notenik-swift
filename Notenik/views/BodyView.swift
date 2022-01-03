@@ -17,6 +17,7 @@ class BodyView: MacEditView {
     
     var scrollView: NSScrollView!
     var textView: NSTextView!
+    var delegate: BodyViewDelegate!
     
     var view: NSView {
         return scrollView
@@ -78,6 +79,9 @@ class BodyView: MacEditView {
         }
         
         AppPrefsCocoa.shared.setRegularFont(object: textView)
+        
+        delegate = BodyViewDelegate()
+        textView.delegate = delegate
         
         // Add the Text View to the Scroll View
         scrollView.documentView = textView

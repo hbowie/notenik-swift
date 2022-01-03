@@ -424,7 +424,6 @@ class NoteListViewController:   NSViewController,
     }
     
     func selectRow(index: Int, andScroll: Bool = false) {
-        print("NoteListViewController.selectRow at index = \(index)")
         let indexSet = IndexSet(integer: index)
         tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
         if andScroll {

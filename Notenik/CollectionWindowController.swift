@@ -1830,11 +1830,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         if note != nil && (position == nil || position!.invalid) {
             positionToUse = notenikIO!.positionOfNote(note!)
-            if positionToUse == nil {
-                print("  - position is nil")
-            } else {
-                positionToUse!.display()
-            }
         }
         
         if note == nil && position != nil && position!.valid {

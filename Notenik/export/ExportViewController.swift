@@ -27,6 +27,8 @@ class ExportViewController: NSViewController {
     let bookmarks = "Netscape Bookmark File"
     let concatHtml = "Concatenated HTML"
     let concatMd  = "Concatenated Markdown"
+    let webBookEPUB = "Web Book as EPUB"
+    let webBookSite = "Web Book as Site"
     let osdir     = OpenSaveDirectory.shared
     
     let csv     = "csv"
@@ -57,6 +59,8 @@ class ExportViewController: NSViewController {
         formatPopup.addItem(withTitle: outline)
         formatPopup.addItem(withTitle: concatHtml)
         formatPopup.addItem(withTitle: concatMd)
+        formatPopup.addItem(withTitle: webBookEPUB)
+        formatPopup.addItem(withTitle: webBookSite)
         formatPopup.selectItem(at: 0)
         
         fileExtCombo.removeAllItems()
@@ -73,27 +77,36 @@ class ExportViewController: NSViewController {
     
     @IBAction func formatAction(_ sender: Any) {
         if let selectedFormat = formatPopup.selectedItem {
-            if selectedFormat.title == commaSep {
+            switch selectedFormat.title {
+            case commaSep:
                 fileExtCombo.selectItem(withObjectValue: csv)
-            } else if selectedFormat.title == tabDelim {
+            case  tabDelim:
                 fileExtCombo.selectItem(withObjectValue: txt)
-            } else if selectedFormat.title == jsonTitle {
+            case jsonTitle:
                 fileExtCombo.selectItem(withObjectValue: json)
-            } else if selectedFormat.title == bookmarks {
+            case bookmarks:
                 fileExtCombo.selectItem(withObjectValue: htm)
                 splitTagsCheckBox.state = .on
-            } else if selectedFormat.title == notenik {
+            case notenik:
                 fileExtCombo.selectItem(withObjectValue: txt)
                 splitTagsCheckBox.state = .off
-            } else if selectedFormat.title == outline {
+            case outline:
                 fileExtCombo.selectItem(withObjectValue: opml)
                 splitTagsCheckBox.state = .off
-            } else if selectedFormat.title == concatHtml {
+            case concatHtml:
                 fileExtCombo.selectItem(withObjectValue: html)
                 splitTagsCheckBox.state = .off
-            } else if selectedFormat.title == concatMd {
+            case concatMd:
                 fileExtCombo.selectItem(withObjectValue: md)
                 splitTagsCheckBox.state = .off
+            case webBookEPUB:
+                fileExtCombo.selectItem(withObjectValue: html)
+                splitTagsCheckBox.state = .off
+            case webBookSite:
+                fileExtCombo.selectItem(withObjectValue: html)
+                splitTagsCheckBox.state = .off
+            default:
+                break
             }
         }
     }
@@ -124,6 +137,16 @@ class ExportViewController: NSViewController {
             format = .concatHtml
         case concatMd:
             format = .concatMarkdown
+        case webBookEPUB:
+            format = .webBookEPUB
+            generateWebBook()
+            window.close()
+            return
+        case webBookSite:
+            format = .webBookSite
+            publishWebBookAsSite()
+            window.close()
+            return
         default:
             format = .commaSeparated
         }
@@ -201,6 +224,77 @@ class ExportViewController: NSViewController {
         } else {
             return nil
         }
+    }
+    
+    /// Generate a Web Book of CSS and HTML pages, containing the entire Collection.
+    func generateWebBook() {
+        
+        guard let collection = io.collection else { return }
+        
+        let dialog = NSOpenPanel()
+        
+        if !collection.webBookPath.isEmpty {
+            let webBookURL = URL(fileURLWithPath: collection.webBookPath)
+            let parent = webBookURL.deletingLastPathComponent()
+            dialog.directoryURL = parent
+        }
+        
+        dialog.title                   = "Choose an Output Folder for your Web Book"
+        dialog.showsResizeIndicator    = true
+        dialog.showsHiddenFiles        = false
+        dialog.allowsMultipleSelection = false
+        dialog.canChooseDirectories    = true
+        dialog.canChooseFiles          = false
+        dialog.canCreateDirectories    = true
+        
+        let response = dialog.runModal()
+         
+        if response == .OK {
+            let bookURL = dialog.url!
+            let maker = WebBookMaker(input: collection.fullPathURL!, output: bookURL, epub: true)
+            if maker != nil {
+                collection.webBookPath = bookURL.path
+                collection.webBookAsEPUB = true
+                let filesWritten = maker!.generate()
+                informUserOfImportExportResults(operation: "Generate Web Book", ok: true, numberOfNotes: filesWritten, path: bookURL.path)
+            }
+        }
+        
+    }
+    
+    func publishWebBookAsSite() {
+        
+        guard let collection = io.collection else { return }
+        
+        let dialog = NSOpenPanel()
+        
+        if !collection.webBookPath.isEmpty {
+            let webBookURL = URL(fileURLWithPath: collection.webBookPath)
+            let parent = webBookURL.deletingLastPathComponent()
+            dialog.directoryURL = parent
+        }
+        
+        dialog.title                   = "Choose an Output Folder for your Web Book"
+        dialog.showsResizeIndicator    = true
+        dialog.showsHiddenFiles        = false
+        dialog.allowsMultipleSelection = false
+        dialog.canChooseDirectories    = true
+        dialog.canChooseFiles          = false
+        dialog.canCreateDirectories    = true
+        
+        let response = dialog.runModal()
+         
+        if response == .OK {
+            let bookURL = dialog.url!
+            let maker = WebBookMaker(input: collection.fullPathURL!, output: bookURL, epub: false)
+            if maker != nil {
+                collection.webBookPath = bookURL.path
+                collection.webBookAsEPUB = false
+                let filesWritten = maker!.generate()
+                informUserOfImportExportResults(operation: "Generate Web Book", ok: true, numberOfNotes: filesWritten, path: bookURL.path)
+            }
+        }
+        
     }
     
     /// Let the user know the results of an import/export operation
