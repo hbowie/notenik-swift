@@ -45,49 +45,56 @@ class NewWithOptionsViewController: NSViewController {
         }
         set {
             io = newValue
-            collection = io?.collection
-            if collection != nil {
-                
-                // Set up collection path, to provide context for user.
-                collectionPath.url = collection!.fullPathURL
-                
-                // Set up Class Combo Box
-                klassComboBox.removeAllItems()
-                if collection!.klassDefs.count == 0 {
-                    klassComboBox.stringValue = ""
-                    klassComboBox.isEnabled = false
-                } else {
+            
+            klassComboBox.removeAllItems()
+            klassComboBox.stringValue = ""
+            klassComboBox.isEnabled = false
+            
+            levelPopup.removeAllItems()
+            levelPopup.isEnabled = false
+            
+            seqField.stringValue = ""
+            seqField.isEnabled = false
+            
+            guard let collection = io?.collection else { return }
+            self.collection = collection
+
+            // Set up collection path, to provide context for user.
+            collectionPath.url = collection.fullPathURL
+            
+            // Set up Class Combo Box
+            if let def = collection.klassFieldDef {
+                if let pickList = def.pickList as? KlassPickList {
                     klassComboBox.isEnabled = true
-                    for klassDef in collection!.klassDefs {
+                    for value in pickList.values {
+                        klassComboBox.addItem(withObjectValue: value.value)
+                    }
+                } else if collection.klassDefs.count > 0 {
+                    klassComboBox.isEnabled = true
+                    for klassDef in collection.klassDefs {
                         klassComboBox.addItem(withObjectValue: klassDef.name)
                     }
-                    if collection!.lastNewKlass.isEmpty {
-                        klassComboBox.selectItem(at: 0)
-                    } else {
-                        klassComboBox.stringValue = collection!.lastNewKlass
-                    }
                 }
-                
-                // Set up Level Popup Menu
-                levelPopup.removeAllItems()
-                levelConfig = collection!.levelConfig
-                if collection!.levelFieldDef == nil {
-                    levelPopup.isEnabled = false
+                if collection.lastNewKlass.isEmpty {
+                    klassComboBox.selectItem(at: 0)
                 } else {
-                    levelPopup.isEnabled = true
-                    for index in levelConfig.low...levelConfig.high {
-                        let intWithLabel = levelConfig.intWithLabel(forInt: index)
-                        levelPopup.addItem(withTitle: intWithLabel)
-                    }
+                    klassComboBox.stringValue = collection.lastNewKlass
                 }
-                
-                // Set up Seq field
-                seqField.stringValue = ""
-                if collection!.seqFieldDef == nil {
-                    seqField.isEnabled = false
-                } else {
-                    seqField.isEnabled = true
+            }
+            
+            // Set up Level Popup Menu
+            levelConfig = collection.levelConfig
+            if collection.levelFieldDef != nil {
+                levelPopup.isEnabled = true
+                for index in levelConfig.low...levelConfig.high {
+                    let intWithLabel = levelConfig.intWithLabel(forInt: index)
+                    levelPopup.addItem(withTitle: intWithLabel)
                 }
+            }
+            
+            // Set up Seq field
+            if collection.seqFieldDef != nil {
+                seqField.isEnabled = true
             }
         }
     }
@@ -132,6 +139,7 @@ class NewWithOptionsViewController: NSViewController {
     }
     
     func adjustSeq() {
+        guard collection != nil else { return }
         let newSeq = currSeq!.dupe()
         let newLevelInt = levelPopup.indexOfSelectedItem + levelConfig.low
         let newLevel = LevelValue(i: newLevelInt,

@@ -243,6 +243,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    @IBAction func toggleStreamlinedReading(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        if collection.streamlined {
+            collection.streamlined = false
+            collection.bodyLabel = true
+        } else {
+            collection.streamlined = true
+            collection.bodyLabel = false
+        }
+        noteIO.persistCollectionInfo()
+        reloadCollection(self)
+    }
+    
     /// Let the calling class know that the user has completed modifications
     /// of the Collection Preferences.
     ///
