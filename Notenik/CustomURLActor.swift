@@ -216,6 +216,9 @@ class CustomURLActor {
                 fileURLstr = "file://" + path!
             }
             link = NotenikLink(str: fileURLstr, assume: .assumeFile)
+            if link != nil {
+                link!.determineCollectionType()
+            }
         }
         guard let collectionLink = link else { return nil }
         return juggler.open(link: collectionLink)

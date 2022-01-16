@@ -257,6 +257,24 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         reloadCollection(self)
     }
     
+    @IBAction func copyNotenikURLforCollection(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+
+        var str = "notenik://open?"
+        if collection.shortcut.count > 0 {
+            str.append("shortcut=\(collection.shortcut)")
+        } else {
+            let folderURL = URL(fileURLWithPath: collection.fullPath)
+            let encodedPath = String(folderURL.absoluteString.dropFirst(7))
+            str.append("path=\(encodedPath)")
+        }
+        let board = NSPasteboard.general
+        board.clearContents()
+        board.setString(str, forType: NSPasteboard.PasteboardType.string)
+    }
+    
     /// Let the calling class know that the user has completed modifications
     /// of the Collection Preferences.
     ///
