@@ -945,6 +945,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         var newLevel: LevelValue?
         var newSeq: SeqValue?
+        var newKlass: KlassValue?
                             
         // Gen Seq and Level, if appropriate
         if row > 0 && dropOperation == .above && collection.sortParm == .seqPlusTitle {
@@ -955,6 +956,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 seqAbove = noteAbove!.seq
                 levelAbove = noteAbove!.level
                 newLevel = noteAbove!.level
+                if noteAbove!.hasKlass() {
+                    newKlass = KlassValue(noteAbove!.klass.value)
+                }
             }
             let noteBelow = noteIO.getNote(at: row)
             if noteBelow != nil {
@@ -963,6 +967,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     newLevel = belowLevel
                 } else if belowLevel > newLevel! {
                     newLevel = belowLevel
+                }
+                if newKlass == nil && noteBelow!.hasKlass() {
+                    newKlass = KlassValue(noteBelow!.klass.value)
                 }
             }
             if noteAbove != nil {
@@ -1032,15 +1039,22 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             //     print("    - utf8: \(utf8!)")
             } else if str != nil && str!.count > 0 {
                 logInfo(msg: "Processing pasted item as Note")
+                print("CollectionWindowController pasting item as Note")
                 let tempCollection = NoteCollection()
                 tempCollection.otherFields = true
                 let reader = BigStringReader(str!)
+                print("  - parsing following text:")
+                print(str!)
                 let parser = NoteLineParser(collection: tempCollection, reader: reader)
                 let tempNote = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)",
                                               allowDictAdds: true)
+                print("  - pasting note titled \(tempNote.title.value)")
+                print("  - temp note body = \(tempNote.body.value)")
+                print("  - temp note id = '\(tempNote.noteID)'")
                 if !tempNote.title.value.hasPrefix("Pasted Note Number ")
                         || tempNote.hasBody() || tempNote.hasLink() {
                     tempNote.copyDefinedFields(to: note)
+                    print("  - new note body: \(note.body.value)")
                 }
             } else {
                 logInfo(msg: "Not sure how to handle this pasted item")
@@ -1048,6 +1062,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             var updateExisting = false
             var existingNote: Note?
             if dropOperation == .above && collection.seqFieldDef != nil {
+                print("  - note id = '\(note.noteID)'")
                 existingNote = noteIO.getNote(forID: note.noteID)
                 if existingNote != nil {
                     if existingNote!.body.value == note.body.value {
@@ -1057,6 +1072,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             }
 
             if updateExisting {
+                print("  - attempting to update existing note")
                 let moved = moveNote(note: existingNote!, row: row)
                 if moved != nil {
                     notesAdded += 1
@@ -1070,6 +1086,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 }
                 if newSeq != nil {
                     _ = note.setSeq(newSeq!.value)
+                }
+                if newKlass != nil {
+                    _ = note.setKlass(newKlass!.value)
                 }
                 let addedNote = addPastedNote(note)
                 if addedNote != nil {
