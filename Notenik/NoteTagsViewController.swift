@@ -118,7 +118,19 @@ class NoteTagsViewController: NSViewController,
                 case .tag:
                     textField.stringValue = node.tag!.forDisplay
                 case .note:
-                    textField.stringValue = node.note!.title.value
+                    if let note = node.note {
+                        let sortParm = note.collection.sortParm
+                        if sortParm == .seqPlusTitle
+                            || sortParm == .tasksBySeq
+                            || sortParm == .datePlusSeq
+                            || sortParm == .tagsPlusSeq {
+                            textField.stringValue = note.titleToDisplay
+                        } else {
+                            textField.stringValue = node.note!.title.value
+                        }
+                    } else {
+                        textField.stringValue = "???"
+                    }
                 }
                 textField.sizeToFit()
             }
