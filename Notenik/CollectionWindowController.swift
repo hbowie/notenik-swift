@@ -1039,22 +1039,15 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             //     print("    - utf8: \(utf8!)")
             } else if str != nil && str!.count > 0 {
                 logInfo(msg: "Processing pasted item as Note")
-                print("CollectionWindowController pasting item as Note")
                 let tempCollection = NoteCollection()
                 tempCollection.otherFields = true
                 let reader = BigStringReader(str!)
-                print("  - parsing following text:")
-                print(str!)
                 let parser = NoteLineParser(collection: tempCollection, reader: reader)
                 let tempNote = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)",
                                               allowDictAdds: true)
-                print("  - pasting note titled \(tempNote.title.value)")
-                print("  - temp note body = \(tempNote.body.value)")
-                print("  - temp note id = '\(tempNote.noteID)'")
                 if !tempNote.title.value.hasPrefix("Pasted Note Number ")
                         || tempNote.hasBody() || tempNote.hasLink() {
                     tempNote.copyDefinedFields(to: note)
-                    print("  - new note body: \(note.body.value)")
                 }
             } else {
                 logInfo(msg: "Not sure how to handle this pasted item")
@@ -1062,17 +1055,19 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             var updateExisting = false
             var existingNote: Note?
             if dropOperation == .above && collection.seqFieldDef != nil {
-                print("  - note id = '\(note.noteID)'")
                 existingNote = noteIO.getNote(forID: note.noteID)
                 if existingNote != nil {
-                    if existingNote!.body.value == note.body.value {
+                    let existingTrimmed = StringUtils.trim(existingNote!.body.value)
+                    let dropTrimmed = StringUtils.trim(existingNote!.body.value)
+                    if existingTrimmed == dropTrimmed {
                         updateExisting = true
                     }
+                } else {
+                    print("  - could not find an existing note with this id")
                 }
             }
 
             if updateExisting {
-                print("  - attempting to update existing note")
                 let moved = moveNote(note: existingNote!, row: row)
                 if moved != nil {
                     notesAdded += 1
@@ -1087,7 +1082,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 if newSeq != nil {
                     _ = note.setSeq(newSeq!.value)
                 }
-                if newKlass != nil {
+                if newKlass != nil && !note.hasKlass() {
                     _ = note.setKlass(newKlass!.value)
                 }
                 let addedNote = addPastedNote(note)
