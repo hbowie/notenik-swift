@@ -4,6 +4,8 @@ Tags:   Software.Groovy
 
 Body: 
 
-A note-taking system cunningly devised by Herb Bowie of PowerSurge Publishing. 
+A note-taking system cunningly devised by Herb Bowie. 
 
-You can delete this starting Note after creating one or two of your own. 
+Learn more at [Notenik.app](https://notenik.app).
+
+You can delete this starting Note after creating one or two of your own.

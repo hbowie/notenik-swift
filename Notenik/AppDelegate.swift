@@ -238,6 +238,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         }
     }
     
+    @IBAction func menuHelpNotenikIntro(_ sender: NSMenuItem) {
+        if let url = URL(string: "https://notenik.app/intro/EPUB/html/welcome-to-notenik.html") {
+            NSWorkspace.shared.open(url)
+        }
+    }
+    
     @IBAction func menuHelpRateOnAppStore(_ sender: NSMenuItem) {
         let url = URL(string: "https://itunes.apple.com/app/id1465997984?action=write-review")
         if url != nil {

@@ -6,18 +6,10 @@ Seq:    1
 
 Body: 
 
-Thanks for your interest in Notenik! 
+This brief into is designed to be both a tutorial and a workshop for learning some of the Notenik basics. That is, this intro is itself a Notenik Collection containing instructions on the use of Notenik; but it is a disposable copy that you can modify however you would like, so all of the editing capabilites of Notenik will be available to you as you step through the tutorial.  
 
-This brief intro can be accessed in several different ways. 
+When you install and launch Notenik for the first time, this intro will typically be the first thing you see. 
 
-1. You can read it as a Web Book published on the [Notenik.app](https://notenik.app/intro/EPUB/html/welcome-to-notenik.html) website. 
+(You can also find a read-only copy of this intro on the [Notenik.app website](https://notenik.app/intro/EPUB/html/welcome-to-notenik.html).)
 
-2. You can read it from within Notenik, after launching the app for the first time on your Mac. 
-
-3. You can read it from within Notenik, at some later date, perhaps by creating a new Collection and choosing this Notenik Intro as the starting point for your new Collection. 
-
-In general, the wording of this intro will assume that you are reading it within Notenik. If you are instead reading it as a Web Book (situation # 1, above), then you'll need to make your own mental adjustments to compensate for the fact that you are only viewing screenshots of the app, rather than working with the live application running on your own Mac. 
-
-If you are viewing this intro within Notenik (especially in situation # 2), then it can also serve as your first working Collection of Notes, if you would like. Feel free to modify it in any way that suits your needs or your interests. 
-
-When you're ready to move to the next Note, just click on the `Next` link below.
+When you're ready to move to the next Note in this tutorial, just click on the link following the `Next` label below.

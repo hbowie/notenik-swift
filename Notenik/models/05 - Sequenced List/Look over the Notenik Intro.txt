@@ -2,6 +2,8 @@ Title:  Look over the Notenik Intro
 
 Tags:   steps
 
+Link:   https://notenik.app/intro/EPUB/html/welcome-to-notenik.html
+
 Status: 0 - Idea
 
 Seq:    1.1

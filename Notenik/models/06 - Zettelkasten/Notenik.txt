@@ -2,8 +2,11 @@ Title:  Notenik
 
 Tags:   notenik
 
-Link:   https://notenik.net
+Link:   https://notenik.app
+
+Timestamp: 20210209215337
 
 Body: 
 
 When using the default Markdown parser provided by Notenik, one note can easily link to another, providing one of the key attributes of a [[Zettelkasten]]. 
+

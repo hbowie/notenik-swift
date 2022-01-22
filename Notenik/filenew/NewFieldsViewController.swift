@@ -36,22 +36,26 @@ class NewFieldsViewController: NSViewController {
                 let menuItem = listOfModels.item(withTitle: model)
                 if menuItem != nil {
                     switch model {
-                    case "1 - Notenik Intro":
-                        menuItem!.toolTip = "A Brief Introduction to Notenik"
-                    case "2 - Basic Notes":
+                    case "01 - Basic Notes":
                         menuItem!.toolTip = "Each Note will have a Title, Tags & Body"
-                    case "3 - Web Links":
+                    case "02 - Notenik Intro":
+                        menuItem!.toolTip = "A Brief Introduction to Notenik"
+                    case "03 - Web Links":
                         menuItem!.toolTip = "Each Note will have a Link field, as well as Title, Tags & Body"
-                    case "4 - To Do":
+                    case "04 - To Do":
                         menuItem!.toolTip = "Each Note will represent a task, with a Date, a Status, and optional Recurs rule, in addition to the more common fields."
-                    case "5 - Sequenced List":
+                    case "05 - Sequenced List":
                         menuItem!.toolTip = "Each Note gets a sequence number, and you can sort the entire list by those numbers."
-                    case "6 - Zettelkasten":
+                    case "06 - Zettelkasten":
                         menuItem!.toolTip = "Zettelkasten is a fancy term for a collection of thoughts that can link to one another."
-                    case "7 - Blog":
+                    case "07 - Blog":
                         menuItem!.toolTip = "Each Note becomes a Blog Post"
-                    case "8 - Commonplace book":
+                    case "08 - Commonplace book":
                         menuItem!.toolTip = "Each Note contains a notable quotation"
+                    case "09 - Outline":
+                        menuItem!.toolTip = "Each Note has a Seq field and a Level field"
+                    case "10 - Web Book":
+                        menuItem!.toolTip = "Your entire Collection can be published as a Web Book"
                     default:
                         break
                     }

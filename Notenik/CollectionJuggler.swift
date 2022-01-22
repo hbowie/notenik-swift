@@ -32,7 +32,7 @@ class CollectionJuggler: NSObject {
     let osdir     = OpenSaveDirectory.shared
     
     let modelsPath = "/models"
-    let introModelPath = "/1 - Notenik Intro"
+    let introModelPath = "/02 - Notenik Intro"
     var introModelFullPath = ""
 
     let introFolderName = "Intro"
