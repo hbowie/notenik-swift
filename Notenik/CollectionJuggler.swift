@@ -661,12 +661,24 @@ class CollectionJuggler: NSObject {
         guard let kbwc = openFileWithNewWindow(folderPath: path, readOnly: true) else { return }
         guard let io = kbwc.io else { return }
         guard let note = io.getNote(forID: "versionhistory") else {
-            communicateError("Knowledge Base Version History could not be found")
+            communicateError("Knowledge Base Version History could not be found", alert: true)
             return
         }
         let position = io.positionOfNote(note)
         let (nextNote, nextPosition) = io.nextNote(position)
         kbwc.select(note: nextNote, position: nextPosition, source: .action, andScroll: true)
+    }
+    
+    func mdCheatSheet() {
+        let path = notenikFolderList.kbNode.path
+        guard let kbwc = openFileWithNewWindow(folderPath: path, readOnly: true) else { return }
+        guard let io = kbwc.io else { return }
+        guard let note = io.getNote(forID: "markdowncheatsheet") else {
+            communicateError("Markdown Cheat Sheet could not be found", alert: true)
+            return
+        }
+        let position = io.positionOfNote(note)
+        kbwc.select(note: note, position: position, source: .action, andScroll: true)
     }
     
     /// Respond to a user request to open another Collection. Present the user

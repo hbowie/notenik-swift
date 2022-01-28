@@ -81,6 +81,18 @@
                                                 <action selector="menuFileOpenAction:" target="Voe-Tx-rLC" id="80C-8Z-SfC"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Open Parent Realm..." keyEquivalent="o" id="qGi-li-dJF">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="menuFileOpenParentRealm:" target="Voe-Tx-rLC" id="mXe-2Q-4cT"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Open Folder in Finder" keyEquivalent="O" id="pz3-dS-R0z">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="showFolderInFinder:" target="Ady-hI-5gd" id="pig-AN-j69"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Open Recent" id="tXI-mr-wws">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="oas-Oc-fiZ">
@@ -109,16 +121,10 @@
                                                 <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="1JX-EK-Sqq"/>
                                         <menuItem title="Navigation Board..." keyEquivalent="b" id="uNF-2W-1Z3">
                                             <connections>
                                                 <action selector="navBoard:" target="Voe-Tx-rLC" id="b0B-xY-2Mg"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="1JX-EK-Sqq"/>
-                                        <menuItem title="Open Parent Realm..." keyEquivalent="o" id="qGi-li-dJF">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="menuFileOpenParentRealm:" target="Voe-Tx-rLC" id="mXe-2Q-4cT"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="uYG-Vh-z53"/>
@@ -538,6 +544,12 @@ CA
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="wikipediaLink:" target="Ady-hI-5gd" id="eeI-td-w2p"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Clean Link..." keyEquivalent="L" id="qOG-nw-qIg">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="cleanLink:" target="Ady-hI-5gd" id="yd6-5d-Nxv"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Launch Link" keyEquivalent="l" id="Lj6-TD-r8R">
@@ -965,6 +977,12 @@ CA
                                                 <action selector="menuWhatIsNew:" target="Voe-Tx-rLC" id="2fF-GS-haa"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Markdown Cheat Sheet" id="DcB-rt-vMW">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuCheatSheet:" target="Voe-Tx-rLC" id="AGm-Qe-K7Z"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Notenik Knowledge Base" id="Tse-1t-iaY">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -1016,6 +1034,7 @@ CA
                 <windowController storyboardIdentifier="collWC" id="B8D-0N-5wS" customClass="CollectionWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" toolbarStyle="expanded" id="IQv-IB-iLA" customClass="CollectionWindow" customModule="Notenik" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
@@ -1243,13 +1262,13 @@ CA
             <objects>
                 <viewController id="ckd-wC-xiu" customClass="NoteListViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="71N-8b-3wX">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="183"/>
+                        <rect key="frame" x="0.0" y="0.0" width="410" height="157"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="131"/>
+                                <rect key="frame" x="0.0" y="0.0" width="350" height="131"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="148" height="114"/>
+                                    <rect key="frame" x="1" y="1" width="348" height="114"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
@@ -1561,7 +1580,7 @@ CA
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="115" width="148" height="15"/>
+                                    <rect key="frame" x="1" y="115" width="348" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
@@ -1598,13 +1617,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="254"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="237"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="252"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="235"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="477" height="252"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="477" height="235"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

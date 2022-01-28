@@ -17,5 +17,6 @@ Notenik also makes use of the following supporting libraries, each of which is s
 * [Down](https://github.com/iwasrobbed/Down)
 * [Ink](https://github.com/JohnSundell/Ink)
 * [MathJax](https://www.mathjax.org)
+* [TrackerZapper](https://github.com/rknightuk/TrackerZapper)
 * [XMLCoder](https://github.com/MaxDesiatov/XMLCoder)
 * [ZIPFoundation](https://github.com/weichsel/ZIPFoundation)

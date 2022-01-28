@@ -236,10 +236,17 @@ class NoteEditViewController: NSViewController {
         collectionWindowController!.pendingEdits = true
     }
     
-    /// Set the link field on the edit screen
-    func setLink(_ localLink: String) {
+    func getLink() -> String {
         if linkView != nil {
-            linkView!.text = localLink
+            return linkView!.text
+        }
+        return ""
+    }
+    
+    /// Set the link field on the edit screen
+    func setLink(_ newLink: String) {
+        if linkView != nil {
+            linkView!.text = newLink
         }
     }
     

@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 - 2021 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2022 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -55,8 +55,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
     let tagsMassChangeStoryboard:  NSStoryboard = NSStoryboard(name: "TagsMassChange", bundle: nil)
     let advSearchStoryboard:       NSStoryboard = NSStoryboard(name: "AdvSearch", bundle: nil)
-    let newWithOptionsStoryboard:     NSStoryboard = NSStoryboard(name: "NewWithOptions", bundle: nil)
+    let newWithOptionsStoryboard:  NSStoryboard = NSStoryboard(name: "NewWithOptions", bundle: nil)
     let seqModStoryboard:          NSStoryboard = NSStoryboard(name: "SeqMod", bundle: nil)
+    let linkCleanerStoryboard:     NSStoryboard = NSStoryboard(name: "LinkCleaner", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -1312,6 +1313,36 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    @IBAction func cleanLink(_ sender: Any) {
+        if let cleanLinkController = self.linkCleanerStoryboard.instantiateController(withIdentifier: "linkcleanerWC") as? LinkCleanerWindowController {
+            cleanLinkController.showWindow(self)
+            cleanLinkController.passCollectionWindow(self)
+        }
+    }
+    
+    func getDirtyLink() -> String? {
+        let (_, sel) = guardForNoteAction()
+        guard let selectedNote = sel else { return nil }
+        if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
+            return editVC!.getLink()
+        } else {
+            return selectedNote.link.value
+        }
+    }
+    
+    func setCleanLink(_ clean: String) {
+        guard io != nil && io!.collectionOpen else { return }
+        let (note, _) = io!.getSelectedNote()
+        guard note != nil else { return }
+        if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
+            editVC!.setLink(clean)
+        } else {
+            let modNote = note!.copy() as! Note
+            _ = modNote.setLink(clean)
+            let _ = recordMods(noteIO: io!, note: note!, modNote: modNote)
+        }
+    }
+    
     /// Close the note, either by applying the recurs rule, or changing the status to 9
     @IBAction func menuNoteClose(_ sender: Any) {
         guard io != nil && io!.collectionOpen else { return }
@@ -2367,6 +2398,12 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let nnkIO = guardForCollectionAction() else { return }
         let templatePath = nnkIO.collection!.lib.getPath(type: .template)
         NSWorkspace.shared.openFile(templatePath)
+    }
+    
+    @IBAction func showFolderInFinder(_ sender: Any) {
+        guard let nnkIO = guardForCollectionAction() else { return }
+        let folderPath = nnkIO.collection!.lib.getPath(type: .collection)
+        NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: folderPath)
     }
     
     /// Reload the current collection from disk

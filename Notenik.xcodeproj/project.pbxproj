@@ -54,6 +54,9 @@
 		9C1E0C9622E4F7FA0025C99C /* AttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1E0C9422E4F7FA0025C99C /* AttachmentViewController.swift */; };
 		9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1E0C9722E5306B0025C99C /* AttachmentMasterController.swift */; };
 		9C1E0C9922E5306B0025C99C /* AttachmentMasterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1E0C9722E5306B0025C99C /* AttachmentMasterController.swift */; };
+		9C2709C627A1B47200B8FD9B /* LinkCleaner.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C2709C527A1B47200B8FD9B /* LinkCleaner.storyboard */; };
+		9C2709C827A1B7D300B8FD9B /* LinkCleanerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2709C727A1B7D300B8FD9B /* LinkCleanerWindowController.swift */; };
+		9C2709CA27A1B7F200B8FD9B /* LinkCleanerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2709C927A1B7F200B8FD9B /* LinkCleanerViewController.swift */; };
 		9C29A4EA25D1CABC00409BF5 /* models in Resources */ = {isa = PBXBuildFile; fileRef = 9C29A4E925D1CABC00409BF5 /* models */; };
 		9C29A780256421EA002C5F7A /* NoteDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29A77F256421EA002C5F7A /* NoteDisplayView.swift */; };
 		9C29A78A2564380F002C5F7A /* NoteDisplayWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */; };
@@ -317,6 +320,9 @@
 		9C1E0C9122E4F7D00025C99C /* AttachmentWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentWindowController.swift; sourceTree = "<group>"; };
 		9C1E0C9422E4F7FA0025C99C /* AttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentViewController.swift; sourceTree = "<group>"; };
 		9C1E0C9722E5306B0025C99C /* AttachmentMasterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentMasterController.swift; sourceTree = "<group>"; };
+		9C2709C527A1B47200B8FD9B /* LinkCleaner.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LinkCleaner.storyboard; sourceTree = "<group>"; };
+		9C2709C727A1B7D300B8FD9B /* LinkCleanerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCleanerWindowController.swift; sourceTree = "<group>"; };
+		9C2709C927A1B7F200B8FD9B /* LinkCleanerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCleanerViewController.swift; sourceTree = "<group>"; };
 		9C29A4E925D1CABC00409BF5 /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = models; sourceTree = "<group>"; };
 		9C29A77F256421EA002C5F7A /* NoteDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayView.swift; sourceTree = "<group>"; };
 		9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayWebView.swift; sourceTree = "<group>"; };
@@ -548,6 +554,16 @@
 			path = attachments;
 			sourceTree = "<group>";
 		};
+		9C2709C427A1B43100B8FD9B /* linkCleaner */ = {
+			isa = PBXGroup;
+			children = (
+				9C2709C527A1B47200B8FD9B /* LinkCleaner.storyboard */,
+				9C2709C727A1B7D300B8FD9B /* LinkCleanerWindowController.swift */,
+				9C2709C927A1B7F200B8FD9B /* LinkCleanerViewController.swift */,
+			);
+			path = linkCleaner;
+			sourceTree = "<group>";
+		};
 		9C3CC8F2250A980D002C95D0 /* navigator */ = {
 			isa = PBXGroup;
 			children = (
@@ -651,6 +667,7 @@
 				9CC78E672283560F00640477 /* displayPrefs */,
 				9CAD6A5422DFA95D00531D90 /* export */,
 				9C46A71325D05C58006E9C16 /* filenew */,
+				9C2709C427A1B43100B8FD9B /* linkCleaner */,
 				9C60E70E21F6518400C332ED /* logging */,
 				9C6D8EA4259AB73C00E7AE38 /* medium */,
 				9CD9058726362E54000851E8 /* microblog */,
@@ -1123,6 +1140,7 @@
 				9C65B2A023DE28BC00794C59 /* LICENSE.md in Resources */,
 				9CB60BC0226509B2003B5655 /* Share.storyboard in Resources */,
 				9C9E47FD271F5BB60094FEA5 /* AdvSearch.storyboard in Resources */,
+				9C2709C627A1B47200B8FD9B /* LinkCleaner.storyboard in Resources */,
 				9C60E6D921F64B3C00C332ED /* Main.storyboard in Resources */,
 				9CD9058926362F70000851E8 /* MicroBlog.storyboard in Resources */,
 				9CE3250A224D58360051CA1F /* Log.storyboard in Resources */,
@@ -1242,6 +1260,7 @@
 				9CCE7C69264B1FA7003818DF /* QuickActionFolder.swift in Sources */,
 				9C924C7025CDB80A000DEAB3 /* FileExtensionPicker.swift in Sources */,
 				9C097D5D259AB95A00834A42 /* MediumPubWindowController.swift in Sources */,
+				9C2709C827A1B7D300B8FD9B /* LinkCleanerWindowController.swift in Sources */,
 				9C2BDBC72764188200E2041C /* IncludeChildrenView.swift in Sources */,
 				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
 				9C5BE16C277166E60013C0D3 /* SeqModWindowController.swift in Sources */,
@@ -1276,6 +1295,7 @@
 				9C36EC792773CB7400ECD847 /* BodyViewDelegate.swift in Sources */,
 				9CC78E6F228358A400640477 /* DisplayPrefsViewController.swift in Sources */,
 				9C822B9D22D6D5D6008EF106 /* TagsView.swift in Sources */,
+				9C2709CA27A1B7F200B8FD9B /* LinkCleanerViewController.swift in Sources */,
 				9C60E6D221F64B3B00C332ED /* AppDelegate.swift in Sources */,
 				9C05BD6225AE461500EEC1D4 /* NavigatorFolder.swift in Sources */,
 				9C02D2B62267F5E700587EDF /* CalendarViewController.swift in Sources */,
@@ -1573,7 +1593,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 230;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1586,7 +1606,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 8.1.1;
+				MARKETING_VERSION = 8.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1602,7 +1622,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 230;
+				CURRENT_PROJECT_VERSION = 236;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1615,7 +1635,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 8.1.1;
+				MARKETING_VERSION = 8.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

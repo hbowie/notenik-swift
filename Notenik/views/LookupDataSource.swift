@@ -55,11 +55,12 @@ class LookupDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     /// the text the user has typed.
     func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
         guard notesList != nil else { return nil }
+        guard let sortParm = io?.collection?.sortParm else { return nil }
         var i = 0
         while i < notesList!.count {
             if notesList![i].title.value.hasPrefix(string) {
                 return notesList![i].title.value
-            } else if notesList![i].title.value > string && io!.collection!.sortParm == .title {
+            } else if notesList![i].title.value > string && sortParm == .title {
                 return nil
             }
             i += 1

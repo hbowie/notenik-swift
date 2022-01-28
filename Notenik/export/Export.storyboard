@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,6 +12,7 @@
                 <windowController storyboardIdentifier="exportWC" id="4UP-Iy-hXp" customClass="ExportWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Export Options" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="tKF-AM-HEU">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="425" y="461" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
@@ -35,7 +37,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Exq-bf-KLT">
-                                <rect key="frame" x="18" y="233" width="101" height="17"/>
+                                <rect key="frame" x="18" y="234" width="101" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Output Format: " id="8yY-UM-fF7">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -43,7 +45,7 @@
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Omm-Zk-4KB">
-                                <rect key="frame" x="173" y="226" width="290" height="25"/>
+                                <rect key="frame" x="172" y="226" width="292" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Comma-Separated" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Haw-sE-Wxk" id="IQk-pl-5fZ">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -60,7 +62,7 @@
                                 </connections>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JoO-zm-Yfa">
-                                <rect key="frame" x="18" y="170" width="149" height="17"/>
+                                <rect key="frame" x="18" y="173" width="148" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Use Tags Export Prefs? " id="rqE-b2-c0O">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -68,7 +70,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="R46-nG-9aE">
-                                <rect key="frame" x="18" y="144" width="74" height="17"/>
+                                <rect key="frame" x="18" y="148" width="74" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Split Tags? " id="IE2-36-0bA">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -76,7 +78,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1En-Qx-qUZ">
-                                <rect key="frame" x="20" y="119" width="139" height="17"/>
+                                <rect key="frame" x="19" y="124" width="139" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Add Web Extensions? " id="quW-XJ-zrb">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -84,7 +86,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YYS-Fn-e7G">
-                                <rect key="frame" x="407" y="13" width="59" height="32"/>
+                                <rect key="frame" x="414" y="13" width="53" height="32"/>
                                 <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2Vi-DZ-Aqw">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -97,7 +99,7 @@ DQ
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1yv-gc-F0W">
-                                <rect key="frame" x="14" y="13" width="82" height="32"/>
+                                <rect key="frame" x="13" y="13" width="76" height="32"/>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rTM-Kx-uZw">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -110,7 +112,7 @@ Gw
                                 </connections>
                             </button>
                             <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GXv-Vg-nas">
-                                <rect key="frame" x="177" y="194" width="125" height="26"/>
+                                <rect key="frame" x="176" y="196" width="125" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="122" id="aQk-7t-yCh"/>
                                 </constraints>
@@ -126,7 +128,7 @@ Gw
                                 </comboBoxCell>
                             </comboBox>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="caW-0K-45t">
-                                <rect key="frame" x="22" y="201" width="95" height="17"/>
+                                <rect key="frame" x="21" y="203" width="95" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="File Extension: " id="srG-NL-1Ey">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -134,21 +136,21 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DzB-J7-VW5">
-                                <rect key="frame" x="175" y="168" width="44" height="18"/>
+                                <rect key="frame" x="174" y="172" width="48" height="18"/>
                                 <buttonCell key="cell" type="check" title="Yes" bezelStyle="regularSquare" imagePosition="left" inset="2" id="WYV-Zr-l0N">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KjJ-fY-bg4">
-                                <rect key="frame" x="175" y="143" width="44" height="18"/>
+                                <rect key="frame" x="174" y="147" width="48" height="18"/>
                                 <buttonCell key="cell" type="check" title="Yes" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Qyq-dO-X2l">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x4w-dm-XxG">
-                                <rect key="frame" x="175" y="118" width="44" height="18"/>
+                                <rect key="frame" x="174" y="123" width="48" height="18"/>
                                 <buttonCell key="cell" type="check" title="Yes" bezelStyle="regularSquare" imagePosition="left" inset="2" id="PLz-5X-ar3">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
