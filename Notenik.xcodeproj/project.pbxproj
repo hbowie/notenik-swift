@@ -89,6 +89,7 @@
 		9C46A72125D070BD006E9C16 /* NewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72025D070BD006E9C16 /* NewCollectionViewController.swift */; };
 		9C46A72725D07899006E9C16 /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72625D07899006E9C16 /* NewLocationViewController.swift */; };
 		9C46A72D25D0A6E0006E9C16 /* NewNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72C25D0A6E0006E9C16 /* NewNameViewController.swift */; };
+		9C479DEA27B090D1002747C9 /* notenik-tips in Resources */ = {isa = PBXBuildFile; fileRef = 9C479DE927B090D0002747C9 /* notenik-tips */; };
 		9C4A45A82723464400BE3202 /* KlassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4A45A72723464400BE3202 /* KlassView.swift */; };
 		9C4A45AA272346BD00BE3202 /* KlassDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4A45A9272346BD00BE3202 /* KlassDataSource.swift */; };
 		9C4AE8D626A205EB00CD4EB4 /* MathJax in Resources */ = {isa = PBXBuildFile; fileRef = 9C4AE8D526A205EB00CD4EB4 /* MathJax */; };
@@ -344,6 +345,7 @@
 		9C46A72025D070BD006E9C16 /* NewCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCollectionViewController.swift; sourceTree = "<group>"; };
 		9C46A72625D07899006E9C16 /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
 		9C46A72C25D0A6E0006E9C16 /* NewNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNameViewController.swift; sourceTree = "<group>"; };
+		9C479DE927B090D0002747C9 /* notenik-tips */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-tips"; path = "../../Notenik Docs/notenik-tips"; sourceTree = "<group>"; };
 		9C4A45A72723464400BE3202 /* KlassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlassView.swift; sourceTree = "<group>"; };
 		9C4A45A9272346BD00BE3202 /* KlassDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlassDataSource.swift; sourceTree = "<group>"; };
 		9C4AE8D526A205EB00CD4EB4 /* MathJax */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MathJax; path = ../../MathJax; sourceTree = "<group>"; };
@@ -658,6 +660,7 @@
 				9C4AE8D526A205EB00CD4EB4 /* MathJax */,
 				9C29A4E925D1CABC00409BF5 /* models */,
 				9C7132DC2692328B00A3034F /* notenik-KB */,
+				9C479DE927B090D0002747C9 /* notenik-tips */,
 				9C09E1752248601D0046D50D /* notenik.iconset */,
 				9C60E6DB21F64B3C00C332ED /* Notenik.entitlements */,
 				9C9E47FB271F5B760094FEA5 /* advsearch */,
@@ -1134,6 +1137,7 @@
 				9C3CC8F6250A9C9E002C95D0 /* Navigator.storyboard in Resources */,
 				9CE32504224D48180051CA1F /* Preferences.storyboard in Resources */,
 				9CD9963023D3CA30004650BE /* CollectionPrefs.storyboard in Resources */,
+				9C479DEA27B090D1002747C9 /* notenik-tips in Resources */,
 				9C60E6D621F64B3C00C332ED /* Assets.xcassets in Resources */,
 				9C1BE26B22EB9164006FDFEC /* Script.storyboard in Resources */,
 				9C8FD8D82216302900F16669 /* README.md in Resources */,
@@ -1593,7 +1597,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 237;
+				CURRENT_PROJECT_VERSION = 239;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1606,7 +1610,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 8.2.1;
+				MARKETING_VERSION = 8.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1622,7 +1626,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 237;
+				CURRENT_PROJECT_VERSION = 239;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1635,7 +1639,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 8.2.1;
+				MARKETING_VERSION = 8.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

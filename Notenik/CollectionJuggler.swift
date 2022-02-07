@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 - 2021 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2022 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -39,6 +39,7 @@ class CollectionJuggler: NSObject {
     
     let storyboard:                NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
     let logStoryboard:             NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
+    let prefsStoryboard:           NSStoryboard = NSStoryboard(name: "Preferences", bundle: nil)
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
     let navStoryboard:             NSStoryboard = NSStoryboard(name: "Navigator", bundle: nil)
     let quickActionStoryBoard:     NSStoryboard = NSStoryboard(name: "QuickAction", bundle: nil)
@@ -600,6 +601,14 @@ class CollectionJuggler: NSObject {
         }
     }
     
+    func showAppPreferences() {
+        if let prefsController = self.prefsStoryboard.instantiateController(withIdentifier: "prefsWC") as? PrefsWindowController {
+            prefsController.showWindow(self)
+        } else {
+            communicateError("Couldn't get a Prefs Window Controller!")
+        }
+    }
+    
     /// Let the calling class know that the user has completed modifications
     /// of the Collection Preferences.
     ///
@@ -679,6 +688,25 @@ class CollectionJuggler: NSObject {
         }
         let position = io.positionOfNote(note)
         kbwc.select(note: note, position: position, source: .action, andScroll: true)
+    }
+    
+    func openTips() -> CollectionWindowController? {
+        let path = notenikFolderList.tipsNode.path
+        let tipswc = openFileWithNewWindow(folderPath: path, readOnly: true)
+        if tipswc != nil {
+            tipswc!.selectFirstNote()
+            tipswc!.changeLeftViewVisibility(makeVisible: false)
+            if let window = tipswc!.window {
+                let frame = window.frame
+                print("Window frame width  = \(frame.width)")
+                print("Window frame height = \(frame.height)")
+                print("Window frame x = \(frame.minX) - \(frame.maxX)")
+                print("Window frame y = \(frame.minY) - \(frame.maxY))")
+                let newFrame = NSRect(x: frame.minX + 400.0, y: frame.minY + 180.0, width: 600.0, height: 560.0)
+                window.setFrame(newFrame, display: true)
+            }
+        }
+        return tipswc
     }
     
     /// Respond to a user request to open another Collection. Present the user

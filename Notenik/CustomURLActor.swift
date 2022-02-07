@@ -68,6 +68,8 @@ class CustomURLActor {
             processHelpCommand(labels: labels, values: values)
         case "open":
             processOpenCommand(labels: labels, values: values)
+        case "prefs":
+            processPrefsCommand()
         default:
             communicateError("Invalid Command: \(command)")
             return false
@@ -232,6 +234,10 @@ class CustomURLActor {
         } else {
             return multiEntry!.link
         }
+    }
+    
+    func processPrefsCommand() {
+        juggler.showAppPreferences()
     }
     
     /// Send an informational message to the log.

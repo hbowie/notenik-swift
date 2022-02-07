@@ -21,12 +21,19 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     
     @IBOutlet var confirmDeletesNo: NSButton!
     
+    @IBOutlet var openTipsAtStartup: NSButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if appPrefs.confirmDeletes {
             confirmDeletesYes.state = .on
         } else {
             confirmDeletesNo.state = .on
+        }
+        if appPrefs.tipsAtStartup {
+            openTipsAtStartup.state = .on
+        } else {
+            openTipsAtStartup.state = .off
         }
     }
     
@@ -35,6 +42,14 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
             appPrefs.confirmDeletes = true
         } else if confirmDeletesNo.state == .on {
             appPrefs.confirmDeletes = false
+        }
+    }
+    
+    @IBAction func checkBoxStartupTips(_ sender: Any) {
+        if openTipsAtStartup.state == .on {
+            appPrefs.tipsAtStartup = true
+        } else {
+            appPrefs.tipsAtStartup = false
         }
     }
     

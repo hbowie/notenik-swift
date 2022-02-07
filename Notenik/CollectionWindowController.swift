@@ -258,6 +258,12 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         reloadCollection(self)
     }
     
+    func changeLeftViewVisibility(makeVisible: Bool) {
+        if splitViewController != nil {
+            splitViewController!.changeLeftViewVisibility(makeVisible: false)
+        }
+    }
+    
     @IBAction func copyNotenikURLforCollection(_ sender: Any) {
         
         guard let noteIO = guardForCollectionAction() else { return }

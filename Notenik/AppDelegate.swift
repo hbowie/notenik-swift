@@ -36,7 +36,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     let newControllerStoryboard:    NSStoryboard = NSStoryboard(name: "NewCollection", bundle: nil)
     let newInIcloudStoryboard:      NSStoryboard = NSStoryboard(name: "NewICloud", bundle: nil)
-    let prefsStoryboard:            NSStoryboard = NSStoryboard(name: "Preferences", bundle: nil)
     let displayPrefsStoryboard:     NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
     let logStoryboard:              NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
     let newsStoryboard:             NSStoryboard = NSStoryboard(name: "News", bundle: nil)
@@ -88,6 +87,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         // Register our app to handle Apple events.
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(self.handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
         
+        // Show Tips if requested
+        if appPrefs.tipsAtStartup {
+            _ = juggler.openTips()
+        }
+        
         // Done launching
         appPrefs.appLaunching = false
         
@@ -135,14 +139,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     @IBAction func menuAppPreferences(_ sender: NSMenuItem) {
-        if let prefsController = self.prefsStoryboard.instantiateController(withIdentifier: "prefsWC") as? PrefsWindowController {
-            prefsController.showWindow(self)
-        } else {
-            logger.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "AppDelegate",
-                              level: .error,
-                              message: "Couldn't get a Prefs Window Controller!")
-        }
+        juggler.showAppPreferences()
     }
     
     @IBAction func navBoard(_ sender: NSMenuItem) {
@@ -208,18 +205,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         juggler.viewResetEditFontSize()
     }
     
-    @IBAction func menuOpenKB(_ sender: Any) {
-        _ = juggler.openKB()
-    }
-    
-    @IBAction func menuWhatIsNew(_ sender: Any) {
-        juggler.whatIsNew()
-    }
-    
-    @IBAction func menuCheatSheet(_ sender: Any) {
-        juggler.mdCheatSheet()
-    }
-    
     @IBAction func menuWindowLog(_ sender: NSMenuItem) {
         if let logController = self.logStoryboard.instantiateController(withIdentifier: "logWC") as? LogWindowController {
             logController.showWindow(self)
@@ -233,6 +218,28 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     @IBAction func menuWindowScripter(_ sender: Any) {
         juggler.showScriptWindow()
+    }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Help Menu Items
+    //
+    // -----------------------------------------------------------
+    
+    @IBAction func menuOpenKB(_ sender: Any) {
+        _ = juggler.openKB()
+    }
+    
+    @IBAction func menuWhatIsNew(_ sender: Any) {
+        juggler.whatIsNew()
+    }
+    
+    @IBAction func menuCheatSheet(_ sender: Any) {
+        juggler.mdCheatSheet()
+    }
+    
+    @IBAction func menuOpenTips(_ sender: Any) {
+        _ = juggler.openTips()
     }
     
     @IBAction func menuHelpNotenikDotNet(_ sender: NSMenuItem) {
