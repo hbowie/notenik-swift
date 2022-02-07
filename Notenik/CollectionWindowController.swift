@@ -146,6 +146,12 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 editVC!.io = newValue
             }
             
+            if let windowStr = notenikIO?.collection?.windowPosStr {
+                if !notenikIO!.collection!.readOnly {
+                    setNumbers(windowStr)
+                }
+            }
+            
             var (selected, position) = notenikIO!.getSelectedNote()
             if selected == nil {
                 (selected, position) = notenikIO!.firstNote()
@@ -164,6 +170,29 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             }
         }
     }
+    
+    /// Set position of window, given a string of formatted doubles.
+    func setNumbers(_ windowStr: String) {
+        guard !windowStr.isEmpty else { return }
+        let numbers = windowStr.components(separatedBy: ";")
+        guard numbers.count >= 5 else {
+            print("Window Numbers String could not be split into five numbers")
+            return
+        }
+        let x = Double(numbers[0])
+        let y = Double(numbers[1])
+        let width = Double(numbers[2])
+        let height = Double(numbers[3])
+        let divider = Double(numbers[4])
+        guard x != nil && y != nil && width != nil && height != nil && divider != nil  else {
+            print("One or more components could not be converted to Doubles")
+            return
+        }
+        let frame = NSRect(x: x!, y: y!, width: width!, height: height!)
+        window!.setFrame(frame, display: true)
+        let float = CGFloat(divider!)
+        splitViewController!.splitView.setPosition(float, ofDividerAt: 0)
+    }
 
     override func windowDidLoad() {
         super.windowDidLoad()
@@ -173,9 +202,33 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         window!.delegate = self
     }
     
+    func windowWillClose() {
+        juggler.windowClosing(window: self)
+    }
+    
     func saveBeforeClose() {
+        
         if !pendingMod {
             let _ = modIfChanged()
+        }
+        
+        var windowPosition = ""
+        if let frame = window?.frame {
+            windowPosition.append("\(frame.minX);")
+            windowPosition.append("\(frame.minY);")
+            windowPosition.append("\(frame.width);")
+            windowPosition.append("\(frame.height);")
+        }
+        if let splitVC = splitViewController {
+            windowPosition.append("\(splitVC.leftViewWidth);")
+        }
+        if let collection = io?.collection {
+            collection.windowPosStr = windowPosition
+            if collection.readOnly {
+                if collection.fullPath.hasSuffix("tips") {
+                    appPrefs.tipsWindow = windowPosition
+                }
+            }
         }
     }
     
@@ -209,10 +262,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 displayVC!.wc = self
             }
         }
-    }
-    
-    func windowWillClose() {
-        juggler.windowClosing(window: self)
     }
     
     /// The user has requested a chance to review and possibly modify the Collection Preferences. 

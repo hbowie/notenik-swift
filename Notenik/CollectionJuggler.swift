@@ -692,19 +692,10 @@ class CollectionJuggler: NSObject {
     
     func openTips() -> CollectionWindowController? {
         let path = notenikFolderList.tipsNode.path
-        let tipswc = openFileWithNewWindow(folderPath: path, readOnly: true)
+        let tipsWindowNumbers = appPrefs.tipsWindow
+        let tipswc = openFileWithNewWindow(folderPath: path, readOnly: true, windowNumbers: tipsWindowNumbers)
         if tipswc != nil {
             tipswc!.selectFirstNote()
-            tipswc!.changeLeftViewVisibility(makeVisible: false)
-            if let window = tipswc!.window {
-                let frame = window.frame
-                print("Window frame width  = \(frame.width)")
-                print("Window frame height = \(frame.height)")
-                print("Window frame x = \(frame.minX) - \(frame.maxX)")
-                print("Window frame y = \(frame.minY) - \(frame.maxY))")
-                let newFrame = NSRect(x: frame.minX + 400.0, y: frame.minY + 180.0, width: 600.0, height: 560.0)
-                window.setFrame(newFrame, display: true)
-            }
         }
         return tipswc
     }
@@ -738,20 +729,23 @@ class CollectionJuggler: NSObject {
     ///   - folderPath: The path to the collection folder.
     ///   - readOnly:   Should this collection be opened read-only?
     /// - Returns: True if open was successful; false otherwise.
-    func openFileWithNewWindow(folderPath: String, readOnly: Bool) -> CollectionWindowController? {
+    func openFileWithNewWindow(folderPath: String,
+                               readOnly: Bool,
+                               windowNumbers: String = "") -> CollectionWindowController? {
         let fileURL = URL(fileURLWithPath: folderPath)
-        return openFileWithNewWindow(fileURL: fileURL, readOnly: readOnly)
+        return openFileWithNewWindow(fileURL: fileURL,
+                                     readOnly: readOnly,
+                                     windowNumbers: windowNumbers)
     }
     
     /// Attempt to open a Notenik Collection.
     ///
     /// - Parameter fileURL: A URL pointing to a Notenik folder.
     /// - Returns: True if open was successful, false if not.
-    func openFileWithNewWindow(fileURL: URL, readOnly: Bool) -> CollectionWindowController? {
+    func openFileWithNewWindow(fileURL: URL,
+                               readOnly: Bool,
+                               windowNumbers: String = "") -> CollectionWindowController? {
         
-        // let io: NotenikIO = FileIO()
-        // let realm = io.getDefaultRealm()
-        // realm.path = ""
         var collectionURL: URL
         if FileUtils.isDir(fileURL.path) {
             collectionURL = fileURL
@@ -774,6 +768,9 @@ class CollectionJuggler: NSObject {
         guard let collection = io.collection else { return nil }
         saveCollectionInfo(collection)
         let wc = assignIOtoWindow(io: io)
+        if wc != nil && !windowNumbers.isEmpty {
+            wc!.setNumbers(windowNumbers)
+        }
         notenikFolderList.add(collection)
         return wc
 
