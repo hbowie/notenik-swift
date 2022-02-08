@@ -658,7 +658,10 @@ class CollectionJuggler: NSObject {
     /// Open the Notenik Knowledge Base.
     func openKB() -> CollectionWindowController? {
         let path = notenikFolderList.kbNode.path
-        let kbwc = openFileWithNewWindow(folderPath: path, readOnly: true)
+        let kbWindowNumbers = appPrefs.kbWindow
+        let kbwc = openFileWithNewWindow(folderPath: path,
+                                         readOnly: true,
+                                         windowNumbers: kbWindowNumbers)
         if kbwc != nil {
             kbwc!.selectFirstNote()
         }
@@ -667,7 +670,10 @@ class CollectionJuggler: NSObject {
     
     func whatIsNew() {
         let path = notenikFolderList.kbNode.path
-        guard let kbwc = openFileWithNewWindow(folderPath: path, readOnly: true) else { return }
+        let kbWindowNumbers = appPrefs.kbWindow
+        guard let kbwc = openFileWithNewWindow(folderPath: path,
+                                               readOnly: true,
+                                               windowNumbers: kbWindowNumbers) else { return }
         guard let io = kbwc.io else { return }
         guard let note = io.getNote(forID: "versionhistory") else {
             communicateError("Knowledge Base Version History could not be found", alert: true)
@@ -680,7 +686,10 @@ class CollectionJuggler: NSObject {
     
     func mdCheatSheet() {
         let path = notenikFolderList.kbNode.path
-        guard let kbwc = openFileWithNewWindow(folderPath: path, readOnly: true) else { return }
+        let kbWindowNumbers = appPrefs.kbWindow
+        guard let kbwc = openFileWithNewWindow(folderPath: path,
+                                               readOnly: true,
+                                               windowNumbers: kbWindowNumbers) else { return }
         guard let io = kbwc.io else { return }
         guard let note = io.getNote(forID: "markdowncheatsheet") else {
             communicateError("Markdown Cheat Sheet could not be found", alert: true)

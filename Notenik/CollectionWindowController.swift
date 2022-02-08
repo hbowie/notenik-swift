@@ -227,6 +227,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             if collection.readOnly {
                 if collection.fullPath.hasSuffix("tips") {
                     appPrefs.tipsWindow = windowPosition
+                } else if collection.fullPath.hasSuffix("-KB") {
+                    appPrefs.kbWindow = windowPosition
                 }
             }
         }
@@ -1760,6 +1762,29 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let priorNote = crumbs!.backup(from: selNote)
         
         select(note: priorNote, position: nil, source: .nav, andScroll: true)
+    }
+    
+    @IBAction func goToRandomNote(_ sender: Any) {
+        let (nio, _) = guardForNoteAction()
+        guard let noteIO = nio else { return }
+        var (randomNote, randomPosition) = noteIO.getSelectedNote()
+        guard randomNote != nil else { return }
+        let lastTitle = randomNote!.title.value
+        var first = 0
+        if noteIO.collection!.seqFieldDef != nil {
+            let (note, _) = noteIO.firstNote()
+            if note != nil && !note!.hasSeq() && noteIO.notesCount > 1 {
+                first = 1
+            }
+        }
+        while (noteIO.notesCount - 1) > first && randomNote!.title.value == lastTitle {
+            let randomIndex = Int.random(in: first..<noteIO.notesCount)
+            randomPosition = NotePosition(index: randomIndex)
+            randomNote = noteIO.getNote(at: randomIndex)
+            guard randomNote != nil else { return }
+        }
+        
+        select(note: randomNote, position: randomPosition, source: .nav, andScroll: true)
     }
     
     /// Respond to a user request for an Advanced Search.
