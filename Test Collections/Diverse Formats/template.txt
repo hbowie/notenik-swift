@@ -1,0 +1,18 @@
+title: <title> 
+
+location:  
+
+author: <author> 
+
+passage:  
+
+date: <date> 
+
+tags: <tags> 
+
+layout:  
+
+aliases: <aka> 
+
+Body:  
+

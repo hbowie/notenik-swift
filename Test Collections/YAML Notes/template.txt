@@ -1,0 +1,12 @@
+title: <title> 
+
+layout:  
+
+tags: <tags> 
+
+authors: <author> 
+
+aliases: <aka> 
+
+Body:  
+
