@@ -1,0 +1,15 @@
+---
+title:  YAML with Aliases
+tags:   
+- authors
+- tags
+- yaml
+authors: 
+- Herb Bowie
+- Pauline Bowie
+aliases: 
+- YAML Example 3
+- Third YAML Example
+...
+This is a note with YAML frontmatter containing multiple tags and multiple authors and aliases. 
+

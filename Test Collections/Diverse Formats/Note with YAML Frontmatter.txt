@@ -1,0 +1,8 @@
+---
+title: Note with YAML Frontmatter
+tags:
+    - Educational
+-Tasty
+	- Hip
+---
+This is a note with YAML frontmatter. 

@@ -1,0 +1,16 @@
+---
+title:  YAML with Authors
+tags:   
+- authors
+- tags
+- yaml
+authors: 
+- Herb Bowie
+- Pauline Bowie
+...
+
+
+This is a note with YAML frontmatter containing multiple tags and multiple authors. 
+
+
+Also see [[third YAML example]].
