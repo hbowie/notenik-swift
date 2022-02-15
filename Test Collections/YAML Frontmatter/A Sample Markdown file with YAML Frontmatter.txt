@@ -1,0 +1,9 @@
+---
+title: A Sample Markdown file with YAML Frontmatter
+keywords:
+  - A keyword
+  - Another keyword
+author:
+  - The Zettlr Team
+---
+And this is the body. 
