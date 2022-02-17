@@ -1,0 +1,10 @@
+---
+title:  A New Markdown file with YAML frontmatter
+keywords: 
+- tag1
+- tag2
+author: 
+- Herb Bowie
+---
+
+This is the body. 

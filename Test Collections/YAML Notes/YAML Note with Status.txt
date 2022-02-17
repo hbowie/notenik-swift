@@ -1,0 +1,15 @@
+---
+title:  YAML Note with Status
+tags:
+- #authors
+- #tags
+- #yaml
+authors:
+- Herb Bowie
+- Pauline Bowie
+- Stephen Bowie
+status: draft
+...
+
+This is a YAML note with a status field. Let's see what this does to the rest of the Collection. 
+

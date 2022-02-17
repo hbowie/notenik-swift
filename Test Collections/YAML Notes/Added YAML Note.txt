@@ -1,0 +1,14 @@
+---
+title: Added YAML Note
+tags:
+- #Hip
+- #YAML
+- #example
+layout: test
+authors:
+- Herb Bowie
+- Pauline Bowie
+---
+
+Added within Notenik. And modified. 
+

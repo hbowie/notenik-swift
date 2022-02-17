@@ -17,7 +17,7 @@ import NotenikLib
 /// corresponding fields. 
 class ViewFactory {
     
-    static func getEditView(pickLists: ValuePickLists, def: FieldDefinition) -> MacEditView {
+    static func getEditView(collection: NoteCollection, pickLists: ValuePickLists, def: FieldDefinition) -> MacEditView {
         
         if let pickList = def.pickList as? AuthorPickList {
             return AuthorView(pickList: pickList)

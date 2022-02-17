@@ -131,7 +131,9 @@ class NoteEditViewController: NSViewController {
         let label = def.fieldLabel
         let labelView = makeLabelView(with: label)
         
-        let editView = ViewFactory.getEditView(pickLists: notenikIO!.pickLists, def: def)
+        let editView = ViewFactory.getEditView(collection: collection,
+                                               pickLists: notenikIO!.pickLists,
+                                               def: def)
         let valueView = editView.view
         
         editViews.append(editView)

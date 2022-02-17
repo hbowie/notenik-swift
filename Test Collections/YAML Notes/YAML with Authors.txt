@@ -9,8 +9,9 @@ authors:
 - Pauline Bowie
 ...
 
-
 This is a note with YAML frontmatter containing multiple tags and multiple authors. 
 
 
 Also see [[third YAML example]].
+
+Modified. 

@@ -1,18 +1,17 @@
 ---
-title:  Note Added with YAML
-tags:   
-- groovy
-- hip
+title: Note Added with YAML
+tags:
+- #groovy
+- #hip
 layout: post
-authors: 
+authors:
 - Herb Bowie
 - Pauline Bowie
-aliases: 
+aliases:
 - Fifth YAML Note
 - YAML Note 5
 ---
 
 This is a new Note added through Notenik. 
 
-And now modified. 
-
+And now modified again. 

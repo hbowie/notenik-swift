@@ -13,24 +13,29 @@ import NotenikLib
 class StatusView: MacEditView {
     
     var config: StatusValueConfig!
-    var menu: NSPopUpButton!
+    // var menu: NSPopUpButton!
+    var combo: NSComboBox!
     
     var view: NSView {
-        return menu
+        return combo
     }
     
     var text: String {
         get {
-            if menu.titleOfSelectedItem != nil {
-                return config.getFullString(fromLabel: menu.titleOfSelectedItem!)
-            } else {
-                return ""
-            }
+            return config.normalize(str: combo.stringValue, withDigit: true) 
+            //if menu.titleOfSelectedItem != nil {
+            //    return config.getFullString(fromLabel: menu.titleOfSelectedItem!)
+            // } else {
+            //    return ""
+            // }
         }
         set {
-            let configIndex = config.get(newValue)
-            let title = config.get(configIndex)
-            menu.selectItem(withTitle: title)
+            if let configIndex = config.getIndexFor(str: newValue) {
+                let comboItem = config.get(configIndex)
+                combo.selectItem(withObjectValue: comboItem)
+            } else {
+                combo.stringValue = newValue
+            }
         }
     }
     
@@ -42,19 +47,20 @@ class StatusView: MacEditView {
     func buildView() {
         
         // Set up the Menu
-        menu = NSPopUpButton()
+        combo = NSComboBox()
+        // menu = NSPopUpButton()
         for option in config.statusOptions {
-            if option.count > 0 {
-                menu.addItem(withTitle: option)
-                let menuItem = menu.item(at: menu.numberOfItems - 1)
-                menuItem!.attributedTitle = AppPrefsCocoa.shared.makeUserAttributedString(text: option)
+            if !option.isEmpty {
+                combo.addItem(withObjectValue: option)
+                // let menuItem = combo.item(at: combo.numberOfItems - 1)
+                // menuItem!.attributedTitle = AppPrefsCocoa.shared.makeUserAttributedString(text: option)
             }
         }
-        AppPrefsCocoa.shared.setRegularFont(object: menu!.menu!)
+        // AppPrefsCocoa.shared.setRegularFont(object: combo!.menu!)
     }
     
     /// Close the note by selecting the last status value in the list
     func close() {
-        menu.selectItem(at: (menu.numberOfItems - 1))
+        combo.selectItem(at: (combo.numberOfItems - 1))
     }
 }
