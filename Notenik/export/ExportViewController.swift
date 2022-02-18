@@ -22,6 +22,7 @@ class ExportViewController: NSViewController {
     let commaSep  = "Comma-Separated"
     let jsonTitle = "JSON"
     let notenik   = "Notenik"
+    let yaml      = "YAML Metadata"
     let outline   = "OPML"
     let tabDelim  = "Tab-Delimited"
     let bookmarks = "Netscape Bookmark File"
@@ -55,6 +56,7 @@ class ExportViewController: NSViewController {
         formatPopup.addItem(withTitle: tabDelim)
         formatPopup.addItem(withTitle: jsonTitle)
         formatPopup.addItem(withTitle: notenik)
+        formatPopup.addItem(withTitle: yaml)
         formatPopup.addItem(withTitle: bookmarks)
         formatPopup.addItem(withTitle: outline)
         formatPopup.addItem(withTitle: concatHtml)
@@ -89,6 +91,9 @@ class ExportViewController: NSViewController {
                 splitTagsCheckBox.state = .on
             case notenik:
                 fileExtCombo.selectItem(withObjectValue: txt)
+                splitTagsCheckBox.state = .off
+            case yaml:
+                fileExtCombo.selectItem(withObjectValue: md)
                 splitTagsCheckBox.state = .off
             case outline:
                 fileExtCombo.selectItem(withObjectValue: opml)
@@ -131,6 +136,8 @@ class ExportViewController: NSViewController {
             format = .bookmarks
         case notenik:
             format = .notenik
+        case yaml:
+            format = .yaml
         case outline:
             format = .opml
         case concatHtml:
@@ -153,8 +160,8 @@ class ExportViewController: NSViewController {
         
         // See where the user wants to save it.
         var url: URL?
-        if format == .notenik {
-            url = getNotenikExportURL()
+        if format == .notenik || format == .yaml {
+            url = getFolderExportURL(format: format)
         } else {
             url = getExportURL(fileExt: fileExtCombo.stringValue)
         }
@@ -203,9 +210,9 @@ class ExportViewController: NSViewController {
     }
     
     /// Ask the user where to save the export folder.
-    func getNotenikExportURL() -> URL? {
+    func getFolderExportURL(format: ExportFormat) -> URL? {
         let openPanel = NSOpenPanel();
-        openPanel.title = "Create a New Notenik Folder"
+        openPanel.title = "Create and Select an Empty Folder"
         let parent = osdir.directoryURL
         if parent != nil {
             openPanel.directoryURL = parent!
@@ -219,7 +226,9 @@ class ExportViewController: NSViewController {
         openPanel.allowsMultipleSelection = false
         let response = openPanel.runModal()
         if response == .OK {
-            MultiFileIO.shared.registerBookmark(url: openPanel.url!)
+            if format == .notenik {
+                MultiFileIO.shared.registerBookmark(url: openPanel.url!)
+            }
             return openPanel.url
         } else {
             return nil

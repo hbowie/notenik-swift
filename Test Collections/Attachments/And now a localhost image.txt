@@ -1,0 +1,7 @@
+Title:  And now a localhost image
+
+Body:
+
+Let's try an image reference to localhost:
+
+![Herb and Hank at Discovery Park](http://localhost/~hbowie/practopian%203/images/the-author-herb-with-hank.jpg)
