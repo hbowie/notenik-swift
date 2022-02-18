@@ -176,7 +176,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard !windowStr.isEmpty else { return }
         let numbers = windowStr.components(separatedBy: ";")
         guard numbers.count >= 5 else {
-            print("Window Numbers String could not be split into five numbers")
             return
         }
         let x = Double(numbers[0])
@@ -185,9 +184,16 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let height = Double(numbers[3])
         let divider = Double(numbers[4])
         guard x != nil && y != nil && width != nil && height != nil && divider != nil  else {
-            print("One or more components could not be converted to Doubles")
             return
         }
+        
+        guard let mainScreen = NSScreen.main else { return }
+        let visibleFrame = mainScreen.visibleFrame
+        guard x! >= visibleFrame.minX else { return }
+        guard x! <= visibleFrame.maxX else { return }
+        guard (x! + width!) <= visibleFrame.maxX else { return }
+        guard (y! + height!) <= visibleFrame.maxY else { return }
+        
         let frame = NSRect(x: x!, y: y!, width: width!, height: height!)
         window!.setFrame(frame, display: true)
         let float = CGFloat(divider!)
