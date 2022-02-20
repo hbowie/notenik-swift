@@ -35,7 +35,6 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     }
     
     var stackView: NSStackView!
-    var imageView: NSImageView!
     var webView: NoteDisplayWebView!
     var webConfig: WKWebViewConfiguration!
     
@@ -49,15 +48,16 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     var parms = DisplayParms()
     
+    /// Set up the view for this controller.
     override func loadView() {
         
         stackView = NSStackView()
         stackView.orientation = .vertical
         
-        imageView = NSImageView()
-        stackView.addArrangedSubview(imageView)
-        
         webConfig = WKWebViewConfiguration()
+        if #available(macOS 11.0, *) {
+            webConfig.limitsNavigationsToAppBoundDomains = false
+        }
         webView = NoteDisplayWebView(frame: .zero, configuration: webConfig)
         webView.uiDelegate = self
         webView.navigationDelegate = self
@@ -66,6 +66,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         view = stackView
     }
     
+    /// Now that the we know the view has loaded successfully...
     override func viewDidLoad() {
         super.viewDidLoad()
         parms.localMj = true
@@ -99,8 +100,10 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         guard isViewLoaded else { return }
         guard let collection = io!.collection else { return }
         
-        _ = displayImage()
-        
+        if collection.imgLocal {
+            parms.imagesPath = NotenikConstants.filesFolderName
+        }
+            
         parms.setFrom(note: note!)
         
         let (displayHTML, wikiAdds) = noteDisplay.display(note!, io: io!, parms: parms)
@@ -165,10 +168,26 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             }
         }
         
+        var base: URL? = Bundle.main.bundleURL
         var nav: WKNavigation?
-        nav = webView.loadHTMLString(html,
-                                     baseURL: Bundle.main.bundleURL)
-//                                     baseURL: io!.collection!.fullPathURL)
+        var tempHTML = false
+        if collection.imgLocal {
+            if let collectionURL = io?.collection?.fullPathURL {
+                let tempURL = collectionURL.appendingPathComponent(NotenikConstants.tempDisplayBase).appendingPathExtension(NotenikConstants.tempDisplayExt)
+                do {
+                    try html.write(to: tempURL, atomically: true, encoding: .utf8)
+                    tempHTML = true
+                    base = collectionURL
+                    nav = webView.loadFileURL(tempURL, allowingReadAccessTo: collectionURL)
+                } catch {
+                    communicateError("Could not write html to temporary file")
+                }
+            }
+        }
+        
+        if !tempHTML {
+            nav = webView.loadHTMLString(html, baseURL: base)
+        }
         if nav == nil {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "NoteDisplayViewController",
@@ -183,32 +202,6 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         // This is just a convenient spot to request that we refresh our
         // collective idea of what today is. 
         DateUtils.shared.refreshToday()
-    }
-    
-    func displayImage() -> Bool {
-        guard let collection = io!.collection else { return false }
-        guard let lib = collection.lib else { return false }
-        guard let def = collection.imageNameFieldDef else { return false }
-        guard let imageField = note!.getField(def: def) else { return false }
-        let imageName = imageField.value.value
-        guard imageName.count > 0 else { return false }
-
-        let filesFolderResource = lib.ensureResource(type: .attachments)
-        guard filesFolderResource.isAvailable else { return false }
-        let filesURL = filesFolderResource.url
-        
-        var imageFullName = ""
-        for attachment in note!.attachments {
-            if attachment.suffix.lowercased() == imageName.lowercased() {
-                imageFullName = attachment.fullName
-            }
-        }
-        guard imageFullName.count > 0 else { return false }
-        
-        guard let imageURL = filesURL?.appendingPathComponent(imageFullName) else { return false }
-        guard let image = NSImage(contentsOf: imageURL) else { return false }
-        // imageView.image = image
-        return true
     }
     
     /// This method gets called when the user requests to open a link in a new window.
@@ -266,7 +259,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
                 webLinkFollowed(true)
             }
             decisionHandler(.allow)
-        case .notenikApp, .xcodeDev:
+        case .notenikApp, .xcodeDev, .tempFile:
             webLinkFollowed(false)
             decisionHandler(.allow)
         case .wikiLink:

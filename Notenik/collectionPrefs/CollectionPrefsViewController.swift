@@ -31,6 +31,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var h1TitlesCkBox:        NSButton!
     @IBOutlet var streamlinedCkBox:     NSButton!
     @IBOutlet var mathJaxCkBox:         NSButton!
+    @IBOutlet var imgLocalCkBox:        NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
     
@@ -127,6 +128,7 @@ class CollectionPrefsViewController: NSViewController {
         setH1Titles(collection!.h1Titles)
         setStreamlined(collection!.streamlined)
         setMathJax(collection!.mathJax)
+        setImgLocal(collection!.imgLocal)
     }
     
     func makeStackViews() {
@@ -332,6 +334,14 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
+    func setImgLocal(_ on: Bool) {
+        if on {
+            imgLocalCkBox.state = .on
+        } else {
+            imgLocalCkBox.state = .off
+        }
+    }
+    
     @objc func checkBoxClicked() {
         // No need to take any immediate action here
     }
@@ -350,6 +360,7 @@ class CollectionPrefsViewController: NSViewController {
         collection!.h1Titles = (h1TitlesCkBox.state == .on)
         collection!.streamlined = (streamlinedCkBox.state == .on)
         collection!.mathJax = (mathJaxCkBox.state == .on)
+        collection!.imgLocal = (imgLocalCkBox.state == .on)
         defsRemoved.clear()
         let dict = collection!.dict
         dict.unlock()
