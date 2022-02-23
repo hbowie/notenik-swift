@@ -1,0 +1,5 @@
+Title:  A Note Pointing to Another Note
+
+Body:
+
+Don't forget that Notenik is [[Open Source Software]]!

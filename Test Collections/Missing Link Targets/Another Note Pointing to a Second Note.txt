@@ -1,0 +1,5 @@
+Title:  Another Note Pointing to a Second Note
+
+Body:
+
+Oh, and did I mention that Notenik is [[completely free]]?

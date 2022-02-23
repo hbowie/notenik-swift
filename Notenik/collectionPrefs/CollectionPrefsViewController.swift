@@ -32,6 +32,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var streamlinedCkBox:     NSButton!
     @IBOutlet var mathJaxCkBox:         NSButton!
     @IBOutlet var imgLocalCkBox:        NSButton!
+    @IBOutlet var missingTargetsCkBox:  NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
     
@@ -342,6 +343,14 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
+    func setMissingTargets(_ on: Bool) {
+        if on {
+            missingTargetsCkBox.state = .on
+        } else {
+            missingTargetsCkBox.state = .off
+        }
+    }
+    
     @objc func checkBoxClicked() {
         // No need to take any immediate action here
     }
@@ -361,6 +370,7 @@ class CollectionPrefsViewController: NSViewController {
         collection!.streamlined = (streamlinedCkBox.state == .on)
         collection!.mathJax = (mathJaxCkBox.state == .on)
         collection!.imgLocal = (imgLocalCkBox.state == .on)
+        collection!.missingTargets = (missingTargetsCkBox.state == .on)
         defsRemoved.clear()
         let dict = collection!.dict
         dict.unlock()

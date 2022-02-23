@@ -1,0 +1,5 @@
+Title:  completely free
+
+Body:
+
+Created by Wiki-style Link found in the body of the Note titled [[Another Note Pointing to a Second Note]].

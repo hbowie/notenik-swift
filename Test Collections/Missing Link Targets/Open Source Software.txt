@@ -1,0 +1,5 @@
+Title:  Open Source Software
+
+Body:
+
+Created by Wiki Style Link found in the body of the Note titled [[A Note Pointing to Another Note]].
