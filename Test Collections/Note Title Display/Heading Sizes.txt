@@ -1,0 +1,29 @@
+Title:  Heading Sizes
+
+Seq:    1.2
+
+Body:
+
+# Heading 1
+
+And this is normal text. 
+
+## Heading 2
+
+And this is normal text. 
+
+### Heading 3
+
+And this is normal text. 
+
+#### Heading 4
+
+And this is normal text. 
+
+##### Heading 5
+
+And this is normal text. 
+
+###### Heading 6
+
+And this is normal text. 

@@ -1,0 +1,15 @@
+Title:  Download Notenik from the Mac App Store
+
+Tags:   steps
+
+Link:   https://apps.apple.com/us/app/notenik/id1465997984
+
+Status: 6 - Completed
+
+Seq:    1
+
+Body:
+
+The first step towards making good use of Notenik is to download it from the Mac App store. 
+
+Congratulations -- it seems you've already done this!

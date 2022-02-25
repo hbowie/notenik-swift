@@ -26,9 +26,9 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var collectionTitle:      NSTextField!
     @IBOutlet var fileExtComboBox:      NSComboBox!
     @IBOutlet var collectionShortcut:   NSTextField!
+    @IBOutlet var noteTitleDisplayPopUp: NSPopUpButton!
     @IBOutlet var mirrorAutoIndexCkBox: NSButton!
     @IBOutlet var bodyLabelCkBox:       NSButton!
-    @IBOutlet var h1TitlesCkBox:        NSButton!
     @IBOutlet var streamlinedCkBox:     NSButton!
     @IBOutlet var mathJaxCkBox:         NSButton!
     @IBOutlet var imgLocalCkBox:        NSButton!
@@ -81,7 +81,11 @@ class CollectionPrefsViewController: NSViewController {
     /// Create the fields we need.
     func makeViews() {
         collectionTitle.maximumNumberOfLines = 3
-        // makeStackViews()
+        
+        noteTitleDisplayPopUp.removeAllItems()
+        for opt in LineDisplayOption.allCases {
+            noteTitleDisplayPopUp.addItem(withTitle: opt.rawValue)
+        }
     }
     
     /// Pass needed info from the Collection Juggler
@@ -126,7 +130,7 @@ class CollectionPrefsViewController: NSViewController {
         extPicker.setFileExt(collection!.preferredExt)
         setMirrorAutoIndex(collection!.mirrorAutoIndex)
         setBodyLabel(collection!.bodyLabel)
-        setH1Titles(collection!.h1Titles)
+        setTitleDisplay(collection!.titleDisplayOption)
         setStreamlined(collection!.streamlined)
         setMathJax(collection!.mathJax)
         setImgLocal(collection!.imgLocal)
@@ -311,12 +315,8 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
-    func setH1Titles(_ on: Bool) {
-        if on {
-            h1TitlesCkBox.state = .on
-        } else {
-            h1TitlesCkBox.state = .off
-        }
+    func setTitleDisplay(_ opt: LineDisplayOption) {
+        noteTitleDisplayPopUp.selectItem(withTitle: opt.rawValue)
     }
     
     func setStreamlined(_ on: Bool) {
@@ -366,7 +366,11 @@ class CollectionPrefsViewController: NSViewController {
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
         collection!.mirrorAutoIndex = (mirrorAutoIndexCkBox.state == .on)
         collection!.bodyLabel = (bodyLabelCkBox.state == .on)
-        collection!.h1Titles = (h1TitlesCkBox.state == .on)
+        if let displayOptTitle = noteTitleDisplayPopUp.titleOfSelectedItem {
+            if let titleDisplayOpt = LineDisplayOption(rawValue: displayOptTitle) {
+                collection!.titleDisplayOption = titleDisplayOpt
+            }
+        }
         collection!.streamlined = (streamlinedCkBox.state == .on)
         collection!.mathJax = (mathJaxCkBox.state == .on)
         collection!.imgLocal = (imgLocalCkBox.state == .on)
