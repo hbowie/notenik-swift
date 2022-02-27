@@ -208,23 +208,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         window!.delegate = self
     }
     
-    /* override func keyDown(with event: NSEvent) {
-        print("CollectionWindowController.keyDown")
-        print("  - Event Type: \(event.type)")
-        print("  - key code: \(event.keyCode)")
-        var chars = "?"
-        if event.characters != nil && !event.characters!.isEmpty {
-            chars = event.characters!
-        }
-        guard let char1 = chars.first else { return }
-        let keyCode = event.keyCode
-        if char1.isWhitespace || keyCode == 124 || keyCode == 125 {
-            goToNextNote(self)
-        } else if keyCode == 126 {
-            goToPriorNote(self)
-        }
-    } */
-    
     func windowWillClose() {
         juggler.windowClosing(window: self)
     }
