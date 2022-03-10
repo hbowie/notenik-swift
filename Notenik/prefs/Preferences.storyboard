@@ -128,6 +128,33 @@ DQ
                                     <action selector="checkBoxStartupTips:" target="i5j-TU-ObT" id="LOc-5D-7B7"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jzP-lk-gcl">
+                                <rect key="frame" x="22" y="182" width="109" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="App Appearance:" id="8T1-Lj-HVF">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="89Q-x0-U70">
+                                <rect key="frame" x="135" y="174" width="147" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Follow System" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Y9z-6f-SQb" id="VQX-lN-Ziv">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="HOX-O6-PmM">
+                                        <items>
+                                            <menuItem title="Follow System" state="on" id="Y9z-6f-SQb" userLabel="Follow System"/>
+                                            <menuItem title="Light" id="iqF-Lv-o3f"/>
+                                            <menuItem title="Dark" id="qys-So-pCO"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="appAppearanceSelected:" target="i5j-TU-ObT" id="guj-8r-DpG"/>
+                                </connections>
+                            </popUpButton>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="n0J-Up-LPW" secondAttribute="bottom" constant="20" symbolic="YES" id="767-b8-wVn"/>
@@ -142,6 +169,7 @@ DQ
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="appAppearance" destination="89Q-x0-U70" id="0aI-7I-3HW"/>
                         <outlet property="confirmDeletesNo" destination="zS6-1Z-Jui" id="tp9-Ba-Dz8"/>
                         <outlet property="confirmDeletesYes" destination="u03-TY-6ei" id="YtU-Qn-N0Z"/>
                         <outlet property="openTipsAtStartup" destination="kbG-lN-2Hh" id="DVt-1O-cbu"/>

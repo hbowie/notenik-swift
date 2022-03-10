@@ -51,6 +51,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         appPrefs = AppPrefs.shared
+        
+        if #available(macOS 10.14, *) {
+            let appearance = appPrefs.appAppearance
+            switch appearance {
+            case "light":
+                NSApp.appearance = NSAppearance(named: .aqua)
+            case "dark":
+                NSApp.appearance = NSAppearance(named: .darkAqua)
+            default:
+                break
+            }
+        }
+        
         displayPrefs = DisplayPrefs.shared
         displayPrefs.setMaster(master: self)
         juggler = CollectionJuggler.shared
@@ -140,6 +153,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     @IBAction func menuAppPreferences(_ sender: NSMenuItem) {
         juggler.showAppPreferences()
+    }
+    
+    @IBAction func grantFolderAccess(_ sender: NSMenuItem) {
+        juggler.grantFolderAccess()
     }
     
     @IBAction func navBoard(_ sender: NSMenuItem) {

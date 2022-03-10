@@ -22,6 +22,8 @@ class NoteTagsViewController: NSViewController,
 
     @IBOutlet var outlineView: NSOutlineView!
     
+    var shortcutMenu: NSMenu!
+    
     /// Get or Set the Window Controller
     var window: CollectionWindowController? {
         get {
@@ -48,6 +50,11 @@ class NoteTagsViewController: NSViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         outlineView.dataSource = self
+        
+        // Setup the popup menu for rows in the list.
+        shortcutMenu = NSMenu()
+        shortcutMenu.addItem(NSMenuItem(title: "Launch Link", action: #selector(launchLinkForItem(_:)), keyEquivalent: ""))
+        outlineView.menu = shortcutMenu
     }
     
     func reload() {
@@ -71,6 +78,52 @@ class NoteTagsViewController: NSViewController,
             let clickedNote = node.note
             if clickedNote != nil {
                 collectionWindowController!.launchLink(for: clickedNote!)
+            }
+        }
+    }
+    
+    /// Launch a Note's Link
+    @IBAction func launchLink(_ sender: Any) {
+        for index in outlineView.selectedRowIndexes {
+            launchLinkForRow(index)
+        }
+    }
+    
+    /// Respond to a contextual menu selection to launch a link for the clicked Note.
+    @objc private func launchLinkForItem(_ sender: AnyObject) {
+       
+        guard outlineView.clickedRow >= 0 else { return }
+        
+        var clickedWithinSelected = false
+        for index in outlineView.selectedRowIndexes {
+            if outlineView.clickedRow == index {
+                clickedWithinSelected = true
+                break
+            }
+        }
+        
+        if clickedWithinSelected {
+            for index in outlineView.selectedRowIndexes {
+                launchLinkForRow(index)
+            }
+        } else {
+            launchLinkForRow(outlineView.clickedRow)
+        }
+
+    }
+    
+    func launchLinkForRow(_ row: Int) {
+        
+        guard row >= 0 else { return }
+        guard let wc = collectionWindowController else { return }
+        
+        let item = outlineView.item(atRow: row)
+        guard let node = item as? TagsNode else { return }
+        
+        if node.type == .note {
+            let clickedNote = node.note
+            if clickedNote != nil {
+                wc.launchLink(for: clickedNote!)
             }
         }
     }

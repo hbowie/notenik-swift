@@ -23,6 +23,8 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     
     @IBOutlet var openTipsAtStartup: NSButton!
     
+    @IBOutlet var appAppearance: NSPopUpButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if appPrefs.confirmDeletes {
@@ -34,6 +36,13 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
             openTipsAtStartup.state = .on
         } else {
             openTipsAtStartup.state = .off
+        }
+        let appearance = appPrefs.appAppearance
+        switch appearance {
+        case "system": appAppearance.selectItem(at: 0)
+        case "light":  appAppearance.selectItem(at: 1)
+        case "dark":   appAppearance.selectItem(at: 2)
+        default: break
         }
     }
     
@@ -50,6 +59,24 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
             appPrefs.tipsAtStartup = true
         } else {
             appPrefs.tipsAtStartup = false
+        }
+    }
+    
+    @available(macOS 10.14, *)
+    @IBAction func appAppearanceSelected(_ sender: Any) {
+        let ix = appAppearance.indexOfSelectedItem
+        switch ix {
+        case 0:
+            appPrefs.appAppearance = "system"
+            NSApp.appearance = NSAppearance()
+        case 1:
+            appPrefs.appAppearance = "light"
+            NSApp.appearance = NSAppearance(named: .aqua)
+        case 2:
+            appPrefs.appAppearance = "dark"
+            NSApp.appearance = NSAppearance(named: .darkAqua)
+        default:
+            break
         }
     }
     

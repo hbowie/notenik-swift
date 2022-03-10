@@ -711,6 +711,35 @@ class CollectionJuggler: NSObject {
     
     /// Respond to a user request to open another Collection. Present the user
     /// with an Open Panel to allow the selection of a folder containing an
+    /// existing Notenik Collection.
+    func grantFolderAccess() {
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Grant Access to Entire Folder"
+        let parent = osdir.directoryURL
+        if parent != nil {
+            openPanel.directoryURL = parent!
+        }
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = false
+        openPanel.allowsMultipleSelection = false
+        
+        openPanel.message = "Grant Notenik Access to the Selected Folder"
+        openPanel.prompt = "Grant Access"
+        let result = openPanel.runModal()
+        if result == .OK {
+            let dialog = NSAlert()
+            dialog.alertStyle = .informational
+            dialog.messageText = "Notenik Access Granted to \(openPanel.url!.path)"
+            dialog.addButton(withTitle: "OK")
+            let _ = dialog.runModal()
+        }
+    }
+    
+    /// Respond to a user request to open another Collection. Present the user
+    /// with an Open Panel to allow the selection of a folder containing an
     /// existing Notenik Collection. 
     func userRequestsOpenCollection() {
         let openPanel = NSOpenPanel();

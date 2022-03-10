@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/21/19.
-//  Copyright © 2019 - 2021 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2022 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -142,6 +142,44 @@ class NoteListViewController:   NSViewController,
         collectionWindowController!.seqModify(startingRow: lowIndex, endingRow: highIndex)
     }
     
+    /// Launch a Note's Link
+    @IBAction func launchLink(_ sender: Any) {
+        for index in tableView.selectedRowIndexes {
+            launchLinkForRow(index)
+        }
+    }
+    
+    /// Respond to a contextual menu selection to launch a link for the clicked Note.
+    @objc private func launchLinkForItem(_ sender: AnyObject) {
+       
+        guard tableView.clickedRow >= 0 else { return }
+        
+        var clickedWithinSelected = false
+        for index in tableView.selectedRowIndexes {
+            if tableView.clickedRow == index {
+                clickedWithinSelected = true
+                break
+            }
+        }
+        
+        if clickedWithinSelected {
+            for index in tableView.selectedRowIndexes {
+                launchLinkForRow(index)
+            }
+        } else {
+            launchLinkForRow(tableView.clickedRow)
+        }
+
+    }
+    
+    func launchLinkForRow(_ row: Int) {
+        guard let wc = collectionWindowController else { return }
+        guard let io = notenikIO else { return }
+        guard row >= 0 else { return }
+        guard let clickedNote = io.getNote(at: row) else { return }
+        wc.launchLink(for: clickedNote)
+    }
+    
     /// Get a possible range of selected rows from the table view.
     /// - Returns: The first (lowest) row selected, and the highest row selected,
     /// or a pair of negative values is no valid selection.
@@ -212,15 +250,6 @@ class NoteListViewController:   NSViewController,
         guard row >= 0 else { return }
         guard let clickedNote = notenikIO?.getNote(at: row) else { return }
         collectionWindowController!.incrementNote(clickedNote)
-    }
-    
-    /// Respond to a contextual menu selection to launch a link for the clicked Note.
-    @objc private func launchLinkForItem(_ sender: AnyObject) {
-        guard collectionWindowController != nil else { return }
-        let row = tableView.clickedRow
-        guard row >= 0 else { return }
-        guard let clickedNote = notenikIO?.getNote(at: row) else { return }
-        collectionWindowController!.launchLink(for: clickedNote)
     }
     
     /// Respond to a contextual menu selection to launch a link for the clicked Note.
