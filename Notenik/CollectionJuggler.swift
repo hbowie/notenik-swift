@@ -189,6 +189,8 @@ class CollectionJuggler: NSObject {
 
         link.determineCollectionType()
         switch link.type {
+        case .accessFolder:
+            accessGranted(accessFolder: link.url)
         case .emptyFolder:
             return newCollection(fileURL: link.url!)
         case .ordinaryCollection, .webCollection:
@@ -709,9 +711,8 @@ class CollectionJuggler: NSObject {
         return tipswc
     }
     
-    /// Respond to a user request to open another Collection. Present the user
-    /// with an Open Panel to allow the selection of a folder containing an
-    /// existing Notenik Collection.
+    /// Let the user select a folder, so that Notenik can have unfettered
+    /// access to everything within that folder.
     func grantFolderAccess() {
         let openPanel = NSOpenPanel();
         openPanel.title = "Grant Access to Entire Folder"
@@ -730,12 +731,18 @@ class CollectionJuggler: NSObject {
         openPanel.prompt = "Grant Access"
         let result = openPanel.runModal()
         if result == .OK {
-            let dialog = NSAlert()
-            dialog.alertStyle = .informational
-            dialog.messageText = "Notenik Access Granted to \(openPanel.url!.path)"
-            dialog.addButton(withTitle: "OK")
-            let _ = dialog.runModal()
+            // docController!.noteNewRecentDocumentURL(openPanel.url!)
+//            accessGranted(accessFolder: openPanel.url)
         }
+    }
+    
+    func accessGranted(accessFolder: URL?) {
+        guard let url = accessFolder else { return }
+        let dialog = NSAlert()
+        dialog.alertStyle = .informational
+        dialog.messageText = "Notenik Access Granted to \(url.path)"
+        dialog.addButton(withTitle: "OK")
+        let _ = dialog.runModal()
     }
     
     /// Respond to a user request to open another Collection. Present the user
