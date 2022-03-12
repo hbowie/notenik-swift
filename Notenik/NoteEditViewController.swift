@@ -35,9 +35,6 @@ class NoteEditViewController: NSViewController {
     var grid:      [[NSView]] = []
     var gridView:  NSGridView!
     
-    var bodyView:    NSTextView!
-    var bodyStorage: NSTextStorage!
-    
     var titleView:  MacEditView?
     var dateView:   DateView?
     var recursView: MacEditView?
@@ -45,6 +42,7 @@ class NoteEditViewController: NSViewController {
     var levelView:  LevelView?
     var linkView:   LinkView?
     var imageNameView: ImageNameView?
+    var bodyView:   BodyView?
     
     var window: CollectionWindowController? {
         get {
@@ -108,6 +106,7 @@ class NoteEditViewController: NSViewController {
         levelView = nil
         linkView = nil
         imageNameView = nil
+        bodyView = nil
         
         // Build the label and value views for each field in the dictionary
         for def in editDefs {
@@ -158,6 +157,8 @@ class NoteEditViewController: NSViewController {
             linkView = editView as? LinkView
         } else if def.fieldType.typeString == NotenikConstants.linkCommon {
             linkView = editView as? LinkView
+        } else if def.fieldType.typeString == NotenikConstants.bodyCommon {
+            bodyView = editView as? BodyView
         }
     }
     
@@ -186,7 +187,6 @@ class NoteEditViewController: NSViewController {
         let str = AppPrefsCocoa.shared.makeUserAttributedString(text: label.properForm + ": ")
         let vw = NSTextField(labelWithAttributedString: str)
         return vw
-    
     }
     
     /// Update appropriate stuff when a new note has been selected

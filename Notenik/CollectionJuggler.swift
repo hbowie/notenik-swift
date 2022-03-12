@@ -732,7 +732,7 @@ class CollectionJuggler: NSObject {
         let result = openPanel.runModal()
         if result == .OK {
             // docController!.noteNewRecentDocumentURL(openPanel.url!)
-//            accessGranted(accessFolder: openPanel.url)
+            accessGranted(accessFolder: openPanel.url)
         }
     }
     

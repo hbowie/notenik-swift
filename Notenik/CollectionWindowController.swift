@@ -58,6 +58,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let newWithOptionsStoryboard:  NSStoryboard = NSStoryboard(name: "NewWithOptions", bundle: nil)
     let seqModStoryboard:          NSStoryboard = NSStoryboard(name: "SeqMod", bundle: nil)
     let linkCleanerStoryboard:     NSStoryboard = NSStoryboard(name: "LinkCleaner", bundle: nil)
+    let notePickerStoryboard:      NSStoryboard = NSStoryboard(name: "NotePicker", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -1393,6 +1394,17 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    /// If we have a text view as a first responder, then paste into it from the clipboard. 
+    func pasteTextNow() {
+        if let win = window {
+            if let first = win.firstResponder {
+                if let view = first as? NSTextView {
+                    view.paste(self)
+                }
+            }
+        }
+    }
+    
     func setCleanLink(_ clean: String) {
         guard io != nil && io!.collectionOpen else { return }
         let (note, _) = io!.getSelectedNote()
@@ -1816,6 +1828,35 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    @IBAction func selectNote(_ sender: Any) {
+        
+        guard let noteIO = notenikIO else { return }
+                // guardForCollectionAction() else { return }
+        
+        guard let notePickerController = self.notePickerStoryboard.instantiateController(withIdentifier: "NotePickerWC") as? NotePickerWindowController else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Note Picker Window Controller!")
+            return
+        }
+
+        guard let vc = notePickerController.contentViewController as? NotePickerViewController else { return }
+        
+        notePickerController.showWindow(self)
+        vc.collectionController = self
+        vc.wc = notePickerController
+        vc.noteIO = noteIO
+        
+        //vc.searchOptions = searchOptions
+        // var searchPhrase: String?
+        // if displayVC != nil {
+            // searchPhrase = displayVC!.searchPhrase
+        // }
+        // vc.searchPhrase = searchPhrase
+
+    }
+    
     /// Start an Advanced Search using the options provided by the user.
     /// - Parameter options: The options as specified by the user.
     func advSearchNow(options: SearchOptions) {
@@ -1965,6 +2006,15 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         return noteFieldToCompare.contains(searchFor)
     }
+    
+    func selectNoteTitled(_ title: String) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        let id = StringUtils.toCommon(title)
+        guard let note = noteIO.getNote(forID: id) else { return }
+        select(note: note, position: nil, source: .action, andScroll: true, searchPhrase: nil)
+    }
+    
     
     /// Select the first Note in the list. 
     func selectFirstNote() {

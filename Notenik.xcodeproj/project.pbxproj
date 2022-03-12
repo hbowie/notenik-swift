@@ -140,6 +140,9 @@
 		9C60E7C821F6525F00C332ED /* StringValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E7B421F6525F00C332ED /* StringValueTests.swift */; };
 		9C60E7C921F6525F00C332ED /* RecursValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E7B521F6525F00C332ED /* RecursValueTests.swift */; };
 		9C60E7CA21F6525F00C332ED /* FieldLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60E7B621F6525F00C332ED /* FieldLabelTests.swift */; };
+		9C617AE227DBDC4300ACEC8A /* NotePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C617AE127DBDC4300ACEC8A /* NotePicker.storyboard */; };
+		9C617AE427DBDE4100ACEC8A /* NotePickerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C617AE327DBDE4100ACEC8A /* NotePickerWindowController.swift */; };
+		9C617AE627DBDEA400ACEC8A /* NotePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C617AE527DBDEA400ACEC8A /* NotePickerViewController.swift */; };
 		9C619A38231B323B003CFFBE /* WorkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C619A37231B323B003CFFBE /* WorkTypeView.swift */; };
 		9C619A3A231B323B003CFFBE /* WorkTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C619A37231B323B003CFFBE /* WorkTypeView.swift */; };
 		9C63100F257596E700FCD74A /* CoreXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = 9C63100E257596E700FCD74A /* CoreXLSX */; };
@@ -394,6 +397,9 @@
 		9C60E7B421F6525F00C332ED /* StringValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringValueTests.swift; sourceTree = "<group>"; };
 		9C60E7B521F6525F00C332ED /* RecursValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursValueTests.swift; sourceTree = "<group>"; };
 		9C60E7B621F6525F00C332ED /* FieldLabelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldLabelTests.swift; sourceTree = "<group>"; };
+		9C617AE127DBDC4300ACEC8A /* NotePicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotePicker.storyboard; sourceTree = "<group>"; };
+		9C617AE327DBDE4100ACEC8A /* NotePickerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePickerWindowController.swift; sourceTree = "<group>"; };
+		9C617AE527DBDEA400ACEC8A /* NotePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePickerViewController.swift; sourceTree = "<group>"; };
 		9C619A37231B323B003CFFBE /* WorkTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkTypeView.swift; sourceTree = "<group>"; };
 		9C65B29F23DE28BC00794C59 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		9C7132DC2692328B00A3034F /* notenik-KB */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-KB"; path = "../../Notenik Docs/notenik-KB"; sourceTree = "<group>"; };
@@ -678,6 +684,7 @@
 				9C8693DD257560EF00F045D2 /* newicloud */,
 				9C85994A273EE34A008758EF /* newWithOptions */,
 				9C10831225AA66A8004B33CA /* news */,
+				9C617AE027DBDBD000ACEC8A /* notepicker */,
 				9C832A00224ABDBD007DA6FC /* prefs */,
 				9CCE7C61264AE8AB003818DF /* quick */,
 				9C4C1BAE22E7EE0A005997DF /* script */,
@@ -738,6 +745,16 @@
 				9CE3250F224D5E180051CA1F /* LogViewController.swift */,
 			);
 			path = logging;
+			sourceTree = "<group>";
+		};
+		9C617AE027DBDBD000ACEC8A /* notepicker */ = {
+			isa = PBXGroup;
+			children = (
+				9C617AE127DBDC4300ACEC8A /* NotePicker.storyboard */,
+				9C617AE327DBDE4100ACEC8A /* NotePickerWindowController.swift */,
+				9C617AE527DBDEA400ACEC8A /* NotePickerViewController.swift */,
+			);
+			path = notepicker;
 			sourceTree = "<group>";
 		};
 		9C65394E21F91EBB00012184 /* Frameworks */ = {
@@ -1124,6 +1141,7 @@
 				9C02D2B02267F29400587EDF /* Calendar.storyboard in Resources */,
 				9C5556D222E115960099414E /* Export.storyboard in Resources */,
 				9CC78E692283565E00640477 /* DisplayPrefs.storyboard in Resources */,
+				9C617AE227DBDC4300ACEC8A /* NotePicker.storyboard in Resources */,
 				9C09E1762248601D0046D50D /* notenik.iconset in Resources */,
 				9CF435C42480598500DD7C33 /* Counts.storyboard in Resources */,
 				9C85994C273EE3A9008758EF /* NewWithOptions.storyboard in Resources */,
@@ -1290,11 +1308,13 @@
 				9CF256CB21FD0FF000D9F06A /* CollectionJuggler.swift in Sources */,
 				9C8693EB257565AB00F045D2 /* NewICloudViewController.swift in Sources */,
 				9C7DDD91255B36AA00065812 /* DisplayFontsDataSource.swift in Sources */,
+				9C617AE627DBDEA400ACEC8A /* NotePickerViewController.swift in Sources */,
 				9CA80797229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
 				9C9E4801271F60980094FEA5 /* AdvSearchViewController.swift in Sources */,
 				9CB60BC622651074003B5655 /* ShareViewController.swift in Sources */,
 				9C85994E273EE4F6008758EF /* NewWithOptionsWindowController.swift in Sources */,
 				9C568DF5232325B5005D6B0A /* WorkTypeDataSource.swift in Sources */,
+				9C617AE427DBDE4100ACEC8A /* NotePickerWindowController.swift in Sources */,
 				9C0B643C23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */,
 				9C36EC792773CB7400ECD847 /* BodyViewDelegate.swift in Sources */,
 				9CC78E6F228358A400640477 /* DisplayPrefsViewController.swift in Sources */,
@@ -1597,7 +1617,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 262;
+				CURRENT_PROJECT_VERSION = 266;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1610,7 +1630,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 8.7.0;
+				MARKETING_VERSION = 8.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1626,7 +1646,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 262;
+				CURRENT_PROJECT_VERSION = 266;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1639,7 +1659,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 8.7.0;
+				MARKETING_VERSION = 8.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
