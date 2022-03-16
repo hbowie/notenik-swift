@@ -1,0 +1,5 @@
+Title:  Copy Wikilink
+
+Body:
+
+notenik-dot-app

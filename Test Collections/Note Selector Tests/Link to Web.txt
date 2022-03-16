@@ -1,0 +1,9 @@
+Title:  Link to Web
+
+Link:   https://notenik.app
+
+AKA:    notenik-dot-app
+
+Body:
+
+Here's a launchable link to a website.

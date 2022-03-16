@@ -13,11 +13,15 @@
 import Cocoa
 
 import NotenikLib
+import NotenikUtils
 
 class NotePickerViewController: NSViewController,
                                     NSTableViewDataSource,
                                     NSTableViewDelegate,
                                     NSTextFieldDelegate {
+    
+    let downArrow                 : UInt16 = 0x7D
+    let upArrow                   : UInt16 = 0x7E
     
     let copyTitle      = "Copy Title"
     let copyPasteTitle = "Copy and Paste Title"
@@ -53,6 +57,14 @@ class NotePickerViewController: NSViewController,
         let lastAction = AppPrefs.shared.noteAction
         if !lastAction.isEmpty {
             actionList.selectItem(withTitle: lastAction)
+        }
+        
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+            if self.myKeyDown(with: $0) {
+                return nil
+            } else {
+                return $0
+            }
         }
     }
     
@@ -91,6 +103,7 @@ class NotePickerViewController: NSViewController,
         } else {
             // Reload the table with titles that match the entered characters.
             matchingTitles = []
+            
             var i = 0
             while i < noteIO!.count {
                 let note = noteIO!.getNote(at: i)
@@ -99,12 +112,18 @@ class NotePickerViewController: NSViewController,
                 }
                 i += 1
             }
+            
             let akaAll = noteIO!.getAKAEntries()
-            for (aka, _) in akaAll.akaDict {
+            for (aka, note) in akaAll.akaDict {
                 if aka.lowercased().contains(textToMatch) {
-                    matchingTitles.append(aka)
+                    for originalAKA in note.aka.list {
+                        if aka == StringUtils.toCommon(originalAKA) {
+                            matchingTitles.append(originalAKA)
+                        }
+                    }
                 }
             }
+            
             matchingTitles.sort()
         }
         
@@ -135,60 +154,171 @@ class NotePickerViewController: NSViewController,
         return cellView
     }
     
+    func myKeyDown(with event: NSEvent) -> Bool {
+        guard let locWindow = self.view.window,
+              NSApplication.shared.keyWindow === locWindow else { return false }
+        
+        var chars = " "
+        if event.charactersIgnoringModifiers != nil {
+            chars = event.charactersIgnoringModifiers!
+        }
+        if event.modifierFlags.contains(.command) {
+            switch chars {
+            case "c":
+                if event.modifierFlags.contains(.option) {
+                    AppPrefs.shared.noteAction = copyLink
+                    copyNoteTitleWithBrackets()
+                    return true
+                } else {
+                    AppPrefs.shared.noteAction = copyTitle
+                    copyNoteTitle()
+                    return true
+                }
+            case "g":
+                AppPrefs.shared.noteAction = goToAction
+                goTo()
+                return true
+            case "l":
+                AppPrefs.shared.noteAction = launchAction
+                launchLink()
+                return true
+            case "v":
+                if event.modifierFlags.contains(.option) {
+                    AppPrefs.shared.noteAction = copyPasteLink
+                    copyPasteNoteTitleWithBrackets()
+                    return true
+                } else {
+                    AppPrefs.shared.noteAction = copyPasteTitle
+                    copyPasteNoteTitle()
+                    return true
+                }
+            default:
+                break
+            }
+        }
+        switch event.keyCode {
+        case downArrow:
+            var i = noteTableView.selectedRow
+            i += 1
+            if i < noteTableView.numberOfRows {
+                noteTableView.selectRowIndexes([i], byExtendingSelection: false)
+            }
+            return true
+        case upArrow:
+            var i = noteTableView.selectedRow
+            i -= 1
+            if i >= 0 && i < noteTableView.numberOfRows {
+                noteTableView.selectRowIndexes([i], byExtendingSelection: false)
+            }
+            return true
+        default:
+            return false
+        }
+    }
+    
     @IBAction func cancel(_ sender: Any) {
         closeWindow()
     }
     
     @IBAction func ok(_ sender: Any) {
+  
+        if let selectedAction = actionList.selectedItem {
+            AppPrefs.shared.noteAction = selectedAction.title
+            
+            // Perform the requested action.
+            switch selectedAction.title {
+            case copyTitle:
+                copyNoteTitle()
+            case copyPasteTitle:
+                copyPasteNoteTitle()
+            case copyLink:
+                copyNoteTitleWithBrackets()
+            case copyPasteLink:
+                copyPasteNoteTitleWithBrackets()
+            case goToAction:
+                goTo()
+            case launchAction:
+                launchLink()
+            default:
+                break
+            }
+        }
+    }
+    
+    func copyNoteTitle() {
+        let selectedRow = noteTableView.selectedRow
+        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
+        let selectedTitle = matchingTitles[selectedRow]
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(selectedTitle, forType: .string)
+        closeWindow()
+    }
+    
+    func copyNoteTitleWithBrackets() {
+        let selectedRow = noteTableView.selectedRow
+        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
+        let selectedTitle = matchingTitles[selectedRow]
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString("[[\(selectedTitle)]]", forType: .string)
+        closeWindow()
+    }
+    
+    func copyPasteNoteTitle() {
+        guard let collWC = collectionController else { return }
+        let selectedRow = noteTableView.selectedRow
+        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
+        let selectedTitle = matchingTitles[selectedRow]
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(selectedTitle, forType: .string)
+        closeWindow()
+        collWC.pasteTextNow()
+    }
+    
+    func copyPasteNoteTitleWithBrackets() {
+        guard let collWC = collectionController else { return }
+        let selectedRow = noteTableView.selectedRow
+        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
+        let selectedTitle = matchingTitles[selectedRow]
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString("[[\(selectedTitle)]]", forType: .string)
+        closeWindow()
+        collWC.pasteTextNow()
+    }
+    
+    func goTo() {
         guard let io = noteIO else { return }
         guard let collWC = collectionController else { return }
         let selectedRow = noteTableView.selectedRow
         if selectedRow >= 0 && selectedRow < matchingTitles.count {
             let selectedTitle = matchingTitles[selectedRow]
-            if let selectedAction = actionList.selectedItem {
-                AppPrefs.shared.noteAction = selectedAction.title
-                
-                // Perform the requested action.
-                switch selectedAction.title {
-                case copyTitle:
-                    let pasteboard = NSPasteboard.general
-                    pasteboard.clearContents()
-                    pasteboard.declareTypes([.string], owner: nil)
-                    pasteboard.setString(selectedTitle, forType: .string)
-                case copyPasteTitle:
-                    let pasteboard = NSPasteboard.general
-                    pasteboard.clearContents()
-                    pasteboard.declareTypes([.string], owner: nil)
-                    pasteboard.setString(selectedTitle, forType: .string)
-                    collWC.pasteTextNow()
-                case copyLink:
-                    let pasteboard = NSPasteboard.general
-                    pasteboard.clearContents()
-                    pasteboard.declareTypes([.string], owner: nil)
-                    pasteboard.setString("[[\(selectedTitle)]]", forType: .string)
-                case copyPasteLink:
-                    let pasteboard = NSPasteboard.general
-                    pasteboard.clearContents()
-                    pasteboard.declareTypes([.string], owner: nil)
-                    pasteboard.setString("[[\(selectedTitle)]]", forType: .string)
-                    collWC.pasteTextNow()
-                case goToAction:
-                    let note = io.getNote(knownAs: selectedTitle)
-                    if note != nil {
-                        collWC.select(note: note!, position: nil, source: .nav)
-                    }
-                case launchAction:
-                    let note = io.getNote(knownAs: selectedTitle)
-                    if note != nil {
-                        collWC.launchLink(for: note!)
-                    }
-                default:
-                    break
-                }
+            let note = io.getNote(knownAs: selectedTitle)
+            if note != nil {
+                collWC.select(note: note!, position: nil, source: .nav)
+                closeWindow()
             }
         }
-
-        closeWindow()
+    }
+    
+    func launchLink() {
+        guard let io = noteIO else { return }
+        guard let collWC = collectionController else { return }
+        let selectedRow = noteTableView.selectedRow
+        if selectedRow >= 0 && selectedRow < matchingTitles.count {
+            let selectedTitle = matchingTitles[selectedRow]
+            let note = io.getNote(knownAs: selectedTitle)
+            if note != nil {
+                collWC.launchLink(for: note!)
+                closeWindow()
+            }
+        }
     }
     
     func closeWindow() {

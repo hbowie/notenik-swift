@@ -1,0 +1,7 @@
+Title:  Copy and Paste Wikilink
+
+Body:
+
+See [[notenik-dot-app]] for details. 
+
+[[notenik-dot-app]]
