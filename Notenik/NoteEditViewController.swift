@@ -43,6 +43,7 @@ class NoteEditViewController: NSViewController {
     var linkView:   LinkView?
     var imageNameView: ImageNameView?
     var bodyView:   BodyView?
+    var bodyRow = -1
     
     var window: CollectionWindowController? {
         get {
@@ -137,9 +138,21 @@ class NoteEditViewController: NSViewController {
         
         editViews.append(editView)
         
+        bodyRow = -1
+        
         // Add the next row to the Grid View
-        let row = [labelView, valueView]
-        grid.append(row)
+        if def.fieldType.typeString == NotenikConstants.bodyCommon {
+            if collection.bodyLabel {
+                let row = [labelView]
+                grid.append(row)
+            }
+            bodyRow = grid.count
+            let row = [valueView]
+            grid.append(row)
+        } else {
+            let row = [labelView, valueView]
+            grid.append(row)
+        }
         
         if label.commonForm == NotenikConstants.titleCommon {
             titleView = editView
@@ -167,7 +180,12 @@ class NoteEditViewController: NSViewController {
         gridView = NSGridView(views: grid)
         
         gridView.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        if bodyRow >= 0 {
+            let hRange = NSRange(location: 0,length: 2)
+            let vRange = NSRange(location: bodyRow, length: 1)
+            gridView.mergeCells(inHorizontalRange: hRange, verticalRange: vRange)
+        }
         if subView == nil {
             parentView.addSubview(gridView)
         } else {
