@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -134,8 +134,8 @@ Gw
                                 <rect key="frame" x="331" y="102" width="397" height="344"/>
                             </stackView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VNE-Tk-2ei">
-                                <rect key="frame" x="20" y="220" width="287" height="18"/>
-                                <buttonCell key="cell" type="check" title="Include explicit Body field label on Display?" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Xuw-2d-KYg">
+                                <rect key="frame" x="20" y="220" width="274" height="18"/>
+                                <buttonCell key="cell" type="check" title="Include explicit Body field label for Note?" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Xuw-2d-KYg">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>

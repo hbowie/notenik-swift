@@ -2547,6 +2547,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let noteIO = guardForCollectionAction() else { return }
         let path = noteIO.collection!.fullPath
         let readOnly = noteIO.collection!.readOnly
+        saveBeforeClose()
         noteIO.closeCollection()
         newNoteRequested = false
         pendingMod = false
