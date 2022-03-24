@@ -1,0 +1,3 @@
+Title:  Note Linking to New Note
+
+Link:   notenik://open?path=/Users/hbowie/Xcode/Notenik/Test%20Collections/Hook%20Integration/&timestamp=20220324194503

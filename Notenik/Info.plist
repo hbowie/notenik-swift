@@ -65,6 +65,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2009 - 2022 Herb Bowie under terms of MIT License</string>
 	<key>NSMainStoryboardFile</key>
@@ -83,6 +85,8 @@
 			<string>Any</string>
 		</dict>
 	</dict>
+	<key>OSAScriptingDefinition</key>
+	<string>Notenik.sdef</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>

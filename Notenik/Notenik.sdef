@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+
+<dictionary title="Dictionary" xmlns:xi="http://www.w3.org/2003/XInclude">
+  
+  <suite name="Notenik suite" code="NtNk" description="Notenik specific classes">
+      
+      <command name="HasSelectedNote" code="NtNkHasS" description="Has selected note check">
+          <cocoa class="Notenik.AppHasSelectedNote"/>
+          <result type="boolean" />
+      </command>
+      
+      <command name="GetSelectedNoteTitle" code="NtNkGetS" description="Get selected note title">
+          <cocoa class="Notenik.AppGetSelectedNoteTitle"/>
+          <result type="text" />
+      </command>
+      
+      <command name="GetSelectedNoteBacklink" code="NtNkGetL" description="Get selected note backlink">
+          <cocoa class="Notenik.AppGetSelectedNoteBacklink"/>
+          <result type="text" />
+      </command>
+      
+      <command name="AddNote" code="NtNkAddN" description="Add a New Note">
+          
+          <cocoa class="Notenik.AppAddNote"/>
+          
+          <parameter name="title" code="NtTl" type="text" optional="no" description="Title of Note to be Created">
+              <cocoa key="NoteTitle"/>
+          </parameter>
+          
+          <parameter name="link" code="NtLk" type="text" optional="no" description="Link of Note to be Created">
+              <cocoa key="NoteLink"/>
+          </parameter>
+          
+          <parameter name="tags" code="NtTg" type="text" optional="no" description="Tags for Note to be Created">
+              <cocoa key="NoteTags"/>
+          </parameter>
+          
+          <result type="text" />
+      </command>
+      
+  </suite>
+</dictionary>

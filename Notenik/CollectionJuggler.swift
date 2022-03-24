@@ -58,6 +58,10 @@ class CollectionJuggler: NSObject {
     var navController: NavigatorWindowController?
     var quickActionController: QuickActionWindowController?
     
+    var lastSelectedNoteTitle = ""
+    var lastSelectedNoteCustomURL = ""
+    var lastWC: CollectionWindowController? = nil
+    
     override private init() {
         super.init()
     }
@@ -875,6 +879,7 @@ class CollectionJuggler: NSObject {
     
     /// Take appropriate actions when a Collection window is closing.
     func windowClosing(window: CollectionWindowController) {
+        setLastSelection(title: "", link: "", wc: nil)
         var windowCount = 0
         var index = 0
         for nextWindow in windows {
@@ -971,6 +976,33 @@ class CollectionJuggler: NSObject {
         if scriptWindowController == nil {
             communicateError("Couldn't get a Script Window Controller")
         }
+    }
+    
+    func setLastSelection(title: String, link: String, wc: CollectionWindowController?) {
+        
+        if wc == nil {
+            lastSelectedNoteTitle = title
+            lastSelectedNoteCustomURL = link
+            lastWC = wc
+            return
+        }
+        guard let collection = wc?.io?.collection else { return }
+        guard !collection.readOnly else { return }
+        lastSelectedNoteTitle = title
+        lastSelectedNoteCustomURL = link
+        lastWC = wc
+    }
+    
+    func getLastSelectedNoteTitle() -> String {
+        return lastSelectedNoteTitle
+    }
+    
+    func getLastSelectedNoteCustomURL() -> String {
+        return lastSelectedNoteCustomURL
+    }
+    
+    func getLastUsedWindowController() -> CollectionWindowController? {
+        return lastWC
     }
     
     let countsStoryboard:          NSStoryboard = NSStoryboard(name: "Counts", bundle: nil)

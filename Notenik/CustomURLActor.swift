@@ -21,6 +21,7 @@ class CustomURLActor {
     let folders = NotenikFolderList.shared
     let juggler = CollectionJuggler.shared
     let multi   = MultiFileIO.shared
+    let fm = FileManager.default
     
     init() {
         
@@ -134,6 +135,42 @@ class CustomURLActor {
             }
             guard let io = controller.io else { return }
             guard let note = io.getNote(forID: value) else {
+                communicateError("Note could not be found with this ID: \(value)")
+                return
+            }
+            controller.select(note: note, position: nil, source: .action, andScroll: true)
+        case "timestamp":
+            guard let controller = cwc else {
+                communicateError("Unable to open desired Collection")
+                return
+            }
+            guard let io = controller.io else { return }
+            guard let collection = io.collection else { return }
+            guard collection.hasTimestamp else {
+                communicateError("Indicated Collection does not have a Timestamp field")
+                return
+            }
+            guard let note = io.getNote(forTimestamp: value) else {
+                communicateError("Note could not be found with this Timestamp: \(value)")
+                return
+            }
+            controller.select(note: note, position: nil, source: .action, andScroll: true)
+        case "notepath":
+            guard fm.fileExists(atPath: value) else {
+                communicateError("Note file could not be located")
+                return
+            }
+            let noteURL = URL(fileURLWithPath: value)
+            let folderURL = noteURL.deletingLastPathComponent()
+            cwc = openCollection(shortcut: nil, path: folderURL.path)
+            guard let controller = cwc else {
+                communicateError("Unable to open desired Collection")
+                return
+            }
+            guard let io = controller.io else { return }
+            let fileName = noteURL.deletingPathExtension().lastPathComponent
+            let noteID = StringUtils.toCommon(fileName)
+            guard let note = io.getNote(forID: noteID) else {
                 communicateError("Note could not be found with this ID: \(value)")
                 return
             }

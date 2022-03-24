@@ -98,6 +98,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         set {
             notenikIO = newValue
+            juggler.setLastSelection(title: "", link: "", wc: nil)
             guard notenikIO != nil && notenikIO!.collection != nil else {
                 window!.title = "No Collection to Display"
                 return
@@ -207,6 +208,15 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         getWindowComponents()
         juggler.registerWindow(window: self)
         window!.delegate = self
+        juggler.setLastSelection(title: "", link: "", wc: nil)
+    }
+    
+    func windowDidBecomeKey(_ notification: Notification) {
+        guard let vc = displayVC else { return }
+        guard let note = vc.note else { return }
+        juggler.setLastSelection(title: note.title.value,
+                                 link: note.getNotenikLink(preferringTimestamp: false),
+                                 wc: self)
     }
     
     func windowWillClose() {

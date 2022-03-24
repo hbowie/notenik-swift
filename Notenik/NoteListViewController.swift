@@ -264,19 +264,10 @@ class NoteListViewController:   NSViewController,
     /// Respond to a request to copy a note's internal url to the clipboard.
     @objc private func copyItemInternalURL(_ sender: AnyObject) {
         guard let io = notenikIO else { return }
-        guard let collection = io.collection else { return }
         let row = tableView.clickedRow
         guard row >= 0 else { return }
         guard let clickedNote = io.getNote(at: row) else { return }
-        var str = "notenik://open?"
-        if collection.shortcut.count > 0 {
-            str.append("shortcut=\(collection.shortcut)")
-        } else {
-            let folderURL = URL(fileURLWithPath: collection.fullPath)
-            let encodedPath = String(folderURL.absoluteString.dropFirst(7))
-            str.append("path=\(encodedPath)")
-        }
-        str.append("&id=\(clickedNote.id)")
+        let str = clickedNote.getNotenikLink(preferringTimestamp: false)
         let board = NSPasteboard.general
         board.clearContents()
         board.setString(str, forType: NSPasteboard.PasteboardType.string)
