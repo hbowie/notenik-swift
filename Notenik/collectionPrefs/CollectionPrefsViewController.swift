@@ -33,6 +33,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var mathJaxCkBox:         NSButton!
     @IBOutlet var imgLocalCkBox:        NSButton!
     @IBOutlet var missingTargetsCkBox:  NSButton!
+    @IBOutlet var curlyApostsCkBox:     NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
     
@@ -134,6 +135,7 @@ class CollectionPrefsViewController: NSViewController {
         setStreamlined(collection!.streamlined)
         setMathJax(collection!.mathJax)
         setImgLocal(collection!.imgLocal)
+        setCurlyApostrophes(collection!.curlyApostrophes)
     }
     
     func makeStackViews() {
@@ -351,6 +353,14 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
+    func setCurlyApostrophes(_ on: Bool) {
+        if on {
+            curlyApostsCkBox.state = .on
+        } else {
+            curlyApostsCkBox.state = .off
+        }
+    }
+    
     @objc func checkBoxClicked() {
         // No need to take any immediate action here
     }
@@ -375,6 +385,7 @@ class CollectionPrefsViewController: NSViewController {
         collection!.mathJax = (mathJaxCkBox.state == .on)
         collection!.imgLocal = (imgLocalCkBox.state == .on)
         collection!.missingTargets = (missingTargetsCkBox.state == .on)
+        collection!.curlyApostrophes = (curlyApostsCkBox.state == .on)
         defsRemoved.clear()
         let dict = collection!.dict
         dict.unlock()
