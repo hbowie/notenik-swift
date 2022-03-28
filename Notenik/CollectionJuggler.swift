@@ -204,6 +204,8 @@ class CollectionJuggler: NSObject {
         case .notenikScheme:
             let actor = CustomURLActor()
             _ = actor.act(on: link.str)
+        case .noteFile:
+            _ = openNoteFile(link: link)
         default:
             communicateError("Item to be opened at \(link) could not be used, possibly due to expired permissions", alert: true)
         }
@@ -770,6 +772,25 @@ class CollectionJuggler: NSObject {
             MultiFileIO.shared.registerBookmark(url: openPanel.url!)
             _ = self.openFileWithNewWindow(fileURL: openPanel.url!, readOnly: false)
         }
+    }
+    
+    func openNoteFile(link: NotenikLink) -> Bool {
+        guard let noteURL = link.url else { return false }
+        let folderURL = noteURL.deletingLastPathComponent()
+        let cwc = openFileWithNewWindow(fileURL: folderURL, readOnly: false)
+        guard let controller = cwc else {
+            communicateError("Unable to open desired Collection, possibley due to expired permissions", alert: true)
+            return false
+        }
+        guard let io = controller.io else { return false }
+        let fileName = noteURL.deletingPathExtension().lastPathComponent
+        let noteID = StringUtils.toCommon(fileName)
+        guard let note = io.getNote(forID: noteID) else {
+            communicateError("Note could not be found with this ID: \(noteID)")
+            return false
+        }
+        controller.select(note: note, position: nil, source: .action, andScroll: true)
+        return true
     }
     
     /// Attempt to open a Notenik collection, starting with a file path.
