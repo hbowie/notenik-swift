@@ -27,6 +27,8 @@ class NotePickerViewController: NSViewController,
     let copyPasteTitle = "Copy and Paste Title"
     let copyLink       = "Copy Wikilink"
     let copyPasteLink  = "Copy and Paste Wikilink"
+    let copyTimestamp  = "Copy Timestamp"
+    let copyPasteStamp = "Copy and Paste Timestamp"
     let goToAction     = "Go To"
     let launchAction   = "Launch Link"
     
@@ -51,6 +53,8 @@ class NotePickerViewController: NSViewController,
         actionList.addItem(withTitle: copyPasteTitle)
         actionList.addItem(withTitle: copyLink)
         actionList.addItem(withTitle: copyPasteLink)
+        actionList.addItem(withTitle: copyTimestamp)
+        actionList.addItem(withTitle: copyPasteStamp)
         actionList.addItem(withTitle: goToAction)
         actionList.addItem(withTitle: launchAction)
         
@@ -182,6 +186,10 @@ class NotePickerViewController: NSViewController,
                 AppPrefs.shared.noteAction = launchAction
                 launchLink()
                 return true
+            case "t":
+                AppPrefs.shared.noteAction = copyTimestamp
+                copyNoteTimestamp()
+                return true
             case "v":
                 if event.modifierFlags.contains(.option) {
                     AppPrefs.shared.noteAction = copyPasteLink
@@ -235,6 +243,10 @@ class NotePickerViewController: NSViewController,
                 copyNoteTitleWithBrackets()
             case copyPasteLink:
                 copyPasteNoteTitleWithBrackets()
+            case copyTimestamp:
+                copyNoteTimestamp()
+            case copyPasteStamp:
+                copyPasteNoteTimestamp()
             case goToAction:
                 goTo()
             case launchAction:
@@ -289,6 +301,34 @@ class NotePickerViewController: NSViewController,
         pasteboard.clearContents()
         pasteboard.declareTypes([.string], owner: nil)
         pasteboard.setString("[[\(selectedTitle)]]", forType: .string)
+        closeWindow()
+        collWC.pasteTextNow()
+    }
+    
+    func copyNoteTimestamp() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        guard let io = noteIO else { return }
+        let selectedRow = noteTableView.selectedRow
+        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
+        let selectedTitle = matchingTitles[selectedRow]
+        guard let note = io.getNote(knownAs: selectedTitle) else { return }
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(note.timestampAsString, forType: .string)
+        closeWindow()
+    }
+    
+    func copyPasteNoteTimestamp() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        guard let io = noteIO else { return }
+        guard let collWC = collectionController else { return }
+        let selectedRow = noteTableView.selectedRow
+        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
+        let selectedTitle = matchingTitles[selectedRow]
+        guard let note = io.getNote(knownAs: selectedTitle) else { return }
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(note.timestampAsString, forType: .string)
         closeWindow()
         collWC.pasteTextNow()
     }
