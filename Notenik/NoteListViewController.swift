@@ -69,6 +69,8 @@ class NoteListViewController:   NSViewController,
         shortcutMenu.addItem(NSMenuItem(title: "Launch Link", action: #selector(launchLinkForItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Share...", action: #selector(shareItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Copy Notenik URL", action: #selector(copyItemInternalURL(_:)), keyEquivalent: ""))
+        shortcutMenu.addItem(NSMenuItem(title: "Copy Title", action: #selector(copyItemTitle(_:)), keyEquivalent: ""))
+        shortcutMenu.addItem(NSMenuItem(title: "Copy Timestamp", action: #selector(copyItemTimestamp(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem.separator())
         shortcutMenu.addItem(NSMenuItem(title: "Duplicate", action: #selector(duplicateItem(_:)), keyEquivalent: ""))
         tableView.menu = shortcutMenu
@@ -259,6 +261,32 @@ class NoteListViewController:   NSViewController,
         guard row >= 0 else { return }
         guard let clickedNote = notenikIO?.getNote(at: row) else { return }
         collectionWindowController!.shareNote(clickedNote)
+    }
+    
+    /// Respond to a request to copy a note's internal url to the clipboard.
+    @objc private func copyItemTitle(_ sender: AnyObject) {
+        guard let io = notenikIO else { return }
+        let row = tableView.clickedRow
+        guard row >= 0 else { return }
+        guard let clickedNote = io.getNote(at: row) else { return }
+        let str = clickedNote.title.value
+        let board = NSPasteboard.general
+        board.clearContents()
+        board.setString(str, forType: NSPasteboard.PasteboardType.string)
+    }
+    
+    /// Respond to a request to copy a note's internal url to the clipboard.
+    @objc private func copyItemTimestamp(_ sender: AnyObject) {
+        guard let io = notenikIO else { return }
+        guard let collection = io.collection else { return }
+        let board = NSPasteboard.general
+        board.clearContents()
+        guard collection.hasTimestamp else { return }
+        let row = tableView.clickedRow
+        guard row >= 0 else { return }
+        guard let clickedNote = io.getNote(at: row) else { return }
+        let str = clickedNote.timestampAsString
+        board.setString(str, forType: NSPasteboard.PasteboardType.string)
     }
     
     /// Respond to a request to copy a note's internal url to the clipboard.
