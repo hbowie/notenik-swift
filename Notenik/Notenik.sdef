@@ -20,6 +20,11 @@
           <result type="text" />
       </command>
       
+      <command name="GetSelectedNoteFilePath" code="NtNkGetP" description="Get selected note filepath">
+          <cocoa class="Notenik.AppGetSelectedNoteFilePath"/>
+          <result type="text" />
+      </command>
+      
       <command name="AddNote" code="NtNkAddN" description="Add a New Note">
           
           <cocoa class="Notenik.AppAddNote"/>

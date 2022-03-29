@@ -99,9 +99,12 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         guard io != nil else { return }
         guard isViewLoaded else { return }
         guard let collection = io!.collection else { return }
-        
-        CollectionJuggler.shared.setLastSelection(title: note!.title.value, link: note!.getNotenikLink(preferringTimestamp: false), wc: wc)
-        
+        if let filepath = note!.fileInfo.fullPath {
+            CollectionJuggler.shared.setLastSelection(title: note!.title.value,
+                                                      link: note!.getNotenikLink(preferringTimestamp: false),
+                                                      filepath: filepath,
+                                                      wc: wc)
+        }
         if collection.imgLocal {
             parms.imagesPath = NotenikConstants.filesFolderName
         }

@@ -60,6 +60,7 @@ class CollectionJuggler: NSObject {
     
     var lastSelectedNoteTitle = ""
     var lastSelectedNoteCustomURL = ""
+    var lastSelectedNoteFilepath = ""
     var lastWC: CollectionWindowController? = nil
     
     override private init() {
@@ -900,7 +901,7 @@ class CollectionJuggler: NSObject {
     
     /// Take appropriate actions when a Collection window is closing.
     func windowClosing(window: CollectionWindowController) {
-        setLastSelection(title: "", link: "", wc: nil)
+        setLastSelection(title: "", link: "", filepath: "", wc: nil)
         var windowCount = 0
         var index = 0
         for nextWindow in windows {
@@ -999,11 +1000,15 @@ class CollectionJuggler: NSObject {
         }
     }
     
-    func setLastSelection(title: String, link: String, wc: CollectionWindowController?) {
+    func setLastSelection(title: String,
+                          link: String,
+                          filepath: String,
+                          wc: CollectionWindowController?) {
         
         if wc == nil {
             lastSelectedNoteTitle = title
             lastSelectedNoteCustomURL = link
+            lastSelectedNoteFilepath = filepath
             lastWC = wc
             return
         }
@@ -1011,6 +1016,7 @@ class CollectionJuggler: NSObject {
         guard !collection.readOnly else { return }
         lastSelectedNoteTitle = title
         lastSelectedNoteCustomURL = link
+        lastSelectedNoteFilepath = filepath
         lastWC = wc
     }
     
@@ -1020,6 +1026,10 @@ class CollectionJuggler: NSObject {
     
     func getLastSelectedNoteCustomURL() -> String {
         return lastSelectedNoteCustomURL
+    }
+    
+    func getLastSelectedNoteFilePath() -> String {
+        return lastSelectedNoteFilepath
     }
     
     func getLastUsedWindowController() -> CollectionWindowController? {
