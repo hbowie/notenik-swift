@@ -62,6 +62,7 @@ class LinkView: MacEditView {
         textView.isRichText = false
         textView.usesFontPanel = false
         textView.isAutomaticQuoteSubstitutionEnabled = false
+        textView.isFieldEditor = true
         
         AppPrefsCocoa.shared.setFixedPitchFont(view: textView)
         

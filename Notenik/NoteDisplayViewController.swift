@@ -101,7 +101,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         guard let collection = io!.collection else { return }
         if let filepath = note!.fileInfo.fullPath {
             CollectionJuggler.shared.setLastSelection(title: note!.title.value,
-                                                      link: note!.getNotenikLink(preferringTimestamp: false),
+                                                      link: note!.getNotenikLink(preferringTimestamp: true),
                                                       filepath: filepath,
                                                       wc: wc)
         }

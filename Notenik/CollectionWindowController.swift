@@ -219,7 +219,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             filepath = fp
         }
         juggler.setLastSelection(title: note.title.value,
-                                 link: note.getNotenikLink(preferringTimestamp: false),
+                                 link: note.getNotenikLink(preferringTimestamp: true),
                                  filepath: filepath,
                                  wc: self)
     }
