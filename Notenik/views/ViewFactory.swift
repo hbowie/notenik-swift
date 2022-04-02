@@ -19,15 +19,17 @@ class ViewFactory {
     
     static func getEditView(collection: NoteCollection, pickLists: ValuePickLists, def: FieldDefinition) -> MacEditView {
         
-        if let pickList = def.pickList as? AuthorPickList {
-            return AuthorView(pickList: pickList)
-        }
-        
         switch def.fieldType.typeString {
         case NotenikConstants.akaCommon:
             return AKAView()
         case NotenikConstants.attribCommon:
             return LongTextView()
+        case NotenikConstants.authorCommon:
+            if let pickList = def.pickList as? AuthorPickList {
+                return AuthorView(pickList: pickList)
+            } else {
+                return StringView()
+            }
         case NotenikConstants.backlinksCommon:
             return LabelView()
         case NotenikConstants.bodyCommon:
