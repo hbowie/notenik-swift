@@ -766,19 +766,23 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     /// Renumber the Collection's sequence numbers based on the level and position of each note.
     @IBAction func renumberSeqBasedOnLevel(_ sender: Any) {
-        outlineUpdatesBasedOnLevel(updateSeq: true, updateTags: false)
+        outlineUpdatesBasedOnLevel(updateSeq: true, tagsAction: .ignore)
     }
     
     @IBAction func replaceTagsBasedOnLevel(_ sender: Any) {
-        outlineUpdatesBasedOnLevel(updateSeq: false, updateTags: true)
+        outlineUpdatesBasedOnLevel(updateSeq: false, tagsAction: .update)
     }
     
     @IBAction func updateSeqAndTagsBasedOnLevel(_ sender: Any) {
-        outlineUpdatesBasedOnLevel(updateSeq: true, updateTags: true)
+        outlineUpdatesBasedOnLevel(updateSeq: true, tagsAction: .update)
+    }
+    
+    @IBAction func removeTagsBasedOnLevel(_ sender: Any) {
+        outlineUpdatesBasedOnLevel(updateSeq: false, tagsAction: .remove)
     }
     
     /// Update Seq and/or Tags field based on outline structure (based on seq + level).
-    func outlineUpdatesBasedOnLevel(updateSeq: Bool, updateTags: Bool) {
+    func outlineUpdatesBasedOnLevel(updateSeq: Bool, tagsAction: SeqTagsAction) {
         
         // Make sure we're in a position to perform this operation.
         guard let noteIO = guardForCollectionAction() else { return }
@@ -797,7 +801,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         
         let (numberOfUpdates, errorMsg) = sequencer.outlineUpdatesBasedOnLevel(updateSeq: updateSeq,
-                                                                               updateTags: updateTags)
+                                                                               tagsAction: tagsAction)
         if !errorMsg.isEmpty {
             communicateError(errorMsg, alert: true)
         }
@@ -3663,4 +3667,5 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         crumbs!.refresh()
         select(note: note, position: position, source: .action, andScroll: true)
     }
+    
 }
