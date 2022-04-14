@@ -2,8 +2,6 @@ Title:  Notenik
 
 Tags:   Software.Groovy
 
-Timestamp: 20220324174512
-
 Body:
 
 A note-taking system cunningly devised by Herb Bowie. 
@@ -11,5 +9,3 @@ A note-taking system cunningly devised by Herb Bowie.
 Learn more at [Notenik.app](https://notenik.app).
 
 You can delete this starting Note after creating one or two of your own.
-
-"[Adding Yet Another New Note](notenik://open?path=/Users/hbowie/Xcode/Notenik/Test%20Collections/Hook%20Integration/&timestamp=20220326233509)"

@@ -1109,7 +1109,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             } else if fileRefURL != nil {
                 logInfo(msg: "Processing pasted item as File Ref URL")
                 let fileURL = URL(fileURLWithPath: fileRefURL!).standardized
-                if row >= 0 && dropOperation == .on {
+                let likelyText = ResourceFileSys.isLikelyNoteFile(fileURL: fileURL, preferredNoteExt: collection.preferredExt)
+                if row >= 0 && dropOperation == .on && !likelyText {
                     let dropNote = noteIO.getNote(at: row)
                     if dropNote != nil {
                         select(note: dropNote, position: nil, source: .action, andScroll: true)
@@ -1118,6 +1119,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                             firstNotePasted = dropNote
                         }
                     }
+                } else {
+                    let addedNote = importTextFile(fileURL: fileURL,
+                                                   newLevel: newLevel, newSeq: newSeq, newKlass: newKlass,
+                                                   finishUp: false)
+                    if addedNote != nil {
+                        firstNotePasted = addedNote
+                    }
+                    continue
                 }
             // } else if utf8 != nil && utf8!.count > 0 {
             //     print("    - utf8: \(utf8!)")
@@ -2955,6 +2964,59 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         editVC!.io = noteIO
         finishBatchOperation()
+    }
+    
+    @IBAction func importTextFile(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let importURL = promptUserForImportFile(
+                title: "Import an input Text file",
+                parent: noteIO.collection!.lib.getURL(type: .parent))
+            else { return }
+        _ = importTextFile(fileURL: importURL, newLevel: nil, newSeq: nil, newKlass: nil)
+    }
+    
+    /// Try to import a new Note from an existing text file.
+    func importTextFile(fileURL: URL,
+                        newLevel: LevelValue?,
+                        newSeq: SeqValue?,
+                        newKlass: KlassValue?,
+                        finishUp: Bool = true) -> Note? {
+        
+        guard let noteIO = guardForCollectionAction() else { return nil }
+        guard let collection = noteIO.collection else { return nil }
+        let newNote = Note(collection: collection)
+        
+        guard let reader = BigStringReader(fileURL: fileURL) else {
+            communicateError("Could not read contents of \(fileURL)")
+            return nil
+        }
+        let tempCollection = NoteCollection()
+        tempCollection.otherFields = true
+        let parser = NoteLineParser(collection: tempCollection, reader: reader)
+        let tempNote = parser.getNote(defaultTitle: fileURL.deletingPathExtension().lastPathComponent,
+                                      allowDictAdds: true)
+        tempNote.copyDefinedFields(to: newNote)
+
+        if newLevel != nil {
+            _ = newNote.setLevel(newLevel!)
+        }
+        if newSeq != nil {
+            _ = newNote.setSeq(newSeq!.value)
+        }
+        if newKlass != nil && !newNote.hasKlass() {
+            _ = newNote.setKlass(newKlass!.value)
+        }
+        
+        var addedNote: Note?
+        if finishUp {
+            addedNote = addNewNote(newNote)
+        } else {
+            addedNote = addPastedNote(newNote)
+        }
+        if addedNote == nil {
+            communicateError("Could not add new Note titled \(newNote.title.value)", alert: true)
+        }
+        return addedNote
     }
     
     @IBAction func importXML(_ sender: Any) {
