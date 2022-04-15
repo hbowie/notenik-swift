@@ -2399,6 +2399,16 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     @IBAction func discardEdits(_ sender: Any) {
         
         guard io != nil && io!.collectionOpen else { return }
+        
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = "Proceed with the Discard of your current edits?"
+        alert.informativeText = "(All of your current entries on the Edit tab will be lost.)"
+        alert.addButton(withTitle: "OK")
+        alert.addButton(withTitle: "Cancel")
+        let response = alert.runModal()
+        guard response == .alertFirstButtonReturn else { return }
+        
         pendingMod = false
         pendingEdits = false
         if newNoteRequested {
