@@ -41,6 +41,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     var notenikIO:          NotenikIO?
     var preferredExt        = ""
+    var backLinksDef:       FieldDefinition?
     var defsRemoved         = DefsRemoved()
     var crumbs:             NoteCrumbs?
     var webLinkFollowed     = false
@@ -293,6 +294,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard let noteIO = guardForCollectionAction() else { return }
         preferredExt = noteIO.collection!.preferredExt
+        backLinksDef = noteIO.collection!.backlinksDef
         defsRemoved.clear()
                 
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
@@ -364,9 +366,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///   - window: The Collection Prefs window.
     func collectionPrefsModified() {
         guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
         if noteIO is FileIO {
             let fileIO = noteIO as! FileIO
-            if noteIO.collection!.preferredExt != preferredExt {
+            if collection.preferredExt != preferredExt {
                 let renameOK = fileIO.changePreferredExt(from: preferredExt,
                                                          to: fileIO.collection!.preferredExt)
                 if !renameOK {
@@ -375,6 +378,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             }
         }
         removeFields()
+        
+        if collection.backlinksDef != nil && backLinksDef == nil {
+            addBackLinks()
+        }
         noteIO.persistCollectionInfo()
         reloadCollection(self)
     }
@@ -414,6 +421,29 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if notesToUpdate.count > 0 {
             reportNumberOfNotesUpdated(notesToUpdate.count)
         }
+    }
+    
+    func addBackLinks() {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        crumbs!.refresh()
+        let mogi = Transmogrifier(io: noteIO)
+        let backlinks = mogi.generateBacklinks()
+        
+        finishBatchOperation()
+        
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        if backlinks == 0 {
+            alert.messageText = "No Backlinks were generated"
+        } else if backlinks == 1 {
+            alert.messageText = "1 Backlink was generated"
+        } else {
+            alert.messageText = "\(backlinks) Backlinks were generated"
+        }
+        alert.addButton(withTitle: "OK")
+        let _ = alert.runModal()
     }
     
     /// The user has requested an export of this Collection. 

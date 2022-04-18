@@ -1,0 +1,8 @@
+Title:  And another Wiki link
+
+Wiki Links: Notenik
+
+Body:
+
+Link to [[Notenik]].
+

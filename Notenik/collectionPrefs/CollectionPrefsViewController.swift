@@ -399,8 +399,14 @@ class CollectionPrefsViewController: NSViewController {
                                         label: checkBox.title)
                 if added == nil {
                     communicateError("Trouble adding definition to dictionary", alert: true)
-                } else if checkBox.title == NotenikConstants.backlinks {
-                    _ = dict.addDef(typeCatalog: collection!.typeCatalog, label: NotenikConstants.wikilinks)
+                } else {
+                    collection!.registerDef(added!)
+                    if checkBox.title == NotenikConstants.backlinks {
+                        let added2 = dict.addDef(typeCatalog: collection!.typeCatalog, label: NotenikConstants.wikilinks)
+                        if added2 != nil {
+                            collection!.registerDef(added2!)
+                        }
+                    }
                 }
             } else if def != nil && checkBox.state == NSControl.StateValue.on {
                 // Definition already in dictionary and requested
@@ -420,9 +426,7 @@ class CollectionPrefsViewController: NSViewController {
         if !collection!.otherFields {
             dict.lock()
         }
-        if defsRemoved.count > 0 {
-            print("CollectionPrefsViewController: \(defsRemoved.count) field definitions removed")
-        }
+
         application.stopModal(withCode: .OK)
         windowController!.close()
     }
