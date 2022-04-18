@@ -1162,18 +1162,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             //     print("    - utf8: \(utf8!)")
             } else if str != nil && str!.count > 0 {
                 logInfo(msg: "Processing pasted item as Note")
-                let tempCollection = NoteCollection()
-                tempCollection.otherFields = true
-                collection.populateFieldDefs(to: tempCollection)
-                tempCollection.dict.unlock()
-                let reader = BigStringReader(str!)
-                let parser = NoteLineParser(collection: tempCollection, reader: reader)
-                let tempNote = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)",
-                                              allowDictAdds: true)
-                if !tempNote.title.value.hasPrefix("Pasted Note Number ")
-                        || tempNote.hasBody() || tempNote.hasLink() {
-                    tempNote.copyDefinedFields(to: note)
-                }
+                strToNote(str: str!, note: note)
             } else {
                 logInfo(msg: "Not sure how to handle this pasted item")
             }
@@ -1224,6 +1213,21 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             select(note: firstNotePasted, position: nil, source: .nav, andScroll: true)
         }
         return notesAdded
+    }
+    
+    func strToNote(str: String, note: Note) {
+        let tempCollection = NoteCollection()
+        tempCollection.otherFields = note.collection.otherFields
+        note.collection.populateFieldDefs(to: tempCollection)
+        // tempCollection.dict.unlock()
+        let reader = BigStringReader(str)
+        let parser = NoteLineParser(collection: tempCollection, reader: reader)
+        let tempNote = parser.getNote(defaultTitle: "Pasted Note",
+                                      allowDictAdds: true)
+        if !tempNote.title.value.hasPrefix("Pasted Note")
+                || tempNote.hasBody() || tempNote.hasLink() {
+            tempNote.copyDefinedFields(to: note)
+        }
     }
     
     /// Queue used for reading and writing file promises.
@@ -3032,12 +3036,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             communicateError("Could not read contents of \(fileURL)")
             return nil
         }
-        let tempCollection = NoteCollection()
-        tempCollection.otherFields = true
-        let parser = NoteLineParser(collection: tempCollection, reader: reader)
-        let tempNote = parser.getNote(defaultTitle: fileURL.deletingPathExtension().lastPathComponent,
-                                      allowDictAdds: true)
-        tempNote.copyDefinedFields(to: newNote)
+        
+        strToNote(str: reader.bigString, note: newNote)
 
         if newLevel != nil {
             _ = newNote.setLevel(newLevel!)

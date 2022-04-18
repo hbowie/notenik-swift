@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 4/5/19.
-//  Copyright © 2019 - 2021 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2022 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -272,7 +272,7 @@ class CollectionPrefsViewController: NSViewController {
             var looking = true
             while i < fieldSelectors.count && looking {
                 let button = fieldSelectors[i]
-                if def.fieldLabel.properForm == button.title {
+                if def.fieldLabel.commonForm == StringUtils.toCommon(button.title) {
                     looking = false
                     button.state = NSControl.StateValue.on
                 } else {
