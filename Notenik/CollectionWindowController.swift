@@ -1164,6 +1164,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 logInfo(msg: "Processing pasted item as Note")
                 let tempCollection = NoteCollection()
                 tempCollection.otherFields = true
+                collection.populateFieldDefs(to: tempCollection)
+                tempCollection.dict.unlock()
                 let reader = BigStringReader(str!)
                 let parser = NoteLineParser(collection: tempCollection, reader: reader)
                 let tempNote = parser.getNote(defaultTitle: "Pasted Note Number \(notesAdded)",
