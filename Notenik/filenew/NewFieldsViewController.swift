@@ -56,6 +56,8 @@ class NewFieldsViewController: NSViewController {
                         menuItem!.toolTip = "Each Note has a Seq field and a Level field"
                     case "10 - Web Book":
                         menuItem!.toolTip = "Your entire Collection can be published as a Web Book"
+                    case "11 - Commonplace with Lookups":
+                        menuItem!.toolTip = "Lookup authors and their works in nested Collection folders"
                     default:
                         break
                     }
