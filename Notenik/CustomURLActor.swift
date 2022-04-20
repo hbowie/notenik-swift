@@ -134,7 +134,7 @@ class CustomURLActor {
                 return
             }
             guard let io = controller.io else { return }
-            guard let note = io.getNote(forID: value) else {
+            guard let note = io.getNote(knownAs: value) else {
                 communicateError("Note could not be found with this ID: \(value)")
                 return
             }
@@ -185,7 +185,7 @@ class CustomURLActor {
         guard let wc = juggler.open(link: collectionLink) else { return false }
         if id.count == 0 { return true }
         guard let io = wc.io else { return false }
-        guard let note = io.getNote(forID: id) else { return false }
+        guard let note = io.getNote(knownAs: id) else { return false }
         wc.select(note: note, position: nil, source: .action, andScroll: true)
         return true
     }
