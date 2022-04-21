@@ -1162,7 +1162,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             //     print("    - utf8: \(utf8!)")
             } else if str != nil && str!.count > 0 {
                 logInfo(msg: "Processing pasted item as Note")
-                strToNote(str: str!, note: note)
+                strToNote(str: str!, note: note, defaultTitle: nil)
             } else {
                 logInfo(msg: "Not sure how to handle this pasted item")
             }
@@ -1215,14 +1215,23 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         return notesAdded
     }
     
-    func strToNote(str: String, note: Note) {
+    
+    /// Given a Note formatted as a String, extract the fields and apply them to the give Note.
+    /// - Parameters:
+    ///   - str: A String containing a formatted Note.
+    ///   - note: The Note to which the extracted fields are to be applied.
+    func strToNote(str: String, note: Note, defaultTitle: String?) {
         let tempCollection = NoteCollection()
         tempCollection.otherFields = note.collection.otherFields
         note.collection.populateFieldDefs(to: tempCollection)
         // tempCollection.dict.unlock()
         let reader = BigStringReader(str)
         let parser = NoteLineParser(collection: tempCollection, reader: reader)
-        let tempNote = parser.getNote(defaultTitle: "Pasted Note",
+        var possibleTitle = "Pasted Note"
+        if defaultTitle != nil && !defaultTitle!.isEmpty {
+            possibleTitle = defaultTitle!
+        }
+        let tempNote = parser.getNote(defaultTitle: possibleTitle,
                                       allowDictAdds: true)
         if !tempNote.title.value.hasPrefix("Pasted Note")
                 || tempNote.hasBody() || tempNote.hasLink() {
@@ -3037,7 +3046,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             return nil
         }
         
-        strToNote(str: reader.bigString, note: newNote)
+        let defaultTitle = fileURL.deletingPathExtension().lastPathComponent
+        
+        strToNote(str: reader.bigString, note: newNote, defaultTitle: defaultTitle)
 
         if newLevel != nil {
             _ = newNote.setLevel(newLevel!)
