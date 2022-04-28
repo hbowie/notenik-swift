@@ -1,0 +1,5 @@
+Title:  Copy Title from ns0
+
+Body:
+
+Copy Wikilink

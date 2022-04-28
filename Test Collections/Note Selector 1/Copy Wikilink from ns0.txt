@@ -1,0 +1,5 @@
+Title:  Copy Wikilink from ns0
+
+Body:
+
+[Notenik](notenik://open?shortcut=ns0&id=notenik)

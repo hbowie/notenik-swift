@@ -19,6 +19,11 @@ class QuickActionFolder: CustomStringConvertible, NSCopying, Comparable {
     var shortcut = ""
     var link: NotenikLink!
     
+    init() {
+        shortcut = ""
+        link = NotenikLink()
+    }
+    
     init(shortcut: String, link: NotenikLink) {
         self.shortcut = shortcut.lowercased()
         self.link = link

@@ -1,0 +1,5 @@
+Title:  Copy and Paste Wikilink from ns0
+
+Body:
+
+[notenik-dot-app](notenik://open?shortcut=ns0&id=linktoweb)

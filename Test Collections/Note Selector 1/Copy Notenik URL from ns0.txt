@@ -1,0 +1,3 @@
+Title:  Copy Notenik URL from ns0
+
+Link:   notenik://open?shortcut=ns0&id=linktoweb

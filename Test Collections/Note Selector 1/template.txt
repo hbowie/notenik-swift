@@ -4,9 +4,5 @@ Tags: <tags>
 
 Link: <link> 
 
-AKA: <aka> 
-
-Timestamp:  
-
 Body:  
 

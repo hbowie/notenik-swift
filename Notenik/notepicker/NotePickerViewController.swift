@@ -16,28 +16,49 @@ import NotenikLib
 import NotenikUtils
 
 class NotePickerViewController: NSViewController,
+                                    NSComboBoxDataSource,
                                     NSTableViewDataSource,
                                     NSTableViewDelegate,
                                     NSTextFieldDelegate {
     
+    let multi = MultiFileIO.shared
+    
+    var folders: [QuickActionFolder] = []
+    let initalFolderShortcut: String = ""
+    var initalFolder = QuickActionFolder()
+    
     let downArrow                 : UInt16 = 0x7D
     let upArrow                   : UInt16 = 0x7E
     
-    let copyTitle      = "Copy Title"
-    let copyPasteTitle = "Copy and Paste Title"
-    let copyLink       = "Copy Wikilink"
-    let copyPasteLink  = "Copy and Paste Wikilink"
-    let copyTimestamp  = "Copy Timestamp"
-    let copyPasteStamp = "Copy and Paste Timestamp"
-    let goToAction     = "Go To"
-    let launchAction   = "Launch Link"
+    let copyTitle       = "Copy Title"
+    let copyPasteTitle  = "Copy and Paste Title"
+    let copyLink        = "Copy Wikilink"
+    let copyPasteLink   = "Copy and Paste Wikilink"
+    let copyTimestamp   = "Copy Timestamp"
+    let copyPasteStamp  = "Copy and Paste Timestamp"
+    let copyNotenikURL  = "Copy Notenik URL"
+    let copyPasteURL    = "Copy and Paste Notenik URL"
+    let goToAction      = "Go To"
+    let launchAction    = "Launch Link"
     
     var collectionController: CollectionWindowController?
     var wc: NotePickerWindowController?
 
-    @IBOutlet var titleTextField: NSTextField!
-    @IBOutlet var noteTableView: NSTableView!
-    @IBOutlet var actionList: NSPopUpButton!
+    @IBOutlet var shortcutComboBox: NSComboBox!
+    @IBOutlet var titleTextField:   NSTextField!
+    @IBOutlet var noteTableView:    NSTableView!
+    @IBOutlet var actionList:       NSPopUpButton!
+    
+    var shortcutToUse = ""
+    var ioToUse: NotenikIO?
+    
+    var targetingAnotherCollection: Bool {
+        if ioToUse?.collection?.fullPath == noteIO?.collection?.fullPath {
+            return false
+        } else {
+            return true
+        }
+    }
     
     var matchingTitles: [String] = []
     var lastTitleTextLength = 0
@@ -55,6 +76,8 @@ class NotePickerViewController: NSViewController,
         actionList.addItem(withTitle: copyPasteLink)
         actionList.addItem(withTitle: copyTimestamp)
         actionList.addItem(withTitle: copyPasteStamp)
+        actionList.addItem(withTitle: copyNotenikURL)
+        actionList.addItem(withTitle: copyPasteURL)
         actionList.addItem(withTitle: goToAction)
         actionList.addItem(withTitle: launchAction)
         
@@ -70,6 +93,13 @@ class NotePickerViewController: NSViewController,
                 return $0
             }
         }
+        
+        shortcutComboBox.stringValue = initalFolderShortcut
+        loadFolders()
+        shortcutComboBox.usesDataSource = true
+        shortcutComboBox.dataSource = self
+        
+        titleTextField.becomeFirstResponder()
     }
     
     var noteIO: NotenikIO? {
@@ -78,10 +108,75 @@ class NotePickerViewController: NSViewController,
         }
         set {
             _noteIO = newValue
-            // tailorForCollection()
+            tailorForCollection()
         }
     }
     var _noteIO: NotenikIO?
+    
+    func tailorForCollection() {
+        guard let url = noteIO?.collection?.fullPathURL else { return }
+        initalFolder.link = NotenikLink(url: url, isCollection: true)
+        setTargetCollection(targetShortcut: initalFolderShortcut, targetIO: noteIO!)
+    }
+    
+    /// Load the available folders along with their shortcuts.
+    func loadFolders() {
+        folders = []
+        for folder in NotenikFolderList.shared {
+            if !folder.shortcut.isEmpty {
+                let item = QuickActionFolder(shortcut: folder.shortcut, link: folder)
+                folders.append(item)
+            }
+        }
+        folders.sort()
+    }
+    
+    @IBAction func shortcutComboBoxAction(_ sender: NSComboBox) {
+        guard let io = noteIO else { return }
+        let str = sender.stringValue
+        let i = indexForFolderShortcut(str)
+        guard i != NSNotFound else { return }
+        if i == 0 {
+            setTargetCollection(targetShortcut: initalFolderShortcut, targetIO: io)
+        } else {
+            let multiIO = multi.getFileIO(shortcut: str)
+            if multiIO != nil {
+                setTargetCollection(targetShortcut: str, targetIO: multiIO!)
+            }
+        }
+    }
+    
+    /// Set the Collection to be used for Note lookups.
+    func setTargetCollection(targetShortcut: String, targetIO: NotenikIO) {
+        if targetShortcut == shortcutToUse && targetIO.collection?.fullPath == ioToUse?.collection?.fullPath {
+            // Nothing appears to have changed, so no need to proceed.
+            return
+        }
+        shortcutToUse = targetShortcut
+        ioToUse = targetIO
+        titleTextField.stringValue = ""
+        matchingTitles = []
+        lastTitleTextLength = 0
+        titleTextField.becomeFirstResponder()
+    }
+    
+    /// Return the index of the folder with the passed shortcut.
+    /// - Parameter str: The shortcut.
+    /// - Returns: The index of the matching entry, or NSNotFound if nothing matches.
+    func indexForFolderShortcut(_ str: String) -> Int {
+        let lower = str.lowercased()
+        if lower == "" || lower == " " || lower == "  " || lower == initalFolderShortcut {
+            return 0
+        }
+        var i = 0
+        while i < folders.count {
+            if folders[i].shortcut == lower {
+                return i + 1
+            }
+            i += 1
+        }
+        return NSNotFound
+    }
     
     /// Update list of matching note titles to correspond to entered text.
     func controlTextDidChange(_ obj: Notification) {
@@ -91,7 +186,7 @@ class NotePickerViewController: NSViewController,
         if textToMatch.count < 3 {
             // Fewer than three characters entered - empty out the table of possible matches
             matchingTitles = []
-        } else if noteIO == nil {
+        } else if ioToUse == nil {
             // No I/O module? Then nothing to show.
             matchingTitles = []
         } else if textToMatch.count > lastTitleTextLength && lastTitleTextLength >= 3{
@@ -109,15 +204,15 @@ class NotePickerViewController: NSViewController,
             matchingTitles = []
             
             var i = 0
-            while i < noteIO!.count {
-                let note = noteIO!.getNote(at: i)
+            while i < ioToUse!.count {
+                let note = ioToUse!.getNote(at: i)
                 if note!.title.value.lowercased().contains(textToMatch) {
                     matchingTitles.append(note!.title.value)
                 }
                 i += 1
             }
             
-            let akaAll = noteIO!.getAKAEntries()
+            let akaAll = ioToUse!.getAKAEntries()
             for (aka, note) in akaAll.akaDict {
                 if aka.lowercased().contains(textToMatch) {
                     for originalAKA in note.aka.list {
@@ -143,7 +238,7 @@ class NotePickerViewController: NSViewController,
     }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        guard noteIO != nil else { return 0 }
+        guard ioToUse != nil else { return 0 }
         return matchingTitles.count
     }
     
@@ -167,37 +262,40 @@ class NotePickerViewController: NSViewController,
             chars = event.charactersIgnoringModifiers!
         }
         if event.modifierFlags.contains(.command) {
+            let row = noteTableView.selectedRow
+            guard row >= 0 && row < matchingTitles.count else { return false }
+            let title = matchingTitles[row]
             switch chars {
             case "c":
                 if event.modifierFlags.contains(.option) {
                     AppPrefs.shared.noteAction = copyLink
-                    copyNoteTitleWithBrackets()
+                    copyNoteTitleWithBrackets(title: title)
                     return true
                 } else {
                     AppPrefs.shared.noteAction = copyTitle
-                    copyNoteTitle()
+                    copyNoteTitle(title: title)
                     return true
                 }
             case "g":
                 AppPrefs.shared.noteAction = goToAction
-                goTo()
+                goTo(title: title)
                 return true
             case "l":
                 AppPrefs.shared.noteAction = launchAction
-                launchLink()
+                launchLink(title: title)
                 return true
             case "t":
                 AppPrefs.shared.noteAction = copyTimestamp
-                copyNoteTimestamp()
+                copyNoteTimestamp(title: title)
                 return true
             case "v":
                 if event.modifierFlags.contains(.option) {
                     AppPrefs.shared.noteAction = copyPasteLink
-                    copyPasteNoteTitleWithBrackets()
+                    copyPasteNoteTitleWithBrackets(title: title)
                     return true
                 } else {
                     AppPrefs.shared.noteAction = copyPasteTitle
-                    copyPasteNoteTitle()
+                    copyPasteNoteTitle(title: title)
                     return true
                 }
             default:
@@ -230,133 +328,140 @@ class NotePickerViewController: NSViewController,
     
     @IBAction func ok(_ sender: Any) {
   
-        if let selectedAction = actionList.selectedItem {
-            AppPrefs.shared.noteAction = selectedAction.title
-            
-            // Perform the requested action.
-            switch selectedAction.title {
-            case copyTitle:
-                copyNoteTitle()
-            case copyPasteTitle:
-                copyPasteNoteTitle()
-            case copyLink:
-                copyNoteTitleWithBrackets()
-            case copyPasteLink:
-                copyPasteNoteTitleWithBrackets()
-            case copyTimestamp:
-                copyNoteTimestamp()
-            case copyPasteStamp:
-                copyPasteNoteTimestamp()
-            case goToAction:
-                goTo()
-            case launchAction:
-                launchLink()
-            default:
-                break
+        guard let selectedAction = actionList.selectedItem else { return }
+        AppPrefs.shared.noteAction = selectedAction.title
+        let row = noteTableView.selectedRow
+        guard row >= 0 && row < matchingTitles.count else { return }
+        let title = matchingTitles[row]
+        
+        // Perform the requested action.
+        switch selectedAction.title {
+        case copyTitle:
+            copyNoteTitle(title: title)
+        case copyPasteTitle:
+            copyPasteNoteTitle(title: title)
+        case copyLink:
+            if targetingAnotherCollection {
+                copyNotenikURLasMDlink(title: title)
+            } else {
+                copyNoteTitleWithBrackets(title: title)
             }
+        case copyPasteLink:
+            if targetingAnotherCollection {
+                copyPasteNotenikURLasMDlink(title: title)
+            } else {
+                copyPasteNoteTitleWithBrackets(title: title)
+            }
+        case copyTimestamp:
+            copyNoteTimestamp(title: title)
+        case copyPasteStamp:
+            copyPasteNoteTimestamp(title: title)
+        case copyNotenikURL:
+            copyNotenikURLForNote(title: title)
+        case copyPasteURL:
+            copyPasteNotenikURLForNote(title: title)
+        case goToAction:
+            if targetingAnotherCollection {
+                goToAnotherCollection(title: title)
+            } else {
+                goTo(title: title)
+            }
+        case launchAction:
+            launchLink(title: title)
+        default:
+            break
         }
     }
     
-    func copyNoteTitle() {
-        let selectedRow = noteTableView.selectedRow
-        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
-        let selectedTitle = matchingTitles[selectedRow]
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString(selectedTitle, forType: .string)
-        closeWindow()
+    /// Copy the title of the indicated Note to the System pasteboard.
+    func copyNoteTitle(title: String) {
+        strToPasteboard(title)
     }
     
-    func copyNoteTitleWithBrackets() {
-        let selectedRow = noteTableView.selectedRow
-        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
-        let selectedTitle = matchingTitles[selectedRow]
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString("[[\(selectedTitle)]]", forType: .string)
-        closeWindow()
+    func copyPasteNoteTitle(title: String) {
+        strToPasteboard(title, paste: true)
     }
     
-    func copyPasteNoteTitle() {
-        guard let collWC = collectionController else { return }
-        let selectedRow = noteTableView.selectedRow
-        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
-        let selectedTitle = matchingTitles[selectedRow]
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString(selectedTitle, forType: .string)
-        closeWindow()
-        collWC.pasteTextNow()
+    func copyNoteTitleWithBrackets(title: String) {
+        strToPasteboard("[[\(title)]]")
     }
     
-    func copyPasteNoteTitleWithBrackets() {
-        guard let collWC = collectionController else { return }
-        let selectedRow = noteTableView.selectedRow
-        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
-        let selectedTitle = matchingTitles[selectedRow]
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString("[[\(selectedTitle)]]", forType: .string)
-        closeWindow()
-        collWC.pasteTextNow()
+    func copyPasteNoteTitleWithBrackets(title: String) {
+        strToPasteboard("[[\(title)]]", paste: true)
     }
     
-    func copyNoteTimestamp() {
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-        guard let io = noteIO else { return }
-        let selectedRow = noteTableView.selectedRow
-        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
-        let selectedTitle = matchingTitles[selectedRow]
-        guard let note = io.getNote(knownAs: selectedTitle) else { return }
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString(note.timestampAsString, forType: .string)
-        closeWindow()
+    func copyNoteTimestamp(title: String) {
+        guard let io = ioToUse else { return }
+        guard let note = io.getNote(knownAs: title) else { return }
+        strToPasteboard(note.timestampAsString)
     }
     
-    func copyPasteNoteTimestamp() {
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
+    func copyPasteNoteTimestamp(title: String) {
+        guard let io = ioToUse else { return }
+        guard let note = io.getNote(knownAs: title) else { return }
+        strToPasteboard(note.timestampAsString, paste: true)
+    }
+    
+    func copyNotenikURLForNote(title: String) {
+        guard let io = ioToUse else { return }
+        guard let note = io.getNote(knownAs: title) else { return }
+        strToPasteboard(note.getNotenikLink())
+    }
+    
+    func copyPasteNotenikURLForNote(title: String) {
+        guard let io = ioToUse else { return }
+        guard let note = io.getNote(knownAs: title) else { return }
+        strToPasteboard(note.getNotenikLink(), paste: true)
+    }
+    
+    func copyNotenikURLasMDlink(title: String) {
+        guard let io = ioToUse else { return }
+        guard let note = io.getNote(knownAs: title) else { return }
+        strToPasteboard("[\(title)](\(note.getNotenikLink()))")
+    }
+    
+    func copyPasteNotenikURLasMDlink(title: String) {
+        guard let io = ioToUse else { return }
+        guard let note = io.getNote(knownAs: title) else { return }
+        strToPasteboard("[\(title)](\(note.getNotenikLink()))", paste: true)
+    }
+    
+    func goTo(title: String) {
         guard let io = noteIO else { return }
         guard let collWC = collectionController else { return }
-        let selectedRow = noteTableView.selectedRow
-        guard selectedRow >= 0 && selectedRow < matchingTitles.count else { return }
-        let selectedTitle = matchingTitles[selectedRow]
-        guard let note = io.getNote(knownAs: selectedTitle) else { return }
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString(note.timestampAsString, forType: .string)
+        guard let note = io.getNote(knownAs: title) else { return }
+        collWC.select(note: note, position: nil, source: .nav)
         closeWindow()
-        collWC.pasteTextNow()
+
     }
     
-    func goTo() {
-        guard let io = noteIO else { return }
+    func goToAnotherCollection(title: String) {
+        guard let io = ioToUse else { return }
+        guard let note = io.getNote(knownAs: title) else { return }
+        let actor = CustomURLActor()
+        _ = actor.act(on: note.getNotenikLink())
+        closeWindow()
+    }
+    
+    func launchLink(title: String) {
+        guard let io = ioToUse else { return }
         guard let collWC = collectionController else { return }
-        let selectedRow = noteTableView.selectedRow
-        if selectedRow >= 0 && selectedRow < matchingTitles.count {
-            let selectedTitle = matchingTitles[selectedRow]
-            let note = io.getNote(knownAs: selectedTitle)
-            if note != nil {
-                collWC.select(note: note!, position: nil, source: .nav)
-                closeWindow()
-            }
+        guard let note = io.getNote(knownAs: title) else { return }
+        collWC.launchLink(for: note)
+        closeWindow()
+    }
+    
+    func strToPasteboard(_ str: String, paste: Bool = false, closing: Bool = true) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(str, forType: .string)
+        if closing {
+            closeWindow()
         }
-    }
-    
-    func launchLink() {
-        guard let io = noteIO else { return }
-        guard let collWC = collectionController else { return }
-        let selectedRow = noteTableView.selectedRow
-        if selectedRow >= 0 && selectedRow < matchingTitles.count {
-            let selectedTitle = matchingTitles[selectedRow]
-            let note = io.getNote(knownAs: selectedTitle)
-            if note != nil {
-                collWC.launchLink(for: note!)
-                closeWindow()
+        if paste {
+            if let collWC = collectionController {
+                collWC.pasteTextNow()
             }
         }
     }
@@ -366,5 +471,50 @@ class NotePickerViewController: NSViewController,
         wc!.close()
     }
     
+    // -----------------------------------------------------------
+    //
+    // MARK: NSComboBoxDataSource methods for shortcut combo box.
+    //
+    // -----------------------------------------------------------
+    
+    /// Returns the first item from the pop-up list that starts with the text the user has typed.
+    func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
+        guard comboBox == shortcutComboBox else { return nil }
+        let lower = string.lowercased()
+        if lower == "" || lower == " " || lower == "  " || lower == initalFolderShortcut {
+            return initalFolderShortcut
+        }
+        var i = 0
+        while i < folders.count {
+            if folders[i].shortcut.hasPrefix(lower) {
+                return folders[i].shortcut
+            }
+            i += 1
+        }
+        return nil
+    }
+    
+    /// Returns the index of the combo box matching the specified string.
+    func comboBox(_ comboBox: NSComboBox, indexOfItemWithStringValue string: String) -> Int {
+        guard comboBox == shortcutComboBox else { return NSNotFound }
+        let i = indexForFolderShortcut(string)
+        return i
+    }
+    
+    /// Returns the object that corresponds to the item at the specified index in the combo box.
+    func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
+        guard comboBox == shortcutComboBox else { return nil }
+        if index < 1 {
+            return initalFolder
+        } else {
+            return folders[index - 1]
+        }
+    }
+    
+    /// Returns the number of items that the data source manages for the combo box.
+    func numberOfItems(in comboBox: NSComboBox) -> Int {
+        guard comboBox == shortcutComboBox else { return 0 }
+        return folders.count + 1
+    }
     
 }

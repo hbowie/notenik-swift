@@ -1,0 +1,17 @@
+title:  Feedback for the Version One Course on Zettelkasten
+
+tags:   course, feedback, systemio, traverse
+
+uuid:   dcf80ed0-be35
+
+version: 54
+
+created: Sun, 17 Apr 2022 10:05:08 GMT
+
+Body:
+
+- [] Send an email to everyone who has enrolled to give you feedback. 
+
+	- [] Can you email these people via systemio or Traverselink?
+	
+> Is the size of people who have taken the course too small for you to ask for a feedback?
