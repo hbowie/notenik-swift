@@ -3030,6 +3030,65 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         _ = importTextFile(fileURL: importURL, newLevel: nil, newSeq: nil, newKlass: nil)
     }
     
+    @IBAction func importFolderOfTextFiles(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Select Folder of Text Files to Import"
+        openPanel.directoryURL = noteIO.collection!.lib.getURL(type: .parent)
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = false
+        openPanel.allowsMultipleSelection = false
+        let userChoice = openPanel.runModal()
+        guard userChoice == .OK else { return }
+        guard let importURL = openPanel.url else { return }
+        
+        var imported = 0
+        var rejected = 0
+        
+        do {
+            let contents = try FileManager.default.contentsOfDirectory(atPath: importURL.path)
+            for item in contents {
+                let resource = ResourceFileSys(folderPath: importURL.path, fileName: item)
+                if resource.type == .note {
+                    let addedNote = importTextFile(fileURL: resource.url!,
+                                                   newLevel: nil, newSeq: nil, newKlass: nil,
+                                                   finishUp: false)
+                    if addedNote == nil {
+                        rejected += 1
+                    } else {
+                        imported += 1
+                    }
+                }
+                /*
+                if item.starts(with: ".") {
+                    continue
+                }
+                let fileURL = importURL.appendingPathComponent(item)
+                if ResourceFileSys.isLikelyNoteFile(fileURL: fileURL, preferredNoteExt: nil) {
+                    let addedNote = importTextFile(fileURL: fileURL,
+                                                   newLevel: nil, newSeq: nil, newKlass: nil,
+                                                   finishUp: false)
+                    if addedNote == nil {
+                        rejected += 1
+                    } else {
+                        imported += 1
+                    }
+                } */
+            }
+        } catch {
+            communicateError("Problems reading contents of directory at \(importURL)", alert: true)
+        }
+        
+        let ok = (rejected == 0) && (imported > 0)
+        informUserOfImportExportResults(operation: "import", ok: ok, numberOfNotes: imported, path: importURL.path)
+        finishBatchOperation()
+    }
+    
     /// Try to import a new Note from an existing text file.
     func importTextFile(fileURL: URL,
                         newLevel: LevelValue?,
