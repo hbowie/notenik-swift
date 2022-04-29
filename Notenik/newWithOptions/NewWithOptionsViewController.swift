@@ -140,7 +140,7 @@ class NewWithOptionsViewController: NSViewController {
     
     func adjustSeq() {
         guard collection != nil else { return }
-        let newSeq = currSeq!.dupe()
+        guard let newSeq = currSeq?.dupe() else { return }
         let newLevelInt = levelPopup.indexOfSelectedItem + levelConfig.low
         let newLevel = LevelValue(i: newLevelInt,
                                   config: collection!.levelConfig)
