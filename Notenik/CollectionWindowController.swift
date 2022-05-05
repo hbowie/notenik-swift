@@ -3279,38 +3279,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 informUserOfImportExportResults(operation: "Generate Web Book", ok: true, numberOfNotes: filesWritten, path: bookURL.path)
             }
         }
-        
-    }
-    
-    @IBAction func webBookIndexRedirect(_ sender: Any) {
-        guard let noteIO = guardForCollectionAction() else { return }
-        guard let collection = noteIO.collection else { return }
-        guard !collection.webBookPath.isEmpty else { return }
-        guard !collection.webBookPath.isEmpty else { return }
-        
-        let dialog = NSSavePanel()
-        let webBookURL = URL(fileURLWithPath: collection.webBookPath)
-        let parent = webBookURL.deletingLastPathComponent()
-        dialog.directoryURL = parent
-        dialog.nameFieldStringValue    = "index.html"
-        dialog.title                   = "Web Book Index Redirect"
-        dialog.message                 = "Create Redirect to Web Book"
-        dialog.prompt                  = "Write File"
-        dialog.showsResizeIndicator    = true
-        dialog.showsHiddenFiles        = false
-        dialog.canCreateDirectories    = true
-        let response = dialog.runModal()
-        guard response == .OK else { return }
-
-        guard let maker = WebBookMaker(input: noteIO.collection!.fullPathURL!,
-                                       output: webBookURL,
-                                       epub: collection.webBookAsEPUB) else {
-            return
-        }
-        let errorMsg = maker.webBookIndexRedirect(dialog.url!)
-        if errorMsg != nil && !errorMsg!.isEmpty {
-            communicateError(errorMsg!, alert: true)
-        }
     }
     
     /// Ask the user where to save the export file
