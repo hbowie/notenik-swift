@@ -2783,7 +2783,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     //
     // ----------------------------------------------------------------------------------
     
-    
     /// Purge closed Notes from this Collection
     @IBAction func userRequestsPurge(_ sender: Any) {
         
@@ -3194,6 +3193,43 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard userChoice == .OK else { return nil }
         guard let importURL = openPanel.url else { return nil }
         return importURL
+    }
+    
+    @IBAction func populateAppCatalog(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Select Applications Folder"
+        openPanel.directoryURL = noteIO.collection!.lib.getURL(type: .parent)
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = false
+        openPanel.allowsMultipleSelection = false
+        openPanel.prompt = "Select Applications folder"
+        let userChoice = openPanel.runModal()
+        guard userChoice == .OK else { return }
+        guard let importURL = openPanel.url else { return }
+        
+        let alert = NSAlert()
+        alert.messageText = "Please Confirm Choices"
+        var info = "Notenik will scan for applications within:\n"
+        info.append("\(importURL.path)\n")
+        info.append("And add app info to the Collection at:\n")
+        info.append("\(noteIO.collection!.fullPath)")
+        alert.informativeText = info
+        alert.addButton(withTitle: "OK")
+        alert.addButton(withTitle: "Cancel")
+        alert.alertStyle = .warning
+        let response = alert.runModal()
+        guard response == .alertFirstButtonReturn else { return }
+        
+        let appPop = AppPop()
+        appPop.populate(noteIO: noteIO, appFolder: importURL)
+        
+        reloadCollection(self)
+        finishBatchOperation()
     }
     
     @IBAction func favoritesToHTML(_ sender: Any) {
