@@ -12,9 +12,9 @@ import NotenikLib
 
 class StatusView: MacEditView {
     
-    var config: StatusValueConfig!
-    // var menu: NSPopUpButton!
-    var combo: NSComboBox!
+    var config:     StatusValueConfig!
+    var dataSource: StatusDataSource!
+    var combo:      NSComboBox!
     
     var view: NSView {
         return combo
@@ -22,45 +22,33 @@ class StatusView: MacEditView {
     
     var text: String {
         get {
-            return config.normalize(str: combo.stringValue, withDigit: true) 
-            //if menu.titleOfSelectedItem != nil {
-            //    return config.getFullString(fromLabel: menu.titleOfSelectedItem!)
-            // } else {
-            //    return ""
-            // }
+            return config.normalize(str: combo.stringValue, withDigit: true)
         }
         set {
-            if let configIndex = config.getIndexFor(str: newValue) {
-                let comboItem = config.get(configIndex)
-                combo.selectItem(withObjectValue: comboItem)
-            } else {
-                combo.stringValue = newValue
-            }
+            let (_, label) = config.match(newValue)
+            combo.stringValue = label
         }
     }
     
     init(config: StatusValueConfig) {
         self.config = config
+        dataSource = StatusDataSource(config: config)
         buildView()
     }
     
     func buildView() {
         
-        // Set up the Menu
+        // Set up the Combo Box control
         combo = NSComboBox()
-        // menu = NSPopUpButton()
-        for option in config.statusOptions {
-            if !option.isEmpty {
-                combo.addItem(withObjectValue: option)
-                // let menuItem = combo.item(at: combo.numberOfItems - 1)
-                // menuItem!.attributedTitle = AppPrefsCocoa.shared.makeUserAttributedString(text: option)
-            }
-        }
-        // AppPrefsCocoa.shared.setRegularFont(object: combo!.menu!)
+        combo.completes = true
+        combo.usesDataSource = true
+        combo.dataSource = dataSource
+        AppPrefsCocoa.shared.setRegularFont(object: combo)
     }
     
     /// Close the note by selecting the last status value in the list
     func close() {
-        combo.selectItem(at: (combo.numberOfItems - 1))
+        let highValue = config.get(config.highIndex)
+        combo.stringValue = highValue
     }
 }
