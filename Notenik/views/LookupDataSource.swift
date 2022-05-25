@@ -18,7 +18,7 @@ class LookupDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     
     let multiFile = MultiFileIO.shared
     var io: FileIO?
-    var notesList: NotesList?
+    var comboValues: [String] = []
     
     var fieldDef: FieldDefinition?
     var lookupField: NSComboBox?
@@ -38,48 +38,50 @@ class LookupDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
         guard let def = fieldDef else { return }
         guard !def.lookupFrom.isEmpty else { return }
         io = multiFile.getFileIO(shortcut: fieldDef!.lookupFrom)
-        notesList = multiFile.getNotesList(shortcut: fieldDef!.lookupFrom)
+        var note: Note?
+        var pos: NotePosition?
+        (note, pos) = io!.firstNote()
+        while (note != nil) {
+            comboValues.append(note!.title.value.lowercased())
+            (note, pos) = io!.nextNote(pos!)
+        }
+        comboValues.sort()
     }
     
+    /// Returns the number of items that the data source manages for the combo box.
     func numberOfItems(in comboBox: NSComboBox) -> Int {
-        guard notesList != nil else { return 0 }
-        return notesList!.count
+        return comboValues.count
     }
     
+    /// Returns the object that corresponds to the item at the specified index in the combo box.
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
-        guard notesList != nil else { return nil }
-        return notesList![index].title.value
+        guard index >= 0 && index < comboValues.count else { return nil }
+        let comboValue = comboValues[index]
+        guard let note = io!.getNote(knownAs: comboValue) else { return nil }
+        return note.title.value
     }
     
-    /// Returns the first item from the pop-up list that starts with
-    /// the text the user has typed.
+    /// Returns the first item from the pop-up list that starts with the text the user has typed.
     func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
-        guard notesList != nil else { return nil }
-        guard let sortParm = io?.collection?.sortParm else { return nil }
-        var i = 0
-        while i < notesList!.count {
-            if notesList![i].title.value.hasPrefix(string) {
-                return notesList![i].title.value
-            } else if notesList![i].title.value > string && sortParm == .title {
-                return nil
+        
+        let lookingFor = string.lowercased()
+        for value in comboValues {
+            if value.starts(with: lookingFor) {
+                return value
             }
-            i += 1
         }
         return nil
     }
     
-    /// Returns the index of the combo box item
-    /// matching the specified string.
+    /// Returns the index of the combo box item matching the specified string.
     func comboBox(_ comboBox: NSComboBox, indexOfItemWithStringValue string: String) -> Int {
-        guard notesList != nil else { return NSNotFound }
-        guard io != nil else { return NSNotFound }
-        guard io!.collection != nil else { return NSNotFound }
+        
+        let lookingFor = string.lowercased()
         var i = 0
-        while i < notesList!.count {
-            if notesList![i].title.value == string {
+        while i < comboValues.count {
+            let value = comboValues[i]
+            if lookingFor == value {
                 return i
-            } else if notesList![i].title.value > string && io!.collection!.sortParm == .title {
-                return NSNotFound
             }
             i += 1
         }
