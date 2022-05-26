@@ -91,6 +91,8 @@
 		9C46A72725D07899006E9C16 /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72625D07899006E9C16 /* NewLocationViewController.swift */; };
 		9C46A72D25D0A6E0006E9C16 /* NewNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46A72C25D0A6E0006E9C16 /* NewNameViewController.swift */; };
 		9C479DEA27B090D1002747C9 /* notenik-tips in Resources */ = {isa = PBXBuildFile; fileRef = 9C479DE927B090D0002747C9 /* notenik-tips */; };
+		9C47DD32284001550025A7B9 /* ComboView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C47DD31284001550025A7B9 /* ComboView.swift */; };
+		9C47DD342840019A0025A7B9 /* ComboDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C47DD332840019A0025A7B9 /* ComboDataSource.swift */; };
 		9C4A45A82723464400BE3202 /* KlassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4A45A72723464400BE3202 /* KlassView.swift */; };
 		9C4A45AA272346BD00BE3202 /* KlassDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4A45A9272346BD00BE3202 /* KlassDataSource.swift */; };
 		9C4AE8D626A205EB00CD4EB4 /* MathJax in Resources */ = {isa = PBXBuildFile; fileRef = 9C4AE8D526A205EB00CD4EB4 /* MathJax */; };
@@ -357,6 +359,8 @@
 		9C46A72625D07899006E9C16 /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
 		9C46A72C25D0A6E0006E9C16 /* NewNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNameViewController.swift; sourceTree = "<group>"; };
 		9C479DE927B090D0002747C9 /* notenik-tips */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "notenik-tips"; path = "../../Notenik Docs/notenik-tips"; sourceTree = "<group>"; };
+		9C47DD31284001550025A7B9 /* ComboView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboView.swift; sourceTree = "<group>"; };
+		9C47DD332840019A0025A7B9 /* ComboDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboDataSource.swift; sourceTree = "<group>"; };
 		9C4A45A72723464400BE3202 /* KlassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlassView.swift; sourceTree = "<group>"; };
 		9C4A45A9272346BD00BE3202 /* KlassDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlassDataSource.swift; sourceTree = "<group>"; };
 		9C4AE8D526A205EB00CD4EB4 /* MathJax */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MathJax; path = ../../MathJax; sourceTree = "<group>"; };
@@ -912,6 +916,7 @@
 				9C02D2B22267F41200587EDF /* CalendarWindowController.swift */,
 				9C02D2B52267F5E700587EDF /* CalendarViewController.swift */,
 				9C45E8BD2298BC87003F6589 /* CodeView.swift */,
+				9C47DD31284001550025A7B9 /* ComboView.swift */,
 				9C02D2AD2267D46000587EDF /* DateView.swift */,
 				9C29A79A25645B78002C5F7A /* FileAttachView.swift */,
 				9C29A79425645A42002C5F7A /* FileDropView.swift */,
@@ -939,6 +944,7 @@
 				9C568DE82322F701005D6B0A /* WorkTitleView.swift */,
 				9C568DF4232325B5005D6B0A /* WorkTypeDataSource.swift */,
 				9C619A37231B323B003CFFBE /* WorkTypeView.swift */,
+				9C47DD332840019A0025A7B9 /* ComboDataSource.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1304,6 +1310,7 @@
 				9C10832025AA78A0004B33CA /* NewsViewController.swift in Sources */,
 				9C29A79525645A42002C5F7A /* FileDropView.swift in Sources */,
 				9CCE7C69264B1FA7003818DF /* QuickActionFolder.swift in Sources */,
+				9C47DD32284001550025A7B9 /* ComboView.swift in Sources */,
 				9C924C7025CDB80A000DEAB3 /* FileExtensionPicker.swift in Sources */,
 				9CA5C84627EBB7DB007CDA96 /* AppHasSelectedNote.swift in Sources */,
 				9C097D5D259AB95A00834A42 /* MediumPubWindowController.swift in Sources */,
@@ -1328,6 +1335,7 @@
 				9C29A79B25645B78002C5F7A /* FileAttachView.swift in Sources */,
 				9CAD6A4922DF806800531D90 /* TagsExportViewController.swift in Sources */,
 				9CF1193E225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
+				9C47DD342840019A0025A7B9 /* ComboDataSource.swift in Sources */,
 				9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */,
 				9CF1193B225822870015AE91 /* CollectionPrefsWindowController.swift in Sources */,
 				9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
@@ -1645,7 +1653,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 307;
+				CURRENT_PROJECT_VERSION = 308;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1658,7 +1666,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 9.3.2;
+				MARKETING_VERSION = 9.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1674,7 +1682,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 307;
+				CURRENT_PROJECT_VERSION = 308;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1687,7 +1695,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 9.3.2;
+				MARKETING_VERSION = 9.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

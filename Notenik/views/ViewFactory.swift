@@ -38,6 +38,8 @@ class ViewFactory {
             return BooleanView()
         case NotenikConstants.codeCommon:
             return CodeView()
+        case NotenikConstants.comboType:
+            return ComboView(def: def)
         case NotenikConstants.dateAddedCommon:
             return LabelView()
         case NotenikConstants.dateCommon:
