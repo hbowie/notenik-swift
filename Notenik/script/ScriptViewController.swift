@@ -88,6 +88,10 @@ class ScriptViewController: NSViewController {
         modulePopUpSelected(self)
     }
     
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        scripter.close()
+    }
 
     
     @IBAction func modulePopUpSelected(_ sender: Any) {
