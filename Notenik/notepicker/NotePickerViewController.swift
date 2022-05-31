@@ -34,6 +34,7 @@ class NotePickerViewController: NSViewController,
     let copyPasteTitle  = "Copy and Paste Title"
     let copyLink        = "Copy Wikilink"
     let copyPasteLink   = "Copy and Paste Wikilink"
+    let copyPasteInc    = "Copy and Paste Include Command"
     let copyTimestamp   = "Copy Timestamp"
     let copyPasteStamp  = "Copy and Paste Timestamp"
     let copyNotenikURL  = "Copy Notenik URL"
@@ -74,6 +75,7 @@ class NotePickerViewController: NSViewController,
         actionList.addItem(withTitle: copyPasteTitle)
         actionList.addItem(withTitle: copyLink)
         actionList.addItem(withTitle: copyPasteLink)
+        actionList.addItem(withTitle: copyPasteInc)
         actionList.addItem(withTitle: copyTimestamp)
         actionList.addItem(withTitle: copyPasteStamp)
         actionList.addItem(withTitle: copyNotenikURL)
@@ -352,6 +354,8 @@ class NotePickerViewController: NSViewController,
             } else {
                 copyPasteNoteTitleWithBrackets(title: title)
             }
+        case copyPasteInc:
+            copyPasteInclude(title: title)
         case copyTimestamp:
             copyNoteTimestamp(title: title)
         case copyPasteStamp:
@@ -388,6 +392,16 @@ class NotePickerViewController: NSViewController,
     
     func copyPasteNoteTitleWithBrackets(title: String) {
         strToPasteboard("[[\(title)]]", paste: true)
+    }
+    
+    func copyPasteInclude(title: String) {
+        guard let io = ioToUse else { return }
+        guard let note = io.getNote(knownAs: title) else { return }
+        if note.hasKlass() && note.klass.quote {
+            strToPasteboard("{:include-quote:\(title)}", paste: true)
+        } else {
+            strToPasteboard("{:include:\(title)}", paste: true)
+        }
     }
     
     func copyNoteTimestamp(title: String) {
