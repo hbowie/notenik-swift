@@ -847,7 +847,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard io != nil && io!.collectionOpen else { return }
         
-        let outcome = modIfChanged()
+        let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
         
         let today = DateValue("today")
@@ -1799,7 +1799,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard let noteIO = notenikIO else { return }
         
-        let outcome = modIfChanged()
+        let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
         
         switch sender.selectedSegment {
@@ -2278,7 +2278,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard notenikIO != nil && notenikIO!.collectionOpen else { return }
         
-        let outcome = modIfChanged()
+        let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
         
         newNoteRequested = true
@@ -2319,7 +2319,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard notenikIO != nil && notenikIO!.collectionOpen else { return }
         let (selectedNote, _) = notenikIO!.getSelectedNote()
         guard selectedNote != nil else { return }
-        let outcome = modIfChanged()
+        let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
         duplicateNote(startingNote: selectedNote!)
     }
@@ -2483,15 +2483,15 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     /// Modify the Note if the user changed anything on the Edit Screen
-    func modIfChanged() -> modIfChangedOutcome {
-        guard editVC != nil else { return .notReady }
+    func modIfChanged() -> (modIfChangedOutcome, Note?) {
+        guard editVC != nil else { return (.notReady, nil) }
         guard !pendingMod else {
             checkForPromises()
-            return .notReady
+            return (.notReady, nil)
         }
         guard newNoteRequested || pendingEdits else {
             checkForPromises()
-            return .noChange
+            return (.noChange, nil)
         }
         pendingMod = true
         let (outcome, note) = editVC!.modIfChanged(newNoteRequested: newNoteRequested, newNote: newNote)
@@ -2522,7 +2522,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             checkForReviewRequest()
         }
         checkForPromises()
-        return outcome
+        return (outcome, note)
     }
     
     /// Update outputs showing the data from the updated note.
@@ -3321,7 +3321,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     func getExportURL(fileExt: String, fileName: String = "export") -> URL? {
         guard io != nil && io!.collectionOpen else { return nil }
         
-        let outcome = modIfChanged()
+        let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return nil }
         
         let savePanel = NSSavePanel();
@@ -3744,7 +3744,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard io != nil && io!.collectionOpen else { return (nil, nil) }
         let (note, _) = io!.getSelectedNote()
         guard note != nil else { return (io!, nil) }
-        let outcome = modIfChanged()
+        let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return (io!, nil) }
         return (io!, note!)
     }
@@ -3756,7 +3756,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     func guardForCollectionAction() -> NotenikIO? {
         guard !pendingMod else { return nil }
         guard io != nil && io!.collectionOpen else { return nil }
-        let outcome = modIfChanged()
+        let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return nil }
         return io
     }
