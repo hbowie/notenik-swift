@@ -1,7 +1,0 @@
-Title:  Another Test
-
-Link:   https://discourse.notenik.app
-
-Body:
-
-And yet another test...

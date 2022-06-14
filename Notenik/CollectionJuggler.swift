@@ -597,15 +597,21 @@ class CollectionJuggler: NSObject {
     /// Adjust all the open windows to reflect any changes in the UI appearance.
     func adjustEditWindows() {
         for window in windows {
-            let editing = window.newNoteRequested || window.pendingEdits
+            let editing = window.noteTabs!.tabView.selectedTabViewItem!.label == "Edit"
             guard let noteIO = window.io else { continue }
-            let (outcome, note) = window.modIfChanged()
-            guard outcome != .tryAgain else { continue }
-            window.editVC!.containerViewBuilt = false
             var klassName: String?
+            var note = window.editVC!.selectedNote
+            if editing {
+                let (outcome, modNote) = window.modIfChanged()
+                if modNote != nil {
+                    note = modNote
+                }
+                guard outcome != .tryAgain else { continue }
+            }
             if note != nil && note!.hasKlass() {
                 klassName = note!.klass.value
             }
+            window.editVC!.containerViewBuilt = false
             window.editVC!.configureEditView(noteIO: noteIO, klassName: klassName)
             if note != nil {
                 window.select(note: note,
