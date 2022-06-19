@@ -550,9 +550,13 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
-        guard let klassFieldDef = collection.klassFieldDef else {
-            communicateError("Collection does not define a Class field", alert: true)
-            return
+        var klasses = false
+        var klassFieldDef: FieldDefinition?
+        if let kfd = collection.klassFieldDef {
+            klasses = true
+            klassFieldDef = kfd
+            // communicateError("Collection does not define a Class field", alert: true)
+            // return
         }
         guard let lib = collection.lib else { return }
         let klassFolderResource = lib.ensureResource(type: .klassFolder)
@@ -562,7 +566,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         savePanel.title = "Save and Edit New Class Template"
         savePanel.nameFieldLabel = "Class name: "
         savePanel.directoryURL = klassFolderResource.url
-        savePanel.nameFieldStringValue = "classname." + collection.preferredExt
+        if klasses {
+            savePanel.nameFieldStringValue = "classname." + collection.preferredExt
+        } else {
+            savePanel.nameFieldStringValue = NotenikConstants.defaultsKlass + "." + collection.preferredExt
+        }
         var allowedFileTypes: [String] = []
         allowedFileTypes.append(collection.preferredExt)
         savePanel.allowedFileTypes = allowedFileTypes
@@ -572,7 +580,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let klassName = url.deletingPathExtension().lastPathComponent
         var klassTemplate = ""
         for def in collection.dict.list {
-            if def.fieldLabel.commonForm == klassFieldDef.fieldLabel.commonForm {
+            if klasses && def.fieldLabel.commonForm == klassFieldDef!.fieldLabel.commonForm {
                 klassTemplate.append("\(def.fieldLabel.properForm): \(klassName)\n\n")
             } else {
                 klassTemplate.append("\(def.fieldLabel.properForm): \n\n")
@@ -626,6 +634,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             if !klassName.isEmpty {
                 editVC!.configureEditView(noteIO: io!, klassName: klassName)
             }
+        } else if note.collection.klassDefs.count == 1 {
+            let klassName = note.collection.klassDefs[0].name
+            editVC!.configureEditView(noteIO: io!, klassName: klassName)
         }
         editVC!.populateFields(with: note)
     }
@@ -719,18 +730,28 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     func applyKlassTemplate(noteIO: NotenikIO, klassName: String?) {
-        guard let name = klassName else { return }
-        guard !name.isEmpty else { return }
-        guard let collection = noteIO.collection else { return }
         
-        _ = newNote!.setKlass(name)
+        guard let collection = noteIO.collection else { return }
         let klassDefs = collection.klassDefs
+        guard !klassDefs.isEmpty else { return }
+        
+        var klsName = NotenikConstants.defaultsKlass
+        var realKlass = false
+        if let name = klassName {
+            if !name.isEmpty {
+                klsName = name
+                realKlass = true
+                _ = newNote!.setKlass(name)
+            }
+        }
         
         var defFound = false
         var klassDef: KlassDef?
         for nextDef in klassDefs {
-            if name == nextDef.name {
-                collection.lastNewKlass = name
+            if klsName == nextDef.name {
+                if realKlass {
+                    collection.lastNewKlass = klsName
+                }
                 defFound = true
                 klassDef = nextDef
                 break
