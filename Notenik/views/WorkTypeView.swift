@@ -61,7 +61,7 @@ class WorkTypeView: MacEditView {
         workTypeField.dataSource = dataSource
         workTypeField.delegate = dataSource
         workTypeField.completes = true
-        AppPrefsCocoa.shared.setRegularFont(object: workTypeField)
+        AppPrefsCocoa.shared.setTextEditingFont(object: workTypeField)
     }
 
 }

@@ -27,7 +27,7 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
     
     @IBOutlet var fontComboBox: NSComboBox!
     
-    let fonts = DisplayFontsDataSource()
+    let fonts = CocoaFontsDataSource()
     
     @IBOutlet var sizeComboBox: NSComboBox!
     

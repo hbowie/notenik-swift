@@ -54,17 +54,17 @@ class DateView: MacEditView {
         textField = NSTextField()
         controls.append(textField)
         
-        let todayTitle = appPrefsCocoa.makeUserAttributedString(text: "Today")
+        let todayTitle = appPrefsCocoa.makeUserAttributedString(text: "Today", usage: .text)
         todayButton = NSButton(title: "Today", target: self, action: #selector(todayButtonClicked))
         todayButton.attributedTitle = todayTitle
         controls.append(todayButton)
         
-        let calendarTitle = appPrefsCocoa.makeUserAttributedString(text: "Calendar")
+        let calendarTitle = appPrefsCocoa.makeUserAttributedString(text: "Calendar", usage: .text)
         calendarButton = NSButton(title: "Calendar", target: self, action: #selector(calendarButtonClicked))
         calendarButton.attributedTitle = calendarTitle
         controls.append(calendarButton)
         
-        let recurTitle = appPrefsCocoa.makeUserAttributedString(text: "Recur")
+        let recurTitle = appPrefsCocoa.makeUserAttributedString(text: "Recur", usage: .text)
         recurButton = NSButton(title: "Recur", target: self, action: #selector(recurButtonClicked))
         recurButton.attributedTitle = recurTitle
         controls.append(recurButton)
@@ -72,7 +72,7 @@ class DateView: MacEditView {
         stack = NSStackView(views: controls)
         stack.orientation = .horizontal
         
-        AppPrefsCocoa.shared.setRegularFont(object: textField)
+        AppPrefsCocoa.shared.setTextEditingFont(object: textField)
         
     }
     

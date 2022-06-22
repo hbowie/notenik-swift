@@ -62,7 +62,7 @@ class KlassView: MacEditView {
         klassField.dataSource = dataSource
         klassField.delegate = dataSource
         klassField.completes = true
-        AppPrefsCocoa.shared.setRegularFont(object: klassField)
+        AppPrefsCocoa.shared.setTextEditingFont(object: klassField)
     }
 
 }

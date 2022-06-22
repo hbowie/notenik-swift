@@ -28,10 +28,10 @@ class TagsMassChangeViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        AppPrefsCocoa.shared.setRegularFont(object: existingTagsTokenField)
+        AppPrefsCocoa.shared.setTextEditingFont(object: existingTagsTokenField)
         existingTagsTokenField.tokenizingCharacterSet = CharacterSet([",",";"])
         
-        AppPrefsCocoa.shared.setRegularFont(object: replaceTagsTokenField)
+        AppPrefsCocoa.shared.setTextEditingFont(object: replaceTagsTokenField)
         replaceTagsTokenField.tokenizingCharacterSet = CharacterSet([",",";"])
         
     }

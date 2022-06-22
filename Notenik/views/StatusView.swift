@@ -43,7 +43,7 @@ class StatusView: MacEditView {
         combo.completes = true
         combo.usesDataSource = true
         combo.dataSource = dataSource
-        AppPrefsCocoa.shared.setRegularFont(object: combo)
+        AppPrefsCocoa.shared.setTextEditingFont(object: combo)
     }
     
     /// Close the note by selecting the last status value in the list

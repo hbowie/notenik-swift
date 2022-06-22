@@ -52,9 +52,9 @@ class LevelView: MacEditView {
             let intWithLabel = config.intWithLabel(forInt: index)
             menu.addItem(withTitle: intWithLabel)
             let menuItem = menu.item(at: menu.numberOfItems - 1)
-            menuItem!.attributedTitle = AppPrefsCocoa.shared.makeUserAttributedString(text: intWithLabel)
+            menuItem!.attributedTitle = AppPrefsCocoa.shared.makeUserAttributedString(text: intWithLabel, usage: .text)
         }
-        AppPrefsCocoa.shared.setRegularFont(object: menu!.menu!)
+        AppPrefsCocoa.shared.setTextEditingFont(object: menu!.menu!)
     }
 
 }

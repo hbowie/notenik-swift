@@ -202,7 +202,7 @@ class NoteEditViewController: NSViewController {
     
     /// Make a View to contain a field label
     func makeLabelView(with label: FieldLabel) -> NSView {
-        let str = AppPrefsCocoa.shared.makeUserAttributedString(text: label.properForm + ": ")
+        let str = AppPrefsCocoa.shared.makeUserAttributedString(text: label.properForm + ": ", usage: .labels)
         let vw = NSTextField(labelWithAttributedString: str)
         return vw
     }

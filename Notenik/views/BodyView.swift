@@ -78,7 +78,7 @@ class BodyView: MacEditView {
             textView.toggleAutomaticSpellingCorrection(nil)
         }
         
-        AppPrefsCocoa.shared.setRegularFont(object: textView)
+        AppPrefsCocoa.shared.setTextEditingFont(object: textView)
         
         delegate = BodyViewDelegate()
         textView.delegate = delegate

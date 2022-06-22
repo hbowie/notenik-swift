@@ -74,7 +74,7 @@ class ScriptViewController: NSViewController {
         scrollingTextView.leadingAnchor.constraint(equalTo: parentView.leadingAnchor, constant: 8).isActive = true
         scrollingTextView.trailingAnchor.constraint(equalTo: parentView.trailingAnchor, constant: -8).isActive = true
         scrollingTextView.bottomAnchor.constraint(equalTo: parentView.bottomAnchor, constant: -8).isActive = true
-        AppPrefsCocoa.shared.setRegularFont(object: scriptLog)
+        AppPrefsCocoa.shared.setTextEditingFont(object: scriptLog)
         
         modulePopUp.removeAllItems()
         modulePopUp.addItem(withTitle: "script")

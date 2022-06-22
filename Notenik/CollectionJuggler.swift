@@ -580,17 +580,20 @@ class CollectionJuggler: NSObject {
     /// Increase the font size used on the Edit panel
     func viewIncreaseEditFontSize() {
         appPrefsCocoa.increaseEditFontSize(by: 1.0)
+        appPrefsCocoa.saveDefaults()
         adjustEditWindows()
     }
     
     /// Decrease the font size used on the Edit Panel
     func viewDecreaseEditFontSize() {
         appPrefsCocoa.decreaseEditFontSize(by: 1.0)
+        appPrefsCocoa.saveDefaults()
         adjustEditWindows()
     }
     
     func viewResetEditFontSize() {
         appPrefsCocoa.resetEditFontSize()
+        appPrefsCocoa.saveDefaults()
         adjustEditWindows()
     }
     

@@ -45,7 +45,7 @@ class LookupView: MacEditView {
         lookupField.dataSource = lookupDataSource
         lookupField.delegate = lookupDataSource
         lookupField.completes = true
-        AppPrefsCocoa.shared.setRegularFont(object: lookupField)
+        AppPrefsCocoa.shared.setTextEditingFont(object: lookupField)
     }
     
 }

@@ -45,7 +45,7 @@ class ComboView: MacEditView {
         comboField.dataSource = comboDataSource
         comboField.delegate = comboDataSource
         comboField.completes = true
-        AppPrefsCocoa.shared.setRegularFont(object: comboField)
+        AppPrefsCocoa.shared.setTextEditingFont(object: comboField)
     }
     
 }

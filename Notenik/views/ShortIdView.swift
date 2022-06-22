@@ -37,7 +37,7 @@ class ShortIdView: MacEditView {
     
     func buildView() {
         textField = NSTextField(labelWithString: "")
-        AppPrefsCocoa.shared.setRegularFont(object: textField)
+        AppPrefsCocoa.shared.setTextEditingFont(object: textField)
         textField.isSelectable = true
     }
     

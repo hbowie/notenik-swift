@@ -78,7 +78,7 @@ class TeaserView: MacEditView {
             textView.toggleAutomaticSpellingCorrection(nil)
         }
         
-        AppPrefsCocoa.shared.setRegularFont(object: textView)
+        AppPrefsCocoa.shared.setTextEditingFont(object: textView)
         
         // Add the Text View to the Scroll View
         scrollView.documentView = textView

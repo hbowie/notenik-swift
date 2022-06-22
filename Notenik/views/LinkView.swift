@@ -64,7 +64,7 @@ class LinkView: MacEditView {
         textView.isAutomaticQuoteSubstitutionEnabled = false
         textView.isFieldEditor = true
         
-        AppPrefsCocoa.shared.setFixedPitchFont(view: textView)
+        AppPrefsCocoa.shared.setCodeEditingFont(view: textView)
         
         // Add the Text View to the Scroll View
         scrollView.documentView = textView

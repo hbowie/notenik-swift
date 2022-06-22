@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 8/24/20.
-//  Copyright © 2020 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2020 - 2022 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -11,6 +11,7 @@
 
 import Cocoa
 
+/// A shared object used to apply a standard look to cocoa controls.
 class AppPrefsCocoa {
     
     /// Provide a standard shared singleton instance
@@ -18,30 +19,9 @@ class AppPrefsCocoa {
     
     let defaults = UserDefaults.standard
     
-    let launchingKey    = "app-launching"
-    let fontSizeKey     = "font-size"
-    
-    var _edFS:   Float   = 13.0
-    var _edFSCG: CGFloat = 13.0
-    
-    var userFont       = NSFont.userFont(ofSize: 13.0)
-    var fixedPitchFont = NSFont.userFixedPitchFont(ofSize: 13.0)
-    
-    var userFontAttrs       = [NSAttributedString.Key.font: NSFont.userFont(ofSize: 13.0)]
-    var fixedPitchFontAttrs = [NSAttributedString.Key.font: NSFont.userFixedPitchFont(ofSize: 13.0)]
-    
-    var editFontSize: Float {
-        get {
-            return _edFS
-        }
-        set {
-            if newValue > 8.0 && newValue < 24.0 {
-                _edFS = newValue
-                defaults.set(_edFS, forKey: fontSizeKey)
-                deriveRelatedFontFields()
-            }
-        }
-    }
+    var labelFontPrefs = CocoaFontPrefs(.labels)
+    var textFontPrefs  = CocoaFontPrefs(.text)
+    var codeFontPrefs  = CocoaFontPrefs(.code)
     
     /// Private initializer to enforce usage of the singleton instance
     private init() {
@@ -50,77 +30,81 @@ class AppPrefsCocoa {
     
     func resetDefaults() {
         resetEditFontSize()
-        deriveRelatedFontFields()
     }
     
     func loadDefaults() {
-        
-        let defaultFontSize = defaults.float(forKey: fontSizeKey)
-        if defaultFontSize == 0.0 {
-            defaults.set(_edFS, forKey: fontSizeKey)
-        } else {
-            _edFS = defaultFontSize
-        }
-        deriveRelatedFontFields()
-        
-    }
-    
-    /// Prepare all the font fields we might need, adjusted to the latest size selection
-    func deriveRelatedFontFields() {
-        
-        _edFSCG = CGFloat(_edFS)
-        
-        userFont = NSFont.userFont(ofSize: _edFSCG)
-        fixedPitchFont = NSFont.userFixedPitchFont(ofSize: _edFSCG)
-        
-        userFontAttrs = [NSAttributedString.Key.font: userFont]
-        fixedPitchFontAttrs = [NSAttributedString.Key.font: fixedPitchFont]
+        labelFontPrefs.loadDefaults()
+        textFontPrefs.loadDefaults()
+        codeFontPrefs.loadDefaults()
     }
     
     public func increaseEditFontSize(by: Float) {
-        editFontSize += by
+        labelFontPrefs.increaseFontSize(by: by)
+        textFontPrefs.increaseFontSize(by: by)
+        codeFontPrefs.increaseFontSize(by: by)
     }
     
     public func decreaseEditFontSize(by: Float) {
-        editFontSize -= by
+        labelFontPrefs.decreaseFontSize(by: by)
+        textFontPrefs.decreaseFontSize(by: by)
+        codeFontPrefs.decreaseFontSize(by: by)
     }
     
     public func resetEditFontSize() {
-        editFontSize = 13.0
+        labelFontPrefs.resetEditFontSize()
+        textFontPrefs.resetEditFontSize()
+        codeFontPrefs.resetEditFontSize()
     }
     
-    public func setRegularFont(object: NSObject) {
-        if userFont != nil {
-            if let cb = object as? NSComboBox {
-                cb.font = userFont
-            } else if let textView = object as? NSTextView {
-                textView.font = userFont
-            } else if let textField = object as? NSTextField {
-                textField.font = userFont
-            } else if let menu = object as? NSMenu {
-                menu.font = userFont
-            }
+    public func setLabelFont(object: NSObject) {
+        if let textField = object as? NSTextField {
+            textField.font = labelFontPrefs.font
         }
     }
     
-    public func setFixedPitchFont(view: NSView) {
-        if userFont != nil {
-            if let textView = view as? NSTextView {
-                textView.font = fixedPitchFont
-            } else if let textField = view as? NSTextField {
-                textField.font = fixedPitchFont
-            }
+    public func setTextEditingFont(object: NSObject) {
+
+        if let cb = object as? NSComboBox {
+            cb.font = textFontPrefs.font
+        } else if let textView = object as? NSTextView {
+            textView.font = textFontPrefs.font
+        } else if let textField = object as? NSTextField {
+            textField.font = textFontPrefs.font
+        } else if let menu = object as? NSMenu {
+            menu.font = textFontPrefs.font
+        }
+    }
+    
+    public func setCodeEditingFont(view: NSView) {
+
+        if let textView = view as? NSTextView {
+            textView.font = codeFontPrefs.font
+        } else if let textField = view as? NSTextField {
+            textField.font = codeFontPrefs.font
         }
     }
     
     /// Make an attributed string using latest font size
-    public func makeUserAttributedString(text: String) -> NSAttributedString {
-        return NSAttributedString(string: text, attributes: userFontAttrs as [NSAttributedString.Key: Any])
+    public func makeUserAttributedString(text: String, usage: CocoaFontUsage) -> NSAttributedString {
+        switch usage {
+        case .labels:
+            return NSAttributedString(string: text, attributes: labelFontPrefs.fontAttrs as [NSAttributedString.Key: Any])
+        case .text:
+            return NSAttributedString(string: text, attributes: textFontPrefs.fontAttrs as [NSAttributedString.Key: Any])
+        case .code:
+            return NSAttributedString(string: text, attributes: codeFontPrefs.fontAttrs as [NSAttributedString.Key: Any])
+        }
     }
     
     /// Determine the appropriate height constraint for a text view based on the desired
     /// Number of lines to show.
     public func getViewHeight(lines: Float) -> CGFloat {
-        return CGFloat(editFontSize * 1.20 * lines)
+        return CGFloat(textFontPrefs.size * 1.20 * lines)
+    }
+    
+    public func saveDefaults() {
+        labelFontPrefs.saveDefaults()
+        textFontPrefs.saveDefaults()
+        codeFontPrefs.saveDefaults()
     }
 }

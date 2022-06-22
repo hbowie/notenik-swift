@@ -11,7 +11,7 @@
 
 import Cocoa
 
-class DisplayFontsDataSource: NSObject,  NSComboBoxDataSource {
+class CocoaFontsDataSource: NSObject,  NSComboBoxDataSource {
     
     var useShort = true
     

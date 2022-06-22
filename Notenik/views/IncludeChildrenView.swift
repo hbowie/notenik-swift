@@ -62,7 +62,7 @@ class IncludeChildrenView: MacEditView {
             includeChildrenField.addItem(withTitle: value)
         }
         includeChildrenField.selectItem(withTitle: IncludeChildrenList.no)
-        AppPrefsCocoa.shared.setRegularFont(object: includeChildrenField)
+        AppPrefsCocoa.shared.setTextEditingFont(object: includeChildrenField)
     }
 
 }

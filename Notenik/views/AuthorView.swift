@@ -42,7 +42,7 @@ class AuthorView: MacEditView {
         authorField.dataSource = authorDataSource
         authorField.delegate = authorDataSource
         authorField.completes = true
-        AppPrefsCocoa.shared.setRegularFont(object: authorField)
+        AppPrefsCocoa.shared.setTextEditingFont(object: authorField)
     }
     
 }

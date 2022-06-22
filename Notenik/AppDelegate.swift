@@ -37,6 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     let newControllerStoryboard:    NSStoryboard = NSStoryboard(name: "NewCollection", bundle: nil)
     let newInIcloudStoryboard:      NSStoryboard = NSStoryboard(name: "NewICloud", bundle: nil)
     let displayPrefsStoryboard:     NSStoryboard = NSStoryboard(name: "DisplayPrefs", bundle: nil)
+    let editPrefsStoryboard:        NSStoryboard = NSStoryboard(name: "EditPrefs", bundle: nil)
     let logStoryboard:              NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
     let newsStoryboard:             NSStoryboard = NSStoryboard(name: "News", bundle: nil)
     
@@ -298,6 +299,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     func displayRefresh() {
         juggler.displayRefresh()
+    }
+    
+    @IBAction func editPrefs(_ sender: Any) {
+        if let editPrefsController = self.editPrefsStoryboard.instantiateController(withIdentifier: "editPrefsWC") as? EditPrefsWindowController {
+            editPrefsController.showWindow(self)
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get an Edit Prefs Window Controller!")
+        }
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
