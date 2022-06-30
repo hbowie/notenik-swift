@@ -103,12 +103,12 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         }
         
         cssText.font = NSFont(name: "Menlo", size: 14)
-        if displayPrefs.css == nil {
+        if displayPrefs.fontCSS == nil {
             cssText.string = ""
         } else {
-            cssText.string = displayPrefs.css!
-            startingCSS = displayPrefs.css!
-            latestCSS = displayPrefs.css!
+            cssText.string = displayPrefs.fontCSS!
+            startingCSS = displayPrefs.fontCSS!
+            latestCSS = displayPrefs.fontCSS!
         }
         
         refreshSample(self)
@@ -205,7 +205,7 @@ class DisplayPrefsViewController: NSViewController, NSComboBoxDataSource {
         }
         displayPrefs.font = latestFont
         displayPrefs.size = latestSize
-        displayPrefs.css = latestCSS
+        displayPrefs.fontCSS = latestCSS
         window.close()
         displayPrefs.displayRefresh()
     }

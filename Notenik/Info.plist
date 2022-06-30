@@ -87,6 +87,8 @@
 			<string>Any</string>
 		</dict>
 	</dict>
+	<key>NSUserActivityTypes</key>
+	<array/>
 	<key>OSAScriptingDefinition</key>
 	<string>Notenik.sdef</string>
 	<key>UTImportedTypeDeclarations</key>

@@ -37,7 +37,7 @@ class NewsViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
     /// Load the HTML to be displayed in the web view.
     func loadHTML() {
         let code = Markedup(format: format)
-        var css = displayPrefs.bodyCSS!
+        var css = displayPrefs.displayCSS!
         if let bodySizeStr = displayPrefs.size {
             if let bodySize = Int(bodySizeStr) {
                 css.append("\nh1 { font-weight: 600; font-size: \(bodySize+4)pt }")
