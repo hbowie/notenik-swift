@@ -419,7 +419,7 @@ class NoteListViewController:   NSViewController,
                             let level = levelValue.getInt()
                             let indent = level - config.low
                             if indent > 0 {
-                                displayValue = String(repeating: "  ", count: indent)
+                                displayValue = AppPrefs.shared.indentSpaces(level: indent)
                             }
                         } 
                     }

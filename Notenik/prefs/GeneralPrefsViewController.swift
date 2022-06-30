@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 5/29/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2022 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -16,6 +16,19 @@ import NotenikLib
 class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     
     let appPrefs = AppPrefs.shared
+    
+    let spacingOptions: [String] = [
+        "no spaces",
+        "1 space",
+        "2 spaces",
+        "3 spaces",
+        "4 spaces",
+        "5 spaces",
+        "6 spaces",
+        "7 spaces",
+        "8 spaces",
+        "9 spaces"
+    ]
 
     @IBOutlet var confirmDeletesYes: NSButton!
     
@@ -24,6 +37,8 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     @IBOutlet var openTipsAtStartup: NSButton!
     
     @IBOutlet var appAppearance: NSPopUpButton!
+    
+    @IBOutlet var indentSpacesPopUpButton: NSPopUpButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +59,10 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
         case "dark":   appAppearance.selectItem(at: 2)
         default: break
         }
+        
+        indentSpacesPopUpButton.removeAllItems()
+        indentSpacesPopUpButton.addItems(withTitles: spacingOptions)
+        indentSpacesPopUpButton.selectItem(at: appPrefs.indentSpacing)
     }
     
     @IBAction func appPrefsConfirmDeletes (_ sender: Any) {
@@ -78,6 +97,12 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
         default:
             break
         }
+        DisplayPrefs.shared.displayRefresh()
+    }
+    
+    @IBAction func indentSpacingSelected(_ sender: Any) {
+        appPrefs.indentSpacing = indentSpacesPopUpButton.indexOfSelectedItem
+        CollectionJuggler.shared.adjustListViews()
     }
     
     @IBAction func appPrefsOK(_ sender: Any) {

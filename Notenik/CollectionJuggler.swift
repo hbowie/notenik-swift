@@ -629,6 +629,14 @@ class CollectionJuggler: NSObject {
         }
     }
     
+    func adjustListViews() {
+        for window in windows {
+            if let lvc = window.listVC {
+                lvc.reload()
+            }
+        }
+    }
+    
     func displayRefresh() {
         for window in windows {
             window.reloadDisplayView(self)
