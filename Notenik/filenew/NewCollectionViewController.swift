@@ -222,6 +222,7 @@ class NewCollectionViewController: NSTabViewController {
             if io != nil {
                 let collection = io!.collection
                 if collection != nil {
+                    collection!.title = collectionURL!.lastPathComponent
                     if collection!.mirror != nil {
                         wc!.mirrorAllNotesAndIndex(self)
                     }

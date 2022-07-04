@@ -3051,7 +3051,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     @IBAction func importFolderOfTextFiles(_ sender: Any) {
-        
+        importFolderOfTextFiles2()
+    }
+    
+    func importFolderOfTextFiles1() {
         guard let noteIO = guardForCollectionAction() else { return }
         
         let openPanel = NSOpenPanel();
@@ -3106,6 +3109,67 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         let ok = (rejected == 0) && (imported > 0)
         informUserOfImportExportResults(operation: "import", ok: ok, numberOfNotes: imported, path: importURL.path)
+        finishBatchOperation()
+    }
+    
+    /// Import the notes from another Notenik Collection
+    func importFolderOfTextFiles2() {
+
+        // See if we're ready to take action
+        let nio = guardForCollectionAction()
+        guard let noteIO = nio else { return }
+        guard let collection = noteIO.collection else { return }
+        
+        // Ask the user for an import location
+        let openPanel = juggler.prepCollectionOpenPanel()
+        openPanel.canCreateDirectories = false
+        let userChoice = openPanel.runModal()
+        guard userChoice == .OK else { return }
+
+        let importIO: NotenikIO = FileIO()
+        let importRealm = importIO.getDefaultRealm()
+        let importURL = openPanel.url!
+        importRealm.path = ""
+        let importCollection = importIO.openCollection(realm: importRealm, collectionPath: importURL.path, readOnly: true)
+        guard importCollection != nil else {
+            blockingAlert(msg: "The import location does not seem to be a valid Notenik Collection",
+                          info: "Attempted to import from \(importURL.path)")
+            return
+        }
+
+        // OK, let's import
+        let lockStart = collection.dict.isLocked
+        collection.dict.unlock()
+        var imported = 0
+        var rejected = 0
+        var (importNote, importPosition) = importIO.firstNote()
+        while importNote != nil && importPosition.valid {
+            let noteCopy = Note(collection: collection)
+            importNote!.copyDefinedFields(to: noteCopy, addDefs: true)
+            let (importedNote, _) = noteIO.addNote(newNote: noteCopy)
+            if importedNote == nil {
+                rejected += 1
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .error,
+                                  message: "Could not import note titled '\(importNote!.title.value)'")
+            } else {
+                imported += 1
+            }
+            (importNote, importPosition) = importIO.nextNote(importPosition)
+        }
+        
+        if lockStart {
+            collection.dict.lock()
+        }
+        
+        if rejected > 0 {
+            blockingAlert(msg: "\(rejected) Notes could not be imported", info: "See the Log Window for details")
+        }
+        let ok = imported > 0
+        informUserOfImportExportResults(operation: "import", ok: ok, numberOfNotes: imported, path: importURL.path)
+        
+        editVC!.io = noteIO
         finishBatchOperation()
     }
     
