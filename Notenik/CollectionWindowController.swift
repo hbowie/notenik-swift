@@ -324,10 +324,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let collection = noteIO.collection else { return }
         if collection.streamlined {
             collection.streamlined = false
-            collection.bodyLabel = true
         } else {
             collection.streamlined = true
-            collection.bodyLabel = false
         }
         noteIO.persistCollectionInfo()
         reloadCollection(self)

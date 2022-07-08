@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="EdV-iT-cJj">
+            <objects>
+                <windowController storyboardIdentifier="dateInsertWC" id="sdx-31-k5X" customClass="DateInsertWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Paste Date" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="jEf-Q5-oVF">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="163" y="197" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1280" height="775"/>
+                        <view key="contentView" id="Rfx-Qq-2CK">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="sdx-31-k5X" id="PNZ-fZ-gng"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="fNj-gh-u1r" kind="relationship" relationship="window.shadowedContentViewController" id="KQG-yY-eoV"/>
+                    </connections>
+                </windowController>
+                <customObject id="Y8B-7V-VJ3" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-12" y="29"/>
+        </scene>
+        <!--Date Insert View Controller-->
+        <scene sceneID="Asw-BT-0nv">
+            <objects>
+                <viewController id="fNj-gh-u1r" customClass="DateInsertViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="SIx-3I-eOJ">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d1i-QH-brX">
+                                <rect key="frame" x="414" y="13" width="53" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="39" id="gjF-3b-dVk"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="amw-33-Brr">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vd0-Pd-pKf">
+                                <rect key="frame" x="13" y="13" width="76" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="62" id="qm9-Oa-bPu"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xmq-2L-KFY">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bss-5N-ouw">
+                                <rect key="frame" x="18" y="215" width="63" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Today" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="4Kq-8x-Hvl">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tAY-nJ-zS1">
+                                <rect key="frame" x="20" y="240" width="57" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Content:" id="Wiz-2G-Puz">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c0z-cu-Co7">
+                                <rect key="frame" x="18" y="187" width="87" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Tomorrow" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="fv3-rY-l3K">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tJF-rC-Obq">
+                                <rect key="frame" x="20" y="156" width="92" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Next Week" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Lo0-1N-iNi">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="efg-8x-8Gk">
+                                <rect key="frame" x="20" y="126" width="97" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Next Month" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="haS-Px-aHM">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pJb-Rr-XHP">
+                                <rect key="frame" x="20" y="95" width="85" height="18"/>
+                                <buttonCell key="cell" type="radio" title="Next Year" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="uBd-h0-bnG">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YpW-3B-iHK">
+                                <rect key="frame" x="153" y="240" width="51" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Format:" id="mIz-hP-whn">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JfB-IN-LIV">
+                                <rect key="frame" x="153" y="215" width="167" height="18"/>
+                                <buttonCell key="cell" type="radio" title="yyyy-mm-dd hh:mm:ss" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="ylt-pF-vQU">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8vA-NR-RZJ">
+                                <rect key="frame" x="153" y="187" width="105" height="18"/>
+                                <buttonCell key="cell" type="radio" title="yyyy-mm-dd" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="bTZ-cf-Y8Y">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cSM-TC-C3W">
+                                <rect key="frame" x="153" y="156" width="111" height="18"/>
+                                <buttonCell key="cell" type="radio" title="dd MMM yyyy" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="tAI-N1-IdC">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BfL-eD-NsV">
+                                <rect key="frame" x="174" y="24" width="133" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="2022-07-07 10:21:33" id="5WG-BJ-Nrc">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="8vA-NR-RZJ" firstAttribute="leading" secondItem="cSM-TC-C3W" secondAttribute="leading" id="2jm-Pn-Jpw"/>
+                            <constraint firstItem="BfL-eD-NsV" firstAttribute="centerX" secondItem="SIx-3I-eOJ" secondAttribute="centerX" id="31J-yo-TxJ"/>
+                            <constraint firstItem="c0z-cu-Co7" firstAttribute="top" secondItem="Bss-5N-ouw" secondAttribute="bottom" constant="12" id="38g-Y3-QGw"/>
+                            <constraint firstItem="efg-8x-8Gk" firstAttribute="leading" secondItem="pJb-Rr-XHP" secondAttribute="leading" id="3BP-xh-dRW"/>
+                            <constraint firstItem="tJF-rC-Obq" firstAttribute="leading" secondItem="efg-8x-8Gk" secondAttribute="leading" id="4Ub-4D-52A"/>
+                            <constraint firstItem="Bss-5N-ouw" firstAttribute="leading" secondItem="c0z-cu-Co7" secondAttribute="leading" id="9VC-vI-J1o"/>
+                            <constraint firstItem="pJb-Rr-XHP" firstAttribute="top" secondItem="efg-8x-8Gk" secondAttribute="bottom" constant="15" id="JtF-9T-beh"/>
+                            <constraint firstAttribute="bottom" secondItem="Vd0-Pd-pKf" secondAttribute="bottom" constant="20" symbolic="YES" id="KfP-FQ-JOt"/>
+                            <constraint firstItem="BfL-eD-NsV" firstAttribute="top" secondItem="d1i-QH-brX" secondAttribute="top" id="M0m-0M-lLq"/>
+                            <constraint firstItem="BfL-eD-NsV" firstAttribute="leading" secondItem="Vd0-Pd-pKf" secondAttribute="trailing" constant="94" id="MEm-22-3XC"/>
+                            <constraint firstItem="YpW-3B-iHK" firstAttribute="leading" secondItem="8vA-NR-RZJ" secondAttribute="leading" id="Pbp-gV-adD"/>
+                            <constraint firstItem="Bss-5N-ouw" firstAttribute="centerX" secondItem="Vd0-Pd-pKf" secondAttribute="centerX" id="Pk4-SI-kAL"/>
+                            <constraint firstItem="tAY-nJ-zS1" firstAttribute="leading" secondItem="tJF-rC-Obq" secondAttribute="leading" id="QnR-z8-0QE"/>
+                            <constraint firstItem="efg-8x-8Gk" firstAttribute="centerY" secondItem="SIx-3I-eOJ" secondAttribute="centerY" id="QwS-PI-28q"/>
+                            <constraint firstItem="efg-8x-8Gk" firstAttribute="top" secondItem="tJF-rC-Obq" secondAttribute="bottom" constant="14" id="agJ-GG-CXj"/>
+                            <constraint firstItem="d1i-QH-brX" firstAttribute="leading" secondItem="SIx-3I-eOJ" secondAttribute="leading" constant="421" id="cCD-cC-VGc"/>
+                            <constraint firstItem="c0z-cu-Co7" firstAttribute="trailing" secondItem="pJb-Rr-XHP" secondAttribute="trailing" id="dVT-aM-lOq"/>
+                            <constraint firstItem="tAY-nJ-zS1" firstAttribute="baseline" secondItem="YpW-3B-iHK" secondAttribute="baseline" id="eBM-OH-xuB"/>
+                            <constraint firstItem="Vd0-Pd-pKf" firstAttribute="baseline" secondItem="d1i-QH-brX" secondAttribute="baseline" id="eHu-w4-Vai"/>
+                            <constraint firstItem="tJF-rC-Obq" firstAttribute="top" secondItem="c0z-cu-Co7" secondAttribute="bottom" constant="15" id="efY-L9-Umo"/>
+                            <constraint firstItem="cSM-TC-C3W" firstAttribute="leading" secondItem="tJF-rC-Obq" secondAttribute="trailing" constant="43" id="gvi-Lm-Lkr"/>
+                            <constraint firstItem="Bss-5N-ouw" firstAttribute="baseline" secondItem="JfB-IN-LIV" secondAttribute="baseline" id="h1F-9n-12w"/>
+                            <constraint firstItem="JfB-IN-LIV" firstAttribute="leading" secondItem="Bss-5N-ouw" secondAttribute="trailing" constant="74" id="ogj-rN-0RT"/>
+                            <constraint firstItem="c0z-cu-Co7" firstAttribute="baseline" secondItem="8vA-NR-RZJ" secondAttribute="baseline" id="rFT-qb-McX"/>
+                            <constraint firstItem="c0z-cu-Co7" firstAttribute="leading" secondItem="Vd0-Pd-pKf" secondAttribute="leading" id="t9l-sI-5vr"/>
+                            <constraint firstItem="Bss-5N-ouw" firstAttribute="top" secondItem="tAY-nJ-zS1" secondAttribute="bottom" constant="8" symbolic="YES" id="thL-Ei-TR7"/>
+                            <constraint firstAttribute="trailing" secondItem="d1i-QH-brX" secondAttribute="trailing" constant="20" symbolic="YES" id="vs8-1i-Pc3"/>
+                            <constraint firstItem="Bss-5N-ouw" firstAttribute="leading" secondItem="SIx-3I-eOJ" secondAttribute="leading" constant="20" symbolic="YES" id="vxp-Mu-gpG"/>
+                            <constraint firstItem="tJF-rC-Obq" firstAttribute="baseline" secondItem="cSM-TC-C3W" secondAttribute="baseline" id="ySK-yZ-iib"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="vHk-Ci-uIw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-12" y="567"/>
+        </scene>
+    </scenes>
+</document>
