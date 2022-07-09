@@ -40,7 +40,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     let editPrefsStoryboard:        NSStoryboard = NSStoryboard(name: "EditPrefs", bundle: nil)
     let logStoryboard:              NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
     let newsStoryboard:             NSStoryboard = NSStoryboard(name: "News", bundle: nil)
-    let dateInsertStoryboard:       NSStoryboard = NSStoryboard(name: "DateInsert", bundle: nil)
     
     var logController: LogWindowController?
     
@@ -189,17 +188,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
                               category: "AppDelegate",
                               level: .fault,
                               message: "Couldn't get a New in iCloud Window Controller!")
-        }
-    }
-    
-    @IBAction func dateInsert(_ sender: Any) {
-        if let insertDateController = self.dateInsertStoryboard.instantiateController(withIdentifier: "dateInsertWC") as? DateInsertWindowController {
-            insertDateController.showWindow(self)
-        } else {
-            logger.log(subsystem: "com.powersurgepub.notenik.macos",
-                       category: "AppDelegate",
-                       level: .fault,
-                       message: "Couldn't get a Date Insert Window Controller")
         }
     }
     

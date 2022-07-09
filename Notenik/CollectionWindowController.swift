@@ -60,6 +60,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let seqModStoryboard:          NSStoryboard = NSStoryboard(name: "SeqMod", bundle: nil)
     let linkCleanerStoryboard:     NSStoryboard = NSStoryboard(name: "LinkCleaner", bundle: nil)
     let notePickerStoryboard:      NSStoryboard = NSStoryboard(name: "NotePicker", bundle: nil)
+    let dateInsertStoryboard:      NSStoryboard = NSStoryboard(name: "DateInsert", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -1923,7 +1924,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     @IBAction func selectNote(_ sender: Any) {
         
         guard let noteIO = notenikIO else { return }
-                // guardForCollectionAction() else { return }
         
         guard let notePickerController = self.notePickerStoryboard.instantiateController(withIdentifier: "NotePickerWC") as? NotePickerWindowController else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
@@ -1947,6 +1947,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         // }
         // vc.searchPhrase = searchPhrase
 
+    }
+    
+    @IBAction func dateInsert(_ sender: Any) {
+        guard let insertDateController = self.dateInsertStoryboard.instantiateController(withIdentifier: "dateInsertWC") as? DateInsertWindowController else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Date Insert Window Controller")
+            return
+        }
+        guard let vc = insertDateController.contentViewController as? DateInsertViewController else { return }
+        insertDateController.showWindow(self)
+        vc.collectionController = self
+        vc.wc = insertDateController
     }
     
     /// Start an Advanced Search using the options provided by the user.
