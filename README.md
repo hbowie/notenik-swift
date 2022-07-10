@@ -11,6 +11,7 @@ This is one of several active repositories on GitHub containing code and/or docu
 Use these links to obtain more info about the app, and to actually download a working version to your Mac. 
 
 + [Notenik.app](https://notenik.app) - The Notenik website
++ [Notenik Discourse Forum](https://discourse.notenik.app) - A dedicated Discourse Community for Notenik
 + [Notenik 101](https://youtu.be/JR0kpAUXM5E) - An introductory video hosted on YouTube
 + [Notenik on the Mac App Store](https://apps.apple.com/us/app/notenik/id1465997984) - A direct link to Notenik in the App Store
 
