@@ -2335,7 +2335,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let sel = selection else { return }
         guard let following = newNote else { return }
         
-        if following.collection.seqFieldDef != nil && sel.hasSeq() {
+        if following.collection.seqFieldDef != nil && sel.hasSeq()
+                && (collection.sortParm == .seqPlusTitle || collection.sortParm == .tasksBySeq) {
             let incSeq = sel.seq.dupe()
             incSeq.increment()
             _ = following.setSeq(incSeq.value)
