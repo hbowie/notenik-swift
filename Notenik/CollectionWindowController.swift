@@ -61,6 +61,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let linkCleanerStoryboard:     NSStoryboard = NSStoryboard(name: "LinkCleaner", bundle: nil)
     let notePickerStoryboard:      NSStoryboard = NSStoryboard(name: "NotePicker", bundle: nil)
     let dateInsertStoryboard:      NSStoryboard = NSStoryboard(name: "DateInsert", bundle: nil)
+    let queryBuilderStoryboard:    NSStoryboard = NSStoryboard(name: "QueryBuilder", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -177,15 +178,16 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     /// Set position of window, given a string of formatted doubles.
     func setNumbers(_ windowStr: String) {
+
         guard !windowStr.isEmpty else { return }
         let numbers = windowStr.components(separatedBy: ";")
         guard numbers.count >= 5 else {
             return
         }
-        let x = Double(numbers[0])
-        let y = Double(numbers[1])
-        let width = Double(numbers[2])
-        let height = Double(numbers[3])
+        var x = Double(numbers[0])
+        var y = Double(numbers[1])
+        var width = Double(numbers[2])
+        var height = Double(numbers[3])
         let divider = Double(numbers[4])
         guard x != nil && y != nil && width != nil && height != nil && divider != nil  else {
             return
@@ -193,10 +195,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard let mainScreen = NSScreen.main else { return }
         let visibleFrame = mainScreen.visibleFrame
-        guard x! >= visibleFrame.minX else { return }
+        if x! < visibleFrame.minX {
+            x = visibleFrame.minX
+        }
         guard x! <= visibleFrame.maxX else { return }
-        guard (x! + width!) <= visibleFrame.maxX else { return }
-        guard (y! + height!) <= visibleFrame.maxY else { return }
+        if (x! + width!) > visibleFrame.maxX {
+            width = visibleFrame.maxX - x!
+        }
+        guard width! >= 300 else { return }
+        if (y! < visibleFrame.minY) {
+            y = visibleFrame.minY
+        }
+        if (y! + height!) > visibleFrame.maxY {
+            height = visibleFrame.maxY - y!
+        }
         
         let frame = NSRect(x: x!, y: y!, width: width!, height: height!)
         window!.setFrame(frame, display: true)
@@ -231,10 +243,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     func saveBeforeClose() {
-        
+
         if !pendingMod {
             let _ = modIfChanged()
         }
+        
         
         var windowPosition = ""
         if let frame = window?.frame {
@@ -1961,6 +1974,21 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         insertDateController.showWindow(self)
         vc.collectionController = self
         vc.wc = insertDateController
+    }
+    
+    @IBAction func queryBuilder(_ sender: Any) {
+        guard let queryBuilderController = self.queryBuilderStoryboard.instantiateController(withIdentifier: "queryWC") as? QueryBuilderWindowController else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Query Builder Window Controller")
+            return
+        }
+        guard let vc = queryBuilderController.contentViewController as? QueryBuilderViewController else { return }
+        vc.io = notenikIO
+        vc.collectionWC = self
+        queryBuilderController.showWindow(self)
+        vc.windowController = queryBuilderController
     }
     
     /// Start an Advanced Search using the options provided by the user.
