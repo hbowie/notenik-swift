@@ -56,6 +56,12 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>INIntentsSupported</key>
+	<array>
+		<string>GetNoteTitleIntent</string>
+		<string>GetNoteSharingLinkIntent</string>
+		<string>GetNoteFilePathIntent</string>
+	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
@@ -88,7 +94,11 @@
 		</dict>
 	</dict>
 	<key>NSUserActivityTypes</key>
-	<array/>
+	<array>
+		<string>GetNoteFilePathIntent</string>
+		<string>GetNoteSharingLinkIntent</string>
+		<string>GetNoteTitleIntent</string>
+	</array>
 	<key>OSAScriptingDefinition</key>
 	<string>Notenik.sdef</string>
 	<key>UTImportedTypeDeclarations</key>

@@ -136,6 +136,12 @@ class CollectionJuggler: NSObject {
                 }
             }
         }
+        
+        let grantAccessOpt = appPrefs.grantAccessOption
+        if grantAccessOpt > 1 {
+            let confirmDialog = (grantAccessOpt == 2)
+            grantFolderAccess(confirm: confirmDialog)
+        }
     }
     
     func loadNotenikIntro() -> String {
@@ -753,13 +759,14 @@ class CollectionJuggler: NSObject {
     
     /// Let the user select a folder, so that Notenik can have unfettered
     /// access to everything within that folder.
-    func grantFolderAccess() {
+    func grantFolderAccess(confirm: Bool = true) {
         let openPanel = NSOpenPanel();
         openPanel.title = "Grant Access to Entire Folder"
-        let parent = osdir.directoryURL
-        if parent != nil {
-            openPanel.directoryURL = parent!
-        }
+        // let parent = osdir.directoryURL
+        let parent = URL(fileURLWithPath: "/Users/")
+        // if parent != nil {
+            openPanel.directoryURL = parent
+        // }
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
         openPanel.canChooseDirectories = true
@@ -770,7 +777,7 @@ class CollectionJuggler: NSObject {
         openPanel.message = "Grant Notenik Access to the Selected Folder"
         openPanel.prompt = "Grant Access"
         let result = openPanel.runModal()
-        if result == .OK {
+        if result == .OK && confirm {
             // docController!.noteNewRecentDocumentURL(openPanel.url!)
             accessGranted(accessFolder: openPanel.url)
         }

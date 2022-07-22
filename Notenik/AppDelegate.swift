@@ -10,6 +10,7 @@
 //
 
 import Cocoa
+import Intents
 
 import NotenikUtils
 import NotenikLib
@@ -310,6 +311,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
                               level: .fault,
                               message: "Couldn't get an Edit Prefs Window Controller!")
         }
+    }
+    
+    @available(macOS 11.0, *)
+    func application(_ application: NSApplication, handlerFor intent: INIntent) -> Any? {
+        if intent is GetNoteTitleIntent {
+            return GetNoteTitleIntentHandler()
+        } else if intent is GetNoteSharingLinkIntent {
+            return GetNoteSharingLinkIntentHandler()
+        } else if intent is GetNoteFilePathIntent {
+            return GetNoteFilePathIntentHandler()
+        }
+        return nil
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

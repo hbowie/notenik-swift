@@ -40,6 +40,8 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     
     @IBOutlet var indentSpacesPopUpButton: NSPopUpButton!
     
+    @IBOutlet var grantAccessOptPopUpButton: NSPopUpButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if appPrefs.confirmDeletes {
@@ -63,6 +65,9 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
         indentSpacesPopUpButton.removeAllItems()
         indentSpacesPopUpButton.addItems(withTitles: spacingOptions)
         indentSpacesPopUpButton.selectItem(at: appPrefs.indentSpacing)
+        
+        let grantAccessOpt = appPrefs.grantAccessOption
+        grantAccessOptPopUpButton.selectItem(at: grantAccessOpt - 1)
     }
     
     @IBAction func appPrefsConfirmDeletes (_ sender: Any) {
@@ -109,6 +114,10 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
         self.view.window!.close()
     }
     
+    @IBAction func funcgrantAccessOptionSelected(_ sender: Any) {
+        let selIndex = grantAccessOptPopUpButton.indexOfSelectedItem
+        appPrefs.grantAccessOption = selIndex + 1
+    }
     /// Called when the user is leaving this tab for another one.
     func leavingTab() {
 

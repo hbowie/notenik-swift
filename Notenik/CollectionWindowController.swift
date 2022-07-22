@@ -1205,7 +1205,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 existingNote = noteIO.getNote(forID: note.noteID)
                 if existingNote != nil {
                     let existingTrimmed = StringUtils.trim(existingNote!.body.value)
-                    let dropTrimmed = StringUtils.trim(existingNote!.body.value)
+                    let dropTrimmed = StringUtils.trim(note.body.value)
                     if existingTrimmed == dropTrimmed {
                         updateExisting = true
                     }

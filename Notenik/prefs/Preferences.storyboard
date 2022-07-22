@@ -85,7 +85,7 @@
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zS6-1Z-Jui">
                                 <rect key="frame" x="136" y="241" width="209" height="18"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="207" id="NHy-Ui-Z2U"/>
+                                    <constraint firstAttribute="width" constant="207" id="uxY-XX-Hbr"/>
                                 </constraints>
                                 <buttonCell key="cell" type="radio" title="No - Delete Notes Immediately" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="CLw-qO-faG">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -137,7 +137,7 @@ DQ
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="89Q-x0-U70">
                                 <rect key="frame" x="135" y="174" width="147" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="140" id="o5S-B3-q2Q"/>
+                                    <constraint firstAttribute="width" constant="140" id="Ar9-Bn-7YS"/>
                                 </constraints>
                                 <popUpButtonCell key="cell" type="push" title="Follow System" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Y9z-6f-SQb" id="VQX-lN-Ziv">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -156,9 +156,6 @@ DQ
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jMZ-gc-h8h">
                                 <rect key="frame" x="22" y="145" width="105" height="23"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="23" id="j5E-zk-lkP"/>
-                                </constraints>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Indent per Level:" id="qjK-iX-ssB">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -167,6 +164,9 @@ DQ
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="reV-eV-mGO">
                                 <rect key="frame" x="135" y="144" width="78" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Ls2-BO-sX7"/>
+                                </constraints>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="PiB-Ny-S16" id="WeO-Fx-doF">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -182,35 +182,69 @@ DQ
                                     <action selector="indentSpacingSelected:" target="i5j-TU-ObT" id="Om9-Fb-tRK"/>
                                 </connections>
                             </popUpButton>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sUX-H7-gFW">
+                                <rect key="frame" x="135" y="114" width="227" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="cEP-FH-oaN"/>
+                                </constraints>
+                                <popUpButtonCell key="cell" type="push" title="Only When Requested" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="f9x-KW-S34" id="3B2-rc-czk">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="TG3-PD-VD6">
+                                        <items>
+                                            <menuItem title="Only When Requested" state="on" id="f9x-KW-S34"/>
+                                            <menuItem title="At Startup" id="m8J-d5-c5n"/>
+                                            <menuItem title="At Startup w/o Confirmation" id="o1o-Sm-z76"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="funcgrantAccessOptionSelected:" target="i5j-TU-ObT" id="609-jJ-qcN"/>
+                                </connections>
+                            </popUpButton>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eYm-l4-D7b">
+                                <rect key="frame" x="22" y="120" width="93" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Grant Access: " id="7yD-Oh-Xcf">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="jfX-v3-CeP" firstAttribute="top" secondItem="SVv-OQ-5hv" secondAttribute="top" constant="20" symbolic="YES" id="169-jE-J6q"/>
-                            <constraint firstItem="89Q-x0-U70" firstAttribute="leading" secondItem="reV-eV-mGO" secondAttribute="leading" id="3LC-Um-0Kl"/>
-                            <constraint firstItem="jfX-v3-CeP" firstAttribute="leading" secondItem="SVv-OQ-5hv" secondAttribute="leading" constant="20" symbolic="YES" id="5fl-Jl-q6z"/>
-                            <constraint firstItem="kbG-lN-2Hh" firstAttribute="top" secondItem="zS6-1Z-Jui" secondAttribute="bottom" constant="14" id="6W0-BF-X8D"/>
-                            <constraint firstItem="79R-Qb-MEv" firstAttribute="baseline" secondItem="kbG-lN-2Hh" secondAttribute="baseline" id="6hT-G2-wXz"/>
-                            <constraint firstAttribute="trailing" secondItem="u03-TY-6ei" secondAttribute="trailing" constant="18" id="9wI-Bf-8Ao"/>
-                            <constraint firstAttribute="bottom" secondItem="n0J-Up-LPW" secondAttribute="bottom" constant="20" symbolic="YES" id="DR5-Kl-5vw"/>
-                            <constraint firstItem="jzP-lk-gcl" firstAttribute="top" secondItem="89Q-x0-U70" secondAttribute="top" id="JYz-Jf-sQS"/>
-                            <constraint firstItem="reV-eV-mGO" firstAttribute="top" secondItem="89Q-x0-U70" secondAttribute="bottom" constant="10" symbolic="YES" id="KcH-CP-K5g"/>
-                            <constraint firstItem="u03-TY-6ei" firstAttribute="leading" secondItem="jfX-v3-CeP" secondAttribute="trailing" constant="13" id="NcN-xL-ZXA"/>
-                            <constraint firstItem="jMZ-gc-h8h" firstAttribute="top" secondItem="reV-eV-mGO" secondAttribute="top" id="OF6-By-oeS"/>
-                            <constraint firstItem="kbG-lN-2Hh" firstAttribute="leading" secondItem="79R-Qb-MEv" secondAttribute="trailing" constant="19" id="Qb7-LN-P1g"/>
-                            <constraint firstItem="zS6-1Z-Jui" firstAttribute="leading" secondItem="kbG-lN-2Hh" secondAttribute="leading" id="RHq-Wf-aA7"/>
-                            <constraint firstItem="kbG-lN-2Hh" firstAttribute="leading" secondItem="89Q-x0-U70" secondAttribute="leading" id="SxG-LT-fzG"/>
-                            <constraint firstItem="jzP-lk-gcl" firstAttribute="top" secondItem="79R-Qb-MEv" secondAttribute="bottom" constant="14" id="YpQ-ja-tfh"/>
-                            <constraint firstItem="u03-TY-6ei" firstAttribute="leading" secondItem="zS6-1Z-Jui" secondAttribute="leading" id="b1r-w9-ukS"/>
-                            <constraint firstAttribute="trailing" secondItem="n0J-Up-LPW" secondAttribute="trailing" constant="20" symbolic="YES" id="cTz-qb-c2Y"/>
-                            <constraint firstItem="zS6-1Z-Jui" firstAttribute="top" secondItem="u03-TY-6ei" secondAttribute="bottom" constant="6" symbolic="YES" id="dRE-2W-aWL"/>
-                            <constraint firstItem="jzP-lk-gcl" firstAttribute="leading" secondItem="jMZ-gc-h8h" secondAttribute="leading" id="f0U-UY-ppa"/>
-                            <constraint firstItem="jfX-v3-CeP" firstAttribute="trailing" secondItem="jMZ-gc-h8h" secondAttribute="trailing" id="jd9-om-De1"/>
-                            <constraint firstItem="jfX-v3-CeP" firstAttribute="baseline" secondItem="u03-TY-6ei" secondAttribute="baseline" id="pCJ-Nm-QOy"/>
+                            <constraint firstItem="zS6-1Z-Jui" firstAttribute="leading" secondItem="kbG-lN-2Hh" secondAttribute="leading" id="1vx-ZV-lBp"/>
+                            <constraint firstItem="eYm-l4-D7b" firstAttribute="centerY" secondItem="sUX-H7-gFW" secondAttribute="centerY" id="3bg-P4-BMD"/>
+                            <constraint firstItem="jzP-lk-gcl" firstAttribute="leading" secondItem="jMZ-gc-h8h" secondAttribute="leading" id="5Kh-dv-a9h"/>
+                            <constraint firstAttribute="bottom" secondItem="n0J-Up-LPW" secondAttribute="bottom" constant="20" symbolic="YES" id="5bQ-Y5-gPj"/>
+                            <constraint firstItem="eYm-l4-D7b" firstAttribute="top" secondItem="jMZ-gc-h8h" secondAttribute="bottom" constant="9" id="5m6-9p-U5i"/>
+                            <constraint firstItem="zS6-1Z-Jui" firstAttribute="top" secondItem="u03-TY-6ei" secondAttribute="bottom" constant="6" symbolic="YES" id="5wF-TD-UFu"/>
+                            <constraint firstItem="jfX-v3-CeP" firstAttribute="leading" secondItem="SVv-OQ-5hv" secondAttribute="leading" constant="20" symbolic="YES" id="6Y9-QF-gWf"/>
+                            <constraint firstItem="reV-eV-mGO" firstAttribute="top" secondItem="89Q-x0-U70" secondAttribute="bottom" constant="10" symbolic="YES" id="7rE-0I-ap7"/>
+                            <constraint firstItem="79R-Qb-MEv" firstAttribute="baseline" secondItem="kbG-lN-2Hh" secondAttribute="baseline" id="7zr-Zk-3TI"/>
+                            <constraint firstItem="89Q-x0-U70" firstAttribute="leading" secondItem="jzP-lk-gcl" secondAttribute="trailing" constant="9" id="9et-3N-MrW"/>
+                            <constraint firstItem="reV-eV-mGO" firstAttribute="leading" secondItem="sUX-H7-gFW" secondAttribute="leading" id="9hm-V1-nNI"/>
+                            <constraint firstItem="u03-TY-6ei" firstAttribute="leading" secondItem="zS6-1Z-Jui" secondAttribute="leading" id="DDb-SU-2QJ"/>
+                            <constraint firstAttribute="trailing" secondItem="n0J-Up-LPW" secondAttribute="trailing" constant="20" symbolic="YES" id="ELX-g6-MWT"/>
+                            <constraint firstItem="jMZ-gc-h8h" firstAttribute="top" secondItem="reV-eV-mGO" secondAttribute="top" id="EkY-XL-82u"/>
+                            <constraint firstItem="jzP-lk-gcl" firstAttribute="top" secondItem="89Q-x0-U70" secondAttribute="top" id="Lof-Jz-sNR"/>
+                            <constraint firstItem="sUX-H7-gFW" firstAttribute="top" secondItem="reV-eV-mGO" secondAttribute="bottom" constant="10" symbolic="YES" id="RU4-ld-TP1"/>
+                            <constraint firstItem="jfX-v3-CeP" firstAttribute="trailing" secondItem="jMZ-gc-h8h" secondAttribute="trailing" id="Sgl-Mr-n5A"/>
+                            <constraint firstItem="kbG-lN-2Hh" firstAttribute="top" secondItem="zS6-1Z-Jui" secondAttribute="bottom" constant="14" id="WU0-8o-GGv"/>
+                            <constraint firstAttribute="trailing" secondItem="u03-TY-6ei" secondAttribute="trailing" constant="18" id="axX-RL-yP7"/>
+                            <constraint firstItem="89Q-x0-U70" firstAttribute="leading" secondItem="reV-eV-mGO" secondAttribute="leading" id="bri-le-nns"/>
+                            <constraint firstItem="kbG-lN-2Hh" firstAttribute="leading" secondItem="79R-Qb-MEv" secondAttribute="trailing" constant="19" id="c71-TN-TDC"/>
+                            <constraint firstItem="jfX-v3-CeP" firstAttribute="top" secondItem="SVv-OQ-5hv" secondAttribute="top" constant="20" symbolic="YES" id="gil-JV-QkW"/>
+                            <constraint firstItem="jfX-v3-CeP" firstAttribute="baseline" secondItem="u03-TY-6ei" secondAttribute="baseline" id="ibW-qs-kAI"/>
+                            <constraint firstItem="jMZ-gc-h8h" firstAttribute="leading" secondItem="eYm-l4-D7b" secondAttribute="leading" id="ijq-qP-PAq"/>
+                            <constraint firstItem="kbG-lN-2Hh" firstAttribute="leading" secondItem="89Q-x0-U70" secondAttribute="leading" id="m0v-zW-kGf"/>
+                            <constraint firstItem="jzP-lk-gcl" firstAttribute="top" secondItem="79R-Qb-MEv" secondAttribute="bottom" constant="14" id="nL8-Z1-0xq"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="appAppearance" destination="89Q-x0-U70" id="0aI-7I-3HW"/>
                         <outlet property="confirmDeletesNo" destination="zS6-1Z-Jui" id="tp9-Ba-Dz8"/>
                         <outlet property="confirmDeletesYes" destination="u03-TY-6ei" id="YtU-Qn-N0Z"/>
+                        <outlet property="grantAccessOptPopUpButton" destination="sUX-H7-gFW" id="g7V-0A-939"/>
                         <outlet property="indentSpacesPopUpButton" destination="reV-eV-mGO" id="OHP-kp-2Dz"/>
                         <outlet property="openTipsAtStartup" destination="kbG-lN-2Hh" id="DVt-1O-cbu"/>
                     </connections>
