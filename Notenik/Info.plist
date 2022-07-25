@@ -61,6 +61,7 @@
 		<string>GetNoteTitleIntent</string>
 		<string>GetNoteSharingLinkIntent</string>
 		<string>GetNoteFilePathIntent</string>
+		<string>AddNoteFromTextIntent</string>
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
@@ -95,6 +96,7 @@
 	</dict>
 	<key>NSUserActivityTypes</key>
 	<array>
+		<string>AddNoteFromTextIntent</string>
 		<string>GetNoteFilePathIntent</string>
 		<string>GetNoteSharingLinkIntent</string>
 		<string>GetNoteTitleIntent</string>

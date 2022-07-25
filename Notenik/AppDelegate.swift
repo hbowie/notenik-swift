@@ -321,6 +321,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
             return GetNoteSharingLinkIntentHandler()
         } else if intent is GetNoteFilePathIntent {
             return GetNoteFilePathIntentHandler()
+        } else if intent is AddNoteFromTextIntent {
+            return AddNoteFromTextIntentHandler()
         }
         return nil
     }
