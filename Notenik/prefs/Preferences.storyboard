@@ -194,7 +194,6 @@ DQ
                                         <items>
                                             <menuItem title="Only When Requested" state="on" id="f9x-KW-S34"/>
                                             <menuItem title="At Startup" id="m8J-d5-c5n"/>
-                                            <menuItem title="At Startup w/o Confirmation" id="o1o-Sm-z76"/>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
