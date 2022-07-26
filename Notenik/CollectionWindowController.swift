@@ -2768,6 +2768,13 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         juggler.launchScript(fileURL: fileURL)
     }
     
+    func runScript(fileURL: URL) {
+        let player = ScriptPlayer()
+        let scriptPath = fileURL.path
+        let qol = QueryOutputLauncher()
+        player.playScript(fileName: scriptPath, templateOutputConsumer: qol)
+    }
+    
     @IBAction func reloadDisplayView(_ sender: Any) {
         guard displayVC != nil else { return }
         displayVC!.reload()
@@ -3802,7 +3809,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     if noteIO.collection!.lib.hasAvailable(type: .reports) {
                         let scriptURL = noteIO.reports[i].getURL(folderPath: noteIO.collection!.lib.getPath(type: .reports))
                         if scriptURL != nil {
-                            launchScript(fileURL: scriptURL!)
+                            runScript(fileURL: scriptURL!)
                         }
                     }
                 } else {
@@ -3822,11 +3829,12 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let io = notenikIO else { return false }
         guard let collection = io.collection else { return false }
         let template = Template()
+        let qol = QueryOutputLauncher()
         var ok = template.openTemplate(templateURL: templateURL)
         if ok {
             template.supplyData(notesList: io.notesList,
                                 dataSource: collection.fullPath)
-            ok = template.generateOutput()
+            ok = template.generateOutput(templateOutputConsumer: qol)
             if ok {
                 let textOutURL = template.util.textOutURL
                 if textOutURL != nil {

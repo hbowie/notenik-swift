@@ -343,14 +343,6 @@ class QueryBuilderViewController: NSViewController {
         scriptWriter.write(value: "")
         scriptWriter.endLine()
         
-        let outputURL = reportsFolderURL.appendingPathComponent("\(qName).html")
-        scriptWriter.write(value: "browse")
-        scriptWriter.write(value: "")
-        scriptWriter.write(value: "")
-        scriptWriter.write(value: "")
-        scriptWriter.write(value: outputURL.absoluteString)
-        scriptWriter.endLine()
-        
         let ok = scriptWriter.close()
         if !ok { return }
         
@@ -358,7 +350,10 @@ class QueryBuilderViewController: NSViewController {
         collectionWC.buildReportsActionMenu()
         
         // Now run the script.
-        CollectionJuggler.shared.launchScript(fileURL: scriptURL)
+        let player = ScriptPlayer()
+        let scriptPath = scriptURL.path
+        let qol = QueryOutputLauncher()
+        player.playScript(fileName: scriptPath, templateOutputConsumer: qol)
     }
     
     func determineColumns() -> [Int] {

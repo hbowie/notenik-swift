@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="20037"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="5ml-9e-lJ5">
+            <objects>
+                <windowController storyboardIdentifier="queryOutputWC" id="Cdh-zk-N9b" customClass="QueryOutputWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Query Output" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="XqX-3m-zNv">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+                        <view key="contentView" id="iuh-3m-cwY">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="Cdh-zk-N9b" id="Y1X-gC-wzP"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="eZR-3m-UH5" kind="relationship" relationship="window.shadowedContentViewController" id="PtF-da-x0q"/>
+                    </connections>
+                </windowController>
+                <customObject id="Bot-uC-Qzj" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-158" y="-156"/>
+        </scene>
+        <!--Query Output View Controller-->
+        <scene sceneID="8d8-Ev-BTo">
+            <objects>
+                <viewController id="eZR-3m-UH5" customClass="QueryOutputViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="24K-12-snC">
+                        <rect key="frame" x="0.0" y="0.0" width="548" height="491"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z5j-4t-qoY">
+                                <rect key="frame" x="20" y="20" width="508" height="451"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="z5j-4t-qoY" secondAttribute="trailing" constant="20" symbolic="YES" id="9u7-gp-fwh"/>
+                            <constraint firstItem="z5j-4t-qoY" firstAttribute="top" secondItem="24K-12-snC" secondAttribute="top" constant="20" symbolic="YES" id="GaZ-5f-Nw3"/>
+                            <constraint firstAttribute="bottom" secondItem="z5j-4t-qoY" secondAttribute="bottom" constant="20" symbolic="YES" id="MRu-NN-bfa"/>
+                            <constraint firstItem="z5j-4t-qoY" firstAttribute="leading" secondItem="24K-12-snC" secondAttribute="leading" constant="20" symbolic="YES" id="hhi-cK-yHT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="z5j-4t-qoY" id="G4f-yo-UbK"/>
+                    </connections>
+                </viewController>
+                <customObject id="E43-6Q-ThH" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-192" y="489.5"/>
+        </scene>
+    </scenes>
+</document>

@@ -39,7 +39,6 @@ class ScriptWindowController: NSWindowController {
         if contentViewController != nil && contentViewController is ScriptViewController {
             scriptViewController = contentViewController as? ScriptViewController
             scriptViewController!.window = self
-            
         }
         if scriptViewController != nil {
             scriptView = scriptViewController!.view
