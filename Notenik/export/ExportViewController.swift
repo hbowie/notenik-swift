@@ -3,7 +3,8 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 7/18/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//
+//  Copyright © 2019-2022 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -17,7 +18,6 @@ import NotenikLib
 class ExportViewController: NSViewController {
     
     var window: ExportWindowController!
-    var io: NotenikIO!
     
     let commaSep  = "Comma-Separated"
     let jsonTitle = "JSON"
@@ -30,6 +30,7 @@ class ExportViewController: NSViewController {
     let concatMd  = "Concatenated Markdown"
     let webBookEPUB = "Web Book as EPUB"
     let webBookSite = "Web Book as Site"
+    
     let osdir     = OpenSaveDirectory.shared
     
     let csv     = "csv"
@@ -42,6 +43,9 @@ class ExportViewController: NSViewController {
     let txt     = "txt"
     
     @IBOutlet var formatPopup: NSPopUpButton!
+    
+    var startOfExportScripts = -1
+    
     @IBOutlet var fileExtCombo: NSComboBox!
     @IBOutlet var tagsExportPrefsCheckBox: NSButton!
     @IBOutlet var splitTagsCheckBox: NSButton!
@@ -51,19 +55,7 @@ class ExportViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        formatPopup.removeAllItems()
-        formatPopup.addItem(withTitle: commaSep)
-        formatPopup.addItem(withTitle: tabDelim)
-        formatPopup.addItem(withTitle: jsonTitle)
-        formatPopup.addItem(withTitle: notenik)
-        formatPopup.addItem(withTitle: yaml)
-        formatPopup.addItem(withTitle: bookmarks)
-        formatPopup.addItem(withTitle: outline)
-        formatPopup.addItem(withTitle: concatHtml)
-        formatPopup.addItem(withTitle: concatMd)
-        formatPopup.addItem(withTitle: webBookEPUB)
-        formatPopup.addItem(withTitle: webBookSite)
-        formatPopup.selectItem(at: 0)
+        loadFormatPopup()
         
         fileExtCombo.removeAllItems()
         fileExtCombo.addItem(withObjectValue: csv)
@@ -75,6 +67,41 @@ class ExportViewController: NSViewController {
         fileExtCombo.addItem(withObjectValue: html)
         fileExtCombo.addItem(withObjectValue: opml)
         fileExtCombo.selectItem(at: 0)
+    }
+    
+    var io: NotenikIO? {
+        get {
+            return _io
+        }
+        set {
+            _io = newValue
+            loadFormatPopup()
+        }
+    }
+    var _io: NotenikIO?
+    
+    func loadFormatPopup() {
+        formatPopup.removeAllItems()
+        
+        formatPopup.addItem(withTitle: commaSep)
+        formatPopup.addItem(withTitle: tabDelim)
+        formatPopup.addItem(withTitle: jsonTitle)
+        formatPopup.addItem(withTitle: notenik)
+        formatPopup.addItem(withTitle: yaml)
+        formatPopup.addItem(withTitle: bookmarks)
+        formatPopup.addItem(withTitle: outline)
+        formatPopup.addItem(withTitle: concatHtml)
+        formatPopup.addItem(withTitle: concatMd)
+        formatPopup.addItem(withTitle: webBookEPUB)
+        formatPopup.addItem(withTitle: webBookSite)
+        startOfExportScripts = formatPopup.numberOfItems
+        formatPopup.selectItem(at: 0)
+        
+        guard let noteIO = io else { return }
+        for script in noteIO.exportScripts {
+            formatPopup.addItem(withTitle: script.scriptName)
+        }
+        
     }
     
     @IBAction func formatAction(_ sender: Any) {
@@ -119,50 +146,53 @@ class ExportViewController: NSViewController {
     /// The user clicked ok -- let's go ahead and export now. 
     @IBAction func okButtonPressed(_ sender: Any) {
         
-        io = window.io
-        
         // Figure out the desired output format.
         var formatTitle = commaSep
         var format = ExportFormat.commaSeparated
         if formatPopup.selectedItem != nil {
             formatTitle = formatPopup.selectedItem!.title
         }
-        switch formatTitle {
-        case tabDelim:
-            format = .tabDelimited
-        case jsonTitle:
-            format = .json
-        case bookmarks:
-            format = .bookmarks
-        case notenik:
-            format = .notenik
-        case yaml:
-            format = .yaml
-        case outline:
-            format = .opml
-        case concatHtml:
-            format = .concatHtml
-        case concatMd:
-            format = .concatMarkdown
-        case webBookEPUB:
-            format = .webBookEPUB
-            generateWebBook()
-            window.close()
-            return
-        case webBookSite:
-            format = .webBookSite
-            publishWebBookAsSite()
-            window.close()
-            return
-        default:
-            format = .commaSeparated
+        if formatPopup.indexOfSelectedItem >= startOfExportScripts {
+            format = .exportScript
+        } else {
+            switch formatTitle {
+            case tabDelim:
+                format = .tabDelimited
+            case jsonTitle:
+                format = .json
+            case bookmarks:
+                format = .bookmarks
+            case notenik:
+                format = .notenik
+            case yaml:
+                format = .yaml
+            case outline:
+                format = .opml
+            case concatHtml:
+                format = .concatHtml
+            case concatMd:
+                format = .concatMarkdown
+            case webBookEPUB:
+                format = .webBookEPUB
+                generateWebBook()
+                window.close()
+                return
+            case webBookSite:
+                format = .webBookSite
+                publishWebBookAsSite()
+                window.close()
+                return
+            default:
+                format = .commaSeparated
+            }
         }
         
         // See where the user wants to save it.
         var url: URL?
-        if format == .notenik || format == .yaml {
+        switch format {
+        case .notenik, .yaml, .webBookSite, .webBookEPUB, .exportScript:
             url = getFolderExportURL(format: format)
-        } else {
+        default:
             url = getExportURL(fileExt: fileExtCombo.stringValue)
         }
         guard let destination = url else {
@@ -170,9 +200,12 @@ class ExportViewController: NSViewController {
             return
         }
         
-        // Now let's export. 
+        // Now let's export.
+        if format == .exportScript {
+            runExportScript(scriptName: formatTitle, exportPath: url!.path)
+        }
         let exporter = NotesExporter()
-        let notesExported = exporter.export(noteIO: io,
+        let notesExported = exporter.export(noteIO: io!,
                                             format: format,
                                             useTagsExportPrefs: tagsExportPrefsCheckBox.state == .on,
                                             split: splitTagsCheckBox.state == .on,
@@ -192,6 +225,7 @@ class ExportViewController: NSViewController {
     func getExportURL(fileExt: String, fileName: String = "export") -> URL? {
         
         let savePanel = NSSavePanel();
+        
         savePanel.title = "Specify an output file"
         let parent = io!.collection!.fullPathURL
         if parent != nil {
@@ -201,6 +235,7 @@ class ExportViewController: NSViewController {
         savePanel.showsHiddenFiles = false
         savePanel.canCreateDirectories = true
         savePanel.nameFieldStringValue = fileName + "." + fileExt
+        savePanel.prompt = "Export"
         let userChoice = savePanel.runModal()
         if userChoice == .OK {
             return savePanel.url
@@ -212,18 +247,18 @@ class ExportViewController: NSViewController {
     /// Ask the user where to save the export folder.
     func getFolderExportURL(format: ExportFormat) -> URL? {
         let openPanel = NSOpenPanel();
-        openPanel.title = "Create and Select an Empty Folder"
+        openPanel.title = "Select Folder for Export"
         let parent = osdir.directoryURL
         if parent != nil {
             openPanel.directoryURL = parent!
         }
-        // openPanel.directoryURL = home
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
         openPanel.canChooseDirectories = true
         openPanel.canCreateDirectories = true
         openPanel.canChooseFiles = false
         openPanel.allowsMultipleSelection = false
+        openPanel.prompt = "Export"
         let response = openPanel.runModal()
         if response == .OK {
             if format == .notenik {
@@ -235,10 +270,20 @@ class ExportViewController: NSViewController {
         }
     }
     
+    func runExportScript(scriptName: String, exportPath: String) {
+        guard let lib = io?.collection?.lib else { return }
+        guard lib.hasAvailable(type: .exportFolder) else { return }
+        guard let exportFolderURL = lib.getURL(type: .exportFolder) else { return }
+        let scriptURL = exportFolderURL.appendingPathComponent(scriptName).appendingPathExtension("tcz")
+        let scriptPath = scriptURL.path
+        let player = ScriptPlayer()
+        player.playScript(fileName: scriptPath, exportPath: exportPath, templateOutputConsumer: nil)
+    }
+    
     /// Generate a Web Book of CSS and HTML pages, containing the entire Collection.
     func generateWebBook() {
         
-        guard let collection = io.collection else { return }
+        guard let collection = io?.collection else { return }
         
         let dialog = NSOpenPanel()
         
@@ -273,7 +318,7 @@ class ExportViewController: NSViewController {
     
     func publishWebBookAsSite() {
         
-        guard let collection = io.collection else { return }
+        guard let collection = io?.collection else { return }
         
         let dialog = NSOpenPanel()
         

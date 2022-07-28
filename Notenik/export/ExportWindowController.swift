@@ -15,8 +15,18 @@ import NotenikLib
 
 class ExportWindowController: NSWindowController {
     
-    var io: NotenikIO!
     var exportViewController: ExportViewController?
+    
+    var io: NotenikIO? {
+        get {
+            return exportViewController?.io
+        }
+        set {
+            if let vc = exportViewController {
+                vc.io = newValue
+            }
+        }
+    }
 
     override func windowDidLoad() {
         super.windowDidLoad()
