@@ -323,6 +323,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
             return GetNoteFilePathIntentHandler()
         } else if intent is AddNoteFromTextIntent {
             return AddNoteFromTextIntentHandler()
+        } else if intent is RunScriptIntent {
+            return RunScriptIntentHandler()
         }
         return nil
     }

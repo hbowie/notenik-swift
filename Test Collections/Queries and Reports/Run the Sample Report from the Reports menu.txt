@@ -1,0 +1,19 @@
+Title:  Run the Sample Report from the Reports menu
+
+Status: 9 - Passed
+
+Seq:    1.2
+
+Level:  2
+
+Test:
+
+Select the sample report from the Reports menu, and run it. 
+
+Expected Results:
+
+Report should display within Notenik. 
+
+Reset Instructions:
+
+Rerun step 1.1. 

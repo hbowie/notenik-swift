@@ -1,0 +1,131 @@
+<?nextrec?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>=$title$=</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  :root {
+    --background-color: #000000;
+    --text-color: #F0F0F0;
+    --link-color: #93d5ff;
+    --highlight-color: DimGray
+  }
+a {
+    color: var(--link-color);
+}
+.search-results {
+    background-color: var(--highlight-color);
+}
+body { 
+  tab-size: 4; 
+  margin: 1em; 
+  background-color: var(--background-color);
+  color: var(--text-color); 
+font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14pt}
+blockquote { 
+  border-left: 0.4em solid #999;
+  margin-left: 0;
+  padding-left: 1em;
+} 
+figure { 
+  margin-left: 0.2em;
+  padding-left: 0.2em;
+} 
+table, th, td { 
+  border: 2px solid gray; 
+} 
+table { 
+  border-collapse: collapse; 
+} 
+th, td { 
+  padding: 6px; 
+} 
+img { 
+  max-width: 100%; 
+  height: auto; 
+} 
+h1 { font-size: 2.0em; margin-top: 0.7em; margin-bottom: 0.0em; font-weight: 600; font-style: normal;  }
+h2 { font-size: 1.8em; margin-top: 0.7em; margin-bottom: 0.0em; font-weight: 600; font-style: normal;  }
+h3 { font-size: 1.6em; margin-top: 0.7em; margin-bottom: 0.0em; font-weight: 600; font-style: normal;  }
+h4 { font-size: 1.4em; margin-top: 0.7em; margin-bottom: 0.0em; font-weight: 600; font-style: normal;  }
+h5 { font-size: 1.2em; margin-top: 0.7em; margin-bottom: 0.0em; font-weight: 600; font-style: normal;  }
+h6 { font-size: 1.0em; margin-top: 0.7em; margin-bottom: 0.0em; font-weight: 600; font-style: normal;  }
+ul.checklist { list-style-type: none; }
+ul.tags-list { list-style-type: none; }
+ul.tags-cloud { 
+  list-style: none; 
+  padding-left: 0; 
+  display: flex; 
+  flex-wrap: wrap; 
+  align-items: center; 
+  justify-content: center; 
+  line-height: 2.5rem; 
+} 
+ul.tags-cloud a { 
+  display: block; 
+  font-size: 1.1rem; 
+  font-weight: 600; 
+  text-decoration: none; 
+  position: relative; 
+  border-radius: 15px; 
+  background-color: var(--highlight-color); 
+  padding: 2px 12px 2px 12px; 
+  margin: 10px 10px 10px 10px; 
+  min-width: 40px; 
+  text-aligh: center; 
+} 
+</style>
+</head>
+<body>
+<p>Using display.html to tailor the display. </p>
+<?allfields?>
+<?if "=$IndividualFields$=" ?>
+<!-- For Detailed Formatting Control, Uncomment these lines: 
+<?if "=$tags$=" ?>
+
+<p><em>=$tags$=</em></p>
+<?endif?>
+
+<p><strong>=$title&h$=</strong></p>
+<?if "=$link$=" ?>
+
+<p>Link: <a href="=$link$=">=$link$=</a></p>
+<?endif?>
+
+<?if "=$status$=" ?>
+
+<p>Status: =$status$=</p>
+<?endif?>
+
+<?if "=$seq$=" ?>
+
+<p>Seq: =$seq$=</p>
+<?endif?>
+
+<?if "=$level$=" ?>
+
+<p>Level: =$level$=</p>
+<?endif?>
+
+<?if "=$test$=" ?>
+
+<p>Test: </p>=$test&o$=
+<?endif?>
+
+<?if "=$expectedresults$=" ?>
+
+<p>Expected Results: </p>=$expectedresults&o$=
+<?endif?>
+
+<?if "=$resetinstructions$=" ?>
+
+<p>Reset Instructions: </p>=$resetinstructionsw1o$=
+<?endif?>
+-->
+<?endif?>
+</body>
+</html>
+<?loop?>

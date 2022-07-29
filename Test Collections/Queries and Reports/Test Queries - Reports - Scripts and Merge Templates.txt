@@ -1,0 +1,14 @@
+Title:  Test Queries, Reports, Scripts and Merge Templates
+
+Tags:   steps
+
+Status: 0 - To Run
+
+Seq:    1
+
+Level:  1
+
+Body:
+
+Merge templates are used in different places, and in different ways. Version 10.0.0 supports merge template output going to an internal window, rather than to an external file. Let's make sure all of this works right. 
+

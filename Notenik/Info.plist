@@ -62,6 +62,7 @@
 		<string>GetNoteSharingLinkIntent</string>
 		<string>GetNoteFilePathIntent</string>
 		<string>AddNoteFromTextIntent</string>
+		<string>RunScriptIntent</string>
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
@@ -100,6 +101,7 @@
 		<string>GetNoteFilePathIntent</string>
 		<string>GetNoteSharingLinkIntent</string>
 		<string>GetNoteTitleIntent</string>
+		<string>RunScriptIntent</string>
 	</array>
 	<key>OSAScriptingDefinition</key>
 	<string>Notenik.sdef</string>

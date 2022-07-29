@@ -1,0 +1,27 @@
+<?output "report.html"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Queries and Reports</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+
+<h1>Queries and Reports</h1>
+<?nextrec?>
+
+<h2>=$title&h$=</h2>
+
+<p><strong>Tags:</strong> =$tags&h$=</p>
+
+<p><strong>Link:</strong> =$link&h$=</p>
+
+<p><strong>Status:</strong> =$status&h$=</p>
+
+<p><strong>Seq:</strong> =$seq&h$=</p>
+
+<p><strong>Body:</strong></p>=$body&o$=
+<?loop?>
+</body>
+</html>

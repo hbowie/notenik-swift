@@ -203,20 +203,21 @@ class ExportViewController: NSViewController {
         // Now let's export.
         if format == .exportScript {
             runExportScript(scriptName: formatTitle, exportPath: url!.path)
+        } else {
+            let exporter = NotesExporter()
+            let notesExported = exporter.export(noteIO: io!,
+                                                format: format,
+                                                useTagsExportPrefs: tagsExportPrefsCheckBox.state == .on,
+                                                split: splitTagsCheckBox.state == .on,
+                                                addWebExtensions: addWebExtensionsCheckBox.state == .on,
+                                                destination: destination,
+                                                ext: fileExtCombo.stringValue)
+            let ok = notesExported > 0
+            informUserOfImportExportResults(operation: "export",
+                                            ok: ok,
+                                            numberOfNotes: notesExported,
+                                            path: destination.path)
         }
-        let exporter = NotesExporter()
-        let notesExported = exporter.export(noteIO: io!,
-                                            format: format,
-                                            useTagsExportPrefs: tagsExportPrefsCheckBox.state == .on,
-                                            split: splitTagsCheckBox.state == .on,
-                                            addWebExtensions: addWebExtensionsCheckBox.state == .on,
-                                            destination: destination,
-                                            ext: fileExtCombo.stringValue)
-        let ok = notesExported > 0
-        informUserOfImportExportResults(operation: "export",
-                                        ok: ok,
-                                        numberOfNotes: notesExported,
-                                        path: destination.path)
         
         window.close()
     }

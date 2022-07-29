@@ -1,0 +1,21 @@
+Title:  Create a Report Sample and Run it
+
+Tags:   steps
+
+Status: 9 - Passed
+
+Seq:    1.1
+
+Level:  2
+
+Test:
+
+Under the Reports menu, Generate a Report Sample in HTML. Once generated, run it. 
+
+Expected Results:
+
+Should display in a new Notenik window. 
+
+Reset Instructions:
+
+In the Finder, delete the report sample. 
