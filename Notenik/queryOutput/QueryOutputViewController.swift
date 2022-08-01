@@ -13,12 +13,31 @@
 import Cocoa
 import WebKit
 
-class QueryOutputViewController: NSViewController {
+import NotenikLib
+
+class QueryOutputViewController: NSViewController, NSWindowDelegate {
     
     @IBOutlet weak var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear() {
+        self.view.window?.delegate = self
+    }
+    
+    func windowWillClose(_ notification: Notification) {
+        guard let window = self.view.window else {
+            return
+        }
+        var windowPosition = ""
+        let frame = window.frame
+        windowPosition.append("\(frame.minX);")
+        windowPosition.append("\(frame.minY);")
+        windowPosition.append("\(frame.width);")
+        windowPosition.append("\(frame.height);")
+        AppPrefs.shared.queryOutputWindowNumbers = windowPosition
     }
     
     func loadHTMLString(_ string: String) {
