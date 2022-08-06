@@ -283,6 +283,7 @@ class CollectionJuggler: NSObject {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = false
         openPanel.allowsMultipleSelection = false
+        openPanel.prompt = "Open Realm"
         let result = openPanel.runModal()
         if result == .OK {
             MultiFileIO.shared.registerBookmark(url: openPanel.url!)
