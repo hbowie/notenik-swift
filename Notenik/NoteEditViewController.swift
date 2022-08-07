@@ -335,7 +335,7 @@ class NoteEditViewController: NSViewController {
         }
         
         // See if a new note needs to be selected.
-        if (outcome == .add || outcome == .deleteAndAdd) && outNote != nil {
+        if (outcome == .add || outcome == .modWithKeyChanges) && outNote != nil {
             selectedNote = outNote
         }
 

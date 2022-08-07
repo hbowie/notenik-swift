@@ -2563,10 +2563,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if outcome != .tryAgain && outcome != .noChange {
             pendingEdits = false
         }
-        if outcome == .add || outcome == .deleteAndAdd || outcome == .modify {
+        if outcome == .add || outcome == .modWithKeyChanges || outcome == .modify {
             populateEditFields(with: note!)
         }
-        if outcome == .add || outcome == .deleteAndAdd {
+        if outcome == .add || outcome == .modWithKeyChanges {
             reloadViews()
             select(note: note, position: nil, source: .action, andScroll: true)
             if note != nil {
@@ -2580,7 +2580,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             noteTabs!.tabView.selectFirstTabViewItem(nil)
         }
         pendingMod = false
-        if outcome == .add || outcome == .deleteAndAdd || outcome == .modify {
+        if outcome == .add || outcome == .modWithKeyChanges || outcome == .modify {
             checkForReviewRequest()
         }
         checkForPromises()
