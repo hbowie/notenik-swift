@@ -73,6 +73,7 @@ class NoteListViewController:   NSViewController,
         shortcutMenu.addItem(NSMenuItem(title: "Copy Timestamp", action: #selector(copyItemTimestamp(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem.separator())
         shortcutMenu.addItem(NSMenuItem(title: "Duplicate", action: #selector(duplicateItem(_:)), keyEquivalent: ""))
+        shortcutMenu.addItem(NSMenuItem(title: "Delete Range...", action: #selector(deleteNotes(_:)), keyEquivalent: ""))
         tableView.menu = shortcutMenu
     }
     
@@ -120,6 +121,21 @@ class NoteListViewController:   NSViewController,
             shortcutMenu.addItem(withTitle: "New with Options...", action: #selector(newWithOptions(_:)), keyEquivalent: "")
         }
     
+    }
+    
+    @objc private func deleteNotes(_ sender: AnyObject) {
+        guard collectionWindowController != nil else { return }
+        guard tableView.numberOfSelectedRows > 0 else { return }
+
+        // Get the full range of selected notes.
+        let (lowIndex, highIndex) = getRangeOfSelectedRows()
+        guard lowIndex >= 0 else { return }
+        // Make sure the user clicked somewhere within this range.
+        if tableView.clickedRow > highIndex || tableView.clickedRow < lowIndex {
+            return
+        }
+        
+        collectionWindowController!.deleteRangeOfNotes(startingRow: lowIndex, endingRow: highIndex)
     }
     
     /// Modify the seq values for a range of notes.

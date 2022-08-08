@@ -2422,6 +2422,63 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         window.makeFirstResponder(titleView.view)
     }
     
+    func deleteRangeOfNotes(startingRow: Int, endingRow: Int) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let deleteCount = endingRow - startingRow + 1
+        guard let firstNote = noteIO.getNote(at: startingRow) else { return }
+        
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = "Really Delete \(deleteCount) Notes starting with Note titled \(firstNote.title.value)?"
+        alert.addButton(withTitle: "OK")
+        alert.addButton(withTitle: "Cancel")
+        let response = alert.runModal()
+        guard response == .alertFirstButtonReturn else { return }
+        
+        guard noteIO.notesCount - deleteCount >= 1 else {
+            let alert = NSAlert()
+            alert.alertStyle = .warning
+            alert.messageText = "A Notenik Collection always needs to have at least one Note"
+            alert.addButton(withTitle: "OK")
+            _ = alert.runModal()
+            return
+        }
+        
+        var i = startingRow
+        var notesLeftToDelete = deleteCount
+        while notesLeftToDelete > 0 {
+            guard let noteToDelete = noteIO.getNote(at: i) else {
+                i += 1
+                notesLeftToDelete -= 1
+                continue
+            }
+            pendingEdits = false
+            if undoMgr != nil {
+                let undoNote = noteToDelete.copy() as! Note
+                undoMgr!.registerUndo(withTarget: self) {
+                    targetSelf in targetSelf.restoreNote(undoNote)
+                }
+                undoMgr!.setActionName("Delete Note")
+            }
+            _ = noteIO.deleteNote(noteToDelete, preserveAttachments: false)
+            notesLeftToDelete -= 1
+        }
+        reloadViews()
+        var selNote: Note?
+        if i < noteIO.notesCount {
+            selNote = noteIO.getNote(at: i)
+        }
+        if selNote == nil {
+            selNote = noteIO.getNote(at: startingRow - 1)
+        }
+        if selNote == nil {
+            (selNote, _) = noteIO.firstNote()
+        }
+        if selNote != nil {
+            select(note: selNote, position: nil, source: .action, andScroll: true)
+        }
+    }
+    
     /// Delete the Note
     @IBAction func deleteNote(_ sender: Any) {
         
