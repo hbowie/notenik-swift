@@ -80,7 +80,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         // Let's build a submenu showing all folders in the iCloud Notenik folder.
         iCloudMenu.removeAllItems()
         notenikFolderList = NotenikFolderList.shared
-        notenikFolderList.loadShortcutsFromPrefs()
         for folder in notenikFolderList {
             if folder.location == .iCloudContainer {
                 let item = NSMenuItem(title: folder.fileOrFolderName, action: #selector(openICloudItem(_:)), keyEquivalent: "")

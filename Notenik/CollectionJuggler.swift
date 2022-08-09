@@ -142,6 +142,7 @@ class CollectionJuggler: NSObject {
             let confirmDialog = (grantAccessOpt == 2)
             grantFolderAccess(confirm: confirmDialog)
         }
+        NotenikFolderList.shared.loadShortcutsFromPrefs()
     }
     
     func loadNotenikIntro() -> String {
