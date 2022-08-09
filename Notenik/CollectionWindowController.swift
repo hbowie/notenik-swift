@@ -1526,26 +1526,26 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     /// Close the note, either by applying the recurs rule, or changing the status to 9
     @IBAction func menuNoteClose(_ sender: Any) {
-        guard io != nil && io!.collectionOpen else { return }
-        let (note, _) = io!.getSelectedNote()
-        guard note != nil else { return }
+        
+        let (nIO, sNote) = guardForNoteAction()
+        guard let io = nIO else { return }
+        guard let selNote = sNote else { return }
         
         if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
             editVC!.closeNote()
         } else {
-            let modNote = note!.copy() as! Note
+            let modNote = selNote.copy() as! Note
             modNote.close()
-            let (_, _) = io!.deleteSelectedNote(preserveAttachments: true)
-            let (addedNote, _) = io!.addNote(newNote: modNote)
-            if addedNote == nil {
+            let (chgNote, _) = io.modNote(oldNote: selNote, newNote: modNote)
+            if chgNote == nil {
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                                   category: "CollectionWindowController",
                                   level: .fault,
-                                  message: "Problems adding note titled \(modNote.title)")
+                                  message: "Problems modifying note titled \(selNote.title)")
             } else {
-                displayModifiedNote(updatedNote: addedNote!)
+                displayModifiedNote(updatedNote: chgNote!)
                 reloadViews()
-                select(note: addedNote, position: nil, source: .action)
+                select(note: chgNote, position: nil, source: .action)
             }
         }
     }
@@ -1720,20 +1720,19 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     /// - Returns: True if changes were recorded successfully; false otherwise.
     func recordMods (noteIO: NotenikIO, note: Note, modNote: Note) -> Bool {
         guard noteIO.reattach(from: note, to: modNote) else { return false }
-        let (_, _) = noteIO.deleteSelectedNote(preserveAttachments: true)
-        let (addedNote, _) = noteIO.addNote(newNote: modNote)
-        if addedNote == nil {
+        let (chgNote, _) = noteIO.modNote(oldNote: note, newNote: modNote)
+        if chgNote == nil {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionWindowController",
                               level: .error,
-                              message: "Problems adding note titled \(modNote.title)")
+                              message: "Problems modifyinhg note titled \(modNote.title)")
             return false
         } else {
-            displayModifiedNote(updatedNote: addedNote!)
+            displayModifiedNote(updatedNote: chgNote!)
             // editVC!.populateFields(with: addedNote!)
-            editVC!.select(note: addedNote!)
+            editVC!.select(note: chgNote!)
             reloadViews()
-            select(note: addedNote, position: nil, source: .action, andScroll: true)
+            select(note: chgNote, position: nil, source: .action, andScroll: true)
             return true
         }
     }
