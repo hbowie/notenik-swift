@@ -278,6 +278,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         }
     }
     
+    @IBAction func menuHelpNotenikVideo(_ sender: NSMenuItem) {
+        if let url = URL(string: "https://youtu.be/JR0kpAUXM5E") {
+            NSWorkspace.shared.open(url)
+        }
+    }
+    
     @IBAction func menuHelpRateOnAppStore(_ sender: NSMenuItem) {
         let url = URL(string: "https://itunes.apple.com/app/id1465997984?action=write-review")
         if url != nil {
