@@ -478,6 +478,7 @@ class NoteListViewController:   NSViewController,
     
     /// Respond to a user selection of a row in the table.
     func tableViewSelectionDidChange(_ notification: Notification) {
+        guard checkForMods else { return }
         let row = tableView.selectedRow
         guard collectionWindowController != nil && row >= 0 else { return }
         let (outcome, _) = collectionWindowController!.modIfChanged()
@@ -487,12 +488,16 @@ class NoteListViewController:   NSViewController,
         }
     }
     
-    func selectRow(index: Int, andScroll: Bool = false) {
+    var checkForMods = true
+    
+    func selectRow(index: Int, andScroll: Bool = false, checkForMods: Bool) {
+        self.checkForMods = checkForMods
         let indexSet = IndexSet(integer: index)
         tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
         if andScroll {
             scrollToSelectedRow()
         }
+        self.checkForMods = true
     }
     
     func scrollToSelectedRow() {

@@ -2183,9 +2183,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         
         if listVC != nil && source != .list && positionToUse != nil && positionToUse!.index >= 0 {
-            listVC!.selectRow(index: positionToUse!.index, andScroll: andScroll)
+            listVC!.selectRow(index: positionToUse!.index, andScroll: andScroll, checkForMods: (source != .action))
         }
-        
         guard noteToUse != nil else { return }
         
         if displayVC != nil {
