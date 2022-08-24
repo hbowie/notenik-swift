@@ -154,6 +154,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             if let windowStr = notenikIO?.collection?.windowPosStr {
                 if !notenikIO!.collection!.readOnly {
                     setNumbers(windowStr)
+                } else if notenikIO!.collection!.isRealmCollection {
+                    setNumbers(windowStr)
                 }
             }
             
@@ -266,6 +268,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     appPrefs.tipsWindow = windowPosition
                 } else if collection.fullPath.hasSuffix("-KB") {
                     appPrefs.kbWindow = windowPosition
+                } else if collection.isRealmCollection {
+                    _ = RealmScanner.saveInfoFile(collection: collection)
                 }
             }
         }

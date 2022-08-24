@@ -159,6 +159,12 @@ class CollectionJuggler: NSObject {
         return collectionURL!.path
     }
     
+    // -----------------------------------------------------------
+    //
+    // MARK: Open a folder.
+    //
+    // -----------------------------------------------------------
+    
     /// Let the user select a folder to be opened.
     func openFolder() -> Bool {
         var opens = 0
@@ -207,7 +213,7 @@ class CollectionJuggler: NSObject {
             return newCollection(fileURL: link.url!)
         case .ordinaryCollection, .webCollection:
             return openFileWithNewWindow(fileURL: link.url!, readOnly: false)
-        case .realm:
+        case .parentRealm:
             return openParentRealm(parentURL: link.url!)
         case .notenikScheme:
             let actor = CustomURLActor()
@@ -293,8 +299,9 @@ class CollectionJuggler: NSObject {
         return nil
     }
     
+    /// Open a parent realm containing one or more Notenik Collections.
     func openParentRealm(parentURL: URL) -> CollectionWindowController? {
-        notenikFolderList.add(url: parentURL, type: .realm, location: .undetermined)
+        notenikFolderList.add(url: parentURL, type: .parentRealm, location: .undetermined)
         AppPrefs.shared.parentRealmPath = parentURL.path
         appPrefs.parentRealmParentURL = parentURL.deletingLastPathComponent()
         let realmScanner = RealmScanner()
