@@ -57,11 +57,8 @@ class ImageNameView: MacEditView {
         lister.removeAllItems()
         lister.addItem(withTitle: noFileSelected)
         for attachment in note.attachments {
-            switch attachment.ext {
-            case ".jpg", ".jpeg", ".png", ".gif":               
+            if attachment.ext.isImage {
                 lister.addItem(withTitle: attachment.suffix)
-            default:
-                continue
             }
         }
     }

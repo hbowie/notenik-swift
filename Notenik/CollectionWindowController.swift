@@ -2305,16 +2305,13 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             if let imageDef = noteIO.collection?.imageNameFieldDef {
                 let imageField = note.getField(def: imageDef)
                 if imageField == nil || imageField!.value.value.count == 0 {
-                    let ext = file.pathExtension
-                    switch ext {
-                    case "gif", "jpg", "jpeg", "png":
+                    let ext = FileExtension(file.pathExtension)
+                    if ext.isImage {
                         _ = note.setField(label: imageDef.fieldLabel.commonForm, value: suffix)
                         _ = noteIO.writeNote(note)
                         displayModifiedNote(updatedNote: note)
                         populateEditFields(with: note)
                         reloadViews()
-                    default:
-                        break
                     }
                 }
             }
