@@ -268,25 +268,20 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             webLinkFollowed(false)
             decisionHandler(.allow)
         case .wikiLink:
-            let io = wc?.notenikIO
-            var nextNote = io!.getNote(forID: link.noteID)
-            if nextNote == nil {
-                nextNote = io!.getNote(forID: (link.noteID + "s"))
+            var linkText = link.noteID
+            if link.linkPart4 != nil {
+                linkText = String(link.linkPart4!)
             }
-            if nextNote == nil && io!.collection!.akaFieldDef != nil {
-                nextNote = io!.getNote(alsoKnownAs: link.noteID)
-            }
-            if nextNote == nil {
-                nextNote = io!.getNote(forTimestamp: link.noteID)
-            }
-            if nextNote == nil {
+            let resolution = NoteLinkResolution(io: wc?.notenikIO, linkText: linkText)
+            NoteLinkResolver.resolve(resolution: resolution)
+            if resolution.result == .resolved {
+                webLinkFollowed(false)
+                decisionHandler(.cancel)
+                NoteLinkResolverCocoa.link(wc: wc!, resolution: resolution)
+            } else {
                 webLinkFollowed(true)
                 decisionHandler(.allow)
                 return
-            } else {
-                webLinkFollowed(false)
-                decisionHandler(.cancel)
-                wc!.select(note: nextNote, position: nil, source: .action, andScroll: true)
             }
         default:
             wc!.launchLink(url: url)
