@@ -12,6 +12,8 @@ import NotenikLib
 
 class AttachmentViewController: NSViewController {
     
+    let moveKey = "move-attachments"
+    
     var master: AttachmentMasterController!
     var window: AttachmentWindowController!
 
@@ -19,13 +21,20 @@ class AttachmentViewController: NSViewController {
     @IBOutlet var storageFolder: NSTextField!
     @IBOutlet var attachmentPrefix: NSTextField!
     @IBOutlet var attachmentSuffix: NSTextField!
+    @IBOutlet weak var copyButton: NSButton!
+    @IBOutlet weak var moveButton: NSButton!
     
     var fileToCopyURL: URL!
     var note: Note!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        let move = UserDefaults.standard.bool(forKey: moveKey)
+        if move {
+            moveButton.state = .on
+        } else {
+            copyButton.state = .on
+        }
     }
     
     func setFileToCopy(_ fileURL: URL) {
@@ -45,8 +54,19 @@ class AttachmentViewController: NSViewController {
         attachmentPrefix.isEditable = false
     }
     
+    @IBAction func opSelected(_ sender: Any) {
+        // No need to actually do anything here... we just need to assign
+        // both radio buttons to this action so that they will act
+        // like radio buttons, allowing only one to be selected at a time.
+    }
+    
     @IBAction func okAction(_ sender: Any) {
-        master.okToAddAttachment(note: note, file: fileToCopyURL, suffix: attachmentSuffix.stringValue)
+        let move = (moveButton.state == .on)
+        master.okToAddAttachment(note: note,
+                                 file: fileToCopyURL,
+                                 suffix: attachmentSuffix.stringValue,
+                                 move: move)
+        UserDefaults.standard.set(move, forKey: moveKey)
         window.close()
     }
     

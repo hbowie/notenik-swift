@@ -2296,10 +2296,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///   - note: The note to which the attachment should be added.
     ///   - file: A URL pointing to the file to become attached.
     ///   - suffix: The unique identifier for this particular attachment to this note.
+    ///   - move: Should the file be moved instead of copied?
     ///
-    func okToAddAttachment(note: Note, file: URL, suffix: String) {
+    func okToAddAttachment(note: Note, file: URL, suffix: String, move: Bool) {
         guard let noteIO = guardForCollectionAction() else { return }
-        let added = noteIO.addAttachment(from: file, to: note, with: suffix)
+        let added = noteIO.addAttachment(from: file, to: note, with: suffix, move: move)
         if added {
             adjustAttachmentsMenu(note)
             if let imageDef = noteIO.collection?.imageNameFieldDef {

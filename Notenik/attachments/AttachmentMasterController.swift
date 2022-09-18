@@ -23,6 +23,7 @@ protocol AttachmentMasterController {
     ///   - note: The note to which the attachment should be added.
     ///   - file: A URL pointing to the file to become attached.
     ///   - suffix: The unique identifier for this particular attachment to this note.
+    ///   - move: Should the file be moved instead of copied?
     ///
-    func okToAddAttachment(note: Note, file: URL, suffix: String)
+    func okToAddAttachment(note: Note, file: URL, suffix: String, move: Bool)
 }
