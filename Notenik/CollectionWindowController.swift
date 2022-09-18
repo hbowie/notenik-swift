@@ -196,18 +196,25 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         
         guard let mainScreen = NSScreen.main else { return }
+        
         let visibleFrame = mainScreen.visibleFrame
-        if x! < visibleFrame.minX {
+        
+        if x! < visibleFrame.minX ||
+            x! > visibleFrame.maxX ||
+            x! + width! < visibleFrame.maxX {
             x = visibleFrame.minX
         }
-        guard x! <= visibleFrame.maxX else { return }
+
         if (x! + width!) > visibleFrame.maxX {
             width = visibleFrame.maxX - x!
         }
-        guard width! >= 300 else { return }
-        if (y! < visibleFrame.minY) {
+        
+        if (y! < visibleFrame.minY) ||
+            y! > visibleFrame.maxY ||
+            y! + height! > visibleFrame.maxY {
             y = visibleFrame.minY
         }
+        
         if (y! + height!) > visibleFrame.maxY {
             height = visibleFrame.maxY - y!
         }
