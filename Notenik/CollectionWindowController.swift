@@ -209,10 +209,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             width = visibleFrame.maxX - x!
         }
         
+        if height! > visibleFrame.maxY - visibleFrame.minY {
+            height = visibleFrame.maxY - visibleFrame.minY
+        }
+        
         if (y! < visibleFrame.minY) ||
             y! > visibleFrame.maxY ||
             y! + height! > visibleFrame.maxY {
-            y = visibleFrame.minY
+            y = visibleFrame.maxY - height!
         }
         
         if (y! + height!) > visibleFrame.maxY {
