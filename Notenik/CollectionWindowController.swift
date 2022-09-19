@@ -180,52 +180,57 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     /// Set position of window, given a string of formatted doubles.
     func setNumbers(_ windowStr: String) {
-
+    
         guard !windowStr.isEmpty else { return }
         let numbers = windowStr.components(separatedBy: ";")
-        guard numbers.count >= 5 else {
-            return
-        }
-        var x = Double(numbers[0])
-        var y = Double(numbers[1])
-        var width = Double(numbers[2])
-        var height = Double(numbers[3])
-        let divider = Double(numbers[4])
-        guard x != nil && y != nil && width != nil && height != nil && divider != nil  else {
-            return
-        }
+        guard numbers.count >= 5 else { return }
+        
+        guard let x2 = Double(numbers[0]) else { return }
+        guard let y2 = Double(numbers[1]) else { return }
+        guard let w = Double(numbers[2]) else { return }
+        guard let h = Double(numbers[3]) else { return }
+        var x = x2
+        var y = y2
+        var width = w
+        var height = h
         
         guard let mainScreen = NSScreen.main else { return }
-        
         let visibleFrame = mainScreen.visibleFrame
+        var minX = visibleFrame.minX
+        var maxX = visibleFrame.maxX
+        var minY = visibleFrame.minY
+        var maxY = visibleFrame.maxY
         
-        if x! < visibleFrame.minX ||
-            x! > visibleFrame.maxX ||
-            x! + width! < visibleFrame.maxX {
-            x = visibleFrame.minX
-        }
-
-        if (x! + width!) > visibleFrame.maxX {
-            width = visibleFrame.maxX - x!
-        }
-        
-        if height! > visibleFrame.maxY - visibleFrame.minY {
-            height = visibleFrame.maxY - visibleFrame.minY
+        if width > maxX - minX {
+            let priorWidth = width
+            width = maxX - minX
+            logInfo(msg: "Window width adjusted from \(priorWidth) to \(width)")
         }
         
-        if (y! < visibleFrame.minY) ||
-            y! > visibleFrame.maxY ||
-            y! + height! > visibleFrame.maxY {
-            y = visibleFrame.maxY - height!
+        if x < minX || x > maxX || x + width > maxX {
+            let priorX = x
+            x = minX
+            logInfo(msg: "Window x coordinate adjusted from \(priorX) to \(x)")
         }
         
-        if (y! + height!) > visibleFrame.maxY {
-            height = visibleFrame.maxY - y!
+        if height > maxY - minY {
+            let priorHeight = height
+            height = maxY - minY
+            logInfo(msg: "Window height adjusted from \(priorHeight) to \(height)")
         }
         
-        let frame = NSRect(x: x!, y: y!, width: width!, height: height!)
+        if y < minY || y > maxY || y + height > maxY {
+            let priorY = y
+            y = maxY - height
+            logInfo(msg: "Window y coordinate adjusted from \(priorY) to \(y)")
+            
+        }
+        
+        let frame = NSRect(x: x, y: y, width: width, height: height)
         window!.setFrame(frame, display: true)
-        let float = CGFloat(divider!)
+        
+        guard let divider = Double(numbers[4]) else { return }
+        let float = CGFloat(divider)
         splitViewController!.splitView.setPosition(float, ofDividerAt: 0)
     }
 
