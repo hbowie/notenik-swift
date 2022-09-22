@@ -196,10 +196,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard let mainScreen = NSScreen.main else { return }
         let visibleFrame = mainScreen.visibleFrame
-        var minX = visibleFrame.minX
-        var maxX = visibleFrame.maxX
-        var minY = visibleFrame.minY
-        var maxY = visibleFrame.maxY
+        let minX = visibleFrame.minX
+        let maxX = visibleFrame.maxX
+        let minY = visibleFrame.minY
+        let maxY = visibleFrame.maxY
         
         if width > maxX - minX {
             let priorWidth = width
