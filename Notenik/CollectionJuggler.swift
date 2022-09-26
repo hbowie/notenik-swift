@@ -301,6 +301,18 @@ class CollectionJuggler: NSObject {
     
     /// Open a parent realm containing one or more Notenik Collections.
     func openParentRealm(parentURL: URL) -> CollectionWindowController? {
+        
+        // If the collection is already open, then close it before
+        // we re-open it.
+        for window in windows {
+            guard let windowCollection = window.io?.collection else { continue }
+            guard let windowURL = windowCollection.fullPathURL else { continue }
+            if windowURL == parentURL && window.window != nil {
+                window.window!.close()
+                break
+            }
+        }
+        
         notenikFolderList.add(url: parentURL, type: .parentRealm, location: .undetermined)
         AppPrefs.shared.parentRealmPath = parentURL.path
         appPrefs.parentRealmParentURL = parentURL.deletingLastPathComponent()
