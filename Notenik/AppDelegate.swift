@@ -168,6 +168,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         juggler.quickAction()
     }
     
+    @IBAction func forgetShortcuts(_ sender: NSMenuItem) {
+        notenikFolderList.forgetShortcuts()
+    }
+    
     @IBAction func newCollection(_ sender: NSMenuItem) {
         if let newCollectionController = self.newControllerStoryboard.instantiateController(withIdentifier: "filenewWC") as? NewCollectionWindowController {
             newCollectionController.showWindow(self)
