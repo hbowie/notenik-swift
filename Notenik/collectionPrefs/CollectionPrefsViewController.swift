@@ -135,6 +135,7 @@ class CollectionPrefsViewController: NSViewController {
         setStreamlined(collection!.streamlined)
         setMathJax(collection!.mathJax)
         setImgLocal(collection!.imgLocal)
+        setMissingTargets(collection!.missingTargets)
         setCurlyApostrophes(collection!.curlyApostrophes)
     }
     
