@@ -42,6 +42,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     var notenikIO:          NotenikIO?
     var preferredExt        = ""
     var backLinksDef:       FieldDefinition?
+    var noteFileFormat:     NoteFileFormat = .notenik
     var defsRemoved         = DefsRemoved()
     var crumbs:             NoteCrumbs?
     var webLinkFollowed     = false
@@ -323,36 +324,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
-    /// The user has requested a chance to review and possibly modify the Collection Preferences. 
-    @IBAction func menuCollectionPreferences(_ sender: Any) {
-        
-        guard let noteIO = guardForCollectionAction() else { return }
-        preferredExt = noteIO.collection!.preferredExt
-        backLinksDef = noteIO.collection!.backlinksDef
-        defsRemoved.clear()
-                
-        if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
-            if let collectionPrefsWindow = collectionPrefsController.window {
-                let collectionPrefsVC = collectionPrefsWindow.contentViewController as! CollectionPrefsViewController
-                collectionPrefsVC.passCollectionPrefsRequesterInfo(collection: noteIO.collection!,
-                                                                   window: collectionPrefsController,
-                                                                   defsRemoved: defsRemoved)
-                let returnCode = application.runModal(for: collectionPrefsWindow)
-                if returnCode == NSApplication.ModalResponse.OK {
-                    collectionPrefsModified()
-                }
-                // collectionPrefsWindow.close()
-            }
-            // collectionPrefsController.showWindow(self)
-            // collectionPrefsController.passCollectionPrefsRequesterInfo(owner: self, collection: noteIO.collection!)
-        } else {
-            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                              category: "CollectionWindowController",
-                              level: .fault,
-                              message: "Couldn't get a Collection Prefs Window Controller!")
-        }
-    }
-    
     @IBAction func toggleStreamlinedReading(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
@@ -389,13 +360,49 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         board.setString(str, forType: NSPasteboard.PasteboardType.string)
     }
     
-    /// Let the calling class know that the user has completed modifications
-    /// of the Collection Preferences.
-    ///
-    /// - Parameters:
-    ///   - ok: True if they clicked on OK, false if they clicked Cancel.
-    ///   - collection: The Collection whose prefs are being modified.
-    ///   - window: The Collection Prefs window.
+    // -----------------------------------------------------------
+    //
+    // MARK: Review and Possibly Update the Collection Prefs.
+    //
+    // -----------------------------------------------------------
+    
+    /// The user has requested a chance to review and possibly modify the Collection Preferences.
+    @IBAction func menuCollectionPreferences(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        guard !collection.readOnly else {
+            communicateError("The Collection Prefs cannot be adjusted for a read-only Collection", alert: true)
+            return
+        }
+        guard !collection.isRealmCollection else {
+            communicateError("The Collection Prefs cannot be adjusted for a Parent Realm Pseudo-Collection", alert: true)
+            return
+        }
+        preferredExt = collection.preferredExt
+        noteFileFormat = collection.noteFileFormat
+        backLinksDef = collection.backlinksDef
+        defsRemoved.clear()
+                
+        if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
+            if let collectionPrefsWindow = collectionPrefsController.window {
+                let collectionPrefsVC = collectionPrefsWindow.contentViewController as! CollectionPrefsViewController
+                collectionPrefsVC.passCollectionPrefsRequesterInfo(collection: collection,
+                                                                   window: collectionPrefsController,
+                                                                   defsRemoved: defsRemoved)
+                let returnCode = application.runModal(for: collectionPrefsWindow)
+                if returnCode == NSApplication.ModalResponse.OK {
+                    collectionPrefsModified()
+                }
+            }
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Collection Prefs Window Controller!")
+        }
+    }
+    
     func collectionPrefsModified() {
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
@@ -408,6 +415,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     noteIO.collection!.preferredExt = preferredExt
                 }
             }
+            if collection.noteFileFormat != noteFileFormat {
+                confirmFileFormatChange(fileIO: fileIO, collection: collection)
+            }
         }
         removeFields()
         
@@ -416,6 +426,69 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         noteIO.persistCollectionInfo()
         reloadCollection(self)
+    }
+    
+    func confirmFileFormatChange(fileIO: FileIO, collection: NoteCollection) {
+        let alert = NSAlert()
+        var msg = "Are you sure you want to change your file storage format from \(noteFileFormat.forDisplay) to \(collection.noteFileFormat.forDisplay)? "
+        if collection.noteFileFormat == .plainText || collection.noteFileFormat == .markdown {
+            msg.append("Data loss may result.")
+        }
+        alert.messageText = msg
+        alert.addButton(withTitle: "Yes - Proceed")
+        alert.addButton(withTitle: "No - Cancel")
+        let response = alert.runModal()
+        switch response {
+        case NSApplication.ModalResponse.alertFirstButtonReturn:
+            performFileFormatChange(fileIO: fileIO)
+        case NSApplication.ModalResponse.alertSecondButtonReturn:
+            collection.noteFileFormat = noteFileFormat
+            break
+        default:
+            break
+        }
+
+    }
+    
+    func performFileFormatChange(fileIO: FileIO) {
+        
+        // Offer the user a chance to perform a backup.
+        let alert = NSAlert()
+        alert.messageText = "A backup is recommended before making a change to your file storage format. "
+        alert.addButton(withTitle: "OK - Proceed with Backup")
+        alert.addButton(withTitle: "No - Skip the Backup")
+        let response = alert.runModal()
+        switch response {
+        case NSApplication.ModalResponse.alertFirstButtonReturn:
+            backupToZip(self)
+        default:
+            break
+        }
+        
+        // Now rewrite the Collection to disk.
+        let newFormat = fileIO.collection!.noteFileFormat
+        var updated = 0
+        var (note, position) = fileIO.firstNote()
+        crumbs!.refresh()
+        while note != nil {
+            note!.fileInfo.setFormat(newFormat: newFormat)
+            let written = fileIO.writeNote(note!)
+            if written {
+                updated += 1
+            } else {
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .error,
+                                  message: "Problems saving note titled \(note!.title)")
+            }
+            (note, position) = fileIO.nextNote(position)
+        }
+        
+        let alert2 = NSAlert()
+        alert2.messageText = "Note File Format change from \(noteFileFormat.forDisplay) to \(fileIO.collection!.noteFileFormat.forDisplay) has been completed."
+        alert2.runModal()
+        // finishBatchOperation()
+        // reportNumberOfNotesUpdated(updated)
     }
     
     func removeFields() {
@@ -2696,7 +2769,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     /// Backup the Collection to a Zip file.
-    @IBAction func backupToZip(_ sender: NSMenuItem) {
+    @IBAction func backupToZip(_ sender: Any) {
         
         guard let noteIO = guardForCollectionAction() else { return }
         

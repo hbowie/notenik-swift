@@ -25,6 +25,7 @@ class CollectionPrefsViewController: NSViewController {
     
     @IBOutlet var collectionTitle:      NSTextField!
     @IBOutlet var fileExtComboBox:      NSComboBox!
+    @IBOutlet var fileFormatComboBox:   NSComboBox!
     @IBOutlet var collectionShortcut:   NSTextField!
     @IBOutlet var noteTitleDisplayPopUp: NSPopUpButton!
     @IBOutlet var mirrorAutoIndexCkBox: NSButton!
@@ -129,6 +130,7 @@ class CollectionPrefsViewController: NSViewController {
         }
         
         extPicker.setFileExt(collection!.preferredExt)
+        setFileFormat(collection!.noteFileFormat.rawValue)
         setMirrorAutoIndex(collection!.mirrorAutoIndex)
         setBodyLabel(collection!.bodyLabel)
         setTitleDisplay(collection!.titleDisplayOption)
@@ -294,6 +296,23 @@ class CollectionPrefsViewController: NSViewController {
         bodyCkBox.isEnabled = false
     }
     
+    func setFileFormat(_ format: String) {
+        switch format {
+        case "nnk", "Notenik", "notenik":
+            fileFormatComboBox.selectItem(at: 0)
+        case "yaml", "YAML", "YAML Frontmatter":
+            fileFormatComboBox.selectItem(at: 1)
+        case "mmd", "multimarkdown", "MultiMarkdown":
+            fileFormatComboBox.selectItem(at: 2)
+        case "md", "markdown", "Markdown":
+            fileFormatComboBox.selectItem(at: 3)
+        case "txt", "plain text", "Plain Text":
+            fileFormatComboBox.selectItem(at: 4)
+        default:
+            fileFormatComboBox.selectItem(at: 0)
+        }
+    }
+    
     func setOtherFieldsAllowed(_ allowed: Bool) {
         if allowed {
             otherFieldsCkBox.state = .on
@@ -374,6 +393,7 @@ class CollectionPrefsViewController: NSViewController {
             NotenikFolderList.shared.updateWithShortcut(linkStr: collection!.fullPath, shortcut: collection!.shortcut)
         }
         collection!.preferredExt = fileExtComboBox.stringValue
+        collection!.setFileFormat(format: fileFormatComboBox.stringValue)
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
         collection!.mirrorAutoIndex = (mirrorAutoIndexCkBox.state == .on)
         collection!.bodyLabel = (bodyLabelCkBox.state == .on)
