@@ -43,6 +43,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     var preferredExt        = ""
     var backLinksDef:       FieldDefinition?
     var noteFileFormat:     NoteFileFormat = .notenik
+    var hashTags            = false
     var defsRemoved         = DefsRemoved()
     var crumbs:             NoteCrumbs?
     var webLinkFollowed     = false
@@ -382,6 +383,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         preferredExt = collection.preferredExt
         noteFileFormat = collection.noteFileFormat
         backLinksDef = collection.backlinksDef
+        hashTags = collection.hashTags
         defsRemoved.clear()
                 
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
@@ -403,6 +405,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    /// If the user requested that Collection Prefs be updated, figure out what to do next.
     func collectionPrefsModified() {
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
@@ -415,7 +418,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     noteIO.collection!.preferredExt = preferredExt
                 }
             }
-            if collection.noteFileFormat != noteFileFormat {
+            if collection.noteFileFormat != noteFileFormat || collection.hashTags != hashTags {
                 confirmFileFormatChange(fileIO: fileIO, collection: collection)
             }
         }
@@ -428,9 +431,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         reloadCollection(self)
     }
     
+    // If the user requested a file format change, let's see if they're serious.
     func confirmFileFormatChange(fileIO: FileIO, collection: NoteCollection) {
         let alert = NSAlert()
-        var msg = "Are you sure you want to change your file storage format from \(noteFileFormat.forDisplay) to \(collection.noteFileFormat.forDisplay)? "
+        var msg = "Are you sure you want to change your file storage format? \n"
+        if noteFileFormat != collection.noteFileFormat {
+            msg.append( "  - from \(noteFileFormat.forDisplay) to \(collection.noteFileFormat.forDisplay) \n")
+        }
+        if hashTags != collection.hashTags {
+            if collection.hashTags {
+                msg.append("  - adding hash tags")
+            } else {
+                msg.append("  - removing hash tags")
+            }
+        }
         if collection.noteFileFormat == .plainText || collection.noteFileFormat == .markdown {
             msg.append("Data loss may result.")
         }
@@ -450,6 +464,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
 
     }
     
+    /// Let's rewrite the entire Collection.
     func performFileFormatChange(fileIO: FileIO) {
         
         // Offer the user a chance to perform a backup.
@@ -467,11 +482,17 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         // Now rewrite the Collection to disk.
         let newFormat = fileIO.collection!.noteFileFormat
+        let newTags = fileIO.collection!.hashTags
         var updated = 0
         var (note, position) = fileIO.firstNote()
         crumbs!.refresh()
         while note != nil {
             note!.fileInfo.setFormat(newFormat: newFormat)
+            if let tagsField = note!.getTagsAsField() {
+                if let tags = tagsField.value as? TagsValue {
+                    tags.hashTags = newTags
+                }
+            }
             let written = fileIO.writeNote(note!)
             if written {
                 updated += 1
@@ -485,10 +506,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         
         let alert2 = NSAlert()
-        alert2.messageText = "Note File Format change from \(noteFileFormat.forDisplay) to \(fileIO.collection!.noteFileFormat.forDisplay) has been completed."
+        alert2.messageText = "Note File Format changes have been completed."
         alert2.runModal()
-        // finishBatchOperation()
-        // reportNumberOfNotesUpdated(updated)
     }
     
     func removeFields() {

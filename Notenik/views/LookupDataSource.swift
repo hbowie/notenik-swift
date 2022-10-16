@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 8/21/21.
 //
-//  Copyright © 2021 Herb Bowie (https://hbowie.net)
+//  Copyright © 2021 - 2022 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -13,6 +13,7 @@
 import Cocoa
 
 import NotenikLib
+import NotenikUtils
 
 class LookupDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     
@@ -37,13 +38,19 @@ class LookupDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     func loadNotesList() {
         guard let def = fieldDef else { return }
         guard !def.lookupFrom.isEmpty else { return }
-        io = multiFile.getFileIO(shortcut: fieldDef!.lookupFrom)
+        guard let io = multiFile.getFileIO(shortcut: fieldDef!.lookupFrom) else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "LookupDataSource",
+                              level: .error,
+                              message: "File I/O could not be opened for shortcut \(fieldDef!.lookupFrom)")
+            return
+        }
         var note: Note?
         var pos: NotePosition?
-        (note, pos) = io!.firstNote()
+        (note, pos) = io.firstNote()
         while (note != nil) {
             comboValues.append(note!.title.value.lowercased())
-            (note, pos) = io!.nextNote(pos!)
+            (note, pos) = io.nextNote(pos!)
         }
         comboValues.sort()
     }

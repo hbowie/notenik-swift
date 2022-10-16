@@ -26,6 +26,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var collectionTitle:      NSTextField!
     @IBOutlet var fileExtComboBox:      NSComboBox!
     @IBOutlet var fileFormatComboBox:   NSComboBox!
+    @IBOutlet var hashTagsCkBox:        NSButton!
     @IBOutlet var collectionShortcut:   NSTextField!
     @IBOutlet var noteTitleDisplayPopUp: NSPopUpButton!
     @IBOutlet var mirrorAutoIndexCkBox: NSButton!
@@ -131,6 +132,7 @@ class CollectionPrefsViewController: NSViewController {
         
         extPicker.setFileExt(collection!.preferredExt)
         setFileFormat(collection!.noteFileFormat.rawValue)
+        setHashTags(collection!.hashTags)
         setMirrorAutoIndex(collection!.mirrorAutoIndex)
         setBodyLabel(collection!.bodyLabel)
         setTitleDisplay(collection!.titleDisplayOption)
@@ -313,6 +315,14 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
+    func setHashTags(_ on: Bool) {
+        if on {
+            hashTagsCkBox.state = .on
+        } else {
+            hashTagsCkBox.state = .off
+        }
+    }
+    
     func setOtherFieldsAllowed(_ allowed: Bool) {
         if allowed {
             otherFieldsCkBox.state = .on
@@ -394,6 +404,7 @@ class CollectionPrefsViewController: NSViewController {
         }
         collection!.preferredExt = fileExtComboBox.stringValue
         collection!.setFileFormat(format: fileFormatComboBox.stringValue)
+        collection!.hashTags = (hashTagsCkBox.state == .on)
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
         collection!.mirrorAutoIndex = (mirrorAutoIndexCkBox.state == .on)
         collection!.bodyLabel = (bodyLabelCkBox.state == .on)
