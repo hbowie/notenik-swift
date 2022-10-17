@@ -267,7 +267,8 @@ class CustomURLActor {
         
         let multiEntry = multi.entries[shortcut]
         if multiEntry == nil {
-            return folders.getFolderFor(shortcut: shortcut)
+            let link = folders.getFolderFor(shortcut: shortcut)
+            return link
         } else {
             return multiEntry!.link
         }

@@ -18,7 +18,7 @@ import NotenikUtils
 class LookupDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     
     let multiFile = MultiFileIO.shared
-    var io: FileIO?
+    var lookupIO: FileIO?
     var comboValues: [String] = []
     
     var fieldDef: FieldDefinition?
@@ -45,6 +45,7 @@ class LookupDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
                               message: "File I/O could not be opened for shortcut \(fieldDef!.lookupFrom)")
             return
         }
+        lookupIO = io
         var note: Note?
         var pos: NotePosition?
         (note, pos) = io.firstNote()
@@ -63,8 +64,9 @@ class LookupDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
     /// Returns the object that corresponds to the item at the specified index in the combo box.
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
         guard index >= 0 && index < comboValues.count else { return nil }
+        guard let io = lookupIO else { return nil }
         let comboValue = comboValues[index]
-        guard let note = io!.getNote(knownAs: comboValue) else { return nil }
+        guard let note = io.getNote(knownAs: comboValue) else { return nil }
         return note.title.value
     }
     
