@@ -119,6 +119,10 @@ class QueryBuilderViewController: NSViewController {
         case .datePlusSeq:
             setSelector(labelOrType: NotenikConstants.date, sortSeq: 1)
             setSelector(labelOrType: NotenikConstants.seq, sortSeq: 2)
+        case .rankSeqTitle:
+            setSelector(labelOrType: NotenikConstants.rank, sortSeq: 1)
+            setSelector(labelOrType: NotenikConstants.seq, sortSeq: 2)
+            setSelector(labelOrType: NotenikConstants.title, sortSeq: 3)
         }
         
         gridView = NSGridView(views: grid)

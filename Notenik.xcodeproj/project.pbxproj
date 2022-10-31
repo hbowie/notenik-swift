@@ -203,6 +203,7 @@
 		9C97E71128943BE900A234F3 /* RunScriptIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C97E71028943BE900A234F3 /* RunScriptIntentHandler.swift */; };
 		9C9A025221F65AF00027F364 /* NoteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025121F65AF00027F364 /* NoteListViewController.swift */; };
 		9C9A025421F65B990027F364 /* NoteDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */; };
+		9C9AB78229070C7100181964 /* RankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9AB78129070C7100181964 /* RankView.swift */; };
 		9C9D441B271119E800BB7B07 /* AKAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9D441A271119E800BB7B07 /* AKAView.swift */; };
 		9C9E47FD271F5BB60094FEA5 /* AdvSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C9E47FC271F5BB60094FEA5 /* AdvSearch.storyboard */; };
 		9C9E47FF271F602C0094FEA5 /* AdvSearchWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E47FE271F602C0094FEA5 /* AdvSearchWindowController.swift */; };
@@ -292,6 +293,7 @@
 		9CE3DB6325E0580B006938D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CE3DB6125E0580B006938D3 /* LaunchScreen.storyboard */; };
 		9CE5750125D19E2D000C102C /* NewFieldsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE5750025D19E2D000C102C /* NewFieldsViewController.swift */; };
 		9CE8340527ECD4C500724931 /* AppAddNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE8340427ECD4C500724931 /* AppAddNote.swift */; };
+		9CE8D96D2906179C000F7EEA /* RankDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE8D96C2906179C000F7EEA /* RankDataSource.swift */; };
 		9CEAB6FB27F35DEB003866EA /* AppGetSelectedNoteFilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAB6FA27F35DEB003866EA /* AppGetSelectedNoteFilePath.swift */; };
 		9CEBB2A925E5815200EEA83D /* NotesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEBB2A825E5815200EEA83D /* NotesListViewController.swift */; };
 		9CED2810224EB39900798621 /* LongTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CED280F224EB39900798621 /* LongTextView.swift */; };
@@ -477,6 +479,7 @@
 		9C97E71028943BE900A234F3 /* RunScriptIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunScriptIntentHandler.swift; sourceTree = "<group>"; };
 		9C9A025121F65AF00027F364 /* NoteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewController.swift; sourceTree = "<group>"; };
 		9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDisplayViewController.swift; sourceTree = "<group>"; };
+		9C9AB78129070C7100181964 /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
 		9C9D441A271119E800BB7B07 /* AKAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AKAView.swift; sourceTree = "<group>"; };
 		9C9E47FC271F5BB60094FEA5 /* AdvSearch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdvSearch.storyboard; sourceTree = "<group>"; };
 		9C9E47FE271F602C0094FEA5 /* AdvSearchWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvSearchWindowController.swift; sourceTree = "<group>"; };
@@ -542,6 +545,7 @@
 		9CE3DB6425E0580B006938D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CE5750025D19E2D000C102C /* NewFieldsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFieldsViewController.swift; sourceTree = "<group>"; };
 		9CE8340427ECD4C500724931 /* AppAddNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAddNote.swift; sourceTree = "<group>"; };
+		9CE8D96C2906179C000F7EEA /* RankDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankDataSource.swift; sourceTree = "<group>"; };
 		9CEAB6FA27F35DEB003866EA /* AppGetSelectedNoteFilePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGetSelectedNoteFilePath.swift; sourceTree = "<group>"; };
 		9CEBB2A825E5815200EEA83D /* NotesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListViewController.swift; sourceTree = "<group>"; };
 		9CEBB2B225E593D000EEA83D /* Notenik-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Notenik-iOS.entitlements"; sourceTree = "<group>"; };
@@ -1050,6 +1054,8 @@
 				9CD3261F2233068F00D06B77 /* MacEditView.swift */,
 				9CA4EE8B246A15BC00059F65 /* PickListDataSource.swift */,
 				9CA4EE87246A143B00059F65 /* PickListView.swift */,
+				9CE8D96C2906179C000F7EEA /* RankDataSource.swift */,
+				9C9AB78129070C7100181964 /* RankView.swift */,
 				9C71414926AF5DDA0033DF47 /* ShortIdView.swift */,
 				9C051DA2282833D00015B3F3 /* StatusDataSource.swift */,
 				9C553C602266A0D50008D176 /* StatusView.swift */,
@@ -1373,6 +1379,7 @@
 				9C859950273EE54A008758EF /* NewWithOptionsViewController.swift in Sources */,
 				9C0B643923888D6700869FAA /* TagsMassChangeWindowController.swift in Sources */,
 				9C03629A239AFAAB00C948DB /* MarkdownPrefsViewController.swift in Sources */,
+				9CE8D96D2906179C000F7EEA /* RankDataSource.swift in Sources */,
 				9C1BE27122EB940E006FDFEC /* ScriptWindowController.swift in Sources */,
 				9C4A45A82723464400BE3202 /* KlassView.swift in Sources */,
 				9C79BDB0226E368800796E93 /* LabelView.swift in Sources */,
@@ -1491,6 +1498,7 @@
 				9C617AE427DBDE4100ACEC8A /* NotePickerWindowController.swift in Sources */,
 				9C0B643C23888D9E00869FAA /* TagsMassChangeViewController.swift in Sources */,
 				9C36EC792773CB7400ECD847 /* BodyViewDelegate.swift in Sources */,
+				9C9AB78229070C7100181964 /* RankView.swift in Sources */,
 				9CC78E6F228358A400640477 /* DisplayPrefsViewController.swift in Sources */,
 				9C822B9D22D6D5D6008EF106 /* TagsView.swift in Sources */,
 				9C2709CA27A1B7F200B8FD9B /* LinkCleanerViewController.swift in Sources */,
@@ -1793,7 +1801,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 382;
+				CURRENT_PROJECT_VERSION = 386;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1806,7 +1814,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 10.6.0;
+				MARKETING_VERSION = 10.6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1822,7 +1830,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 382;
+				CURRENT_PROJECT_VERSION = 386;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1835,7 +1843,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 10.6.0;
+				MARKETING_VERSION = 10.6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

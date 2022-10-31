@@ -424,7 +424,7 @@ class NoteListViewController:   NSViewController,
         
         if let note = notenikIO?.getNote(at: row) {
             if tableColumn?.title == "Title" ||
-                    tableColumn?.title == note.collection.titleFieldDef.fieldLabel.properForm {
+                tableColumn?.title == note.collection.titleFieldDef.fieldLabel.properForm {
                 let title = note.title.value
                 var displayValue = ""
                 if let collection = notenikIO?.collection {
@@ -437,11 +437,13 @@ class NoteListViewController:   NSViewController,
                             if indent > 0 {
                                 displayValue = AppPrefs.shared.indentSpaces(level: indent)
                             }
-                        } 
+                        }
                     }
                 }
                 displayValue.append(title)
                 cellView.textField?.stringValue = displayValue
+            } else if tableColumn?.title == "Rank" {
+                cellView.textField?.stringValue = note.rank.value
             } else if tableColumn?.title == "Seq" {
                 cellView.textField?.stringValue = note.seq.value
             } else if tableColumn?.title == "X" {
@@ -461,6 +463,8 @@ class NoteListViewController:   NSViewController,
             } else if notenikIO != nil && notenikIO!.collection != nil {
                 if tableColumn?.title == notenikIO!.collection!.titleFieldDef.fieldLabel.properForm {
                     cellView.textField?.stringValue = note.title.value
+                } else if notenikIO!.collection!.rankFieldDef != nil && tableColumn?.title == notenikIO!.collection!.rankFieldDef!.fieldLabel.properForm {
+                    cellView.textField?.stringValue = note.rank.value
                 } else if tableColumn?.title == notenikIO!.collection!.tagsFieldDef.fieldLabel.properForm {
                     cellView.textField?.stringValue = note.tags.value
                 } else if tableColumn?.title == notenikIO!.collection!.dateFieldDef.fieldLabel.properForm {
@@ -564,6 +568,11 @@ class NoteListViewController:   NSViewController,
                 addSeqColumn(at: 1)
                 addTitleColumn(at: 2)
             }
+        case .rankSeqTitle:
+            addRankColumn(at: 0)
+            addSeqColumn(at: 1)
+            addTitleColumn(at: 2)
+            trimColumns(to: 3)
         case .custom:
             addTitleColumn(at: 0)
             trimColumns(to: 1)
@@ -583,6 +592,18 @@ class NoteListViewController:   NSViewController,
         addColumn(title: collection.titleFieldDef.fieldLabel.properForm,
                   strID: "title-column",
                   at: desiredIndex, min: 200, width: 445, max: 1500)
+    }
+    
+    func addRankColumn(at desiredIndex: Int) {
+        if notenikIO != nil
+            && notenikIO!.collection != nil
+            && notenikIO!.collection!.rankFieldDef != nil {
+            addColumn(title: notenikIO!.collection!.rankFieldDef!.fieldLabel.properForm,
+                      strID: "rank-column",
+                      at: desiredIndex, min: 50, width: 80, max: 250)
+        } else {
+            addColumn(title: "Rank", strID: "rank-column", at: desiredIndex, min: 50, width: 80, max: 250)
+        }
     }
     
     func addSeqColumn(at desiredIndex: Int) {

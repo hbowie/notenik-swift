@@ -2986,6 +2986,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         setSortParm(.datePlusSeq)
     }
     
+    @IBAction func sortByRankAndSeq(_ sender: Any) {
+        setSortParm(.rankSeqTitle)
+    }
+    
     @IBAction func sortReverse(_ sender: NSMenuItem) {
         guard let io = notenikIO else { return }
         if io.sortDescending {
