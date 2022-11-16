@@ -118,10 +118,17 @@ class QueryBuilderViewController: NSViewController {
             setSelector(labelOrType: NotenikConstants.dateModified, sortSeq: 1)
         case .datePlusSeq:
             setSelector(labelOrType: NotenikConstants.date, sortSeq: 1)
-            setSelector(labelOrType: NotenikConstants.seq, sortSeq: 2)
+            setSelector(labelOrType: NotenikConstants.seq,  sortSeq: 2)
         case .rankSeqTitle:
             setSelector(labelOrType: NotenikConstants.rank, sortSeq: 1)
-            setSelector(labelOrType: NotenikConstants.seq, sortSeq: 2)
+            setSelector(labelOrType: NotenikConstants.seq,  sortSeq: 2)
+            setSelector(labelOrType: NotenikConstants.title, sortSeq: 3)
+        case .klassTitle:
+            setSelector(labelOrType: NotenikConstants.klass, sortSeq: 1)
+            setSelector(labelOrType: NotenikConstants.title, sortSeq: 2)
+        case .klassDateTitle:
+            setSelector(labelOrType: NotenikConstants.klass, sortSeq: 1)
+            setSelector(labelOrType: NotenikConstants.date,  sortSeq: 2)
             setSelector(labelOrType: NotenikConstants.title, sortSeq: 3)
         }
         

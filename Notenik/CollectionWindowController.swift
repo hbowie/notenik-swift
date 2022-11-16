@@ -2990,6 +2990,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         setSortParm(.rankSeqTitle)
     }
     
+    @IBAction func sortByKlassAndTitle(_ sender: Any) {
+        setSortParm(.klassTitle)
+    }
+    
+    @IBAction func sortByKlassDateAndTitle(_ sender: Any) {
+        setSortParm(.klassDateTitle)
+    }
+    
     @IBAction func sortReverse(_ sender: NSMenuItem) {
         guard let io = notenikIO else { return }
         if io.sortDescending {
@@ -3003,6 +3011,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard var noteIO = notenikIO else { return }
         guard let lister = listVC else { return }
         noteIO.sortParm = sortParm
+        noteIO.sortDescending = false
         lister.setSortParm(sortParm)
         noteIO.persistCollectionInfo()
     }

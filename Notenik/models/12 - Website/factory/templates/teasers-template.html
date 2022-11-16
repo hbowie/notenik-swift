@@ -1,0 +1,15 @@
+<?output "../includes-gen/teasers.html" ?>
+<?set count = 0 ?>
+<?nextrec?>
+<?set count ++ ?>
+<?if =$count$= le 10 ?>
+		<h3>
+			<a href="posts/=$title&f$=.html">
+				=$title$=
+			</a>
+		</h3>
+		
+		=$teaser&o$=
+		
+<?endif?>
+<?loop?>

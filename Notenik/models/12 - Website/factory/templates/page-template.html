@@ -1,0 +1,36 @@
+<?nextrec?>
+<?output "../../web/=$title&f$=.html"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<?if "=$class$=" eq "home"?>
+	<title>Home | Sample Website</title>
+<?else?>
+	<title>=$title$= | Sample Website</title>
+<?endif?>
+	<meta name="description" content="=$title$= page for a sample website" />
+<?include "../includes/head-links.html" ?>
+</head>
+<body>
+
+<?include "../includes/header.html" ?>
+
+	<main>
+
+=$body&o$=
+
+<?if "=$title$=" eq "Index"?>
+<?include "../includes-gen/teasers.html" ?>
+<?endif?>
+
+<?include "../includes/back-to-top.html" ?>
+
+	</main>
+
+<?include "../includes/footer.html" ?>
+
+</body>
+</html>
+<?loop?>

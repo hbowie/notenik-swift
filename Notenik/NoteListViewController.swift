@@ -442,6 +442,8 @@ class NoteListViewController:   NSViewController,
                 }
                 displayValue.append(title)
                 cellView.textField?.stringValue = displayValue
+            } else if tableColumn?.title == "Class" {
+                cellView.textField?.stringValue = note.klass.value
             } else if tableColumn?.title == "Rank" {
                 cellView.textField?.stringValue = note.rank.value
             } else if tableColumn?.title == "Seq" {
@@ -473,6 +475,8 @@ class NoteListViewController:   NSViewController,
                     cellView.textField?.stringValue = note.seq.value
                 } else if tableColumn?.title == notenikIO!.collection!.creatorFieldDef.fieldLabel.properForm {
                     cellView.textField?.stringValue = note.creatorValue
+                } else if notenikIO!.collection!.klassFieldDef != nil && tableColumn?.title == notenikIO!.collection!.klassFieldDef!.fieldLabel.properForm {
+                    cellView.textField?.stringValue = note.klass.value
                 }
             }
         }
@@ -573,6 +577,13 @@ class NoteListViewController:   NSViewController,
             addSeqColumn(at: 1)
             addTitleColumn(at: 2)
             trimColumns(to: 3)
+        case .klassTitle:
+            addKlassColumn(at: 0)
+            addTitleColumn(at: 1)
+        case .klassDateTitle:
+            addKlassColumn(at: 0)
+            addDateColumn(at: 1)
+            addTitleColumn(at: 2)
         case .custom:
             addTitleColumn(at: 0)
             trimColumns(to: 1)
@@ -602,7 +613,21 @@ class NoteListViewController:   NSViewController,
                       strID: "rank-column",
                       at: desiredIndex, min: 50, width: 80, max: 250)
         } else {
-            addColumn(title: "Rank", strID: "rank-column", at: desiredIndex, min: 50, width: 80, max: 250)
+            addColumn(title: "Rank", strID: "rank-column",
+                      at: desiredIndex, min: 50, width: 80, max: 250)
+        }
+    }
+    
+    func addKlassColumn(at desiredIndex: Int) {
+        if notenikIO != nil
+            && notenikIO!.collection != nil
+            && notenikIO!.collection!.klassFieldDef != nil {
+            addColumn(title: notenikIO!.collection!.klassFieldDef!.fieldLabel.properForm,
+                      strID: "klass-column",
+                      at: desiredIndex, min: 60, width: 80, max: 150)
+        } else {
+            addColumn(title: NotenikConstants.klass, strID: "klass-column",
+                      at: desiredIndex, min: 60, width: 80, max: 150)
         }
     }
     

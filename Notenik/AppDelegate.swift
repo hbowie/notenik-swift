@@ -252,6 +252,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         _ = juggler.openKB()
     }
     
+    @IBAction func menuOpenMC(_ sender: Any) {
+        _ = juggler.openMC()
+    }
+    
     @IBAction func menuWhatIsNew(_ sender: Any) {
         juggler.whatIsNew()
     }

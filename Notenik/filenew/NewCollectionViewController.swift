@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 2/7/21.
 //
-//  Copyright © 2021 Herb Bowie (https://hbowie.net)
+//  Copyright © 2021 - 2022 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -200,24 +200,43 @@ class NewCollectionViewController: NSTabViewController {
     /// Collect the info gathered on the third tab, and now take action.
     func setFields(_ modelName: String, modelURL: URL) {
         
-        guard collectionURL != nil else {
+        guard let toURL = collectionURL else {
             communicateError("Name for new Collection must be specified first", alert: true)
             selectTab(index: 1)
             return
         }
         
-        let relo = CollectionRelocation()
-        let ok = relo.copyOrMoveCollection(from: modelURL.path, to: collectionURL!.path, move: false)
+        var ok = true
+        let parentRealm = (modelName == "12 - Website")
+        
+        if parentRealm {
+            ok = copyFolders(fromURL: modelURL, toURL: toURL)
+        } else {
+            let relo = CollectionRelocation()
+            ok = relo.copyOrMoveCollection(from: modelURL.path, to: toURL.path, move: false)
+        }
         guard ok else {
             communicateError("Could not populate new Collection with model folder", alert: true)
             closeWindow()
             return
         }
         
-        let wc = juggler.openFileWithNewWindow(fileURL: collectionURL!, readOnly: false)
+        var wc: CollectionWindowController?
+        var notesURL: URL? = toURL
+        if parentRealm {
+            _ = juggler.openParentRealm(parentURL: toURL)
+            notesURL = URL(string: "content", relativeTo: toURL)
+            wc = juggler.openFileWithNewWindow(fileURL: notesURL!, readOnly: false)
+            if let readmeURL = URL(string: "README.md", relativeTo: toURL) {
+                NSWorkspace.shared.open(readmeURL)
+            }
+        } else {
+            wc = juggler.openFileWithNewWindow(fileURL: toURL, readOnly: false)
+        }
+        guard notesURL != nil else { return }
         
         if wc != nil {
-            juggler.notenikFolderList.add(url: collectionURL!, type: .ordinaryCollection, location: .undetermined)
+            juggler.notenikFolderList.add(url: notesURL!, type: .ordinaryCollection, location: .undetermined)
             let io = wc!.io
             if io != nil {
                 let collection = io!.collection
@@ -232,6 +251,24 @@ class NewCollectionViewController: NSTabViewController {
         }
         
         closeWindow()
+    }
+    
+    func copyFolders(fromURL: URL, toURL: URL) -> Bool {
+        var ok = FileUtils.ensureFolder(forURL: toURL)
+        if ok {
+            do {
+                let items = try fm.contentsOfDirectory(at: fromURL, includingPropertiesForKeys: nil)
+                for item in items {
+                    let itemName = item.lastPathComponent
+                    guard let toURL = URL(string: itemName, relativeTo: toURL) else { continue }
+                    try fm.copyItem(at: item, to: toURL)
+                }
+            } catch {
+                communicateError("Errors copying folder from \(fromURL) to \(toURL)")
+                ok = false
+            }
+        }
+        return ok
     }
     
     func closeWindow() {

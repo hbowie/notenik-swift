@@ -737,6 +737,18 @@ class CollectionJuggler: NSObject {
         return kbwc
     }
     
+    func openMC() -> CollectionWindowController? {
+        let path = notenikFolderList.mcNode.path
+        let mcWindowNumbers = appPrefs.mcWindow
+        let mcwc = openFileWithNewWindow(folderPath: path,
+                                         readOnly: true,
+                                         windowNumbers: mcWindowNumbers)
+        if mcwc != nil {
+            mcwc!.selectFirstNote()
+        }
+        return mcwc
+    }
+    
     func whatIsNew() {
         let path = notenikFolderList.kbNode.path
         let kbWindowNumbers = appPrefs.kbWindow

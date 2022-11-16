@@ -1,0 +1,34 @@
+module	action	modifier	object	value
+
+<!-- Generate Web pages for Posts  -->
+
+input	set		xpltags	false
+input	set		dirdepth	1
+input	open	notenik-defined		#PATH#../content
+filter	clear			
+filter	add	eq	Class	post
+filter	set		params	
+sort	clear			
+sort	add	descending	Date	
+sort	add	ascending	Title	
+sort	set		params	
+template	webroot			#PATH#../web
+template	open			#PATH#../factory/templates/teasers-template.html
+template	generate			
+template	open			#PATH#../factory/templates/post-template.html
+template	generate			
+
+<!-- Generate Web pages for Static Pages  -->
+
+input	set		xpltags	false
+input	set		dirdepth	1
+input	open	notenik-defined		#PATH#../content
+filter	clear			
+filter	add	ne	Class	post
+filter	set		params	
+sort	clear			
+sort	add	ascending	Title	
+sort	set		params	
+template	webroot			#PATH#../web
+template	open			#PATH#../factory/templates/page-template.html
+template	generate			

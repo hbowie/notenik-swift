@@ -1,0 +1,30 @@
+<?nextrec?>
+<?output "../../web/posts/=$title&f$=.html"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+	<title>=$title$= | Sample Website</title>
+	<meta name="description" content="=$title$= page for a sample website" />
+<?include "../includes/head-links.html" ?>
+</head>
+<body>
+
+<?include "../includes/header.html" ?>
+
+	<main>
+	
+	<h2>=$title$=</h2>
+
+=$body&o$=
+
+<?include "../includes/back-to-top.html" ?>
+
+	</main>
+
+<?include "../includes/footer.html" ?>
+
+</body>
+</html>
+<?loop?>
