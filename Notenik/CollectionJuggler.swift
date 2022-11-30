@@ -191,11 +191,46 @@ class CollectionJuggler: NSObject {
     
     /// Open a single URL.
     func open(url: URL) -> Bool {
-        let link = NotenikLink(url: url)
-        link.determineCollectionType()
-        let wc = open(link: link)
+        var link: NotenikLink?
+        var readable = true
+        var folderURL: URL?
+        if url.scheme == "file" {
+            if url.pathExtension == NotenikConstants.infoFileExt {
+                folderURL = url.deletingLastPathComponent()
+            } else {
+                folderURL = url
+            }
+            let folderPath = folderURL!.path
+            readable = fm.isReadableFile(atPath: folderPath)
+            link = NotenikLink(url: folderURL!)
+        } else {
+            link = NotenikLink(url: url)
+        }
+        if !readable {
+            communicateError("You will need to explicitly open this folder since Notenik does not currently have access to it.", alert: true)
+            link = explicitFolderOpen(requestedParent: folderURL!.deletingLastPathComponent())
+        }
+        guard link != nil else { return false }
+        // link!.determineCollectionType()
+        let wc = open(link: link!)
         guard wc != nil else { return false }
         return true
+    }
+    
+    func explicitFolderOpen(requestedParent: URL) -> NotenikLink? {
+        let openPanel = NSOpenPanel();
+        openPanel.title = "Open a Notenik Folder"
+        openPanel.directoryURL = requestedParent
+        openPanel.showsResizeIndicator = true
+        openPanel.showsHiddenFiles = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = false
+        openPanel.allowsMultipleSelection = false
+        let result = openPanel.runModal()
+        guard result == .OK else { return nil }
+        guard let folder = openPanel.url else { return nil }
+        return NotenikLink(url: folder)
     }
     
     /// Open a single NotenikLink. 
@@ -204,7 +239,6 @@ class CollectionJuggler: NSObject {
         guard link.location != .appBundle else {
             return openFileWithNewWindow(fileURL: link.url!, readOnly: true)
         }
-
         link.determineCollectionType()
         switch link.type {
         case .accessFolder:
@@ -828,12 +862,16 @@ class CollectionJuggler: NSObject {
     /// Respond to a user request to open another Collection. Present the user
     /// with an Open Panel to allow the selection of a folder containing an
     /// existing Notenik Collection. 
-    func userRequestsOpenCollection() {
+    func userRequestsOpenCollection(requestedParent: URL? = nil) {
         let openPanel = NSOpenPanel();
         openPanel.title = "Select a Notenik Collection"
-        let parent = osdir.directoryURL
-        if parent != nil {
-            openPanel.directoryURL = parent!
+        if requestedParent != nil {
+            openPanel.directoryURL = requestedParent!
+        } else {
+            let parent = osdir.directoryURL
+            if parent != nil {
+                openPanel.directoryURL = parent!
+            }
         }
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
