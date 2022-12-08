@@ -12,23 +12,24 @@
 import Cocoa
 
 class ShareWindowController: NSWindowController {
+    
+    var vc: ShareViewController!
 
     override func windowDidLoad() {
         super.windowDidLoad()
-    
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+        vc = self.contentViewController as? ShareViewController
     }
     
     @IBAction func shareContentSelection(_ sender: Any) {
-        
+        vc.contentSelection()
     }
     
     @IBAction func shareFormatSelection(_ sender: Any) {
-        
+        vc.formatSelection()
     }
     
     @IBAction func shareDestinationSelection(_ sender: Any) {
-        
+        vc.destinationSelection()
     }
 
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -10,7 +10,7 @@
         <scene sceneID="9r4-EK-Drf">
             <objects>
                 <windowController storyboardIdentifier="editPrefsWC" id="q4s-cP-0g8" customClass="EditPrefsWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Edit Font Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="KiC-89-K4I">
+                    <window key="window" title="Edit Font Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="KiC-89-K4I">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="425" y="462" width="480" height="270"/>
@@ -77,7 +77,7 @@
                                 </textFieldCell>
                             </textField>
                             <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Ut-CZ-jTn">
-                                <rect key="frame" x="130" y="178" width="250" height="26"/>
+                                <rect key="frame" x="129" y="180" width="251" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="247" id="HA9-7m-Qxa"/>
                                 </constraints>
@@ -162,7 +162,7 @@ DQ
                                 </scroller>
                             </scrollView>
                             <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="goK-1q-0HR">
-                                <rect key="frame" x="130" y="150" width="87" height="26"/>
+                                <rect key="frame" x="129" y="152" width="88" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="Ze2-Q3-Syi"/>
                                 </constraints>

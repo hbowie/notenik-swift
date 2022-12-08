@@ -69,7 +69,7 @@ class CustomURLActor {
             processHelpCommand(labels: labels, values: values)
         case "open":
             processOpenCommand(labels: labels, values: values)
-        case "prefs":
+        case "prefs", "settings":
             processPrefsCommand()
         default:
             communicateError("Invalid Command: \(command)")

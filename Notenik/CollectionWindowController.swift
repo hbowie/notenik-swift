@@ -53,6 +53,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
     let shareStoryboard:           NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
     let mediumPubStoryboard:       NSStoryboard = NSStoryboard(name: "MediumPub", bundle: nil)
+    let mastodonPubStoryboard:     NSStoryboard = NSStoryboard(name: "Mastodon", bundle: nil)
     let microBlogStoryboard:       NSStoryboard = NSStoryboard(name: "MicroBlog", bundle: nil)
     let exportStoryboard:          NSStoryboard = NSStoryboard(name: "Export", bundle: nil)
     let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
@@ -1887,6 +1888,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                               category: "CollectionWindowController",
                               level: .fault,
                               message: "Couldn't get a Share Window Controller!")
+        }
+    }
+    
+    @IBAction func menuNotePublishToMastodon(_ sender: Any) {
+        let (_, sel) = guardForNoteAction()
+        guard let selectedNote = sel else { return }
+        if let mastodonPubController = self.mastodonPubStoryboard.instantiateController(withIdentifier: "mastodonpubWC") as? MastodonWindowController {
+            mastodonPubController.note = selectedNote
+            mastodonPubController.showWindow(sender)
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Mastodon Publish Window Controller")
         }
     }
     

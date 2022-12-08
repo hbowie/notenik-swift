@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -95,20 +96,6 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="shareDestinationSelection:" target="C6S-Gq-nNR" id="uOi-Gk-4I1"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RwZ-7Y-eJK">
-                                <rect key="frame" x="439" y="13" width="59" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Wbb-VO-d0o">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="okButtonPressed:" target="IDQ-mI-NjM" id="MTz-BS-Avn"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dII-uW-RRD">
@@ -211,11 +198,48 @@ Gw
                                     <action selector="shareFormatSelection:" target="C6S-Gq-nNR" id="TIC-xo-RaT"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qVS-hI-ibo">
+                                <rect key="frame" x="373" y="164" width="126" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="radio" title="Open in Browser" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="fBD-Yv-EVB">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="shareDestinationSelection:" target="C6S-Gq-nNR" id="ni6-lJ-kfl"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qac-bL-Xep">
+                                <rect key="frame" x="178" y="54" width="117" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="radio" title="Microblog Post" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="4Th-aR-nnW">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="shareFormatSelection:" target="C6S-Gq-nNR" id="QSK-xK-kTM"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RwZ-7Y-eJK">
+                                <rect key="frame" x="447" y="13" width="59" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Wbb-VO-d0o">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="okButtonPressed:" target="IDQ-mI-NjM" id="MTz-BS-Avn"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="contentBodyOnlyButton" destination="MUC-MA-WTX" id="Zhf-IY-X0r"/>
                         <outlet property="contentEntireNoteButton" destination="8s6-Se-dMB" id="lPY-cX-N7t"/>
+                        <outlet property="destinationBrowserButton" destination="qVS-hI-ibo" id="jLK-0s-HcT"/>
                         <outlet property="destinationClipboardButton" destination="FqU-1u-Irh" id="ZBi-dk-y63"/>
                         <outlet property="destinationFileButton" destination="kPg-JB-VjE" id="QP9-b9-lpk"/>
                         <outlet property="formatHTMLBlockquoteButton" destination="nDM-fr-x96" id="H1d-5s-zzr"/>
@@ -224,6 +248,7 @@ Gw
                         <outlet property="formatJSONButton" destination="buk-bw-lFd" id="UCR-dc-afv"/>
                         <outlet property="formatMarkdownButton" destination="bTg-7a-2Qd" id="0wL-99-Til"/>
                         <outlet property="formatMarkdownQuoteButton" destination="SgD-9l-Drn" id="Ywj-zW-QcI"/>
+                        <outlet property="formatMicroButton" destination="Qac-bL-Xep" id="Tmh-uK-lqG"/>
                         <outlet property="formatNotenikButton" destination="3xP-05-Fbw" id="EBc-oR-Jd6"/>
                     </connections>
                 </viewController>

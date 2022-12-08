@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 4/15/19.
-//  Copyright © 2019-2020 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019-2022 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -32,9 +32,11 @@ class ShareViewController: NSViewController {
     let markdownQuoteValue = "mdquote"
     let notenikValue = "notenik"
     let jsonValue = "json"
+    let microValue = "micro"
     
     let clipboardValue = "clipboard"
     let fileValue = "file"
+    let browserValue = "browser"
     
     var window: ShareWindowController?
     var io: NotenikIO?
@@ -52,9 +54,11 @@ class ShareViewController: NSViewController {
     @IBOutlet var formatMarkdownQuoteButton: NSButton!
     @IBOutlet var formatNotenikButton: NSButton!
     @IBOutlet var formatJSONButton: NSButton!
+    @IBOutlet var formatMicroButton: NSButton!
     
     @IBOutlet var destinationClipboardButton: NSButton!
     @IBOutlet var destinationFileButton: NSButton!
+    @IBOutlet var destinationBrowserButton: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +84,8 @@ class ShareViewController: NSViewController {
             formatMarkdownQuoteButton.state = .on
         } else if formatSelector == jsonValue {
             formatJSONButton.state = .on
+        } else if formatSelector == microValue {
+            formatMicroButton.state = .on
         } else {
             formatNotenikButton.state = .on
         }
@@ -87,8 +93,24 @@ class ShareViewController: NSViewController {
         let destinationSelector = defaults.string(forKey: destinationKey)
         if destinationSelector == clipboardValue {
             destinationClipboardButton.state = .on
-        } else {
+        } else if destinationSelector == fileValue {
             destinationFileButton.state = .on
+        } else {
+            destinationBrowserButton.state = .on
+        }
+    }
+    
+    func contentSelection() {
+        
+    }
+    
+    func formatSelection() {
+        
+    }
+    
+    func destinationSelection() {
+        if destinationBrowserButton.state == .on {
+            formatHTMLDocButton.state = .on
         }
     }
     
@@ -188,6 +210,21 @@ class ShareViewController: NSViewController {
             } else {
                 stringToShare = markdown.html
             }
+        } else if formatMicroButton.state == .on {
+            stringToShare = note!.body.value
+            if note!.hasLink() {
+                appendLine(" ")
+                appendLine(note!.link.value)
+            }
+            if contentEntireNoteButton.state == .on {
+                if note!.hasTags() {
+                    appendLine(" ")
+                    let tagsField = note!.getTagsAsField()
+                    if let tagsValue = tagsField?.value as? TagsValue {
+                        appendLine(tagsValue.microTags)
+                    }
+                }
+            }
         } else {
             // Format the entire Note as HTML. 
             let noteDisplay = NoteDisplay()
@@ -243,6 +280,24 @@ class ShareViewController: NSViewController {
             }
         }
         
+        if destinationBrowserButton.state == .on {
+            if let notesFolder = note?.collection.lib.getURL(type: .notes) {
+                let browseFolder = notesFolder.appendingPathComponent("browse", isDirectory: true)
+                _ = FileUtils.makeDirectory(at: browseFolder)
+                let fn = StringUtils.toCommonFileName(note!.title.value)
+                let url = browseFolder.appendingPathComponent(fn).appendingPathExtension("html")
+                do {
+                    try stringToShare.write(to: url, atomically: true, encoding: .utf8)
+                    NSWorkspace.shared.open(url)
+                } catch {
+                    Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                      category: "ShareViewController",
+                                      level: .fault,
+                                      message: "Problems writing shared text to disk")
+                }
+            }
+        }
+        
         // Save the user's choices so we can default to them later
         var contentSelector = entireNoteValue
         if contentBodyOnlyButton.state == .on {
@@ -263,12 +318,16 @@ class ShareViewController: NSViewController {
             formatSelector = markdownQuoteValue
         } else if formatJSONButton.state == .on {
             formatSelector = jsonValue
+        } else if formatMicroButton.state == .on {
+            formatSelector = microValue
         }
         defaults.set(formatSelector, forKey: formatKey)
         
         var destinationSelector = clipboardValue
         if destinationFileButton.state == .on {
             destinationSelector = fileValue
+        } else if destinationBrowserButton.state == .on {
+            destinationSelector = browserValue
         }
         defaults.set(destinationSelector, forKey: destinationKey)
         
