@@ -600,18 +600,20 @@ class NoteListViewController:   NSViewController,
             addColumn(title: "Title", strID: "title-column", at: desiredIndex, min: 200, width: 445, max: 1500)
             return
         }
+        let col = collection.columnWidths.getColumn(withTitle: "Title")
         addColumn(title: collection.titleFieldDef.fieldLabel.properForm,
                   strID: "title-column",
-                  at: desiredIndex, min: 200, width: 445, max: 1500)
+                  at: desiredIndex, min: col.min, width: col.pref, max: col.max)
     }
     
     func addRankColumn(at desiredIndex: Int) {
         if notenikIO != nil
             && notenikIO!.collection != nil
             && notenikIO!.collection!.rankFieldDef != nil {
+            let col = notenikIO!.collection!.columnWidths.getColumn(withTitle: "Rank")
             addColumn(title: notenikIO!.collection!.rankFieldDef!.fieldLabel.properForm,
                       strID: "rank-column",
-                      at: desiredIndex, min: 50, width: 80, max: 250)
+                      at: desiredIndex, min: col.min, width: col.pref, max: col.max)
         } else {
             addColumn(title: "Rank", strID: "rank-column",
                       at: desiredIndex, min: 50, width: 80, max: 250)
@@ -622,9 +624,10 @@ class NoteListViewController:   NSViewController,
         if notenikIO != nil
             && notenikIO!.collection != nil
             && notenikIO!.collection!.klassFieldDef != nil {
+            let col = notenikIO!.collection!.columnWidths.getColumn(withTitle: "Klass")
             addColumn(title: notenikIO!.collection!.klassFieldDef!.fieldLabel.properForm,
                       strID: "klass-column",
-                      at: desiredIndex, min: 60, width: 80, max: 150)
+                      at: desiredIndex, min: col.min, width: col.pref, max: col.max)
         } else {
             addColumn(title: NotenikConstants.klass, strID: "klass-column",
                       at: desiredIndex, min: 60, width: 80, max: 150)
@@ -635,30 +638,40 @@ class NoteListViewController:   NSViewController,
         if notenikIO != nil
             && notenikIO!.collection != nil
             && notenikIO!.collection!.seqFieldDef != nil {
+            let col = notenikIO!.collection!.columnWidths.getColumn(withTitle: "Seq")
             addColumn(title: notenikIO!.collection!.seqFieldDef!.fieldLabel.properForm,
                       strID: "seq-column",
-                      at: desiredIndex, min: 50, width: 80, max: 250)
+                      at: desiredIndex, min: col.min, width: col.pref, max: col.max)
         } else {
-            addColumn(title: "Seq", strID: "seq-column", at: desiredIndex, min: 50, width: 80, max: 250)
+            addColumn(title: "Seq", strID: "seq-column", at: desiredIndex, min: 30, width: 80, max: 250)
         }
     }
     
     func addXColumn(at desiredIndex: Int) {
-        addColumn(title: "X", strID: "x-column", at: desiredIndex, min: 12, width: 20, max: 50)
+        var col = ColumnWidth(title: "X", min: 12, pref: 20, max: 50)
+        if let collection = notenikIO?.collection {
+            col = collection.columnWidths.getColumn(withTitle: "X")
+        }
+        addColumn(title: "X", strID: "x-column", at: desiredIndex, min: col.min, width: col.pref, max: col.max)
     }
     
     func addStatusDigit(at desiredIndex: Int) {
-        addColumn(title: "Stat", strID: "status-digit-column", at: desiredIndex, min: 20, width: 30, max: 50)
+        var col = ColumnWidth(title: "status-digit", min: 20, pref: 30, max: 50)
+        if let collection = notenikIO?.collection {
+            col = collection.columnWidths.getColumn(withTitle: "status-digit")
+        }
+        addColumn(title: "Stat", strID: "status-digit-column", at: desiredIndex, min: col.min, width: col.pref, max: col.max)
     }
     
     func addDateColumn(at desiredIndex: Int) {
         guard let collection = notenikIO?.collection else {
-            addColumn(title: "Date", strID: "date-column", at: desiredIndex, min: 200, width: 445, max: 1500)
+            addColumn(title: "Date", strID: "date-column", at: desiredIndex, min: 80, width: 120, max: 500)
             return
         }
+        let col = collection.columnWidths.getColumn(withTitle: "Date")
         addColumn(title: collection.dateFieldDef.fieldLabel.properForm,
                   strID: "date-column",
-                  at: desiredIndex, min: 100, width: 120, max: 300)
+                  at: desiredIndex, min: col.min, width: col.pref, max: col.max)
     }
     
     func addAuthorColumn(at desiredIndex: Int) {
@@ -666,9 +679,10 @@ class NoteListViewController:   NSViewController,
             addColumn(title: "Author", strID: "author-column", at: desiredIndex, min: 100, width: 200, max: 1000)
             return
         }
+        let col = collection.columnWidths.getColumn(withTitle: "Author")
         addColumn(title: collection.creatorFieldDef.fieldLabel.properForm,
                   strID: "author-column",
-                  at: desiredIndex, min: 100, width: 200, max: 1000)
+                  at: desiredIndex, min: col.min, width: col.pref, max: col.max)
     }
     
     func addTagsColumn(at desiredIndex: Int) {
@@ -676,17 +690,26 @@ class NoteListViewController:   NSViewController,
             addColumn(title: "Tags", strID: "tags-column", at: desiredIndex, min: 50, width: 100, max: 1200)
             return
         }
+        let col = collection.columnWidths.getColumn(withTitle: "Tags")
         addColumn(title: collection.tagsFieldDef.fieldLabel.properForm,
                   strID: "tags-column",
-                  at: desiredIndex, min: 50, width: 100, max: 1200)
+                  at: desiredIndex, min: col.min, width: col.pref, max: col.max)
     }
     
     func addDateAddedColumn(at desiredIndex: Int) {
-        addColumn(title: "Date Added", strID: "date-added-column", at: desiredIndex, min: 100, width: 180, max: 250)
+        var col = ColumnWidth(title: "Date Added", min: 100, pref: 180, max: 250)
+        if let collection = notenikIO?.collection {
+            col = collection.columnWidths.getColumn(withTitle: "Date Added")
+        }
+        addColumn(title: "Date Added", strID: "date-added-column", at: desiredIndex, min: col.min, width: col.pref, max: col.max)
     }
     
     func addDateModifiedColumn(at desiredIndex: Int) {
-        addColumn(title: "Date Mod", strID: "date-mod-column", at: desiredIndex, min: 100, width: 180, max: 250)
+        var col = ColumnWidth(title: "Date Mod", min: 100, pref: 180, max: 250)
+        if let collection = notenikIO?.collection {
+            col = collection.columnWidths.getColumn(withTitle: "Date Mod")
+        }
+        addColumn(title: "Date Mod", strID: "date-mod-column", at: desiredIndex, min: col.min, width: col.pref, max: col.max)
     }
     
     /// Add a column, or make sure it already exists, and position it appropriately.
@@ -734,6 +757,18 @@ class NoteListViewController:   NSViewController,
         while tableView.tableColumns.count > desiredNumberOfColumns {
             let columntToRemove = tableView.tableColumns[tableView.tableColumns.count - 1]
             tableView.removeTableColumn(columntToRemove)
+        }
+    }
+    
+    /// If the user resized a column, then capture the preferred column width. 
+    func tableViewColumnDidResize(_ notification: Notification) {
+        if let tableColumn = notification.userInfo?["NSTableColumn"] as? NSTableColumn {
+            if let collection = notenikIO?.collection {
+                collection.columnWidths.add(title: tableColumn.title,
+                                            min: Int(tableColumn.minWidth),
+                                            pref: Int(tableColumn.width),
+                                            max: Int(tableColumn.maxWidth))
+            }
         }
     }
     
