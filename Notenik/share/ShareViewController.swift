@@ -298,6 +298,21 @@ class ShareViewController: NSViewController {
             }
         }
         
+        /// Open Mastodon domain, when appropriate.
+        if destinationClipboardButton.state == .on && formatMicroButton.state == .on {
+            let domain = AppPrefs.shared.mastodonDomain
+            if !domain.isEmpty {
+                var urlStr = domain
+                if !domain.starts(with: "http") {
+                    urlStr = "https://\(domain)"
+                }
+                if let url = URL(string: urlStr) {
+                    NSWorkspace.shared.open(url)
+                }
+            }
+            
+        }
+        
         // Save the user's choices so we can default to them later
         var contentSelector = entireNoteValue
         if contentBodyOnlyButton.state == .on {

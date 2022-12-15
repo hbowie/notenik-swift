@@ -34,6 +34,12 @@
                                                 <action selector="displayPrefs:" target="Ady-hI-5gd" id="Ig0-Dk-gDj"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Mastodon Profile" id="agT-gh-j8v">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mastProfile:" target="Voe-Tx-rLC" id="GFb-2h-00o"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                                         <menuItem title="Services" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>

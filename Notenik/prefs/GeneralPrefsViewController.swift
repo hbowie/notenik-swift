@@ -42,6 +42,10 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     
     @IBOutlet var grantAccessOptPopUpButton: NSPopUpButton!
     
+    @IBOutlet var mastodonHandleTextField: NSTextField!
+    
+    @IBOutlet var mastodonDomainTextField: NSTextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if appPrefs.confirmDeletes {
@@ -56,10 +60,10 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
         }
         let appearance = appPrefs.appAppearance
         switch appearance {
-        case "system": appAppearance.selectItem(at: 0)
-        case "light":  appAppearance.selectItem(at: 1)
-        case "dark":   appAppearance.selectItem(at: 2)
-        default: break
+            case "system": appAppearance.selectItem(at: 0)
+            case "light":  appAppearance.selectItem(at: 1)
+            case "dark":   appAppearance.selectItem(at: 2)
+            default: break
         }
         
         indentSpacesPopUpButton.removeAllItems()
@@ -68,6 +72,9 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
         
         let grantAccessOpt = appPrefs.grantAccessOption
         grantAccessOptPopUpButton.selectItem(at: grantAccessOpt - 1)
+        
+        mastodonHandleTextField.stringValue = appPrefs.mastodonHandle
+        mastodonDomainTextField.stringValue = appPrefs.mastodonDomain
     }
     
     @IBAction func appPrefsConfirmDeletes (_ sender: Any) {
@@ -111,7 +118,17 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     }
     
     @IBAction func appPrefsOK(_ sender: Any) {
+        appPrefs.mastodonHandle = mastodonHandleTextField.stringValue
+        appPrefs.mastodonDomain = mastodonDomainTextField.stringValue
         self.view.window!.close()
+    }
+    
+    @IBAction func mastodonHandleEdited(_ sender: Any) {
+        appPrefs.mastodonHandle = mastodonHandleTextField.stringValue
+    }
+    
+    @IBAction func mastodonDomainEdited(_ sender: Any) {
+        appPrefs.mastodonDomain = mastodonDomainTextField.stringValue
     }
     
     @IBAction func funcgrantAccessOptionSelected(_ sender: Any) {

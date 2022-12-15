@@ -156,6 +156,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         juggler.showAppPreferences()
     }
     
+    @IBAction func mastProfile(_ sender: NSMenuItem) {
+        let handle = appPrefs.mastodonHandle
+        let domain = appPrefs.mastodonDomain
+        var urlStr = ""
+        guard !handle.isEmpty && !domain.isEmpty else { return }
+        urlStr = "https://\(domain)/@\(handle)"
+        if let url = URL(string: urlStr) {
+            NSWorkspace.shared.open(url)
+        }
+    }
+    
     @IBAction func grantFolderAccess(_ sender: NSMenuItem) {
         juggler.grantFolderAccess()
     }
