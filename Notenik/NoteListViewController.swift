@@ -764,10 +764,21 @@ class NoteListViewController:   NSViewController,
     func tableViewColumnDidResize(_ notification: Notification) {
         if let tableColumn = notification.userInfo?["NSTableColumn"] as? NSTableColumn {
             if let collection = notenikIO?.collection {
-                collection.columnWidths.add(title: tableColumn.title,
-                                            min: Int(tableColumn.minWidth),
-                                            pref: Int(tableColumn.width),
-                                            max: Int(tableColumn.maxWidth))
+                let type = String(tableColumn.identifier.rawValue.dropLast(7))
+                let cw = ColumnWidth(title: type, min: 20, pref: 100, max: 1500)
+                let min = tableColumn.minWidth
+                if min > 10 && min < 1000 {
+                    cw.min = Int(min)
+                }
+                let pref = tableColumn.width
+                if pref >= 0 && pref < 5000 {
+                    cw.pref = Int(pref)
+                }
+                let max = tableColumn.maxWidth
+                if max > 0 && max < 32000 {
+                    cw.max = Int(max)
+                }
+                collection.columnWidths.add(cw)
             }
         }
     }
