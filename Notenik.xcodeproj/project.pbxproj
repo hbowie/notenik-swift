@@ -312,11 +312,6 @@
 		9CF435C824805C0500DD7C33 /* CountsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C624805C0500DD7C33 /* CountsWindowController.swift */; };
 		9CF435CA24805C2F00DD7C33 /* CountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C924805C2F00DD7C33 /* CountsViewController.swift */; };
 		9CF435CB24805C2F00DD7C33 /* CountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C924805C2F00DD7C33 /* CountsViewController.swift */; };
-		9CF9D47F293BBF0300E62DE2 /* MastodonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9CF9D47E293BBF0300E62DE2 /* MastodonKit */; };
-		9CF9D482293BC2C600E62DE2 /* Mastodon.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF9D481293BC2C600E62DE2 /* Mastodon.storyboard */; };
-		9CF9D484293BC8E700E62DE2 /* MastodonWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF9D483293BC8E700E62DE2 /* MastodonWindowController.swift */; };
-		9CF9D486293BC91000E62DE2 /* MastodonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF9D485293BC91000E62DE2 /* MastodonViewController.swift */; };
-		9CF9D488293BD6FE00E62DE2 /* MastodonInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF9D487293BD6FE00E62DE2 /* MastodonInfo.swift */; };
 		9CFC28A725E08C560094B4CB /* intro-ios in Resources */ = {isa = PBXBuildFile; fileRef = 9CFC28A625E08C560094B4CB /* intro-ios */; };
 		9CFCB047226BC7FF00443FFA /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
 		9CFCB9E9293A5A04008D53E7 /* ComboItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB9E8293A5A04008D53E7 /* ComboItem.swift */; };
@@ -568,10 +563,6 @@
 		9CF435C624805C0500DD7C33 /* CountsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountsWindowController.swift; sourceTree = "<group>"; };
 		9CF435C924805C2F00DD7C33 /* CountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountsViewController.swift; sourceTree = "<group>"; };
 		9CF54FA8244A2E07001EF927 /* NotenikLib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikLib; path = ../NotenikLib; sourceTree = "<group>"; };
-		9CF9D481293BC2C600E62DE2 /* Mastodon.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Mastodon.storyboard; sourceTree = "<group>"; };
-		9CF9D483293BC8E700E62DE2 /* MastodonWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MastodonWindowController.swift; sourceTree = "<group>"; };
-		9CF9D485293BC91000E62DE2 /* MastodonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MastodonViewController.swift; sourceTree = "<group>"; };
-		9CF9D487293BD6FE00E62DE2 /* MastodonInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MastodonInfo.swift; sourceTree = "<group>"; };
 		9CFC28A625E08C560094B4CB /* intro-ios */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "intro-ios"; sourceTree = "<group>"; };
 		9CFCB9E8293A5A04008D53E7 /* ComboItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboItem.swift; sourceTree = "<group>"; };
 		9CFCB9EA293A65F3008D53E7 /* ComboData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboData.swift; sourceTree = "<group>"; };
@@ -585,7 +576,6 @@
 				9C63100F257596E700FCD74A /* CoreXLSX in Frameworks */,
 				9C036298239AE7D500C948DB /* Ink in Frameworks */,
 				9C0A347D244A262300B39604 /* NotenikLib in Frameworks */,
-				9CF9D47F293BBF0300E62DE2 /* MastodonKit in Frameworks */,
 				9CC4B15B2439111B00CB8EB2 /* NotenikTextile in Frameworks */,
 				9C07F7522436904F00460E14 /* NotenikUtils in Frameworks */,
 				9CC44AF62436A904002B41EF /* NotenikMkdown in Frameworks */,
@@ -783,7 +773,6 @@
 				9C7995BD28877376003C22D5 /* intentHandlers */,
 				9C2709C427A1B43100B8FD9B /* linkCleaner */,
 				9C60E70E21F6518400C332ED /* logging */,
-				9CF9D480293BC25C00E62DE2 /* mastodon */,
 				9C6D8EA4259AB73C00E7AE38 /* medium */,
 				9CD9058726362E54000851E8 /* microblog */,
 				9C3CC8F2250A980D002C95D0 /* navigator */,
@@ -1142,17 +1131,6 @@
 			path = counts;
 			sourceTree = "<group>";
 		};
-		9CF9D480293BC25C00E62DE2 /* mastodon */ = {
-			isa = PBXGroup;
-			children = (
-				9CF9D481293BC2C600E62DE2 /* Mastodon.storyboard */,
-				9CF9D483293BC8E700E62DE2 /* MastodonWindowController.swift */,
-				9CF9D485293BC91000E62DE2 /* MastodonViewController.swift */,
-				9CF9D487293BD6FE00E62DE2 /* MastodonInfo.swift */,
-			);
-			path = mastodon;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1178,7 +1156,6 @@
 				9C63100E257596E700FCD74A /* CoreXLSX */,
 				9C5CBC7825D60AA300D23F4B /* Down */,
 				9C7132DF26923A2300A3034F /* ZipArchive */,
-				9CF9D47E293BBF0300E62DE2 /* MastodonKit */,
 			);
 			productName = Notenik;
 			productReference = 9C60E6CE21F64B3B00C332ED /* Notenik.app */;
@@ -1301,7 +1278,6 @@
 				9C63100D257596E700FCD74A /* XCRemoteSwiftPackageReference "CoreXLSX" */,
 				9C5CBC7725D60AA300D23F4B /* XCRemoteSwiftPackageReference "Down" */,
 				9C7132DE26923A2200A3034F /* XCRemoteSwiftPackageReference "ZipArchive" */,
-				9CF9D47D293BBF0300E62DE2 /* XCRemoteSwiftPackageReference "MastodonKit" */,
 			);
 			productRefGroup = 9C60E6CF21F64B3B00C332ED /* Products */;
 			projectDirPath = "";
@@ -1335,7 +1311,6 @@
 				9C674C1D288F3B4F0035E612 /* QueryOutput.storyboard in Resources */,
 				9C29A4EA25D1CABC00409BF5 /* models in Resources */,
 				9CC41CD5229CA61700E92A66 /* Credits.rtf in Resources */,
-				9CF9D482293BC2C600E62DE2 /* Mastodon.storyboard in Resources */,
 				9C0B643523885E9900869FAA /* TagsMassChange.storyboard in Resources */,
 				9C3CC8F6250A9C9E002C95D0 /* Navigator.storyboard in Resources */,
 				9C6E781927EA646D004BB9A0 /* Notenik.sdef in Resources */,
@@ -1419,7 +1394,6 @@
 				9C1BE27122EB940E006FDFEC /* ScriptWindowController.swift in Sources */,
 				9C4A45A82723464400BE3202 /* KlassView.swift in Sources */,
 				9C79BDB0226E368800796E93 /* LabelView.swift in Sources */,
-				9CF9D486293BC91000E62DE2 /* MastodonViewController.swift in Sources */,
 				9C1E0C9222E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
 				9C4A45AA272346BD00BE3202 /* KlassDataSource.swift in Sources */,
 				9CAE23F726D166CB0002FCCD /* LookupDataSource.swift in Sources */,
@@ -1442,7 +1416,6 @@
 				9C7995BF288773D2003C22D5 /* GetNoteTitleIntentHandler.swift in Sources */,
 				9C822BA222D6DC71008EF106 /* TagsTokenDelegate.swift in Sources */,
 				9CAD6A4F22DF9ACD00531D90 /* PrefsTabViewController.swift in Sources */,
-				9CF9D488293BD6FE00E62DE2 /* MastodonInfo.swift in Sources */,
 				9CADA025286147FF00E71990 /* EditPrefsViewController.swift in Sources */,
 				9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */,
 				9C29DD29226286A100928180 /* CollectionWindow.swift in Sources */,
@@ -1530,7 +1503,6 @@
 				9C617AE627DBDEA400ACEC8A /* NotePickerViewController.swift in Sources */,
 				9CEAB6FB27F35DEB003866EA /* AppGetSelectedNoteFilePath.swift in Sources */,
 				9CA80797229EE97100C5D673 /* GeneralPrefsViewController.swift in Sources */,
-				9CF9D484293BC8E700E62DE2 /* MastodonWindowController.swift in Sources */,
 				9C9E4801271F60980094FEA5 /* AdvSearchViewController.swift in Sources */,
 				9CB60BC622651074003B5655 /* ShareViewController.swift in Sources */,
 				9C85994E273EE4F6008758EF /* NewWithOptionsWindowController.swift in Sources */,
@@ -1841,7 +1813,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 404;
+				CURRENT_PROJECT_VERSION = 408;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1854,7 +1826,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 11.0.2;
+				MARKETING_VERSION = 11.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1870,7 +1842,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 404;
+				CURRENT_PROJECT_VERSION = 408;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1883,7 +1855,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 11.0.2;
+				MARKETING_VERSION = 11.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2133,14 +2105,6 @@
 				minimumVersion = 0.1.0;
 			};
 		};
-		9CF9D47D293BBF0300E62DE2 /* XCRemoteSwiftPackageReference "MastodonKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/MastodonKit/MastodonKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2214,11 +2178,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9CC4B1592439111B00CB8EB2 /* XCRemoteSwiftPackageReference "NotenikTextile" */;
 			productName = NotenikTextile;
-		};
-		9CF9D47E293BBF0300E62DE2 /* MastodonKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9CF9D47D293BBF0300E62DE2 /* XCRemoteSwiftPackageReference "MastodonKit" */;
-			productName = MastodonKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

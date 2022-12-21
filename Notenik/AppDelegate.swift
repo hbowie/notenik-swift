@@ -286,6 +286,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         }
     }
     
+    @IBAction func donateViaKofi(_ sender: Any) {
+        let url = URL(string: "https://ko-fi.com/hbowie")
+        if url != nil {
+            NSWorkspace.shared.open(url!)
+        }
+    }
+    
     @IBAction func menuHelpDiscussionForum(_ sender: NSMenuItem) {
         guard let url = URL(string: "https://discourse.notenik.app") else { return }
         NSWorkspace.shared.open(url)
