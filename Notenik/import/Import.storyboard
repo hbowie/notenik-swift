@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="KrB-Wf-89V">
+            <objects>
+                <windowController storyboardIdentifier="importWC" id="0OM-fl-jeC" customClass="ImportWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Import Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="d77-6g-cVn">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+                        <view key="contentView" id="cre-6h-VpL">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="0OM-fl-jeC" id="CUb-Sf-42j"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="bOz-E3-aQP" kind="relationship" relationship="window.shadowedContentViewController" id="lyL-kg-yzX"/>
+                    </connections>
+                </windowController>
+                <customObject id="PO4-I7-Mav" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-128" y="4"/>
+        </scene>
+        <!--Import View Controller-->
+        <scene sceneID="AUv-Dl-Tzu">
+            <objects>
+                <viewController id="bOz-E3-aQP" customClass="ImportViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="k8Q-uL-rxg">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vig-2f-SGq">
+                                <rect key="frame" x="18" y="234" width="108" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Additional Fields:" id="kTm-l9-a4Z">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jya-kv-xdX">
+                                <rect key="frame" x="146" y="228" width="161" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="154" id="6d0-jY-fBj"/>
+                                </constraints>
+                                <popUpButtonCell key="cell" type="push" title="Ignore" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fuT-Y5-fuI" id="C06-g1-mrp">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="ZhF-Jr-5b9">
+                                        <items>
+                                            <menuItem title="Ignore" state="on" id="fuT-Y5-fuI"/>
+                                            <menuItem title="Add" id="4h9-iZ-RwK"/>
+                                            <menuItem title="Replace" id="Aoa-kk-sfd"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kHn-9D-TjD">
+                                <rect key="frame" x="18" y="203" width="114" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Rows (aka Notes):" id="H0g-mN-30g">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aIr-3N-xj1">
+                                <rect key="frame" x="146" y="197" width="161" height="25"/>
+                                <popUpButtonCell key="cell" type="push" title="Add" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Kco-5f-Pdb" id="uDz-qF-6dl">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="Wkr-4b-a9k">
+                                        <items>
+                                            <menuItem title="Add" state="on" id="Kco-5f-Pdb"/>
+                                            <menuItem title="Match and Add" id="YgX-Df-eRX"/>
+                                            <menuItem title="Item" id="RYQ-xi-8Kg" userLabel="Match Only">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uVE-Ge-CpR">
+                                <rect key="frame" x="13" y="13" width="76" height="32"/>
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zqb-ns-O8d">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="userSaysCancel:" target="bOz-E3-aQP" id="A2H-bN-mxD"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yBS-Qd-iW6">
+                                <rect key="frame" x="414" y="13" width="53" height="32"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qIq-QV-GCc">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="userSaysOK:" target="bOz-E3-aQP" id="z5I-9b-Obg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="vig-2f-SGq" firstAttribute="top" secondItem="k8Q-uL-rxg" secondAttribute="top" constant="20" symbolic="YES" id="0Qj-IQ-6AP"/>
+                            <constraint firstItem="vig-2f-SGq" firstAttribute="leading" secondItem="k8Q-uL-rxg" secondAttribute="leading" constant="20" symbolic="YES" id="5F4-ZN-wzk"/>
+                            <constraint firstAttribute="bottom" secondItem="uVE-Ge-CpR" secondAttribute="bottom" constant="20" symbolic="YES" id="LCV-Aa-l7M"/>
+                            <constraint firstItem="uVE-Ge-CpR" firstAttribute="baseline" secondItem="yBS-Qd-iW6" secondAttribute="baseline" id="MYr-Gw-gIr"/>
+                            <constraint firstItem="aIr-3N-xj1" firstAttribute="leading" secondItem="kHn-9D-TjD" secondAttribute="trailing" constant="19" id="QYT-3R-b3l"/>
+                            <constraint firstItem="kHn-9D-TjD" firstAttribute="leading" secondItem="uVE-Ge-CpR" secondAttribute="leading" id="SXI-3O-Pyo"/>
+                            <constraint firstItem="jya-kv-xdX" firstAttribute="trailing" secondItem="aIr-3N-xj1" secondAttribute="trailing" id="Z8s-MC-hiz"/>
+                            <constraint firstItem="aIr-3N-xj1" firstAttribute="top" secondItem="jya-kv-xdX" secondAttribute="bottom" constant="11" id="bX2-N8-xSD"/>
+                            <constraint firstItem="jya-kv-xdX" firstAttribute="leading" secondItem="aIr-3N-xj1" secondAttribute="leading" id="fJF-ih-M5l"/>
+                            <constraint firstItem="vig-2f-SGq" firstAttribute="leading" secondItem="kHn-9D-TjD" secondAttribute="leading" id="gVV-Vx-8EJ"/>
+                            <constraint firstAttribute="trailing" secondItem="yBS-Qd-iW6" secondAttribute="trailing" constant="20" symbolic="YES" id="nHP-v6-euD"/>
+                            <constraint firstItem="vig-2f-SGq" firstAttribute="centerY" secondItem="jya-kv-xdX" secondAttribute="centerY" id="oac-cK-Bl4"/>
+                            <constraint firstItem="kHn-9D-TjD" firstAttribute="centerY" secondItem="aIr-3N-xj1" secondAttribute="centerY" id="pyV-So-cU1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="fieldsPopup" destination="jya-kv-xdX" id="lar-fW-8vx"/>
+                        <outlet property="rowsPopup" destination="aIr-3N-xj1" id="pl8-PO-LM4"/>
+                    </connections>
+                </viewController>
+                <customObject id="v36-Gb-gah" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-128" y="454"/>
+        </scene>
+    </scenes>
+</document>

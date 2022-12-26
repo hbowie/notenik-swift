@@ -55,6 +55,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let mediumPubStoryboard:       NSStoryboard = NSStoryboard(name: "MediumPub", bundle: nil)
     let microBlogStoryboard:       NSStoryboard = NSStoryboard(name: "MicroBlog", bundle: nil)
     let exportStoryboard:          NSStoryboard = NSStoryboard(name: "Export", bundle: nil)
+    let importStoryboard:          NSStoryboard = NSStoryboard(name: "Import", bundle: nil)
     let attachmentStoryboard:      NSStoryboard = NSStoryboard(name: "Attachment", bundle: nil)
     let tagsMassChangeStoryboard:  NSStoryboard = NSStoryboard(name: "TagsMassChange", bundle: nil)
     let advSearchStoryboard:       NSStoryboard = NSStoryboard(name: "AdvSearch", bundle: nil)
@@ -3109,10 +3110,36 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let _ = alert.runModal()
     }
     
+    var importParms = ImportParms()
+    
     /// Import additional notes from a comma- or tab-separated text file.
     @IBAction func importDelimited(_ sender: Any) {
         
         guard let noteIO = guardForCollectionAction() else { return }
+        
+        if let importController = self.importStoryboard.instantiateController(withIdentifier: "importWC") as? ImportWindowController {
+            importController.collectionWC = self
+            importController.io = noteIO
+            importController.parms = importParms
+            importController.showWindow(self)
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get an Import Window Controller!")
+        }
+    }
+    
+    func importSettingsObtained() {
+        if importParms.userOkToSettings {
+            importDelimitedOK()
+        }
+    }
+    
+    func importDelimitedOK() {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
         guard let importURL = promptUserForImportFile(
                 title: "Open an input tab- or comma-separated text file",
                 parent: noteIO.collection!.lib.getURL(type: .parent))
@@ -3122,14 +3149,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     func importDelimitedFromURL(_ fileURL: URL, noteIO: NotenikIO) {
         let importer = DelimitedReader()
-        let imports = noteIO.importRows(importer: importer, fileURL: fileURL)
+        let (imports, mods) = noteIO.importRows(importer: importer, fileURL: fileURL, importParms: importParms)
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionWindowController",
                           level: .info,
-                          message: "Imported \(imports) notes from \(fileURL.path)")
+                          message: "Imported \(imports) notes, modified \(mods) notes, from \(fileURL.path)")
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = "Imported \(imports) notes from \(fileURL.path)"
+        alert.messageText = "Imported \(imports) notes, modified \(mods) notes, from \(fileURL.path)"
         alert.addButton(withTitle: "OK")
         _ = alert.runModal()
         editVC!.io = noteIO
@@ -3147,7 +3174,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     func importCSVfromOmniFocus(_ fileURL: URL, noteIO: NotenikIO) {
         let importer = OmniFocusReader()
-        let imports = noteIO.importRows(importer: importer, fileURL: fileURL)
+        let imports = noteIO.importRows(importer: importer, fileURL: fileURL, importParms: importParms)
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionWindowController",
                           level: .info,
@@ -3172,7 +3199,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     func importPlainTextfromOmniFocus(_ fileURL: URL, noteIO: NotenikIO) {
         let importer = OmniFocusPlainTextReader()
-        let imports = noteIO.importRows(importer: importer, fileURL: fileURL)
+        let imports = noteIO.importRows(importer: importer, fileURL: fileURL, importParms: importParms)
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionWindowController",
                           level: .info,
@@ -3199,14 +3226,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     func importXSLXFromURL(_ fileURL: URL) {
         guard let noteIO = guardForCollectionAction() else { return }
         let importer = XLSXReader()
-        let imports = noteIO.importRows(importer: importer, fileURL: fileURL)
+        let (imports, mods) = noteIO.importRows(importer: importer, fileURL: fileURL, importParms: importParms)
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionWindowController",
                           level: .info,
-                          message: "Imported \(imports) notes from \(fileURL.path)")
+                          message: "Imported \(imports) notes, Modified \(mods) notes, from \(fileURL.path)")
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = "Imported \(imports) notes from \(fileURL.path)"
+        alert.messageText = "Imported \(imports) notes, Modified \(mods) notes, from \(fileURL.path)"
         alert.addButton(withTitle: "OK")
         _ = alert.runModal()
         editVC!.io = noteIO
