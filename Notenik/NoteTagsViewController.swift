@@ -61,6 +61,29 @@ class NoteTagsViewController: NSViewController,
         outlineView.reloadData()
     }
     
+    /// Expand the given tag so that its children are visible
+    /// - Parameter forTag: The tag to be expanded.
+    public func expand(forTag: String) {
+        let lowerTagTarget = forTag.lowercased()
+        let itemCount = outlineView.numberOfRows
+        var i = -1
+        while (i + 1) < itemCount {
+            i += 1
+            guard let item = outlineView.item(atRow: i) else { continue }
+            guard let node = item as? TagsNode else { continue }
+            guard node.children.count > 0 else { continue }
+            guard node.type == .tag else { continue }
+            guard let tag = node.tag else { continue }
+            if tag.lowercased() == lowerTagTarget {
+                outlineView.expandItem(item, expandChildren: true)
+                outlineView.scrollRowToVisible(i+1)
+                return
+            } else if outlineView.isItemExpanded(item) {
+                outlineView.collapseItem(item, collapseChildren: true)
+            }
+        }
+    }
+    
     @IBAction func doubleClick(_ sender: NSOutlineView) {
         
         guard collectionWindowController != nil else { return }
@@ -128,6 +151,11 @@ class NoteTagsViewController: NSViewController,
         }
     }
     
+    // -----------------------------------------------------------
+    //
+    // MARK: Implement NSOutlineViewDataSource
+    //
+    // -----------------------------------------------------------
     
     /// How many children does this node have?
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {

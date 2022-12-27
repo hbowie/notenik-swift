@@ -4069,6 +4069,15 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    /// Expand the given tag so that its children are visible
+    /// - Parameter forTag: The tag to be expanded.
+    public func expand(forTag: String) {
+        guard let ctabs = collectionTabs else { return }
+        guard let tvc = tagsVC else { return }
+        ctabs.selectedTabViewItemIndex = 1
+        tvc.expand(forTag: forTag)
+    }
+    
     // ----------------------------------------------------------------------------------
     //
     // The following section of code contains internal utility routines.

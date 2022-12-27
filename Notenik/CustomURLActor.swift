@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 5/21/21.
 //
-//  Copyright © 2021 Herb Bowie (https://hbowie.net)
+//  Copyright © 2021 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -28,7 +28,7 @@ class CustomURLActor {
     }
     
     func act(on customURL: String) -> Bool {
-        logInfo(msg: "Received request to act on Custom URL: \(customURL)")
+        // logInfo(msg: "Received request to act on Custom URL: \(customURL)")
         guard let url = URL(string: customURL) else {
             communicateError("Could not fashion a URL from this string: \(customURL)")
             return false
@@ -67,6 +67,8 @@ class CustomURLActor {
             processAddCommand(labels: labels, values: values)
         case "help":
             processHelpCommand(labels: labels, values: values)
+        case "expand":
+            processExpandCommand(labels: labels, values: values)
         case "open":
             processOpenCommand(labels: labels, values: values)
         case "prefs", "settings":
@@ -106,6 +108,40 @@ class CustomURLActor {
             cwc.select(note: note, position: nil, source: .action, andScroll: true)
         default:
             communicateError("Help Query Parameter of \(label) not recognized")
+        }
+    }
+    
+    func processExpandCommand(labels: [String], values: [String]) {
+        var cwc: CollectionWindowController?
+        var i = 0
+        while i < labels.count {
+            processExpandParm(label: labels[i],
+                              value: values[i],
+                              cwc: &cwc)
+            i += 1
+        }
+    }
+    
+    func processExpandParm(label: String,
+                           value: String,
+                           cwc:   inout CollectionWindowController?) {
+        switch label {
+        case "shortcut":
+            cwc = openCollection(shortcut: value, path: nil)
+        case "path":
+            cwc = openCollection(shortcut: nil, path: value)
+        case "tag":
+            guard let controller = cwc else {
+                communicateError("Unable to open desired Collection")
+                return
+            }
+            var targetTag = value
+            if value.starts(with: "#") {
+                _ = targetTag.removeFirst()
+            }
+            controller.expand(forTag: targetTag)
+        default:
+            communicateError("List Query Parameter of '\(label)' not recognized")
         }
     }
     
