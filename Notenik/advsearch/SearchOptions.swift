@@ -14,7 +14,20 @@ import Foundation
 
 class SearchOptions {
 
-    var searchText = ""
+    var _searchText = ""
+    var searchText: String {
+        get {
+            return _searchText
+        }
+        set {
+            hashTag = newValue.starts(with: "#")
+            if hashTag {
+                _searchText = String(newValue.dropFirst(1))
+            } else {
+                _searchText = newValue
+            }
+        }
+    }
     
     var titleField = true
     var akaField = true
@@ -25,7 +38,10 @@ class SearchOptions {
     
     var caseSensitive = false
     
+    var hashTag = false
+    
     init() {
         
     }
+    
 }

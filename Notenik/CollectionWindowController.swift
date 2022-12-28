@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 - 2022 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -2200,6 +2200,13 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             searchFor = searchOptions.searchText.lowercased()
         }
         var matched = false
+        
+        matched = searchOneFieldUsingOptions(fieldSelected: searchOptions.hashTag,
+                                             noteField: note.tags.value,
+                                             searchFor: searchFor)
+        if searchOptions.hashTag {
+            return matched
+        }
         
         matched = searchOneFieldUsingOptions(fieldSelected: searchOptions.titleField,
                                              noteField: note.title.value,
