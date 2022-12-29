@@ -3137,12 +3137,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    /// User has finished with import settings.
     func importSettingsObtained() {
         if importParms.userOkToSettings {
             importDelimitedOK()
         }
     }
     
+    /// User said to go ahead and import. 
     func importDelimitedOK() {
         
         guard let noteIO = guardForCollectionAction() else { return }

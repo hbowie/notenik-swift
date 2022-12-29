@@ -81,7 +81,7 @@
                                         <items>
                                             <menuItem title="Add" state="on" id="Kco-5f-Pdb"/>
                                             <menuItem title="Match and Add" id="YgX-Df-eRX"/>
-                                            <menuItem title="Item" id="RYQ-xi-8Kg" userLabel="Match Only">
+                                            <menuItem title="Match Only" id="RYQ-xi-8Kg" userLabel="Match Only">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
                                         </items>

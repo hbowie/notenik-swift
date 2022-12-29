@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 3/11/22.
 //
-//  Copyright © 2022 Herb Bowie (https://hbowie.net)
+//  Copyright © 2022 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -20,6 +20,12 @@ class NotePickerViewController: NSViewController,
                                     NSTableViewDataSource,
                                     NSTableViewDelegate,
                                     NSTextFieldDelegate {
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Constants and Variables used.
+    //
+    // -----------------------------------------------------------
     
     let multi = MultiFileIO.shared
     
@@ -61,9 +67,16 @@ class NotePickerViewController: NSViewController,
         }
     }
     
-    var matchingTitles: [String] = []
+    var matchingNotes: [NoteToPick] = []
     var lastTitleTextLength = 0
     
+    // -----------------------------------------------------------
+    //
+    // MARK: Basic Setup, irrespective of Collection used.
+    //
+    // -----------------------------------------------------------
+    
+    /// Setup the user interface and load a list of available folders. .
     override func viewDidLoad() {
         super.viewDidLoad()
         titleTextField.delegate = self
@@ -104,23 +117,6 @@ class NotePickerViewController: NSViewController,
         titleTextField.becomeFirstResponder()
     }
     
-    var noteIO: NotenikIO? {
-        get {
-            return _noteIO
-        }
-        set {
-            _noteIO = newValue
-            tailorForCollection()
-        }
-    }
-    var _noteIO: NotenikIO?
-    
-    func tailorForCollection() {
-        guard let url = noteIO?.collection?.fullPathURL else { return }
-        initalFolder.link = NotenikLink(url: url, isCollection: true)
-        setTargetCollection(targetShortcut: initalFolderShortcut, targetIO: noteIO!)
-    }
-    
     /// Load the available folders along with their shortcuts.
     func loadFolders() {
         folders = []
@@ -133,6 +129,32 @@ class NotePickerViewController: NSViewController,
         folders.sort()
     }
     
+    // --------------------------------------------------------------
+    //
+    // MARK: Methods related to selection of a Collection.
+    //
+    // --------------------------------------------------------------
+    
+    /// Save the NoteIO instance and tailor the interface for the particular collection.
+    var noteIO: NotenikIO? {
+        get {
+            return _noteIO
+        }
+        set {
+            _noteIO = newValue
+            tailorForCollection()
+        }
+    }
+    var _noteIO: NotenikIO?
+    
+    /// Tailor the user interface for a particular collection.
+    func tailorForCollection() {
+        guard let url = noteIO?.collection?.fullPathURL else { return }
+        initalFolder.link = NotenikLink(url: url, isCollection: true)
+        setTargetCollection(targetShortcut: initalFolderShortcut, targetIO: noteIO!)
+    }
+    
+    /// See what the user has entered in the Collection Shortcut field, and respond appropriately. 
     @IBAction func shortcutComboBoxAction(_ sender: NSComboBox) {
         guard let io = noteIO else { return }
         let str = sender.stringValue
@@ -157,7 +179,7 @@ class NotePickerViewController: NSViewController,
         shortcutToUse = targetShortcut
         ioToUse = targetIO
         titleTextField.stringValue = ""
-        matchingTitles = []
+        matchingNotes = []
         lastTitleTextLength = 0
         titleTextField.becomeFirstResponder()
     }
@@ -180,81 +202,168 @@ class NotePickerViewController: NSViewController,
         return NSNotFound
     }
     
+    var tagToMatch = ""
+    
     /// Update list of matching note titles to correspond to entered text.
     func controlTextDidChange(_ obj: Notification) {
         
         let textToMatch = titleTextField.stringValue.lowercased()
+        var hashMark = false
+        var endTag = false
+        tagToMatch = ""
+        var titleToMatch = ""
+        var textStarted = false
+        for c in textToMatch {
+            if c.isWhitespace && !textStarted { continue }
+            if c == "#" && !textStarted {
+                hashMark = true
+                continue
+            }
+            textStarted = true
+            if hashMark && !endTag {
+                if c == "=" || c == "|" {
+                    tagToMatch = StringUtils.trim(tagToMatch)
+                    endTag = true
+                    continue
+                } else {
+                    tagToMatch.append(c)
+                }
+                continue
+            }
+            if c.isWhitespace && titleToMatch.isEmpty {
+                continue
+            }
+            titleToMatch.append(c)
+        }
         
-        if textToMatch.count < 3 {
+        if textToMatch.count < 3 || (tagToMatch.count < 3 && titleToMatch.count < 3) {
             // Fewer than three characters entered - empty out the table of possible matches
-            matchingTitles = []
+            matchingNotes = []
         } else if ioToUse == nil {
             // No I/O module? Then nothing to show.
-            matchingTitles = []
-        } else if textToMatch.count > lastTitleTextLength && lastTitleTextLength >= 3{
+            matchingNotes = []
+        } else if textToMatch.count > lastTitleTextLength && !matchingNotes.isEmpty {
             // User is entering more characters -- narrow the selections in the list.
             var i = 0
-            while i < matchingTitles.count {
-                if matchingTitles[i].lowercased().contains(textToMatch) {
+            while i < matchingNotes.count {
+                let noteToPick = matchingNotes[i]
+                if noteMatches(noteTitle: noteToPick.title,
+                               noteTags: noteToPick.tags,
+                               tagToMatch: tagToMatch,
+                               titleToMatch: titleToMatch) {
+                    noteToPick.setMatchingTag(tagToMatch: tagToMatch)
                     i += 1
                 } else {
-                    matchingTitles.remove(at: i)
+                    matchingNotes.remove(at: i)
                 }
             }
         } else {
             // Reload the table with titles that match the entered characters.
-            matchingTitles = []
+            matchingNotes = []
             
             var i = 0
             while i < ioToUse!.count {
                 let note = ioToUse!.getNote(at: i)
-                if note!.title.value.lowercased().contains(textToMatch) {
-                    matchingTitles.append(note!.title.value)
+                if noteMatches(noteTitle: note!.title.value,
+                               noteTags: note!.tags,
+                               tagToMatch: tagToMatch,
+                               titleToMatch: titleToMatch) {
+                    let newMatch = NoteToPick(title: note!.title.value, tags: note!.tags)
+                    newMatch.setMatchingTag(tagToMatch: tagToMatch)
+                    matchingNotes.append(newMatch)
                 }
                 i += 1
             }
             
             let akaAll = ioToUse!.getAKAEntries()
             for (aka, note) in akaAll.akaDict {
-                if aka.lowercased().contains(textToMatch) {
+                if noteMatches(noteTitle: aka.lowercased(),
+                               noteTags: note.tags,
+                               tagToMatch: tagToMatch,
+                               titleToMatch: titleToMatch) {
                     for originalAKA in note.aka.list {
                         if aka == StringUtils.toCommon(originalAKA) {
-                            matchingTitles.append(originalAKA)
+                            let akaMatch = NoteToPick(title: originalAKA, tags: note.tags)
+                            akaMatch.setMatchingTag(tagToMatch: tagToMatch)
+                            matchingNotes.append(akaMatch)
                         }
                     }
                 }
             }
             
-            matchingTitles.sort()
+            matchingNotes.sort()
         }
         
         lastTitleTextLength = textToMatch.count
         noteTableView.reloadData()
-        if matchingTitles.count > 0 {
+        if matchingNotes.count > 0 {
             noteTableView.selectRowIndexes([0], byExtendingSelection: false)
         }
+    }
+    
+    /// See if Note meets criteria specified so far.
+    func noteMatches(noteTitle: String,
+                     noteTags: TagsValue,
+                     tagToMatch: String,
+                     titleToMatch: String) -> Bool {
+        
+        if !tagToMatch.isEmpty {
+            if !noteTags.value.lowercased().contains(tagToMatch) {
+                return false
+            }
+        }
+        if !titleToMatch.isEmpty {
+            if !noteTitle.lowercased().contains(titleToMatch) {
+                return false
+            }
+        }
+        return true
     }
     
     @IBAction func titleTextAction(_ sender: Any) {
 
     }
     
+    // -----------------------------------------------------------
+    //
+    // MARK: Methods to support the Table View.
+    //
+    // -----------------------------------------------------------
+    
     func numberOfRows(in tableView: NSTableView) -> Int {
         guard ioToUse != nil else { return 0 }
-        return matchingTitles.count
+        return matchingNotes.count
     }
     
+    /// Return the view for a specified table cell.
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
-        guard row >= 0 && row < matchingTitles.count else { return nil }
+        guard row >= 0 && row < matchingNotes.count else { return nil }
         let cellID = NSUserInterfaceItemIdentifier(rawValue: "TitleCellID")
         guard let anyView = noteTableView.makeView(withIdentifier: cellID, owner: self) else { return nil }
         guard let cellView = anyView as? NSTableCellView else { return nil }
-        cellView.textField?.stringValue = matchingTitles[row]
+        let md = matchingNotes[row].getMarkdown(includeTag: tagToMatch.count > 0)
+        if #available(macOS 12, *) {
+            do {
+                let attrib = try NSAttributedString(markdown: md)
+                cellView.textField?.attributedStringValue = attrib
+            } catch {
+                cellView.textField?.stringValue = md
+            }
+        } else {
+            cellView.textField?.stringValue = md
+        }
         
         return cellView
     }
     
+    // -----------------------------------------------------------
+    //
+    // MARK: Respond to a keyboard shortcut.
+    //
+    // -----------------------------------------------------------
+    
+    /// Respond to a key press with the appropriate action.
     func myKeyDown(with event: NSEvent) -> Bool {
         guard let locWindow = self.view.window,
               NSApplication.shared.keyWindow === locWindow else { return false }
@@ -265,39 +374,39 @@ class NotePickerViewController: NSViewController,
         }
         if event.modifierFlags.contains(.command) {
             let row = noteTableView.selectedRow
-            guard row >= 0 && row < matchingTitles.count else { return false }
-            let title = matchingTitles[row]
+            guard row >= 0 && row < matchingNotes.count else { return false }
+            let noteToPick = matchingNotes[row]
             switch chars {
             case "c":
                 if event.modifierFlags.contains(.option) {
                     AppPrefs.shared.noteAction = copyLink
-                    copyNoteTitleWithBrackets(title: title)
+                    copyNoteTitleWithBrackets(title: noteToPick.title)
                     return true
                 } else {
                     AppPrefs.shared.noteAction = copyTitle
-                    copyNoteTitle(title: title)
+                    copyNoteTitle(title: noteToPick.title)
                     return true
                 }
             case "g":
                 AppPrefs.shared.noteAction = goToAction
-                goTo(title: title)
+                goTo(title: noteToPick.title)
                 return true
             case "l":
                 AppPrefs.shared.noteAction = launchAction
-                launchLink(title: title)
+                launchLink(title: noteToPick.title)
                 return true
             case "t":
                 AppPrefs.shared.noteAction = copyTimestamp
-                copyNoteTimestamp(title: title)
+                copyNoteTimestamp(title: noteToPick.title)
                 return true
             case "v":
                 if event.modifierFlags.contains(.option) {
                     AppPrefs.shared.noteAction = copyPasteLink
-                    copyPasteNoteTitleWithBrackets(title: title)
+                    copyPasteNoteTitleWithBrackets(title: noteToPick.title)
                     return true
                 } else {
                     AppPrefs.shared.noteAction = copyPasteTitle
-                    copyPasteNoteTitle(title: title)
+                    copyPasteNoteTitle(title: noteToPick.title)
                     return true
                 }
             default:
@@ -324,58 +433,66 @@ class NotePickerViewController: NSViewController,
         }
     }
     
+    /// Cancel and get out.
     @IBAction func cancel(_ sender: Any) {
         closeWindow()
     }
     
+    /// Perform the requested action.
     @IBAction func ok(_ sender: Any) {
   
         guard let selectedAction = actionList.selectedItem else { return }
         AppPrefs.shared.noteAction = selectedAction.title
         let row = noteTableView.selectedRow
-        guard row >= 0 && row < matchingTitles.count else { return }
-        let title = matchingTitles[row]
+        guard row >= 0 && row < matchingNotes.count else { return }
+        let noteToPick = matchingNotes[row]
         
         // Perform the requested action.
         switch selectedAction.title {
         case copyTitle:
-            copyNoteTitle(title: title)
+            copyNoteTitle(title: noteToPick.title)
         case copyPasteTitle:
-            copyPasteNoteTitle(title: title)
+            copyPasteNoteTitle(title: noteToPick.title)
         case copyLink:
             if targetingAnotherCollection {
-                copyNotenikURLasMDlink(title: title)
+                copyNotenikURLasMDlink(title: noteToPick.title)
             } else {
-                copyNoteTitleWithBrackets(title: title)
+                copyNoteTitleWithBrackets(title: noteToPick.title)
             }
         case copyPasteLink:
             if targetingAnotherCollection {
-                copyPasteNotenikURLasMDlink(title: title)
+                copyPasteNotenikURLasMDlink(title: noteToPick.title)
             } else {
-                copyPasteNoteTitleWithBrackets(title: title)
+                copyPasteNoteTitleWithBrackets(title: noteToPick.title)
             }
         case copyPasteInc:
-            copyPasteInclude(title: title)
+            copyPasteInclude(title: noteToPick.title)
         case copyTimestamp:
-            copyNoteTimestamp(title: title)
+            copyNoteTimestamp(title: noteToPick.title)
         case copyPasteStamp:
-            copyPasteNoteTimestamp(title: title)
+            copyPasteNoteTimestamp(title: noteToPick.title)
         case copyNotenikURL:
-            copyNotenikURLForNote(title: title)
+            copyNotenikURLForNote(title: noteToPick.title)
         case copyPasteURL:
-            copyPasteNotenikURLForNote(title: title)
+            copyPasteNotenikURLForNote(title: noteToPick.title)
         case goToAction:
             if targetingAnotherCollection {
-                goToAnotherCollection(title: title)
+                goToAnotherCollection(title: noteToPick.title)
             } else {
-                goTo(title: title)
+                goTo(title: noteToPick.title)
             }
         case launchAction:
-            launchLink(title: title)
+            launchLink(title: noteToPick.title)
         default:
             break
         }
     }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Methods to perform various commands.
+    //
+    // -----------------------------------------------------------
     
     /// Copy the title of the indicated Note to the System pasteboard.
     func copyNoteTitle(title: String) {

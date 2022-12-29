@@ -44,13 +44,11 @@ class ImportViewController: NSViewController {
     
     
     @IBAction func userSaysCancel(_ sender: Any) {
-        print("cancel")
         importParms.userOkToSettings = false
         finishUp()
     }
     
     @IBAction func userSaysOK(_ sender: Any) {
-        print("ok")
         importParms.userOkToSettings = true
         
         if let cpStr = fieldsPopup.titleOfSelectedItem {
@@ -59,7 +57,7 @@ class ImportViewController: NSViewController {
             }
         }
         
-        if let rpStr = fieldsPopup.titleOfSelectedItem {
+        if let rpStr = rowsPopup.titleOfSelectedItem {
             if let rp = ImportParms.RowParm(rawValue: rpStr) {
                 importParms.rowParm = rp
             }
