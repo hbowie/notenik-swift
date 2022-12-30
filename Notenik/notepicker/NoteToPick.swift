@@ -13,31 +13,30 @@
 import Foundation
 
 import NotenikLib
+import NotenikUtils
 
 class NoteToPick: CustomStringConvertible, Comparable {
 
-    var title = ""
-    var titleLower = ""
+    var title: StringVar!
     var tags: TagsValue!
     var tagsLower = ""
     var matchingTag = ""
     
     var description: String {
-        return title
+        return title.original
     }
     
     init(title: String, tags: TagsValue) {
-        self.title = title
-        titleLower = title.lowercased()
+        self.title = StringVar(title)
         self.tags = tags
         tagsLower = tags.value.lowercased()
     }
     
-    func setMatchingTag(tagToMatch: String) {
+    func setMatchingTag(tagToMatch: StringVar) {
         matchingTag = ""
         guard !tagToMatch.isEmpty else { return }
         for tag in tags.tags {
-            if tag.value.lowercased().contains(tagToMatch) {
+            if tag.value.lowercased().contains(tagToMatch.lowered) {
                 matchingTag = tag.value
                 return
             }
@@ -46,9 +45,9 @@ class NoteToPick: CustomStringConvertible, Comparable {
     
     func getMarkdown(includeTag: Bool) -> String {
         if includeTag && !matchingTag.isEmpty {
-            return "#*\(matchingTag)* | \(title)"
+            return "#*\(matchingTag)* | \(title.original)"
         } else {
-            return title
+            return title.original
         }
     }
     
@@ -57,12 +56,6 @@ class NoteToPick: CustomStringConvertible, Comparable {
     }
     
     static func < (lhs: NoteToPick, rhs: NoteToPick) -> Bool {
-        if lhs.titleLower < rhs.titleLower {
-            return true
-        } else if lhs.titleLower > rhs.titleLower {
-            return false
-        } else {
-            return lhs.title < rhs.title
-        }
+        return lhs.title < rhs.title
     }
 }
