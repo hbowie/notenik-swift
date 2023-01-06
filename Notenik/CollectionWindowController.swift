@@ -112,10 +112,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             crumbs = NoteCrumbs(io: newValue!)
             window!.representedURL = notenikIO!.collection!.fullPathURL
             if notenikIO!.collection!.title == "" {
-                window!.title = notenikIO!.collection!.path
-            } else {
-                window!.title = notenikIO!.collection!.title
+                notenikIO!.collection!.setDefaultTitle()
             }
+            window!.title = notenikIO!.collection!.userFacingLabel()
             
             if self.window == nil {
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",

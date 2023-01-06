@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 5/29/19.
-//  Copyright © 2019 - 2022 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -46,6 +46,11 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     
     @IBOutlet var mastodonDomainTextField: NSTextField!
     
+    @IBOutlet var idFolderLevelsField: NSTextField!
+    
+    @IBOutlet var idFolderSepField: NSTextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if appPrefs.confirmDeletes {
@@ -75,6 +80,9 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
         
         mastodonHandleTextField.stringValue = appPrefs.mastodonHandle
         mastodonDomainTextField.stringValue = appPrefs.mastodonDomain
+        
+        idFolderLevelsField.stringValue = "\(appPrefs.idFolderLevels)"
+        idFolderSepField.stringValue = appPrefs.idFolderSep
     }
     
     @IBAction func appPrefsConfirmDeletes (_ sender: Any) {
@@ -120,6 +128,12 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     @IBAction func appPrefsOK(_ sender: Any) {
         appPrefs.mastodonHandle = mastodonHandleTextField.stringValue
         appPrefs.mastodonDomain = mastodonDomainTextField.stringValue
+        if let folderLevels = Int(idFolderLevelsField.stringValue) {
+            if folderLevels > 0 && folderLevels < 9 {
+                appPrefs.idFolderLevels = folderLevels
+            }
+        }
+        appPrefs.idFolderSep = idFolderSepField.stringValue
         self.view.window!.close()
     }
     
@@ -135,6 +149,19 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
         let selIndex = grantAccessOptPopUpButton.indexOfSelectedItem
         appPrefs.grantAccessOption = selIndex + 1
     }
+    
+    @IBAction func idFolderLevelsEdited(_ sender: Any) {
+        if let folderLevels = Int(idFolderLevelsField.stringValue) {
+            if folderLevels > 0 && folderLevels < 9 {
+                appPrefs.idFolderLevels = folderLevels
+            }
+        }
+    }
+    
+    @IBAction func idFolderSepEdited(_ sender: Any) {
+        appPrefs.idFolderSep = idFolderSepField.stringValue
+    }
+    
     /// Called when the user is leaving this tab for another one.
     func leavingTab() {
 

@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 1/12/21.
 //
-//  Copyright © 2021 Herb Bowie (https://hbowie.net)
+//  Copyright © 2021 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -19,8 +19,8 @@ class NavigatorFolder: CustomStringConvertible, NSCopying, Comparable {
     var folder = ""
     var link: NotenikLink!
     
-    init(link: NotenikLink) {
-        folder = link.folder.lowercased()
+    init(link: NotenikLink, handle: String) {
+        self.folder = handle
         self.link = link
     }
     
@@ -29,7 +29,7 @@ class NavigatorFolder: CustomStringConvertible, NSCopying, Comparable {
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = NavigatorFolder(link: self.link)
+        let copy = NavigatorFolder(link: self.link, handle: folder)
         return copy
     }
     

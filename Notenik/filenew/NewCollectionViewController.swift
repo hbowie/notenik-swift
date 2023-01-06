@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 2/7/21.
 //
-//  Copyright © 2021 - 2022 Herb Bowie (https://hbowie.net)
+//  Copyright © 2021 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -241,7 +241,7 @@ class NewCollectionViewController: NSTabViewController {
             if io != nil {
                 let collection = io!.collection
                 if collection != nil {
-                    collection!.title = collectionURL!.lastPathComponent
+                    collection!.setDefaultTitle()
                     if collection!.mirror != nil {
                         wc!.mirrorAllNotesAndIndex(self)
                     }

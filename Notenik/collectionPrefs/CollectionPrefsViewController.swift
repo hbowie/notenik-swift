@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 4/5/19.
-//  Copyright © 2019 - 2022 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -122,6 +122,9 @@ class CollectionPrefsViewController: NSViewController {
     func setCollectionValues() {
         guard collection != nil else { return }
         
+        if collection!.title.isEmpty {
+            collection!.setDefaultTitle()
+        }
         if collectionTitle != nil {
             collectionTitle!.stringValue = collection!.title
         }
@@ -395,9 +398,27 @@ class CollectionPrefsViewController: NSViewController {
         // No need to take any immediate action here
     }
     
+    @IBAction func titleEdited(_ sender: Any) {
+        if collectionTitle.stringValue.isEmpty {
+            collectionTitle.stringValue = collection!.defaultTitle
+        }
+    }
+    
+    
     @IBAction func okButtonClicked(_ sender: Any) {
         guard collection != nil else { return }
-        collection!.title = collectionTitle.stringValue
+        
+        // Set Collection Title
+        if collectionTitle.stringValue.isEmpty {
+            collectionTitle.stringValue = collection!.defaultTitle
+        }
+        if collection!.title != collectionTitle.stringValue {
+            collection!.title = collectionTitle.stringValue
+            if collectionTitle.stringValue != collection!.defaultTitle {
+                collection!.titleSetByUser = true
+            }
+        }
+        
         if collectionShortcut.stringValue != collection!.shortcut {
             collection!.shortcut = StringUtils.toCommon(collectionShortcut.stringValue)
             NotenikFolderList.shared.updateWithShortcut(linkStr: collection!.fullPath, shortcut: collection!.shortcut)

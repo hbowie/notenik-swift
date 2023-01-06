@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 9/10/20.
-//  Copyright © 2020 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2020 - 2023 Herb Bowie (https://powersurgepub.com)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -42,14 +42,49 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
         comboPicker.reloadData()
     }
     
+    // -----------------------------------------------------------
+    //
+    // MARK: Load the array of folders, with suitable names.
+    //
+    // -----------------------------------------------------------
+    
     func loadFolders() {
         folders = []
         for folder in NotenikFolderList.shared {
-            let item = NavigatorFolder(link: folder)
-            folders.append(item)
+            add(link: folder)
         }
         folders.sort()
     }
+    
+    /// Add a new folder, ensuring it has a distinct name.
+    func add(link: NotenikLink) {
+        var folderName = link.folder.lowercased()
+        var briefDesc = link.briefDesc.lowercased()
+        var handleSource = 1
+        if !briefDesc.isEmpty && briefDesc.count < 21 && !briefDesc.contains(AppPrefs.shared.idFolderSep) {
+            handleSource = 2
+        }
+        if handleSource == 1 && !briefDesc.isEmpty {
+            for folder in folders {
+                if folderName == folder.folder {
+                    handleSource = 2
+                    break
+                }
+            }
+        }
+        var handle = folderName
+        if handleSource == 2 {
+            handle = briefDesc
+        }
+        let anotherFolder = NavigatorFolder(link: link, handle: handle)
+        folders.append(anotherFolder)
+    }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Functions providing data source for the Combo Box.
+    //
+    // -----------------------------------------------------------
     
     /// Returns the number of items that the data source manages for the combo box.
     func numberOfItems(in comboBox: NSComboBox) -> Int {
@@ -110,6 +145,12 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
         }
         return NSNotFound
     }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Functions supporting the Outline View.
+    //
+    // -----------------------------------------------------------
     
     /// How many children does this node have?
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
