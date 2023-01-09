@@ -274,6 +274,7 @@
 		9CD3588B2293C42B00C9203F /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD358882293C42B00C9203F /* LinkView.swift */; };
 		9CD756D72210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
 		9CD756D82210F62600AB8EE3 /* NoteSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */; };
+		9CD804BA296C82E10060E418 /* OpenQuickActionIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD804B9296C82E10060E418 /* OpenQuickActionIntentHandler.swift */; };
 		9CD9058926362F70000851E8 /* MicroBlog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD9058826362F70000851E8 /* MicroBlog.storyboard */; };
 		9CD9058F26363053000851E8 /* MicroBlogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD9058E26363053000851E8 /* MicroBlogWindowController.swift */; };
 		9CD9963023D3CA30004650BE /* CollectionPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD9962F23D3CA30004650BE /* CollectionPrefs.storyboard */; };
@@ -537,6 +538,7 @@
 		9CD3262722330C8A00D06B77 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		9CD358882293C42B00C9203F /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
 		9CD756D62210F62600AB8EE3 /* NoteSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSplitViewController.swift; sourceTree = "<group>"; };
+		9CD804B9296C82E10060E418 /* OpenQuickActionIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenQuickActionIntentHandler.swift; sourceTree = "<group>"; };
 		9CD9058826362F70000851E8 /* MicroBlog.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MicroBlog.storyboard; sourceTree = "<group>"; };
 		9CD9058E26363053000851E8 /* MicroBlogWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroBlogWindowController.swift; sourceTree = "<group>"; };
 		9CD9962F23D3CA30004650BE /* CollectionPrefs.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CollectionPrefs.storyboard; sourceTree = "<group>"; };
@@ -926,6 +928,7 @@
 				9C969DE328887B230002618C /* GetNoteFilePathIntentHandler.swift */,
 				9C969DE12888629B0002618C /* GetNoteSharingLinkIntentHandler.swift */,
 				9C7995BE288773D2003C22D5 /* GetNoteTitleIntentHandler.swift */,
+				9CD804B9296C82E10060E418 /* OpenQuickActionIntentHandler.swift */,
 				9C97E71028943BE900A234F3 /* RunScriptIntentHandler.swift */,
 			);
 			path = intentHandlers;
@@ -1469,6 +1472,7 @@
 				9CA4EE8C246A15BC00059F65 /* PickListDataSource.swift in Sources */,
 				9CE3250D224D5A4D0051CA1F /* LogWindowController.swift in Sources */,
 				9C00AD632658158A002B6A0F /* CustomURLActor.swift in Sources */,
+				9CD804BA296C82E10060E418 /* OpenQuickActionIntentHandler.swift in Sources */,
 				9C9D441B271119E800BB7B07 /* AKAView.swift in Sources */,
 				9CE5750125D19E2D000C102C /* NewFieldsViewController.swift in Sources */,
 				9C3CC8FA250AA136002C95D0 /* NavigatorViewController.swift in Sources */,
@@ -1837,7 +1841,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 420;
+				CURRENT_PROJECT_VERSION = 424;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1850,7 +1854,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 11.2.0;
+				MARKETING_VERSION = 11.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1866,7 +1870,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 420;
+				CURRENT_PROJECT_VERSION = 424;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1879,7 +1883,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 11.2.0;
+				MARKETING_VERSION = 11.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

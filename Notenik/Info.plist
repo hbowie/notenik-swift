@@ -63,6 +63,7 @@
 		<string>GetNoteFilePathIntent</string>
 		<string>AddNoteFromTextIntent</string>
 		<string>RunScriptIntent</string>
+		<string>OpenQuickActionIntent</string>
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
@@ -78,7 +79,7 @@
 	<key>NSAppleScriptEnabled</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2009 - 2022 Herb Bowie under terms of MIT License</string>
+	<string>Copyright © 2009 - 2023 Herb Bowie under terms of MIT License</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
@@ -101,6 +102,7 @@
 		<string>GetNoteFilePathIntent</string>
 		<string>GetNoteSharingLinkIntent</string>
 		<string>GetNoteTitleIntent</string>
+		<string>OpenQuickActionIntent</string>
 		<string>RunScriptIntent</string>
 	</array>
 	<key>OSAScriptingDefinition</key>
