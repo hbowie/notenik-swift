@@ -20,6 +20,8 @@ class NoteListViewController:   NSViewController,
 
     var collectionWindowController: CollectionWindowController?
     var notenikIO: NotenikIO?
+    
+    var monoFont: NSFont?
    
     @IBOutlet var tableView: NSTableView!
     
@@ -52,6 +54,10 @@ class NoteListViewController:   NSViewController,
     /// Initialization after the view loaded.
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available(macOS 10.15, *) {
+            monoFont = NSFont.monospacedSystemFont(ofSize: 13.0, weight: NSFont.Weight.regular)
+        }
         
         // Setup for drag and drop.
         tableView.setDraggingSourceOperationMask(.copy, forLocal: false)
@@ -451,7 +457,11 @@ class NoteListViewController:   NSViewController,
             } else if tableColumn?.title == "X" {
                 cellView.textField?.stringValue = note.doneXorT
             } else if tableColumn?.title == "Date" {
-                cellView.textField?.stringValue = note.date.dMyDate
+                if #available(macOS 10.15, *) {
+                    monoFont = NSFont.monospacedSystemFont(ofSize: 13.0, weight: NSFont.Weight.regular)
+                    cellView.textField?.font = monoFont!
+                }
+                cellView.textField?.stringValue = note.date.dMyW2Date
             } else if tableColumn?.title == "Author" {
                 cellView.textField?.stringValue = note.creatorValue
             } else if tableColumn?.title == "Tags" {
