@@ -22,6 +22,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
 
     @IBOutlet weak var favsToHTML: NSMenuItem!
     @IBOutlet weak var iCloudMenu: NSMenu!
+
+    @IBOutlet weak var sortMenu: NSMenu!
     
     var appPrefs:     AppPrefs!
     var displayPrefs: DisplayPrefs!
@@ -70,6 +72,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         displayPrefs.setMaster(master: self)
         juggler = CollectionJuggler.shared
         juggler.docController = docController
+        juggler.sortMenu = sortMenu
         recentDocumentURLs = docController.recentDocumentURLs
         stage = "2"
         logger.logDestPrint = false

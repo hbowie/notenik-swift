@@ -30,6 +30,7 @@ class CollectionJuggler: NSObject {
     let appPrefs  = AppPrefs.shared
     let appPrefsCocoa = AppPrefsCocoa.shared
     let osdir     = OpenSaveDirectory.shared
+    var sortMenu: NSMenu!
     
     let modelsPath = "/models"
     let introModelPath = "/02 - Notenik Intro"
@@ -61,7 +62,6 @@ class CollectionJuggler: NSObject {
     var lastSelectedNoteTitle = ""
     var lastSelectedNoteCustomURL = ""
     var lastSelectedNoteFilepath = ""
-    var lastWC: CollectionWindowController? = nil
     
     override private init() {
         super.init()
@@ -1111,6 +1111,17 @@ class CollectionJuggler: NSObject {
         }
     }
     
+    var lastWC: CollectionWindowController? {
+        get {
+            return _lastWC
+        }
+        set {
+            _lastWC = newValue
+            updateSortMenu()
+        }
+    }
+    var _lastWC: CollectionWindowController? = nil
+    
     func setLastSelection(title: String,
                           link: String,
                           filepath: String,
@@ -1145,6 +1156,49 @@ class CollectionJuggler: NSObject {
     
     func getLastUsedWindowController() -> CollectionWindowController? {
         return lastWC
+    }
+    
+    func updateSortMenu() {
+        guard sortMenu != nil else { return }
+        var reverseMenuItem: NSMenuItem?
+        for menuItem in sortMenu!.items {
+            menuItem.state = .off
+            reverseMenuItem = menuItem
+        }
+        guard let collection = _lastWC?.io?.collection else { return }
+        switch collection.sortParm {
+        case .title:
+            sortMenu!.items[0].state = .on
+        case .seqPlusTitle:
+            sortMenu!.items[1].state = .on
+        case .tasksByDate:
+            sortMenu!.items[2].state = .on
+        case .tasksBySeq:
+            sortMenu!.items[3].state = .on
+        case .author:
+            sortMenu!.items[6].state = .on
+        case .tagsPlusTitle:
+            sortMenu!.items[4].state = .on
+        case .tagsPlusSeq:
+            sortMenu!.items[5].state = .on
+        case .custom:
+            break
+        case .dateAdded:
+            sortMenu!.items[7].state = .on
+        case .dateModified:
+            sortMenu!.items[8].state = .on
+        case .datePlusSeq:
+            sortMenu!.items[9].state = .on
+        case .rankSeqTitle:
+            sortMenu!.items[10].state = .on
+        case .klassTitle:
+            sortMenu!.items[11].state = .on
+        case .klassDateTitle:
+            sortMenu!.items[12].state = .on
+        }
+        if collection.sortDescending && reverseMenuItem != nil {
+            reverseMenuItem!.state = .on
+        }
     }
     
     let countsStoryboard:          NSStoryboard = NSStoryboard(name: "Counts", bundle: nil)

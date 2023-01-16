@@ -3021,6 +3021,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         noteIO.sortDescending = false
         lister.setSortParm(sortParm)
         noteIO.persistCollectionInfo()
+        juggler.updateSortMenu()
     }
     
     func setSortDescending(_ descending: Bool) {
@@ -3029,6 +3030,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         noteIO.sortDescending = descending
         lister.setSortDescending(descending)
         noteIO.persistCollectionInfo()
+        juggler.updateSortMenu()
     }
     
     // ----------------------------------------------------------------------------------
