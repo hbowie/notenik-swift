@@ -34,6 +34,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let application = NSApplication.shared
     let juggler  = CollectionJuggler.shared
     let appPrefs = AppPrefs.shared
+    let displayPrefs = DisplayPrefs.shared
     let osdir    = OpenSaveDirectory.shared
     
     let filesTitle = "files..."
@@ -3578,6 +3579,58 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         reloadCollection(self)
         finishBatchOperation()
+    }
+    
+    @IBAction func datesToCalendar(_ sender: Any) {
+
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        
+        guard collection.sortParm == .tasksByDate || collection.sortParm == .datePlusSeq else {
+            communicateError("Collection must be sorted by Date in order to generate a calendar", alert: true)
+            return
+        }
+        
+        let (lowIndex, highIndex) = listVC!.getRangeOfSelectedRows()
+        guard lowIndex >= 0 else {
+            communicateError("Select one or more Notes in the months you wish included")
+            return
+        }
+        print("  - low index = \(lowIndex)")
+        print("  - high index = \(highIndex)")
+        
+        guard let lowNote = noteIO.getNote(at: lowIndex) else { return }
+        guard let highNote = noteIO.getNote(at: highIndex) else { return }
+        
+        let lowDateValue = lowNote.date
+        let highDateValue = highNote.date
+        
+        var lowYM = lowDateValue.yearAndMonth
+        var highYM = highDateValue.yearAndMonth
+        
+        if lowYM > highYM {
+            let temp = lowYM
+            lowYM = highYM
+            highYM = temp
+        }
+        
+        print("  - low date = \(lowYM)")
+        print("  - high date = \(highYM)")
+        
+        let calendar = CalendarMaker(lowYM: lowYM, highYM: highYM)
+        calendar.startCalendar(title: collection.title, prefs: displayPrefs)
+        
+        var (note, position) = noteIO.firstNote()
+        var done = false
+        while note != nil && !done {
+            done = calendar.nextNote(note!)
+            (note, position) = noteIO.nextNote(position)
+        }
+        
+        let html = calendar.finishCalendar()
+        
+        let qol = QueryOutputLauncher()
+        qol.consumeTemplateOutput(html)
     }
     
     @IBAction func favoritesToHTML(_ sender: Any) {

@@ -453,12 +453,14 @@ class NoteListViewController:   NSViewController,
             } else if tableColumn?.title == "Rank" {
                 cellView.textField?.stringValue = note.rank.value
             } else if tableColumn?.title == "Seq" {
+                if #available(macOS 10.15, *) {
+                    cellView.textField?.font = monoFont!
+                }
                 cellView.textField?.stringValue = note.seq.value
             } else if tableColumn?.title == "X" {
                 cellView.textField?.stringValue = note.doneXorT
             } else if tableColumn?.title == "Date" {
                 if #available(macOS 10.15, *) {
-                    monoFont = NSFont.monospacedSystemFont(ofSize: 13.0, weight: NSFont.Weight.regular)
                     cellView.textField?.font = monoFont!
                 }
                 cellView.textField?.stringValue = note.date.dMyW2Date
