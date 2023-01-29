@@ -41,18 +41,43 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z5j-4t-qoY">
-                                <rect key="frame" x="20" y="20" width="508" height="451"/>
+                                <rect key="frame" x="20" y="60" width="508" height="411"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rgx-at-sqZ">
+                                <rect key="frame" x="351" y="16" width="181" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="174" id="dYX-su-DkG"/>
+                                </constraints>
+                                <popUpButtonCell key="cell" type="push" title="Web Page:" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="zH7-xn-xJJ">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="x1F-CF-Aay">
+                                        <items>
+                                            <menuItem title="Web Page:" state="on" hidden="YES" id="BHd-CC-Xlh"/>
+                                            <menuItem title="Save to Disk..." id="dVO-rv-zed"/>
+                                            <menuItem title="Browse" id="qTj-Ue-jlB"/>
+                                            <menuItem title="Save and Browse..." id="8zY-mK-gS9">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="webPageAction:" target="eZR-3m-UH5" id="IZe-Ty-Ir2"/>
+                                </connections>
+                            </popUpButton>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="z5j-4t-qoY" secondAttribute="trailing" constant="20" symbolic="YES" id="9u7-gp-fwh"/>
-                            <constraint firstItem="z5j-4t-qoY" firstAttribute="top" secondItem="24K-12-snC" secondAttribute="top" constant="20" symbolic="YES" id="GaZ-5f-Nw3"/>
-                            <constraint firstAttribute="bottom" secondItem="z5j-4t-qoY" secondAttribute="bottom" constant="20" symbolic="YES" id="MRu-NN-bfa"/>
-                            <constraint firstItem="z5j-4t-qoY" firstAttribute="leading" secondItem="24K-12-snC" secondAttribute="leading" constant="20" symbolic="YES" id="hhi-cK-yHT"/>
+                            <constraint firstAttribute="trailing" secondItem="z5j-4t-qoY" secondAttribute="trailing" constant="20" symbolic="YES" id="5WF-uq-p1i"/>
+                            <constraint firstItem="Rgx-at-sqZ" firstAttribute="top" secondItem="z5j-4t-qoY" secondAttribute="bottom" constant="20" symbolic="YES" id="5p1-u6-otc"/>
+                            <constraint firstItem="z5j-4t-qoY" firstAttribute="trailing" secondItem="Rgx-at-sqZ" secondAttribute="trailing" id="CtT-bT-j0g"/>
+                            <constraint firstItem="z5j-4t-qoY" firstAttribute="top" secondItem="24K-12-snC" secondAttribute="top" constant="20" symbolic="YES" id="JOU-28-rOl"/>
+                            <constraint firstItem="z5j-4t-qoY" firstAttribute="leading" secondItem="24K-12-snC" secondAttribute="leading" constant="20" symbolic="YES" id="gHY-tQ-ARj"/>
+                            <constraint firstAttribute="bottom" secondItem="Rgx-at-sqZ" secondAttribute="bottom" constant="20" symbolic="YES" id="lnV-eT-nUN"/>
                         </constraints>
                     </view>
                     <connections>

@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 7/25/22.
 //
-//  Copyright © 2022 Herb Bowie (https://hbowie.net)
+//  Copyright © 2022 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -19,16 +19,28 @@ public class QueryOutputLauncher: NSObject, TemplateOutputConsumer {
     
     let queryOutputStoryboard:     NSStoryboard = NSStoryboard(name: "QueryOutput", bundle: nil)
     
+    var windowTitle = ""
+    var collectionWC: CollectionWindowController? = nil
+    
+    init(windowTitle: String = "Query Output", collectionWC: CollectionWindowController) {
+        super.init()
+        self.windowTitle = windowTitle
+        self.collectionWC = collectionWC
+    }
+    
     /// Consume output from Merge Template, per TemplateOutputConsumer protocol.
     public func consumeTemplateOutput(_ templateOutput: String) {
+        
         guard !templateOutput.isEmpty else { return }
         
         guard let queryOutputWC = self.queryOutputStoryboard.instantiateController(withIdentifier: "queryOutputWC") as? QueryOutputWindowController else {
             return
         }
+        queryOutputWC.window!.title = windowTitle
         queryOutputWC.showWindow(self)
         applyNumbers(passedWindow: queryOutputWC.window)
         if let vc = queryOutputWC.contentViewController as? QueryOutputViewController {
+            vc.windowTitle = windowTitle
             vc.loadHTMLString(templateOutput)
         }
 

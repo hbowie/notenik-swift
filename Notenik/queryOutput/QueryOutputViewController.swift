@@ -14,10 +14,14 @@ import Cocoa
 import WebKit
 
 import NotenikLib
+import NotenikUtils
 
 class QueryOutputViewController: NSViewController, NSWindowDelegate {
     
     @IBOutlet weak var webView: WKWebView!
+    
+    var windowTitle = "Query Output"
+    var htmlString = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +46,85 @@ class QueryOutputViewController: NSViewController, NSWindowDelegate {
     
     func loadHTMLString(_ string: String) {
         webView.loadHTMLString(string, baseURL: nil)
+        htmlString = string
+    }
+    
+    
+    @IBAction func webPageAction(_ sender: Any) {
+        if let actionButton = sender as? NSPopUpButton {
+            switch actionButton.indexOfSelectedItem {
+            case 1:
+                saveToDisk()
+            case 2:
+                browse()
+            case 3:
+                saveAndBrowse()
+            default:
+                break
+            }
+        }
+    }
+    
+    /// Option 1: Save file to disk, at location of user's choice.
+    func saveToDisk() {
+        if let savedURL = askUserForLocation() {
+            _ = writeToDisk(diskURL: savedURL)
+        }
+    }
+    
+    /// Option 2: Save file to temp directory and request that it be opened by preferred Web browser.
+    func browse() {
+        let tempDirURL = URL(fileURLWithPath: NSTemporaryDirectory(),
+                                        isDirectory: true)
+        let tempFileURL = tempDirURL.appendingPathComponent(defaultFileName)
+        let ok = writeToDisk(diskURL: tempFileURL)
+        if ok {
+            NSWorkspace.shared.open(tempFileURL)
+        }
+    }
+    
+    /// Option 3: Save file to dis, at location of user's choice, and then
+    /// request that it be opened by preferred Web browser. 
+    func saveAndBrowse() {
+        if let savedURL = askUserForLocation() {
+            let ok = writeToDisk(diskURL: savedURL)
+            if ok {
+                NSWorkspace.shared.open(savedURL)
+            }
+        }
+    }
+    
+    func askUserForLocation() -> URL? {
+        let savePanel = NSSavePanel()
+        savePanel.title = "Specify an Output File"
+        savePanel.showsResizeIndicator = true
+        savePanel.showsHiddenFiles = false
+        savePanel.canCreateDirectories = true
+        savePanel.nameFieldStringValue = defaultFileName
+        let userChoice = savePanel.runModal()
+        if userChoice == .OK {
+            return savePanel.url
+        } else {
+            return nil
+        }
+    }
+    
+    func writeToDisk(diskURL: URL) -> Bool {
+        var ok = true
+        do {
+            try htmlString.write(to: diskURL, atomically: true, encoding: .utf8)
+        } catch {
+            Logger.shared.log(subsystem: "Notenik",
+                              category: "QueryOutputViewController",
+                              level: .error,
+                              message: "Trouble writing HTML to disk file at \(diskURL)")
+            ok = false
+        }
+        return ok
+    }
+    
+    var defaultFileName: String {
+        return "\(StringUtils.toCommonFileName(windowTitle)).html"
     }
     
 }

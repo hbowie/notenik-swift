@@ -363,7 +363,7 @@ class QueryBuilderViewController: NSViewController {
         // Now run the script.
         let player = ScriptPlayer()
         let scriptPath = scriptURL.path
-        let qol = QueryOutputLauncher()
+        let qol = QueryOutputLauncher(windowTitle: "Script Output", collectionWC: collectionWC)
         player.playScript(fileName: scriptPath, templateOutputConsumer: qol)
     }
     

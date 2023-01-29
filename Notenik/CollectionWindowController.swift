@@ -2944,7 +2944,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     func runScript(fileURL: URL) {
         let player = ScriptPlayer()
         let scriptPath = fileURL.path
-        let qol = QueryOutputLauncher()
+        let qol = QueryOutputLauncher(windowTitle: "Script Output", collectionWC: self)
         player.playScript(fileName: scriptPath, templateOutputConsumer: qol)
     }
     
@@ -3596,8 +3596,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             communicateError("Select one or more Notes in the months you wish included")
             return
         }
-        print("  - low index = \(lowIndex)")
-        print("  - high index = \(highIndex)")
         
         guard let lowNote = noteIO.getNote(at: lowIndex) else { return }
         guard let highNote = noteIO.getNote(at: highIndex) else { return }
@@ -3614,9 +3612,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             highYM = temp
         }
         
-        print("  - low date = \(lowYM)")
-        print("  - high date = \(highYM)")
-        
         let calendar = CalendarMaker(lowYM: lowYM, highYM: highYM)
         calendar.startCalendar(title: collection.title, prefs: displayPrefs)
         
@@ -3629,7 +3624,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         let html = calendar.finishCalendar()
         
-        let qol = QueryOutputLauncher()
+        let qol = QueryOutputLauncher(windowTitle: "Calendar", collectionWC: self)
         qol.consumeTemplateOutput(html)
     }
     
@@ -3637,12 +3632,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         // See if we're ready to take action
         let nio = guardForCollectionAction()
         guard let noteIO = nio else { return }
-        
-        guard let fileURL = getExportURL(fileExt: "html", fileName: "favorites") else { return }
-        let favsToHTML = FavoritesToHTML(noteIO: noteIO, outURL: fileURL)
-        let genOK = favsToHTML.generate()
-        if genOK {
-            NSWorkspace.shared.open(fileURL)
+        let favsToHTML = FavoritesToHTML(noteIO: noteIO)
+        let html = favsToHTML.generate()
+        if !html.isEmpty {
+            let qol = QueryOutputLauncher(windowTitle: "Favorites", collectionWC: self)
+            qol.consumeTemplateOutput(html)
         }
     }
     
@@ -4097,7 +4091,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let io = notenikIO else { return false }
         guard let collection = io.collection else { return false }
         let template = Template()
-        let qol = QueryOutputLauncher()
+        let qol = QueryOutputLauncher(windowTitle: "Query Output", collectionWC: self)
         var ok = template.openTemplate(templateURL: templateURL)
         if ok {
             template.supplyData(notesList: io.notesList,
