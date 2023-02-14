@@ -234,6 +234,7 @@ class ShareViewController: NSViewController {
             displayParms.localMj = false
             displayParms.format = format
             displayParms.curlyApostrophes = note!.collection.curlyApostrophes
+            displayParms.extLinksOpenInNewWindows = note!.collection.extLinksOpenInNewWindows
             let (displayString, _) = noteDisplay.display(note!, io: io!, parms: displayParms)
             if format == .htmlDoc && searchPhrase != nil && searchPhrase!.count > 0 {
                 stringToShare = StringUtils.highlightPhraseInHTML(phrase: searchPhrase!,

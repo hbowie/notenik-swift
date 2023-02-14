@@ -830,6 +830,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         applyKlassTemplate(noteIO: noteIO, klassName: klassName)
         
+        if klassName != nil && !klassName!.isEmpty && !newNote!.hasKlass() {
+            _ = newNote!.setKlass(klassName!)
+        }
+        
         if level != nil && !level!.isEmpty && collection.levelFieldDef != nil {
             _ = newNote!.setLevel(level!)
         }

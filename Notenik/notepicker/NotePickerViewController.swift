@@ -393,6 +393,9 @@ class NotePickerViewController: NSViewController,
                 AppPrefs.shared.noteAction = goToAction
                 goTo(title: noteToPick.title.original)
                 return true
+            case "i":
+                copyPasteInclude(title: noteToPick.title.original)
+                return true
             case "l":
                 AppPrefs.shared.noteAction = launchAction
                 launchLink(title: noteToPick.title.original)
@@ -404,7 +407,11 @@ class NotePickerViewController: NSViewController,
             case "v":
                 if event.modifierFlags.contains(.option) {
                     AppPrefs.shared.noteAction = copyPasteLink
-                    copyPasteNoteTitleWithBrackets(title: noteToPick.title.original)
+                    if targetingAnotherCollection {
+                        copyPasteNotenikURLasMDlink(title: noteToPick.title.original)
+                    } else {
+                        copyPasteNoteTitleWithBrackets(title: noteToPick.title.original)
+                    }
                     return true
                 } else {
                     AppPrefs.shared.noteAction = copyPasteTitle
