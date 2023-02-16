@@ -218,9 +218,7 @@ class NoteEditViewController: NSViewController {
         selectedNote = note
         if io!.collection!.klassFieldDef != nil {
             let klassName = note.klass.value
-            if !klassName.isEmpty {
-                configureEditView(noteIO: io!, klassName: klassName)
-            }
+            configureEditView(noteIO: io!, klassName: klassName)
         }
         populateFieldsWithSelectedNote()
     }

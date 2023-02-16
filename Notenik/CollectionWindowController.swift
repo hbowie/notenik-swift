@@ -759,9 +759,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             if !klassName.isEmpty {
                 editVC!.configureEditView(noteIO: io!, klassName: klassName)
             }
-        } else if note.collection.klassDefs.count == 1 {
-            let klassName = note.collection.klassDefs[0].name
-            editVC!.configureEditView(noteIO: io!, klassName: klassName)
         }
         editVC!.populateFields(with: note)
     }
@@ -1308,8 +1305,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     }
                     continue
                 }
-            // } else if utf8 != nil && utf8!.count > 0 {
-            //     print("    - utf8: \(utf8!)")
             } else if str != nil && str!.count > 0 {
                 logInfo(msg: "Processing pasted item as Note")
                 strToNote(str: str!, note: note, defaultTitle: nil)
