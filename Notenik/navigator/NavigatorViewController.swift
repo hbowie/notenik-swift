@@ -58,8 +58,8 @@ class NavigatorViewController: NSViewController, NSOutlineViewDataSource, NSOutl
     
     /// Add a new folder, ensuring it has a distinct name.
     func add(link: NotenikLink) {
-        var folderName = link.folder.lowercased()
-        var briefDesc = link.briefDesc.lowercased()
+        let folderName = link.folder.lowercased()
+        let briefDesc = link.briefDesc.lowercased()
         var handleSource = 1
         if !briefDesc.isEmpty && briefDesc.count < 21 && !briefDesc.contains(AppPrefs.shared.idFolderSep) {
             handleSource = 2
