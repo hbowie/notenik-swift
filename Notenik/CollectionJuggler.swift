@@ -136,7 +136,9 @@ class CollectionJuggler: NSObject {
                 }
             }
         }
-        
+    }
+    
+    func checkGrantAndLoadShortcuts() {
         let grantAccessOpt = appPrefs.grantAccessOption
         if grantAccessOpt > 1 {
             let confirmDialog = (grantAccessOpt == 2)

@@ -49,7 +49,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     func applicationWillFinishLaunching(_ notification: Notification) {
         docController = NoteDocumentController()
         stage = "1"
-        
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -111,6 +110,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         
         // Done launching
         appPrefs.appLaunching = false
+        
+        juggler.checkGrantAndLoadShortcuts()
         
     }
     
