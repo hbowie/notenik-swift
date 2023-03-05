@@ -1,9 +1,10 @@
 //
-//  DisplayFontsDataSource.swift
+//  FontSizeDataSource.swift
 //  Notenik
 //
-//  Created by Herb Bowie on 11/10/20.
-//  Copyright © 2020 - 2023 Herb Bowie (https://hbowie.net)
+//  Created by Herb Bowie on 3/4/23.
+//
+//  Copyright © 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -11,47 +12,30 @@
 
 import Cocoa
 
-class CocoaFontsDataSource: NSObject,  NSComboBoxDataSource {
+import NotenikLib
+
+class FontSizeDataSource: NSObject,  NSComboBoxDataSource {
     
-    var useShort = true
+    var fontsFor: FontsFor = .body
     
-    var shortList: [String] = [
-        "American Typewriter",
-        "Andale Mono",
-        "Arial",
-        "Avenir",
-        "Avenir Next",
-        "Baskerville",
-        "Big Caslon",
-        "Bookman",
-        "Courier",
-        "Courier New",
-        "Futura",
-        "Garamond",
-        "Georgia",
-        "Gill Sans",
-        "Helvetica",
-        "Helvetica Neue",
-        "Hoefler Text",
-        "Lucida Grande",
-        "Menlo",
-        "Palatino",
-        "Tahoma",
-        "Times",
-        "Times New Roman",
-        "Trebuchet",
-        "Verdana"
-    ]
+    var sizes: [String] = []
     
-    var longList: [String] = []
+    var bodySizes: [String] = ["08", "10", "12", "14", "16", "18", "20", "24", "28", "36"]
     
-    /// Use a long list of all system fonts, or a short list of common fonts?
-    func useLongList(_ yes: Bool) {
-        if yes {
-            longList = NSFontManager.shared.availableFontFamilies
-            useShort = false
+    var headingSizes: [String] = ["1.0", "1.2", "1.4", "1.6", "1.8", "2.0", "2.2", "2.4", "2.6", "2.8", "3.0"]
+    
+    override init() {
+        super.init()
+        sizes = bodySizes
+    }
+    
+    /// Supply sizes for the body type, or for headings?
+    func setFontsFor(_ fontsFor: FontsFor) {
+        self.fontsFor = fontsFor
+        if fontsFor == .body {
+            sizes = bodySizes
         } else {
-            useShort = true
+            sizes = headingSizes
         }
     }
     
@@ -70,21 +54,12 @@ class CocoaFontsDataSource: NSObject,  NSComboBoxDataSource {
     /// Returns the first item from the list that starts with the text the user has typed.
     func comboBox(_ comboBox: NSComboBox, completedString string: String) -> String? {
         var index = 0
-        let strLowered = string.lowercased()
-        let lowered = (string == strLowered)
         while index < numberOfItems {
             let item = itemAt(index)
             if item!.hasPrefix(string) {
                 return item
             }
-            if lowered && item!.lowercased().hasPrefix(string) {
-                return item
-            }
-            if lowered {
-                if item!.lowercased() > string {
-                    return nil
-                }
-            } else if item! > string {
+            if item! > string {
                 return nil
             }
             index += 1
@@ -113,12 +88,11 @@ class CocoaFontsDataSource: NSObject,  NSComboBoxDataSource {
     //
     // -----------------------------------------------------------
     
-    func indexFor(_ family: String) -> Int {
+    func indexFor(_ str: String) -> Int {
         var index = 0
-        let strLowered = family.lowercased()
         while index < numberOfItems {
             let item = itemAt(index)
-            if item == family || item!.lowercased() == strLowered {
+            if item == str {
                 return index
             }
             index += 1
@@ -128,21 +102,13 @@ class CocoaFontsDataSource: NSObject,  NSComboBoxDataSource {
     
     func itemAt(_ index: Int) -> String? {
         if index >= 0 && index < numberOfItems {
-            if useShort {
-                return shortList[index]
-            } else {
-                return longList[index]
-            }
+            return sizes[index]
         }
         return nil
     }
     
     var numberOfItems: Int {
-        if useShort {
-            return shortList.count
-        } else {
-            return longList.count
-        }
+        return sizes.count
     }
     
 }

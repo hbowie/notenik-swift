@@ -43,6 +43,7 @@
 		9C12D48F22134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49022134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
 		9C12D49122134970003136B2 /* NoteSelectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12D48E22134970003136B2 /* NoteSelectionSource.swift */; };
+		9C13708129B3D1C0000F8CFB /* FontSizeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C13708029B3D1C0000F8CFB /* FontSizeDataSource.swift */; };
 		9C15A11028774A0E00D5E6EF /* DateInsert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C15A10F28774A0E00D5E6EF /* DateInsert.storyboard */; };
 		9C15A11228774E3C00D5E6EF /* DateInsertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15A11128774E3C00D5E6EF /* DateInsertWindowController.swift */; };
 		9C15A11428774E7900D5E6EF /* DateInsertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15A11328774E7900D5E6EF /* DateInsertViewController.swift */; };
@@ -361,6 +362,7 @@
 		9C10831925AA784A004B33CA /* NewsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsWindowController.swift; sourceTree = "<group>"; };
 		9C10831F25AA78A0004B33CA /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		9C12D48E22134970003136B2 /* NoteSelectionSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSelectionSource.swift; sourceTree = "<group>"; };
+		9C13708029B3D1C0000F8CFB /* FontSizeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSizeDataSource.swift; sourceTree = "<group>"; };
 		9C15A10F28774A0E00D5E6EF /* DateInsert.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DateInsert.storyboard; sourceTree = "<group>"; };
 		9C15A11128774E3C00D5E6EF /* DateInsertWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateInsertWindowController.swift; sourceTree = "<group>"; };
 		9C15A11328774E7900D5E6EF /* DateInsertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateInsertViewController.swift; sourceTree = "<group>"; };
@@ -1038,6 +1040,7 @@
 				9CC78E6B2283587300640477 /* DisplayPrefsWindowController.swift */,
 				9CC78E6E228358A400640477 /* DisplayPrefsViewController.swift */,
 				9C7DDD90255B36AA00065812 /* CocoaFontsDataSource.swift */,
+				9C13708029B3D1C0000F8CFB /* FontSizeDataSource.swift */,
 			);
 			path = displayPrefs;
 			sourceTree = "<group>";
@@ -1493,6 +1496,7 @@
 				9C2709C827A1B7D300B8FD9B /* LinkCleanerWindowController.swift in Sources */,
 				9CB8876E28625D1300AA91DB /* CocoaFontUsage.swift in Sources */,
 				9C674C1F288F3C0E0035E612 /* QueryOutputWindowController.swift in Sources */,
+				9C13708129B3D1C0000F8CFB /* FontSizeDataSource.swift in Sources */,
 				9C2BDBC72764188200E2041C /* IncludeChildrenView.swift in Sources */,
 				9C857C6423830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
 				9C5BE16C277166E60013C0D3 /* SeqModWindowController.swift in Sources */,
@@ -1841,7 +1845,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 438;
+				CURRENT_PROJECT_VERSION = 440;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1854,7 +1858,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 11.6.1;
+				MARKETING_VERSION = 11.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1870,7 +1874,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 438;
+				CURRENT_PROJECT_VERSION = 440;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1883,7 +1887,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 11.6.1;
+				MARKETING_VERSION = 11.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
