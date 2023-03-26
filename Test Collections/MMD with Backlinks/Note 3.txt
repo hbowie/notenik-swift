@@ -1,0 +1,8 @@
+---
+Title:  Note 3
+Seq:    3
+Level:  1
+Backlinks: Note 1
+---
+
+This may be the best of the bunch.

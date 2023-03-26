@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/21/19.
-//  Copyright © 2019-2021 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -127,7 +127,6 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         
         // See if any derived Note fields need to be updated.
         if AppPrefs.shared.parseUsingNotenik && (collection.minutesToReadDef != nil || collection.wikilinksDef != nil || collection.backlinksDef != nil) {
-            
             var modified = false
             let modNote = note!.copy() as! Note
             

@@ -1,0 +1,13 @@
+---
+Title:  Note 1
+Seq:    1
+Level:  1
+Wiki Links: Note 2
+Wiki Links: Note 3
+---
+
+This is the first Note. 
+
+This is a great Note, but [[Note 2]] is also a very good Note. 
+
+(Not to mention [[Note 3]].)
