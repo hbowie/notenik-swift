@@ -1,0 +1,12 @@
+Title:  A Plain Text Note
+
+Link:   https://discourse.notenik.app/t/outline-style-text-files/197?u=hbowie
+
+Date:   27 Mar 2023
+
+Body:
+
+This is an outline. 
+	Tabs are used for indention. 
+		This is another indent.
+	And another 2nd-level. 

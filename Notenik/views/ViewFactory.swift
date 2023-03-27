@@ -82,6 +82,8 @@ class ViewFactory {
             return TagsView(pickList: pickLists.tagsPickList)
         case NotenikConstants.teaserCommon:
             return TeaserView()
+        case NotenikConstants.textFormatCommon:
+            return TextFormatView()
         case NotenikConstants.timestampCommon:
             return LabelView()
         case NotenikConstants.wikilinksCommon:

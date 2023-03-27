@@ -1,0 +1,12 @@
+Title:  Another Note
+
+Body:
+
+Let's see an outline. 
+
+Top
+	Section 1
+		Chapter 1
+		Chapter 2
+	Section 2
+		Chapter 3

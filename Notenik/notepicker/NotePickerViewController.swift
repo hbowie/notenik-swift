@@ -407,11 +407,11 @@ class NotePickerViewController: NSViewController,
             case "v":
                 if event.modifierFlags.contains(.option) {
                     AppPrefs.shared.noteAction = copyPasteLink
-                    if targetingAnotherCollection {
-                        copyPasteNotenikURLasMDlink(title: noteToPick.title.original)
-                    } else {
+                    // if targetingAnotherCollection {
+                    //    copyPasteNotenikURLasMDlink(title: noteToPick.title.original)
+                    // } else {
                         copyPasteNoteTitleWithBrackets(title: noteToPick.title.original)
-                    }
+                    // }
                     return true
                 } else {
                     AppPrefs.shared.noteAction = copyPasteTitle
@@ -463,17 +463,17 @@ class NotePickerViewController: NSViewController,
         case copyPasteTitle:
             copyPasteNoteTitle(title: noteToPick.title.original)
         case copyLink:
-            if targetingAnotherCollection {
-                copyNotenikURLasMDlink(title: noteToPick.title.original)
-            } else {
+            // if targetingAnotherCollection {
+            //     copyNotenikURLasMDlink(title: noteToPick.title.original)
+            // } else {
                 copyNoteTitleWithBrackets(title: noteToPick.title.original)
-            }
+            // }
         case copyPasteLink:
-            if targetingAnotherCollection {
-                copyPasteNotenikURLasMDlink(title: noteToPick.title.original)
-            } else {
+            // if targetingAnotherCollection {
+            //     copyPasteNotenikURLasMDlink(title: noteToPick.title.original)
+            // } else {
                 copyPasteNoteTitleWithBrackets(title: noteToPick.title.original)
-            }
+            // }
         case copyPasteInc:
             copyPasteInclude(title: noteToPick.title.original)
         case copyTimestamp:
@@ -513,20 +513,32 @@ class NotePickerViewController: NSViewController,
     }
     
     func copyNoteTitleWithBrackets(title: String) {
-        strToPasteboard("[[\(title)]]")
+        if shortcutToUse.isEmpty {
+            strToPasteboard("[[\(title)]]")
+        } else {
+            strToPasteboard("[[\(shortcutToUse)/\(title)]]")
+        }
     }
     
     func copyPasteNoteTitleWithBrackets(title: String) {
-        strToPasteboard("[[\(title)]]", paste: true)
+        if shortcutToUse.isEmpty {
+            strToPasteboard("[[\(title)]]", paste: true)
+        } else {
+            strToPasteboard("[[\(shortcutToUse)/\(title)]]", paste: true)
+        }
     }
     
     func copyPasteInclude(title: String) {
         guard let io = ioToUse else { return }
         guard let note = io.getNote(knownAs: title) else { return }
+        var target = title
+        if !shortcutToUse.isEmpty {
+            target = "\(shortcutToUse)/\(title)"
+        }
         if note.hasKlass() && note.klass.quote {
-            strToPasteboard("{:include-quote:\(title)}", paste: true)
+            strToPasteboard("{:include-quote:\(target)}", paste: true)
         } else {
-            strToPasteboard("{:include:\(title)}", paste: true)
+            strToPasteboard("{:include:\(target)}", paste: true)
         }
     }
     
