@@ -1,0 +1,13 @@
+Title:  A Footnote with a Link
+
+Short ID: fowl
+
+Body:
+
+This is a footnote[^1]
+
+[^1]: First footnote
+
+This is a link footnote[^2]
+
+[^2]: <https://apple.com>

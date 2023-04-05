@@ -1,0 +1,11 @@
+module	action	modifier	object	value
+input	set		xpltags	false
+input	set		dirdepth	1
+input	open	notenik-defined		/Users/hbowie/Xcode/Notenik/Test Collections/Footnotes with Short IDs
+filter	clear			
+filter	set		params	
+sort	clear			
+sort	add	ascending	title	
+sort	set		params	
+template	open			/Users/hbowie/Xcode/Notenik/Test Collections/Footnotes with Short IDs/reports/query_template.html
+template	generate			

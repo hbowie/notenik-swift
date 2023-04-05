@@ -1,0 +1,42 @@
+Title:  Footnotes and Citations
+
+Short ID: foci
+
+Body:
+
+This is a second sample document. [^With an inline footnote]
+
+The footnotes themselves do not seem to render until a reference footnote is added. [^1]
+
+Here is another sentence with an asynchronous footnote reference. [^5] 
+
+It works!
+
+
+[^1]: Meaning that if you place an inline footnote in a document, you may not see them appear on the display page unless some reference style footnotes are added.
+
+[^5]: I believe that `asynchronous` would be the right word to use. Right?
+
+Here is a sample of a note that I took with MMD style citations added
+
+---
+
+The first few pages of HTML5 Up and Running [][#Pilgrim2010] by Mark Pilgrim show me that the development of HTML standards was essentially a hodge podge of preferences and accessibility to resources.  `<img>` is the standard way of implementing an image in a web document today because Marc Andressen thought of it and he just so happened to be developing Netscape which more or less evolved into the "web brower's web browser" of the time. 
+
+In the near 30 years since the initial development of the Web and the ten years since this book was first published (which I can imagine means ten years since HTML5?), HTML is still the backbone of a very convoluted World Wide Web. 
+
+> Implementations and specifications have to do a delicate dance together. You don’t want implementations to happen before the specification is finished, because people start de- pending on the details of implementations and that constrains the specification. How- ever, you also don’t want the specification to be finished before there are implementations and author experience with those implementations, because you need the feedback. There is unavoidable tension here, but we just have to muddle on through. [pg. 1][#Pilgrim2010]
+
+
+
+[#Pilgrim2010]: Pilgrim, Mark. *HTML5 Up and Running*. 2010. O'Reilly Media.
+
+---
+
+As you can see, the second portion of MMD citations involves the rendering of a bibliography using a Hashtagged citekey as an indicator. Bibliographies should appear separate from footnotes. [][#Pilgrim2010]
+
+As shown in Appendix 1 (attached to email).
+
+Here is a link to Fletcher Penney's documentation on MMD citations: <https://fletcher.github.io/MultiMarkdown-6/syntax/citation.html>
+
+It gives a more thorough explanation into how MMD handles citations in various formats; suppressed locators (no page number), inline citations, etc.

@@ -1,0 +1,23 @@
+Title:  Citations
+
+Short ID: cita
+
+Body:
+
+Let's start with an inline citation. [#Wilson, David Sloan. (2019). *This View of Life: Completing the Darwinian Revolution*. Pantheon Books. ]
+
+Now let's add a reference citation. [p. 147][#Harari:2015]
+
+And let's add a second citation to the same work. [p. 233][#harari:2015]
+
+[#Harari:2015]: Harari, Yuval Noah. (2015). *Sapiens: A Brief History of Humankind*. Harper.
+
+Now let's try a reference without a locator. [][#O'Reilly:2017]
+
+[#O'Reilly:2017]: O'Reilly, Tim. (2017). *WTF: What's the Future and Why It's Up to Us*. Harper Business. 
+
+And now let's add a call-out for a work to include in the bibliography, but without any specific citation.
+
+[Not cited][#citekey]
+
+[#citekey]: Bowie, Herb. *Why Die?*

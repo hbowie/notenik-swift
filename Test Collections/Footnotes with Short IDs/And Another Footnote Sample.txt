@@ -1,0 +1,11 @@
+Title:  And Another Footnote Sample
+
+Short ID: anfos
+
+Body:
+
+Mr. Bowie, thanks giving me the opportunity to make suggestions and also provide feedback to them when they're implemented. I'm not a programmer in the least bit, but it does feel nice to get involved in the development of software in any capacity. [^1]
+
+
+
+[^1]: The reason I made this document is to see what happens if you begin a note with reference style footnotes instead of inline as tested in the previous 2 documents. Appear to render automatically.

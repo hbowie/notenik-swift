@@ -1,0 +1,8 @@
+Title: <title> 
+
+Tags: <tags> 
+
+Short ID: <short-id>
+
+Body:  
+

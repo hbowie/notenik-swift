@@ -1,0 +1,25 @@
+Title:  Footnotes
+
+Short ID: foot
+
+Body:
+
+Here is some text containing some sample footnote.[^somesamplefootnote]
+
+[^somesamplefootnote]: Here is the text of some sample footnote.
+
+[somelink]:http://somelink.com
+
+Here is another footnote.[^This is the text of another footnote]
+
+Here's a simple footnote,[^1] and here's a longer one.[^bignote]
+
+[^1]: This is a simple footnote.
+
+[^bignote]: Here's a big note with multiple paragraphs and code.
+
+    Indent paragraphs to include them in the footnote.
+
+    `{ my code }`
+
+    Add as many paragraphs as you like.

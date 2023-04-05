@@ -122,6 +122,7 @@ class ShareViewController: NSViewController {
         let displayParms = DisplayParms()
         displayParms.setFrom(note: note!)
         let mkdownOptions = displayParms.genMkdownOptions()
+        mkdownOptions.shortID = note!.shortID.value
         
         // Set desired output format
         var format: MarkedupFormat = .htmlDoc
