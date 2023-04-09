@@ -77,6 +77,10 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         } 
     }
     
+    func loadHeaderFooterNav(io: NotenikIO) {
+        noteDisplay.loadHeaderFooterNav(io: io, parms: parms)
+    }
+    
     /// Display the provided note
     func display(note: Note, io: NotenikIO, searchPhrase: String? = nil) {
         self.io = io

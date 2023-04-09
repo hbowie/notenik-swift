@@ -162,6 +162,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 }
             }
             
+            if displayVC != nil {
+                displayVC!.loadHeaderFooterNav(io: notenikIO!)
+            }
+            
             var (selected, position) = notenikIO!.getSelectedNote()
             if selected == nil {
                 (selected, position) = notenikIO!.firstNote()
