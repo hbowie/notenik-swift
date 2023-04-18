@@ -28,8 +28,9 @@ class ExportViewController: NSViewController {
     let bookmarks = "Netscape Bookmark File"
     let concatHtml = "Concatenated HTML"
     let concatMd  = "Concatenated Markdown"
-    let webBookEPUB = "Web Book as EPUB"
+    let webBookEPUBFolder = "Web Book as EPUB Folder"
     let webBookSite = "Web Book as Site"
+    let webBookEPUB = "Web Book as EPUB"
     
     let osdir     = OpenSaveDirectory.shared
     
@@ -41,6 +42,7 @@ class ExportViewController: NSViewController {
     let opml    = "opml"
     let tab     = "tab"
     let txt     = "txt"
+    let xhtml   = "xhtml"
     
     @IBOutlet var formatPopup: NSPopUpButton!
     
@@ -66,6 +68,7 @@ class ExportViewController: NSViewController {
         fileExtCombo.addItem(withObjectValue: htm)
         fileExtCombo.addItem(withObjectValue: html)
         fileExtCombo.addItem(withObjectValue: opml)
+        fileExtCombo.addItem(withObjectValue: xhtml)
         fileExtCombo.selectItem(at: 0)
     }
     
@@ -92,8 +95,9 @@ class ExportViewController: NSViewController {
         formatPopup.addItem(withTitle: outline)
         formatPopup.addItem(withTitle: concatHtml)
         formatPopup.addItem(withTitle: concatMd)
-        formatPopup.addItem(withTitle: webBookEPUB)
+        formatPopup.addItem(withTitle: webBookEPUBFolder)
         formatPopup.addItem(withTitle: webBookSite)
+        formatPopup.addItem(withTitle: webBookEPUB)
         startOfExportScripts = formatPopup.numberOfItems
         formatPopup.selectItem(at: 0)
         
@@ -132,6 +136,9 @@ class ExportViewController: NSViewController {
                 fileExtCombo.selectItem(withObjectValue: md)
                 splitTagsCheckBox.state = .off
             case webBookEPUB:
+                fileExtCombo.selectItem(withObjectValue: xhtml)
+                splitTagsCheckBox.state = .off
+            case webBookEPUBFolder:
                 fileExtCombo.selectItem(withObjectValue: html)
                 splitTagsCheckBox.state = .off
             case webBookSite:
@@ -174,12 +181,17 @@ class ExportViewController: NSViewController {
                 format = .concatMarkdown
             case webBookEPUB:
                 format = .webBookEPUB
-                generateWebBook()
+                generateWebBook(exportFormat: format)
                 window.close()
                 return
             case webBookSite:
                 format = .webBookSite
                 publishWebBookAsSite()
+                window.close()
+                return
+            case webBookEPUBFolder:
+                format = .webBookEPUBFolder
+                generateWebBook(exportFormat: format)
                 window.close()
                 return
             default:
@@ -282,8 +294,12 @@ class ExportViewController: NSViewController {
     }
     
     /// Generate a Web Book of CSS and HTML pages, containing the entire Collection.
-    func generateWebBook() {
+    func generateWebBook(exportFormat: ExportFormat) {
         
+        var webBookType: WebBookType = .epub
+        if exportFormat == .webBookEPUBFolder {
+            webBookType = .epubsite
+        }
         guard let collection = io?.collection else { return }
         
         let dialog = NSOpenPanel()
@@ -306,7 +322,7 @@ class ExportViewController: NSViewController {
          
         if response == .OK {
             let bookURL = dialog.url!
-            let maker = WebBookMaker(input: collection.fullPathURL!, output: bookURL, epub: true)
+            let maker = WebBookMaker(input: collection.fullPathURL!, output: bookURL, webBookType: webBookType)
             if maker != nil {
                 collection.webBookPath = bookURL.path
                 collection.webBookAsEPUB = true
@@ -341,7 +357,7 @@ class ExportViewController: NSViewController {
          
         if response == .OK {
             let bookURL = dialog.url!
-            let maker = WebBookMaker(input: collection.fullPathURL!, output: bookURL, epub: false)
+            let maker = WebBookMaker(input: collection.fullPathURL!, output: bookURL, webBookType: .website)
             if maker != nil {
                 collection.webBookPath = bookURL.path
                 collection.webBookAsEPUB = false

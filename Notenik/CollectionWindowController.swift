@@ -3669,7 +3669,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
          
         if response == .OK {
             let bookURL = dialog.url!
-            let maker = WebBookMaker(input: noteIO.collection!.fullPathURL!, output: bookURL, epub: true)
+            let maker = WebBookMaker(input: noteIO.collection!.fullPathURL!, output: bookURL, webBookType: .website)
             if maker != nil {
                 collection.webBookPath = bookURL.path
                 collection.webBookAsEPUB = true
@@ -3705,7 +3705,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
          
         if response == .OK {
             let bookURL = dialog.url!
-            let maker = WebBookMaker(input: noteIO.collection!.fullPathURL!, output: bookURL, epub: false)
+            let maker = WebBookMaker(input: noteIO.collection!.fullPathURL!, output: bookURL, webBookType: .website)
             if maker != nil {
                 collection.webBookPath = bookURL.path
                 collection.webBookAsEPUB = false
