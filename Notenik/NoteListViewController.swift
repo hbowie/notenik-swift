@@ -344,7 +344,7 @@ class NoteListViewController:   NSViewController,
                         -> NSPasteboardWriting? {
         if let selectedNote = notenikIO?.getNote(at: row) {
             let maker = NoteLineMaker()
-            let _ = maker.putNote(selectedNote)
+            let _ = maker.putNote(selectedNote, includeAttachments: true)
             var str = ""
             if let writer = maker.writer as? BigStringWriter {
                 str = writer.bigString

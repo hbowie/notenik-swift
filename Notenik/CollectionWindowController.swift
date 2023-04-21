@@ -1163,7 +1163,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let (_, sel) = guardForNoteAction()
         guard let selectedNote = sel else { return }
         let maker = NoteLineMaker()
-        let _ = maker.putNote(selectedNote)
+        let _ = maker.putNote(selectedNote, includeAttachments: true)
         var str = ""
         if let writer = maker.writer as? BigStringWriter {
             str = writer.bigString
@@ -1269,6 +1269,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             
             let note = Note(collection: collection)
             
+            var attachmentPaths = ""
+            
             if url != nil && title != nil {
                 logInfo(msg: "Processing pasted item as URL: \(title!)")
                 _ = note.setTitle(title!)
@@ -1311,7 +1313,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 }
             } else if str != nil && str!.count > 0 {
                 logInfo(msg: "Processing pasted item as Note")
-                strToNote(str: str!, note: note, defaultTitle: nil)
+                attachmentPaths = strToNote(str: str!, note: note, defaultTitle: nil)
             } else {
                 logInfo(msg: "Not sure how to handle this pasted item")
             }
@@ -1354,6 +1356,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     if firstNotePasted == nil {
                         firstNotePasted = addedNote
                     }
+                    copyAttachments(note: addedNote!, io: noteIO, attachmentPaths: attachmentPaths)
                 }
             }
         } // end for each item
@@ -1369,7 +1372,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     /// - Parameters:
     ///   - str: A String containing a formatted Note.
     ///   - note: The Note to which the extracted fields are to be applied.
-    func strToNote(str: String, note: Note, defaultTitle: String?) {
+    ///   - defaultTitle: The default tile to use, if one is not defined within the passed string.
+    /// - Returns: Note attachment paths.
+    func strToNote(str: String, note: Note, defaultTitle: String?) -> String {
+        var attachmentPaths = ""
         let tempCollection = NoteCollection()
         tempCollection.otherFields = note.collection.otherFields
         note.collection.populateFieldDefs(to: tempCollection)
@@ -1385,6 +1391,43 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if !tempNote.title.value.hasPrefix("Pasted Note")
                 || tempNote.hasBody() || tempNote.hasLink() {
             tempNote.copyDefinedFields(to: note)
+        }
+        if let attachmentsField = tempNote.getField(common: NotenikConstants.attachmentsCommon) {
+            attachmentPaths = attachmentsField.value.value
+        }
+        return attachmentPaths
+    }
+    
+    func copyAttachments(note: Note, io: NotenikIO, attachmentPaths: String) {
+        let paths = attachmentPaths.components(separatedBy: "; ")
+        for path in paths {
+            var fromURL: URL?
+            if #available(macOS 13.0, *) {
+                fromURL = URL(filePath: path)
+            } else {
+               fromURL = URL(string: path)
+            }
+            if fromURL != nil {
+                let piped = path.components(separatedBy: " | ")
+                if piped.count >= 2 {
+                    let suffix = piped[piped.count - 1]
+                    let added = io.addAttachment(from: fromURL!, to: note, with: suffix, move: false)
+                    if added {
+                        if let imageDef = io.collection?.imageNameFieldDef {
+                            let imageField = note.getField(def: imageDef)
+                            if imageField == nil || imageField!.value.value.count == 0 {
+                                let ext = FileExtension(fromURL!.pathExtension)
+                                if ext.isImage {
+                                    _ = note.setField(label: imageDef.fieldLabel.commonForm, value: suffix)
+                                    _ = io.writeNote(note)
+                                }
+                            }
+                        }
+                    } else {
+                        communicateError("Attachment could not be added - possible duplicate", alert: true)
+                    }
+                }
+            }
         }
     }
     
@@ -3458,7 +3501,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         let defaultTitle = fileURL.deletingPathExtension().lastPathComponent
         
-        strToNote(str: reader.bigString, note: newNote, defaultTitle: defaultTitle)
+        _ = strToNote(str: reader.bigString, note: newNote, defaultTitle: defaultTitle)
 
         if newLevel != nil {
             _ = newNote.setLevel(newLevel!)
