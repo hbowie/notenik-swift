@@ -163,7 +163,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             }
             
             if displayVC != nil {
-                displayVC!.loadHeaderFooterNav(io: notenikIO!)
+                displayVC!.loadResourcePagesForCollection(io: notenikIO!)
             }
             
             var (selected, position) = notenikIO!.getSelectedNote()

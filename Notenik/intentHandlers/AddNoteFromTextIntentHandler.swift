@@ -38,7 +38,7 @@ class AddNoteFromTextIntentHandler: NSObject, AddNoteFromTextIntentHandling {
         
         let newNote = Note(collection: collection)
         
-        collWC.strToNote(str: noteText, note: newNote, defaultTitle: nil)
+        _ = collWC.strToNote(str: noteText, note: newNote, defaultTitle: nil)
         
         guard let addedNote = collWC.addPastedNote(newNote) else {
             let response = AddNoteFromTextIntentResponse(code: .failure, userActivity: nil)

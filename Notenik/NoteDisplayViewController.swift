@@ -77,8 +77,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         } 
     }
     
-    func loadHeaderFooterNav(io: NotenikIO) {
-        noteDisplay.loadHeaderFooterNav(io: io, parms: parms)
+    func loadResourcePagesForCollection(io: NotenikIO) {
+        noteDisplay.loadResourcePagesForCollection(io: io, parms: parms)
     }
     
     /// Display the provided note
