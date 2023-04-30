@@ -792,14 +792,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         _ = newNote!.setKlass(klassDef.name)
         for (_, field) in templateNote.fields {
             if !field.value.value.isEmpty {
-                switch field.def.fieldType.typeString {
-                case NotenikConstants.titleCommon:
-                    break
-                case NotenikConstants.dateModifiedCommon:
-                    break
-                case NotenikConstants.dateAddedCommon:
-                    break
-                default:
+                if field.def.shouldInitFromKlassTemplate {
                     _ = newNote!.setField(label: field.def.fieldLabel.properForm, value: field.value.value)
                 }
             }
@@ -894,14 +887,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
 
         for (_, field) in templateNote.fields {
             if !field.value.value.isEmpty {
-                switch field.def.fieldType.typeString {
-                case NotenikConstants.titleCommon:
-                    break
-                case NotenikConstants.dateModifiedCommon:
-                    break
-                case NotenikConstants.dateAddedCommon:
-                    break
-                default:
+                if field.def.shouldInitFromKlassTemplate {
                     _ = newNote!.setField(label: field.def.fieldLabel.properForm, value: field.value.value)
                 }
             }

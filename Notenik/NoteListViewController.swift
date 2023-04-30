@@ -471,8 +471,14 @@ class NoteListViewController:   NSViewController,
             } else if tableColumn?.title == "Stat" {
                 cellView.textField?.stringValue = String(note.status.getInt())
             } else if tableColumn?.title == "Date Added" {
+                if #available(macOS 10.15, *) {
+                    cellView.textField?.font = monoFont!
+                }
                 cellView.textField?.stringValue = note.dateAddedValue
             } else if tableColumn?.title == "Date Mod" {
+                if #available(macOS 10.15, *) {
+                    cellView.textField?.font = monoFont!
+                }
                 cellView.textField?.stringValue = note.dateModifiedValue
             } else if notenikIO != nil && notenikIO!.collection != nil {
                 if tableColumn?.title == notenikIO!.collection!.titleFieldDef.fieldLabel.properForm {
