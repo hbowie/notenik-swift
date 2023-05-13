@@ -64,7 +64,7 @@ class NoteListViewController:   NSViewController,
         tableView.registerForDraggedTypes(NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0) })
         tableView.registerForDraggedTypes([NSPasteboard.PasteboardType(kUTTypeBookmark as String),
                                            NSPasteboard.PasteboardType(kUTTypeURL as String),
-                                           NSPasteboard.PasteboardType.vCard,
+                                           NSPasteboard.PasteboardType(kUTTypeVCard as String),
                                            NSPasteboard.PasteboardType.string])
         
         tableView.target = self
