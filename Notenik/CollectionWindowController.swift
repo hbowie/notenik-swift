@@ -1279,7 +1279,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 logInfo(msg: "Processing pasted item as File Ref URL")
                 let fileURL = URL(fileURLWithPath: fileRefURL!).standardized
                 let likelyText = ResourceFileSys.isLikelyNoteFile(fileURL: fileURL, preferredNoteExt: collection.preferredExt)
-                if row >= 0 && dropOperation == .on && !likelyText {
+                let fileName = fileURL.deletingPathExtension().lastPathComponent
+                let ext = fileURL.pathExtension
+                if ext == "opml" {
+                    let defaultTitle = StringUtils.wordDemarcation(fileName,
+                                                        caseMods: ["u", "u", "l"],
+                                                        delimiter: " ")
+                    
+                    let opmlToBody = OPMLtoBody()
+                    let (body, title) = opmlToBody.importFrom(fileURL,
+                                                              defaultTitle: defaultTitle)
+                    _ = note.setTitle(title)
+                    _ = note.setBody(body)
+                    
+                } else if row >= 0 && dropOperation == .on && !likelyText {
                     let dropNote = noteIO.getNote(at: row)
                     if dropNote != nil {
                         select(note: dropNote, position: nil, source: .action, andScroll: true)
