@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -215,10 +214,22 @@
                                                             <action selector="importNotenik:" target="Ady-hI-5gd" id="Aaw-Dm-0eU"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="OPML..." id="fhH-i0-H1D">
+                                                    <menuItem title="OPML using Seq &amp; Level..." id="fhH-i0-H1D" userLabel="OPML using Seq &amp; Level...">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="importOPML:" target="Ady-hI-5gd" id="gd5-16-Ly6"/>
+                                                            <action selector="importOPMLusingSeqAndLevel:" target="Ady-hI-5gd" id="gd5-16-Ly6"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="OPML using Headings..." id="b65-Ck-vgu" userLabel="OPML using Headings...">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="importOPMLusingHeadings:" target="Ady-hI-5gd" id="eny-5I-QPF"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="OPML using Lists..." id="5Oc-gr-mYW" userLabel="OPML using List Items...">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="importOPMLusingListItems:" target="Ady-hI-5gd" id="jOO-yc-1o9"/>
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem title="Plain Text from OmniFocus..." id="GqB-Bv-wSg">
@@ -1407,13 +1418,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="53"/>
+                                <rect key="frame" x="0.0" y="0.0" width="370" height="105"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="388" height="36"/>
+                                    <rect key="frame" x="1" y="1" width="368" height="88"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
-                                            <rect key="frame" x="0.0" y="0.0" width="1323" height="19"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1323" height="63"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1785,7 +1796,7 @@ CA
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="37" width="388" height="15"/>
+                                    <rect key="frame" x="1" y="89" width="368" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
@@ -1822,13 +1833,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="47"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="45"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="45"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="43"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="477" height="45"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="477" height="43"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

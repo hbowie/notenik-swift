@@ -3548,7 +3548,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         finishBatchOperation()
     }
     
-    @IBAction func importOPML(_ sender: Any) {
+    @IBAction func importOPMLusingSeqAndLevel(_ sender: Any) {
         
         // See if we're ready to take action
         guard let noteIO = guardForCollectionAction() else { return }
@@ -3568,6 +3568,90 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         alert.messageText = "Imported \(imports) notes from \(importURL.path)"
         alert.addButton(withTitle: "OK")
         _ = alert.runModal()
+        editVC!.io = noteIO
+        finishBatchOperation()
+    }
+    
+    @IBAction func importOPMLusingHeadings(_ sender: Any) {
+        
+        // See if we're ready to take action
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        guard let importURL = promptUserForImportFile(
+                title: "Open an input OPML file",
+                parent: noteIO.collection!.lib.getURL(type: .parent))
+            else { return }
+        
+        let note = Note(collection: collection)
+
+        let fileName = importURL.deletingPathExtension().lastPathComponent
+        let ext = importURL.pathExtension
+ 
+        let defaultTitle = StringUtils.wordDemarcation(fileName,
+                                            caseMods: ["u", "u", "l"],
+                                            delimiter: " ")
+        
+        let opmlToBody = OPMLtoBody()
+        let (body, title) = opmlToBody.importFrom(importURL,
+                                                  defaultTitle: defaultTitle,
+                                                  usingHeadings: true)
+        _ = note.setTitle(title)
+        _ = note.setBody(body)
+            
+        if let added = addPastedNote(note) {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .info,
+                              message: "Imported 1 note from \(importURL.path)")
+            let alert = NSAlert()
+            alert.alertStyle = .informational
+            alert.messageText = "Imported 1 note from \(importURL.path)"
+            alert.addButton(withTitle: "OK")
+            _ = alert.runModal()
+        }
+
+        editVC!.io = noteIO
+        finishBatchOperation()
+    }
+    
+    @IBAction func importOPMLusingListItems(_ sender: Any) {
+        
+        // See if we're ready to take action
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        guard let importURL = promptUserForImportFile(
+                title: "Open an input OPML file",
+                parent: noteIO.collection!.lib.getURL(type: .parent))
+            else { return }
+        
+        let note = Note(collection: collection)
+
+        let fileName = importURL.deletingPathExtension().lastPathComponent
+ 
+        let defaultTitle = StringUtils.wordDemarcation(fileName,
+                                            caseMods: ["u", "u", "l"],
+                                            delimiter: " ")
+        
+        let opmlToBody = OPMLtoBody()
+        let (body, title) = opmlToBody.importFrom(importURL,
+                                                  defaultTitle: defaultTitle,
+                                                  usingHeadings: false)
+        _ = note.setTitle(title)
+        _ = note.setBody(body)
+            
+        let added = addPastedNote(note)
+        if added != nil {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .info,
+                              message: "Imported 1 note from \(importURL.path)")
+            let alert = NSAlert()
+            alert.alertStyle = .informational
+            alert.messageText = "Imported 1 note from \(importURL.path)"
+            alert.addButton(withTitle: "OK")
+            _ = alert.runModal()
+        }
+
         editVC!.io = noteIO
         finishBatchOperation()
     }
