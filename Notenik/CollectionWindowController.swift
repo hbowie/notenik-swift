@@ -1193,14 +1193,16 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         // Make sure we're ready to do stuff.
         guard let noteIO = guardForCollectionAction() else { return 0 }
         guard let collection = noteIO.collection else { return 0 }
+        let seqDef = collection.seqFieldDef
         
         var newLevel: LevelValue?
         var newSeq: SeqValue?
         var newKlass: KlassValue?
                             
         // Gen Seq and Level, if appropriate
-        if row > 0 && dropOperation == .above && collection.sortParm == .seqPlusTitle {
-            var seqAbove = SeqValue("")
+        if row > 0 && dropOperation == .above && seqDef != nil && collection.sortParm == .seqPlusTitle {
+            let seqType = seqDef!.fieldType as! SeqType
+            var seqAbove = seqType.createValue() as! SeqValue
             let noteAbove = noteIO.getNote(at: row - 1)
             var levelAbove: LevelValue = LevelValue()
             if noteAbove != nil {
@@ -1533,12 +1535,18 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     func moveNote(note: Note, row: Int) -> Note? {
         guard let noteIO = guardForCollectionAction() else { return nil }
+        let collection = noteIO.collection
+        let seqDef = collection?.seqFieldDef
 
         let position = noteIO.positionOfNote(note)
         _ = noteIO.selectNote(at: position.index)
         let modNote = note.copy() as! Note
         let level = note.level
-        var priorSeq = SeqValue("")
+        var priorSeq: SeqValue?
+        if seqDef != nil {
+            let seqType = seqDef!.fieldType as! SeqType
+            priorSeq = seqType.createValue() as? SeqValue
+        }
         var priorLevel: LevelValue?
         if row > 0 {
             let priorIndex = row - 1
@@ -1548,11 +1556,13 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 priorLevel = priorNote!.level
             }
         }
-        let modSeq = priorSeq.dupe()
-        if priorLevel != nil {
-            modSeq.incByLevels(originalLevel: priorLevel!, newLevel: level)
+        if seqDef != nil {
+            let modSeq = priorSeq!.dupe()
+            if priorLevel != nil {
+                modSeq.incByLevels(originalLevel: priorLevel!, newLevel: level)
+            }
+            _ = modNote.setSeq(modSeq.value)
         }
-        _ = modNote.setSeq(modSeq.value)
         let _ = recordMods(noteIO: noteIO, note: note, modNote: modNote)
         return modNote
     }
@@ -3585,7 +3595,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let note = Note(collection: collection)
 
         let fileName = importURL.deletingPathExtension().lastPathComponent
-        let ext = importURL.pathExtension
  
         let defaultTitle = StringUtils.wordDemarcation(fileName,
                                             caseMods: ["u", "u", "l"],
@@ -3598,7 +3607,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         _ = note.setTitle(title)
         _ = note.setBody(body)
             
-        if let added = addPastedNote(note) {
+        let added = addPastedNote(note)
+        if added != nil {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionWindowController",
                               level: .info,

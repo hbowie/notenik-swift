@@ -24,6 +24,7 @@ class NoteListViewController:   NSViewController,
     var monoFont: NSFont?
    
     @IBOutlet var tableView: NSTableView!
+    @IBOutlet var scrollView: NSScrollView!
     
     var shortcutMenu: NSMenu!
     var newChildIndex = -1
@@ -58,6 +59,8 @@ class NoteListViewController:   NSViewController,
         if #available(macOS 10.15, *) {
             monoFont = NSFont.monospacedSystemFont(ofSize: 13.0, weight: NSFont.Weight.regular)
         }
+        
+        adjustScroller()
         
         // Setup for drag and drop.
         tableView.setDraggingSourceOperationMask(.copy, forLocal: false)
@@ -398,7 +401,20 @@ class NoteListViewController:   NSViewController,
     
     /// Reload the Table's Data.
     func reload() {
+        adjustScroller()
         tableView.reloadData()
+    }
+    
+    func adjustScroller() {
+        scrollView.usesPredominantAxisScrolling = true
+        switch AppPrefs.shared.horizontalListScrollBar {
+        case "on":
+            scrollView.hasHorizontalScroller = true
+        case "off":
+            scrollView.hasHorizontalScroller = false
+        default:
+            break
+        }
     }
     
     // -----------------------------------------------------------

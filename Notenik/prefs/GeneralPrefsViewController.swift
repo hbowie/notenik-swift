@@ -50,6 +50,7 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     
     @IBOutlet var idFolderSepField: NSTextField!
     
+    @IBOutlet var horizListScrollBarField: NSPopUpButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +70,12 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
             case "light":  appAppearance.selectItem(at: 1)
             case "dark":   appAppearance.selectItem(at: 2)
             default: break
+        }
+        
+        switch appPrefs.horizontalListScrollBar {
+            case "on": horizListScrollBarField.selectItem(at: 0)
+            case "off":  horizListScrollBarField.selectItem(at: 1)
+            default: break;
         }
         
         indentSpacesPopUpButton.removeAllItems()
@@ -99,6 +106,18 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
         } else {
             appPrefs.tipsAtStartup = false
         }
+    }
+    
+    @IBAction func horizListScrollBarUpdated(_ sender: Any) {
+        switch horizListScrollBarField.indexOfSelectedItem {
+        case 0:
+            appPrefs.horizontalListScrollBar = "on"
+        case 1:
+            appPrefs.horizontalListScrollBar = "off"
+        default:
+            break
+        }
+        CollectionJuggler.shared.adjustListViews()
     }
     
     @available(macOS 10.14, *)
