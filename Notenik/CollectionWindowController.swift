@@ -659,13 +659,16 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
-    public func seqModified(modStartingNote: Note?, reselect: Bool = true) {
+    public func seqModified(modStartingNote: Note?, rowCount: Int, reselect: Bool = true) {
         newNoteRequested = false
         pendingEdits = false
         reloadCollection(self)
         if reselect {
             if modStartingNote != nil {
                 select(note: modStartingNote!, position: nil, source: .nav, andScroll: true)
+                if listVC != nil && rowCount > 1 {
+                    listVC!.extendSelection(rowCount: rowCount)
+                }
             } else {
                 let (note, position) = io!.firstNote()
                 select(note: note, position: position, source: .nav, andScroll: true)
@@ -1847,7 +1850,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if highIndex > lowIndex && newSeq != nil {
             if let sequencer = Sequencer(io: io!) {
                 let modStartingNote = sequencer.renumberRange(startingRow: lowIndex, endingRow: highIndex, newSeqValue: newSeq!.value)
-                seqModified(modStartingNote: modStartingNote, reselect: true)
+                let selCount = highIndex - lowIndex + 1
+                seqModified(modStartingNote: modStartingNote, rowCount: selCount, reselect: true)
                 return
             }
         }

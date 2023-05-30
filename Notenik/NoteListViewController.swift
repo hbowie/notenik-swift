@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/21/19.
-//  Copyright © 2019 - 2022 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -241,6 +241,20 @@ class NoteListViewController:   NSViewController,
         }
         
         return (lowIndex, highIndex)
+    }
+    
+    func extendSelection(rowCount: Int) {
+        let selectedRow = tableView.selectedRow
+        var topRow = selectedRow + rowCount - 1
+        if topRow >= tableView.numberOfRows {
+            topRow = tableView.numberOfRows - 1
+        }
+        var selIx = selectedRow + 1
+        while selIx <= topRow {
+            let indexSet = IndexSet(integer: selIx)
+            tableView.selectRowIndexes(indexSet, byExtendingSelection: true)
+            selIx += 1
+        }
     }
     
     @objc private func newChildForItem(_ sender: AnyObject) {

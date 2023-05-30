@@ -58,7 +58,7 @@ class SeqModViewController: NSViewController {
 
         if let sequencer = Sequencer(io: io!) {
             let modStartingNote = sequencer.renumberRange(startingRow: startingRow, endingRow: endingRow, newSeqValue: newStartingSeq.stringValue)
-            collectionWC!.seqModified(modStartingNote: modStartingNote)
+            collectionWC!.seqModified(modStartingNote: modStartingNote, rowCount: 1)
         }
         application.stopModal(withCode: .OK)
         window!.close()
