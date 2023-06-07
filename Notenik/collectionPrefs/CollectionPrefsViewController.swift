@@ -24,6 +24,7 @@ class CollectionPrefsViewController: NSViewController {
     var defsRemoved = DefsRemoved()
     
     @IBOutlet var collectionTitle:      NSTextField!
+    var collectionTitleSetByUser =      true
     @IBOutlet var fileExtComboBox:      NSComboBox!
     @IBOutlet var fileFormatComboBox:   NSComboBox!
     @IBOutlet var hashTagsCkBox:        NSButton!
@@ -129,6 +130,7 @@ class CollectionPrefsViewController: NSViewController {
         }
         if collectionTitle != nil {
             collectionTitle!.stringValue = collection!.title
+            collectionTitleSetByUser = collection!.titleSetByUser
         }
         
         if collectionShortcut != nil {
@@ -412,6 +414,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBAction func titleEdited(_ sender: Any) {
         if collectionTitle.stringValue.isEmpty {
             collectionTitle.stringValue = collection!.defaultTitle
+            collectionTitleSetByUser = false
         }
     }
     
@@ -422,11 +425,15 @@ class CollectionPrefsViewController: NSViewController {
         // Set Collection Title
         if collectionTitle.stringValue.isEmpty {
             collectionTitle.stringValue = collection!.defaultTitle
+            collectionTitleSetByUser = false
         }
-        if collection!.title != collectionTitle.stringValue {
+        if collection!.title != collectionTitle.stringValue
+                || collection!.titleSetByUser != collectionTitleSetByUser{
             collection!.title = collectionTitle.stringValue
             if collectionTitle.stringValue != collection!.defaultTitle {
                 collection!.titleSetByUser = true
+            } else {
+                collection!.titleSetByUser = collectionTitleSetByUser
             }
         }
         

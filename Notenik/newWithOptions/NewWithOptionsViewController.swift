@@ -154,10 +154,23 @@ class NewWithOptionsViewController: NSViewController {
                               bodyText: nil,
                               klassName: klassComboBox.stringValue,
                               level: levelPopup.titleOfSelectedItem,
-                              seq: seqField.stringValue)
+                              seq: seqField.stringValue,
+                              addAndReturn: false)
 
         application.stopModal(withCode: .OK)
         window!.close()
+    }
+    
+    @IBAction func addAndReturn(_ sender: Any) {
+        guard collectionWC != nil else { return }
+        application.stopModal(withCode: .OK)
+        window!.close()
+        collectionWC!.newNote(title: titleField.stringValue,
+                              bodyText: nil,
+                              klassName: klassComboBox.stringValue,
+                              level: levelPopup.titleOfSelectedItem,
+                              seq: seqField.stringValue,
+                              addAndReturn: true)
     }
     
     @IBAction func cancel(_ sender: Any) {

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -61,7 +60,7 @@
                                     </objectValues>
                                 </comboBoxCell>
                             </comboBox>
-                            <pathControl verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9p8-5Y-BDH">
+                            <pathControl toolTip="Add the New Note and Return to Add Another" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9p8-5Y-BDH">
                                 <rect key="frame" x="20" y="20" width="428" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="39P-VE-V4T"/>
@@ -188,6 +187,16 @@ DQ
                                     <action selector="decreaseLevel:" target="I9U-Ay-dMa" id="r6P-go-7kp"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BQY-gB-udP">
+                                <rect key="frame" x="348" y="55" width="68" height="32"/>
+                                <buttonCell key="cell" type="push" title="Again" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="asR-lj-Dge">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="addAndReturn:" target="I9U-Ay-dMa" id="yay-W1-V1e"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="ejM-My-8Rg" firstAttribute="baseline" secondItem="j63-8l-QKO" secondAttribute="baseline" id="347-S0-77b"/>
@@ -200,6 +209,7 @@ DQ
                             <constraint firstItem="HZC-h3-VU4" firstAttribute="baseline" secondItem="wLh-QY-MzK" secondAttribute="baseline" id="ABh-sf-1yn"/>
                             <constraint firstItem="39c-IX-jrv" firstAttribute="leading" secondItem="Zrp-9x-drL" secondAttribute="leading" constant="20" symbolic="YES" id="Btu-5z-hHQ"/>
                             <constraint firstItem="tF8-ZA-oEs" firstAttribute="top" secondItem="wLh-QY-MzK" secondAttribute="bottom" constant="20" symbolic="YES" id="Cbv-pA-EO1"/>
+                            <constraint firstItem="j63-8l-QKO" firstAttribute="leading" secondItem="BQY-gB-udP" secondAttribute="trailing" constant="12" symbolic="YES" id="Ccy-dj-mer"/>
                             <constraint firstItem="wLh-QY-MzK" firstAttribute="leading" secondItem="HZC-h3-VU4" secondAttribute="trailing" constant="7" id="Dfq-kE-3y3"/>
                             <constraint firstItem="7qZ-Vx-LlQ" firstAttribute="trailing" secondItem="wLh-QY-MzK" secondAttribute="trailing" id="Fqa-dq-PnO"/>
                             <constraint firstItem="ejM-My-8Rg" firstAttribute="leading" secondItem="9p8-5Y-BDH" secondAttribute="leading" id="HIs-1R-Tnm"/>
@@ -207,6 +217,7 @@ DQ
                             <constraint firstItem="qq1-99-dSH" firstAttribute="trailing" secondItem="39c-IX-jrv" secondAttribute="trailing" id="I7f-2i-NtV"/>
                             <constraint firstItem="AjL-ad-7rW" firstAttribute="centerY" secondItem="XaV-4Z-zzH" secondAttribute="centerY" id="Kjt-Ec-bef"/>
                             <constraint firstItem="EXE-lj-7BR" firstAttribute="leading" secondItem="HZC-h3-VU4" secondAttribute="leading" id="M6V-3f-h4p"/>
+                            <constraint firstItem="BQY-gB-udP" firstAttribute="baseline" secondItem="j63-8l-QKO" secondAttribute="baseline" id="O16-J5-MRt"/>
                             <constraint firstItem="39c-IX-jrv" firstAttribute="top" secondItem="LL6-Sf-jYc" secondAttribute="bottom" constant="8" symbolic="YES" id="P2q-Aj-Of0"/>
                             <constraint firstItem="wLh-QY-MzK" firstAttribute="top" secondItem="7qZ-Vx-LlQ" secondAttribute="bottom" constant="12" id="TXf-eC-nag"/>
                             <constraint firstItem="7qZ-Vx-LlQ" firstAttribute="leading" secondItem="wLh-QY-MzK" secondAttribute="leading" id="TgS-q2-qrw"/>

@@ -813,12 +813,12 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                  bodyText: String? = nil,
                  klassName: String? = nil,
                  level: String? = nil,
-                 seq:   String? = nil) {
+                 seq:   String? = nil,
+                 addAndReturn: Bool = false) {
         
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
         
-        newNoteRequested = true
         newNote = Note(collection: noteIO.collection!)
         
         if title != nil && !title!.isEmpty {
@@ -846,13 +846,23 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if level == nil && seq == nil {
             setFollowing()
         }
-        editVC!.configureEditView(noteIO: noteIO, klassName: klassName)
-        editVC!.populateFields(with: newNote!)
-        noteTabs!.tabView.selectTabViewItem(at: 1)
-        guard let window = self.window else { return }
-        guard let titleView = editVC?.titleView else { return }
-        window.makeFirstResponder(titleView.view)
-
+        
+        if addAndReturn {
+            let newNote = addPastedNote(newNote!)
+            reloadViews()
+            if newNote != nil {
+                select(note: newNote!, position: nil, source: .action, andScroll: true)
+                newWithOptions(currentNote: newNote!)
+            }
+        } else {
+            newNoteRequested = true
+            editVC!.configureEditView(noteIO: noteIO, klassName: klassName)
+            editVC!.populateFields(with: newNote!)
+            noteTabs!.tabView.selectTabViewItem(at: 1)
+            guard let window = self.window else { return }
+            guard let titleView = editVC?.titleView else { return }
+            window.makeFirstResponder(titleView.view)
+        }
     }
     
     func applyKlassTemplate(noteIO: NotenikIO, klassName: String?) {
