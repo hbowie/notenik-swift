@@ -80,8 +80,8 @@ class BodyView: MacEditView {
         
         AppPrefsCocoa.shared.setTextEditingFont(object: textView)
         
-        delegate = BodyViewDelegate()
-        textView.delegate = delegate
+        // delegate = BodyViewDelegate()
+        // textView.delegate = delegate
         
         // Add the Text View to the Scroll View
         scrollView.documentView = textView
