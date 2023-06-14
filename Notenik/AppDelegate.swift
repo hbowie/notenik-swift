@@ -44,6 +44,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     let logStoryboard:              NSStoryboard = NSStoryboard(name: "Log", bundle: nil)
     let newsStoryboard:             NSStoryboard = NSStoryboard(name: "News", bundle: nil)
     
+    let expStoryboard:              NSStoryboard = NSStoryboard(name: "ViewExperiment", bundle: nil)
+    
     var logController: LogWindowController?
     
     func applicationWillFinishLaunching(_ notification: Notification) {
@@ -255,6 +257,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     @IBAction func menuWindowScripter(_ sender: Any) {
         juggler.showScriptWindow()
+    }
+    
+    @IBAction func menuWindowExperiment(_ sender: Any) {
+        if let expController = self.expStoryboard.instantiateController(withIdentifier: "viewExpWC") as? ViewExpWindowController {
+            expController.showWindow(self)
+        } else {
+            logger.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "AppDelegate",
+                              level: .fault,
+                              message: "Couldn't get a View Experiment Window Controller!")
+        }
     }
     
     // -----------------------------------------------------------
