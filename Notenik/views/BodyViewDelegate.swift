@@ -14,25 +14,27 @@ import Cocoa
 
 public class BodyViewDelegate: NSObject, NSTextViewDelegate {
     
-    var conMenu: NSMenu?
-    var lookupItem: NSMenuItem?
-
-    public func textView(_ view: NSTextView, menu: NSMenu, for event: NSEvent, at charIndex: Int) -> NSMenu? {
-        conMenu = menu
-        // conMenu!.addItem(NSMenuItem.separator())
-        lookupItem = NSMenuItem(title: "Complete wiki link...", action: #selector(lookupPartialWikiLinks(_:)), keyEquivalent: "")
-        lookupItem?.target = self
-        lookupItem?.isEnabled = true
-        // conMenu!.addItem(lookupItem!)
-        return conMenu
-    }
-    
-    public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+    public func textShouldBeginEditing(_ textObject: NSText) -> Bool {
+        print("Body View Should begin editing")
         return true
     }
     
-    @IBAction public func lookupPartialWikiLinks(_ sender: AnyObject) {
-        print("Lookup Partial Wiki Links invoked!")
+    public func textDidBeginEditing(_ notification: Notification) {
+        print("Body View Did begin editing")
+    }
+    
+    public func textShouldEndEditing(_ textObject: NSText) -> Bool {
+        print("Body View Should end editing")
+        return true
+    }
+    
+    public func textDidEndEditing(_ notification: Notification) {
+        print("Body View Did end editing")
+        if let userInfo = notification.userInfo {
+            if let textMovement = userInfo["NSTextMovement"] {
+                print("  - text movement: \(textMovement)")
+            }
+        }
     }
 
 }

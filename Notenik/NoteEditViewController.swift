@@ -133,7 +133,8 @@ class NoteEditViewController: NSViewController {
         
         let editView = ViewFactory.getEditView(collection: collection,
                                                pickLists: notenikIO!.pickLists,
-                                               def: def)
+                                               def: def,
+                                               auxLongText: AppPrefs.shared.auxLongText)
         let valueView = editView.view
         
         editViews.append(editView)

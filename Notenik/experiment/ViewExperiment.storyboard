@@ -45,7 +45,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="425" height="135"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView wantsLayer="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="bar" spellingCorrection="YES" smartInsertDelete="YES" id="0sv-6T-wqh">
+                                        <textView wantsLayer="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" fieldEditor="YES" findStyle="bar" smartInsertDelete="YES" id="0sv-6T-wqh">
                                             <rect key="frame" x="0.0" y="0.0" width="425" height="135"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -72,7 +72,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="425" height="163"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView wantsLayer="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="bar" spellingCorrection="YES" smartInsertDelete="YES" id="ibp-pW-i31">
+                                        <textView wantsLayer="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" fieldEditor="YES" findStyle="bar" smartInsertDelete="YES" id="ibp-pW-i31">
                                             <rect key="frame" x="0.0" y="0.0" width="425" height="163"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -94,6 +94,10 @@
                             </scrollView>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="tv1" destination="0sv-6T-wqh" id="hrW-th-5WM"/>
+                        <outlet property="tv2" destination="ibp-pW-i31" id="lah-uK-odK"/>
+                    </connections>
                 </viewController>
                 <customObject id="nAq-wv-eaq" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

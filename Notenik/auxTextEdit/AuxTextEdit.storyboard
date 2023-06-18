@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="mSx-rW-6vT">
+            <objects>
+                <windowController storyboardIdentifier="auxTextWC" showSeguePresentationStyle="single" id="M1R-gd-xA0" customClass="AuxTextEditWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Auxiliary Text Editor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="L9y-nc-ee1">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+                        <view key="contentView" id="Tqj-Ob-MFJ">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="M1R-gd-xA0" id="QAm-Fb-I0a"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="98b-fc-03G" kind="relationship" relationship="window.shadowedContentViewController" id="uVu-yq-BW9"/>
+                    </connections>
+                </windowController>
+                <customObject id="qe3-xM-n2c" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-506" y="-64"/>
+        </scene>
+        <!--Aux Text Edit View Controller-->
+        <scene sceneID="Q1x-sb-aZy">
+            <objects>
+                <viewController id="98b-fc-03G" customClass="AuxTextEditViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="dRj-5w-Bag">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xHI-0n-uA8">
+                                <rect key="frame" x="13" y="13" width="76" height="32"/>
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vz9-yl-5Vr">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="cancelAction:" target="98b-fc-03G" id="JTq-Gq-N1p"/>
+                                </connections>
+                            </button>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQh-xe-nv3">
+                                <rect key="frame" x="20" y="60" width="440" height="190"/>
+                                <clipView key="contentView" drawsBackground="NO" id="uv1-Hh-4Ug">
+                                    <rect key="frame" x="0.0" y="0.0" width="425" height="190"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView wantsLayer="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="bar" spellingCorrection="YES" smartInsertDelete="YES" id="lgN-od-9K8">
+                                            <rect key="frame" x="0.0" y="0.0" width="425" height="190"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="425" height="190"/>
+                                            <size key="maxSize" width="440" height="10000000"/>
+                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="q6v-1F-jb8">
+                                    <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="WGM-vQ-8TC">
+                                    <rect key="frame" x="425" y="0.0" width="15" height="190"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b44-fs-tTL">
+                                <rect key="frame" x="414" y="13" width="53" height="32"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2T0-AU-ivR">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="OKtoProceed:" target="98b-fc-03G" id="55d-E5-aoL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="hQh-xe-nv3" firstAttribute="top" secondItem="dRj-5w-Bag" secondAttribute="top" constant="20" symbolic="YES" id="HhM-Hw-C9g"/>
+                            <constraint firstItem="hQh-xe-nv3" firstAttribute="leading" secondItem="dRj-5w-Bag" secondAttribute="leading" constant="20" symbolic="YES" id="Ogt-gd-lAF"/>
+                            <constraint firstItem="xHI-0n-uA8" firstAttribute="top" secondItem="hQh-xe-nv3" secondAttribute="bottom" constant="20" symbolic="YES" id="UaM-5g-G4Y"/>
+                            <constraint firstItem="hQh-xe-nv3" firstAttribute="leading" secondItem="xHI-0n-uA8" secondAttribute="leading" id="cEf-KI-sz3"/>
+                            <constraint firstAttribute="bottom" secondItem="xHI-0n-uA8" secondAttribute="bottom" constant="20" symbolic="YES" id="lTe-Zm-lPb"/>
+                            <constraint firstItem="xHI-0n-uA8" firstAttribute="baseline" secondItem="b44-fs-tTL" secondAttribute="baseline" id="mhh-hm-DC6"/>
+                            <constraint firstItem="hQh-xe-nv3" firstAttribute="trailing" secondItem="b44-fs-tTL" secondAttribute="trailing" id="qw2-bo-quk"/>
+                            <constraint firstAttribute="trailing" secondItem="hQh-xe-nv3" secondAttribute="trailing" constant="20" symbolic="YES" id="uVq-tj-crj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="lgN-od-9K8" id="0yP-Mj-XOj"/>
+                    </connections>
+                </viewController>
+                <customObject id="Sje-GW-yo9" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-506" y="400"/>
+        </scene>
+    </scenes>
+</document>

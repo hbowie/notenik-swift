@@ -52,6 +52,8 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
     
     @IBOutlet var horizListScrollBarField: NSPopUpButton!
     
+    @IBOutlet var inlineLongTextField: NSPopUpButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if appPrefs.confirmDeletes {
@@ -76,6 +78,13 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
             case "on": horizListScrollBarField.selectItem(at: 0)
             case "off":  horizListScrollBarField.selectItem(at: 1)
             default: break;
+        }
+        
+        switch appPrefs.auxLongText {
+        case false:
+            inlineLongTextField.selectItem(at: 0)
+        case true:
+            inlineLongTextField.selectItem(at: 1)
         }
         
         indentSpacesPopUpButton.removeAllItems()
@@ -119,6 +128,18 @@ class GeneralPrefsViewController: NSViewController, PrefsTabVC {
         }
         CollectionJuggler.shared.adjustListViews()
     }
+    
+    @IBAction func inlineLongTextPopupUpdated(_ sender: NSPopUpButton) {
+        switch inlineLongTextField.indexOfSelectedItem {
+        case 0:
+            appPrefs.auxLongText = false
+        case 1:
+            appPrefs.auxLongText = true
+        default:
+            appPrefs.auxLongText = false
+        }
+    }
+    
     
     @available(macOS 10.14, *)
     @IBAction func appAppearanceSelected(_ sender: Any) {

@@ -17,13 +17,21 @@ import NotenikLib
 /// corresponding fields. 
 class ViewFactory {
     
-    static func getEditView(collection: NoteCollection, pickLists: ValuePickLists, def: FieldDefinition) -> MacEditView {
+    static func getEditView(collection: NoteCollection,
+                            pickLists: ValuePickLists,
+                            def: FieldDefinition,
+                            auxLongText: Bool) -> MacEditView {
         
         switch def.fieldType.typeString {
         case NotenikConstants.akaCommon:
             return AKAView()
         case NotenikConstants.attribCommon:
-            return LongTextView()
+            if auxLongText {
+                let longView = AuxTextView(properLabel: def.fieldLabel.properForm, typeString: def.fieldType.typeString)
+                return longView
+            } else {
+                return LongTextView()
+            }
         case NotenikConstants.authorCommon:
             if let pickList = def.pickList as? AuthorPickList {
                 return AuthorView(pickList: pickList)
@@ -37,7 +45,12 @@ class ViewFactory {
         case NotenikConstants.booleanType:
             return BooleanView()
         case NotenikConstants.codeCommon:
-            return CodeView()
+            if auxLongText {
+                let codeView = AuxTextView(properLabel: def.fieldLabel.properForm, typeString: def.fieldType.typeString)
+                return codeView
+            } else {
+                return CodeView()
+            }
         case NotenikConstants.comboType:
             return ComboView(def: def)
         case NotenikConstants.dateAddedCommon:
@@ -51,7 +64,12 @@ class ViewFactory {
         case NotenikConstants.includeChildrenCommon:
             return IncludeChildrenView()
         case NotenikConstants.indexCommon:
-            return LongTextView()
+            if auxLongText {
+                let indexView = AuxTextView(properLabel: def.fieldLabel.properForm, typeString: def.fieldType.typeString)
+                return indexView
+            } else {
+                return LongTextView()
+            }
         case NotenikConstants.klassCommon:
             if let pickList = def.pickList as? KlassPickList {
                 return KlassView(pickList: pickList)
@@ -65,9 +83,19 @@ class ViewFactory {
         case NotenikConstants.levelCommon:
             return LevelView(config: pickLists.levelConfig)
         case NotenikConstants.linkCommon, NotenikConstants.workLinkCommon:
-            return LinkView()
+            if auxLongText {
+                let linkView = AuxTextView(properLabel: def.fieldLabel.properForm, typeString: def.fieldType.typeString)
+                return linkView
+            } else {
+                return LinkView()
+            }
         case NotenikConstants.longTextType:
-            return LongTextView()
+            if auxLongText {
+                let longView = AuxTextView(properLabel: def.fieldLabel.properForm, typeString: def.fieldType.typeString)
+                return longView
+            } else {
+                return LongTextView()
+            }
         case NotenikConstants.lookupType:
             return LookupView(def: def)
         case NotenikConstants.minutesToReadCommon:
@@ -81,7 +109,12 @@ class ViewFactory {
         case NotenikConstants.tagsCommon:
             return TagsView(pickList: pickLists.tagsPickList)
         case NotenikConstants.teaserCommon:
-            return TeaserView()
+            if auxLongText {
+                let teaserView = AuxTextView(properLabel: def.fieldLabel.properForm, typeString: def.fieldType.typeString)
+                return teaserView
+            } else {
+                return TeaserView()
+            }
         case NotenikConstants.textFormatCommon:
             return TextFormatView()
         case NotenikConstants.timestampCommon:

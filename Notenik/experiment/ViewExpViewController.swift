@@ -10,9 +10,13 @@ import Cocoa
 
 class ViewExpViewController: NSViewController {
 
+    @IBOutlet var tv1: NSTextView!
+    
+    @IBOutlet var tv2: NSTextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        
     }
     
 }
