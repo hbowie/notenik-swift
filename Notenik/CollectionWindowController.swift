@@ -184,6 +184,78 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             }
         }
     }
+
+    override func windowDidLoad() {
+        super.windowDidLoad()
+        shareButton.sendAction(on: .leftMouseDown)
+        getWindowComponents()
+        juggler.registerWindow(window: self)
+        window!.delegate = self
+        juggler.setLastSelection(title: "", link: "", filepath: "", wc: nil)
+    }
+    
+    func windowDidBecomeKey(_ notification: Notification) {
+        guard let vc = displayVC else { return }
+        guard let note = vc.note else { return }
+        var filepath = ""
+        if let fp = note.fileInfo.fullPath {
+            filepath = fp
+        }
+        juggler.setLastSelection(title: note.title.value,
+                                 link: note.getNotenikLink(preferringTimestamp: true),
+                                 filepath: filepath,
+                                 wc: self)
+    }
+    
+    func windowWillClose() {
+        juggler.windowClosing(window: self)
+    }
+    
+    /// Save important info before closing the Collection Window. 
+    func saveBeforeClose() {
+
+        if !pendingMod {
+            let _ = modIfChanged()
+        }
+
+        if  io != nil && io!.collection != nil {
+            _ = saveNumbers()
+        }
+    }
+    
+    /// Save position of window as a string by concatenating a series of formatted doubles.
+    func saveNumbers() -> String {
+        var windowPosition = ""
+        if let frame = window?.frame {
+            if let mainScreen = NSScreen.main {
+                let visibleFrame = mainScreen.visibleFrame
+                let maxY = visibleFrame.maxY
+                let origin = frame.origin
+                let size   = frame.size
+                windowPosition.append("\(origin.x);")
+                let originFlippedY = maxY - size.height - origin.y
+                windowPosition.append("\(originFlippedY);")
+                windowPosition.append("\(size.width);")
+                windowPosition.append("\(size.height);")
+            }
+        }
+        if let splitVC = splitViewController {
+            windowPosition.append("\(splitVC.leftViewWidth);")
+        }
+        if let collection = io?.collection {
+            collection.windowPosStr = windowPosition
+            if collection.readOnly {
+                if collection.fullPath.hasSuffix("tips") {
+                    appPrefs.tipsWindow = windowPosition
+                } else if collection.fullPath.hasSuffix("-KB") {
+                    appPrefs.kbWindow = windowPosition
+                } else if collection.isRealmCollection {
+                    _ = RealmScanner.saveInfoFile(collection: collection)
+                }
+            }
+        }
+        return windowPosition
+    }
     
     /// Set position of window, given a string of formatted doubles.
     func setNumbers(_ windowStr: String) {
@@ -197,7 +269,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let w = Double(numbers[2]) else { return }
         guard let h = Double(numbers[3]) else { return }
         var x = x2
-        var y = y2
+        let flippedY = y2
         var width = w
         var height = h
         
@@ -226,11 +298,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             logInfo(msg: "Window height adjusted from \(priorHeight) to \(height)")
         }
         
+        var y = maxY - flippedY - height
         if y < minY || y > maxY || y + height > maxY {
             let priorY = y
             y = maxY - height
             logInfo(msg: "Window y coordinate adjusted from \(priorY) to \(y)")
-            
         }
         
         let frame = NSRect(x: x, y: y, width: width, height: height)
@@ -239,63 +311,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let divider = Double(numbers[4]) else { return }
         let float = CGFloat(divider)
         splitViewController!.splitView.setPosition(float, ofDividerAt: 0)
-    }
-
-    override func windowDidLoad() {
-        super.windowDidLoad()
-        shareButton.sendAction(on: .leftMouseDown)
-        getWindowComponents()
-        juggler.registerWindow(window: self)
-        window!.delegate = self
-        juggler.setLastSelection(title: "", link: "", filepath: "", wc: nil)
-    }
-    
-    func windowDidBecomeKey(_ notification: Notification) {
-        guard let vc = displayVC else { return }
-        guard let note = vc.note else { return }
-        var filepath = ""
-        if let fp = note.fileInfo.fullPath {
-            filepath = fp
-        }
-        juggler.setLastSelection(title: note.title.value,
-                                 link: note.getNotenikLink(preferringTimestamp: true),
-                                 filepath: filepath,
-                                 wc: self)
-    }
-    
-    func windowWillClose() {
-        juggler.windowClosing(window: self)
-    }
-    
-    func saveBeforeClose() {
-
-        if !pendingMod {
-            let _ = modIfChanged()
-        }
-        
-        
-        var windowPosition = ""
-        if let frame = window?.frame {
-            windowPosition.append("\(frame.minX);")
-            windowPosition.append("\(frame.minY);")
-            windowPosition.append("\(frame.width);")
-            windowPosition.append("\(frame.height);")
-        }
-        if let splitVC = splitViewController {
-            windowPosition.append("\(splitVC.leftViewWidth);")
-        }
-        if let collection = io?.collection {
-            collection.windowPosStr = windowPosition
-            if collection.readOnly {
-                if collection.fullPath.hasSuffix("tips") {
-                    appPrefs.tipsWindow = windowPosition
-                } else if collection.fullPath.hasSuffix("-KB") {
-                    appPrefs.kbWindow = windowPosition
-                } else if collection.isRealmCollection {
-                    _ = RealmScanner.saveInfoFile(collection: collection)
-                }
-            }
-        }
     }
     
     /// Let's grab the key components of the window and store them for easier access later
