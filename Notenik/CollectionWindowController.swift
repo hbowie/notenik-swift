@@ -2823,6 +2823,48 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if outcome == .add || outcome == .modWithKeyChanges || outcome == .modify {
             populateEditFields(with: note!)
         }
+        
+        // Update directions, if requested.
+        if outcome == .add || outcome == .modWithKeyChanges || outcome == .modify {
+            if let directionsDef = io?.collection?.directionsFieldDef {
+                if let directionsField = note!.getField(def: directionsDef) {
+                    if let value = directionsField.value as? DirectionsValue {
+                        if value.directionsRequested {
+                            var source: AddressValue? = nil
+                            var dest:   AddressValue? = nil
+                            let position = io!.positionOfNote(note!)
+                            if note!.hasAddress() {
+                                dest = note!.address
+                            } else {
+                                var nextNote: Note?
+                                var nextPosition: NotePosition?
+                                (nextNote, nextPosition) = io!.nextNote(position)
+                                while dest == nil && nextNote != nil {
+                                    if nextNote!.hasAddress() {
+                                        dest = nextNote!.address
+                                    } else {
+                                        (nextNote, nextPosition) = io!.nextNote(nextPosition!)
+                                    }
+                                }
+                            }
+                            var priorNote: Note?
+                            var priorPostion: NotePosition?
+                            (priorNote, priorPostion) = io!.priorNote(position)
+                            while source == nil && priorNote != nil {
+                                if priorNote!.hasAddress() {
+                                    source = priorNote!.address
+                                } else {
+                                    (priorNote, priorPostion) = io!.priorNote(priorPostion!)
+                                }
+                            }
+                            value.set(source: source, destination: dest)
+                            _ = io!.writeNote(note!)
+                        }
+                    }
+                }
+            }
+        }
+        
         if outcome == .add || outcome == .modWithKeyChanges {
             reloadViews()
             select(note: note, position: nil, source: .action, andScroll: true)

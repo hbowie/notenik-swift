@@ -326,6 +326,7 @@
 		9CF435C824805C0500DD7C33 /* CountsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C624805C0500DD7C33 /* CountsWindowController.swift */; };
 		9CF435CA24805C2F00DD7C33 /* CountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C924805C2F00DD7C33 /* CountsViewController.swift */; };
 		9CF435CB24805C2F00DD7C33 /* CountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF435C924805C2F00DD7C33 /* CountsViewController.swift */; };
+		9CFA1A522A420105001A4555 /* DirectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFA1A512A420105001A4555 /* DirectionsView.swift */; };
 		9CFC28A725E08C560094B4CB /* intro-ios in Resources */ = {isa = PBXBuildFile; fileRef = 9CFC28A625E08C560094B4CB /* intro-ios */; };
 		9CFCB047226BC7FF00443FFA /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
 		9CFCB9E9293A5A04008D53E7 /* ComboItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB9E8293A5A04008D53E7 /* ComboItem.swift */; };
@@ -591,6 +592,7 @@
 		9CF435C624805C0500DD7C33 /* CountsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountsWindowController.swift; sourceTree = "<group>"; };
 		9CF435C924805C2F00DD7C33 /* CountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountsViewController.swift; sourceTree = "<group>"; };
 		9CF54FA8244A2E07001EF927 /* NotenikLib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikLib; path = ../NotenikLib; sourceTree = "<group>"; };
+		9CFA1A512A420105001A4555 /* DirectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsView.swift; sourceTree = "<group>"; };
 		9CFC28A625E08C560094B4CB /* intro-ios */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "intro-ios"; sourceTree = "<group>"; };
 		9CFCB9E8293A5A04008D53E7 /* ComboItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboItem.swift; sourceTree = "<group>"; };
 		9CFCB9EA293A65F3008D53E7 /* ComboData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboData.swift; sourceTree = "<group>"; };
@@ -1093,6 +1095,7 @@
 				9CFCB9E8293A5A04008D53E7 /* ComboItem.swift */,
 				9C47DD31284001550025A7B9 /* ComboView.swift */,
 				9C02D2AD2267D46000587EDF /* DateView.swift */,
+				9CFA1A512A420105001A4555 /* DirectionsView.swift */,
 				9C29A79A25645B78002C5F7A /* FileAttachView.swift */,
 				9C29A79425645A42002C5F7A /* FileDropView.swift */,
 				9CCBE7B325F7F4550001443B /* ImageNameView.swift */,
@@ -1453,6 +1456,7 @@
 			files = (
 				9C9E4803271F7AE70094FEA5 /* SearchOptions.swift in Sources */,
 				9CFCB9EB293A65F3008D53E7 /* ComboData.swift in Sources */,
+				9CFA1A522A420105001A4555 /* DirectionsView.swift in Sources */,
 				9CD358892293C42B00C9203F /* LinkView.swift in Sources */,
 				9CCE7C65264AEB1E003818DF /* QuickActionWindowController.swift in Sources */,
 				9C3CC8F8250AA0F8002C95D0 /* NavigatorWindowController.swift in Sources */,
@@ -1896,7 +1900,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 491;
+				CURRENT_PROJECT_VERSION = 494;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1910,7 +1914,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 12.3.0;
+				MARKETING_VERSION = 12.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1926,7 +1930,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 491;
+				CURRENT_PROJECT_VERSION = 494;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1940,7 +1944,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 12.3.0;
+				MARKETING_VERSION = 12.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

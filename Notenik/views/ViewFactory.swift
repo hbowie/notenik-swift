@@ -23,11 +23,20 @@ class ViewFactory {
                             auxLongText: Bool) -> MacEditView {
         
         switch def.fieldType.typeString {
+        case NotenikConstants.addressCommon:
+            if auxLongText {
+                let addressView = AuxTextView(properLabel: def.fieldLabel.properForm,
+                                              typeString: def.fieldType.typeString)
+                return addressView
+            } else {
+                return LinkView()
+            }
         case NotenikConstants.akaCommon:
             return AKAView()
         case NotenikConstants.attribCommon:
             if auxLongText {
-                let longView = AuxTextView(properLabel: def.fieldLabel.properForm, typeString: def.fieldType.typeString)
+                let longView = AuxTextView(properLabel: def.fieldLabel.properForm,
+                                           typeString: def.fieldType.typeString)
                 return longView
             } else {
                 return LongTextView()
@@ -46,7 +55,8 @@ class ViewFactory {
             return BooleanView()
         case NotenikConstants.codeCommon:
             if auxLongText {
-                let codeView = AuxTextView(properLabel: def.fieldLabel.properForm, typeString: def.fieldType.typeString)
+                let codeView = AuxTextView(properLabel: def.fieldLabel.properForm,
+                                           typeString: def.fieldType.typeString)
                 return codeView
             } else {
                 return CodeView()
@@ -59,13 +69,16 @@ class ViewFactory {
             return DateView()
         case NotenikConstants.dateModifiedCommon:
             return LabelView()
+        case NotenikConstants.directionsCommon:
+            return DirectionsView()
         case NotenikConstants.imageNameCommon:
             return ImageNameView()
         case NotenikConstants.includeChildrenCommon:
             return IncludeChildrenView()
         case NotenikConstants.indexCommon:
             if auxLongText {
-                let indexView = AuxTextView(properLabel: def.fieldLabel.properForm, typeString: def.fieldType.typeString)
+                let indexView = AuxTextView(properLabel: def.fieldLabel.properForm,
+                                            typeString: def.fieldType.typeString)
                 return indexView
             } else {
                 return LongTextView()
@@ -110,7 +123,8 @@ class ViewFactory {
             return TagsView(pickList: pickLists.tagsPickList)
         case NotenikConstants.teaserCommon:
             if auxLongText {
-                let teaserView = AuxTextView(properLabel: def.fieldLabel.properForm, typeString: def.fieldType.typeString)
+                let teaserView = AuxTextView(properLabel: def.fieldLabel.properForm,
+                                             typeString: def.fieldType.typeString)
                 return teaserView
             } else {
                 return TeaserView()
