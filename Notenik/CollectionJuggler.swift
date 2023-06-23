@@ -1163,9 +1163,18 @@ class CollectionJuggler: NSObject {
     func updateSortMenu() {
         guard sortMenu != nil else { return }
         var reverseMenuItem: NSMenuItem?
+        var blankDatesLastItem: NSMenuItem?
+        var menuIx = 0
+        let reverseIx = sortMenu!.items.count - 2
+        let blankDatesLastIx = sortMenu!.items.count - 1
         for menuItem in sortMenu!.items {
             menuItem.state = .off
-            reverseMenuItem = menuItem
+            if menuIx == reverseIx {
+                reverseMenuItem = menuItem
+            } else if menuIx == blankDatesLastIx {
+                blankDatesLastItem = menuItem
+            }
+            menuIx += 1
         }
         guard let collection = _lastWC?.io?.collection else { return }
         switch collection.sortParm {
@@ -1200,6 +1209,9 @@ class CollectionJuggler: NSObject {
         }
         if collection.sortDescending && reverseMenuItem != nil {
             reverseMenuItem!.state = .on
+        }
+        if collection.sortBlankDatesLast && blankDatesLastItem != nil {
+            blankDatesLastItem!.state = .on
         }
     }
     

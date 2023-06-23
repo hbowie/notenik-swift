@@ -3141,6 +3141,15 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    @IBAction func sortDates(_ sender: NSMenuItem) {
+        guard let io = notenikIO else { return }
+        if io.sortBlankDatesLast {
+            setSortBlankDatesLast(false)
+        } else {
+            setSortBlankDatesLast(true)
+        }
+    }
+    
     func setSortParm(_ sortParm: NoteSortParm) {
         guard var noteIO = notenikIO else { return }
         guard let lister = listVC else { return }
@@ -3156,6 +3165,15 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let lister = listVC else { return }
         noteIO.sortDescending = descending
         lister.setSortDescending(descending)
+        noteIO.persistCollectionInfo()
+        juggler.updateSortMenu()
+    }
+    
+    func setSortBlankDatesLast(_ sortBlankDatesLast: Bool) {
+        guard var noteIO = notenikIO else { return }
+        guard let lister = listVC else { return }
+        noteIO.sortBlankDatesLast = sortBlankDatesLast
+        lister.setDateSort(sortBlankDatesLast)
         noteIO.persistCollectionInfo()
         juggler.updateSortMenu()
     }

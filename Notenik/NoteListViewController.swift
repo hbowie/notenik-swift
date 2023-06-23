@@ -643,6 +643,10 @@ class NoteListViewController:   NSViewController,
         tableView.reloadData()
     }
     
+    func setDateSort(_ sortBlankDatesLast: Bool) {
+        tableView.reloadData()
+    }
+    
     func addTitleColumn(at desiredIndex: Int) {
         guard let collection = notenikIO?.collection else {
             addColumn(title: "Title", strID: "title-column", at: desiredIndex, min: 200, width: 445, max: 1500)
