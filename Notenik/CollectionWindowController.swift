@@ -3840,7 +3840,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             highYM = temp
         }
         
-        let calendar = CalendarMaker(lowYM: lowYM, highYM: highYM)
+        let calendar = CalendarMaker(format: .htmlDoc, lowYM: lowYM, highYM: highYM)
         calendar.startCalendar(title: collection.title, prefs: displayPrefs)
         
         var (note, position) = noteIO.firstNote()
