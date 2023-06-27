@@ -2405,19 +2405,24 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     /// Adjust the Attachments menu based on the attachments found in the passed note.
-    func adjustAttachmentsMenu(_ note: Note) {
+    func adjustAttachmentsMenu(_ possibleNote: Note?) {
         
         let topItem = attachmentsMenu.item(at: 0)
-        if note.attachments.count > 0 {
+        if possibleNote == nil {
+            topItem!.title = "attach..."
+        } else if possibleNote!.attachments.count > 0 {
             topItem!.title = "files: "
         } else {
             topItem!.title = "attach..."
         }
+        
         var i = attachmentsMenu.numberOfItems - 1
         while i > 0 {
             attachmentsMenu.removeItem(at: i)
             i -= 1
         }
+        
+        guard let note = possibleNote else { return }
         
         let addMenuItem = NSMenuItem(title: addAttachmentTitle, action: #selector(openOrAddAttachment), keyEquivalent: "")
         attachmentsMenu.addItem(addMenuItem)
@@ -2544,6 +2549,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         newNoteRequested = true
         newNote = Note(collection: notenikIO!.collection!)
+        adjustAttachmentsMenu(nil)
         
         setFollowing()
         
