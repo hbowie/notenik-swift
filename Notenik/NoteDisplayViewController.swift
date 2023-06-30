@@ -74,7 +74,13 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
                                            withExtension: "js")
         if parms.localMjUrl == nil {
             communicateError("Couldn't get a local MathJax URL")
-        } 
+        }
+    }
+    
+    /// Save any important info prior to the view's disappearance.
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        saveScrollOffset()
     }
     
     func loadResourcePagesForCollection(io: NotenikIO) {
@@ -207,9 +213,48 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             wc!.reloadViews()
         }
         
+
+
+        
         // This is just a convenient spot to request that we refresh our
         // collective idea of what today is. 
         DateUtils.shared.refreshToday()
+    }
+    
+    var scrollOffset: NSNumber = 0
+    var scrollTitle = ""
+    
+    /// Just before this view disappears (presumably to switch to the Edit tab),
+    /// save the vertical scroll offset for the Web view.
+    func saveScrollOffset() {
+        scrollOffset = 0
+        guard note != nil else { return }
+        scrollTitle = note!.title.value
+        webView.evaluateJavaScript("window.pageYOffset;") { (result, error) in
+            if result != nil {
+                if let resultNumber = result as? NSNumber {
+                    self.scrollOffset = resultNumber
+                }
+            }
+            if error != nil {
+                self.communicateError("Error returned when trying to determine scroll offset")
+            }
+        }
+    }
+    
+    func restoreScrollOffset() {
+        guard note != nil else { return }
+        if note!.title.value == scrollTitle {
+            if scrollOffset != 0.0 {
+                webView.evaluateJavaScript("window.pageYOffset = \(scrollOffset);") { (result, error) in
+                    if error != nil {
+                        self.communicateError("Could not restore scroll offset of \(self.scrollOffset)")
+                    }
+                }
+            }
+        } else {
+            scrollTitle = ""
+        }
     }
     
     /// This method gets called when the user requests to open a link in a new window.
