@@ -9,4 +9,108 @@ Body:
 This is an outline. 
 	Tabs are used for indention. 
 		This is another indent.
-	And another 2nd-level. 
+	And another 2nd-level.
+Let's make a longer outline. 
+
+A number of authors and systems of thought espouse one or another series of developmental levels, in fields of study as diverse as psychology, sociology, economics and organizational development. [Ken Wilber][wilber] was the first author I encountered who proposed an integration of these various developmental progressions into a single unifying scheme. However, much of Ken's take  on these levels was heavily influenced by the [Spiral Dynamics][spiral] work done by [Clare W. Graves][graves], [Don Beck][beck] and Chris Cowan. (And Hanzi Freinacht provides yet another take on this stuff in his book *[The Listening Society](https://www.amazon.com/Listening-Society-Metamodern-Politics-Guides/dp/8799973901)*.)
+
+So what do we mean by a level of development, in this context?
+
+Here's where it gets a little tricky. 
+
+Both in terms of individual development, and in terms of sociocultural development, these levels seem to emerge in a certain sequence. 
+
+However, later levels do not supersede or invalidate earlier levels. Rather than replacing previous levels, each emergent level expands the complexity and capacity of individuals and societies. 
+
+And so Wilber and Beck and Cowan have tried to use colors to identify the levels, rather than numbers, in order to avoid giving the impression that later levels are somehow superior to earlier levels.
+
+At some point along the line, though, Ken Wilber and the Integral crew decided it was important to change some of the colors. I've listed both the original Spiral Dynamics colors and the newer Integral colors in the table below, but in general I will stick with the original colors from Beck and Cowan. 
+
+Also, there has been a later tendency to add new, higher, levels to the upper end of this range. I've not been able to make much sense of these, myself, so I'm omitting them here. 
+
+As we go through these levels we can make use of [[The Four Quadrants]] model to see that each level has a particular subjective, or intersubjective viewpoint, as well as typical social structures that can be identified from an interobjective perspective.
+
+There's a certain chicken and the egg sort of dilemma we face when trying to disentangle the objective social aspects of a level from its subjective aspects but, for me, it feels more natural to consider the objective social aspects first, so I'll proceed in that manner.
+
+Also, it's worth noting that, as we proceed through the levels, they tend to alternate between an assertion of individual power (archaic, tribal, modern, integral), and then a more community-based perspective (magical, traditional, postmodern, holistic). 
+
+Here's a table listing all of the levels, with their associated colors. (By the way, Spiral Dynamics uses the terms "Value Meme," or "vMeme" to refer to a level.)
+
+[beck]: https://en.wikipedia.org/wiki/Don_Edward_Beck
+
+[graves]: https://en.wikipedia.org/wiki/Clare_W._Graves
+
+[spiral]: https://en.wikipedia.org/wiki/Spiral_Dynamics
+
+[wilber]: https://en.wikipedia.org/wiki/Ken_Wilber
+
+<table>
+<caption align="top">
+Developmental Levels
+</caption>
+<tr>
+<th>Number</th>
+<th>Name</th>
+<th>Characterization</th>
+<th>Spiral Dynamics Color</th>
+<th>Integral Color</th>
+</tr>
+<tr>
+<td>1</td>
+<td><a href="archaic-level-of-development.html">Archaic</a> / Instinctual</td>
+<td>Focused solely on immediate survival needs; minimal sense of self; behavior based on natural instincts and reflexes; concern only for physical self and physical environment; nothing that we would recognize as society or culture. </td>
+<td class="beige">Beige</td>
+<td class="infrared">Infrared </td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="magical-level-of-development.html">Magical</a> / Animistic</td>
+<td>Beginning to differentiate self from world, and elements of world from one another, and to intuit causal relationships, but no accurate understanding of these relationships; impulsive, possessing faith in magic and superheroes; tribal kinship bonds, ethnic tribes, ancestral stories, superstitious beliefs. </td>
+<td class="purple">Purple </td>
+<td class="magenta">Magenta </td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="tribal-level-of-development.html">Tribal</a> / Power Gods </td>
+<td>Egocentric; asserting self for dominance, conquest and power; evident in feudal empires and criminal gangs; people organize themselves based on power hierarchies, with the most powerful individuals leading the weaker; might makes right. </td>
+<td class="red">Red </td>
+<td class="red">Red </td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="traditional-level-of-development.html">Traditional</a> / Mythic Order </td>
+<td>People organize themselves around mythic, fundamentalist principles of truth, with groups requiring close conformity to their particular principles, but with no reliable way to make value judgments comparing one group's "truth" to another's; group membership now based on professed allegiance and obedience to shared principles, rather than on family ties or geography or membership in gangs; fundamental principles held to be absolute and unvarying; belief in the law and in an authoritarian hierarchy from which the law is passed down.         </td>
+<td class="blue">Blue </td>
+<td class="amber">Amber </td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="modern-level-of-development.html">Modern</a> / Rational</td>
+<td>Society advances based on use of the scientific method; quantitative methods are introduced that allow people to make objective decisions about what is true and what is false; truth is determined based on the testing of a variety of hypotheses, rather than reference to an absolute authority; oriented towards achievement of results.  </td>
+<td class="orange">Orange </td>
+<td class="orange">Orange </td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="postmodern-level-of-development.html">Postmodern</a> / Pluralistic</td>
+<td>Egalitarian; relativistic; situational; accepting of fluid affiliations; acknowledges that there are multiple, valid ways of perceiving reality, and tries to accept all people and life forms by placing value on diversity; may be seen as a means of accommodating multiple tribes, gangs and mythic orders within a single, overarching social order; consensus-based decision-making.   </td>
+<td class="green">Green </td>
+<td class="green">Green </td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="integral-level-of-development.html">Integral</a> / Systemic </td>
+<td>Sees the importance of the earlier levels, and of the developmental model as a whole; while still acknowledging the value of diversity, also recognizes the validity of healthy value hierarchies. </td>
+<td class="yellow">Yellow </td>
+<td class="teal">Teal </td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="holistic-level-of-development.html">Holistic</a>  </td>
+<td>Sort of like the prior level but with a more holistic sense of the kosmos.  </td>
+<td class="turquoise">Turquoise </td>
+<td class="turquoise">Turquoise </td>
+</tr>
+</table>
+
+Following are more detailed descriptions of each level.

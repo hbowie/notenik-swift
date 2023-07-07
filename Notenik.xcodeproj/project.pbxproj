@@ -331,6 +331,7 @@
 		9CFCB047226BC7FF00443FFA /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
 		9CFCB9E9293A5A04008D53E7 /* ComboItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB9E8293A5A04008D53E7 /* ComboItem.swift */; };
 		9CFCB9EB293A65F3008D53E7 /* ComboData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCB9EA293A65F3008D53E7 /* ComboData.swift */; };
+		9CFCC58D2A53A3DD009B7723 /* NoteScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCC58C2A53A3DD009B7723 /* NoteScroller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -596,6 +597,7 @@
 		9CFC28A625E08C560094B4CB /* intro-ios */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "intro-ios"; sourceTree = "<group>"; };
 		9CFCB9E8293A5A04008D53E7 /* ComboItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboItem.swift; sourceTree = "<group>"; };
 		9CFCB9EA293A65F3008D53E7 /* ComboData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboData.swift; sourceTree = "<group>"; };
+		9CFCC58C2A53A3DD009B7723 /* NoteScroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteScroller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -823,6 +825,7 @@
 				9CB60BBE22650975003B5655 /* share */,
 				9CB06CB522CCF4A200887778 /* tags */,
 				9CD3261E2233063100D06B77 /* views */,
+				9CFCC58C2A53A3DD009B7723 /* NoteScroller.swift */,
 			);
 			path = Notenik;
 			sourceTree = "<group>";
@@ -1559,6 +1562,7 @@
 				9C66C8902881D301001F5E2A /* QueryBuilderViewController.swift in Sources */,
 				9CF365812637688300EAE129 /* MicroBlogViewController.swift in Sources */,
 				9CCE7C67264AEB47003818DF /* QuickActionViewController.swift in Sources */,
+				9CFCC58D2A53A3DD009B7723 /* NoteScroller.swift in Sources */,
 				9C3986682864FBF400439834 /* Intents.intentdefinition in Sources */,
 				9C2F96C424F4702200C4B8A2 /* AppPrefsCocoa.swift in Sources */,
 				9C5BE16E277167070013C0D3 /* SeqModViewController.swift in Sources */,
@@ -1900,7 +1904,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 502;
+				CURRENT_PROJECT_VERSION = 504;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1914,7 +1918,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 12.4.2;
+				MARKETING_VERSION = 12.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1930,7 +1934,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 502;
+				CURRENT_PROJECT_VERSION = 504;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1944,7 +1948,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 12.4.2;
+				MARKETING_VERSION = 12.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

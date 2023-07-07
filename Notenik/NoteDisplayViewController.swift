@@ -80,7 +80,11 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     /// Save any important info prior to the view's disappearance.
     override func viewWillDisappear() {
         super.viewWillDisappear()
-        saveScrollOffset()
+        if let scroller = wc?.scroller {
+            if let scrollNote = note {
+                scroller.saveDisplayPosition(note: scrollNote, webView: webView)
+            }
+        }
     }
     
     func loadResourcePagesForCollection(io: NotenikIO) {
@@ -104,6 +108,10 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     /// Generate the display from the last note provided
     func display() {
+        print("NoteDisplayViewController.display")
+        if let scroller = wc?.scroller {
+            scroller.display()
+        }
         webLinkFollowed(false)
         guard note != nil else { return }
         guard io != nil else { return }
@@ -213,47 +221,25 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             wc!.reloadViews()
         }
         
-
-
-        
         // This is just a convenient spot to request that we refresh our
         // collective idea of what today is. 
         DateUtils.shared.refreshToday()
     }
     
-    var scrollOffset: NSNumber = 0
-    var scrollTitle = ""
-    
-    /// Just before this view disappears (presumably to switch to the Edit tab),
-    /// save the vertical scroll offset for the Web view.
-    func saveScrollOffset() {
-        scrollOffset = 0
-        guard note != nil else { return }
-        scrollTitle = note!.title.value
-        webView.evaluateJavaScript("window.pageYOffset;") { (result, error) in
-            if result != nil {
-                if let resultNumber = result as? NSNumber {
-                    self.scrollOffset = resultNumber
-                }
-            }
-            if error != nil {
-                self.communicateError("Error returned when trying to determine scroll offset")
+    func scrollOnly() {
+        if let scroller = wc?.scroller {
+            if let scrollNote = note {
+                scroller.setDisplayPosition(note: scrollNote, webView: webView)
             }
         }
     }
     
-    func restoreScrollOffset() {
-        guard note != nil else { return }
-        if note!.title.value == scrollTitle {
-            if scrollOffset != 0.0 {
-                webView.evaluateJavaScript("window.pageYOffset = \(scrollOffset);") { (result, error) in
-                    if error != nil {
-                        self.communicateError("Could not restore scroll offset of \(self.scrollOffset)")
-                    }
-                }
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("NoteDisplayViewController.webView.didFinish")
+        if let scroller = self.wc?.scroller {
+            if let scrollNote = note {
+                scroller.setDisplayPosition(note: scrollNote, webView: self.webView)
             }
-        } else {
-            scrollTitle = ""
         }
     }
     

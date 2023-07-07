@@ -75,6 +75,11 @@ class NoteEditViewController: NSViewController {
         configureEditView(noteIO: notenikIO!, klassName: nil)
     }
     
+    /// Save any important info prior to the view's disappearance.
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+    }
+    
     func configureEditView(noteIO: NotenikIO, klassName: String? = nil) {
         guard initialViewLoaded else { return }
         guard let collection = noteIO.collection else { return }
@@ -337,6 +342,15 @@ class NoteEditViewController: NSViewController {
         // See if a new note needs to be selected.
         if (outcome == .add || outcome == .modWithKeyChanges) && outNote != nil {
             selectedNote = outNote
+        }
+        
+        print("NoteEditViewController.modIfChanged")
+        if let note = selectedNote {
+            if let scrollView = bodyView?.scrollView {
+                if let scroller = collectionWindowController?.scroller {
+                    scroller.saveEditPosition(note: note, scrollView: scrollView)
+                }
+            }
         }
 
         return (outcome, outNote)

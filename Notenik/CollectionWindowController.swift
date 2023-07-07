@@ -18,7 +18,7 @@ import NotenikLib
 import ZipArchive
 
 /// Controls a window showing a particular Collection of Notes.
-class CollectionWindowController: NSWindowController, NSWindowDelegate, AttachmentMasterController {
+class CollectionWindowController: NSWindowController, NSWindowDelegate, AttachmentMasterController, NSFilePresenter {
     
     @IBOutlet var shareButton: NSButton!
     
@@ -99,6 +99,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 var editItem: NSTabViewItem?
                     var editVC: NoteEditViewController?
     
+    var scroller: NoteScroller?
+    
     var io: NotenikIO? {
         get {
             return notenikIO
@@ -112,10 +114,12 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             }
             crumbs = NoteCrumbs(io: newValue!)
             window!.representedURL = notenikIO!.collection!.fullPathURL
+            startFileCoordination()
             if notenikIO!.collection!.title == "" {
                 notenikIO!.collection!.setDefaultTitle()
             }
             window!.title = notenikIO!.collection!.userFacingLabel()
+            scroller = NoteScroller(collection: notenikIO!.collection!)
             
             if self.window == nil {
                 Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
@@ -221,6 +225,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if  io != nil && io!.collection != nil {
             _ = saveNumbers()
         }
+        finishFileCoordination()
     }
     
     /// Save position of window as a string by concatenating a series of formatted doubles.
@@ -2882,6 +2887,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             displayModifiedNote(updatedNote: note!)
             noteTabs!.tabView.selectFirstTabViewItem(nil)
         } else if outcome != .tryAgain {
+            displayVC!.scrollOnly()
             noteTabs!.tabView.selectFirstTabViewItem(nil)
         }
         pendingMod = false
@@ -4367,6 +4373,34 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let tvc = tagsVC else { return }
         ctabs.selectedTabViewItemIndex = 1
         tvc.expand(forTag: forTag)
+    }
+    
+    // ----------------------------------------------------------------------------------
+    //
+    // The following section of code implements the NSFilePresenter protocol.
+    //
+    // ----------------------------------------------------------------------------------
+    
+    var presentedItemURL: URL?
+    
+    lazy var presentedItemOperationQueue: OperationQueue = OperationQueue.main
+    
+    func startFileCoordination() {
+        presentedItemURL = notenikIO!.collection!.fullPathURL
+        NSFileCoordinator.addFilePresenter(self)
+        print("CollectionWindowController.startFileCoordination for \(presentedItemURL!)")
+    }
+    
+    func finishFileCoordination() {
+        if presentedItemURL != nil {
+            print("CollectionWindowController.finishFileCoordination for \(presentedItemURL!)")
+            NSFileCoordinator.removeFilePresenter(self)
+            presentedItemURL = nil
+        }
+    }
+    
+    func presentedSubitemDidChange(at: URL) {
+        print("NSFilePresenter presented sub item did change at: \(at)")
     }
     
     // ----------------------------------------------------------------------------------
