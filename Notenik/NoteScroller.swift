@@ -20,11 +20,13 @@ class NoteScroller {
     var collection: NoteCollection
     
     var lastPositionFrom: LastPositionFrom = .nowhere
-    var lastNoteTitle = ""
     
     //
     // Values from the Display tab.
     //
+    
+    // The estimated height of the display header.
+    var displayHeaderHeight = 30
     
     // The scroll position.
     var displayOffset: Int = 0
@@ -48,40 +50,113 @@ class NoteScroller {
     // The height of the visible content.
     var editVis:       Int = 0
     
-    var editScrollPending = false
+    var fudgeFactor1: Double = 0.85
+    var fudgeFactor2: Double = 0.08
     
     var editScrollView: NSScrollView?
-    
-    var displayDataPending = false
     
     var displayDataReturned = 0
     
     
     init(collection: NoteCollection) {
+        print("NoteScroller.init")
         self.collection = collection
     }
     
-    func saveDisplayPosition(note: Note, webView: NoteDisplayWebView) {
-        print("NoteScroller.saveDisplayPosition")
-        displayOffset = 0
-        lastNoteTitle = note.title.value
-        print("  - scroll title = '\(lastNoteTitle)'")
+    func editStart(scrollView: NSScrollView) {
+        print("NoteScroller.editStart")
+        editScrollView = scrollView
+        editHeight = 0
+        if let contentSize = scrollView.documentView?.bounds.height {
+            editHeight = Int(contentSize)
+        }
+    }
+    
+    func editEnd(scrollView: NSScrollView) {
+        print("NoteScroller.editEnd")
+        if let contentSize = scrollView.documentView?.bounds.height {
+            editHeight = Int(contentSize)
+        }
+        let docVis = scrollView.documentVisibleRect
+        editOffset = Int(docVis.origin.y)
+        editVis = Int(docVis.height)
+        lastPositionFrom = .edit
+    }
+    
+    func displayStart(note: Note, webView: NoteDisplayWebView) {
         
-        displayDataPending = true
+        print("NoteScroller.displayStart")
+        guard collection.scrollingSync else { return }
+        var scrollY = 0
+        
+        switch lastPositionFrom {
+        case .display:
+            scrollY = displayOffset
+        case .edit:
+            print("  - edit offset = \(editOffset)")
+            print("  - edit height = \(editHeight)")
+            print("  - edit vis    = \(editVis)")
+            if editOffset == 0 {
+                scrollY = 0
+            } else {
+                let percent: Double = Double(editOffset) / Double((editHeight - editVis))
+                let ff2Factor = fudgeFactor2 - percent
+                let ff2Applied = fudgeFactor2 * ff2Factor
+                let fudgeFactor = fudgeFactor1 + ff2Applied
+                let fudged = percent * fudgeFactor
+                print("  - edit percent scrolled = \(percent)")
+                print("  - fudge factor 1 = \(fudgeFactor1)")
+                print("  - fudge factor 2 = \(fudgeFactor2)")
+                print("  - fudge factor 2 applied = \(ff2Applied)")
+                print("  - fudge factor = \(fudgeFactor)")
+                print("  - fudged percent = \(fudged)")
+                print("  - display height   = \(displayHeight)")
+                print("  - display header height = \(displayHeaderHeight)")
+                print("  - display vis = \(displayVis)")
+                let equiv: Double = Double(displayHeaderHeight)
+                    + Double(displayHeight - displayHeaderHeight) * fudged
+                print("  - equivalent scroll = \(equiv)")
+                scrollY = Int(equiv.rounded(.toNearestOrAwayFromZero))
+                print("  - scroll Y = \(scrollY)")
+            }
+        case .nowhere:
+            break
+        }
+        
+        guard scrollY > 0 else { return }
+        
+        let js = "window.scroll(0, \(scrollY));"
+        // print("  - evaluate javascript: \(js)")
+        webView.evaluateJavaScript(js) { (result, error) in
+            if error != nil {
+                self.communicateError("    - Error returned: \(error!)")
+            }
+        }
+    }
+    
+    func displayEnd(note: Note, webView: NoteDisplayWebView) {
+        print("NoteScroller.displayEnd")
+        guard collection.scrollingSync else {
+            if editOffset > 0 {
+                if let scrollView = editScrollView {
+                    let newOrigin = NSPoint(x: 0, y: editOffset)
+                    scrollView.contentView.scroll(to: newOrigin)
+                }
+            }
+            return
+        }
+        displayOffset = 0
         displayDataReturned = 0
         
         // Get the current scroll position
         var js = "window.pageYOffset;"
-        print("  - evaluate javascript: \(js)")
+        // print("  - evaluate javascript: \(js)")
         webView.evaluateJavaScript(js) { (result, error) in
-            if result != nil {
-                if let resultNumber = result as? NSNumber {
-                    print("    - numeric result = \(resultNumber)")
-                    self.displayOffset = resultNumber.intValue
-                    self.displayDataReturned += 1
-                    if self.displayDataReturned >= 3 && self.editScrollPending {
-                        self.editScrolUsingDisplayData()
-                    }
+            if let resultNumber = result as? NSNumber {
+                self.displayOffset = resultNumber.intValue
+                self.displayDataReturned += 1
+                if self.displayDataReturned >= 3 {
+                    self.editScrollUsingDisplayData()
                 }
             }
             if error != nil {
@@ -91,16 +166,13 @@ class NoteScroller {
         
         // Get the total scrollable height
         js = "window.document.body.scrollHeight;"
-        print("  - evaluate javascript: \(js)")
+        // print("  - evaluate javascript: \(js)")
         webView.evaluateJavaScript(js) { (result, error) in
-            if result != nil {
-                if let resultNumber = result as? NSNumber {
-                    print("    - numeric result = \(resultNumber)")
-                    self.displayHeight = resultNumber.intValue
-                    self.displayDataReturned += 1
-                    if self.displayDataReturned >= 3 && self.editScrollPending {
-                        self.editScrolUsingDisplayData()
-                    }
+            if let resultNumber = result as? NSNumber {
+                self.displayHeight = resultNumber.intValue
+                self.displayDataReturned += 1
+                if self.displayDataReturned >= 3 {
+                    self.editScrollUsingDisplayData()
                 }
             }
             if error != nil {
@@ -110,16 +182,13 @@ class NoteScroller {
         
         // Get the height of the visible window.
         js = "window.document.documentElement.clientHeight;"
-        print("  - evaluate javascript: \(js)")
+        // print("  - evaluate javascript: \(js)")
         webView.evaluateJavaScript(js) { (result, error) in
-            if result != nil {
-                if let resultNumber = result as? NSNumber {
-                    print("    - numeric result = \(resultNumber)")
-                    self.displayVis = resultNumber.intValue
-                    self.displayDataReturned += 1
-                    if self.displayDataReturned >= 3 && self.editScrollPending {
-                        self.editScrolUsingDisplayData()
-                    }
+            if let resultNumber = result as? NSNumber {
+                self.displayVis = resultNumber.intValue
+                self.displayDataReturned += 1
+                if self.displayDataReturned >= 3 {
+                    self.editScrollUsingDisplayData()
                 }
             }
             if error != nil {
@@ -128,116 +197,31 @@ class NoteScroller {
         }
         
         lastPositionFrom = .display
-        
-        display()
     }
     
-    func setDisplayPosition(note: Note, webView: NoteDisplayWebView) {
-        
-        print("NoteScroller.setDisplayPosition for note title of \(note.title.value)")
-        display()
-        
-        guard note.title.value == lastNoteTitle else {
-            lastNoteTitle = ""
+    func editScrollUsingDisplayData() {
+        print("  - NoteScroller.editScrollUsingDisplayData")
+        guard let scrollView = editScrollView else {
+            print("  - no edit scroll view available!")
             return
         }
-
-        var scrollY = 0
-        
-        switch lastPositionFrom {
-        case .display:
-            scrollY = displayOffset
-        case .edit:
-            if editOffset == 0 {
-                scrollY = 0
-            } else {
-                let percent: Double = Double(editOffset) / Double((editHeight - editVis))
-                print("  - percent scrolled = \(percent)")
-                let equiv: Double = Double(displayHeight) * percent
-                scrollY = Int(equiv.rounded(.toNearestOrAwayFromZero))
-            }
-        case .nowhere:
-            return
-        }
-        
-        guard scrollY > 0 else { return }
-        
-        let js = "window.scroll(0, \(scrollY));"
-        print("  - evaluate javascript: \(js)")
-        webView.evaluateJavaScript(js) { (result, error) in
-            if error != nil {
-                self.communicateError("    - Error returned: \(error!)")
-            }
-        }
-    
-    }
-    
-    func saveEditPosition(note: Note, scrollView: NSScrollView) {
-        print("NoteScroller.saveEditPosition")
-        
         if let contentSize = scrollView.documentView?.bounds.height {
             editHeight = Int(contentSize)
         }
-        
-        let docVis = scrollView.documentVisibleRect
-        editOffset = Int(docVis.origin.y)
-        editVis = Int(docVis.height)
-        
-        /* if let docBounds = scrollView.documentView?.bounds {
-            editVis = docBounds.size.height
-            print("  - doc bounds = \(docBounds)")
-        } */
-        lastPositionFrom = .edit
-        display()
-    }
-    
-    func setEditPosition(note: Note, scrollView: NSScrollView) {
-        print("NoteScroller.setEditPosition for note title of \(note.title.value)")
-        display()
-        
-        editScrollPending = false
-        
-        guard note.title.value == lastNoteTitle else {
-            lastNoteTitle = ""
-            return
-        }
-
-        editScrollView = scrollView
-        var scrollY = 0
-        
-        switch lastPositionFrom {
-        case .display:
-            if displayDataPending {
-                editScrollPending = true
-            } else {
-                editScrolUsingDisplayData()
-            }
-            return
-        case .edit:
-            scrollY = editOffset
-        case .nowhere:
-            return
-        }
-        
-        guard scrollY > 0 else { return }
-        
-        let newOrigin = NSPoint(x: 0, y: scrollY)
-        scrollView.contentView.scroll(to: newOrigin)
-    }
-    
-    func editScrolUsingDisplayData() {
-        guard let scrollView = editScrollView else { return }
-        guard editScrollPending else { return }
-        editScrollPending = false
+        print("  - display offset = \(displayOffset)")
         var scrollY = 0
         if displayOffset == 0 {
             scrollY = 0
         } else {
+            print("  - display height = \(displayHeight)")
+            print("  - display vis    = \(displayVis)")
             let percent: Double = Double(displayOffset) / Double((displayHeight - displayVis))
             print("  - percent scrolled = \(percent)")
             let equiv: Double = Double(editHeight) * percent
+            print("  - edit height = \(editHeight)")
             scrollY = Int(equiv.rounded(.toNearestOrAwayFromZero))
         }
+        print("  - scroll Y = \(scrollY)")
         let newOrigin = NSPoint(x: 0, y: scrollY)
         scrollView.contentView.scroll(to: newOrigin)
     }
@@ -253,7 +237,6 @@ class NoteScroller {
     func display() {
         print("  + NoteScroller.display")
         print("    - last position from: \(lastPositionFrom)")
-        print("    - last note title: \(lastNoteTitle)")
         print("    - display offset: \(displayOffset)")
         print("    - display height: \(displayHeight)")
         print("    - visible height: \(displayVis)")

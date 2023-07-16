@@ -38,7 +38,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var missingTargetsCkBox:  NSButton!
     @IBOutlet var curlyApostsCkBox:     NSButton!
     @IBOutlet var extLinksCkBox:        NSButton!
-    
+    @IBOutlet weak var scrollingSyncCkBox: NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
     
@@ -149,6 +149,7 @@ class CollectionPrefsViewController: NSViewController {
         setMissingTargets(collection!.missingTargets)
         setCurlyApostrophes(collection!.curlyApostrophes)
         setExtLinks(collection!.extLinksOpenInNewWindows)
+        setScrollingSync(collection!.scrollingSync)
     }
     
     func makeStackViews() {
@@ -407,6 +408,14 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
+    func setScrollingSync(_ on: Bool) {
+        if on {
+            scrollingSyncCkBox.state = .on
+        } else {
+            scrollingSyncCkBox.state = .off
+        }
+    }
+    
     @objc func checkBoxClicked() {
         // No need to take any immediate action here
     }
@@ -458,6 +467,7 @@ class CollectionPrefsViewController: NSViewController {
         collection!.missingTargets = (missingTargetsCkBox.state == .on)
         collection!.curlyApostrophes = (curlyApostsCkBox.state == .on)
         collection!.extLinksOpenInNewWindows = (extLinksCkBox.state == .on)
+        collection!.scrollingSync = (scrollingSyncCkBox.state == .on)
         defsRemoved.clear()
         let dict = collection!.dict
         dict.unlock()

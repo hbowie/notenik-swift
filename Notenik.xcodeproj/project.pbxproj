@@ -782,6 +782,7 @@
 				9C9A025321F65B990027F364 /* NoteDisplayViewController.swift */,
 				9C29A7892564380F002C5F7A /* NoteDisplayWebView.swift */,
 				9CBC386721FFA9C200BA7900 /* NoteEditViewController.swift */,
+				9CFCC58C2A53A3DD009B7723 /* NoteScroller.swift */,
 				9C60E6D521F64B3C00C332ED /* Assets.xcassets */,
 				9C60E6DA21F64B3C00C332ED /* Info.plist */,
 				9C6E781827EA646D004BB9A0 /* Notenik.sdef */,
@@ -825,7 +826,6 @@
 				9CB60BBE22650975003B5655 /* share */,
 				9CB06CB522CCF4A200887778 /* tags */,
 				9CD3261E2233063100D06B77 /* views */,
-				9CFCC58C2A53A3DD009B7723 /* NoteScroller.swift */,
 			);
 			path = Notenik;
 			sourceTree = "<group>";

@@ -216,7 +216,6 @@ class NoteEditViewController: NSViewController {
     
     /// Update appropriate stuff when a new note has been selected
     func select(note: Note) {
-        
         guard io != nil else { return }
         guard io!.collection != nil else { return }
         guard io!.collectionOpen else { return }
@@ -228,6 +227,16 @@ class NoteEditViewController: NSViewController {
             configureEditView(noteIO: io!, klassName: klassName)
         }
         populateFieldsWithSelectedNote()
+        
+        if let scroller = collectionWindowController?.scroller {
+            if let sv = bodyView?.scrollView {
+                scroller.editStart(scrollView: sv)
+            } else {
+                print("  - no body scroll view available!")
+            }
+        } else {
+            print("  - no note scroller available!")
+        }
     }
     
     /// Populate the Edit View's fields with data from the currently selected Note.
@@ -344,11 +353,10 @@ class NoteEditViewController: NSViewController {
             selectedNote = outNote
         }
         
-        print("NoteEditViewController.modIfChanged")
         if let note = selectedNote {
             if let scrollView = bodyView?.scrollView {
                 if let scroller = collectionWindowController?.scroller {
-                    scroller.saveEditPosition(note: note, scrollView: scrollView)
+                    scroller.editEnd(scrollView: scrollView)
                 }
             }
         }

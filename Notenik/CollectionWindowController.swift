@@ -2380,6 +2380,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard notenikIO != nil && notenikIO!.collectionOpen else { return }
         
+        scroller = NoteScroller(collection: notenikIO!.collection!)
+        
         var noteToUse: Note? = note
         var positionToUse: NotePosition? = position
         
@@ -2555,6 +2557,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         newNoteRequested = true
         newNote = Note(collection: notenikIO!.collection!)
         adjustAttachmentsMenu(nil)
+        scroller = NoteScroller(collection: notenikIO!.collection!)
         
         setFollowing()
         
@@ -2887,7 +2890,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             displayModifiedNote(updatedNote: note!)
             noteTabs!.tabView.selectFirstTabViewItem(nil)
         } else if outcome != .tryAgain {
-            displayVC!.scrollOnly()
+            displayVC!.scroll()
             noteTabs!.tabView.selectFirstTabViewItem(nil)
         }
         pendingMod = false
@@ -4400,7 +4403,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     func presentedSubitemDidChange(at: URL) {
-        print("NSFilePresenter presented sub item did change at: \(at)")
+        // print("NSFilePresenter presented sub item did change at: \(at)")
     }
     
     // ----------------------------------------------------------------------------------

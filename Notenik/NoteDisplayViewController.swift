@@ -82,7 +82,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         super.viewWillDisappear()
         if let scroller = wc?.scroller {
             if let scrollNote = note {
-                scroller.saveDisplayPosition(note: scrollNote, webView: webView)
+                scroller.displayEnd(note: scrollNote, webView: webView)
             }
         }
     }
@@ -108,10 +108,6 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     /// Generate the display from the last note provided
     func display() {
-        print("NoteDisplayViewController.display")
-        if let scroller = wc?.scroller {
-            scroller.display()
-        }
         webLinkFollowed(false)
         guard note != nil else { return }
         guard io != nil else { return }
@@ -221,24 +217,21 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             wc!.reloadViews()
         }
         
+        if let scroller = wc?.scroller {
+            if let scrollNote = note {
+                scroller.displayStart(note: scrollNote, webView: webView)
+            }
+        }
+        
         // This is just a convenient spot to request that we refresh our
         // collective idea of what today is. 
         DateUtils.shared.refreshToday()
     }
     
-    func scrollOnly() {
+    func scroll() {
         if let scroller = wc?.scroller {
             if let scrollNote = note {
-                scroller.setDisplayPosition(note: scrollNote, webView: webView)
-            }
-        }
-    }
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("NoteDisplayViewController.webView.didFinish")
-        if let scroller = self.wc?.scroller {
-            if let scrollNote = note {
-                scroller.setDisplayPosition(note: scrollNote, webView: self.webView)
+                scroller.displayStart(note: scrollNote, webView: webView)
             }
         }
     }
