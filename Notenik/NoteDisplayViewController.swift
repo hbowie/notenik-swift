@@ -81,9 +81,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     override func viewWillDisappear() {
         super.viewWillDisappear()
         if let scroller = wc?.scroller {
-            if let scrollNote = note {
-                scroller.displayEnd(note: scrollNote, webView: webView)
-            }
+            scroller.displayEnd(note: note!, webView: webView)
         }
     }
     
@@ -218,8 +216,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         }
         
         if let scroller = wc?.scroller {
-            if let scrollNote = note {
-                scroller.displayStart(note: scrollNote, webView: webView)
+            if note != nil {
+                scroller.displayStart(note: note!, webView: webView)
             }
         }
         
@@ -230,8 +228,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     
     func scroll() {
         if let scroller = wc?.scroller {
-            if let scrollNote = note {
-                scroller.displayStart(note: scrollNote, webView: webView)
+            if note != nil {
+                scroller.displayStart(note: note!, webView: webView)
             }
         }
     }

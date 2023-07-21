@@ -353,11 +353,9 @@ class NoteEditViewController: NSViewController {
             selectedNote = outNote
         }
         
-        if let note = selectedNote {
-            if let scrollView = bodyView?.scrollView {
-                if let scroller = collectionWindowController?.scroller {
-                    scroller.editEnd(scrollView: scrollView)
-                }
+        if let scrollView = bodyView?.scrollView {
+            if let scroller = collectionWindowController?.scroller {
+                scroller.editEnd(scrollView: scrollView)
             }
         }
 

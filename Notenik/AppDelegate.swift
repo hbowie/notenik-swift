@@ -232,6 +232,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         juggler.scriptOpen()
     }
     
+    @IBAction func scriptRerun(_ sender: Any) {
+        juggler.scriptRerun()
+    }
+    
     @IBAction func viewIncreaseEditFontSize(_ sender: Any) {
         juggler.viewIncreaseEditFontSize()
     }

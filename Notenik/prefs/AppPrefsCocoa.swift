@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 8/24/20.
-//  Copyright © 2020 - 2022 Herb Bowie (https://hbowie.net)
+//  Copyright © 2020 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -67,6 +67,7 @@ class AppPrefsCocoa {
         if let cb = object as? NSComboBox {
             cb.font = textFontPrefs.font
         } else if let textView = object as? NSTextView {
+            adjustTabSpacing(textView: textView, font: textFontPrefs.font!)
             textView.font = textFontPrefs.font
         } else if let textField = object as? NSTextField {
             textField.font = textFontPrefs.font
@@ -78,10 +79,34 @@ class AppPrefsCocoa {
     public func setCodeEditingFont(view: NSView) {
 
         if let textView = view as? NSTextView {
+            adjustTabSpacing(textView: textView, font: codeFontPrefs.font!)
             textView.font = codeFontPrefs.font
         } else if let textField = view as? NSTextField {
             textField.font = codeFontPrefs.font
         }
+    }
+    
+    func adjustTabSpacing(textView: NSTextView, font: NSFont) {
+        
+        var paraStyle: NSMutableParagraphStyle?
+        if let paragraph = textView.defaultParagraphStyle?.mutableCopy() as? NSMutableParagraphStyle {
+            paraStyle = paragraph
+        } else {
+            paraStyle = NSParagraphStyle.default.mutableCopy() as? NSMutableParagraphStyle
+        }
+        guard paraStyle != nil else {
+            return
+        }
+        
+        // Remove default tab stops
+        paraStyle!.tabStops = []
+
+        // Set the tab width to 4 spaces wide
+        paraStyle!.defaultTabInterval = CGFloat(4) * (" " as NSString).size(withAttributes: [.font: font]).width
+
+        // Set text view's typing attributes, default paragraph style, etc w/ this style
+        textView.typingAttributes = [.paragraphStyle: paraStyle!, .foregroundColor: NSColor.textColor]
+
     }
     
     /// Make an attributed string using latest font size

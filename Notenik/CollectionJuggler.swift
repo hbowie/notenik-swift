@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 - 2022 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -47,6 +47,8 @@ class CollectionJuggler: NSObject {
     
     let scriptStoryboard: NSStoryboard = NSStoryboard(name: "Script", bundle: nil)
     var scriptWindowController: ScriptWindowController?
+    
+    var lastScript: URL?
     
     var docController: NoteDocumentController?
     
@@ -1077,7 +1079,11 @@ class CollectionJuggler: NSObject {
     func scriptOpen() {
         let openPanel = NSOpenPanel();
         openPanel.title = "Select a Script File to be Played"
-        openPanel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
+        if let dirURL = AppPrefs.shared.scriptFolderURL {
+            openPanel.directoryURL = dirURL
+        } else {
+            openPanel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
+        }
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
         openPanel.canChooseDirectories = false
@@ -1090,11 +1096,24 @@ class CollectionJuggler: NSObject {
         }
     }
     
-    /// Launch a script to be played.
-    func launchScript(fileURL: URL) {
+    func scriptRerun() {
+        guard lastScript != nil else {
+            communicateError("Last Script to Rerun is not retained between launches", alert: true)
+            return
+        }
         ensureScriptController()
         guard scriptWindowController != nil else { return }
         scriptWindowController!.showWindow(self)
+        scriptWindowController!.scriptOpenInput(lastScript!, goNow: true)
+    }
+    
+    /// Launch a script to be played.
+    func launchScript(fileURL: URL) {
+        AppPrefs.shared.scriptFolderURL = fileURL.deletingLastPathComponent()
+        ensureScriptController()
+        guard scriptWindowController != nil else { return }
+        scriptWindowController!.showWindow(self)
+        lastScript = fileURL
         scriptWindowController!.scriptOpenInput(fileURL)
     }
     

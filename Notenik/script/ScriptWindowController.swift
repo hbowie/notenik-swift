@@ -45,9 +45,9 @@ class ScriptWindowController: NSWindowController {
         }
     }
     
-    func scriptOpenInput(_ scriptURL: URL) {
+    func scriptOpenInput(_ scriptURL: URL, goNow: Bool = false) {
         if scriptViewController != nil {
-            scriptViewController!.scriptOpenInput(scriptURL)
+            scriptViewController!.scriptOpenInput(scriptURL, goNow: goNow)
         }
     }
 

@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 7/26/19.
-//  Copyright © 2019 - 2021 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -16,6 +16,8 @@ import NotenikUtils
 
 /// Controls the Scripter View. 
 class ScriptViewController: NSViewController {
+    
+    var juggler = CollectionJuggler.shared
     
     var window: ScriptWindowController!
     
@@ -41,12 +43,13 @@ class ScriptViewController: NSViewController {
     
     @IBOutlet var scriptLog:   NSTextView!
     
-    func scriptOpenInput(_ scriptURL: URL) {
+    func scriptOpenInput(_ scriptURL: URL, goNow: Bool = false) {
         scripter = ScriptEngine()
         let command = scripter.getCommand(moduleStr: "script")!
         command.action = .open
         command.modifier = "input"
         command.setValue(fileURL: scriptURL)
+        juggler.lastScript = scriptURL
         scripter.playCommand(command)
         updateLogView(workspace: scripter.workspace)
         
@@ -54,6 +57,10 @@ class ScriptViewController: NSViewController {
         modulePopUpSelected(self)
         actionPopUp.selectItem(at: 1)
         actionPopUpSelected(self)
+        
+        if goNow {
+            goAction(self)
+        }
     }
     
     override func viewDidLoad() {

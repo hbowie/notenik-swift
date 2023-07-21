@@ -4389,17 +4389,17 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     lazy var presentedItemOperationQueue: OperationQueue = OperationQueue.main
     
     func startFileCoordination() {
-        presentedItemURL = notenikIO!.collection!.fullPathURL
-        NSFileCoordinator.addFilePresenter(self)
-        print("CollectionWindowController.startFileCoordination for \(presentedItemURL!)")
+        // presentedItemURL = notenikIO!.collection!.fullPathURL
+        // NSFileCoordinator.addFilePresenter(self)
+        // print("CollectionWindowController.startFileCoordination for \(presentedItemURL!)")
     }
     
     func finishFileCoordination() {
-        if presentedItemURL != nil {
+        /* if presentedItemURL != nil {
             print("CollectionWindowController.finishFileCoordination for \(presentedItemURL!)")
             NSFileCoordinator.removeFilePresenter(self)
             presentedItemURL = nil
-        }
+        } */
     }
     
     func presentedSubitemDidChange(at: URL) {

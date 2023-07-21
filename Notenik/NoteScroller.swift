@@ -26,10 +26,10 @@ class NoteScroller {
     //
     
     // The estimated height of the display header.
-    var displayHeaderHeight = 30
+    var displayHeaderHeight = 50
     
     // The scroll position.
-    var displayOffset: Int = 0
+    var displayOffset: Int = 50
     
     // The total height of the content.
     var displayHeight: Int = 0
@@ -50,21 +50,18 @@ class NoteScroller {
     // The height of the visible content.
     var editVis:       Int = 0
     
-    var fudgeFactor1: Double = 0.85
-    var fudgeFactor2: Double = 0.08
-    
     var editScrollView: NSScrollView?
     
     var displayDataReturned = 0
     
     
     init(collection: NoteCollection) {
-        print("NoteScroller.init")
+        // print("NoteScroller.init")
         self.collection = collection
     }
     
     func editStart(scrollView: NSScrollView) {
-        print("NoteScroller.editStart")
+        // print("NoteScroller.editStart")
         editScrollView = scrollView
         editHeight = 0
         if let contentSize = scrollView.documentView?.bounds.height {
@@ -73,7 +70,7 @@ class NoteScroller {
     }
     
     func editEnd(scrollView: NSScrollView) {
-        print("NoteScroller.editEnd")
+        // print("NoteScroller.editEnd")
         if let contentSize = scrollView.documentView?.bounds.height {
             editHeight = Int(contentSize)
         }
@@ -83,41 +80,47 @@ class NoteScroller {
         lastPositionFrom = .edit
     }
     
+    let fudgeFactor1: Double = 0.50
+    let fudgeFactor2: Double = 0.28
+    
     func displayStart(note: Note, webView: NoteDisplayWebView) {
         
-        print("NoteScroller.displayStart")
+        // print("NoteScroller.displayStart")
         guard collection.scrollingSync else { return }
+        calcDisplayHeaderHeight(note: note)
         var scrollY = 0
         
         switch lastPositionFrom {
         case .display:
             scrollY = displayOffset
         case .edit:
-            print("  - edit offset = \(editOffset)")
-            print("  - edit height = \(editHeight)")
-            print("  - edit vis    = \(editVis)")
+            // print("  - edit offset = \(editOffset)")
+            // print("  - edit height = \(editHeight)")
+            // print("  - edit vis    = \(editVis)")
             if editOffset == 0 {
                 scrollY = 0
             } else {
                 let percent: Double = Double(editOffset) / Double((editHeight - editVis))
-                let ff2Factor = fudgeFactor2 - percent
-                let ff2Applied = fudgeFactor2 * ff2Factor
-                let fudgeFactor = fudgeFactor1 + ff2Applied
-                let fudged = percent * fudgeFactor
-                print("  - edit percent scrolled = \(percent)")
-                print("  - fudge factor 1 = \(fudgeFactor1)")
-                print("  - fudge factor 2 = \(fudgeFactor2)")
-                print("  - fudge factor 2 applied = \(ff2Applied)")
-                print("  - fudge factor = \(fudgeFactor)")
-                print("  - fudged percent = \(fudged)")
-                print("  - display height   = \(displayHeight)")
-                print("  - display header height = \(displayHeaderHeight)")
-                print("  - display vis = \(displayVis)")
+                // let percent: Double = Double(editOffset) / Double(editHeight)
+                // print("  - edit percent scrolled = \(percent)")
+                // print("  - fudge factor 1 = \(fudgeFactor1)")
+                // print("  - fudge factor 2 = \(fudgeFactor2)")
+                let fudge2 = fudgeFactor2 * percent
+                // print("  - fudge 2 = \(fudge2)")
+                let finalFudge = fudgeFactor1 + fudge2
+                // let ff2Factor = fudgeFactor2 * percent
+                // let ff2Applied = fudgeFactor2 * ff2Factor
+                // let fudgeFactor = fudgeFactor1 + ff2Factor
+                // let fudged = percent * fudgeFactor
+                // print("  - final fudge = \(finalFudge)")
+                // print("  - display height   = \(displayHeight)")
+                // print("  - display header height = \(displayHeaderHeight)")
+                // print("  - display vis = \(displayVis)")
                 let equiv: Double = Double(displayHeaderHeight)
-                    + Double(displayHeight - displayHeaderHeight) * fudged
-                print("  - equivalent scroll = \(equiv)")
+                    + (Double(displayHeight - displayHeaderHeight) * finalFudge * percent)
+                // print("  - equivalent scroll = \(equiv)")
                 scrollY = Int(equiv.rounded(.toNearestOrAwayFromZero))
-                print("  - scroll Y = \(scrollY)")
+                // print("  - scroll Y = \(scrollY)")
             }
         case .nowhere:
             break
@@ -135,7 +138,7 @@ class NoteScroller {
     }
     
     func displayEnd(note: Note, webView: NoteDisplayWebView) {
-        print("NoteScroller.displayEnd")
+        // print("NoteScroller.displayEnd")
         guard collection.scrollingSync else {
             if editOffset > 0 {
                 if let scrollView = editScrollView {
@@ -156,7 +159,7 @@ class NoteScroller {
                 self.displayOffset = resultNumber.intValue
                 self.displayDataReturned += 1
                 if self.displayDataReturned >= 3 {
-                    self.editScrollUsingDisplayData()
+                    self.editScrollUsingDisplayData(note: note)
                 }
             }
             if error != nil {
@@ -172,7 +175,7 @@ class NoteScroller {
                 self.displayHeight = resultNumber.intValue
                 self.displayDataReturned += 1
                 if self.displayDataReturned >= 3 {
-                    self.editScrollUsingDisplayData()
+                    self.editScrollUsingDisplayData(note: note)
                 }
             }
             if error != nil {
@@ -188,7 +191,7 @@ class NoteScroller {
                 self.displayVis = resultNumber.intValue
                 self.displayDataReturned += 1
                 if self.displayDataReturned >= 3 {
-                    self.editScrollUsingDisplayData()
+                    self.editScrollUsingDisplayData(note: note)
                 }
             }
             if error != nil {
@@ -199,31 +202,49 @@ class NoteScroller {
         lastPositionFrom = .display
     }
     
-    func editScrollUsingDisplayData() {
-        print("  - NoteScroller.editScrollUsingDisplayData")
+    func editScrollUsingDisplayData(note: Note) {
+        // print("  - NoteScroller.editScrollUsingDisplayData")
         guard let scrollView = editScrollView else {
-            print("  - no edit scroll view available!")
+            // print("  - no edit scroll view available!")
             return
         }
         if let contentSize = scrollView.documentView?.bounds.height {
             editHeight = Int(contentSize)
         }
-        print("  - display offset = \(displayOffset)")
+        // print("  - display offset = \(displayOffset)")
         var scrollY = 0
         if displayOffset == 0 {
             scrollY = 0
         } else {
-            print("  - display height = \(displayHeight)")
-            print("  - display vis    = \(displayVis)")
-            let percent: Double = Double(displayOffset) / Double((displayHeight - displayVis))
-            print("  - percent scrolled = \(percent)")
+            // print("  - display height = \(displayHeight)")
+            // print("  - display vis    = \(displayVis)")
+            calcDisplayHeaderHeight(note: note)
+            let percent: Double = Double(displayOffset - displayHeaderHeight) / Double((displayHeight - displayHeaderHeight))
+            // print("  - percent scrolled = \(percent)")
             let equiv: Double = Double(editHeight) * percent
-            print("  - edit height = \(editHeight)")
+            // print("  - edit height = \(editHeight)")
             scrollY = Int(equiv.rounded(.toNearestOrAwayFromZero))
         }
-        print("  - scroll Y = \(scrollY)")
+        // print("  - scroll Y = \(scrollY)")
         let newOrigin = NSPoint(x: 0, y: scrollY)
         scrollView.contentView.scroll(to: newOrigin)
+    }
+    
+    func calcDisplayHeaderHeight(note: Note) {
+        var displayHeaderLines = 0
+        for (_, field) in note.fields {
+            guard field.value.hasData else { continue }
+            let fieldType = field.def.fieldType
+            if collection.streamlined && !fieldType.streamlinedDisplay { continue }
+            if fieldType.typeString == NotenikConstants.bodyCommon {
+                if collection.bodyLabel {
+                    displayHeaderLines += 2
+                }
+            } else {
+                displayHeaderLines += field.def.fieldType.displayLines
+            }
+        }
+        displayHeaderHeight = displayHeaderLines * 10
     }
     
     /// Log an error message and optionally display an alert message.
