@@ -134,6 +134,8 @@ class ShareViewController: NSViewController {
         }
         
         // Perform selected transformation
+        
+        // Format Markdown quote.
         if formatMarkdownQuoteButton.state == .on {
             let markedUp = Markedup(format: .markdown)
             if note!.hasBody() {
@@ -164,11 +166,15 @@ class ShareViewController: NSViewController {
                 }
             }
             stringToShare = markedUp.code
+            
+        // Format Markdown body only.
         } else if contentBodyOnlyButton.state == .on && formatMarkdownButton.state == .on {
             // No conversion required
             if note!.hasBody() {
                 stringToShare = note!.body.value
             }
+            
+        // Format as Notenik.
         } else if formatNotenikButton.state == .on {
             // Share in Notenik format
             let writer = BigStringWriter()
@@ -182,6 +188,8 @@ class ShareViewController: NSViewController {
             if noteLineMaker.fieldsWritten > 0 {
                 stringToShare = writer.bigString
             }
+            
+        // Format as JSON.
         } else if formatJSONButton.state == .on {
             let jWriter = JSONWriter()
             jWriter.open()
@@ -192,6 +200,8 @@ class ShareViewController: NSViewController {
             }
             jWriter.close()
             stringToShare = jWriter.outputString
+            
+        // Format Body to HTML.
         } else if contentBodyOnlyButton.state == .on {
             let markdown = Markdown()
             markdown.md = note!.body.value
@@ -211,6 +221,8 @@ class ShareViewController: NSViewController {
             } else {
                 stringToShare = markdown.html
             }
+            
+        // Format for Micro Blog post.
         } else if formatMicroButton.state == .on {
             stringToShare = note!.body.value
             newLine()
