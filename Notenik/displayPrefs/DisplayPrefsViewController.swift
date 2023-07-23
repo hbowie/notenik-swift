@@ -162,11 +162,11 @@ class DisplayPrefsViewController: NSViewController {
         if bodyButton.state == .on {
             fontSpecs = displayPrefs.getSpecs(fontsFor: .body)
             sizes.setFontsFor(.body)
-            sizeComboBox.stringValue = "pt"
+            sizeUnitLabel.stringValue = "pt"
         } else {
             fontSpecs = displayPrefs.getSpecs(fontsFor: .headings)
             sizes.setFontsFor(.headings)
-            sizeComboBox.stringValue = "em"
+            sizeUnitLabel.stringValue = "em"
         }
         setFontDisplay()
     }
