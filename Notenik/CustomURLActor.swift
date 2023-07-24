@@ -112,6 +112,7 @@ class CustomURLActor {
     }
     
     func processExpandCommand(labels: [String], values: [String]) {
+        
         var cwc: CollectionWindowController?
         var i = 0
         while i < labels.count {

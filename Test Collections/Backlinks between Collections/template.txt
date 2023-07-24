@@ -1,0 +1,20 @@
+Title: <title> 
+
+Author: <lookup: qauthors> 
+
+Date: <date> 
+
+Tags: <tags> 
+
+Work Title: <lookup: qworks> 
+
+Work Pages:  
+
+Date Added: <dateadded> 
+
+Backlinks: <backlinks> 
+
+Wiki Links: <wikilinks> 
+
+Body:  
+

@@ -1,0 +1,26 @@
+Work Title: <title> 
+
+Tags: <tags> 
+
+Author: <lookup: qauthors> 
+
+Work Type: <worktype> 
+
+Work Minor Title:  
+
+Work Date: <date> 
+
+Work Link: <link> 
+
+Work Id:  
+
+Work Rights:  
+
+Work Rights Holder:  
+
+Publisher:  
+
+Publisher City:  
+
+Work Notes: <body> 
+

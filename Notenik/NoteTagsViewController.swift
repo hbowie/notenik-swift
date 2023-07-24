@@ -65,6 +65,9 @@ class NoteTagsViewController: NSViewController,
     /// - Parameter forTag: The tag to be expanded.
     public func expand(forTag: String) {
         let lowerTagTarget = forTag.lowercased()
+        let tags = lowerTagTarget.split(separator: ".")
+        guard tags.count > 0 else { return }
+        var lookingFor = 0
         let itemCount = outlineView.numberOfRows
         var i = -1
         while (i + 1) < itemCount {
@@ -74,10 +77,15 @@ class NoteTagsViewController: NSViewController,
             guard node.children.count > 0 else { continue }
             guard node.type == .tag else { continue }
             guard let tag = node.tag else { continue }
-            if tag.lowercased() == lowerTagTarget {
+            if lookingFor < tags.count && tag.lowercased() == tags[lookingFor] {
                 outlineView.expandItem(item, expandChildren: true)
-                outlineView.scrollRowToVisible(i+1)
-                return
+                lookingFor += 1
+                if lookingFor >= tags.count {
+                    outlineView.scrollRowToVisible(i+1)
+                    continue
+                } else {
+                    continue
+                }
             } else if outlineView.isItemExpanded(item) {
                 outlineView.collapseItem(item, collapseChildren: true)
             }
