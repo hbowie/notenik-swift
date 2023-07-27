@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 4/17/19.
-//  Copyright © 2019 Herb Bowie (https://powersurgepub.com)
+//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net/)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -15,6 +15,8 @@ import NotenikUtils
 import NotenikLib
 
 class CalendarViewController: NSViewController {
+    
+    let utils = DateUtils.shared
 
     @IBOutlet var yearTextField: NSTextField!
     @IBOutlet var monthTextField: NSTextField!
@@ -24,6 +26,8 @@ class CalendarViewController: NSViewController {
     
     var window: CalendarWindowController?
     var recursString = ""
+    
+    var firstWeekday = 1
     
     var calGrid: NSGridView!
     
@@ -46,7 +50,8 @@ class CalendarViewController: NSViewController {
     /// Populate our view with its initial data.
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.year = 2021
+        firstWeekday = Calendar.current.firstWeekday
+        self.year = 2023
         loaded = true
         displayYear()
         displayMonth()
@@ -100,109 +105,24 @@ class CalendarViewController: NSViewController {
         window!.close()
     }
     
-    /// Put together the Calendar grid
-    func formatCalendar() {
-        
-        // Let's start with the header row showing the day of week abbreviations
-        var j = 1
-        while j <= 7 {
-            let dayOfWeekName = DateUtils.dayOfWeekNames[j]
-            let dayOfWeekAbbrSub = dayOfWeekName.prefix(2)
-            let dayOfWeekAbbr = String(dayOfWeekAbbrSub)
-            let headerLabel = NSTextField(labelWithString: dayOfWeekAbbr)
-            headerLabel.alignment = .center
-            headerRow.append(headerLabel)
-            j += 1
+    
+    /// Calculate the column index for a given day of the week, based on user's preferred first day of the week..
+    /// - Parameter dayOfWeek: Day of week, in the range 1 - 7, where 1 is Sunday.
+    /// - Returns: Column index, in the range 0 - 6.
+    func columnIndex(for dayOfWeek: Int) -> Int {
+        var i = dayOfWeek - firstWeekday
+        if i < 0 {
+            i += 7
         }
-        gridViews.append(headerRow)
-        
-        // Now let's create an array of buttons representing the days of the month
-        var i = 1
-        while i < 7 {
-            var weekRow: [NSButton] = []
-            j = 0
-            while j < 7 {
-                let dayButton = NSButton(frame: NSRect(x: 0, y: 0, width: 64, height: 64))
-                dayButton.setButtonType(.toggle)
-                dayButton.isBordered = true
-                dayButton.bezelStyle = .roundRect
-                dayButton.attributedTitle = NSAttributedString(string: "00")
-                dayButton.target = self
-                dayButton.action = #selector(dayButtonClicked)
-                weekRow.append(dayButton)
-                j += 1
-            }
-            gridViews.append(weekRow)
-            dayButtons.append(weekRow)
-            i += 1
-        }
-        calGrid = NSGridView(views: gridViews)
-        calGrid.translatesAutoresizingMaskIntoConstraints = false
-        gridParent.addSubview(calGrid)
-        
-        // Pin the grid to the edges of our main view
-        calGrid.leadingAnchor.constraint(equalTo: gridParent.leadingAnchor, constant: 0).isActive = true
-        calGrid.trailingAnchor.constraint(equalTo: gridParent.trailingAnchor, constant: 0).isActive = true
-        calGrid.topAnchor.constraint(equalTo: gridParent.topAnchor, constant: 0).isActive = true
-        calGrid.bottomAnchor.constraint(equalTo: gridParent.bottomAnchor, constant: -0).isActive = true
+        return i
     }
     
-    /// Accept the user's selection of a new day
-    @objc func dayButtonClicked() {
-        
-        let firstDayOfMonth = DateUtils.shared.dateFromYMD(year: year, month: month, day: 01)
-        let firstDayOfWeek = DateUtils.shared.dayOfWeekForDate(firstDayOfMonth!)
-        var workDay = 1
-        var workMonth = month
-        var workDaysInMonth = daysInMonth
-        if startingColumn > 0 {
-            workMonth = priorMonth(month)
-            workDaysInMonth = DateUtils.shared.getDaysInMonth(year: year, month: workMonth)
-            workDay = workDaysInMonth - firstDayOfWeek + 2
+    func dayOfWeek(for columnIndex: Int) -> Int {
+        var j = columnIndex + firstWeekday
+        if j > 7 {
+            j -= 7
         }
-        
-        var dateChanged = false
-        var i = 0
-        
-        while i < 6 {
-            var j = 0
-            while j < 7 {
-                if dayButtons[i][j].state == .on {
-                    if !dateChanged && (day != workDay || month != workMonth) {
-                        dateChanged = true
-                        day = workDay
-                        if workMonth < month || (workMonth > month && workMonth == 12){
-                            month = workMonth
-                            if month == 12 {
-                                year -= 1
-                                displayYear()
-                            }
-                            displayMonth()
-                        } else if workMonth > month || workMonth < month && workMonth == 1 {
-                            month = workMonth
-                            if month == 1 {
-                                year += 1
-                                displayYear()
-                            }
-                            displayMonth()
-                        }
-                        displayDay()
-                    }
-                }
-                j += 1
-                
-                workDay += 1
-                if workDay > workDaysInMonth {
-                    workDay = 1
-                    workMonth = nextMonth(workMonth)
-                    workDaysInMonth = DateUtils.shared.getDaysInMonth(year: year, month: workMonth)
-                }
-            }
-            i += 1
-        }
-        if dateChanged {
-            displayCalendar()
-        }
+        return j
     }
     
     /// Set the year to be displayed.
@@ -294,7 +214,7 @@ class CalendarViewController: NSViewController {
     /// is greater than the number of days in the current month, then set it to the last day of
     /// the month.
     func calcDaysInMonth() {
-        daysInMonth = DateUtils.shared.getDaysInMonth(year: year, month: month)
+        daysInMonth = utils.getDaysInMonth(year: year, month: month)
         if day > daysInMonth {
             day = daysInMonth
             displayDay()
@@ -349,6 +269,54 @@ class CalendarViewController: NSViewController {
         }
     }
     
+    /// Put together the Calendar grid
+    func formatCalendar() {
+        
+        // Let's start with the header row showing the day of week abbreviations
+        var dayColumn = 0
+        while dayColumn < 7 {
+            let dayOfWeek = dayOfWeek(for: dayColumn)
+            let dayOfWeekName = DateUtils.dayOfWeekNames[dayOfWeek]
+            let dayOfWeekAbbrSub = dayOfWeekName.prefix(2)
+            let dayOfWeekAbbr = String(dayOfWeekAbbrSub)
+            let headerLabel = NSTextField(labelWithString: dayOfWeekAbbr)
+            headerLabel.alignment = .center
+            headerRow.append(headerLabel)
+            dayColumn += 1
+        }
+        gridViews.append(headerRow)
+        
+        // Now let's create an array of buttons representing the days of the month
+        var weekRow = 1
+        while weekRow < 7 {
+            var weekButtons: [NSButton] = []
+            dayColumn = 0
+            while dayColumn < 7 {
+                let dayButton = NSButton(frame: NSRect(x: 0, y: 0, width: 64, height: 64))
+                dayButton.setButtonType(.toggle)
+                dayButton.isBordered = true
+                dayButton.bezelStyle = .roundRect
+                dayButton.attributedTitle = NSAttributedString(string: "00")
+                dayButton.target = self
+                dayButton.action = #selector(dayButtonClicked)
+                weekButtons.append(dayButton)
+                dayColumn += 1
+            }
+            gridViews.append(weekButtons)
+            dayButtons.append(weekButtons)
+            weekRow += 1
+        }
+        calGrid = NSGridView(views: gridViews)
+        calGrid.translatesAutoresizingMaskIntoConstraints = false
+        gridParent.addSubview(calGrid)
+        
+        // Pin the grid to the edges of our main view
+        calGrid.leadingAnchor.constraint(equalTo: gridParent.leadingAnchor, constant: 0).isActive = true
+        calGrid.trailingAnchor.constraint(equalTo: gridParent.trailingAnchor, constant: 0).isActive = true
+        calGrid.topAnchor.constraint(equalTo: gridParent.topAnchor, constant: 0).isActive = true
+        calGrid.bottomAnchor.constraint(equalTo: gridParent.bottomAnchor, constant: -0).isActive = true
+    }
+    
     /// Update the button titles and styles to reflect the specified date
     func displayCalendar() {
         guard year > 0 && month >= 1 && month <= 12 else { return }
@@ -359,48 +327,108 @@ class CalendarViewController: NSViewController {
         
         let otherMonthAttrs = [NSAttributedString.Key.font: lightFont]
         let otherDayAttrs = [NSAttributedString.Key.font: regularFont]
-        let selectedDayAttrs = [NSAttributedString.Key.font: boldFont, NSAttributedString.Key.foregroundColor: NSColor.red]
+        let selectedDayAttrs = [NSAttributedString.Key.font: boldFont, NSAttributedString.Key.foregroundColor: NSColor.selectedControlTextColor]
         
-        let firstDayOfMonth = DateUtils.shared.dateFromYMD(year: year, month: month, day: 01)
-        let firstDayOfWeek = DateUtils.shared.dayOfWeekForDate(firstDayOfMonth!)
-        var i = 0
-        var j = 0
-        startingColumn = firstDayOfWeek - 1
-        var workDay = 1
+        let firstDayOfMonth = utils.dateFromYMD(year: year, month: month, day: 01)
+        let firstDayOfWeekForMonth = utils.dayOfWeekForDate(firstDayOfMonth!)
+        var weekRow = 0
+        var dayColumn = 0
+        startingColumn = columnIndex(for: firstDayOfWeekForMonth)
+        var workDayOfMonth = 1
         var workMonth = month
         var workDaysInMonth = daysInMonth
         if startingColumn > 0 {
             workMonth = priorMonth(month)
-            workDaysInMonth = DateUtils.shared.getDaysInMonth(year: year, month: workMonth)
-            workDay = workDaysInMonth - firstDayOfWeek + 2
+            workDaysInMonth = utils.getDaysInMonth(year: year, month: workMonth)
+            workDayOfMonth = workDaysInMonth - startingColumn + 1
         }
-        while i < 6 {
-            let dayOfMonthStr = String(format: "%02d", workDay)
+        while weekRow < 6 {
+            let dayOfMonthStr = String(format: "%02d", workDayOfMonth)
             if workMonth == month {
-                dayButtons[i][j].attributedTitle = NSAttributedString(string: dayOfMonthStr, attributes: otherDayAttrs)
-                if workDay == day {
-                    dayButtons[i][j].state = .on
+                dayButtons[weekRow][dayColumn].attributedTitle = NSAttributedString(string: dayOfMonthStr, attributes: otherDayAttrs)
+                if workDayOfMonth == day {
+                    dayButtons[weekRow][dayColumn].state = .on
                 } else {
-                    dayButtons[i][j].state = .off
+                    dayButtons[weekRow][dayColumn].state = .off
                 }
             } else {
-                dayButtons[i][j].attributedTitle = NSAttributedString(string: dayOfMonthStr, attributes: otherMonthAttrs)
-                dayButtons[i][j].state = .off
+                dayButtons[weekRow][dayColumn].attributedTitle = NSAttributedString(string: dayOfMonthStr, attributes: otherMonthAttrs)
+                dayButtons[weekRow][dayColumn].state = .off
             }
-            dayButtons[i][j].attributedAlternateTitle = NSAttributedString(string: dayOfMonthStr, attributes: selectedDayAttrs)
+            dayButtons[weekRow][dayColumn].attributedAlternateTitle = NSAttributedString(string: dayOfMonthStr, attributes: selectedDayAttrs)
             
-            if j < 6 {
-                j += 1
+            if dayColumn < 6 {
+                dayColumn += 1
             } else {
-                i += 1
-                j = 0
+                weekRow += 1
+                dayColumn = 0
             }
-            workDay += 1
-            if workDay > workDaysInMonth {
-                workDay = 1
+            
+            workDayOfMonth += 1
+            if workDayOfMonth > workDaysInMonth {
+                workDayOfMonth = 1
                 workMonth = nextMonth(workMonth)
-                workDaysInMonth = DateUtils.shared.getDaysInMonth(year: year, month: workMonth)
+                workDaysInMonth = utils.getDaysInMonth(year: year, month: workMonth)
             }
+        }
+    }
+    
+    /// Accept the user's selection of a new day
+    @objc func dayButtonClicked() {
+        
+        let firstDayOfMonth = utils.dateFromYMD(year: year, month: month, day: 01)
+        let firstDayOfWeekForMonth = utils.dayOfWeekForDate(firstDayOfMonth!)
+        var weekRow = 0
+        var workDayOfMonth = 1
+        var workMonth = month
+        var workDaysInMonth = daysInMonth
+        startingColumn = columnIndex(for: firstDayOfWeekForMonth)
+        if startingColumn > 0 {
+            workMonth = priorMonth(month)
+            workDaysInMonth = utils.getDaysInMonth(year: year, month: workMonth)
+            workDayOfMonth = workDaysInMonth - startingColumn + 1
+        }
+        
+        var dateChanged = false
+        
+        while weekRow < 6 {
+            var dayColumn = 0
+            while dayColumn < 7 {
+                if dayButtons[weekRow][dayColumn].state == .on {
+                    if !dateChanged && (day != workDayOfMonth || month != workMonth) {
+                        dateChanged = true
+                        day = workDayOfMonth
+                        if workMonth < month || (workMonth > month && workMonth == 12){
+                            month = workMonth
+                            if month == 12 {
+                                year -= 1
+                                displayYear()
+                            }
+                            displayMonth()
+                        } else if workMonth > month || workMonth < month && workMonth == 1 {
+                            month = workMonth
+                            if month == 1 {
+                                year += 1
+                                displayYear()
+                            }
+                            displayMonth()
+                        }
+                        displayDay()
+                    }
+                }
+                dayColumn += 1
+                
+                workDayOfMonth += 1
+                if workDayOfMonth > workDaysInMonth {
+                    workDayOfMonth = 1
+                    workMonth = nextMonth(workMonth)
+                    workDaysInMonth = utils.getDaysInMonth(year: year, month: workMonth)
+                }
+            }
+            weekRow += 1
+        }
+        if dateChanged {
+            displayCalendar()
         }
     }
     

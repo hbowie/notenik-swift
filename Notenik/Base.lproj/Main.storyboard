@@ -1430,9 +1430,9 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="110" height="79"/>
+                                <rect key="frame" x="0.0" y="0.0" width="70" height="79"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="108" height="62"/>
+                                    <rect key="frame" x="1" y="1" width="68" height="62"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
@@ -1808,7 +1808,7 @@ CA
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="63" width="108" height="15"/>
+                                    <rect key="frame" x="1" y="63" width="68" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
@@ -1846,9 +1846,9 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="21"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="20"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="19"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="18"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">

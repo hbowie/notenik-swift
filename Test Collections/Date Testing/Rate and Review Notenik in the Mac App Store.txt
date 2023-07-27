@@ -1,0 +1,17 @@
+Title:  Rate and Review Notenik in the Mac App Store
+
+Tags:   notenik
+
+Link:   https://apps.apple.com/us/app/notenik/id1465997984?mt=12
+
+Status: 0 - Idea
+
+Date:   09 Feb 2021
+
+Recurs: Daily
+
+Body:
+
+This is a sample Note set up as a To Do item. 
+
+You can delete this starting Note after creating one or two of your own.
