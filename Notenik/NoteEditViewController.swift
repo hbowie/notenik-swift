@@ -231,12 +231,8 @@ class NoteEditViewController: NSViewController {
         if let scroller = collectionWindowController?.scroller {
             if let sv = bodyView?.scrollView {
                 scroller.editStart(scrollView: sv)
-            } else {
-                print("  - no body scroll view available!")
             }
-        } else {
-            print("  - no note scroller available!")
-        }
+        } 
     }
     
     /// Populate the Edit View's fields with data from the currently selected Note.
