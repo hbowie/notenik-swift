@@ -16,6 +16,8 @@ class NoteTabsViewController: NSTabViewController {
     
     var collectionWindowController: CollectionWindowController?
     
+    let editTabLabel = "Edit"
+    
     /// Get or Set the Window Controller
     var window: CollectionWindowController? {
         get {
@@ -28,7 +30,6 @@ class NoteTabsViewController: NSTabViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
     }
     
     /// If collection is read-only, then don't allow Edit tab to be selected
@@ -36,7 +37,7 @@ class NoteTabsViewController: NSTabViewController {
         let superResponse = super.tabView(tabView, shouldSelect: tabViewItem)
         guard tabViewItem != nil else { return superResponse }
         guard window != nil else { return superResponse }
-        guard tabViewItem!.label == "Edit" else { return superResponse }
+        guard tabViewItem!.label == editTabLabel else { return superResponse }
         guard window!.io != nil else { return superResponse }
         guard let collection = window!.io!.collection else { return superResponse }
         if collection.readOnly {
@@ -50,9 +51,15 @@ class NoteTabsViewController: NSTabViewController {
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
         super.tabView(tabView, willSelect: tabViewItem)
         guard tabViewItem != nil else { return }
-        guard window != nil else { return }
-        if tabViewItem!.label != "Edit" && !window!.pendingMod  {
-            _ = window!.modIfChanged()
+        if tabViewItem!.label == editTabLabel {
+            // Will Select the Edit tab
+        } else {
+            // Will select the Display tab
+            if window != nil {
+                if !window!.pendingMod  {
+                    _ = window!.modIfChanged()
+                }
+            }
         }
     }
     

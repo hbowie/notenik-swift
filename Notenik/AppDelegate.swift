@@ -25,6 +25,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
 
     @IBOutlet weak var sortMenu: NSMenu!
     
+    @IBOutlet weak var navFindItem: NSMenuItem!
+    @IBOutlet weak var navAdvSearchItem: NSMenuItem!
+    @IBOutlet weak var navFindAgainItem: NSMenuItem!
+    
     var appPrefs:     AppPrefs!
     var displayPrefs: DisplayPrefs!
     var juggler: CollectionJuggler!

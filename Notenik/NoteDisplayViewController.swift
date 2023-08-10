@@ -81,7 +81,9 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     override func viewWillDisappear() {
         super.viewWillDisappear()
         if let scroller = wc?.scroller {
-            scroller.displayEnd(note: note!, webView: webView)
+            if note != nil {
+                scroller.displayEnd(note: note!, webView: webView)
+            }
         }
     }
     

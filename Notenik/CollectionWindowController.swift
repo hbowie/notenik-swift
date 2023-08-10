@@ -46,7 +46,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     var noteFileFormat:     NoteFileFormat = .notenik
     var hashTags            = false
     var defsRemoved         = DefsRemoved()
-    var crumbs:             NoteCrumbs?
+    
+    var searchHistory:      NavHistory?
+    var navHistory:         NavHistory?
+    
     var webLinkFollowed     = false
     var windowNumber        = 0
     var undoMgr:            UndoManager?
@@ -112,7 +115,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 window!.title = "No Collection to Display"
                 return
             }
-            crumbs = NoteCrumbs(io: newValue!)
+            
+            searchHistory = NavHistory(io: newValue!)
+            navHistory = NavHistory(io: newValue!)
+            
             window!.representedURL = notenikIO!.collection!.fullPathURL
             startFileCoordination()
             if notenikIO!.collection!.title == "" {
@@ -510,7 +516,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let newTags = fileIO.collection!.hashTags
         var updated = 0
         var (note, position) = fileIO.firstNote()
-        crumbs!.refresh()
         while note != nil {
             note!.fileInfo.setFormat(newFormat: newFormat)
             if let tagsField = note!.getTagsAsField() {
@@ -540,7 +545,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard defsRemoved.count > 0 else { return }
         guard let noteIO = guardForCollectionAction() else { return }
         
-        crumbs!.refresh()
         var notesToUpdate: [Note] = []
         var (note, position) = noteIO.firstNote()
         while note != nil {
@@ -576,7 +580,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard let noteIO = guardForCollectionAction() else { return }
         
-        crumbs!.refresh()
         let mogi = Transmogrifier(io: noteIO)
         let backlinks = mogi.generateBacklinks()
         
@@ -1023,7 +1026,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let today = DateValue("today")
         var notesToUpdate: [Note] = []
         var (note, position) = io!.firstNote()
-        crumbs!.refresh()
         while note != nil {
             if note!.hasDate() && note!.hasRecurs() && !note!.isDone && note!.daily && note!.date < today {
                 notesToUpdate.append(note!)
@@ -1048,7 +1050,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let noteIO = guardForCollectionAction() else { return }
         
         var (note, position) = noteIO.firstNote()
-        crumbs!.refresh()
         var notesToUpdate: [Note] = []
         let config = noteIO.collection!.statusConfig
         while note != nil {
@@ -1073,7 +1074,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         // See if we're ready to take action
         guard let noteIO = guardForCollectionAction() else { return }
         var (note, position) = noteIO.firstNote()
-        crumbs!.refresh()
         var updated = 0
         while note != nil {
             if note!.hasDate() {
@@ -1124,7 +1124,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let toTags = TagsValue(to)
         
         var (note, position) = noteIO.firstNote()
-        crumbs!.refresh()
         var updated = 0
         while note != nil {
             if note!.hasTags() {
@@ -2056,17 +2055,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let (nio, _) = guardForNoteAction()
         guard let noteIO = nio else { return }
         let (note, position) = noteIO.firstNote()
-        crumbs!.refresh()
         select(note: note, position: position, source: .nav, andScroll: true)
     }
     
     /// Go to the next note in the list
     @IBAction func goToNextNote(_ sender: Any) {
-        let (_, sel) = guardForNoteAction()
+        let (nio, sel) = guardForNoteAction()
         guard let selNote = sel else { return }
+        guard let noteIO = nio else { return }
         
-        let nextNote = crumbs!.advance(from: selNote)
-
+        let position = noteIO.positionOfNote(selNote)
+        var (nextNote, _) = noteIO.nextNote(position)
+        if nextNote == nil {
+            (nextNote, _) = noteIO.firstNote()
+        }
         select(note: nextNote, position: nil, source: .nav, andScroll: true)
     }
     
@@ -2077,14 +2079,21 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     /// Go to the prior note in the list
     @IBAction func goToPriorNote(_ sender: Any) {
-        let (_, sel) = guardForNoteAction()
+        
+        let (nio, sel) = guardForNoteAction()
         guard let selNote = sel else { return }
+        guard let noteIO = nio else { return }
+        
         if webLinkFollowed && displayVC != nil {
             displayVC!.reload()
             return
         }
         
-        let priorNote = crumbs!.backup(from: selNote)
+        let position = noteIO.positionOfNote(selNote)
+        var (priorNote, _) = noteIO.priorNote(position)
+        if priorNote == nil {
+            (priorNote, _) = noteIO.lastNote()
+        }
         
         select(note: priorNote, position: nil, source: .nav, andScroll: true)
     }
@@ -2112,9 +2121,38 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         select(note: randomNote, position: randomPosition, source: .nav, andScroll: true)
     }
     
+    @IBAction func backwardInHistory(_ sender: Any) {
+        let (_, sel) = guardForNoteAction()
+        guard let selNote = sel else { return }
+        
+        if webLinkFollowed && displayVC != nil {
+            displayVC!.reload()
+            return
+        }
+        
+        let priorNote = navHistory!.backwards(from: selNote)
+        if priorNote != nil {
+            select(note: priorNote, position: nil, source: .nav, andScroll: true)
+        } else {
+            communicateError("Navigation History Exhausted", alert: true)
+        }
+    }
+    
+    @IBAction func forwardInHistory(_ sender: Any) {
+        let (_, sel) = guardForNoteAction()
+        guard let selNote = sel else { return }
+        let nextNote = navHistory!.forwards(from: selNote)
+        if nextNote != nil {
+            select(note: nextNote, position: nil, source: .nav, andScroll: true)
+        } else {
+            communicateError("Navigation History Exhausted", alert: true)
+        }
+    }
+    
     /// Respond to a user request for an Advanced Search.
     @IBAction func advSearch(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }
+        searchHistory!.clear()
         if let advSearchController = self.advSearchStoryboard.instantiateController(withIdentifier: "AdvSearchWC") as? AdvSearchWindowController {
             guard let vc = advSearchController.contentViewController as? AdvSearchViewController else { return }
             advSearchController.showWindow(self)
@@ -2218,9 +2256,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     func searchUsingOptions() {
         guard !searchOptions.searchText.isEmpty else { return }
         guard let noteIO = guardForCollectionAction() else { return }
+        searchHistory!.clear()
         var found = false
         var (note, position) = noteIO.firstNote()
-        crumbs!.refresh()
         while !found && note != nil {
             found = searchNoteUsingOptions(note!)
             if !found {
@@ -2228,6 +2266,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             }
         }
         if found {
+            searchHistory!.addToHistory(another: note!)
             select(note: note,
                    position: position,
                    source: .action,
@@ -2262,6 +2301,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             }
         }
         if found {
+            searchHistory!.addToHistory(another: note!)
             select(note: note,
                    position: position,
                    source: .action,
@@ -2271,6 +2311,34 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             let alert = NSAlert()
             alert.alertStyle = .informational
             alert.messageText = "No further notes found containing search string '\(searchOptions.searchText)'"
+            alert.informativeText = "Searched for match using current advanced options"
+            alert.addButton(withTitle: "OK")
+            let _ = alert.runModal()
+            select(note: startingNote, position: startingPosition, source: .action, andScroll: true)
+            _ = noteIO.selectNote(at: startingPosition.index)
+        }
+    }
+    
+    @IBAction func searchForPrevious(_ sender: Any) {
+        if !searchField.stringValue.isEmpty && searchField.stringValue != searchOptions.searchText {
+            searchOptions.searchText = searchField.stringValue
+        }
+        guard !searchOptions.searchText.isEmpty else { return }
+        guard let noteIO = guardForCollectionAction() else { return }
+        var (note, startingPosition) = noteIO.getSelectedNote()
+        guard note != nil else { return }
+        let startingNote = note!
+        note = searchHistory!.backwards(from: startingNote)
+        if note != nil {
+            select(note: note,
+                   position: nil,
+                   source: .action,
+                   andScroll: true,
+                   searchPhrase: searchOptions.searchText)
+        } else {
+            let alert = NSAlert()
+            alert.alertStyle = .informational
+            alert.messageText = "No prior notes found containing search string '\(searchOptions.searchText)'"
             alert.informativeText = "Searched for match using current advanced options"
             alert.addButton(withTitle: "OK")
             let _ = alert.runModal()
@@ -2406,9 +2474,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         adjustAttachmentsMenu(noteToUse!)
         
-        if crumbs != nil {
-            crumbs!.select(noteToUse!)
-        }
+        navHistory!.addToHistory(another: noteToUse!)
     }
     
     /// Adjust the Attachments menu based on the attachments found in the passed note.
@@ -2792,7 +2858,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if newNoteRequested {
             newNoteRequested = false
             let (note, position) = io!.firstNote()
-            crumbs!.refresh()
             select(note: note, position: position, source: .action, andScroll: true)
         } else {
             let (note, _) = io!.getSelectedNote()
@@ -2972,7 +3037,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let noteIO = guardForCollectionAction() else { return }
         var updated = 0
         var (note, position) = noteIO.firstNote()
-        crumbs!.refresh()
         while note != nil {
             let written = noteIO.writeNote(note!)
             if written {
@@ -3265,7 +3329,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                           message: "\(purgeCount) Notes purged from Collection at \(io!.collection!.fullPath)")
         reloadViews()
         let (note, position) = io!.firstNote()
-        crumbs!.refresh()
         select(note: note, position: position, source: .nav, andScroll: true)
         
         let alert = NSAlert()
@@ -4518,7 +4581,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     func finishBatchOperation() {
         reloadViews()
         let (note, position) = io!.firstNote()
-        crumbs!.refresh()
         select(note: note, position: position, source: .action, andScroll: true)
     }
     

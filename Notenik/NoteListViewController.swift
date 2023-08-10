@@ -558,7 +558,11 @@ class NoteListViewController:   NSViewController,
     
     func scrollToSelectedRow() {
         let selected = tableView.selectedRow
-        tableView.scrollRowToVisible(selected)
+        var scrollRow = selected + 2
+        if scrollRow >= tableView.numberOfRows {
+            scrollRow = tableView.numberOfRows - 1
+        }
+        tableView.scrollRowToVisible(scrollRow)
     }
     
     // -----------------------------------------------------------

@@ -16,8 +16,8 @@ import NotenikLib
 class BodyView: MacEditView {
     
     var scrollView: NSScrollView!
-    var textView: NSTextView!
-    var delegate: BodyViewDelegate!
+    var textView:   NSTextView!
+    var delegate:   BodyViewDelegate!
     
     var view: NSView {
         return scrollView
@@ -62,6 +62,7 @@ class BodyView: MacEditView {
         
         textView.isRichText = false
         textView.usesFontPanel = false
+        textView.usesFindBar = true
         textView.allowsUndo = true
         if textView.isAutomaticDashSubstitutionEnabled {
             textView.toggleAutomaticDashSubstitution(nil)

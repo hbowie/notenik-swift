@@ -582,7 +582,7 @@ class NotePickerViewController: NSViewController,
         guard let io = noteIO else { return }
         guard let collWC = collectionController else { return }
         guard let note = io.getNote(knownAs: title) else { return }
-        collWC.select(note: note, position: nil, source: .nav)
+        collWC.select(note: note, position: nil, source: .nav, andScroll: true)
         closeWindow()
 
     }

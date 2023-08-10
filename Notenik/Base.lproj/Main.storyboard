@@ -505,18 +505,18 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Nav" id="4yX-W2-chZ">
                                     <items>
-                                        <menuItem title="Go To Next Note" keyEquivalent="]" id="IvG-LL-jYe" userLabel="Go To Next Note">
+                                        <menuItem title="Next in Seq" keyEquivalent="]" id="IvG-LL-jYe" userLabel="Go To Next Note">
                                             <connections>
                                                 <action selector="goToNextNote:" target="Ady-hI-5gd" id="TKQ-6h-RVt"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Go To Prior Note" keyEquivalent="[" id="UOV-EN-ZWW" userLabel="Go To Prior Note">
+                                        <menuItem title="Prior in Seq" keyEquivalent="[" id="UOV-EN-ZWW" userLabel="Go To Prior Note">
                                             <connections>
                                                 <action selector="goToPriorNote:" target="Ady-hI-5gd" id="Xyb-mG-qYl"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Go To Random Note" keyEquivalent="]" id="BAG-Tc-ZVh">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                        <menuItem title="Go To Random Note" keyEquivalent="/" id="BAG-Tc-ZVh">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="goToRandomNote:" target="Ady-hI-5gd" id="gPb-zC-zWI"/>
                                             </connections>
@@ -528,7 +528,20 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="5ZL-zp-Wne"/>
-                                        <menuItem title="Find" keyEquivalent="f" id="O5R-wR-C3l" userLabel="Find">
+                                        <menuItem title="Back in History" keyEquivalent="[" id="mWd-iF-zLd">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="backwardInHistory:" target="Ady-hI-5gd" id="l44-vZ-Beq"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Forward in History" keyEquivalent="]" id="Kn7-Nt-rVa">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="forwardInHistory:" target="Ady-hI-5gd" id="PDh-me-ky9"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="q8f-lW-o23"/>
+                                        <menuItem title="Search" keyEquivalent="f" id="O5R-wR-C3l" userLabel="Find">
                                             <connections>
                                                 <action selector="findNote:" target="Ady-hI-5gd" id="997-as-N8H"/>
                                             </connections>
@@ -539,9 +552,14 @@
                                                 <action selector="advSearch:" target="Ady-hI-5gd" id="jlo-su-m0k"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Find Again" keyEquivalent="g" id="Sis-fg-Ibk" userLabel="Find Again">
+                                        <menuItem title="Search Next" keyEquivalent="g" id="Sis-fg-Ibk" userLabel="Find Again">
                                             <connections>
                                                 <action selector="searchForNext:" target="Ady-hI-5gd" id="UmC-9P-PSt"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Search Previous" keyEquivalent="G" id="o05-va-7c2">
+                                            <connections>
+                                                <action selector="searchForPrevious:" target="Ady-hI-5gd" id="Uab-wW-7sj"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="yzY-or-On1"/>
@@ -1184,6 +1202,9 @@ CA
                     <connections>
                         <outlet property="favsToHTML" destination="eJv-R5-0H2" id="RKS-zi-0TK"/>
                         <outlet property="iCloudMenu" destination="zeP-2v-kFe" id="PRu-Cu-We2"/>
+                        <outlet property="navAdvSearchItem" destination="dRa-3A-SnJ" id="lvV-93-h5d"/>
+                        <outlet property="navFindAgainItem" destination="Sis-fg-Ibk" id="tld-89-TWt"/>
+                        <outlet property="navFindItem" destination="O5R-wR-C3l" id="z0E-Y5-3Qu"/>
                         <outlet property="sortMenu" destination="LhB-sl-AeY" id="YbX-M5-rEM"/>
                     </connections>
                 </customObject>
@@ -1430,13 +1451,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="RC8-4f-YSE">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="131"/>
+                                <rect key="frame" x="0.0" y="0.0" width="410" height="79"/>
                                 <clipView key="contentView" id="gLb-hh-RZf">
-                                    <rect key="frame" x="1" y="1" width="48" height="114"/>
+                                    <rect key="frame" x="1" y="1" width="408" height="62"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
-                                            <rect key="frame" x="0.0" y="0.0" width="1323" height="89"/>
+                                        <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="08a-mn-sim" viewBased="YES" id="5Qb-62-xdU">
+                                            <rect key="frame" x="0.0" y="0.0" width="1323" height="37"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1808,7 +1829,7 @@ CA
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="CTE-sV-ET2">
-                                    <rect key="frame" x="1" y="115" width="48" height="15"/>
+                                    <rect key="frame" x="1" y="63" width="408" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="pSI-dZ-vUM">
@@ -1846,13 +1867,13 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTK-bV-70K">
-                                <rect key="frame" x="0.0" y="0.0" width="479" height="18"/>
+                                <rect key="frame" x="0.0" y="0.0" width="479" height="20"/>
                                 <clipView key="contentView" id="caU-8Q-uow">
-                                    <rect key="frame" x="1" y="1" width="477" height="16"/>
+                                    <rect key="frame" x="1" y="1" width="477" height="18"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="fwC-s0-qs1" id="Zqh-F5-OQn">
-                                            <rect key="frame" x="0.0" y="0.0" width="477" height="16"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="477" height="18"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
