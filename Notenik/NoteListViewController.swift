@@ -532,6 +532,10 @@ class NoteListViewController:   NSViewController,
         return cellView
     }
     
+    var checkForMods = true
+    var programmaticSelection = false
+    var lastRowSelected = 0
+    
     /// Respond to a user selection of a row in the table.
     func tableViewSelectionDidChange(_ notification: Notification) {
         guard checkForMods else { return }
@@ -539,14 +543,15 @@ class NoteListViewController:   NSViewController,
         guard collectionWindowController != nil && row >= 0 else { return }
         let (outcome, _) = collectionWindowController!.modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
+        guard !programmaticSelection else { return }
         if let (note, position) = notenikIO?.selectNote(at: row) {
             collectionWindowController!.select(note: note, position: position, source: NoteSelectionSource.list)
         }
+        lastRowSelected = row
     }
     
-    var checkForMods = true
-    
     func selectRow(index: Int, andScroll: Bool = false, checkForMods: Bool) {
+        programmaticSelection = true
         self.checkForMods = checkForMods
         let indexSet = IndexSet(integer: index)
         tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
@@ -554,15 +559,25 @@ class NoteListViewController:   NSViewController,
             scrollToSelectedRow()
         }
         self.checkForMods = true
+        programmaticSelection = false
     }
     
     func scrollToSelectedRow() {
         let selected = tableView.selectedRow
-        var scrollRow = selected + 2
+        var scrollRow = selected
+        if selected > lastRowSelected {
+            scrollRow = selected + 2
+        } else if selected < lastRowSelected {
+            scrollRow = selected - 2
+        }
         if scrollRow >= tableView.numberOfRows {
             scrollRow = tableView.numberOfRows - 1
         }
+        if scrollRow < 0 {
+            scrollRow = 0
+        }
         tableView.scrollRowToVisible(scrollRow)
+        lastRowSelected = selected
     }
     
     // -----------------------------------------------------------

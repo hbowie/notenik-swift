@@ -2094,7 +2094,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if priorNote == nil {
             (priorNote, _) = noteIO.lastNote()
         }
-        
         select(note: priorNote, position: nil, source: .nav, andScroll: true)
     }
     
