@@ -1325,7 +1325,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                                               defaultTitle: defaultTitle)
                     _ = note.setTitle(title)
                     _ = note.setBody(body)
-                    
                 } else if row >= 0 && dropOperation == .on && !likelyText {
                     let dropNote = noteIO.getNote(at: row)
                     if dropNote != nil {
@@ -1335,6 +1334,12 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                             firstNotePasted = dropNote
                         }
                     }
+                } else if dropOperation != .on && !likelyText {
+                    let defaultTitle = StringUtils.wordDemarcation(fileName,
+                                                        caseMods: ["u", "u", "l"],
+                                                        delimiter: " ")
+                    _ = note.setTitle(defaultTitle)
+                    _ = note.setLink(fileURL.absoluteString)
                 } else {
                     let addedNote = importTextFile(fileURL: fileURL,
                                                    newLevel: newLevel, newSeq: newSeq, newKlass: newKlass,
@@ -1653,7 +1658,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         MultiFileIO.shared.registerBookmark(url: openPanel.url!)
         let localLink = openPanel.url!.absoluteString
         if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
-            editVC!.setLink(localLink)
+            let linkOK = editVC!.setLink(localLink)
+            if !linkOK {
+                communicateError("Link field not found", alert: true)
+            }
         } else {
             let setOK = selNote.setLink(localLink)
             if !setOK {
@@ -1716,7 +1724,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let (note, _) = io!.getSelectedNote()
         guard note != nil else { return }
         if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
-            editVC!.setLink(clean)
+            _ = editVC!.setLink(clean)
         } else {
             let modNote = note!.copy() as! Note
             _ = modNote.setLink(clean)
@@ -2531,6 +2539,16 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         attachmentsMenu.performActionForItem(at: 0)
     }
     
+    @IBAction func convertLocalLinkToAttachment(_ sender: Any) {
+        
+        // See if we're ready to take action
+        let (_, sel1) = guardForNoteAction()
+        guard let selNote = sel1 else { return }
+        
+        guard let fileURL = selNote.linkAsURL else { return }
+        addAttachment(urlToAttach: fileURL, clearLink: true)
+    }
+    
     /// Prompt the user for an attachment to add and then copy it to the files folder.
     func addAttachment() {
         // Ask the user for a location on disk
@@ -2550,7 +2568,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         addAttachment(urlToAttach: urlToAttach)
     }
     
-    func addAttachment(urlToAttach: URL) {
+    func addAttachment(urlToAttach: URL, clearLink: Bool = false) {
         let (nio, sel) = guardForNoteAction()
         guard let noteIO = nio, let selNote = sel else { return }
         guard selNote.fileInfo.base != nil else { return }
@@ -2561,6 +2579,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             attachmentController.vc.setFileToCopy(urlToAttach)
             attachmentController.vc.setStorageFolder(filesFolderResource.actualPath)
             attachmentController.vc.setNote(selNote)
+            attachmentController.vc.setClearLinkOption(clearLink)
             attachmentController.showWindow(self)
         } else {
             communicateError("Couldn't get an Attachment Window Controller!")
@@ -2575,9 +2594,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///   - suffix: The unique identifier for this particular attachment to this note.
     ///   - move: Should the file be moved instead of copied?
     ///
-    func okToAddAttachment(note: Note, file: URL, suffix: String, move: Bool) {
+    func okToAddAttachment(note: Note, file: URL, suffix: String, move: Bool, clearLink: Bool = false) {
         guard let noteIO = guardForCollectionAction() else { return }
         let added = noteIO.addAttachment(from: file, to: note, with: suffix, move: move)
+        var noteUpdates = false
         if added {
             adjustAttachmentsMenu(note)
             if let imageDef = noteIO.collection?.imageNameFieldDef {
@@ -2586,14 +2606,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     let ext = FileExtension(file.pathExtension)
                     if ext.isImage {
                         _ = note.setField(label: imageDef.fieldLabel.commonForm, value: suffix)
-                        _ = noteIO.writeNote(note)
-                        displayModifiedNote(updatedNote: note)
-                        populateEditFields(with: note)
-                        reloadViews()
+                        noteUpdates = true
                     }
                 }
             }
-            
+            if clearLink {
+                _ = note.setLink("")
+                noteUpdates = true
+            }
+            if noteUpdates {
+                _ = noteIO.writeNote(note)
+                displayModifiedNote(updatedNote: note)
+                populateEditFields(with: note)
+                reloadViews()
+            }
         } else {
             communicateError("Attachment could not be added - possible duplicate", alert: true)
         }

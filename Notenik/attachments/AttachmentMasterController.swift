@@ -24,6 +24,7 @@ protocol AttachmentMasterController {
     ///   - file: A URL pointing to the file to become attached.
     ///   - suffix: The unique identifier for this particular attachment to this note.
     ///   - move: Should the file be moved instead of copied?
+    ///   - clearLink: Should the Note's link field be set to spaces?
     ///
-    func okToAddAttachment(note: Note, file: URL, suffix: String, move: Bool)
+    func okToAddAttachment(note: Note, file: URL, suffix: String, move: Bool, clearLink: Bool)
 }

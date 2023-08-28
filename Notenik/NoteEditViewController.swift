@@ -41,7 +41,7 @@ class NoteEditViewController: NSViewController {
     var recursView: MacEditView?
     var statusView: StatusView?
     var levelView:  LevelView?
-    var linkView:   LinkView?
+    var linkView:   AuxTextView?
     var imageNameView: ImageNameView?
     var bodyView:   BodyView?
     var bodyRow = -1
@@ -173,10 +173,10 @@ class NoteEditViewController: NSViewController {
             statusView = editView as? StatusView
         } else if label.commonForm == NotenikConstants.levelCommon {
             levelView = editView as? LevelView
-        } else if label.commonForm == NotenikConstants.linkCommon {
-            linkView = editView as? LinkView
-        } else if def.fieldType.typeString == NotenikConstants.linkCommon {
-            linkView = editView as? LinkView
+        } else if label.commonForm == NotenikConstants.linkCommon && linkView == nil {
+            linkView = editView as? AuxTextView
+        } else if def.fieldType.typeString == NotenikConstants.linkCommon && linkView == nil {
+            linkView = editView as? AuxTextView
         } else if def.fieldType.typeString == NotenikConstants.bodyCommon {
             bodyView = editView as? BodyView
         }
@@ -274,9 +274,12 @@ class NoteEditViewController: NSViewController {
     }
     
     /// Set the link field on the edit screen
-    func setLink(_ newLink: String) {
+    func setLink(_ newLink: String) -> Bool {
         if linkView != nil {
             linkView!.text = newLink
+            return true
+        } else {
+            return false
         }
     }
     

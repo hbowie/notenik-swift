@@ -26,6 +26,7 @@ class AttachmentViewController: NSViewController {
     
     var fileToCopyURL: URL!
     var note: Note!
+    var clearLink: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +55,10 @@ class AttachmentViewController: NSViewController {
         attachmentPrefix.isEditable = false
     }
     
+    func setClearLinkOption(_ clearLink: Bool) {
+        self.clearLink = clearLink
+    }
+    
     @IBAction func opSelected(_ sender: Any) {
         // No need to actually do anything here... we just need to assign
         // both radio buttons to this action so that they will act
@@ -65,7 +70,8 @@ class AttachmentViewController: NSViewController {
         master.okToAddAttachment(note: note,
                                  file: fileToCopyURL,
                                  suffix: attachmentSuffix.stringValue,
-                                 move: move)
+                                 move: move,
+                                 clearLink: clearLink)
         UserDefaults.standard.set(move, forKey: moveKey)
         window.close()
     }
