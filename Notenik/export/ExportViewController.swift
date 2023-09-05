@@ -27,6 +27,7 @@ class ExportViewController: NSViewController {
     let tabDelim  = "Tab-Delimited"
     let bookmarks = "Netscape Bookmark File"
     let concatHtml = "Concatenated HTML"
+    let outlineHtml = "HTML Outline"
     let concatMd  = "Concatenated Markdown"
     let webBookEPUBFolder = "Web Book as EPUB Folder"
     let webBookSite = "Web Book as Site"
@@ -94,6 +95,7 @@ class ExportViewController: NSViewController {
         formatPopup.addItem(withTitle: bookmarks)
         formatPopup.addItem(withTitle: outline)
         formatPopup.addItem(withTitle: concatHtml)
+        formatPopup.addItem(withTitle: outlineHtml)
         formatPopup.addItem(withTitle: concatMd)
         formatPopup.addItem(withTitle: webBookEPUBFolder)
         formatPopup.addItem(withTitle: webBookSite)
@@ -130,6 +132,9 @@ class ExportViewController: NSViewController {
                 fileExtCombo.selectItem(withObjectValue: opml)
                 splitTagsCheckBox.state = .off
             case concatHtml:
+                fileExtCombo.selectItem(withObjectValue: html)
+                splitTagsCheckBox.state = .off
+            case outlineHtml:
                 fileExtCombo.selectItem(withObjectValue: html)
                 splitTagsCheckBox.state = .off
             case concatMd:
@@ -177,6 +182,8 @@ class ExportViewController: NSViewController {
                 format = .opml
             case concatHtml:
                 format = .concatHtml
+            case outlineHtml:
+                format = .outlineHtml
             case concatMd:
                 format = .concatMarkdown
             case webBookEPUB:
