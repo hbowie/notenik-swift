@@ -33,6 +33,7 @@ class ShareViewController: NSViewController {
     let notenikValue = "notenik"
     let jsonValue = "json"
     let microValue = "micro"
+    let templateValue = "template"
     
     let clipboardValue = "clipboard"
     let fileValue = "file"
@@ -55,6 +56,7 @@ class ShareViewController: NSViewController {
     @IBOutlet var formatNotenikButton: NSButton!
     @IBOutlet var formatJSONButton: NSButton!
     @IBOutlet var formatMicroButton: NSButton!
+    @IBOutlet var formatTemplateButton: NSButton!
     
     @IBOutlet var destinationClipboardButton: NSButton!
     @IBOutlet var destinationFileButton: NSButton!
@@ -86,6 +88,8 @@ class ShareViewController: NSViewController {
             formatJSONButton.state = .on
         } else if formatSelector == microValue {
             formatMicroButton.state = .on
+        } else if formatSelector == templateValue {
+            formatTemplateButton.state = .on
         } else {
             formatNotenikButton.state = .on
         }
@@ -239,6 +243,48 @@ class ShareViewController: NSViewController {
                     }
                 }
             }
+            
+        // Format with Merge Template.
+        } else if formatTemplateButton.state == .on {
+            let openPanel = NSOpenPanel()
+            openPanel.title = "Select a Merge Template"
+            openPanel.prompt = "Use This Template"
+            var parent = note!.collection.lib.getURL(type: .reports)
+            if parent == nil {
+                parent = note!.collection.lib.getURL(type: .notes)
+            }
+            if parent != nil {
+                openPanel.directoryURL = parent!
+            }
+            openPanel.showsResizeIndicator = true
+            openPanel.showsHiddenFiles = false
+            openPanel.canChooseDirectories = false
+            openPanel.canCreateDirectories = false
+            openPanel.canChooseFiles = true
+            openPanel.allowsMultipleSelection = false
+            let userChoice = openPanel.runModal()
+            if userChoice == .OK {
+                let template = Template()
+                var ok = template.openTemplate(templateURL: openPanel.url!)
+                if ok {
+                    let notesList = NotesList()
+                    notesList.append(note!)
+                    template.supplyData(note!,
+                                        dataSource: note!.collection.title,
+                                        io: io)
+                    ok = template.generateOutput()
+                    if ok {
+                        stringToShare = template.util.linesToOutput
+                    }
+                }
+                if !ok {
+                    stringToShare = "Template Generation Failed"
+                    Logger.shared.log(subsystem: "NotenikLib",
+                                      category: "ShareViewController",
+                                      level: .error,
+                                      message: "Template generation failed")
+                }
+            }
         } else {
             // Format the entire Note as HTML. 
             let noteDisplay = NoteDisplay()
@@ -350,6 +396,8 @@ class ShareViewController: NSViewController {
             formatSelector = jsonValue
         } else if formatMicroButton.state == .on {
             formatSelector = microValue
+        } else if formatTemplateButton.state == .on {
+            formatSelector = templateValue
         }
         defaults.set(formatSelector, forKey: formatKey)
         

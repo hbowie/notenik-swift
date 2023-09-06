@@ -1639,7 +1639,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard noteIO.collection!.dict.contains(NotenikConstants.link) else { return }
 
         // Ask the user to pick a local file or folder
-        let openPanel = NSOpenPanel();
+        let openPanel = NSOpenPanel()
         openPanel.title = "Select a File or Folder"
         let parent = osdir.directoryURL
         if parent != nil {
