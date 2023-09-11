@@ -26,7 +26,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         set {
             _countsVC = newValue
             if _countsVC != nil {
-                _countsVC?.updateCounts(counts)
+                _countsVC?.updateCounts(mdResults.counts)
             }
         }
         get {
@@ -44,7 +44,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     var note: Note?
     var searchPhrase: String?
     
-    var counts = MkdownCounts()
+    var mdResults = TransformMdResults()
     
     var parms = DisplayParms()
     
@@ -125,7 +125,9 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             
         parms.setFrom(note: note!)
         
-        let (displayHTML, wikiAdds) = noteDisplay.display(note!, io: io!, parms: parms)
+        mdResults = TransformMdResults()
+        
+        let displayHTML = noteDisplay.display(note!, io: io!, parms: parms, mdResults: mdResults)
         var html = ""
         if searchPhrase == nil || searchPhrase!.isEmpty {
             html = displayHTML
@@ -134,9 +136,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
                                                      html: displayHTML,
                                                      klass: "search-results")
         }
-        counts = noteDisplay.counts
         if countsVC != nil {
-            countsVC!.updateCounts(counts)
+            countsVC!.updateCounts(mdResults.counts)
         }
         
         // See if any derived Note fields need to be updated.
@@ -146,7 +147,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             
             // See if Minutes to Read have changed.
             if collection.minutesToReadDef != nil {
-                let newMinutes = MinutesToReadValue(with: counts)
+                let newMinutes = MinutesToReadValue(with: mdResults.counts)
                 let oldMinutes = modNote.getField(def: collection.minutesToReadDef!)
                 if oldMinutes == nil || oldMinutes!.value != newMinutes {
                     let minutesField = NoteField(def: collection.minutesToReadDef!, value: newMinutes)
@@ -156,8 +157,13 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             }
             
             // See if extracted Wiki Links have changed.
-            if collection.wikilinksDef != nil && noteDisplay.wikilinks != nil {
-                let newLinks = noteDisplay.wikilinks!.links
+            print("NoteDisplayViewController.display for note titled \(modNote.title.value)")
+            if collection.wikilinksDef != nil && mdResults.wikiLinks.isEmpty {
+                print("  - Wiki Link List is empty!")
+            }
+            if collection.wikilinksDef != nil && !mdResults.wikiLinks.isEmpty {
+                let newLinks = mdResults.wikiLinks.links
+                mdResults.wikiLinks.display()
                 let trans = Transmogrifier(io: io!)
                 let mods = trans.updateLinks(for: modNote, links: newLinks)
                 if mods {
@@ -170,7 +176,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
                 if updatedNote == nil {
                     communicateError("Attempt to modify derived values failed")
                 } else {
-                    let (displayHTML, _) = noteDisplay.display(updatedNote!, io: io!, parms: parms)
+                    let displayHTML = noteDisplay.display(updatedNote!, io: io!, parms: parms, mdResults: mdResults)
                     if searchPhrase == nil || searchPhrase!.isEmpty {
                         html = displayHTML
                     } else {
@@ -178,9 +184,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
                                                                  html: displayHTML,
                                                                  klass: "search-results")
                     }
-                    counts = noteDisplay.counts
                     if countsVC != nil {
-                        countsVC!.updateCounts(counts)
+                        countsVC!.updateCounts(mdResults.counts)
                     }
                 }
             }
@@ -213,8 +218,24 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
                               message: "load html String returned nil")
         }
         
-        if wikiAdds && wc != nil {
+        if mdResults.wikiAdds && wc != nil {
             wc!.reloadViews()
+            for link in mdResults.wikiLinks.links {
+                if !link.targetFound {
+                    if link.originalTarget.hasPath {
+                        if let targetIO = MultiFileIO.shared.getFileIO(shortcut: link.originalTarget.path) {
+                            let resolution = NoteLinkResolution(io: targetIO, linkText: link.originalTarget.pathSlashItem)
+                            NoteLinkResolver.resolve(resolution: resolution)
+                            if resolution.result == .resolved {
+                                let collection2 = NoteLinkResolverCocoa.link(wc: wc!, resolution: resolution)
+                                if collection2 != nil {
+                                    collection2!.reloadViews()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         
         if let scroller = wc?.scroller {
@@ -304,7 +325,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             if resolution.result == .resolved {
                 webLinkFollowed(false)
                 decisionHandler(.cancel)
-                NoteLinkResolverCocoa.link(wc: wc!, resolution: resolution)
+                _ = NoteLinkResolverCocoa.link(wc: wc!, resolution: resolution)
             } else {
                 webLinkFollowed(true)
                 decisionHandler(.allow)

@@ -16,10 +16,11 @@ import NotenikLib
 
 class NoteLinkResolverCocoa {
     
-    static func link(wc: CollectionWindowController, resolution: NoteLinkResolution) {
+    static func link(wc: CollectionWindowController?, resolution: NoteLinkResolution) -> CollectionWindowController? {
 
-        if resolution.resolvedPath.isEmpty {
-            wc.select(note: resolution.resolvedNote, position: nil, source: .action, andScroll: true)
+        if resolution.resolvedPath.isEmpty && wc != nil {
+            wc!.select(note: resolution.resolvedNote, position: nil, source: .action, andScroll: true)
+            return wc
         } else {
             let folders = NotenikFolderList.shared
             let juggler = CollectionJuggler.shared
@@ -32,9 +33,10 @@ class NoteLinkResolverCocoa {
             } else {
                 link = multiEntry!.link
             }
-            guard let collectionLink = link else { return }
-            guard let controller = juggler.open(link: collectionLink) else { return }
+            guard let collectionLink = link else { return nil  }
+            guard let controller = juggler.open(link: collectionLink) else { return nil }
             controller.select(note: resolution.resolvedNote!, position: nil, source: .action, andScroll: true)
+            return controller
         }
     }
 }

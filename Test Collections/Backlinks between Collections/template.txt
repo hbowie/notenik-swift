@@ -16,5 +16,7 @@ Backlinks: <backlinks>
 
 Wiki Links: <wikilinks> 
 
+Teaser: <teaser> 
+
 Body:  
 
