@@ -157,13 +157,8 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
             }
             
             // See if extracted Wiki Links have changed.
-            print("NoteDisplayViewController.display for note titled \(modNote.title.value)")
-            if collection.wikilinksDef != nil && mdResults.wikiLinks.isEmpty {
-                print("  - Wiki Link List is empty!")
-            }
             if collection.wikilinksDef != nil && !mdResults.wikiLinks.isEmpty {
                 let newLinks = mdResults.wikiLinks.links
-                mdResults.wikiLinks.display()
                 let trans = Transmogrifier(io: io!)
                 let mods = trans.updateLinks(for: modNote, links: newLinks)
                 if mods {
