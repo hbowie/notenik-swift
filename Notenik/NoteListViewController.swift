@@ -520,6 +520,9 @@ class NoteListViewController:   NSViewController,
                 } else if tableColumn?.title == notenikIO!.collection!.dateFieldDef.fieldLabel.properForm {
                     cellView.textField?.stringValue = note.date.dMyDate
                 } else if notenikIO!.collection!.seqFieldDef != nil && tableColumn?.title == notenikIO!.collection!.seqFieldDef!.fieldLabel.properForm {
+                    if #available(macOS 10.15, *) {
+                        cellView.textField?.font = monoFont!
+                    }
                     cellView.textField?.stringValue = note.seq.value
                 } else if tableColumn?.title == notenikIO!.collection!.creatorFieldDef.fieldLabel.properForm {
                     cellView.textField?.stringValue = note.creatorValue
