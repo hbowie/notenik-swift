@@ -1,0 +1,10 @@
+Title: <title> 
+
+Tags: <tags> 
+
+Teaser: <teaser> 
+
+Preview: <longtext>
+
+Body:  
+

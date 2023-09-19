@@ -1,0 +1,15 @@
+---
+Title: YAML test
+Tags:
+- pkms
+- software
+Teaser: This is the good stuff.
+
+I mean, the really good stuff. 
+
+Preview: It's going to be great.
+
+It's going to be really great. 
+
+---
+And here, finally, we have the body.  And a bit more body. 

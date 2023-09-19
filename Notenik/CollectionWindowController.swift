@@ -916,7 +916,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 break
             }
         }
-        
+                                      
         guard defFound else { return }
         
         let templateNote = klassDef!.defaultValues!
@@ -925,6 +925,36 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             if !field.value.value.isEmpty {
                 if field.def.shouldInitFromKlassTemplate {
                     _ = newNote!.setField(label: field.def.fieldLabel.properForm, value: field.value.value)
+                } else if field.def.fieldType.typeString == NotenikConstants.titleCommon {
+                    if newNote!.title.value.isEmpty {
+                        let defaultTitle = field.value.value
+                        if defaultTitle.hasSuffix("#") {
+                            var titleTextCount = defaultTitle.count
+                            var hashCount = 0
+                            var trailingIndex = defaultTitle.endIndex
+                            var spaceCount = 0
+                            var scanDone = false
+                            while trailingIndex > defaultTitle.startIndex && !scanDone {
+                                trailingIndex = defaultTitle.index(before: trailingIndex)
+                                if defaultTitle[trailingIndex] == "#" && spaceCount == 0 {
+                                    hashCount += 1
+                                    titleTextCount -= 1
+                                } else if defaultTitle[trailingIndex].isWhitespace {
+                                    titleTextCount -= 1
+                                    spaceCount += 1
+                                } else {
+                                    scanDone = true
+                                }
+                            }
+                            let titleLeft = String(defaultTitle.prefix(titleTextCount))
+                            let numberFormat = "%0\(hashCount)d"
+                            let number = collection.nextTitleNumber()
+                            let titleRight = String(format: numberFormat, number)
+                            _ = newNote!.setTitle(titleLeft + " " + titleRight)
+                        } else {
+                            _ = newNote!.setTitle(field.value.value)
+                        }
+                    }
                 }
             }
         }

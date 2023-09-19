@@ -1,0 +1,9 @@
+---
+title: A New New Addition
+tags:
+- #new
+layout: post
+authors:
+- Herb Bowie
+---
+This is the body. 
