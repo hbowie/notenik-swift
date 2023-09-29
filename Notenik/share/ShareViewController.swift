@@ -294,6 +294,7 @@ class ShareViewController: NSViewController {
             displayParms.format = format
             displayParms.curlyApostrophes = note!.collection.curlyApostrophes
             displayParms.extLinksOpenInNewWindows = note!.collection.extLinksOpenInNewWindows
+            displayParms.checkBoxMessageHandlerName = NotenikConstants.checkBoxMessageHandlerName
             let mdResults = TransformMdResults()
             let displayString = noteDisplay.display(note!, io: io!, parms: displayParms, mdResults: mdResults)
             if format == .htmlDoc && searchPhrase != nil && searchPhrase!.count > 0 {

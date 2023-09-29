@@ -119,7 +119,12 @@ class NoteScroller {
                 let equiv: Double = Double(displayHeaderHeight)
                     + (Double(displayHeight - displayHeaderHeight) * finalFudge * percent)
                 // print("  - equivalent scroll = \(equiv)")
-                scrollY = Int(equiv.rounded(.toNearestOrAwayFromZero))
+                let max = Double(Int.max)
+                if equiv < max {
+                    scrollY = Int(equiv.rounded(.toNearestOrAwayFromZero))
+                } else {
+                    scrollY = 0
+                }
                 // print("  - scroll Y = \(scrollY)")
             }
         case .nowhere:

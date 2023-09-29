@@ -234,6 +234,7 @@ class NoteTagsViewController: NSViewController,
         
         let (outcome, _) = collectionWindowController!.modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
+        collectionWindowController!.applyCheckBoxUpdates()
         
         let selectedIndex = outlineView.selectedRow
         guard let node = outlineView.item(atRow: selectedIndex) as? TagsNode else { return }

@@ -16,7 +16,10 @@ import NotenikUtils
 import NotenikLib
 import NotenikMkdown
 
-class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDelegate {
+class NoteDisplayViewController: NSViewController, 
+                                    WKUIDelegate,
+                                    WKNavigationDelegate,
+                                    WKScriptMessageHandler {
     
     var wc: CollectionWindowController?
     
@@ -37,6 +40,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     var stackView: NSStackView!
     var webView: NoteDisplayWebView!
     var webConfig: WKWebViewConfiguration!
+    var userContentController: WKUserContentController!
     
     let noteDisplay = NoteDisplay()
     
@@ -51,18 +55,39 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
     /// Set up the view for this controller.
     override func loadView() {
         
+        super.loadView()
         stackView = NSStackView()
         stackView.orientation = .vertical
         
+        // Initialize WebKit stuff
         webConfig = WKWebViewConfiguration()
+        let webPrefs = WKPreferences()
+        webPrefs.javaScriptEnabled = true
         if #available(macOS 11.0, *) {
             webConfig.limitsNavigationsToAppBoundDomains = false
         }
+        webConfig.preferences = webPrefs
+        // userContentController = WKUserContentController()
+        userContentController = webConfig.userContentController
+        /*
+        let javaScript = """
+        function checkBoxClicked() {
+            document.write("<p>checkBoxClicked</p>");
+            if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.swiftVC) {
+                window.webkit.messageHandlers.swiftVC.postMessage({
+                    "message": "message"
+                });
+            }
+        }
+        """
+        let script = WKUserScript(source: javaScript, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+        userContentController.addUserScript(script) */
+        userContentController.add(self, name: NotenikConstants.checkBoxMessageHandlerName)
+        webConfig.userContentController = userContentController
         webView = NoteDisplayWebView(frame: .zero, configuration: webConfig)
         webView.uiDelegate = self
         webView.navigationDelegate = self
         stackView.addArrangedSubview(webView)
-        
         view = stackView
     }
     
@@ -83,6 +108,40 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         if let scroller = wc?.scroller {
             if note != nil {
                 scroller.displayEnd(note: note!, webView: webView)
+            }
+        }
+    }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Method(s) to comply with WKScriptMessageHandler
+    //
+    // -----------------------------------------------------------
+    
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        
+        guard let ckNote = note else {
+            return
+        }
+        guard message.name == NotenikConstants.checkBoxMessageHandlerName else {
+            return
+        }
+        if let msgDict = message.body as? [String: Any] {
+            var ckBoxNum = -1
+            var ckBoxState = ""
+            if let checkBoxNumber = msgDict["checkBoxNumber"] as? Int {
+                ckBoxNum = checkBoxNumber
+            }
+            if let state = msgDict["checkBoxState"] as? String {
+                ckBoxState = state
+            }
+            if ckBoxNum > 0 {
+                let name = ckNote.checkBoxName(count: ckBoxNum)
+                if ckBoxState == MkdownConstants.checked {
+                    ckNote.checkBoxUpdates[name] = true
+                } else if ckBoxState == MkdownConstants.unchecked {
+                    ckNote.checkBoxUpdates[name] = false
+                }
             }
         }
     }
@@ -124,6 +183,7 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         }
             
         parms.setFrom(note: note!)
+        parms.checkBoxMessageHandlerName = NotenikConstants.checkBoxMessageHandlerName
         
         mdResults = TransformMdResults()
         
@@ -224,7 +284,9 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
                             if resolution.result == .resolved {
                                 let collection2 = NoteLinkResolverCocoa.link(wc: wc!, resolution: resolution)
                                 if collection2 != nil {
-                                    collection2!.reloadViews()
+                                    // collection2!.reloadViews()
+                                    collection2!.reloadCollection(self)
+                                    collection2!.selectNoteTitled(link.bestTarget.item)
                                 }
                             }
                         }
@@ -337,6 +399,12 @@ class NoteDisplayViewController: NSViewController, WKUIDelegate, WKNavigationDel
         guard let controller = wc else { return }
         controller.webLinkFollowed = followed
     }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Utility methods.
+    //
+    // -----------------------------------------------------------
     
     func logInfo(_ msg: String) {
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",

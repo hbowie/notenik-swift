@@ -227,6 +227,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if !pendingMod {
             let _ = modIfChanged()
         }
+        applyCheckBoxUpdates()
 
         if  io != nil && io!.collection != nil {
             _ = saveNumbers()
@@ -1052,6 +1053,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
+        applyCheckBoxUpdates()
         
         let today = DateValue("today")
         var notesToUpdate: [Note] = []
@@ -1950,6 +1952,27 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    /// If any check box updates are pending, apply them now.
+    func applyCheckBoxUpdates() {
+        guard !pendingMod else { return }
+        guard io != nil && io!.collectionOpen else { return }
+        let (selNote, _) = io!.getSelectedNote()
+        guard selNote != nil else { return }
+        if selNote!.hasCheckBoxUpdates {
+            let modNote = selNote!.copy() as! Note
+            let modified = modNote.applyCheckBoxUpdates()
+            if modified {
+                let (chgNote, _) = io!.modNote(oldNote: selNote!, newNote: modNote)
+                if chgNote != nil {
+                    selNote!.clearCheckBoxUpdates()
+                    chgNote!.clearCheckBoxUpdates()
+                    displayModifiedNote(updatedNote: chgNote!)
+                    editVC!.select(note: chgNote!)
+                }
+            }
+        }
+    }
+    
     /// Record modifications made to the Selected Note
     ///
     /// - Parameters:
@@ -1964,7 +1987,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionWindowController",
                               level: .error,
-                              message: "Problems modifyinhg note titled \(modNote.title)")
+                              message: "Problems modifying note titled \(modNote.title)")
             return false
         } else {
             displayModifiedNote(updatedNote: chgNote!)
@@ -2286,6 +2309,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     /// - Parameter sender: The Search field.
     @IBAction func searchNow(_ sender: Any) {
         guard let searchField = sender as? NSSearchField else { return }
+        applyCheckBoxUpdates()
         searchOptions.searchText = searchField.stringValue
         searchUsingOptions()
     }
@@ -2674,6 +2698,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
+        applyCheckBoxUpdates()
         
         newNoteRequested = true
         newNote = Note(collection: notenikIO!.collection!)
@@ -2718,6 +2743,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard selectedNote != nil else { return }
         let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
+        applyCheckBoxUpdates()
         duplicateNote(startingNote: selectedNote!)
     }
     
@@ -2932,6 +2958,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     @IBAction func saveEdits(_ sender: Any) {
         if !pendingMod {
             let _ = modIfChanged()
+            applyCheckBoxUpdates()
         }
     }
     
@@ -4079,6 +4106,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return nil }
+        applyCheckBoxUpdates()
         
         let savePanel = NSSavePanel();
         savePanel.title = "Specify an output file"
@@ -4540,6 +4568,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard note != nil else { return (io!, nil) }
         let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return (io!, nil) }
+        applyCheckBoxUpdates()
         return (io!, note!)
     }
     
@@ -4552,6 +4581,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard io != nil && io!.collectionOpen else { return nil }
         let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return nil }
+        applyCheckBoxUpdates()
         return io
     }
     

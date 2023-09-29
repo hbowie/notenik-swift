@@ -43,6 +43,9 @@ class NoteTabsViewController: NSTabViewController {
         if collection.readOnly {
             return false
         } else {
+            if let cwc = collectionWindowController {
+                cwc.applyCheckBoxUpdates()
+            }
             return superResponse
         }
     }
@@ -52,7 +55,9 @@ class NoteTabsViewController: NSTabViewController {
         super.tabView(tabView, willSelect: tabViewItem)
         guard tabViewItem != nil else { return }
         if tabViewItem!.label == editTabLabel {
-            // Will Select the Edit tab
+            if let cwc = collectionWindowController {
+                cwc.applyCheckBoxUpdates()
+            }
         } else {
             // Will select the Display tab
             if window != nil {

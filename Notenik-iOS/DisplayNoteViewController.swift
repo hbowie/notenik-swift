@@ -128,10 +128,14 @@ class DisplayNoteViewController: UIViewController, WKNavigationDelegate {
     }
     
     func displayNote(_ dNote: Note) {
+        
         webLinkFollowed = false
         guard viewReady else { return }
         guard let io = notenikIO else { return }
-        webView.loadHTMLString(noteDisplay.display(dNote, io: io), baseURL: io.collection!.fullPathURL)
+        let parms = DisplayParms()
+        parms.setFrom(note: dNote)
+        let results = TransformMdResults()
+        webView.loadHTMLString(noteDisplay.display(dNote, io: io, parms: parms, mdResults: results), baseURL: io.collection!.fullPathURL)
     }
 
 }

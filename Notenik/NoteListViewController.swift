@@ -546,6 +546,7 @@ class NoteListViewController:   NSViewController,
         guard collectionWindowController != nil && row >= 0 else { return }
         let (outcome, _) = collectionWindowController!.modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return }
+        collectionWindowController!.applyCheckBoxUpdates()
         guard !programmaticSelection else { return }
         if let (note, position) = notenikIO?.selectNote(at: row) {
             collectionWindowController!.select(note: note, position: position, source: NoteSelectionSource.list)
