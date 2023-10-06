@@ -240,7 +240,7 @@ class NoteScroller {
         for (_, field) in note.fields {
             guard field.value.hasData else { continue }
             let fieldType = field.def.fieldType
-            if collection.streamlined && !fieldType.streamlinedDisplay { continue }
+            if collection.displayMode == .streamlinedReading && !fieldType.streamlinedDisplay { continue }
             if fieldType.typeString == NotenikConstants.bodyCommon {
                 if collection.bodyLabel {
                     displayHeaderLines += 2

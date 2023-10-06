@@ -360,10 +360,28 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     @IBAction func toggleStreamlinedReading(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
-        if collection.streamlined {
-            collection.streamlined = false
-        } else {
-            collection.streamlined = true
+        switch collection.displayMode {
+        case .normal:
+            collection.displayMode = .streamlinedReading
+        case .presentation:
+            collection.displayMode = .streamlinedReading
+        case .streamlinedReading:
+            collection.displayMode = .normal
+        }
+        noteIO.persistCollectionInfo()
+        reloadCollection(self)
+    }
+    
+    @IBAction func togglePresentationMode(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        switch collection.displayMode {
+        case .normal:
+            collection.displayMode = .presentation
+        case .presentation:
+            collection.displayMode = .normal
+        case .streamlinedReading:
+            collection.displayMode = .presentation
         }
         noteIO.persistCollectionInfo()
         reloadCollection(self)

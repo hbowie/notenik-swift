@@ -41,7 +41,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet weak var scrollingSyncCkBox: NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
-    
+    @IBOutlet var displayModePopUp: NSPopUpButton!
     var extPicker: FileExtensionPicker!
     
     @IBOutlet var horizontalStack: NSStackView!
@@ -143,7 +143,15 @@ class CollectionPrefsViewController: NSViewController {
         setMirrorAutoIndex(collection!.mirrorAutoIndex)
         setBodyLabel(collection!.bodyLabel)
         setTitleDisplay(collection!.titleDisplayOption)
-        setStreamlined(collection!.streamlined)
+        setStreamlined(collection!.displayMode != .normal)
+        switch collection!.displayMode {
+        case .normal:
+            displayModePopUp.selectItem(at: 0)
+        case .presentation:
+            displayModePopUp.selectItem(at: 2)
+        case .streamlinedReading:
+            displayModePopUp.selectItem(at: 1)
+        }
         setMathJax(collection!.mathJax)
         setImgLocal(collection!.imgLocal)
         setMissingTargets(collection!.missingTargets)
@@ -461,7 +469,18 @@ class CollectionPrefsViewController: NSViewController {
                 collection!.titleDisplayOption = titleDisplayOpt
             }
         }
-        collection!.streamlined = (streamlinedCkBox.state == .on)
+        // if streamlinedCkBox.state == .on {
+        //     collection!.displayMode = .streamlinedReading
+        // }
+        switch displayModePopUp.indexOfSelectedItem {
+        case 1:
+            collection!.displayMode = .streamlinedReading
+        case 2:
+            collection!.displayMode = .presentation
+        default:
+            collection!.displayMode = .normal
+        }
+        // collection!.streamlined = (streamlinedCkBox.state == .on)
         collection!.mathJax = (mathJaxCkBox.state == .on)
         collection!.imgLocal = (imgLocalCkBox.state == .on)
         collection!.missingTargets = (missingTargetsCkBox.state == .on)
