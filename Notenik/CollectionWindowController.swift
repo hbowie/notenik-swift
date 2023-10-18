@@ -69,6 +69,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let notePickerStoryboard:      NSStoryboard = NSStoryboard(name: "NotePicker", bundle: nil)
     let dateInsertStoryboard:      NSStoryboard = NSStoryboard(name: "DateInsert", bundle: nil)
     let queryBuilderStoryboard:    NSStoryboard = NSStoryboard(name: "QueryBuilder", bundle: nil)
+    let tagsAssignStoryboard:      NSStoryboard = NSStoryboard(name: "TagsAssign", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -1212,6 +1213,90 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         reportNumberOfNotesUpdated(updated)
     }
     
+    /// Get the desired tag to be assigned to the search results.
+    @IBAction func tagSearchResults (_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        if !searchField.stringValue.isEmpty && searchField.stringValue != searchOptions.searchText {
+            searchOptions.searchText = searchField.stringValue
+        }
+        guard !searchOptions.searchText.isEmpty else {
+            communicateError("No search text available", alert: true)
+            return
+        }
+        
+        (tagStartNote, tagStartPosition) = noteIO.getSelectedNote()
+        
+        var found = false
+        var (note, position) = noteIO.firstNote()
+        while !found && note != nil {
+            found = searchNoteUsingOptions(note!)
+            if !found {
+                (note, position) = noteIO.nextNote(position)
+            }
+        }
+        if found {
+            if let tagsAssignController = self.tagsAssignStoryboard.instantiateController(withIdentifier: "tagsAssignWC") as? TagsAssignWindowController {
+                tagsAssignController.showWindow(self)
+                tagsAssignController.passCollectionInfo(io: noteIO, collectionWC: self)
+            } else {
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .fault,
+                                  message: "Couldn't get a Tags Assign Window Controller!")
+            }
+        } else {
+            communicateError("No Notes found matching search criteria", alert: true)
+        }
+    }
+    
+    var tagStartNote: Note?
+    var tagStartPosition: NotePosition = NotePosition()
+    
+    /// Assign the specified tag to the current search results.
+    func tagAssignNow(to: String, vc: TagsAssignViewController) {
+        
+        guard to.count > 0 else {
+            vc.window!.close()
+            communicateError("No tag to assign", alert: true)
+            return
+        }
+        
+        guard let noteIO = guardForCollectionAction() else {
+            vc.window!.close()
+            return
+        }
+        
+        var updated = 0
+        var (note, position) = noteIO.firstNote()
+        while note != nil {
+            let found = searchNoteUsingOptions(note!)
+            if found {
+                updated += 1
+                var tagStr = note!.tags.value
+                if !tagStr.isEmpty {
+                    tagStr.append(", ")
+                }
+                tagStr.append(to)
+                let modNote = note!.copy() as! Note
+                _ = modNote.setTags(tagStr)
+                _ = noteIO.modNote(oldNote: note!, newNote: modNote)
+            }
+            (note, position) = noteIO.nextNote(position)
+        }
+        
+        vc.window!.close()
+        reloadViews()
+        if tagStartNote != nil {
+            select(note: tagStartNote, position: tagStartPosition, source: .action)
+        } else {
+            let (note, position) = io!.firstNote()
+            select(note: note, position: position, source: .action, andScroll: true)
+        }
+        logInfo(msg: "Notes with tags added = \(updated)")
+        reportNumberOfNotesUpdated(updated)
+    }
+    
     func reportNumberOfNotesUpdated(_ updated: Int) {
         let alert = NSAlert()
         alert.alertStyle = .informational
@@ -1347,10 +1432,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 _ = note.setLink(url!)
             } else if vcard != nil {
                 logInfo(msg: "Processing pasted item as VCard")
-                let parser = VCardParser()
-                let cards = parser.parse(vcard!)
-                for vcard in cards {
-                    let contactNote = NoteFromVCard.makeNote(from: vcard, collection: collection)
+                let contacts = ContactCards()
+                let contactNotes = contacts.parse(vcard!, collection: collection)
+                for contactNote in contactNotes {
                     let addedNote = addPastedNote(contactNote)
                     if addedNote != nil {
                         notesAdded += 1
@@ -1367,14 +1451,26 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 let ext = fileURL.pathExtension
                 if ext == "opml" {
                     let defaultTitle = StringUtils.wordDemarcation(fileName,
-                                                        caseMods: ["u", "u", "l"],
-                                                        delimiter: " ")
+                                                                   caseMods: ["u", "u", "l"],
+                                                                   delimiter: " ")
                     
                     let opmlToBody = OPMLtoBody()
                     let (body, title) = opmlToBody.importFrom(fileURL,
                                                               defaultTitle: defaultTitle)
                     _ = note.setTitle(title)
                     _ = note.setBody(body)
+                } else if ext == "vcf" {
+                    let contacts = ContactCards()
+                    let contactNotes = contacts.parse(vCards: fileURL, collection: collection)
+                    for contactNote in contactNotes {
+                        let addedNote = addPastedNote(contactNote)
+                        if addedNote != nil {
+                            notesAdded += 1
+                            if firstNotePasted == nil {
+                                firstNotePasted = addedNote
+                            }
+                        }
+                    }
                 } else if row >= 0 && dropOperation == .on && !likelyText {
                     let dropNote = noteIO.getNote(at: row)
                     if dropNote != nil {
@@ -3812,6 +3908,28 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
 
         let importer = XMLNoteImporter(io: noteIO)
         let imports = importer.importFrom(importURL)
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "CollectionWindowController",
+                          level: .info,
+                          message: "Imported \(imports) notes from \(importURL.path)")
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "Imported \(imports) notes from \(importURL.path)"
+        alert.addButton(withTitle: "OK")
+        _ = alert.runModal()
+        editVC!.io = noteIO
+        finishBatchOperation()
+    }
+    
+    @IBAction func importContacts(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let importURL = promptUserForImportFile(
+                title: "Open an input vCard file",
+                parent: noteIO.collection!.lib.getURL(type: .parent))
+            else { return }
+
+        let importer = ContactCards()
+        let imports = importer.importCards(vCards: importURL, noteIO: noteIO)
         Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                           category: "CollectionWindowController",
                           level: .info,

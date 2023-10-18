@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22154"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="9cv-uC-atT">
+            <objects>
+                <windowController storyboardIdentifier="tagsAssignWC" id="yLg-hp-pRV" customClass="TagsAssignWindowController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Assign Tag to Search Results" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Egf-ml-a04">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+                        <view key="contentView" id="mzM-2o-GCA">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="yLg-hp-pRV" id="XQc-MT-ILr"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="bNb-To-H1t" kind="relationship" relationship="window.shadowedContentViewController" id="183-HC-4k2"/>
+                    </connections>
+                </windowController>
+                <customObject id="tYl-7S-7te" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="70" y="-32"/>
+        </scene>
+        <!--Tags Assign View Controller-->
+        <scene sceneID="P4n-Pr-eLe">
+            <objects>
+                <viewController id="bNb-To-H1t" customClass="TagsAssignViewController" customModule="Notenik" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="1RQ-rH-IU3">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="116"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n7H-eZ-acn">
+                                <rect key="frame" x="18" y="80" width="93" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Tag to Assign: " id="ocK-Vl-I5a">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Cu4-V9-nyI">
+                                <rect key="frame" x="117" y="77" width="343" height="21"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="0a0-VU-qHg">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NJe-3I-scg">
+                                <rect key="frame" x="414" y="13" width="53" height="32"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="O3A-Ek-Ffh">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="proceedWithAssignment:" target="bNb-To-H1t" id="2qf-mQ-kOV"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rIr-Wb-NDd">
+                                <rect key="frame" x="13" y="13" width="76" height="32"/>
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jNa-rn-bNr">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="cancelAssignment:" target="bNb-To-H1t" id="80k-CA-Acq"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="n7H-eZ-acn" firstAttribute="leading" secondItem="1RQ-rH-IU3" secondAttribute="leading" constant="20" symbolic="YES" id="IfM-9y-F34"/>
+                            <constraint firstAttribute="bottom" secondItem="rIr-Wb-NDd" secondAttribute="bottom" constant="20" symbolic="YES" id="NRm-bd-7Eh"/>
+                            <constraint firstItem="rIr-Wb-NDd" firstAttribute="baseline" secondItem="NJe-3I-scg" secondAttribute="baseline" id="R5Y-X6-cIR"/>
+                            <constraint firstItem="n7H-eZ-acn" firstAttribute="top" secondItem="1RQ-rH-IU3" secondAttribute="top" constant="20" symbolic="YES" id="TGK-8r-Lvx"/>
+                            <constraint firstItem="n7H-eZ-acn" firstAttribute="leading" secondItem="rIr-Wb-NDd" secondAttribute="leading" id="Tqc-zi-ezm"/>
+                            <constraint firstAttribute="trailing" secondItem="Cu4-V9-nyI" secondAttribute="trailing" constant="20" symbolic="YES" id="Xc6-qB-RaW"/>
+                            <constraint firstItem="Cu4-V9-nyI" firstAttribute="leading" secondItem="n7H-eZ-acn" secondAttribute="trailing" constant="8" symbolic="YES" id="lab-Gs-oYT"/>
+                            <constraint firstItem="Cu4-V9-nyI" firstAttribute="trailing" secondItem="NJe-3I-scg" secondAttribute="trailing" id="p74-5F-PkY"/>
+                            <constraint firstItem="n7H-eZ-acn" firstAttribute="baseline" secondItem="Cu4-V9-nyI" secondAttribute="baseline" id="phs-Bj-y7P"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tagToAssignTextField" destination="Cu4-V9-nyI" id="tiV-FU-veI"/>
+                    </connections>
+                </viewController>
+                <customObject id="6Vu-oe-m89" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="70" y="329"/>
+        </scene>
+    </scenes>
+</document>

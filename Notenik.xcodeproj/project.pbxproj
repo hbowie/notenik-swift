@@ -260,6 +260,9 @@
 		9CC78E70228358A400640477 /* DisplayPrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC78E6E228358A400640477 /* DisplayPrefsViewController.swift */; };
 		9CC7E7ED295CCFC6008B152B /* NoteToPick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC7E7EC295CCFC6008B152B /* NoteToPick.swift */; };
 		9CC8336E22B3F65B0006AAE0 /* MarkedupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC8336D22B3F65B0006AAE0 /* MarkedupTests.swift */; };
+		9CC902692AE074340004101B /* TagsAssign.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CC902682AE074340004101B /* TagsAssign.storyboard */; };
+		9CC9026B2AE075A90004101B /* TagsAssignWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9026A2AE075A90004101B /* TagsAssignWindowController.swift */; };
+		9CC9026D2AE075C90004101B /* TagsAssignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9026C2AE075C90004101B /* TagsAssignViewController.swift */; };
 		9CCBE7B425F7F4550001443B /* ImageNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCBE7B325F7F4550001443B /* ImageNameView.swift */; };
 		9CCE7C63264AE8FD003818DF /* QuickAction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CCE7C62264AE8FD003818DF /* QuickAction.storyboard */; };
 		9CCE7C65264AEB1E003818DF /* QuickActionWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCE7C64264AEB1E003818DF /* QuickActionWindowController.swift */; };
@@ -540,6 +543,9 @@
 		9CC78E6E228358A400640477 /* DisplayPrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayPrefsViewController.swift; sourceTree = "<group>"; };
 		9CC7E7EC295CCFC6008B152B /* NoteToPick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteToPick.swift; sourceTree = "<group>"; };
 		9CC8336D22B3F65B0006AAE0 /* MarkedupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedupTests.swift; sourceTree = "<group>"; };
+		9CC902682AE074340004101B /* TagsAssign.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagsAssign.storyboard; sourceTree = "<group>"; };
+		9CC9026A2AE075A90004101B /* TagsAssignWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsAssignWindowController.swift; sourceTree = "<group>"; };
+		9CC9026C2AE075C90004101B /* TagsAssignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsAssignViewController.swift; sourceTree = "<group>"; };
 		9CCBE7B325F7F4550001443B /* ImageNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNameView.swift; sourceTree = "<group>"; };
 		9CCE7C62264AE8FD003818DF /* QuickAction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuickAction.storyboard; sourceTree = "<group>"; };
 		9CCE7C64264AEB1E003818DF /* QuickActionWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionWindowController.swift; sourceTree = "<group>"; };
@@ -825,6 +831,7 @@
 				9C5BE168277163C30013C0D3 /* seqmod */,
 				9CB60BBE22650975003B5655 /* share */,
 				9CB06CB522CCF4A200887778 /* tags */,
+				9CC902672AE073EF0004101B /* tagsAssign */,
 				9CD3261E2233063100D06B77 /* views */,
 			);
 			path = Notenik;
@@ -1066,6 +1073,16 @@
 				9C13708029B3D1C0000F8CFB /* FontSizeDataSource.swift */,
 			);
 			path = displayPrefs;
+			sourceTree = "<group>";
+		};
+		9CC902672AE073EF0004101B /* tagsAssign */ = {
+			isa = PBXGroup;
+			children = (
+				9CC902682AE074340004101B /* TagsAssign.storyboard */,
+				9CC9026A2AE075A90004101B /* TagsAssignWindowController.swift */,
+				9CC9026C2AE075C90004101B /* TagsAssignViewController.swift */,
+			);
+			path = tagsAssign;
 			sourceTree = "<group>";
 		};
 		9CCE7C61264AE8AB003818DF /* quick */ = {
@@ -1382,6 +1399,7 @@
 				9C8DD75722E3EEC400FF56C1 /* Attachment.storyboard in Resources */,
 				9C341F1C259AB79600E1972C /* MediumPub.storyboard in Resources */,
 				9C674C1D288F3B4F0035E612 /* QueryOutput.storyboard in Resources */,
+				9CC902692AE074340004101B /* TagsAssign.storyboard in Resources */,
 				9C29A4EA25D1CABC00409BF5 /* models in Resources */,
 				9CC41CD5229CA61700E92A66 /* Credits.rtf in Resources */,
 				9C0B643523885E9900869FAA /* TagsMassChange.storyboard in Resources */,
@@ -1481,9 +1499,11 @@
 				9C71414A26AF5DDA0033DF47 /* ShortIdView.swift in Sources */,
 				9C46A72125D070BD006E9C16 /* NewCollectionViewController.swift in Sources */,
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
+				9CC9026D2AE075C90004101B /* TagsAssignViewController.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9C66C88E2881D2CF001F5E2A /* QueryBuilderWindowController.swift in Sources */,
 				9CDB562B259BAE3400AB93A4 /* MediumAuthViewController.swift in Sources */,
+				9CC9026B2AE075A90004101B /* TagsAssignWindowController.swift in Sources */,
 				9C29A780256421EA002C5F7A /* NoteDisplayView.swift in Sources */,
 				9C45E8BB2298B87C003F6589 /* BodyView.swift in Sources */,
 				9CA4EE88246A143C00059F65 /* PickListView.swift in Sources */,
@@ -1904,7 +1924,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 557;
+				CURRENT_PROJECT_VERSION = 562;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1918,7 +1938,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 13.1.0;
+				MARKETING_VERSION = 13.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1934,7 +1954,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 557;
+				CURRENT_PROJECT_VERSION = 562;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1948,7 +1968,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 13.1.0;
+				MARKETING_VERSION = 13.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

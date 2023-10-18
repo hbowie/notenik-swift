@@ -1,0 +1,24 @@
+Full Name: <title> 
+
+Kind: <pick-from: family, individual, group, org>
+
+Nickname:  <string>
+
+Tags: <tags> 
+
+Organization:  <string>
+
+Job Title:  <string>
+
+Link: <link> 
+
+Email: <email> 
+
+Phone: <phone>
+
+Birthday: <date> 
+
+Address: <address>
+
+Note: <body> 
+

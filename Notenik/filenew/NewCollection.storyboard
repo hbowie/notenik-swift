@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="AUq-ri-ccH">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="AUq-ri-ccH">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22154"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -79,7 +78,7 @@
                                     <action selector="locationButtonSelected:" target="AUq-ri-ccH" id="VWi-lG-CCb"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rcg-Es-BNp">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rcg-Es-BNp">
                                 <rect key="frame" x="20" y="261" width="413" height="19"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Where would you like to store your new Collection of Notes?" id="wVN-qh-rzf">
                                     <font key="font" textStyle="title3" name=".SFNS-Regular"/>
@@ -87,7 +86,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="D8G-xt-F9b">
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="D8G-xt-F9b">
                                 <rect key="frame" x="51" y="188" width="384" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="fAi-lk-oty"/>
@@ -108,7 +107,7 @@
                                     <action selector="locationButtonSelected:" target="AUq-ri-ccH" id="G3U-Cg-Fi3"/>
                                 </connections>
                             </button>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FT8-md-cxM">
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FT8-md-cxM">
                                 <rect key="frame" x="51" y="105" width="382" height="51"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="51" id="DyW-XX-3o4"/>
@@ -122,9 +121,6 @@
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bwq-d4-3fe">
                                 <rect key="frame" x="13" y="13" width="80" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="EOb-yt-Cwk"/>
-                                </constraints>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ElA-IM-6U1">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -132,19 +128,22 @@
 Gw
 </string>
                                 </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="EOb-yt-Cwk"/>
+                                </constraints>
                                 <connections>
                                     <action selector="cancelButtonClicked:" target="AUq-ri-ccH" id="5bB-qL-Mi6"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WcF-Yf-wkG">
                                 <rect key="frame" x="360" y="13" width="80" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="X2A-MW-ewM"/>
-                                </constraints>
                                 <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0gZ-6e-05S">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="X2A-MW-ewM"/>
+                                </constraints>
                                 <connections>
                                     <action selector="nextButtonClicked:" target="AUq-ri-ccH" id="Dhw-W8-kAn"/>
                                 </connections>
@@ -186,7 +185,7 @@ Gw
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8PX-pg-Y2R">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8PX-pg-Y2R">
                                 <rect key="frame" x="18" y="261" width="413" height="19"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="What would you like to call your new Collection?" id="8gj-FZ-IRT">
                                     <font key="font" textStyle="title3" name=".SFNS-Regular"/>
@@ -194,7 +193,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tn3-UO-BOP">
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tn3-UO-BOP">
                                 <rect key="frame" x="20" y="168" width="409" height="85"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="85" id="zMi-2t-QM7"/>
@@ -205,7 +204,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dsV-z2-SQl">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dsV-z2-SQl">
                                 <rect key="frame" x="20" y="130" width="411" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Notenik will attempt to create a folder with this name within:" id="BA6-ft-lCX">
                                     <font key="font" metaFont="system"/>
@@ -213,7 +212,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oj0-y7-Zbq">
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oj0-y7-Zbq">
                                 <rect key="frame" x="20" y="64" width="411" height="58"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="58" id="nXQ-M0-HU5"/>
@@ -226,9 +225,6 @@ Gw
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y7p-gD-3xY">
                                 <rect key="frame" x="13" y="13" width="80" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="Qqo-ti-7Py"/>
-                                </constraints>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="X1b-xi-gb4">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -236,32 +232,35 @@ Gw
 Gw
 </string>
                                 </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="Qqo-ti-7Py"/>
+                                </constraints>
                                 <connections>
                                     <action selector="cancelButtonClicked:" target="lAK-ob-f8C" id="sxf-lL-Dxg"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9nL-1l-ZWs">
                                 <rect key="frame" x="357" y="13" width="80" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="GzZ-pe-0tp"/>
-                                </constraints>
                                 <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ugI-VX-BZi">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="GzZ-pe-0tp"/>
+                                </constraints>
                                 <connections>
                                     <action selector="nextButtonClicked:" target="lAK-ob-f8C" id="fqf-we-1rM"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hKH-J5-MXa">
                                 <rect key="frame" x="279" y="13" width="80" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="8IQ-QI-eDq"/>
-                                </constraints>
                                 <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="g64-YL-1Bn">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="8IQ-QI-eDq"/>
+                                </constraints>
                                 <connections>
                                     <action selector="backButtonClicked:" target="lAK-ob-f8C" id="FzU-Br-LnJ"/>
                                 </connections>
@@ -305,7 +304,7 @@ Gw
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CD0-xt-gYc">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CD0-xt-gYc">
                                 <rect key="frame" x="18" y="261" width="413" height="19"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="What sort of Collection would you like?" id="Tby-uG-e1Q">
                                     <font key="font" textStyle="title3" name=".SFNS-Regular"/>
@@ -315,9 +314,6 @@ Gw
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ahe-45-wjV">
                                 <rect key="frame" x="17" y="229" width="207" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="6Me-Iw-gdQ"/>
-                                </constraints>
                                 <popUpButtonCell key="cell" type="push" title="Type" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="q4S-qZ-gJP" id="yNK-01-rwC">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -327,12 +323,12 @@ Gw
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="6Me-Iw-gdQ"/>
+                                </constraints>
                             </popUpButton>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hdV-hP-nt1">
                                 <rect key="frame" x="13" y="13" width="80" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="ndR-bY-Nj0"/>
-                                </constraints>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dmk-p6-ejs">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -340,37 +336,40 @@ Gw
 Gw
 </string>
                                 </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="ndR-bY-Nj0"/>
+                                </constraints>
                                 <connections>
                                     <action selector="cancelButtonClicked:" target="raR-l2-mFt" id="K9j-1q-6GQ"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mT6-wL-SB9">
                                 <rect key="frame" x="357" y="13" width="80" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="HAh-0G-9OL"/>
-                                </constraints>
                                 <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jYc-Bf-5CA">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="HAh-0G-9OL"/>
+                                </constraints>
                                 <connections>
                                     <action selector="nextButtonClicked:" target="raR-l2-mFt" id="FNJ-dx-gj7"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jp-vj-nK4">
                                 <rect key="frame" x="279" y="13" width="80" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="pyq-Xg-yfU"/>
-                                </constraints>
                                 <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wK5-0D-PDh">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="pyq-Xg-yfU"/>
+                                </constraints>
                                 <connections>
                                     <action selector="backButtonClicked:" target="raR-l2-mFt" id="dfh-Gr-Ee6"/>
                                 </connections>
                             </button>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="60n-cl-cPd">
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="60n-cl-cPd">
                                 <rect key="frame" x="18" y="132" width="411" height="75"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="o9f-B6-bLu"/>
