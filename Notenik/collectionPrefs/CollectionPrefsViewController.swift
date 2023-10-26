@@ -469,9 +469,7 @@ class CollectionPrefsViewController: NSViewController {
                 collection!.titleDisplayOption = titleDisplayOpt
             }
         }
-        // if streamlinedCkBox.state == .on {
-        //     collection!.displayMode = .streamlinedReading
-        // }
+        
         switch displayModePopUp.indexOfSelectedItem {
         case 1:
             collection!.displayMode = .streamlinedReading
@@ -527,7 +525,6 @@ class CollectionPrefsViewController: NSViewController {
         if !collection!.otherFields {
             dict.lock()
         }
-
         application.stopModal(withCode: .OK)
         windowController!.close()
     }

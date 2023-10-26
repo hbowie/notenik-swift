@@ -113,6 +113,8 @@ class ViewFactory {
             return LookupView(def: def)
         case NotenikConstants.minutesToReadCommon:
             return LabelView()
+        case NotenikConstants.personCommon:
+            return PersonView()
         case NotenikConstants.rankCommon:
             return RankView(config: collection.rankConfig)
         case NotenikConstants.shortIdCommon:

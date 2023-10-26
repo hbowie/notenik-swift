@@ -2,6 +2,8 @@ Full Name: <title>
 
 Kind: <pick-from: family, individual, group, org>
 
+Name: <person>
+
 Nickname:  <string>
 
 Tags: <tags> 

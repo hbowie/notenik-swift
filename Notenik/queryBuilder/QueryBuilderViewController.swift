@@ -130,6 +130,14 @@ class QueryBuilderViewController: NSViewController {
             setSelector(labelOrType: NotenikConstants.klass, sortSeq: 1)
             setSelector(labelOrType: NotenikConstants.date,  sortSeq: 2)
             setSelector(labelOrType: NotenikConstants.title, sortSeq: 3)
+        case .lastNameFirst:
+            if collection.personDef != nil {
+                setSelector(labelOrType: NotenikConstants.person, sortSeq: 1)
+            } else if collection.authorDef != nil {
+                setSelector(labelOrType: NotenikConstants.author, sortSeq: 1)
+            } else {
+                setSelector(labelOrType: NotenikConstants.title, sortSeq: 1)
+            }
         }
         
         gridView = NSGridView(views: grid)

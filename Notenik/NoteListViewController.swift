@@ -459,7 +459,9 @@ class NoteListViewController:   NSViewController,
         guard let cellView = anyView as? NSTableCellView else { return nil }
         
         if let note = notenikIO?.getNote(at: row) {
-            if tableColumn?.title == "Title" ||
+            if !lnfCol1Title.isEmpty && lnfCol1Title == tableColumn?.title {
+                cellView.textField?.stringValue = note.lastNameFirst
+            } else if tableColumn?.title == "Title" ||
                 tableColumn?.title == note.collection.titleFieldDef.fieldLabel.properForm {
                 let title = note.title.value
                 var displayValue = ""
@@ -500,6 +502,12 @@ class NoteListViewController:   NSViewController,
                 cellView.textField?.stringValue = note.tags.value
             } else if tableColumn?.title == "Stat" {
                 cellView.textField?.stringValue = String(note.status.getInt())
+            } else if tableColumn?.title == "Person Name" {
+                if notenikIO?.collection?.personDef != nil {
+                    cellView.textField?.stringValue = note.person.value
+                } else {
+                    cellView.textField?.stringValue = note.creatorValue
+                }
             } else if tableColumn?.title == "Date Added" {
                 if #available(macOS 10.15, *) {
                     cellView.textField?.font = monoFont!
@@ -528,6 +536,8 @@ class NoteListViewController:   NSViewController,
                     cellView.textField?.stringValue = note.creatorValue
                 } else if notenikIO!.collection!.klassFieldDef != nil && tableColumn?.title == notenikIO!.collection!.klassFieldDef!.fieldLabel.properForm {
                     cellView.textField?.stringValue = note.klass.value
+                } else if notenikIO!.collection!.personDef != nil && tableColumn?.title == notenikIO!.collection!.personDef!.fieldLabel.properForm {
+                    cellView.textField?.stringValue = note.person.value
                 }
             }
         }
@@ -590,73 +600,90 @@ class NoteListViewController:   NSViewController,
     //
     // -----------------------------------------------------------
     
+    var lnfCol1Title = ""
+    
     func setSortParm(_ sortParm: NoteSortParm) {
-
+        
         guard let collection = notenikIO?.collection else { return }
+        
+        lnfCol1Title = ""
         
         switch sortParm {
         case .title:
-            addTitleColumn(at: 0)
+            _ = addTitleColumn(at: 0)
             trimColumns(to: 1)
         case .seqPlusTitle:
             addSeqColumn(at: 0)
-            addTitleColumn(at: 1)
+            _ = addTitleColumn(at: 1)
             trimColumns(to: 2)
         case .tasksByDate:
             addXColumn(at: 0)
             addDateColumn(at: 1)
             addSeqColumn(at: 2)
-            addTitleColumn(at: 3)
+            _ = addTitleColumn(at: 3)
             trimColumns(to: 4)
         case .tasksBySeq:
             addXColumn(at: 0)
             addSeqColumn(at: 1)
             addDateColumn(at: 2)
-            addTitleColumn(at: 3)
+            _ = addTitleColumn(at: 3)
             trimColumns(to: 4)
         case .tagsPlusTitle:
             addTagsColumn(at: 0)
             addStatusDigit(at: 1)
-            addTitleColumn(at: 2)
+            _ = addTitleColumn(at: 2)
         case .tagsPlusSeq:
             addTagsColumn(at: 0)
             addSeqColumn(at: 1)
-            addTitleColumn(at: 2)
+            _ = addTitleColumn(at: 2)
         case .author:
-            addAuthorColumn(at: 0)
-            addTitleColumn(at: 1)
+            _ = addAuthorColumn(at: 0)
+            _ = addTitleColumn(at: 1)
             trimColumns(to: 2)
         case .dateAdded:
             addDateAddedColumn(at: 0)
-            addTitleColumn(at: 1)
+            _ = addTitleColumn(at: 1)
             trimColumns(to: 2)
         case .dateModified:
             addDateModifiedColumn(at: 0)
-            addTitleColumn(at: 1)
+            _ = addTitleColumn(at: 1)
             trimColumns(to: 2)
         case .datePlusSeq:
             if collection.seqFieldDef == nil {
                 addDateColumn(at: 0)
-                addTitleColumn(at: 1)
+                _ = addTitleColumn(at: 1)
             } else {
                 addDateColumn(at: 0)
                 addSeqColumn(at: 1)
-                addTitleColumn(at: 2)
+                _ = addTitleColumn(at: 2)
             }
         case .rankSeqTitle:
             addRankColumn(at: 0)
             addSeqColumn(at: 1)
-            addTitleColumn(at: 2)
+            _ = addTitleColumn(at: 2)
             trimColumns(to: 3)
         case .klassTitle:
             addKlassColumn(at: 0)
-            addTitleColumn(at: 1)
+            _ = addTitleColumn(at: 1)
         case .klassDateTitle:
             addKlassColumn(at: 0)
             addDateColumn(at: 1)
-            addTitleColumn(at: 2)
+            _ = addTitleColumn(at: 2)
+        case .lastNameFirst:
+            switch collection.lastNameFirstConfig {
+            case .author:
+                lnfCol1Title = addAuthorColumn(at: 0)
+                _ = addTitleColumn(at: 1)
+                trimColumns(to: 2)
+            case .person, .kindPlusPerson:
+                lnfCol1Title = addPersonColumn(at: 0)
+                trimColumns(to: 1)
+            case .title, .kindPlusTitle:
+                lnfCol1Title = addTitleColumn(at: 0)
+                trimColumns(to: 1)
+            }
         case .custom:
-            addTitleColumn(at: 0)
+            _ = addTitleColumn(at: 0)
             trimColumns(to: 1)
         }
         tableView.reloadData()
@@ -670,15 +697,16 @@ class NoteListViewController:   NSViewController,
         tableView.reloadData()
     }
     
-    func addTitleColumn(at desiredIndex: Int) {
+    func addTitleColumn(at desiredIndex: Int) -> String {
         guard let collection = notenikIO?.collection else {
             addColumn(title: "Title", strID: "title-column", at: desiredIndex, min: 200, width: 445, max: 1500)
-            return
+            return "Title"
         }
         let col = collection.columnWidths.getColumn(withTitle: "Title")
         addColumn(title: collection.titleFieldDef.fieldLabel.properForm,
                   strID: "title-column",
                   at: desiredIndex, min: col.min, width: col.pref, max: col.max)
+        return collection.titleFieldDef.fieldLabel.properForm
     }
     
     func addRankColumn(at desiredIndex: Int) {
@@ -749,15 +777,28 @@ class NoteListViewController:   NSViewController,
                   at: desiredIndex, min: col.min, width: col.pref, max: col.max)
     }
     
-    func addAuthorColumn(at desiredIndex: Int) {
+    func addAuthorColumn(at desiredIndex: Int) -> String {
         guard let collection = notenikIO?.collection else {
-            addColumn(title: "Author", strID: "author-column", at: desiredIndex, min: 100, width: 200, max: 1000)
-            return
+            addColumn(title: NotenikConstants.author, strID: "author-column", at: desiredIndex, min: 100, width: 200, max: 1000)
+            return NotenikConstants.author
         }
         let col = collection.columnWidths.getColumn(withTitle: "Author")
         addColumn(title: collection.creatorFieldDef.fieldLabel.properForm,
                   strID: "author-column",
                   at: desiredIndex, min: col.min, width: col.pref, max: col.max)
+        return collection.creatorFieldDef.fieldLabel.properForm
+    }
+    
+    func addPersonColumn(at desiredIndex: Int) -> String {
+        guard let collection = notenikIO?.collection else {
+            addColumn(title: "Person Name", strID: "person-column", at: desiredIndex, min: 100, width: 200, max: 1000)
+            return "Person Name"
+        }
+        let col = collection.columnWidths.getColumn(withTitle: "Person Name")
+        addColumn(title: collection.personDef!.fieldLabel.properForm,
+                  strID: "person-column",
+                  at: desiredIndex, min: col.min, width: col.pref, max: col.max)
+        return collection.personDef!.fieldLabel.properForm
     }
     
     func addTagsColumn(at desiredIndex: Int) {
