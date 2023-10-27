@@ -457,7 +457,6 @@ class NoteListViewController:   NSViewController,
         // Try to get the appropriate cell view
         guard let anyView = tableView.makeView(withIdentifier: tableColumn!.identifier, owner: self) else { return nil }
         guard let cellView = anyView as? NSTableCellView else { return nil }
-        
         if let note = notenikIO?.getNote(at: row) {
             if !lnfCol1Title.isEmpty && lnfCol1Title == tableColumn?.title {
                 cellView.textField?.stringValue = note.lastNameFirst
