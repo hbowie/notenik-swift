@@ -75,6 +75,7 @@ class NoteListViewController:   NSViewController,
         
         // Setup the popup menu for rows in the list. 
         shortcutMenu = NSMenu()
+        shortcutMenu.addItem(NSMenuItem(title: "Show in Finder", action: #selector(showInFinder(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Launch Link", action: #selector(launchLinkForItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Share...", action: #selector(shareItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Copy Notenik URL", action: #selector(copyItemInternalURL(_:)), keyEquivalent: ""))
@@ -338,6 +339,16 @@ class NoteListViewController:   NSViewController,
         let board = NSPasteboard.general
         board.clearContents()
         board.setString(str, forType: NSPasteboard.PasteboardType.string)
+    }
+    
+    @IBAction func showInFinder(_ sender: Any) {
+        guard let io = notenikIO else { return }
+        let row = tableView.clickedRow
+        guard row >= 0 else { return }
+        guard let clickedNote = io.getNote(at: row) else { return }
+        let folderPath = io.collection!.lib.getPath(type: .collection)
+        let filePath = clickedNote.fileInfo.fullPath
+        NSWorkspace.shared.selectFile(filePath, inFileViewerRootedAtPath: folderPath)
     }
     
     /// Respond to double-click.

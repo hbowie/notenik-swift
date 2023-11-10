@@ -15,6 +15,7 @@ import NotenikLib
 
 class LinkView: MacEditView {
     
+    var fieldDef: FieldDefinition
     var scrollView: NSScrollView!
     var textView: NSTextView!
     
@@ -31,7 +32,8 @@ class LinkView: MacEditView {
         }
     }
     
-    init() {
+    init(def: FieldDefinition) {
+        self.fieldDef = def
         buildView()
     }
     

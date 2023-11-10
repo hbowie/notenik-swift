@@ -478,7 +478,6 @@ class CollectionPrefsViewController: NSViewController {
         default:
             collection!.displayMode = .normal
         }
-        // collection!.streamlined = (streamlinedCkBox.state == .on)
         collection!.mathJax = (mathJaxCkBox.state == .on)
         collection!.imgLocal = (imgLocalCkBox.state == .on)
         collection!.missingTargets = (missingTargetsCkBox.state == .on)
@@ -492,7 +491,7 @@ class CollectionPrefsViewController: NSViewController {
             let def = dict.getDef(checkBox.title)
             if def == nil && checkBox.state == NSControl.StateValue.off {
                 // No definition found or requested
-            } else if def == nil && checkBox.state == NSControl.StateValue.on {
+            } else if def == nil && checkBox.state == .on {
                 // Add a new definition
                 let added = dict.addDef(typeCatalog: collection!.typeCatalog,
                                         label: checkBox.title)
@@ -507,7 +506,7 @@ class CollectionPrefsViewController: NSViewController {
                         }
                     }
                 }
-            } else if def != nil && checkBox.state == NSControl.StateValue.on {
+            } else if def != nil && checkBox.state == .on {
                 // Definition already in dictionary and requested
             } else if def != nil && checkBox.state == NSControl.StateValue.off {
                 // Removing definition

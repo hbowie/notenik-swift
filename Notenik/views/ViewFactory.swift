@@ -29,7 +29,7 @@ class ViewFactory {
                                               typeString: def.fieldType.typeString)
                 return addressView
             } else {
-                return LinkView()
+                return LinkView(def: def)
             }
         case NotenikConstants.akaCommon:
             return AKAView()
@@ -100,7 +100,7 @@ class ViewFactory {
                 let linkView = AuxTextView(properLabel: def.fieldLabel.properForm, typeString: def.fieldType.typeString)
                 return linkView
             } else {
-                return LinkView()
+                return LinkView(def: def)
             }
         case NotenikConstants.longTextType:
             if auxLongText {
