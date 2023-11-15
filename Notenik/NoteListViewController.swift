@@ -648,8 +648,12 @@ class NoteListViewController:   NSViewController,
             _ = addTitleColumn(at: 2)
         case .author:
             _ = addAuthorColumn(at: 0)
-            _ = addTitleColumn(at: 1)
-            trimColumns(to: 2)
+            var columns = 1
+            if collection.creatorFieldDef != collection.titleFieldDef {
+                _ = addTitleColumn(at: 1)
+                columns = 2
+            }
+            trimColumns(to: columns)
         case .dateAdded:
             addDateAddedColumn(at: 0)
             _ = addTitleColumn(at: 1)
