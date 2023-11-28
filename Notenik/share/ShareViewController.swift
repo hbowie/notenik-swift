@@ -209,7 +209,10 @@ class ShareViewController: NSViewController {
         } else if contentBodyOnlyButton.state == .on {
             let markdown = Markdown()
             markdown.md = note!.body.value
-            let html = markdown.parse(markdown: note!.body.value, options: mkdownOptions)
+            let context = NotesMkdownContext(io: io!)
+            let html = markdown.parse(markdown: note!.body.value,
+                                      options: mkdownOptions,
+                                      context: context)
             if format == .htmlDoc {
                 let markedup = Markedup(format: .htmlDoc)
                 markedup.startDoc(withTitle: note!.title.value, withCSS: nil)
