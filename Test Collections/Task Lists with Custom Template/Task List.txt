@@ -1,0 +1,10 @@
+Title:  Task List
+
+Body:
+
+Here's what needs to be done:
+
+- [ ] Compose draft newsletter
+- [X] Send out draft to Michael Tarlowe & others
+- [ ] Make any needed edits
+- [ ] Schedule for send next Wednesday, Dec. 13th

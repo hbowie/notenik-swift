@@ -129,8 +129,10 @@ class NoteDisplayViewController: NSViewController,
         if let msgDict = message.body as? [String: Any] {
             var ckBoxNum = -1
             var ckBoxState = ""
-            if let checkBoxNumber = msgDict["checkBoxNumber"] as? Int {
-                ckBoxNum = checkBoxNumber
+            if let checkBoxNumberStr = msgDict["checkBoxNumber"] as? String {
+                if let checkBoxNumber = Int(checkBoxNumberStr) {
+                    ckBoxNum = checkBoxNumber
+                }
             }
             if let state = msgDict["checkBoxState"] as? String {
                 ckBoxState = state
