@@ -70,6 +70,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let dateInsertStoryboard:      NSStoryboard = NSStoryboard(name: "DateInsert", bundle: nil)
     let queryBuilderStoryboard:    NSStoryboard = NSStoryboard(name: "QueryBuilder", bundle: nil)
     let tagsAssignStoryboard:      NSStoryboard = NSStoryboard(name: "TagsAssign", bundle: nil)
+    let fieldRenameStoryboard:     NSStoryboard = NSStoryboard(name: "FieldRename", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -560,6 +561,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         alert2.runModal()
     }
     
+    /// Remove fields no longer needed by the user.
     func removeFields() {
 
         guard defsRemoved.count > 0 else { return }
@@ -632,6 +634,146 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                               level: .fault,
                               message: "Couldn't get an Export Window Controller!")
         }
+    }
+    
+    /// Respond to user request to rename/add/remove a field.
+    @IBAction func renameAddRemoveField(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        if let renameController = self.fieldRenameStoryboard.instantiateController(withIdentifier: "fieldRenameWC") as? FieldRenameWindowController {
+            renameController.io = noteIO
+            renameController.cwc = self
+            renameController.showWindow(self)
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Field Rename Window Controller!")
+        }
+    }
+    
+    /// Execute the user's request to rename/add/remove a field.
+    func renameAddRemoveNow(parms: FieldRenameParms, vc: FieldRenameViewController) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        let dict = collection.dict
+        
+        var oldDef: FieldDefinition? = nil
+        
+        if parms.removeOrRename {
+            oldDef = dict.getDef(parms.existingFieldLabel)
+        }
+        
+        if parms.rename && oldDef!.fieldType.typeString == NotenikConstants.titleCommon {
+            collection.newLabelForTitle = parms.newFieldLabel
+            renameSpecialField(parms: parms, noteIO: noteIO, collection: collection, vc: vc)
+        } else if parms.rename && oldDef!.fieldType.typeString == NotenikConstants.bodyCommon {
+            collection.newLabelForBody = parms.newFieldLabel
+            renameSpecialField(parms: parms, noteIO: noteIO, collection: collection, vc: vc)
+        } else {
+            renameOrdinaryField(parms: parms,
+                                noteIO: noteIO,
+                                collection: collection,
+                                oldDef: oldDef,
+                                vc: vc)
+        }
+    }
+    
+    func renameSpecialField(parms: FieldRenameParms,
+                            noteIO: NotenikIO,
+                            collection: NoteCollection,
+                            vc: FieldRenameViewController) {
+        var updated = 0
+        var (note, position) = noteIO.firstNote()
+        while note != nil {
+            let written = noteIO.writeNote(note!)
+            if written {
+                updated += 1
+            } else {
+                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                                  category: "CollectionWindowController",
+                                  level: .error,
+                                  message: "Problems saving note titled \(note!.title)")
+            }
+            (note, position) = noteIO.nextNote(position)
+        }
+        noteIO.persistCollectionInfo()
+        vc.window!.close()
+        reloadCollection(self)
+        logInfo(msg: "Notes with field changes = \(updated)")
+        reportNumberOfNotesUpdated(updated)
+    }
+    
+    func renameOrdinaryField(parms: FieldRenameParms,
+                             noteIO: NotenikIO,
+                             collection: NoteCollection,
+                             oldDef: FieldDefinition?,
+                             vc: FieldRenameViewController) {
+        
+        let dict = collection.dict
+        
+        var newDef: FieldDefinition? = nil
+        
+        if parms.addOrRename {
+            newDef = FieldDefinition(typeCatalog: noteIO.collection!.typeCatalog,
+                                     label: parms.newFieldLabel,
+                                     type: parms.newFieldType)
+            if newDef != nil {
+                var family: String?
+                if !parms.typeConfigText.isEmpty {
+                    newDef!.applyTypeConfig(parms.typeConfigText, collection: collection)
+                } else if parms.rename && oldDef!.fieldType.typeString == newDef!.fieldType.typeString {
+                    let configStr = oldDef!.extractTypeConfig(collection: collection)
+                    newDef!.applyTypeConfig(configStr, collection: collection)
+                }
+                if parms.rename {
+                    family = oldDef!.fieldLabel.commonForm
+                }
+                
+                dict.unlock()
+                _ = dict.addDef(newDef!, family: family)
+                dict.lock()
+            }
+        }
+        
+        var notesToUpdate: [Note] = []
+        
+        if parms.removeOrRename {
+            
+            var (note, position) = noteIO.firstNote()
+            while note != nil {
+                let oldField = note!.getField(label: parms.existingFieldLabel)
+                if oldField != nil {
+                    notesToUpdate.append(note!)
+                }
+                (note, position) = noteIO.nextNote(position)
+            }
+            
+            for noteToUpdate in notesToUpdate {
+                let modNote = noteToUpdate.copy() as! Note
+                let oldField = modNote.getField(label: parms.existingFieldLabel)
+                if oldField != nil {
+                    if parms.rename {
+                        let newValue = newDef!.fieldType.createValue(oldField!.value.value)
+                        let newField = NoteField(def: newDef!, value: newValue)
+                        modNote.removeField(def: oldDef!)
+                        _ = modNote.setField(newField)
+                    } else {
+                        modNote.removeField(def: oldDef!)
+                    }
+                }
+                _ = io!.modNote(oldNote: noteToUpdate, newNote: modNote)
+            }
+            _ = dict.removeDef(oldDef!)
+        }
+        
+        noteIO.persistCollectionInfo()
+        vc.window!.close()
+        reloadCollection(self)
+        logInfo(msg: "Notes with field changes = \(notesToUpdate.count)")
+        reportNumberOfNotesUpdated(notesToUpdate.count)
     }
     
     /// Prepare a new note, with default fields and values taken from a class template

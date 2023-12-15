@@ -47,6 +47,8 @@
 		9C15A11028774A0E00D5E6EF /* DateInsert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C15A10F28774A0E00D5E6EF /* DateInsert.storyboard */; };
 		9C15A11228774E3C00D5E6EF /* DateInsertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15A11128774E3C00D5E6EF /* DateInsertWindowController.swift */; };
 		9C15A11428774E7900D5E6EF /* DateInsertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C15A11328774E7900D5E6EF /* DateInsertViewController.swift */; };
+		9C17DB372B27C4C100013D3C /* FieldRenameWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C17DB362B27C4C100013D3C /* FieldRenameWindowController.swift */; };
+		9C17DB392B27C4E400013D3C /* FieldRenameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C17DB382B27C4E400013D3C /* FieldRenameViewController.swift */; };
 		9C1BE26B22EB9164006FDFEC /* Script.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C1BE26A22EB9164006FDFEC /* Script.storyboard */; };
 		9C1BE26C22EB9164006FDFEC /* Script.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C1BE26A22EB9164006FDFEC /* Script.storyboard */; };
 		9C1BE27122EB940E006FDFEC /* ScriptWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1BE27022EB940E006FDFEC /* ScriptWindowController.swift */; };
@@ -184,6 +186,8 @@
 		9C79BDB0226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
 		9C79BDB1226E368800796E93 /* LabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C79BDAF226E368800796E93 /* LabelView.swift */; };
 		9C7A2F1928613EB10020DC21 /* EditPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C7A2F1828613EB10020DC21 /* EditPrefs.storyboard */; };
+		9C7B2B8B2B28FAE6008D7F3F /* FieldRenameAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B2B8A2B28FAE6008D7F3F /* FieldRenameAction.swift */; };
+		9C7B2B8D2B28FBAF008D7F3F /* FieldRenameParms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B2B8C2B28FBAF008D7F3F /* FieldRenameParms.swift */; };
 		9C7DDD91255B36AA00065812 /* CocoaFontsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7DDD90255B36AA00065812 /* CocoaFontsDataSource.swift */; };
 		9C7DDD92255B36AA00065812 /* CocoaFontsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7DDD90255B36AA00065812 /* CocoaFontsDataSource.swift */; };
 		9C822B9D22D6D5D6008EF106 /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C822B9C22D6D5D6008EF106 /* TagsView.swift */; };
@@ -290,6 +294,7 @@
 		9CD804BA296C82E10060E418 /* OpenQuickActionIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD804B9296C82E10060E418 /* OpenQuickActionIntentHandler.swift */; };
 		9CD9058926362F70000851E8 /* MicroBlog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD9058826362F70000851E8 /* MicroBlog.storyboard */; };
 		9CD9058F26363053000851E8 /* MicroBlogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD9058E26363053000851E8 /* MicroBlogWindowController.swift */; };
+		9CD92F5A2B263DDB008A4A0A /* FieldRename.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD92F592B263DDB008A4A0A /* FieldRename.storyboard */; };
 		9CD9963023D3CA30004650BE /* CollectionPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD9962F23D3CA30004650BE /* CollectionPrefs.storyboard */; };
 		9CD9963123D3CA30004650BE /* CollectionPrefs.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD9962F23D3CA30004650BE /* CollectionPrefs.storyboard */; };
 		9CDB562B259BAE3400AB93A4 /* MediumAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB562A259BAE3400AB93A4 /* MediumAuthViewController.swift */; };
@@ -380,6 +385,8 @@
 		9C15A10F28774A0E00D5E6EF /* DateInsert.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DateInsert.storyboard; sourceTree = "<group>"; };
 		9C15A11128774E3C00D5E6EF /* DateInsertWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateInsertWindowController.swift; sourceTree = "<group>"; };
 		9C15A11328774E7900D5E6EF /* DateInsertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateInsertViewController.swift; sourceTree = "<group>"; };
+		9C17DB362B27C4C100013D3C /* FieldRenameWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldRenameWindowController.swift; sourceTree = "<group>"; };
+		9C17DB382B27C4E400013D3C /* FieldRenameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldRenameViewController.swift; sourceTree = "<group>"; };
 		9C1BE26A22EB9164006FDFEC /* Script.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Script.storyboard; sourceTree = "<group>"; };
 		9C1BE27022EB940E006FDFEC /* ScriptWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptWindowController.swift; sourceTree = "<group>"; };
 		9C1BE27322EB9444006FDFEC /* ScriptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptViewController.swift; sourceTree = "<group>"; };
@@ -489,6 +496,8 @@
 		9C7995BE288773D2003C22D5 /* GetNoteTitleIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNoteTitleIntentHandler.swift; sourceTree = "<group>"; };
 		9C79BDAF226E368800796E93 /* LabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelView.swift; sourceTree = "<group>"; };
 		9C7A2F1828613EB10020DC21 /* EditPrefs.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditPrefs.storyboard; sourceTree = "<group>"; };
+		9C7B2B8A2B28FAE6008D7F3F /* FieldRenameAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldRenameAction.swift; sourceTree = "<group>"; };
+		9C7B2B8C2B28FBAF008D7F3F /* FieldRenameParms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldRenameParms.swift; sourceTree = "<group>"; };
 		9C7DDD90255B36AA00065812 /* CocoaFontsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaFontsDataSource.swift; sourceTree = "<group>"; };
 		9C822B9C22D6D5D6008EF106 /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
 		9C822BA122D6DC71008EF106 /* TagsTokenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsTokenDelegate.swift; sourceTree = "<group>"; };
@@ -569,6 +578,7 @@
 		9CD804B9296C82E10060E418 /* OpenQuickActionIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenQuickActionIntentHandler.swift; sourceTree = "<group>"; };
 		9CD9058826362F70000851E8 /* MicroBlog.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MicroBlog.storyboard; sourceTree = "<group>"; };
 		9CD9058E26363053000851E8 /* MicroBlogWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroBlogWindowController.swift; sourceTree = "<group>"; };
+		9CD92F592B263DDB008A4A0A /* FieldRename.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FieldRename.storyboard; sourceTree = "<group>"; };
 		9CD9962F23D3CA30004650BE /* CollectionPrefs.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CollectionPrefs.storyboard; sourceTree = "<group>"; };
 		9CDB562A259BAE3400AB93A4 /* MediumAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumAuthViewController.swift; sourceTree = "<group>"; };
 		9CDB5634259BAE9B00AB93A4 /* MediumPubViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumPubViewController.swift; sourceTree = "<group>"; };
@@ -812,6 +822,7 @@
 				9C7A2F1728613E7D0020DC21 /* editPrefs */,
 				9CD400C62A3A11F300347106 /* experiment */,
 				9CAD6A5422DFA95D00531D90 /* export */,
+				9CD92F582B263DA0008A4A0A /* fieldRename */,
 				9C46A71325D05C58006E9C16 /* filenew */,
 				9C6D7030295777E4003F5924 /* import */,
 				9C7995BD28877376003C22D5 /* intentHandlers */,
@@ -1183,6 +1194,18 @@
 			path = microblog;
 			sourceTree = "<group>";
 		};
+		9CD92F582B263DA0008A4A0A /* fieldRename */ = {
+			isa = PBXGroup;
+			children = (
+				9CD92F592B263DDB008A4A0A /* FieldRename.storyboard */,
+				9C17DB362B27C4C100013D3C /* FieldRenameWindowController.swift */,
+				9C17DB382B27C4E400013D3C /* FieldRenameViewController.swift */,
+				9C7B2B8A2B28FAE6008D7F3F /* FieldRenameAction.swift */,
+				9C7B2B8C2B28FBAF008D7F3F /* FieldRenameParms.swift */,
+			);
+			path = fieldRename;
+			sourceTree = "<group>";
+		};
 		9CE3DB5525E0580A006938D3 /* Notenik-iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -1390,6 +1413,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C10831425AA67B8004B33CA /* News.storyboard in Resources */,
+				9CD92F5A2B263DDB008A4A0A /* FieldRename.storyboard in Resources */,
 				9C02D2B02267F29400587EDF /* Calendar.storyboard in Resources */,
 				9C5556D222E115960099414E /* Export.storyboard in Resources */,
 				9CC78E692283565E00640477 /* DisplayPrefs.storyboard in Resources */,
@@ -1538,9 +1562,11 @@
 				9CD32624223308C400D06B77 /* StringView.swift in Sources */,
 				9CDB563F259BB03A00AB93A4 /* MediumTabViewController.swift in Sources */,
 				9CE32507224D561E0051CA1F /* PrefsWindowController.swift in Sources */,
+				9C17DB372B27C4C100013D3C /* FieldRenameWindowController.swift in Sources */,
 				9CCBE7B425F7F4550001443B /* ImageNameView.swift in Sources */,
 				9C051DA3282833D00015B3F3 /* StatusDataSource.swift in Sources */,
 				9C568DED2322FBF0005D6B0A /* AuthorDataSource.swift in Sources */,
+				9C7B2B8B2B28FAE6008D7F3F /* FieldRenameAction.swift in Sources */,
 				9CD400CC2A3A172000347106 /* ViewExpViewController.swift in Sources */,
 				9CE8340527ECD4C500724931 /* AppAddNote.swift in Sources */,
 				9C568DD02322B6CF005D6B0A /* AuthorView.swift in Sources */,
@@ -1601,6 +1627,8 @@
 				9CAD6A4922DF806800531D90 /* TagsExportViewController.swift in Sources */,
 				9CF1193E225827650015AE91 /* CollectionPrefsViewController.swift in Sources */,
 				9C47DD342840019A0025A7B9 /* ComboDataSource.swift in Sources */,
+				9C7B2B8D2B28FBAF008D7F3F /* FieldRenameParms.swift in Sources */,
+				9C17DB392B27C4E400013D3C /* FieldRenameViewController.swift in Sources */,
 				9C45E8BE2298BC87003F6589 /* CodeView.swift in Sources */,
 				9CF1193B225822870015AE91 /* CollectionPrefsWindowController.swift in Sources */,
 				9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */,
@@ -1928,7 +1956,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 580;
+				CURRENT_PROJECT_VERSION = 585;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1942,7 +1970,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 13.5.4;
+				MARKETING_VERSION = 13.5.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1958,7 +1986,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 580;
+				CURRENT_PROJECT_VERSION = 585;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1972,7 +2000,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 13.5.4;
+				MARKETING_VERSION = 13.5.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

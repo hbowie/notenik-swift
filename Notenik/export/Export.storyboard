@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -35,7 +35,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Exq-bf-KLT">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Exq-bf-KLT">
                                 <rect key="frame" x="18" y="234" width="101" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Output Format: " id="8yY-UM-fF7">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -60,7 +60,7 @@
                                     <action selector="formatAction:" target="QdZ-C1-eqn" id="yCN-qJ-Uhh"/>
                                 </connections>
                             </popUpButton>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JoO-zm-Yfa">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JoO-zm-Yfa">
                                 <rect key="frame" x="18" y="173" width="148" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Use Tags Export Prefs? " id="rqE-b2-c0O">
                                     <font key="font" metaFont="system"/>
@@ -68,7 +68,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="R46-nG-9aE">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="R46-nG-9aE">
                                 <rect key="frame" x="18" y="148" width="74" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Split Tags? " id="IE2-36-0bA">
                                     <font key="font" metaFont="system"/>
@@ -76,7 +76,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1En-Qx-qUZ">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1En-Qx-qUZ">
                                 <rect key="frame" x="19" y="124" width="139" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Add Web Extensions? " id="quW-XJ-zrb">
                                     <font key="font" metaFont="system"/>
@@ -110,7 +110,7 @@ Gw
                                     <action selector="cancelButtonPressed:" target="QdZ-C1-eqn" id="nXi-IB-2cT"/>
                                 </connections>
                             </button>
-                            <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GXv-Vg-nas">
+                            <comboBox focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GXv-Vg-nas">
                                 <rect key="frame" x="175" y="197" width="126" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="122" id="aQk-7t-yCh"/>
@@ -126,7 +126,7 @@ Gw
                                     </objectValues>
                                 </comboBoxCell>
                             </comboBox>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="caW-0K-45t">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="caW-0K-45t">
                                 <rect key="frame" x="21" y="203" width="95" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="File Extension: " id="srG-NL-1Ey">
                                     <font key="font" metaFont="system"/>
