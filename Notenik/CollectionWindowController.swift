@@ -679,6 +679,38 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                 oldDef: oldDef,
                                 vc: vc)
         }
+        
+        // Report results to the user
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        var rr = ""
+        var ar = ""
+        var msg = ""
+        switch parms.action {
+        case .add:
+            msg = "Added a New Field:"
+            ar = "Added"
+        case .remove:
+            msg = "Removed an Existing Field:"
+            rr = "Removed"
+        case .rename:
+            msg = "Renamed an Existing Field:"
+            rr = "Renamed"
+            ar = "With"
+        }
+        msg.append("\n")
+        if parms.removeOrRename {
+            msg.append("\(rr) field labeled \(parms.existingFieldLabel)")
+        }
+        if parms.rename {
+            msg.append("\n")
+        }
+        if parms.addOrRename {
+            msg.append("\(ar) field labeled \(parms.newFieldLabel), with type of \(parms.newFieldType)")
+        }
+        alert.messageText = msg
+        alert.addButton(withTitle: "OK")
+        let _ = alert.runModal()
     }
     
     func renameSpecialField(parms: FieldRenameParms,
@@ -703,7 +735,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         vc.window!.close()
         reloadCollection(self)
         logInfo(msg: "Notes with field changes = \(updated)")
-        reportNumberOfNotesUpdated(updated)
     }
     
     func renameOrdinaryField(parms: FieldRenameParms,
@@ -773,7 +804,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         vc.window!.close()
         reloadCollection(self)
         logInfo(msg: "Notes with field changes = \(notesToUpdate.count)")
-        reportNumberOfNotesUpdated(notesToUpdate.count)
     }
     
     /// Prepare a new note, with default fields and values taken from a class template
@@ -2205,27 +2235,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             }
             reloadViews()
             select(note: modNote, position: nil, source: .action, andScroll: true)
-        }
-    }
-    
-    /// If any check box updates are pending, apply them now.
-    func applyCheckBoxUpdates() {
-        guard !pendingMod else { return }
-        guard io != nil && io!.collectionOpen else { return }
-        let (selNote, _) = io!.getSelectedNote()
-        guard selNote != nil else { return }
-        if selNote!.hasCheckBoxUpdates {
-            let modNote = selNote!.copy() as! Note
-            let modified = modNote.applyCheckBoxUpdates()
-            if modified {
-                let (chgNote, _) = io!.modNote(oldNote: selNote!, newNote: modNote)
-                if chgNote != nil {
-                    selNote!.clearCheckBoxUpdates()
-                    chgNote!.clearCheckBoxUpdates()
-                    displayModifiedNote(updatedNote: chgNote!)
-                    editVC!.select(note: chgNote!)
-                }
-            }
         }
     }
     
@@ -4844,13 +4853,16 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///
     /// - Returns: The I/O module and the selected Note (both optionals)
     func guardForNoteAction() -> (NotenikIO?, Note?) {
+        
+        applyCheckBoxUpdates()
+        
+        
         guard !pendingMod else { return (nil, nil) }
         guard io != nil && io!.collectionOpen else { return (nil, nil) }
         let (note, _) = io!.getSelectedNote()
         guard note != nil else { return (io!, nil) }
         let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return (io!, nil) }
-        applyCheckBoxUpdates()
         return (io!, note!)
     }
     
@@ -4859,12 +4871,35 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///
     /// - Returns: The Notenik I/O module to use, if we're ready to go, otherwise nil.
     func guardForCollectionAction() -> NotenikIO? {
+        
+        applyCheckBoxUpdates()
+        
         guard !pendingMod else { return nil }
         guard io != nil && io!.collectionOpen else { return nil }
         let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return nil }
-        applyCheckBoxUpdates()
         return io
+    }
+    
+    /// If any check box updates are pending, apply them now.
+    func applyCheckBoxUpdates() {
+        guard !pendingMod else { return }
+        guard io != nil && io!.collectionOpen else { return }
+        let (selNote, _) = io!.getSelectedNote()
+        guard selNote != nil else { return }
+        if selNote!.hasCheckBoxUpdates {
+            let modNote = selNote!.copy() as! Note
+            let modified = modNote.applyCheckBoxUpdates()
+            if modified {
+                let (chgNote, _) = io!.modNote(oldNote: selNote!, newNote: modNote)
+                if chgNote != nil {
+                    selNote!.clearCheckBoxUpdates()
+                    chgNote!.clearCheckBoxUpdates()
+                    displayModifiedNote(updatedNote: chgNote!)
+                    editVC!.select(note: chgNote!)
+                }
+            }
+        }
     }
     
     /// Communicate success to the user.
