@@ -658,6 +658,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
+        
+        if parms.remove {
+            let proceed = confirmAction(msg: "Really remove field titled \(parms.existingFieldLabel)? Any existing contents of this field will be lost.")
+            guard proceed else { return }
+        }
         let dict = collection.dict
         
         var oldDef: FieldDefinition? = nil
@@ -3046,6 +3051,19 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let window = self.window else { return }
         guard let titleView = editVC?.titleView else { return }
         window.makeFirstResponder(titleView.view)
+    }
+    
+    /// Present the user with a confirmation dialog.
+    /// - Parameter msg: The warning to be presented to the user.
+    /// - Returns: True for OK to proceed; false otherwise.
+    func confirmAction(msg: String) -> Bool {
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = msg
+        alert.addButton(withTitle: "OK")
+        alert.addButton(withTitle: "Cancel")
+        let response = alert.runModal()
+        return response == .alertFirstButtonReturn
     }
     
     func deleteRangeOfNotes(startingRow: Int, endingRow: Int) {
