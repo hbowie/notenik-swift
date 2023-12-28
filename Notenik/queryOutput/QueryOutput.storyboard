@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="22505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -49,9 +48,6 @@
                             </wkWebView>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rgx-at-sqZ">
                                 <rect key="frame" x="351" y="16" width="181" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="174" id="dYX-su-DkG"/>
-                                </constraints>
                                 <popUpButtonCell key="cell" type="push" title="Web Page:" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="zH7-xn-xJJ">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -66,18 +62,33 @@
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="174" id="jWU-mV-PFa"/>
+                                </constraints>
                                 <connections>
                                     <action selector="webPageAction:" target="eZR-3m-UH5" id="IZe-Ty-Ir2"/>
                                 </connections>
                             </popUpButton>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BUQ-NN-UOh">
+                                <rect key="frame" x="13" y="13" width="81" height="32"/>
+                                <buttonCell key="cell" type="push" title="Refresh" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="b3V-Iv-JIH">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="refreshReport:" target="eZR-3m-UH5" id="UnT-2p-1oo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="z5j-4t-qoY" secondAttribute="trailing" constant="20" symbolic="YES" id="5WF-uq-p1i"/>
-                            <constraint firstItem="Rgx-at-sqZ" firstAttribute="top" secondItem="z5j-4t-qoY" secondAttribute="bottom" constant="20" symbolic="YES" id="5p1-u6-otc"/>
-                            <constraint firstItem="z5j-4t-qoY" firstAttribute="trailing" secondItem="Rgx-at-sqZ" secondAttribute="trailing" id="CtT-bT-j0g"/>
-                            <constraint firstItem="z5j-4t-qoY" firstAttribute="top" secondItem="24K-12-snC" secondAttribute="top" constant="20" symbolic="YES" id="JOU-28-rOl"/>
-                            <constraint firstItem="z5j-4t-qoY" firstAttribute="leading" secondItem="24K-12-snC" secondAttribute="leading" constant="20" symbolic="YES" id="gHY-tQ-ARj"/>
-                            <constraint firstAttribute="bottom" secondItem="Rgx-at-sqZ" secondAttribute="bottom" constant="20" symbolic="YES" id="lnV-eT-nUN"/>
+                            <constraint firstItem="z5j-4t-qoY" firstAttribute="trailing" secondItem="Rgx-at-sqZ" secondAttribute="trailing" id="2eY-AN-6XJ"/>
+                            <constraint firstAttribute="trailing" secondItem="z5j-4t-qoY" secondAttribute="trailing" constant="20" symbolic="YES" id="3QJ-uc-J7A"/>
+                            <constraint firstItem="z5j-4t-qoY" firstAttribute="leading" secondItem="BUQ-NN-UOh" secondAttribute="leading" id="4zG-XM-omN"/>
+                            <constraint firstItem="BUQ-NN-UOh" firstAttribute="top" secondItem="z5j-4t-qoY" secondAttribute="bottom" constant="20" symbolic="YES" id="RiA-Me-bf9"/>
+                            <constraint firstAttribute="bottom" secondItem="BUQ-NN-UOh" secondAttribute="bottom" constant="20" symbolic="YES" id="Tt3-fK-efv"/>
+                            <constraint firstItem="z5j-4t-qoY" firstAttribute="leading" secondItem="24K-12-snC" secondAttribute="leading" constant="20" symbolic="YES" id="XSN-4g-JGI"/>
+                            <constraint firstItem="z5j-4t-qoY" firstAttribute="top" secondItem="24K-12-snC" secondAttribute="top" constant="20" symbolic="YES" id="h6v-f0-zXJ"/>
+                            <constraint firstItem="BUQ-NN-UOh" firstAttribute="baseline" secondItem="Rgx-at-sqZ" secondAttribute="baseline" id="oH4-Z9-IS1"/>
                         </constraints>
                     </view>
                     <connections>

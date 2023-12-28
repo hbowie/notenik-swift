@@ -37,6 +37,8 @@ class QueryBuilderViewController: NSViewController {
     
     var templateWriter = Markedup(format: .htmlDoc)
     var scriptWriter: DelimitedWriter!
+    
+    var reportRunner: ReportRunner?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -192,6 +194,8 @@ class QueryBuilderViewController: NSViewController {
     
     /// Now build and run the requested query.
     func buildAndRunQuery() {
+        
+        guard io != nil && io!.collection != nil else { return }
         
         var qName = StringUtils.trim(queryNameTextField.stringValue)
         if qName.isEmpty {
@@ -369,10 +373,14 @@ class QueryBuilderViewController: NSViewController {
         collectionWC.buildReportsActionMenu()
         
         // Now run the script.
-        let player = ScriptPlayer()
-        let scriptPath = scriptURL.path
-        let qol = QueryOutputLauncher(windowTitle: "Script Output", collectionWC: collectionWC)
-        player.playScript(fileName: scriptPath, templateOutputConsumer: qol)
+        reportRunner = ReportRunner(io: io!)
+        let report = MergeReport(reportName: "\(qName)_script", reportType: "tcz")
+        _ = reportRunner!.runReport(report)
+        
+        // let player = ScriptPlayer()
+        // let scriptPath = scriptURL.path
+        // let qol = QueryOutputLauncher(windowTitle: "Script Output")
+        // player.playScript(fileName: scriptPath, templateOutputConsumer: qol)
     }
     
     func determineColumns() -> [Int] {

@@ -12,10 +12,24 @@
 
 import Cocoa
 
+import NotenikLib
+
 class QueryOutputWindowController: NSWindowController {
+    
+    var vc: QueryOutputViewController?
 
     override func windowDidLoad() {
         super.windowDidLoad()
+        if contentViewController != nil && contentViewController is QueryOutputViewController {
+            vc = contentViewController as? QueryOutputViewController
+            // vc!.window = self
+        }
+    }
+    
+    public func supplySource(_ source: TemplateOutputSource) {
+        if vc != nil {
+            vc!.supplySource(source)
+        }
     }
 
 }

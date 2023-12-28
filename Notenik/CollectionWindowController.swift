@@ -106,6 +106,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     var scroller: NoteScroller?
     
+    var reportRunner: ReportRunner?
+    
     var io: NotenikIO? {
         get {
             return notenikIO
@@ -3511,13 +3513,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         juggler.launchScript(fileURL: fileURL)
     }
     
-    func runScript(fileURL: URL) {
-        let player = ScriptPlayer()
-        let scriptPath = fileURL.path
-        let qol = QueryOutputLauncher(windowTitle: "Script Output", collectionWC: self)
-        player.playScript(fileName: scriptPath, templateOutputConsumer: qol)
-    }
-    
     @IBAction func reloadDisplayView(_ sender: Any) {
         guard displayVC != nil else { return }
         displayVC!.reload()
@@ -4309,32 +4304,18 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             highYM = temp
         }
         
-        let calendar = CalendarMaker(format: .htmlDoc, lowYM: lowYM, highYM: highYM)
-        calendar.startCalendar(title: collection.title, prefs: displayPrefs)
+        reportRunner = ReportRunner(io: noteIO)
+        reportRunner!.runCalendar(lowYM: lowYM, highYM: highYM)
         
-        var (note, position) = noteIO.firstNote()
-        var done = false
-        while note != nil && !done {
-            done = calendar.nextNote(note!)
-            (note, position) = noteIO.nextNote(position)
-        }
-        
-        let html = calendar.finishCalendar()
-        
-        let qol = QueryOutputLauncher(windowTitle: "Calendar", collectionWC: self)
-        qol.consumeTemplateOutput(html)
     }
     
     @IBAction func favoritesToHTML(_ sender: Any) {
         // See if we're ready to take action
         let nio = guardForCollectionAction()
         guard let noteIO = nio else { return }
-        let favsToHTML = FavoritesToHTML(noteIO: noteIO)
-        let html = favsToHTML.generate()
-        if !html.isEmpty {
-            let qol = QueryOutputLauncher(windowTitle: "Favorites", collectionWC: self)
-            qol.consumeTemplateOutput(html)
-        }
+        
+        reportRunner = ReportRunner(io: noteIO)
+        reportRunner!.runFavorites()
     }
     
     /// Generate a Web Book of CSS and HTML pages, containing the entire Collection.
@@ -4753,6 +4734,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    /// Run a selected report.
+    /// - Parameter sender: The menu item for the report selected by the user.
     @objc func runReport(_ sender: NSMenuItem) {
         
         // See if we're ready to take action
@@ -4765,18 +4748,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             let reportTitle = String(describing: report)
             found = (sender.title == reportTitle)
             if found {
-                if report.reportType == "tcz" {
-                    if noteIO.collection!.lib.hasAvailable(type: .reports) {
-                        let scriptURL = noteIO.reports[i].getURL(folderPath: noteIO.collection!.lib.getPath(type: .reports))
-                        if scriptURL != nil {
-                            runScript(fileURL: scriptURL!)
-                        }
-                    }
-                } else {
-                    if noteIO.collection!.lib.hasAvailable(type: .reports) {
-                        let templateURL = noteIO.reports[i].getURL(folderPath: noteIO.collection!.lib.getPath(type: .reports))
-                        _ = runReportWithTemplate(templateURL!)
-                    }
+                reportRunner = ReportRunner(io: noteIO)
+                let runOK = reportRunner!.runReport(noteIO.reports[i])
+                if !runOK {
+                    communicateError("Could not run selected report", alert: true)
                 }
             } else {
                 i += 1
@@ -4789,7 +4764,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let io = notenikIO else { return false }
         guard let collection = io.collection else { return false }
         let template = Template()
-        let qol = QueryOutputLauncher(windowTitle: "Query Output", collectionWC: self)
+        let qol = QueryOutputLauncher(windowTitle: "Query Output")
         var ok = template.openTemplate(templateURL: templateURL)
         if ok {
             template.supplyData(notesList: io.notesList,

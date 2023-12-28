@@ -20,8 +20,12 @@ class QueryOutputViewController: NSViewController, NSWindowDelegate {
     
     @IBOutlet weak var webView: WKWebView!
     
+    var source: TemplateOutputSource?
+    
     var windowTitle = "Query Output"
     var htmlString = ""
+    
+    var refreshing = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +33,10 @@ class QueryOutputViewController: NSViewController, NSWindowDelegate {
     
     override func viewDidAppear() {
         self.view.window?.delegate = self
+    }
+    
+    public func supplySource(_ source: TemplateOutputSource) {
+        self.source = source
     }
     
     func windowWillClose(_ notification: Notification) {
@@ -42,6 +50,9 @@ class QueryOutputViewController: NSViewController, NSWindowDelegate {
         windowPosition.append("\(frame.width);")
         windowPosition.append("\(frame.height);")
         AppPrefs.shared.queryOutputWindowNumbers = windowPosition
+        if refreshing && source != nil {
+            source!.refreshQuery()
+        }
     }
     
     func loadHTMLString(_ string: String) {
@@ -63,6 +74,7 @@ class QueryOutputViewController: NSViewController, NSWindowDelegate {
                 break
             }
         }
+        refreshing = false
     }
     
     /// Option 1: Save file to disk, at location of user's choice.
@@ -121,6 +133,14 @@ class QueryOutputViewController: NSViewController, NSWindowDelegate {
             ok = false
         }
         return ok
+    }
+    
+    @IBAction func refreshReport(_ sender: Any) {
+        refreshing = true
+        guard let window = self.view.window else {
+            return
+        }
+        window.close()
     }
     
     var defaultFileName: String {

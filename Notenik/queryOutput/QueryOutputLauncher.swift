@@ -16,16 +16,20 @@ import NotenikLib
 
 /// Displays the output HTML from a query in a new window.
 public class QueryOutputLauncher: NSObject, TemplateOutputConsumer {
+
+    var source: TemplateOutputSource?
     
     let queryOutputStoryboard:     NSStoryboard = NSStoryboard(name: "QueryOutput", bundle: nil)
     
     var windowTitle = ""
-    var collectionWC: CollectionWindowController? = nil
     
-    init(windowTitle: String = "Query Output", collectionWC: CollectionWindowController) {
+    init(windowTitle: String = "Query Output") {
         super.init()
         self.windowTitle = windowTitle
-        self.collectionWC = collectionWC
+    }
+    
+    public func supplySource(_ source: NotenikLib.TemplateOutputSource) {
+        self.source = source
     }
     
     /// Consume output from Merge Template, per TemplateOutputConsumer protocol.
@@ -37,6 +41,9 @@ public class QueryOutputLauncher: NSObject, TemplateOutputConsumer {
             return
         }
         queryOutputWC.window!.title = windowTitle
+        if source != nil {
+            queryOutputWC.supplySource(source!)
+        }
         queryOutputWC.showWindow(self)
         applyNumbers(passedWindow: queryOutputWC.window)
         if let vc = queryOutputWC.contentViewController as? QueryOutputViewController {
