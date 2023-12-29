@@ -2865,6 +2865,22 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         attachmentsMenu.performActionForItem(at: 0)
     }
     
+    func openAttachment(titled: String) {
+        let (_, sel) = guardForNoteAction()
+        guard let selNote = sel else { return }
+        
+        let attachmentURL = selNote.getURLforAttachment(attachmentName: titled)
+        
+        if attachmentURL != nil {
+            let goodOpen = NSWorkspace.shared.open(attachmentURL!)
+            if !goodOpen {
+                communicateError("Trouble opening attachment at \(attachmentURL!.absoluteString)", alert: true)
+            }
+        } else {
+            communicateError("Trouble opening selected attachment", alert: true)
+        }
+    }
+    
     @IBAction func convertLocalLinkToAttachment(_ sender: Any) {
         
         // See if we're ready to take action

@@ -212,6 +212,15 @@ class CustomURLActor {
                 return
             }
             controller.select(note: note, position: nil, source: .action, andScroll: true)
+        case "attachment":
+            guard let controller = cwc else {
+                communicateError("Unable to open desired Collection")
+                return
+            }
+            guard let io = controller.io else { return }
+            let (note, position) = io.getSelectedNote()
+            guard note != nil else { return }
+            controller.openAttachment(titled: value)
         default:
             communicateError("Open Query Parameter of '\(label)' not recognized")
         }

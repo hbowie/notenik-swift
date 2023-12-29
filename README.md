@@ -11,9 +11,9 @@ This is one of several active repositories on GitHub containing code and/or docu
 Use these links to obtain more info about the app, and to actually download a working version to your Mac. 
 
 + [Notenik.app](https://notenik.app) - The Notenik website
-+ [Notenik Discourse Forum](https://discourse.notenik.app) - A dedicated Discourse Community for Notenik
 + [Notenik 101](https://youtu.be/JR0kpAUXM5E) - An introductory video hosted on YouTube
 + [Notenik on the Mac App Store](https://apps.apple.com/us/app/notenik/id1465997984) - A direct link to Notenik in the App Store
++ [Notenik Discourse Forum](https://discourse.notenik.app) - A dedicated Discourse Community for Notenik
 
 ## Notenik Code Repos
 
@@ -27,10 +27,10 @@ This is all of the Swift code written as part of the Notenik application. These 
 
 ## Documentation Repos
 
-These repositories contain various sorts of documentation about Notenik. 
+These repositories contain various sorts of documentation about Notenik. These are organized as Notenik Collections (that can be opened using Notenik).
 
 + [Knowledge Base](https://github.com/hbowie/notenik-KB) - Everything you might ever want to know about Notenik, including its version history
-+ [Guide to Features](https://github.com/hbowie/notenik-features) - A detailed guide to the features to be found in Notenik 
++ [Reasons to Use Notenik](https://github.com/hbowie/notenik-reasons) - All the reasons why one might want to make use of Notenik
 + [Tips](https://github.com/hbowie/notenik-tips) - Brief introductory tips on the use of Notenik
 + [Website](https://github.com/hbowie/notenik-web) - The files needed to generate and maintain the Notenik.app website
 
@@ -46,7 +46,3 @@ This is additional open-source code, written by others, and used by Notenik. The
 + [TrackerZapper](https://github.com/rknightuk/TrackerZapper)
 + [XMLCoder](https://github.com/MaxDesiatov/XMLCoder)
 + [ZIPFoundation](https://github.com/weichsel/ZIPFoundation)
-
-
-
-
