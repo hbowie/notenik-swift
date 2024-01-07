@@ -218,7 +218,7 @@ class CustomURLActor {
                 return
             }
             guard let io = controller.io else { return }
-            let (note, position) = io.getSelectedNote()
+            let (note, _) = io.getSelectedNote()
             guard note != nil else { return }
             controller.openAttachment(titled: value)
         default:
@@ -311,7 +311,7 @@ class CustomURLActor {
     
     func getFolderForShortcut(_ shortcut: String) -> NotenikLink? {
         
-        let multiEntry = multi.entries[shortcut]
+        let multiEntry = multi.getEntry(shortcut: shortcut)
         if multiEntry == nil {
             let link = folders.getFolderFor(shortcut: shortcut)
             return link

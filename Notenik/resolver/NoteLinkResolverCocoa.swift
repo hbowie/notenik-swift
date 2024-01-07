@@ -27,7 +27,7 @@ class NoteLinkResolverCocoa {
             let multi   = MultiFileIO.shared
             let shortcut = resolution.resolvedPath
             var link: NotenikLink?
-            let multiEntry = multi.entries[shortcut]
+            let multiEntry = multi.getEntry(shortcut: shortcut)
             if multiEntry == nil {
                 link = folders.getFolderFor(shortcut: shortcut)
             } else {
