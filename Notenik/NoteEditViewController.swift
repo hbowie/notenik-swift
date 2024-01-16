@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 1/28/19.
 //
-//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -33,6 +33,7 @@ class NoteEditViewController: NSViewController {
     
     var editDefs:  [FieldDefinition] = []
     var editViews: [MacEditView] = []
+    var lookupViews: [LookupView] = []
     var grid:      [[NSView]] = []
     var gridView:  NSGridView!
     
@@ -106,6 +107,7 @@ class NoteEditViewController: NSViewController {
         // Let's build a two-dimensional array of views to be displayed in the grid
 
         editViews = []
+        lookupViews = []
         grid = []
         dateView = nil
         recursView = nil
@@ -144,6 +146,9 @@ class NoteEditViewController: NSViewController {
         let valueView = editView.view
         
         editViews.append(editView)
+        if let lookupView = editView as? LookupView {
+            lookupViews.append(lookupView)
+        }
         
         bodyRow = -1
         
@@ -226,6 +231,7 @@ class NoteEditViewController: NSViewController {
             let klassName = note.klass.value
             configureEditView(noteIO: io!, klassName: klassName)
         }
+        refreshLookupData()
         populateFieldsWithSelectedNote()
         
         if let scroller = collectionWindowController?.scroller {
@@ -233,6 +239,12 @@ class NoteEditViewController: NSViewController {
                 scroller.editStart(scrollView: sv)
             }
         } 
+    }
+    
+    func refreshLookupData() {
+        for lookupView in lookupViews {
+            lookupView.refreshData()
+        }
     }
     
     /// Populate the Edit View's fields with data from the currently selected Note.

@@ -163,9 +163,9 @@ class NotePickerViewController: NSViewController,
         if i == 0 {
             setTargetCollection(targetShortcut: initalFolderShortcut, targetIO: io)
         } else {
-            let multiIO = multi.getFileIO(shortcut: str)
-            if multiIO != nil {
-                setTargetCollection(targetShortcut: str, targetIO: multiIO!)
+            let (multiCollection, multiIO) = multi.provision(shortcut: str, inspector: nil, readOnly: false)
+            if multiCollection != nil {
+                setTargetCollection(targetShortcut: str, targetIO: multiIO)
             }
         }
     }

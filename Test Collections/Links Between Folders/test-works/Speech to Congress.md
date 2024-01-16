@@ -1,1 +1,0 @@
-Title:  Speech to Congress

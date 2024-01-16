@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 8/21/21.
 //
-//  Copyright © 2021 - 2022 Herb Bowie (https://hbowie.net)
+//  Copyright © 2021 - 2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -21,7 +21,6 @@ class LookupDataSource: ComboData {
     var lookupIO: FileIO?
     
     var fieldDef: FieldDefinition?
-    // var lookupField: NSComboBox?
     
     override init() {
         super.init()
@@ -34,10 +33,16 @@ class LookupDataSource: ComboData {
         loadNotesList()
     }
     
+    func refreshData() {
+        clearItems()
+        loadNotesList()
+    }
+    
     func loadNotesList() {
         guard let def = fieldDef else { return }
         guard !def.lookupFrom.isEmpty else { return }
-        guard let io = multiFile.getFileIO(shortcut: fieldDef!.lookupFrom) else {
+        let (collection, io) = multiFile.provision(shortcut: fieldDef!.lookupFrom, inspector: nil, readOnly: false)
+        guard collection != nil else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "LookupDataSource",
                               level: .error,

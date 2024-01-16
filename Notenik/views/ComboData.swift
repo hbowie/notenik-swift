@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 12/2/22.
-//  Copyright © 2022 PowerSurge Publishing. All rights reserved.
+//  Copyright © 2022 - 2024 PowerSurge Publishing. All rights reserved.
 //
 
 import Cocoa
@@ -18,8 +18,12 @@ class ComboData: NSObject, NSComboBoxDataSource {
         super.init()
     }
     
+    public func clearItems() {
+        items = []
+    }
+    
     /// Add another item to the list, without sorting or checking for duplicates.
-    func addItem(_ str: String) {
+    public func addItem(_ str: String) {
         let anotherItem = ComboItem(str)
         items.append(anotherItem)
         sorted = false

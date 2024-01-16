@@ -15,6 +15,8 @@ import NotenikLib
 
 class CollectionWindow: NSWindow {
     
+    let multi = MultiFileIO.shared
+    
     var io: NotenikIO?
     
     override func close() {
@@ -22,7 +24,11 @@ class CollectionWindow: NSWindow {
             wc.saveBeforeClose()
         }
         if io != nil {
-            io!.closeCollection()
+            if let fileIO = io as? FileIO {
+                multi.closeCollection(io: fileIO)
+            } else {
+                io!.closeCollection()
+            }
         }
         if let wc = self.windowController as? CollectionWindowController {
             wc.windowWillClose()

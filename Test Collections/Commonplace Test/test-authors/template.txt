@@ -1,0 +1,16 @@
+Author: <title> 
+
+Tags: <tags> 
+
+Author Info:  
+
+Author Years:  
+
+Author Link: <link> 
+
+Author Works: <lookback: test-works>
+
+Author Quotes: <lookback: test-quotes>
+
+Author Notes: <body> 
+

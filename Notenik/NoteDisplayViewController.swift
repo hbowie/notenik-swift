@@ -280,7 +280,8 @@ class NoteDisplayViewController: NSViewController,
             for link in mdResults.wikiLinks.links {
                 if !link.targetFound {
                     if link.originalTarget.hasPath {
-                        if let targetIO = MultiFileIO.shared.getFileIO(shortcut: link.originalTarget.path) {
+                        let (targetCollection, targetIO) = MultiFileIO.shared.provision(shortcut: link.originalTarget.path, inspector: nil, readOnly: false)
+                        if targetCollection != nil {
                             let resolution = NoteLinkResolution(io: targetIO, linkText: link.originalTarget.pathSlashItem)
                             NoteLinkResolver.resolve(resolution: resolution)
                             if resolution.result == .resolved {

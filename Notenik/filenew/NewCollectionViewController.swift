@@ -207,11 +207,24 @@ class NewCollectionViewController: NSTabViewController {
         }
         
         var ok = true
-        let parentRealm = (modelName == "12 - Website")
+        var parentRealm = false
+        var primaryFolder = ""
+        switch modelName {
+        case "11 - Commonplace with Lookups":
+            parentRealm = true
+            primaryFolder = "book"
+        case "12 - Website":
+            parentRealm = true
+            primaryFolder = "content"
+        default:
+            break
+        }
         
         if parentRealm {
             ok = copyFolders(fromURL: modelURL, toURL: toURL)
+            print("Copying folders")
         } else {
+            print("Relocating Collection")
             let relo = CollectionRelocation()
             ok = relo.copyOrMoveCollection(from: modelURL.path, to: toURL.path, move: false)
         }
@@ -224,8 +237,9 @@ class NewCollectionViewController: NSTabViewController {
         var wc: CollectionWindowController?
         var notesURL: URL? = toURL
         if parentRealm {
+            print("Opening parent realm")
             _ = juggler.openParentRealm(parentURL: toURL)
-            notesURL = URL(string: "content", relativeTo: toURL)
+            notesURL = URL(string: primaryFolder, relativeTo: toURL)
             wc = juggler.openFileWithNewWindow(fileURL: notesURL!, readOnly: false)
             if let readmeURL = URL(string: "README.md", relativeTo: toURL) {
                 NSWorkspace.shared.open(readmeURL)

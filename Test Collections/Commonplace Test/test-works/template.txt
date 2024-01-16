@@ -1,0 +1,28 @@
+Work Title: <title> 
+
+Tags: <tags> 
+
+Author: <lookup: test-authors> 
+
+Work Type: <worktype> 
+
+Work Minor Title:  
+
+Work Date: <date> 
+
+Work Link: <link> 
+
+Work Id:  
+
+Work Rights:  
+
+Work Rights Holder:  
+
+Publisher:  
+
+Publisher City:  
+
+Work Quotes: <lookback: test-quotes>
+
+Work Notes: <body> 
+

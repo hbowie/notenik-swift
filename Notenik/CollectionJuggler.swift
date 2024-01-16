@@ -25,6 +25,8 @@ class CollectionJuggler: NSObject {
     let application = NSApplication.shared
     let fm = FileManager.default
     
+    let multi = MultiFileIO.shared
+    
     var notenikFolderList: NotenikFolderList!
     
     let appPrefs  = AppPrefs.shared
@@ -91,26 +93,29 @@ class CollectionJuggler: NSObject {
     /// Find a collection to show in the initial window shown upon application launch.
     func loadInitialCollection() {
         
-        // Figure out a good collection to open
-        let io: NotenikIO = FileIO()
-        let collector = NoteCollector()
-        io.setInspector(collector)
-        let realm = io.getDefaultRealm()
-        realm.path = ""
         var collection: NoteCollection?
-
-        if collection == nil && appPrefs.essentialURL != nil {
-            collection = io.openCollection(realm: realm, collectionPath: appPrefs.essentialURL!.path, readOnly: false)
+        var io = FileIO()
+        
+        let collector = NoteCollector()
+        
+        if let url = appPrefs.essentialURL {
+            (collection, io) = multi.provision(collectionPath: url.path,
+                                               inspector: collector,
+                                               readOnly: false)
         }
-
-        if collection == nil && appPrefs.lastURL != nil {
-            collection = io.openCollection(realm: realm, collectionPath: appPrefs.lastURL!.path, readOnly: false)
+        
+        if collection == nil {
+            if let url = appPrefs.lastURL {
+                (collection, io) = multi.provision(collectionPath: url.path,
+                                                   inspector: collector,
+                                                   readOnly: false)
+            }
         }
         
         if collection == nil {
             let collectionPath = loadNotenikIntro()
             if !collectionPath.isEmpty {
-                collection = io.openCollection(realm: realm, collectionPath: collectionPath, readOnly: false)
+                (collection, io) = multi.provision(collectionPath: collectionPath, inspector: nil, readOnly: false)
                 _ = io.firstNote()
             }
         }
@@ -122,7 +127,7 @@ class CollectionJuggler: NSObject {
 
         if collection == nil {
             let path = notenikFolderList.kbNode.folder!.path
-            collection = io.openCollection(realm: realm, collectionPath: path, readOnly: true)
+            (collection, io) = multi.provision(collectionPath: path, inspector: nil, readOnly: true)
             _ = io.firstNote()
         }
         
@@ -950,8 +955,8 @@ class CollectionJuggler: NSObject {
             }
         }
         
-        guard let io = MultiFileIO.shared.getFileIO(fileURL: fileURL, readOnly: readOnly) else { return nil }
-        guard let collection = io.collection else { return nil }
+        let (multiCollection, io) = multi.provision(fileURL: fileURL, inspector: nil, readOnly: readOnly)
+        guard let collection = multiCollection else { return nil }
         saveCollectionInfo(collection)
         let wc = assignIOtoWindow(io: io)
         if wc != nil && !windowNumbers.isEmpty {
@@ -959,7 +964,6 @@ class CollectionJuggler: NSObject {
         }
         notenikFolderList.add(collection)
         return wc
-
     }
     
     /// Assign an Input/Output module to a new or existing window.

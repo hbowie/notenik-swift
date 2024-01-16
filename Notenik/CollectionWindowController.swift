@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -36,6 +36,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let appPrefs = AppPrefs.shared
     let displayPrefs = DisplayPrefs.shared
     let osdir    = OpenSaveDirectory.shared
+    let multi = MultiFileIO.shared
     
     let filesTitle = "files..."
     let addAttachmentTitle = "Add Attachment..."
@@ -989,6 +990,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 editVC!.configureEditView(noteIO: io!, klassName: klassName)
             }
         }
+        editVC!.refreshLookupData()
         editVC!.populateFields(with: note)
     }
     
@@ -1079,6 +1081,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         } else {
             newNoteRequested = true
             editVC!.configureEditView(noteIO: noteIO, klassName: klassName)
+            editVC!.refreshLookupData()
             editVC!.populateFields(with: newNote!)
             noteTabs!.tabView.selectTabViewItem(at: 1)
             guard let window = self.window else { return }
@@ -1309,7 +1312,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             if note!.hasDate() {
                 let written = noteIO.writeNote(note!)
                 if !written {
-                    print("Problems saving the note to disk")
                     Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                                       category: "CollectionWindowController",
                                       level: .error,
@@ -1691,7 +1693,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                         updateExisting = true
                     }
                 } else {
-                    print("  - could not find an existing note with this id")
+                    // print("  - could not find an existing note with this id")
                 }
             }
 
@@ -3253,6 +3255,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard noteTabs!.tabView.selectedTabViewItem!.label != "Edit"  else { return }
         let (_, sel) = guardForNoteAction()
         guard sel != nil else { return }
+        editVC!.refreshLookupData()
         noteTabs!.tabView.selectTabViewItem(at: 1)
     }
     
@@ -3458,10 +3461,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         newNoteRequested = false
         pendingMod = false
         pendingEdits = false
-        let newIO: NotenikIO = FileIO()
-        let realm = newIO.getDefaultRealm()
-        realm.path = ""
-        let _ = newIO.openCollection(realm: realm, collectionPath: path, readOnly: readOnly)
+        
+        let (_, newIO) = multi.provision(collectionPath: path, inspector: nil, readOnly: readOnly)
+        
         self.io = newIO
     }
     
@@ -3870,7 +3872,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let importRealm = importIO.getDefaultRealm()
         let importURL = openPanel.url!
         importRealm.path = ""
-        let importCollection = importIO.openCollection(realm: importRealm, collectionPath: importURL.path, readOnly: true)
+        let importCollection = importIO.openCollection(realm: importRealm, 
+                                                       collectionPath: importURL.path,
+                                                       readOnly: true,
+                                                       multiRequests: nil)
         guard importCollection != nil else {
             blockingAlert(msg: "The import location does not seem to be a valid Notenik Collection",
                           info: "Attempted to import from \(importURL.path)")
@@ -3996,7 +4001,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let importRealm = importIO.getDefaultRealm()
         let importURL = openPanel.url!
         importRealm.path = ""
-        let importCollection = importIO.openCollection(realm: importRealm, collectionPath: importURL.path, readOnly: true)
+        let importCollection = importIO.openCollection(realm: importRealm,
+                                                       collectionPath: importURL.path,
+                                                       readOnly: true,
+                                                       multiRequests: nil)
         guard importCollection != nil else {
             blockingAlert(msg: "The import location does not seem to be a valid Notenik Collection",
                           info: "Attempted to import from \(importURL.path)")
@@ -4862,13 +4870,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///
     /// - Returns: The I/O module and the selected Note (both optionals)
     func guardForNoteAction() -> (NotenikIO?, Note?) {
-        
+                
         applyCheckBoxUpdates()
-        
         
         guard !pendingMod else { return (nil, nil) }
         guard io != nil && io!.collectionOpen else { return (nil, nil) }
-        let (note, _) = io!.getSelectedNote()
+        var note: Note?
+        (note, _) = io!.getSelectedNote()
+        if note == nil {
+            let (first, _) = listVC!.getRangeOfSelectedRows()
+            if first >= 0 && first < io!.notesCount {
+                _ = io!.selectNote(at: first)
+                (note, _) = io!.getSelectedNote()
+            }
+        }
         guard note != nil else { return (io!, nil) }
         let (outcome, _) = modIfChanged()
         guard outcome != modIfChangedOutcome.tryAgain else { return (io!, nil) }

@@ -1,0 +1,26 @@
+Source Title: <title> 
+
+Tags: <tags> 
+
+Author: <lookup: author-notes> 
+
+Source Type: <worktype> 
+
+Source Minor Title:  
+
+Source Date: <date> 
+
+Source Link: <link> 
+
+Source ID:  
+
+Source Rights:  
+
+Source Rights Holder:  
+
+Publisher:  
+
+Publisher City:  
+
+Source Notes: <body> 
+
