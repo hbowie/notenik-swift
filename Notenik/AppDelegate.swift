@@ -356,6 +356,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     
     func displayRefresh() {
         juggler.displayRefresh()
+        juggler.adjustListViews()
     }
     
     @IBAction func editPrefs(_ sender: Any) {

@@ -776,7 +776,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 dict.lock()
             }
         }
-        
+                
         var notesToUpdate: [Note] = []
         
         if parms.removeOrRename {
@@ -789,7 +789,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 }
                 (note, position) = noteIO.nextNote(position)
             }
-            
+                        
             for noteToUpdate in notesToUpdate {
                 let modNote = noteToUpdate.copy() as! Note
                 let oldField = modNote.getField(label: parms.existingFieldLabel)
@@ -802,12 +802,17 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     } else {
                         modNote.removeField(def: oldDef!)
                     }
+                    if let noteID = editVC?.selectedNote?.id {
+                        if noteID == modNote.id {
+                            populateEditFields(with: modNote)
+                        }
+                    }
                 }
                 _ = io!.modNote(oldNote: noteToUpdate, newNote: modNote)
             }
             _ = dict.removeDef(oldDef!)
         }
-        
+                
         noteIO.persistCollectionInfo()
         vc.window!.close()
         reloadCollection(self)

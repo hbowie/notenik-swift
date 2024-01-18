@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 5/8/19.
-//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -164,15 +164,19 @@ class DisplayPrefsViewController: NSViewController {
             fontSpecs = displayPrefs.getSpecs(fontsFor: .body)
             sizes.setFontsFor(.body)
             sizeUnitLabel.stringValue = "pt"
+            fonts.addSystemFont(false)
         } else if headingsButton.state == .on {
             fontSpecs = displayPrefs.getSpecs(fontsFor: .headings)
             sizes.setFontsFor(.headings)
             sizeUnitLabel.stringValue = "em"
+            fonts.addSystemFont(false)
         } else if listButton.state == .on {
             fontSpecs = displayPrefs.getSpecs(fontsFor: .list)
             sizes.setFontsFor(.list)
             sizeUnitLabel.stringValue = "pt"
+            fonts.addSystemFont(true)
         }
+        fontComboBox.reloadData()
         setFontDisplay()
     }
     

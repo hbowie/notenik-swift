@@ -61,33 +61,7 @@ class NoteListViewController:   NSViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available(macOS 10.15, *) {
-            monoFont = NSFont.monospacedSystemFont(ofSize: 13.0, weight: NSFont.Weight.regular)
-        }
-        
-        userFont = nil
-        var listFontMsg = ""
-        if let userFontName = defaults.string(forKey: "list-display-font") {
-            listFontMsg = "List Tab Font Request: name = \(userFontName)"
-            if !userFontName.isEmpty && userFontName != " - System Font -" {
-                if let userFontSize = defaults.string(forKey: "list-display-size") {
-                    listFontMsg.append(", font size = \(userFontSize)")
-                    if let doubleValue = Double(userFontSize) {
-                        let cgFloat = CGFloat(doubleValue)
-                        userFont = NSFont(name: userFontName, size: cgFloat)
-                    } else {
-                        listFontMsg.append(" | Could not convert \(userFontSize) to a double")
-                    }
-                } else {
-                    listFontMsg.append(" | font size not available")
-                }
-            }
-        } else {
-            listFontMsg = "List User font not available"
-        }
-        if !listFontMsg.isEmpty {
-            logInfo(msg: listFontMsg)
-        }
+        adjustFonts()
         
         adjustScroller()
         
@@ -114,6 +88,36 @@ class NoteListViewController:   NSViewController,
         shortcutMenu.addItem(NSMenuItem(title: "Duplicate", action: #selector(duplicateItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Delete Range...", action: #selector(deleteNotes(_:)), keyEquivalent: ""))
         tableView.menu = shortcutMenu
+    }
+    
+    func adjustFonts() {
+        if #available(macOS 10.15, *) {
+            monoFont = NSFont.monospacedSystemFont(ofSize: 13.0, weight: NSFont.Weight.regular)
+        }
+        
+        userFont = nil
+        var listFontMsg = ""
+        if let userFontName = defaults.string(forKey: "list-display-font") {
+            listFontMsg = "List Tab Font Request: name = \(userFontName)"
+            if !userFontName.isEmpty && !userFontName.lowercased().contains("system font") {
+                if let userFontSize = defaults.string(forKey: "list-display-size") {
+                    listFontMsg.append(", font size = \(userFontSize)")
+                    if let doubleValue = Double(userFontSize) {
+                        let cgFloat = CGFloat(doubleValue)
+                        userFont = NSFont(name: userFontName, size: cgFloat)
+                    } else {
+                        listFontMsg.append(" | Could not convert \(userFontSize) to a double")
+                    }
+                } else {
+                    listFontMsg.append(" | font size not available")
+                }
+            }
+        } else {
+            listFontMsg = "List User font not available"
+        }
+        if !listFontMsg.isEmpty {
+            logInfo(msg: listFontMsg)
+        }
     }
     
     func modShortcutMenuForCollection() {
@@ -455,6 +459,10 @@ class NoteListViewController:   NSViewController,
     
     /// Reload the Table's Data.
     func reload() {
+        adjustFonts()
+        if let collection = notenikIO?.collection {
+            setSortParm(collection.sortParm)
+        }
         adjustScroller()
         tableView.reloadData()
     }

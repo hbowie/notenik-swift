@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 11/10/20.
-//  Copyright © 2020 - 2023 Herb Bowie (https://hbowie.net)
+//  Copyright © 2020 - 2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -14,6 +14,8 @@ import Cocoa
 class CocoaFontsDataSource: NSObject,  NSComboBoxDataSource {
     
     var useShort = true
+    
+    let systemFont = "- System Font -"
     
     var shortList: [String] = [
         "American Typewriter",
@@ -54,6 +56,17 @@ class CocoaFontsDataSource: NSObject,  NSComboBoxDataSource {
             useShort = true
         }
     }
+    
+    func addSystemFont(_ yes: Bool) {
+        extraFontForSystem = yes
+        if yes {
+            extraAdjustment = 1
+        } else {
+            extraAdjustment = 0
+        }
+    }
+    private var extraFontForSystem = false
+    private var extraAdjustment = 0
     
     // -----------------------------------------------------------
     //
@@ -116,6 +129,12 @@ class CocoaFontsDataSource: NSObject,  NSComboBoxDataSource {
     func indexFor(_ family: String) -> Int {
         var index = 0
         let strLowered = family.lowercased()
+        if extraFontForSystem && strLowered.contains("system font") {
+            return 0
+        }
+        if extraFontForSystem {
+            index = 1
+        }
         while index < numberOfItems {
             let item = itemAt(index)
             if item == family || item!.lowercased() == strLowered {
@@ -127,11 +146,13 @@ class CocoaFontsDataSource: NSObject,  NSComboBoxDataSource {
     }
     
     func itemAt(_ index: Int) -> String? {
-        if index >= 0 && index < numberOfItems {
+        if index == 0 && extraFontForSystem {
+            return systemFont
+        } else if index >= 0 && index < numberOfItems {
             if useShort {
-                return shortList[index]
+                return shortList[index - extraAdjustment]
             } else {
-                return longList[index]
+                return longList[index - extraAdjustment]
             }
         }
         return nil
@@ -139,9 +160,9 @@ class CocoaFontsDataSource: NSObject,  NSComboBoxDataSource {
     
     var numberOfItems: Int {
         if useShort {
-            return shortList.count
+            return shortList.count + extraAdjustment
         } else {
-            return longList.count
+            return longList.count + extraAdjustment
         }
     }
     
