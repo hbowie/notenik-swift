@@ -17,11 +17,16 @@ import NotenikLib
 class NoteListViewController:   NSViewController,
                                 NSTableViewDataSource,
                                 NSTableViewDelegate {
+    
+    let defaults = UserDefaults.standard
 
     var collectionWindowController: CollectionWindowController?
     var notenikIO: NotenikIO?
     
     var monoFont: NSFont?
+    
+    var userFont: NSFont?
+    var userFontName = ""
    
     @IBOutlet var tableView: NSTableView!
     @IBOutlet var scrollView: NSScrollView!
@@ -58,6 +63,30 @@ class NoteListViewController:   NSViewController,
         
         if #available(macOS 10.15, *) {
             monoFont = NSFont.monospacedSystemFont(ofSize: 13.0, weight: NSFont.Weight.regular)
+        }
+        
+        userFont = nil
+        var listFontMsg = ""
+        if let userFontName = defaults.string(forKey: "list-display-font") {
+            listFontMsg = "List Tab Font Request: name = \(userFontName)"
+            if !userFontName.isEmpty && userFontName != " - System Font -" {
+                if let userFontSize = defaults.string(forKey: "list-display-size") {
+                    listFontMsg.append(", font size = \(userFontSize)")
+                    if let doubleValue = Double(userFontSize) {
+                        let cgFloat = CGFloat(doubleValue)
+                        userFont = NSFont(name: userFontName, size: cgFloat)
+                    } else {
+                        listFontMsg.append(" | Could not convert \(userFontSize) to a double")
+                    }
+                } else {
+                    listFontMsg.append(" | font size not available")
+                }
+            }
+        } else {
+            listFontMsg = "List User font not available"
+        }
+        if !listFontMsg.isEmpty {
+            logInfo(msg: listFontMsg)
         }
         
         adjustScroller()
@@ -470,7 +499,7 @@ class NoteListViewController:   NSViewController,
         guard let cellView = anyView as? NSTableCellView else { return nil }
         if let note = notenikIO?.getNote(at: row) {
             if !lnfCol1Title.isEmpty && lnfCol1Title == tableColumn?.title {
-                cellView.textField?.stringValue = note.lastNameFirst
+                modifyCellView(cellView: cellView, value: note.lastNameFirst)
             } else if tableColumn?.title == "Title" ||
                 tableColumn?.title == note.collection.titleFieldDef.fieldLabel.properForm {
                 let title = note.title.value
@@ -489,70 +518,66 @@ class NoteListViewController:   NSViewController,
                     }
                 }
                 displayValue.append(title)
-                cellView.textField?.stringValue = displayValue
+                modifyCellView(cellView: cellView, value: displayValue)
             } else if tableColumn?.title == "Class" {
-                cellView.textField?.stringValue = note.klass.value
+                modifyCellView(cellView: cellView, value: note.klass.value)
             } else if tableColumn?.title == "Rank" {
-                cellView.textField?.stringValue = note.rank.value
+                modifyCellView(cellView: cellView, value: note.rank.value)
             } else if tableColumn?.title == "Seq" {
-                if #available(macOS 10.15, *) {
-                    cellView.textField?.font = monoFont!
-                }
-                cellView.textField?.stringValue = note.seq.value
+                modifyCellView(cellView: cellView, value: note.seq.value, mono: true)
             } else if tableColumn?.title == "X" {
-                cellView.textField?.stringValue = note.doneXorT
+                modifyCellView(cellView: cellView, value: note.doneXorT)
             } else if tableColumn?.title == "Date" {
-                if #available(macOS 10.15, *) {
-                    cellView.textField?.font = monoFont!
-                }
-                cellView.textField?.stringValue = note.date.dMyW2Date
+                modifyCellView(cellView: cellView, value: note.date.dMyW2Date, mono: true)
             } else if tableColumn?.title == "Author" {
-                cellView.textField?.stringValue = note.creatorValue
+                modifyCellView(cellView: cellView, value: note.creatorValue)
             } else if tableColumn?.title == "Tags" {
-                cellView.textField?.stringValue = note.tags.value
+                modifyCellView(cellView: cellView, value: note.tags.value)
             } else if tableColumn?.title == "Stat" {
-                cellView.textField?.stringValue = String(note.status.getInt())
+                modifyCellView(cellView: cellView, value: String(note.status.getInt()))
             } else if tableColumn?.title == "Person Name" {
                 if notenikIO?.collection?.personDef != nil {
-                    cellView.textField?.stringValue = note.person.value
+                    modifyCellView(cellView: cellView, value: note.person.value)
                 } else {
-                    cellView.textField?.stringValue = note.creatorValue
+                    modifyCellView(cellView: cellView, value: note.creatorValue)
                 }
             } else if tableColumn?.title == "Date Added" {
-                if #available(macOS 10.15, *) {
-                    cellView.textField?.font = monoFont!
-                }
-                cellView.textField?.stringValue = note.dateAddedValue
+                modifyCellView(cellView: cellView, value: note.dateAddedValue, mono: true)
             } else if tableColumn?.title == "Date Mod" {
-                if #available(macOS 10.15, *) {
-                    cellView.textField?.font = monoFont!
-                }
-                cellView.textField?.stringValue = note.dateModifiedValue
+                modifyCellView(cellView: cellView, value: note.dateModifiedValue, mono: true)
             } else if notenikIO != nil && notenikIO!.collection != nil {
                 if tableColumn?.title == notenikIO!.collection!.titleFieldDef.fieldLabel.properForm {
-                    cellView.textField?.stringValue = note.title.value
+                    modifyCellView(cellView: cellView, value: note.title.value)
                 } else if notenikIO!.collection!.rankFieldDef != nil && tableColumn?.title == notenikIO!.collection!.rankFieldDef!.fieldLabel.properForm {
-                    cellView.textField?.stringValue = note.rank.value
+                    modifyCellView(cellView: cellView, value: note.rank.value)
                 } else if tableColumn?.title == notenikIO!.collection!.tagsFieldDef.fieldLabel.properForm {
-                    cellView.textField?.stringValue = note.tags.value
+                    modifyCellView(cellView: cellView, value: note.tags.value)
                 } else if tableColumn?.title == notenikIO!.collection!.dateFieldDef.fieldLabel.properForm {
-                    cellView.textField?.stringValue = note.date.dMyDate
+                    modifyCellView(cellView: cellView, value: note.date.dMyDate)
                 } else if notenikIO!.collection!.seqFieldDef != nil && tableColumn?.title == notenikIO!.collection!.seqFieldDef!.fieldLabel.properForm {
-                    if #available(macOS 10.15, *) {
-                        cellView.textField?.font = monoFont!
-                    }
-                    cellView.textField?.stringValue = note.seq.value
+                    modifyCellView(cellView: cellView, value: note.seq.value, mono: true)
                 } else if tableColumn?.title == notenikIO!.collection!.creatorFieldDef.fieldLabel.properForm {
-                    cellView.textField?.stringValue = note.creatorValue
+                    modifyCellView(cellView: cellView, value: note.creatorValue)
                 } else if notenikIO!.collection!.klassFieldDef != nil && tableColumn?.title == notenikIO!.collection!.klassFieldDef!.fieldLabel.properForm {
-                    cellView.textField?.stringValue = note.klass.value
+                    modifyCellView(cellView: cellView, value: note.klass.value)
                 } else if notenikIO!.collection!.personDef != nil && tableColumn?.title == notenikIO!.collection!.personDef!.fieldLabel.properForm {
-                    cellView.textField?.stringValue = note.person.value
+                    modifyCellView(cellView: cellView, value: note.person.value)
                 }
             }
         }
         
         return cellView
+    }
+    
+    func modifyCellView(cellView: NSTableCellView, value: String, mono: Bool = false) {
+        if userFont != nil {
+            cellView.textField?.font = userFont!
+        } else if mono {
+            if #available(macOS 10.15, *) {
+                cellView.textField?.font = monoFont!
+            }
+        }
+        cellView.textField?.stringValue = value
     }
     
     var checkForMods = true
@@ -911,6 +936,14 @@ class NoteListViewController:   NSViewController,
                 collection.columnWidths.add(cw)
             }
         }
+    }
+    
+    /// Send an informational message to the log.
+    func logInfo(msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "NotesListViewController",
+                          level: .info,
+                          message: msg)
     }
     
 }

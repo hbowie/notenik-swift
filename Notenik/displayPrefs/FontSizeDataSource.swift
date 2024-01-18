@@ -20,7 +20,7 @@ class FontSizeDataSource: NSObject,  NSComboBoxDataSource {
     
     var sizes: [String] = []
     
-    var bodySizes: [String] = ["08", "10", "12", "14", "16", "18", "20", "24", "28", "36"]
+    var bodySizes: [String] = ["08", "10", "12", "13", "14", "15", "16", "18", "20", "24", "28", "36"]
     
     var headingSizes: [String] = ["1.0", "1.2", "1.4", "1.6", "1.8", "2.0", "2.2", "2.4", "2.6", "2.8", "3.0"]
     
@@ -32,10 +32,13 @@ class FontSizeDataSource: NSObject,  NSComboBoxDataSource {
     /// Supply sizes for the body type, or for headings?
     func setFontsFor(_ fontsFor: FontsFor) {
         self.fontsFor = fontsFor
-        if fontsFor == .body {
+        switch fontsFor {
+        case .body:
             sizes = bodySizes
-        } else {
+        case .headings:
             sizes = headingSizes
+        case .list:
+            sizes = bodySizes
         }
     }
     

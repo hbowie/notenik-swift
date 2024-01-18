@@ -24,6 +24,7 @@ class DisplayPrefsViewController: NSViewController {
     
     @IBOutlet var bodyButton: NSButton!
     @IBOutlet var headingsButton: NSButton!
+    @IBOutlet var listButton: NSButton!
     
     var fontSpecs = FontSpecs(fontsFor: .body)
     
@@ -163,10 +164,14 @@ class DisplayPrefsViewController: NSViewController {
             fontSpecs = displayPrefs.getSpecs(fontsFor: .body)
             sizes.setFontsFor(.body)
             sizeUnitLabel.stringValue = "pt"
-        } else {
+        } else if headingsButton.state == .on {
             fontSpecs = displayPrefs.getSpecs(fontsFor: .headings)
             sizes.setFontsFor(.headings)
             sizeUnitLabel.stringValue = "em"
+        } else if listButton.state == .on {
+            fontSpecs = displayPrefs.getSpecs(fontsFor: .list)
+            sizes.setFontsFor(.list)
+            sizeUnitLabel.stringValue = "pt"
         }
         setFontDisplay()
     }
