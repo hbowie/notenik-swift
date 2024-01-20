@@ -44,7 +44,6 @@ public class ReportRunner: NSObject, TemplateOutputSource {
         case .unknown:
             break
         }
-        _ = runReport()
     }
     
     public func runCalendar(lowYM: String, highYM: String) {

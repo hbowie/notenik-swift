@@ -24,6 +24,7 @@ class NoteListViewController:   NSViewController,
     var notenikIO: NotenikIO?
     
     var monoFont: NSFont?
+    var monoDigitFont: NSFont?
     
     var userFont: NSFont?
     var userFontName = ""
@@ -94,6 +95,7 @@ class NoteListViewController:   NSViewController,
         if #available(macOS 10.15, *) {
             monoFont = NSFont.monospacedSystemFont(ofSize: 13.0, weight: NSFont.Weight.regular)
         }
+        monoDigitFont = NSFont.monospacedDigitSystemFont(ofSize: 13.0, weight: NSFont.Weight.regular)
         
         userFont = nil
         var listFontMsg = ""
@@ -104,6 +106,9 @@ class NoteListViewController:   NSViewController,
                     listFontMsg.append(", font size = \(userFontSize)")
                     if let doubleValue = Double(userFontSize) {
                         let cgFloat = CGFloat(doubleValue)
+                        let rowHeight = cgFloat * 1.5
+                        tableView.rowHeight = rowHeight
+                        tableView.rowSizeStyle = .custom
                         userFont = NSFont(name: userFontName, size: cgFloat)
                     } else {
                         listFontMsg.append(" | Could not convert \(userFontSize) to a double")
@@ -578,12 +583,12 @@ class NoteListViewController:   NSViewController,
     }
     
     func modifyCellView(cellView: NSTableCellView, value: String, mono: Bool = false) {
-        if userFont != nil {
+        
+        if userFont == nil {
+            cellView.textField?.font = monoDigitFont
+        } else {
             cellView.textField?.font = userFont!
-        } else if mono {
-            if #available(macOS 10.15, *) {
-                cellView.textField?.font = monoFont!
-            }
+            cellView.rowSizeStyle = .custom
         }
         cellView.textField?.stringValue = value
     }
