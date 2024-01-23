@@ -170,7 +170,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         let handle = appPrefs.mastodonHandle
         let domain = appPrefs.mastodonDomain
         var urlStr = ""
-        guard !handle.isEmpty && !domain.isEmpty else { return }
+        guard !handle.isEmpty && !domain.isEmpty else {
+            let dialog = NSAlert()
+            dialog.alertStyle = .warning
+            dialog.messageText = "You must first enter your Mastodon handle and domain in the Notenik General Settings"
+            dialog.addButton(withTitle: "OK")
+            let _ = dialog.runModal()
+            return
+        }
         urlStr = "https://\(domain)/@\(handle)"
         if let url = URL(string: urlStr) {
             NSWorkspace.shared.open(url)

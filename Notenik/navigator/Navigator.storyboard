@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -48,7 +47,7 @@
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="283" minWidth="40" maxWidth="1000" id="0pR-ES-nZv">
+                                                <tableColumn width="254" minWidth="40" maxWidth="1000" id="0pR-ES-nZv">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Notenik Folders">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -61,11 +60,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="FolderCell" id="DeI-in-ekQ">
-                                                            <rect key="frame" x="1" y="1" width="292" height="17"/>
+                                                            <rect key="frame" x="1" y="1" width="263" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="duz-ki-7ng">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="312" height="17"/>
+                                                                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="duz-ki-7ng">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="283" height="17"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="17" id="Kan-Gd-y9e"/>
                                                                     </constraints>
@@ -159,7 +158,7 @@
                                     <action selector="openParentRealm:" target="nmh-XA-nz8" id="o0d-ih-e8Y"/>
                                 </connections>
                             </button>
-                            <textField verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t52-85-Flc">
+                            <textField focusRingType="none" verticalHuggingPriority="750" misplaced="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t52-85-Flc">
                                 <rect key="frame" x="340" y="142" width="160" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="MUG-Gd-gEl"/>
@@ -176,7 +175,7 @@
                             <box verticalHuggingPriority="750" misplaced="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ZPb-hb-aqk">
                                 <rect key="frame" x="340" y="64" width="160" height="5"/>
                             </box>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hjR-r5-Rji">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hjR-r5-Rji">
                                 <rect key="frame" x="338" y="240" width="160" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="156" id="cgw-Nh-YnV"/>
@@ -210,7 +209,7 @@
                                     <action selector="openButton:" target="nmh-XA-nz8" id="tyT-fr-8wZ"/>
                                 </connections>
                             </button>
-                            <comboBox verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hlO-TD-Qff">
+                            <comboBox focusRingType="none" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hlO-TD-Qff">
                                 <rect key="frame" x="19" y="456" width="307" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="57I-Hy-b7p"/>

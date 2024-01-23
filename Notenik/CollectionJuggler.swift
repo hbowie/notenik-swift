@@ -1019,21 +1019,24 @@ class CollectionJuggler: NSObject {
     }
     
     /// Take appropriate actions when a Collection window is closing.
-    func windowClosing(window: CollectionWindowController) {
+    func windowClosing(wc: CollectionWindowController) {
         setLastSelection(title: "", link: "", filepath: "", wc: nil)
         var windowCount = 0
-        var index = 0
-        for nextWindow in windows {
-            if nextWindow as AnyObject === window as AnyObject {
-                // Don't add to the count - this window is closing
-            } else if nextWindow.window == nil {
-                // Don't add to the count
-            } else if nextWindow.io == nil {
-                // Don't add to the count
-            } else if nextWindow.io!.collectionOpen {
-                windowCount += 1
+        for nextWC in windows {
+            if nextWC.window == nil {
+                // Don't count it
+            } else {
+                if nextWC as AnyObject === wc as AnyObject {
+                    // This is the closing window -- don't count it
+                } else if !nextWC.window!.isVisible {
+                    // Don't count it if it is not visible
+                } else if nextWC.io == nil {
+                    // Don't count it if no i/o module
+                } else if nextWC.io!.collectionOpen {
+                    // Count it if collection is open
+                    windowCount += 1
+                }
             }
-            index += 1
         }
         if windowCount == 0 {
             navBoard()

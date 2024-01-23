@@ -223,7 +223,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     func windowWillClose() {
-        juggler.windowClosing(window: self)
+        juggler.windowClosing(wc: self)
     }
     
     /// Save important info before closing the Collection Window. 

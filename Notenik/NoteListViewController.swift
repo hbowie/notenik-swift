@@ -99,6 +99,7 @@ class NoteListViewController:   NSViewController,
         
         userFont = nil
         var listFontMsg = ""
+        var rowHeight: CGFloat = 17.0
         if let userFontName = defaults.string(forKey: "list-display-font") {
             listFontMsg = "List Tab Font Request: name = \(userFontName)"
             if !userFontName.isEmpty && !userFontName.lowercased().contains("system font") {
@@ -106,9 +107,7 @@ class NoteListViewController:   NSViewController,
                     listFontMsg.append(", font size = \(userFontSize)")
                     if let doubleValue = Double(userFontSize) {
                         let cgFloat = CGFloat(doubleValue)
-                        let rowHeight = cgFloat * 1.5
-                        tableView.rowHeight = rowHeight
-                        tableView.rowSizeStyle = .custom
+                        rowHeight = cgFloat * 1.3
                         userFont = NSFont(name: userFontName, size: cgFloat)
                     } else {
                         listFontMsg.append(" | Could not convert \(userFontSize) to a double")
@@ -119,6 +118,13 @@ class NoteListViewController:   NSViewController,
             }
         } else {
             listFontMsg = "List User font not available"
+        }
+        if userFont == nil {
+            tableView.rowHeight = CGFloat(17.0)
+            tableView.rowSizeStyle = .custom
+        } else {
+            tableView.rowHeight = rowHeight
+            tableView.rowSizeStyle = .custom
         }
         if !listFontMsg.isEmpty {
             logInfo(msg: listFontMsg)
@@ -584,10 +590,14 @@ class NoteListViewController:   NSViewController,
     
     func modifyCellView(cellView: NSTableCellView, value: String, mono: Bool = false) {
         
-        if userFont == nil {
-            cellView.textField?.font = monoDigitFont
-        } else {
+        if userFont != nil {
             cellView.textField?.font = userFont!
+            cellView.rowSizeStyle = .custom
+        } else if mono && monoFont != nil {
+            cellView.textField?.font = monoFont!
+            cellView.rowSizeStyle = .custom
+        } else {
+            cellView.textField?.font = monoDigitFont
             cellView.rowSizeStyle = .custom
         }
         cellView.textField?.stringValue = value
