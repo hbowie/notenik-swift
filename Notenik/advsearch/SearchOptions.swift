@@ -38,10 +38,31 @@ class SearchOptions {
     
     var caseSensitive = false
     
+    var scope: SearchScope {
+        get {
+            return _scope
+        }
+        set {
+            _scope = newValue
+            anchorSeq = ""
+            anchorSortKey = ""
+        }
+    }
+    var _scope: SearchScope = .all
+    
+    var anchorSortKey = ""
+    var anchorSeq = ""
+    
     var hashTag = false
     
     init() {
         
+    }
+    
+    enum SearchScope {
+        case all
+        case within
+        case forward
     }
     
 }

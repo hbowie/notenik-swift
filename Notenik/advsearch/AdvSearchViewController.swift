@@ -41,6 +41,10 @@ class AdvSearchViewController: NSViewController {
     
     @IBOutlet var caseSensitive: NSButton!
     
+    @IBOutlet var searchAll: NSButton!
+    @IBOutlet var searchWithin: NSButton!
+    @IBOutlet var searchForward: NSButton!
+    
     var searchOptions: SearchOptions {
         get {
             return _searchOptions
@@ -82,6 +86,7 @@ class AdvSearchViewController: NSViewController {
         setCkBox(ckBox: titleField, selected: _searchOptions.titleField)
         setCkBox(ckBox: bodyField, selected: _searchOptions.bodyField)
         setCkBox(ckBox: caseSensitive, selected: _searchOptions.caseSensitive)
+        searchAll.state = .on
     }
     
     func setCkBox(ckBox: NSButton, selected: Bool) {
@@ -90,6 +95,10 @@ class AdvSearchViewController: NSViewController {
         } else {
             ckBox.state = .off
         }
+    }
+    
+    @IBAction func searchScope(_ sender: Any) {
+        
     }
     
     @IBAction func cancelSearch(_ sender: Any) {
@@ -105,6 +114,14 @@ class AdvSearchViewController: NSViewController {
         searchOptions.tagsField = tagsField.state == .on
         searchOptions.titleField = titleField.state == .on
         searchOptions.caseSensitive = caseSensitive.state == .on
+        
+        if searchAll.state == .on {
+            searchOptions.scope = .all
+        } else if searchWithin.state == .on {
+            searchOptions.scope = .within
+        } else if searchForward.state == .on {
+            searchOptions.scope = .forward
+        }
         
         guard let collectionWC = collectionController else { return }
         collectionWC.advSearchNow(options: searchOptions)

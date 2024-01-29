@@ -24,6 +24,7 @@
 		9C055D4D2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
 		9C055D4F2251513B00282E36 /* NoteTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */; };
 		9C05BD6225AE461500EEC1D4 /* NavigatorFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C05BD6125AE461500EEC1D4 /* NavigatorFolder.swift */; };
+		9C0612192B647E4F00BCCA23 /* NotenikDocs in Resources */ = {isa = PBXBuildFile; fileRef = 9C0612182B647E4F00BCCA23 /* NotenikDocs */; };
 		9C06454E2730C4C7008943A5 /* DefsRemoved.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C06454D2730C4C7008943A5 /* DefsRemoved.swift */; };
 		9C07F7522436904F00460E14 /* NotenikUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 9C07F7512436904F00460E14 /* NotenikUtils */; };
 		9C097D5D259AB95A00834A42 /* MediumPubWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C097D5B259AB95A00834A42 /* MediumPubWindowController.swift */; };
@@ -219,7 +220,6 @@
 		9C9E47FD271F5BB60094FEA5 /* AdvSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C9E47FC271F5BB60094FEA5 /* AdvSearch.storyboard */; };
 		9C9E47FF271F602C0094FEA5 /* AdvSearchWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E47FE271F602C0094FEA5 /* AdvSearchWindowController.swift */; };
 		9C9E4801271F60980094FEA5 /* AdvSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E4800271F60980094FEA5 /* AdvSearchViewController.swift */; };
-		9C9E4803271F7AE70094FEA5 /* SearchOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E4802271F7AE70094FEA5 /* SearchOptions.swift */; };
 		9CA4EE88246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
 		9CA4EE89246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
 		9CA4EE8A246A143C00059F65 /* PickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4EE87246A143B00059F65 /* PickListView.swift */; };
@@ -372,6 +372,7 @@
 		9C051DA2282833D00015B3F3 /* StatusDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusDataSource.swift; sourceTree = "<group>"; };
 		9C055D4C2251513B00282E36 /* NoteTabsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTabsViewController.swift; sourceTree = "<group>"; };
 		9C05BD6125AE461500EEC1D4 /* NavigatorFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorFolder.swift; sourceTree = "<group>"; };
+		9C0612182B647E4F00BCCA23 /* NotenikDocs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NotenikDocs; path = ../../NotenikDocs; sourceTree = "<group>"; };
 		9C06454D2730C4C7008943A5 /* DefsRemoved.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefsRemoved.swift; sourceTree = "<group>"; };
 		9C097D5B259AB95A00834A42 /* MediumPubWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumPubWindowController.swift; sourceTree = "<group>"; };
 		9C09E1752248601D0046D50D /* notenik.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = notenik.iconset; sourceTree = "<group>"; };
@@ -524,7 +525,6 @@
 		9C9E47FC271F5BB60094FEA5 /* AdvSearch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdvSearch.storyboard; sourceTree = "<group>"; };
 		9C9E47FE271F602C0094FEA5 /* AdvSearchWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvSearchWindowController.swift; sourceTree = "<group>"; };
 		9C9E4800271F60980094FEA5 /* AdvSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvSearchViewController.swift; sourceTree = "<group>"; };
-		9C9E4802271F7AE70094FEA5 /* SearchOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOptions.swift; sourceTree = "<group>"; };
 		9CA4EE87246A143B00059F65 /* PickListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickListView.swift; sourceTree = "<group>"; };
 		9CA4EE8B246A15BC00059F65 /* PickListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickListDataSource.swift; sourceTree = "<group>"; };
 		9CA5C84527EBB7DB007CDA96 /* AppHasSelectedNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHasSelectedNote.swift; sourceTree = "<group>"; };
@@ -811,6 +811,7 @@
 				9C60E6DB21F64B3C00C332ED /* Notenik.entitlements */,
 				9C4AE8D526A205EB00CD4EB4 /* MathJax */,
 				9C29A4E925D1CABC00409BF5 /* models */,
+				9C0612182B647E4F00BCCA23 /* NotenikDocs */,
 				9C7132DC2692328B00A3034F /* notenik-KB */,
 				9C479DE927B090D0002747C9 /* notenik-tips */,
 				9C42F5C12922D4F40049CC13 /* notenik-master-class */,
@@ -1036,7 +1037,6 @@
 				9C9E47FC271F5BB60094FEA5 /* AdvSearch.storyboard */,
 				9C9E47FE271F602C0094FEA5 /* AdvSearchWindowController.swift */,
 				9C9E4800271F60980094FEA5 /* AdvSearchViewController.swift */,
-				9C9E4802271F7AE70094FEA5 /* SearchOptions.swift */,
 			);
 			path = advsearch;
 			sourceTree = "<group>";
@@ -1432,6 +1432,7 @@
 				9CC902692AE074340004101B /* TagsAssign.storyboard in Resources */,
 				9C29A4EA25D1CABC00409BF5 /* models in Resources */,
 				9CC41CD5229CA61700E92A66 /* Credits.rtf in Resources */,
+				9C0612192B647E4F00BCCA23 /* NotenikDocs in Resources */,
 				9C0B643523885E9900869FAA /* TagsMassChange.storyboard in Resources */,
 				9C3CC8F6250A9C9E002C95D0 /* Navigator.storyboard in Resources */,
 				9C6E781927EA646D004BB9A0 /* Notenik.sdef in Resources */,
@@ -1505,7 +1506,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C9E4803271F7AE70094FEA5 /* SearchOptions.swift in Sources */,
 				9CFCB9EB293A65F3008D53E7 /* ComboData.swift in Sources */,
 				9CFA1A522A420105001A4555 /* DirectionsView.swift in Sources */,
 				9CD358892293C42B00C9203F /* LinkView.swift in Sources */,
@@ -1962,7 +1962,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 613;
+				CURRENT_PROJECT_VERSION = 615;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1976,7 +1976,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 13.8.0;
+				MARKETING_VERSION = 13.8.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1992,7 +1992,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 613;
+				CURRENT_PROJECT_VERSION = 615;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2006,7 +2006,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 13.8.0;
+				MARKETING_VERSION = 13.8.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

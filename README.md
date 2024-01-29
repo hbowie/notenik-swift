@@ -2,9 +2,9 @@
 
 Notenik is a modern, powerful note-taking application written in Swift.
 
-This is one of several active repositories on GitHub containing code and/or documentation related to the Notenik Mac App. The programming code is written in Swift, and the documentation repos are each provided as separate Notenik Collections, authored in Markdown. 
+This is one of several active repositories on GitHub containing code and/or documentation related to the Notenik Mac App. The programming code is written in Swift, and the documentation is offered in a series of separate Notenik Collections, authored in Markdown. 
 
-(There are also some inactive repos concerning an earlier version of Notenik, written in Java, and these will not be further mentioned here.)
+(There are also some inactive repos concerning an earlier version of Notenik, written in Java, and these will not be further mentioned in this README.)
 
 ## Notenik Links Outside of GitHub
 
@@ -25,13 +25,11 @@ This is all of the Swift code written as part of the Notenik application. These 
 + [NotenikTextile](https://github.com/hbowie/NotenikTextile) - A very basic and incomplete parser for Textile
 + [NotenikMkdown](https://github.com/hbowie/NotenikMkdown) - Notenik's custom Markdown parser
 
-## Documentation Repos
+## Documentation Collections
 
-These repositories contain various sorts of documentation about Notenik. These are organized as Notenik Collections (that can be opened using Notenik).
+These collections contain various sorts of documentation about Notenik. These are organized as Notenik Collections (that can be opened using Notenik).
 
-+ [Knowledge Base](https://github.com/hbowie/notenik-KB) - Everything you might ever want to know about Notenik, including its version history
-+ [Reasons to Use Notenik](https://github.com/hbowie/notenik-reasons) - All the reasons why one might want to make use of Notenik
-+ [Tips](https://github.com/hbowie/notenik-tips) - Brief introductory tips on the use of Notenik
++ [Notenik Docs](https://github.com/hbowie/NotenikDocs) - All the available documentation about Notenik.
 + [Website](https://github.com/hbowie/notenik-web) - The files needed to generate and maintain the Notenik.app website
 
 ## Additional Code Packages
