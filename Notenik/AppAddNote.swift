@@ -38,6 +38,7 @@ import NotenikLib
         _ = note.setTitle(title)
         _ = note.setLink(link)
         _ = note.setTags(tags)
+        note.identify()
         guard let added = activeWC.addNewNote(note) else { return "" }
         return added.getNotenikLink(preferringTimestamp: true)
     }

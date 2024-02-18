@@ -121,7 +121,9 @@ class ShareViewController: NSViewController {
     /// User said OK -- Let's do the Sharing now
     @IBAction func okButtonPressed(_ sender: Any) {
         
-        guard note != nil && window != nil && io != nil else { return }
+        guard note != nil && window != nil && io != nil else {
+            return
+        }
         
         let displayParms = DisplayParms()
         displayParms.setFrom(note: note!)
@@ -185,7 +187,7 @@ class ShareViewController: NSViewController {
             let noteLineMaker = NoteLineMaker(writer)
             if contentBodyOnlyButton.state == .on {
                 noteLineMaker.putField(note!.getBodyAsField(),
-                                       format: note!.fileInfo.format)
+                                       format: note!.noteID.getNoteFileFormat())
             } else {
                 _ = noteLineMaker.putNote(note!)
             }

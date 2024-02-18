@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/21/19.
-//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -312,38 +312,38 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     @IBAction func menuHelpNotenikDotNet(_ sender: NSMenuItem) {
-        let url = URL(string: "https://notenik.app")
+        let url = URL(string: NotenikConstants.webNotenik)
         if url != nil {
             NSWorkspace.shared.open(url!)
         }
     }
     
     @IBAction func donateViaKofi(_ sender: Any) {
-        let url = URL(string: "https://ko-fi.com/hbowie")
+        let url = URL(string: NotenikConstants.webDonate)
         if url != nil {
             NSWorkspace.shared.open(url!)
         }
     }
     
     @IBAction func menuHelpDiscussionForum(_ sender: NSMenuItem) {
-        guard let url = URL(string: "https://discourse.notenik.app") else { return }
+        guard let url = URL(string: NotenikConstants.webForum) else { return }
         NSWorkspace.shared.open(url)
     }
     
     @IBAction func menuHelpNotenikIntro(_ sender: NSMenuItem) {
-        if let url = URL(string: "https://notenik.app/intro/EPUB/html/welcome-to-notenik.html") {
+        if let url = URL(string: NotenikConstants.webIntro) {
             NSWorkspace.shared.open(url)
         }
     }
     
     @IBAction func menuHelpNotenikVideo(_ sender: NSMenuItem) {
-        if let url = URL(string: "https://youtu.be/JR0kpAUXM5E") {
+        if let url = URL(string: NotenikConstants.webVid101) {
             NSWorkspace.shared.open(url)
         }
     }
     
     @IBAction func menuHelpRateOnAppStore(_ sender: NSMenuItem) {
-        let url = URL(string: "https://itunes.apple.com/app/id1465997984?action=write-review")
+        let url = URL(string: NotenikConstants.webMacAppStoreRate)
         if url != nil {
             NSWorkspace.shared.open(url!)
         }

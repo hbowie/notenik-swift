@@ -27,9 +27,9 @@ class FileExtensionPicker {
         fileExtComboBox.addItem(withObjectValue: "text")
         fileExtComboBox.addItem(withObjectValue: "markdown")
         fileExtComboBox.addItem(withObjectValue: "mdown")
+        fileExtComboBox.addItem(withObjectValue: "mdtext")
         fileExtComboBox.addItem(withObjectValue: "mkdown")
         fileExtComboBox.addItem(withObjectValue: "mktext")
-        fileExtComboBox.addItem(withObjectValue: "mdtext")
         fileExtComboBox.addItem(withObjectValue: "nnk")
         fileExtComboBox.addItem(withObjectValue: "notenik")
     }

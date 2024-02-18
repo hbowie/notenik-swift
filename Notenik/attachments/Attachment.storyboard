@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21225"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -36,7 +35,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="357"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gHQ-Pn-WXk">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gHQ-Pn-WXk">
                                 <rect key="frame" x="18" y="321" width="258" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Name and Location of File to be Attached:" id="Rgf-AD-aJ0">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -44,7 +43,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ibc-DT-LuD">
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ibc-DT-LuD">
                                 <rect key="frame" x="20" y="282" width="440" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="0Wd-EN-zdR"/>
@@ -55,7 +54,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dlp-Ol-uPR">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dlp-Ol-uPR">
                                 <rect key="frame" x="18" y="258" width="262" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Folder in which Attachment will be stored: " id="rx3-p9-QQs">
                                     <font key="font" metaFont="system"/>
@@ -63,7 +62,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NBi-uV-pEs">
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NBi-uV-pEs">
                                 <rect key="frame" x="20" y="222" width="440" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="WhR-Lz-oyv"/>
@@ -74,7 +73,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C7Y-eQ-tx3">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C7Y-eQ-tx3">
                                 <rect key="frame" x="18" y="192" width="220" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="First Part of Attachment File Name: " id="L4q-mY-Tmw">
                                     <font key="font" metaFont="system"/>
@@ -82,7 +81,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TJB-aZ-CXu">
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TJB-aZ-CXu">
                                 <rect key="frame" x="20" y="156" width="440" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="ZXa-Cx-Gn1"/>
@@ -93,7 +92,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KLX-Fg-EyW">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KLX-Fg-EyW">
                                 <rect key="frame" x="20" y="132" width="219" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Last Part of Attachment File Name: " id="7wV-F1-py9">
                                     <font key="font" metaFont="system"/>
@@ -101,7 +100,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P5T-S2-nFE">
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P5T-S2-nFE">
                                 <rect key="frame" x="20" y="96" width="440" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="enO-aC-OxN"/>
@@ -125,7 +124,7 @@ Gw
                                     <action selector="cancelAction:" target="TCU-Ne-pya" id="T23-6C-rfN"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EzD-7t-WKJ">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EzD-7t-WKJ">
                                 <rect key="frame" x="18" y="72" width="136" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Operation to Perform:" id="vhQ-oD-iTT">
                                     <font key="font" metaFont="system"/>

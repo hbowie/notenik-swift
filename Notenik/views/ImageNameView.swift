@@ -14,6 +14,8 @@ import Cocoa
 
 import NotenikLib
 
+import NotenikUtils
+
 class ImageNameView: MacEditView {
     
     let noFileSelected = " --- No File Selected --- "
@@ -34,16 +36,48 @@ class ImageNameView: MacEditView {
             return ""
         }
         set {
-            let newLower = newValue.lowercased()
+            
+            // Look for exact match
             var i = 0
             while i < lister.itemArray.count {
                 if let item = lister.item(at: i) {
-                    if item.title.lowercased().contains(newLower) {
+                    if item.title == newValue {
                         lister.selectItem(at: i)
                         return
                     }
                 }
                 i += 1
+            }
+            
+            // Look for close match
+            let newCommon = StringUtils.toCommon(newValue)
+            i = 0
+            while i < lister.itemArray.count {
+                if let item = lister.item(at: i) {
+                    let itemCommon = StringUtils.toCommon(item.title)
+                    if itemCommon == newCommon {
+                        lister.selectItem(at: i)
+                        return
+                    }
+                }
+                i += 1
+            }
+            
+            // Look for contains
+            i = 0
+            while i < lister.itemArray.count {
+                if let item = lister.item(at: i) {
+                    let itemCommon = StringUtils.toCommon(item.title)
+                    if itemCommon.contains(newCommon) {
+                        lister.selectItem(at: i)
+                        return
+                    }
+                }
+                i += 1
+            }
+            
+            if lister.itemArray.count > 0 {
+                lister.selectItem(at: 0)
             }
         }
     }

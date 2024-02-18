@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 12/28/22.
 //
-//  Copyright © 2022 Herb Bowie (https://hbowie.net)
+//  Copyright © 2022 - 2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -17,17 +17,17 @@ import NotenikUtils
 
 class NoteToPick: CustomStringConvertible, Comparable {
 
-    var title: StringVar!
+    var basis: StringVar!
     var tags: TagsValue!
     var tagsLower = ""
     var matchingTag = ""
     
     var description: String {
-        return title.original
+        return basis.original
     }
     
-    init(title: String, tags: TagsValue) {
-        self.title = StringVar(title)
+    init(basis: String, tags: TagsValue) {
+        self.basis = StringVar(basis)
         self.tags = tags
         tagsLower = tags.value.lowercased()
     }
@@ -45,17 +45,17 @@ class NoteToPick: CustomStringConvertible, Comparable {
     
     func getMarkdown(includeTag: Bool) -> String {
         if includeTag && !matchingTag.isEmpty {
-            return "#*\(matchingTag)* | \(title.original)"
+            return "#*\(matchingTag)* | \(basis.original)"
         } else {
-            return title.original
+            return basis.original
         }
     }
     
     static func == (lhs: NoteToPick, rhs: NoteToPick) -> Bool {
-        return (lhs.title == rhs.title)
+        return (lhs.basis == rhs.basis)
     }
     
     static func < (lhs: NoteToPick, rhs: NoteToPick) -> Bool {
-        return lhs.title < rhs.title
+        return lhs.basis < rhs.basis
     }
 }

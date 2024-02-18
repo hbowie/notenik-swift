@@ -55,6 +55,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     var undoMgr:            UndoManager?
     
     let collectionPrefsStoryboard: NSStoryboard = NSStoryboard(name: "CollectionPrefs", bundle: nil)
+    let idPrefsStoryboard:         NSStoryboard = NSStoryboard(name: "IdPrefs", bundle: nil)
     let shareStoryboard:           NSStoryboard = NSStoryboard(name: "Share", bundle: nil)
     let mediumPubStoryboard:       NSStoryboard = NSStoryboard(name: "MediumPub", bundle: nil)
     let microBlogStoryboard:       NSStoryboard = NSStoryboard(name: "MicroBlog", bundle: nil)
@@ -212,7 +213,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let vc = displayVC else { return }
         guard let note = vc.note else { return }
         var filepath = ""
-        if let fp = note.fileInfo.fullPath {
+        if let fp = note.noteID.getFullPath(collection: note.collection) {
             filepath = fp
         }
         juggler.setLastSelection(title: note.title.value,
@@ -427,11 +428,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
         guard !collection.readOnly else {
-            communicateError("The Collection Prefs cannot be adjusted for a read-only Collection", alert: true)
+            communicateError("The Collection Settings cannot be adjusted for a read-only Collection", alert: true)
             return
         }
         guard !collection.isRealmCollection else {
-            communicateError("The Collection Prefs cannot be adjusted for a Parent Realm Pseudo-Collection", alert: true)
+            communicateError("The Collection Settings cannot be adjusted for a Parent Realm Pseudo-Collection", alert: true)
             return
         }
         preferredExt = collection.preferredExt
@@ -540,7 +541,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         var updated = 0
         var (note, position) = fileIO.firstNote()
         while note != nil {
-            note!.fileInfo.setFormat(newFormat: newFormat)
+            note!.noteID.setNoteFileFormat(newFormat: newFormat)
             if let tagsField = note!.getTagsAsField() {
                 if let tags = tagsField.value as? TagsValue {
                     tags.hashTags = newTags
@@ -620,6 +621,116 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         alert.addButton(withTitle: "OK")
         let _ = alert.runModal()
+    }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Update the Note Identification Settings
+    //
+    // -----------------------------------------------------------
+    
+    var uniqueIdRule: NoteIdentifierRule = .titleOnly
+    var noteIdAuxField = ""
+    var textIdRule: NoteIdentifierRule = .titleOnly
+    var textIdSep = ""
+    
+    /// The user has requested a chance to review and possibly modify the Note ID Settings.
+    @IBAction func menuNoteIdPreferences(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        guard !collection.readOnly else {
+            communicateError("The Note ID Config cannot be adjusted for a read-only Collection", alert: true)
+            return
+        }
+        guard !collection.isRealmCollection else {
+            communicateError("The Note ID Config cannot be adjusted for a Parent Realm Pseudo-Collection", alert: true)
+            return
+        }
+                
+        if let idPrefsController = self.idPrefsStoryboard.instantiateController(withIdentifier: "idPrefsWC") as? IdPrefsWindowController {
+            if let idPrefsWindow = idPrefsController.window {
+                let idPrefsVC = idPrefsWindow.contentViewController as! IdPrefsViewController
+                idPrefsVC.passIdPrefsRequesterInfo(collection: collection, window: idPrefsController)
+                let returnCode = application.runModal(for: idPrefsWindow)
+                if returnCode == NSApplication.ModalResponse.OK {
+                    noteIdConfigModified()
+                }
+            }
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Note ID Settings Window Controller!")
+        }
+    }
+    
+    func noteIdConfigModified() {
+ 
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        let notesFolder = collection.lib.getPath(type: .notes)
+        var notesList: [Note] = []
+        var oldFilenames: [String] = []
+        var notesRenamed = 0
+        for note in noteIO.notesList {
+            if let existingFilename = note.noteID.getExistingBaseDotExt() {
+                notesList.append(note)
+                oldFilenames.append(existingFilename)
+            } else {
+                if let filename = note.noteID.getBaseDotExt() {
+                    notesList.append(note)
+                    oldFilenames.append(filename)
+                }
+            }
+        }
+        let path = noteIO.collection!.fullPath
+        let readOnly = noteIO.collection!.readOnly
+        saveBeforeClose()
+        noteIO.closeCollection()
+        
+        var i = 0
+        while i < notesList.count {
+            let note = notesList[i]
+            let oldFilename = oldFilenames[i]
+            note.identify()
+            note.noteID.setIDSourceMatch(true)
+            var newFilename = note.noteID.getBaseDotExt()
+            if newFilename != nil {
+                if newFilename != oldFilename {
+                    let oldPath = FileUtils.joinPaths(path1: notesFolder, path2: oldFilename)
+                    var renameDone = false
+                    while !renameDone {
+                        let newPath = FileUtils.joinPaths(path1: notesFolder, path2: newFilename!)
+                        do {
+                            try FileManager.default.moveItem(atPath: oldPath, toPath: newPath)
+                            renameDone = true
+                            notesRenamed += 1
+                        } catch let error as NSError {
+                            communicateError("Could not rename file from \(oldPath) to \(newPath) due to \(error)", alert: true)
+                            note.noteID.avoidDuplicate()
+                            note.identify()
+                            newFilename = note.noteID.getBaseDotExt()
+                        }
+                    }
+                }
+            }
+            i += 1
+        }
+        
+        reportNumberOfNotesUpdated(notesRenamed )
+            
+        notesList = []
+        oldFilenames = []
+        
+        newNoteRequested = false
+        pendingMod = false
+        pendingEdits = false
+        
+        let (_, newIO) = multi.provision(collectionPath: path, inspector: nil, readOnly: readOnly)
+        
+        self.io = newIO
+        
     }
     
     /// The user has requested an export of this Collection. 
@@ -1076,6 +1187,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         
         if addAndReturn {
+            newNote!.identify()
             let newNote = addPastedNote(newNote!)
             reloadViews()
             if newNote != nil {
@@ -2604,7 +2716,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let noteIO = guardForCollectionAction() else {
             return
         }
-        var (note, position) = searcher.nextMatching(startNew: false)
+        let (note, position) = searcher.nextMatching(startNew: false)
 
         if note != nil {
             select(note: note,
@@ -2814,7 +2926,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     func addAttachment(urlToAttach: URL, clearLink: Bool = false) {
         let (nio, sel) = guardForNoteAction()
         guard let noteIO = nio, let selNote = sel else { return }
-        guard selNote.fileInfo.base != nil else { return }
+        guard selNote.noteID.getBaseFilename() != nil else { return }
         let filesFolderResource = noteIO.collection!.lib.ensureResource(type: .attachments)
         guard filesFolderResource.isAvailable else { return }
         if let attachmentController = self.attachmentStoryboard.instantiateController(withIdentifier: "attachmentWC") as? AttachmentWindowController {
@@ -3370,8 +3482,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     @IBAction func textEditNote(_ sender: Any) {
         let (_, sel) = guardForNoteAction()
         guard let noteToUse = sel else { return }
-        if !noteToUse.fileInfo.isEmpty {
-            NSWorkspace.shared.openFile(noteToUse.fileInfo.fullPath!)
+        if noteToUse.noteID.hasData {
+            NSWorkspace.shared.openFile(noteToUse.noteID.getFullPath(collection: noteToUse.collection)!)
         }
     }
     

@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 3/11/22.
 //
-//  Copyright © 2022 - 2023 Herb Bowie (https://hbowie.net)
+//  Copyright © 2022 - 2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -211,7 +211,7 @@ class NotePickerViewController: NSViewController,
         var hashMark = false
         var endTag = false
         tagToMatch = StringVar("")
-        var titleToMatch = ""
+        var basisToMatch = ""
         var textStarted = false
         for c in textToMatch.lowered {
             if c.isWhitespace && !textStarted { continue }
@@ -230,13 +230,13 @@ class NotePickerViewController: NSViewController,
                 }
                 continue
             }
-            if c.isWhitespace && titleToMatch.isEmpty {
+            if c.isWhitespace && basisToMatch.isEmpty {
                 continue
             }
-            titleToMatch.append(c)
+            basisToMatch.append(c)
         }
         
-        if textToMatch.count < 3 || (tagToMatch.count < 3 && titleToMatch.count < 3) {
+        if textToMatch.count < 3 || (tagToMatch.count < 3 && basisToMatch.count < 3) {
             // Fewer than three characters entered - empty out the table of possible matches
             matchingNotes = []
         } else if ioToUse == nil {
@@ -247,10 +247,10 @@ class NotePickerViewController: NSViewController,
             var i = 0
             while i < matchingNotes.count {
                 let noteToPick = matchingNotes[i]
-                if noteMatches(noteTitle: noteToPick.title,
+                if noteMatches(noteIdBasis: noteToPick.basis,
                                noteTags: noteToPick.tags,
                                tagToMatch: tagToMatch,
-                               titleToMatch: titleToMatch) {
+                               textToMatch: basisToMatch) {
                     noteToPick.setMatchingTag(tagToMatch: tagToMatch)
                     i += 1
                 } else {
@@ -264,12 +264,12 @@ class NotePickerViewController: NSViewController,
             var i = 0
             while i < ioToUse!.count {
                 let note = ioToUse!.getNote(at: i)
-                let noteTitle = StringVar(note!.title.value)
-                if noteMatches(noteTitle: noteTitle,
+                let noteIdBasis = StringVar(note!.noteID.getBasis())
+                if noteMatches(noteIdBasis: noteIdBasis,
                                noteTags: note!.tags,
                                tagToMatch: tagToMatch,
-                               titleToMatch: titleToMatch) {
-                    let newMatch = NoteToPick(title: note!.title.value, tags: note!.tags)
+                               textToMatch: basisToMatch) {
+                    let newMatch = NoteToPick(basis: note!.noteID.getBasis(), tags: note!.tags)
                     newMatch.setMatchingTag(tagToMatch: tagToMatch)
                     matchingNotes.append(newMatch)
                 }
@@ -279,13 +279,13 @@ class NotePickerViewController: NSViewController,
             let akaAll = ioToUse!.getAKAEntries()
             for (aka, note) in akaAll.akaDict {
                 let akaVar = StringVar(aka)
-                if noteMatches(noteTitle: akaVar,
+                if noteMatches(noteIdBasis: akaVar,
                                noteTags: note.tags,
                                tagToMatch: tagToMatch,
-                               titleToMatch: titleToMatch) {
+                               textToMatch: basisToMatch) {
                     for originalAKA in note.aka.list {
                         if aka == StringUtils.toCommon(originalAKA) {
-                            let akaMatch = NoteToPick(title: originalAKA, tags: note.tags)
+                            let akaMatch = NoteToPick(basis: originalAKA, tags: note.tags)
                             akaMatch.setMatchingTag(tagToMatch: tagToMatch)
                             matchingNotes.append(akaMatch)
                         }
@@ -304,18 +304,18 @@ class NotePickerViewController: NSViewController,
     }
     
     /// See if Note meets criteria specified so far.
-    func noteMatches(noteTitle: StringVar,
+    func noteMatches(noteIdBasis: StringVar,
                      noteTags: TagsValue,
                      tagToMatch: StringVar,
-                     titleToMatch: String) -> Bool {
+                     textToMatch: String) -> Bool {
         
         if !tagToMatch.isEmpty {
             if !noteTags.value.lowercased().contains(tagToMatch.lowered) {
                 return false
             }
         }
-        if !titleToMatch.isEmpty {
-            if !noteTitle.lowered.contains(titleToMatch) {
+        if !textToMatch.isEmpty {
+            if !noteIdBasis.lowered.contains(textToMatch) {
                 return false
             }
         }
@@ -382,40 +382,40 @@ class NotePickerViewController: NSViewController,
             case "c":
                 if event.modifierFlags.contains(.option) {
                     AppPrefs.shared.noteAction = copyLink
-                    copyNoteTitleWithBrackets(title: noteToPick.title.original)
+                    copyNoteTitleWithBrackets(title: noteToPick.basis.original)
                     return true
                 } else {
                     AppPrefs.shared.noteAction = copyTitle
-                    copyNoteTitle(title: noteToPick.title.original)
+                    copyNoteTitle(title: noteToPick.basis.original)
                     return true
                 }
             case "g":
                 AppPrefs.shared.noteAction = goToAction
-                goTo(title: noteToPick.title.original)
+                goTo(title: noteToPick.basis.original)
                 return true
             case "i":
-                copyPasteInclude(title: noteToPick.title.original)
+                copyPasteInclude(title: noteToPick.basis.original)
                 return true
             case "l":
                 AppPrefs.shared.noteAction = launchAction
-                launchLink(title: noteToPick.title.original)
+                launchLink(title: noteToPick.basis.original)
                 return true
             case "t":
                 AppPrefs.shared.noteAction = copyTimestamp
-                copyNoteTimestamp(title: noteToPick.title.original)
+                copyNoteTimestamp(title: noteToPick.basis.original)
                 return true
             case "v":
                 if event.modifierFlags.contains(.option) {
                     AppPrefs.shared.noteAction = copyPasteLink
                     // if targetingAnotherCollection {
-                    //    copyPasteNotenikURLasMDlink(title: noteToPick.title.original)
+                    //    copyPasteNotenikURLasMDlink(title: noteToPick.basis.original)
                     // } else {
-                        copyPasteNoteTitleWithBrackets(title: noteToPick.title.original)
+                        copyPasteNoteTitleWithBrackets(title: noteToPick.basis.original)
                     // }
                     return true
                 } else {
                     AppPrefs.shared.noteAction = copyPasteTitle
-                    copyPasteNoteTitle(title: noteToPick.title.original)
+                    copyPasteNoteTitle(title: noteToPick.basis.original)
                     return true
                 }
             default:
@@ -459,39 +459,39 @@ class NotePickerViewController: NSViewController,
         // Perform the requested action.
         switch selectedAction.title {
         case copyTitle:
-            copyNoteTitle(title: noteToPick.title.original)
+            copyNoteTitle(title: noteToPick.basis.original)
         case copyPasteTitle:
-            copyPasteNoteTitle(title: noteToPick.title.original)
+            copyPasteNoteTitle(title: noteToPick.basis.original)
         case copyLink:
             // if targetingAnotherCollection {
-            //     copyNotenikURLasMDlink(title: noteToPick.title.original)
+            //     copyNotenikURLasMDlink(title: noteToPick.basis.original)
             // } else {
-                copyNoteTitleWithBrackets(title: noteToPick.title.original)
+                copyNoteTitleWithBrackets(title: noteToPick.basis.original)
             // }
         case copyPasteLink:
             // if targetingAnotherCollection {
-            //     copyPasteNotenikURLasMDlink(title: noteToPick.title.original)
+            //     copyPasteNotenikURLasMDlink(title: noteToPick.basis.original)
             // } else {
-                copyPasteNoteTitleWithBrackets(title: noteToPick.title.original)
+                copyPasteNoteTitleWithBrackets(title: noteToPick.basis.original)
             // }
         case copyPasteInc:
-            copyPasteInclude(title: noteToPick.title.original)
+            copyPasteInclude(title: noteToPick.basis.original)
         case copyTimestamp:
-            copyNoteTimestamp(title: noteToPick.title.original)
+            copyNoteTimestamp(title: noteToPick.basis.original)
         case copyPasteStamp:
-            copyPasteNoteTimestamp(title: noteToPick.title.original)
+            copyPasteNoteTimestamp(title: noteToPick.basis.original)
         case copyNotenikURL:
-            copyNotenikURLForNote(title: noteToPick.title.original)
+            copyNotenikURLForNote(title: noteToPick.basis.original)
         case copyPasteURL:
-            copyPasteNotenikURLForNote(title: noteToPick.title.original)
+            copyPasteNotenikURLForNote(title: noteToPick.basis.original)
         case goToAction:
             if targetingAnotherCollection {
-                goToAnotherCollection(title: noteToPick.title.original)
+                goToAnotherCollection(title: noteToPick.basis.original)
             } else {
-                goTo(title: noteToPick.title.original)
+                goTo(title: noteToPick.basis.original)
             }
         case launchAction:
-            launchLink(title: noteToPick.title.original)
+            launchLink(title: noteToPick.basis.original)
         default:
             break
         }

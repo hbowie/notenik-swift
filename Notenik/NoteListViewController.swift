@@ -126,9 +126,10 @@ class NoteListViewController:   NSViewController,
             tableView.rowHeight = rowHeight
             tableView.rowSizeStyle = .custom
         }
+        /*
         if !listFontMsg.isEmpty {
             logInfo(msg: listFontMsg)
-        }
+        } */
     }
     
     func modShortcutMenuForCollection() {
@@ -353,7 +354,7 @@ class NoteListViewController:   NSViewController,
         let row = tableView.clickedRow
         guard row >= 0 else { return }
         guard let clickedNote = io.getNote(at: row) else { return }
-        let str = clickedNote.title.value
+        let str = clickedNote.noteID.getBasis()
         let board = NSPasteboard.general
         board.clearContents()
         board.setString(str, forType: NSPasteboard.PasteboardType.string)
@@ -391,7 +392,7 @@ class NoteListViewController:   NSViewController,
         guard row >= 0 else { return }
         guard let clickedNote = io.getNote(at: row) else { return }
         let folderPath = io.collection!.lib.getPath(type: .collection)
-        let filePath = clickedNote.fileInfo.fullPath
+        let filePath = clickedNote.noteID.getFullPath(collection: clickedNote.collection)
         NSWorkspace.shared.selectFile(filePath, inFileViewerRootedAtPath: folderPath)
     }
     
