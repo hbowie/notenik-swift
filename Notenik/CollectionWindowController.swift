@@ -700,6 +700,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 if newFilename != oldFilename {
                     let oldPath = FileUtils.joinPaths(path1: notesFolder, path2: oldFilename)
                     var renameDone = false
+                    var dupeCounter = 1
+                    let originalTitle = note.title.value
                     while !renameDone {
                         let newPath = FileUtils.joinPaths(path1: notesFolder, path2: newFilename!)
                         do {
@@ -708,7 +710,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                             notesRenamed += 1
                         } catch let error as NSError {
                             communicateError("Could not rename file from \(oldPath) to \(newPath) due to \(error)", alert: true)
-                            note.noteID.avoidDuplicate()
+                            dupeCounter += 1
+                            _ = note.setTitle("\(originalTitle) \(dupeCounter)")
                             note.identify()
                             newFilename = note.noteID.getBaseDotExt()
                         }
