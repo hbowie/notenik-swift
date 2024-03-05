@@ -85,6 +85,7 @@ class NoteListViewController:   NSViewController,
         shortcutMenu.addItem(NSMenuItem(title: "Copy Notenik URL", action: #selector(copyItemInternalURL(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Copy Title", action: #selector(copyItemTitle(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Copy Timestamp", action: #selector(copyItemTimestamp(_:)), keyEquivalent: ""))
+        shortcutMenu.addItem(NSMenuItem(title: "Export to iCal", action: #selector(exportToICal(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem.separator())
         shortcutMenu.addItem(NSMenuItem(title: "Duplicate", action: #selector(duplicateItem(_:)), keyEquivalent: ""))
         shortcutMenu.addItem(NSMenuItem(title: "Delete Range...", action: #selector(deleteNotes(_:)), keyEquivalent: ""))
@@ -176,6 +177,21 @@ class NoteListViewController:   NSViewController,
             shortcutMenu.addItem(withTitle: "New with Options...", action: #selector(newWithOptions(_:)), keyEquivalent: "")
         }
     
+    }
+    
+    @objc private func exportToICal(_ sender: AnyObject) {
+        guard collectionWindowController != nil else { return }
+        guard tableView.numberOfSelectedRows > 0 else { return }
+
+        // Get the full range of selected notes.
+        let (lowIndex, highIndex) = getRangeOfSelectedRows()
+        guard lowIndex >= 0 else { return }
+        // Make sure the user clicked somewhere within this range.
+        if tableView.clickedRow > highIndex || tableView.clickedRow < lowIndex {
+            return
+        }
+        
+        collectionWindowController!.exportToICal(startingRow: lowIndex, endingRow: highIndex)
     }
     
     @objc private func deleteNotes(_ sender: AnyObject) {

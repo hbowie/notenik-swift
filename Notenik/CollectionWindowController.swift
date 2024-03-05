@@ -4527,6 +4527,30 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    func exportToICal(startingRow: Int, endingRow: Int) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        let driver = NotesToTextDriver(io: noteIO, format: .iCal)
+        let notesExported = driver.toText(startingRow: startingRow, endingRow: endingRow)
+        if notesExported > 0 {
+            let written = driver.quickExport()
+        }
+        
+        var ok = notesExported > 0
+        informUserOfImportExportResults(operation: "export to iCal",
+                                        ok: ok,
+                                        numberOfNotes: notesExported,
+                                        path: driver.getDestination()!.absoluteString)
+        
+        guard ok else { return }
+        
+        // Now let's have an app open it.
+        ok = NSWorkspace.shared.open(driver.destination!)
+        if !ok {
+            communicateError("File at \(driver.getDestination()!) could not be opened by a default app", alert: true)
+        }
+ 
+    }
+    
     /// Let the user know the results of an import/export operation
     ///
     /// - Parameters:

@@ -71,6 +71,8 @@ class ViewFactory {
             return LabelView()
         case NotenikConstants.directionsCommon:
             return DirectionsView()
+        case NotenikConstants.durationCommon:
+            return DurationView()
         case NotenikConstants.imageNameCommon:
             return ImageNameView()
         case NotenikConstants.includeChildrenCommon:
