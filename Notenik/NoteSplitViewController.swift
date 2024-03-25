@@ -19,7 +19,7 @@ class NoteSplitViewController: NSSplitViewController {
         super.viewDidLoad()
         splitView.autosaveName = "save-me"
         if leftViewCollapsed {
-            changeLeftViewVisibility(makeVisible: true)
+            _ = changeLeftViewVisibility(makeVisible: true)
         }
     }
     
@@ -31,14 +31,14 @@ class NoteSplitViewController: NSSplitViewController {
     /// Respond to a user request to show/hide the list/tabs view.
     @IBAction func toggleListPane(_ sender: Any) {
         if leftViewCollapsed {
-            changeLeftViewVisibility(makeVisible: true)
+            _ = changeLeftViewVisibility(makeVisible: true)
         } else {
-            changeLeftViewVisibility(makeVisible: false)
+            _ = changeLeftViewVisibility(makeVisible: false)
         }
     }
     
     /// The actual mechanics of showing or hiding the leftmost view.
-    func changeLeftViewVisibility(makeVisible: Bool) {
+    func changeLeftViewVisibility(makeVisible: Bool) -> CGFloat {
         var newPosition: CGFloat = 0.0
         if makeVisible {
             if previousDividerPosition > 0.0 {
@@ -52,6 +52,7 @@ class NoteSplitViewController: NSSplitViewController {
         }
         splitView.setPosition(newPosition, ofDividerAt: 0)
         splitView.layoutSubtreeIfNeeded()
+        return newPosition
     }
     
     /// Get the leftmost view.

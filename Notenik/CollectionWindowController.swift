@@ -20,6 +20,8 @@ import ZipArchive
 /// Controls a window showing a particular Collection of Notes.
 class CollectionWindowController: NSWindowController, NSWindowDelegate, AttachmentMasterController, NSFilePresenter {
     
+    let minimumWindowWidth: CGFloat = 550.0
+    
     @IBOutlet var shareButton: NSButton!
     
     @IBOutlet var searchField: NSSearchField!
@@ -323,7 +325,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         
         let frame = NSRect(x: x, y: y, width: width, height: height)
-        window!.setFrame(frame, display: true)
+        window!.setFrame(frame, display: true, animate: true)
         
         guard let divider = Double(numbers[4]) else { return }
         let float = CGFloat(divider)
@@ -362,39 +364,50 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
-    @IBAction func toggleStreamlinedReading(_ sender: Any) {
-        guard let noteIO = guardForCollectionAction() else { return }
-        guard let collection = noteIO.collection else { return }
-        switch collection.displayMode {
-        case .normal:
-            collection.displayMode = .streamlinedReading
-        case .presentation:
-            collection.displayMode = .streamlinedReading
-        case .streamlinedReading:
-            collection.displayMode = .normal
+    func ensureQuotesMode() {
+        
+        if let splits = splitViewController {
+            if splits.leftViewWidth > 0.0 {
+                changeLeftViewVisibility(makeVisible: false)
+            }
         }
-        noteIO.persistCollectionInfo()
-        reloadCollection(self)
-    }
     
-    @IBAction func togglePresentationMode(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
-        switch collection.displayMode {
-        case .normal:
-            collection.displayMode = .presentation
-        case .presentation:
-            collection.displayMode = .normal
-        case .streamlinedReading:
-            collection.displayMode = .presentation
+        if collection.displayMode != .quotations {
+            collection.displayMode = .quotations
+            noteIO.persistCollectionInfo()
+            reloadCollection(self)
         }
-        noteIO.persistCollectionInfo()
-        reloadCollection(self)
     }
     
     func changeLeftViewVisibility(makeVisible: Bool) {
         if splitViewController != nil {
-            splitViewController!.changeLeftViewVisibility(makeVisible: false)
+            let dividerPosition = splitViewController!.changeLeftViewVisibility(makeVisible: makeVisible)
+            if makeVisible {
+                changeWindowWidth(shrink: false, minWidth: dividerPosition + minimumWindowWidth)
+            } else {
+                changeWindowWidth(shrink: true, minWidth: minimumWindowWidth)
+            }
+        }
+    }
+    
+    func changeWindowWidth(shrink: Bool, minWidth: CGFloat) {
+        if let frame = window?.frame {
+            let origin = frame.origin
+            let size   = frame.size
+            let height = size.height
+            let width = size.width
+            var newWidth = width
+            if shrink {
+                newWidth = width / 2.0
+            }
+            if newWidth < minWidth {
+                newWidth = minWidth
+            }
+            let newSize = NSSize(width: newWidth, height: height)
+            let newRect = NSRect(origin: origin, size: newSize)
+            window!.setFrame(newRect, display: true, animate: true)
         }
     }
     
@@ -3551,6 +3564,12 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         checkForPromises()
     }
     
+    // ----------------------------------------------------------------------------------
+    //
+    // The following section of code adjusts sort options.
+    //
+    // ----------------------------------------------------------------------------------
+    
     @IBAction func sortByTitle(_ sender: Any) {
         setSortParm(.title)
     }
@@ -3653,6 +3672,53 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         lister.setDateSort(sortBlankDatesLast)
         noteIO.persistCollectionInfo()
         juggler.updateSortMenu()
+    }
+    
+    // ----------------------------------------------------------------------------------
+    //
+    // The following section of code adjusts the display mode.
+    //
+    // ----------------------------------------------------------------------------------
+    
+    @IBAction func setDisplayToNormal(_sender: Any) {
+        setDisplayTo(.normal)
+    }
+    
+    @IBAction func setDisplayToStreamlined(_sender: Any) {
+        setDisplayTo(.streamlinedReading)
+    }
+    
+    @IBAction func setDisplayToPresentation(_sender: Any) {
+        setDisplayTo(.presentation)
+    }
+    
+    @IBAction func setDisplayToQuotes(_sender: Any) {
+        setDisplayTo(.quotations)
+    }
+    
+    func setDisplayTo(_ displayMode: DisplayMode) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        collection.displayMode = displayMode
+        noteIO.persistCollectionInfo()
+        reloadCollection(self)
+    }
+    
+    @IBAction func togglePresentationMode(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        switch collection.displayMode {
+        case .normal:
+            collection.displayMode = .streamlinedReading
+        case .presentation:
+            collection.displayMode = .quotations
+        case .streamlinedReading:
+            collection.displayMode = .presentation
+        case .quotations:
+            collection.displayMode = .normal
+        }
+        noteIO.persistCollectionInfo()
+        reloadCollection(self)
     }
     
     // ----------------------------------------------------------------------------------
@@ -4531,11 +4597,12 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let noteIO = guardForCollectionAction() else { return }
         let driver = NotesToTextDriver(io: noteIO, format: .iCal)
         let notesExported = driver.toText(startingRow: startingRow, endingRow: endingRow)
+        var written = false
         if notesExported > 0 {
-            let written = driver.quickExport()
+            written = driver.quickExport()
         }
         
-        var ok = notesExported > 0
+        var ok = notesExported > 0 && written
         informUserOfImportExportResults(operation: "export to iCal",
                                         ok: ok,
                                         numberOfNotes: notesExported,

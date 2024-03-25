@@ -427,6 +427,13 @@ class QueryBuilderViewController: NSViewController {
         guard rowIndex < fields.count else { return }
         templateWriter.startTableData()
         let def = fields[rowIndex]
+        var mods: String = ""
+        switch def.fieldType.typeString {
+        case NotenikConstants.bodyCommon, NotenikConstants.teaserCommon, NotenikConstants.longTextType:
+            mods = "&o"
+        default:
+            break
+        }
         if def.fieldLabel.commonForm == NotenikConstants.titleCommon || def.fieldType.typeString == NotenikConstants.titleCommon {
             var str = "notenik://open?"
             if collection.shortcut.count > 0 {
@@ -437,9 +444,9 @@ class QueryBuilderViewController: NSViewController {
                 str.append("path=\(encodedPath)")
             }
             str.append("&id==$\(def.fieldLabel.commonForm)&i$=")
-            templateWriter.link(text: "=$\(def.fieldLabel.commonForm)$=", path: str)
+            templateWriter.link(text: "=$\(def.fieldLabel.commonForm)\(mods)$=", path: str)
         } else {
-            templateWriter.templateVariable(name: fields[rowIndex].fieldLabel.commonForm)
+            templateWriter.templateVariable(name: fields[rowIndex].fieldLabel.commonForm, mods: mods)
         }
         templateWriter.finishTableData()
     }

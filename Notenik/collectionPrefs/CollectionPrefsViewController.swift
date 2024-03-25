@@ -149,6 +149,8 @@ class CollectionPrefsViewController: NSViewController {
             displayModePopUp.selectItem(at: 0)
         case .presentation:
             displayModePopUp.selectItem(at: 2)
+        case .quotations:
+            displayModePopUp.selectItem(at: 3)
         case .streamlinedReading:
             displayModePopUp.selectItem(at: 1)
         }
@@ -475,6 +477,8 @@ class CollectionPrefsViewController: NSViewController {
             collection!.displayMode = .streamlinedReading
         case 2:
             collection!.displayMode = .presentation
+        case 3:
+            collection!.displayMode = .quotations
         default:
             collection!.displayMode = .normal
         }

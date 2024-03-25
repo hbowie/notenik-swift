@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/26/19.
-//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -33,6 +33,7 @@ class CollectionJuggler: NSObject {
     let appPrefsCocoa = AppPrefsCocoa.shared
     let osdir     = OpenSaveDirectory.shared
     var sortMenu: NSMenu!
+    var displayModeMenu: NSMenu!
     
     let modelsPath = "/models"
     let introModelPath = "/02 - Notenik Intro"
@@ -1146,6 +1147,7 @@ class CollectionJuggler: NSObject {
         set {
             _lastWC = newValue
             updateSortMenu()
+            updateDisplayModeMenu()
         }
     }
     var _lastWC: CollectionWindowController? = nil
@@ -1240,6 +1242,26 @@ class CollectionJuggler: NSObject {
         }
         if collection.sortBlankDatesLast && blankDatesLastItem != nil {
             blankDatesLastItem!.state = .on
+        }
+    }
+    
+    func updateDisplayModeMenu() {
+        guard displayModeMenu != nil else { return }
+        var menuIx = 0
+        for menuItem in displayModeMenu!.items {
+            menuItem.state = .off
+            menuIx += 1
+        }
+        guard let collection = _lastWC?.io?.collection else { return }
+        switch collection.displayMode {
+        case .normal:
+            displayModeMenu!.items[0].state = .on
+        case .streamlinedReading:
+            displayModeMenu!.items[1].state = .on
+        case .presentation:
+            displayModeMenu!.items[2].state = .on
+        case .quotations:
+            displayModeMenu!.items[3].state = .on
         }
     }
     

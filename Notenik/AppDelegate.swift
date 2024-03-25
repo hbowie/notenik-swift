@@ -24,21 +24,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     @IBOutlet weak var iCloudMenu: NSMenu!
 
     @IBOutlet weak var sortMenu: NSMenu!
+    @IBOutlet weak var displayModeMenu: NSMenu!
     
     @IBOutlet weak var navFindItem: NSMenuItem!
     @IBOutlet weak var navAdvSearchItem: NSMenuItem!
     @IBOutlet weak var navFindAgainItem: NSMenuItem!
     
-    var appPrefs:     AppPrefs!
-    var displayPrefs: DisplayPrefs!
-    var juggler: CollectionJuggler!
+    var appPrefs:     AppPrefs?
+    var displayPrefs: DisplayPrefs?
+    var juggler: CollectionJuggler?
     let logger = Logger.shared
     var stage = "0"
     var launchURLs: [URL] = []
     
-    var notenikFolderList: NotenikFolderList!
+    var notenikFolderList: NotenikFolderList?
     
-    var docController: NoteDocumentController!
+    var docController: NoteDocumentController?
     var recentDocumentURLs: [URL] = []
     
     let newControllerStoryboard:    NSStoryboard = NSStoryboard(name: "NewCollection", bundle: nil)
@@ -62,7 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         appPrefs = AppPrefs.shared
         
         if #available(macOS 10.14, *) {
-            let appearance = appPrefs.appAppearance
+            let appearance = appPrefs!.appAppearance
             switch appearance {
             case "light":
                 NSApp.appearance = NSAppearance(named: .aqua)
@@ -74,58 +75,59 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         }
         
         displayPrefs = DisplayPrefs.shared
-        displayPrefs.setMaster(master: self)
+        displayPrefs!.setMaster(master: self)
         juggler = CollectionJuggler.shared
-        juggler.docController = docController
-        juggler.sortMenu = sortMenu
-        recentDocumentURLs = docController.recentDocumentURLs
+        juggler!.docController = docController
+        juggler!.sortMenu = sortMenu
+        juggler!.displayModeMenu = displayModeMenu
+        recentDocumentURLs = docController!.recentDocumentURLs
         stage = "2"
         logger.logDestPrint = false
         logger.logDestUnified = true
-        juggler.startup()
-        juggler.makeRecentDocsKnown(recentDocumentURLs)
+        juggler!.startup()
+        juggler!.makeRecentDocsKnown(recentDocumentURLs)
         
         // Let's build a submenu showing all folders in the iCloud Notenik folder.
-        iCloudMenu.removeAllItems()
+        iCloudMenu!.removeAllItems()
         notenikFolderList = NotenikFolderList.shared
-        for folder in notenikFolderList {
+        for folder in notenikFolderList! {
             if folder.location == .iCloudContainer {
                 let item = NSMenuItem(title: folder.fileOrFolderName, action: #selector(openICloudItem(_:)), keyEquivalent: "")
-                iCloudMenu.addItem(item)
+                iCloudMenu!.addItem(item)
             }
         }
         
         var successfulOpens = 0
         if launchURLs.count > 0 {
-            successfulOpens = juggler.open(urls: launchURLs)
+            successfulOpens = juggler!.open(urls: launchURLs)
         }
         if successfulOpens == 0 {
-            juggler.loadInitialCollection()
+            juggler!.loadInitialCollection()
         }
         if !AppPrefs.shared.americanEnglish {
-            favsToHTML.title = "Favourites to HTML..."
+            favsToHTML!.title = "Favourites to HTML..."
         }
         
         // Register our app to handle Apple events.
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(self.handleAppleEvent(event:replyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
         
         // Show Tips if requested
-        if appPrefs.tipsAtStartup {
-            _ = juggler.openTips()
+        if appPrefs!.tipsAtStartup {
+            _ = juggler!.openTips()
         }
         
         // Done launching
-        appPrefs.appLaunching = false
+        appPrefs!.appLaunching = false
         
-        juggler.checkGrantAndLoadShortcuts()
+        juggler!.checkGrantAndLoadShortcuts()
         
     }
     
     /// Open an iCloud item that's been selected by the user from the submenu created above.
     @objc func openICloudItem(_ sender: NSMenuItem) {
-        let urlToOpen = notenikFolderList.getICloudURLFromFolderName(sender.title)
+        let urlToOpen = notenikFolderList!.getICloudURLFromFolderName(sender.title)
         if urlToOpen != nil {
-            _ = juggler.open(urls: [urlToOpen!])
+            _ = juggler!.open(urls: [urlToOpen!])
         }
     }
     
@@ -134,7 +136,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
         if stage == "1" {
             launchURLs = urls
         } else {
-            _ = juggler.open(urls: urls)
+            _ = juggler!.open(urls: urls)
         }
     }
     
@@ -158,17 +160,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
 
         logInfo("Apple Event passed URL: \(appleEventURL)")
         
-        _ = juggler.open(url: appleEventURL)
+        _ = juggler!.open(url: appleEventURL)
         
     }
     
     @IBAction func menuAppPreferences(_ sender: NSMenuItem) {
-        juggler.showAppPreferences()
+        juggler!.showAppPreferences()
     }
     
     @IBAction func mastProfile(_ sender: NSMenuItem) {
-        let handle = appPrefs.mastodonHandle
-        let domain = appPrefs.mastodonDomain
+        let handle = appPrefs!.mastodonHandle
+        let domain = appPrefs!.mastodonDomain
         var urlStr = ""
         guard !handle.isEmpty && !domain.isEmpty else {
             let dialog = NSAlert()
@@ -185,19 +187,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     @IBAction func grantFolderAccess(_ sender: NSMenuItem) {
-        juggler.grantFolderAccess()
+        juggler!.grantFolderAccess()
     }
     
     @IBAction func navBoard(_ sender: NSMenuItem) {
-        juggler.navBoard()
+        juggler!.navBoard()
     }
     
     @IBAction func quickAction(_ sender: NSMenuItem) {
-        juggler.quickAction()
+        juggler!.quickAction()
     }
     
     @IBAction func forgetShortcuts(_ sender: NSMenuItem) {
-        notenikFolderList.forgetShortcuts()
+        notenikFolderList!.forgetShortcuts()
     }
     
     @IBAction func newCollection(_ sender: NSMenuItem) {
@@ -209,7 +211,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     @IBAction func menuFileNewAction(_ sender: NSMenuItem) {
-        juggler.userRequestsNewCollection()
+        juggler!.userRequestsNewCollection()
     }
     
     @IBAction func newInICloud(_ sender: Any) {
@@ -224,39 +226,39 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     @IBAction func menuFileNewWebsiteAction(_ sender: NSMenuItem) {
-        juggler.userRequestsNewWebsite()
+        juggler!.userRequestsNewWebsite()
     }
 
     @IBAction func menuFileOpenAction(_ sender: NSMenuItem) {
-        juggler.userRequestsOpenCollection()
+        juggler!.userRequestsOpenCollection()
     }
     
     @IBAction func menuFileOpenEssential(_ sender: NSMenuItem) {
-        juggler.openEssentialCollection()
+        juggler!.openEssentialCollection()
     }
     
     @IBAction func menuFileOpenParentRealm(_ sender: Any) {
-        _ = juggler.openParentRealm()
+        _ = juggler!.openParentRealm()
     }
     
     @IBAction func scriptPlay(_ sender: Any) {
-        juggler.scriptOpen()
+        juggler!.scriptOpen()
     }
     
     @IBAction func scriptRerun(_ sender: Any) {
-        juggler.scriptRerun()
+        juggler!.scriptRerun()
     }
     
     @IBAction func viewIncreaseEditFontSize(_ sender: Any) {
-        juggler.viewIncreaseEditFontSize()
+        juggler!.viewIncreaseEditFontSize()
     }
     
     @IBAction func viewDecreaseEditFontSize(_ sender: Any) {
-        juggler.viewDecreaseEditFontSize()
+        juggler!.viewDecreaseEditFontSize()
     }
     
     @IBAction func viewResetEditFontSize(_ sender: Any) {
-        juggler.viewResetEditFontSize()
+        juggler!.viewResetEditFontSize()
     }
     
     @IBAction func menuWindowLog(_ sender: NSMenuItem) {
@@ -271,7 +273,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     @IBAction func menuWindowScripter(_ sender: Any) {
-        juggler.showScriptWindow()
+        juggler!.showScriptWindow()
     }
     
     @IBAction func menuWindowExperiment(_ sender: Any) {
@@ -292,23 +294,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     // -----------------------------------------------------------
     
     @IBAction func menuOpenKB(_ sender: Any) {
-        _ = juggler.openKB()
+        _ = juggler!.openKB()
     }
     
     @IBAction func menuOpenMC(_ sender: Any) {
-        _ = juggler.openMC()
+        _ = juggler!.openMC()
     }
     
     @IBAction func menuWhatIsNew(_ sender: Any) {
-        juggler.whatIsNew()
+        juggler!.whatIsNew()
     }
     
     @IBAction func menuCheatSheet(_ sender: Any) {
-        juggler.mdCheatSheet()
+        juggler!.mdCheatSheet()
     }
     
     @IBAction func menuOpenTips(_ sender: Any) {
-        _ = juggler.openTips()
+        _ = juggler!.openTips()
     }
     
     @IBAction func menuHelpNotenikDotNet(_ sender: NSMenuItem) {
@@ -362,8 +364,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     func displayRefresh() {
-        juggler.displayRefresh()
-        juggler.adjustListViews()
+        juggler!.displayRefresh()
+        juggler!.adjustListViews()
     }
     
     @IBAction func editPrefs(_ sender: Any) {
@@ -400,7 +402,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
     }
     
     func applicationWillTerminate(_ notification: Notification) {
-        notenikFolderList.savePrefs()
+        if let folders = notenikFolderList {
+            folders.savePrefs()
+        }
         
         // Stop handling Apple Events
         NSAppleEventManager.shared().removeEventHandler(forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))

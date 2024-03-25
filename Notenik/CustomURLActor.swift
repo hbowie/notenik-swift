@@ -136,6 +136,7 @@ class CustomURLActor {
                 communicateError("Unable to open desired Collection")
                 return
             }
+            controller.changeLeftViewVisibility(makeVisible: true)
             var targetTag = value
             if value.starts(with: "#") {
                 _ = targetTag.removeFirst()
@@ -221,6 +222,26 @@ class CustomURLActor {
             let (note, _) = io.getSelectedNote()
             guard note != nil else { return }
             controller.openAttachment(titled: value)
+        case "select":
+            guard value == "random" else {
+                communicateError("open select value of '\(value)' is not recognized")
+                return
+            }
+            guard let controller = cwc else {
+                communicateError("Unable to open desired Collection")
+                return
+            }
+            controller.goToRandomNote(self)
+        case "mode":
+            guard value == "quotes" else {
+                communicateError("open mode value of '\(value)' is not recognized")
+                return
+            }
+            guard let controller = cwc else {
+                communicateError("Unable to open desired Collection")
+                return
+            }
+            controller.ensureQuotesMode()
         default:
             communicateError("Open Query Parameter of '\(label)' not recognized")
         }
