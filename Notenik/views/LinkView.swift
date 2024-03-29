@@ -13,6 +13,8 @@ import Cocoa
 
 import NotenikLib
 
+import NotenikUtils
+
 class LinkView: MacEditView {
     
     var fieldDef: FieldDefinition
@@ -25,10 +27,10 @@ class LinkView: MacEditView {
     
     var text: String {
         get {
-            return textView.string
+            return StringUtils.addCommonUrlSchemes(str: textView.string)
         }
         set {
-            textView.string = newValue
+            textView.string = StringUtils.addCommonUrlSchemes(str: newValue)
         }
     }
     

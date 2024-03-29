@@ -1785,7 +1785,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                                         caseMods: ["u", "u", "l"],
                                                         delimiter: " ")
                     _ = note.setTitle(defaultTitle)
-                    _ = note.setLink(fileURL.absoluteString)
+                    let localLink = collection.makeLinkRelative(startingLink: fileURL.absoluteString)
+                    _ = note.setLink(localLink)
                 } else {
                     let addedNote = importTextFile(fileURL: fileURL,
                                                    newLevel: newLevel, newSeq: newSeq, newKlass: newKlass,
@@ -2075,14 +2076,15 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     /// Ask the user to pick a file or folder and set the link field to the local URL
     @IBAction func setLocalLink(_ sender: Any) {
-
+        
         // See if we have what we need to proceed
         guard !pendingMod else { return }
         guard io != nil && io!.collectionOpen else { return }
         guard let noteIO = io else { return }
+        guard let collection = noteIO.collection else { return }
         let (note, _) = noteIO.getSelectedNote()
         guard let selNote = note else { return }
-        guard noteIO.collection!.dict.contains(NotenikConstants.link) else { return }
+        guard collection.dict.contains(collection.linkFieldDef) else { return }
 
         // Ask the user to pick a local file or folder
         let openPanel = NSOpenPanel()
@@ -2100,9 +2102,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let userChoice = openPanel.runModal()
         guard userChoice == .OK else { return }
         
+        let localFileURL = openPanel.url!
+        let localLink = collection.makeLinkRelative(startingLink: localFileURL.absoluteString)
+        
         // Now let's make the appropriate updates
-        MultiFileIO.shared.registerBookmark(url: openPanel.url!)
-        let localLink = openPanel.url!.absoluteString
+        // MultiFileIO.shared.registerBookmark(url: openPanel.url!)
         if noteTabs!.tabView.selectedTabViewItem!.label == "Edit" {
             let linkOK = editVC!.setLink(localLink)
             if !linkOK {
