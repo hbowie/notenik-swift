@@ -174,7 +174,7 @@ class NoteDisplayViewController: NSViewController,
         guard io != nil else { return }
         guard isViewLoaded else { return }
         guard let collection = io!.collection else { return }
-        if let filepath = note!.noteID.getFullPath(collection: note!.collection){
+        if let filepath = note!.noteID.getFullPath(note: note!){
             CollectionJuggler.shared.setLastSelection(title: note!.title.value,
                                                       link: note!.getNotenikLink(preferringTimestamp: true),
                                                       filepath: filepath,

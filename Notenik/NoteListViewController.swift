@@ -408,7 +408,7 @@ class NoteListViewController:   NSViewController,
         guard row >= 0 else { return }
         guard let clickedNote = io.getNote(at: row) else { return }
         let folderPath = io.collection!.lib.getPath(type: .collection)
-        let filePath = clickedNote.noteID.getFullPath(collection: clickedNote.collection)
+        let filePath = clickedNote.noteID.getFullPath(note: clickedNote)
         NSWorkspace.shared.selectFile(filePath, inFileViewerRootedAtPath: folderPath)
     }
     

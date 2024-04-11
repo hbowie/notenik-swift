@@ -215,7 +215,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let vc = displayVC else { return }
         guard let note = vc.note else { return }
         var filepath = ""
-        if let fp = note.noteID.getFullPath(collection: note.collection) {
+        if let fp = note.noteID.getFullPath(note: note) {
             filepath = fp
         }
         juggler.setLastSelection(title: note.title.value,
@@ -1728,6 +1728,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             
             if url != nil && title != nil {
                 logInfo(msg: "Processing pasted item as URL: \(title!)")
+                logInfo(msg: "URL as passed: \(url!)")
                 _ = note.setTitle(title!)
                 _ = note.setLink(url!)
             } else if vcard != nil {
@@ -2945,9 +2946,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     func addAttachment(urlToAttach: URL, clearLink: Bool = false) {
         let (nio, sel) = guardForNoteAction()
-        guard let noteIO = nio, let selNote = sel else { return }
+        guard let _ = nio, let selNote = sel else { return }
         guard selNote.noteID.getBaseFilename() != nil else { return }
-        let filesFolderResource = noteIO.collection!.lib.ensureResource(type: .attachments)
+        let noteLib: ResourceLibrary = selNote.getResourceLib()
+        let filesFolderResource = noteLib.ensureResource(type: .attachments)
         guard filesFolderResource.isAvailable else { return }
         if let attachmentController = self.attachmentStoryboard.instantiateController(withIdentifier: "attachmentWC") as? AttachmentWindowController {
             attachmentController.vc.master = self
@@ -3503,7 +3505,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let (_, sel) = guardForNoteAction()
         guard let noteToUse = sel else { return }
         if noteToUse.noteID.hasData {
-            NSWorkspace.shared.openFile(noteToUse.noteID.getFullPath(collection: noteToUse.collection)!)
+            NSWorkspace.shared.openFile(noteToUse.noteID.getFullPath(note: noteToUse)!)
         }
     }
     

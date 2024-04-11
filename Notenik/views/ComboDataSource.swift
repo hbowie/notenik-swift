@@ -30,6 +30,16 @@ class ComboDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
         self.init()
         self.fieldDef = def
         self.comboField = field
+        if fieldDef!.comboList != nil {
+            switch fieldDef!.fieldType.typeString {
+            case NotenikConstants.comboType:
+                comboList = fieldDef!.comboList!
+            case NotenikConstants.folderCommon:
+                comboList = fieldDef!.comboList!
+            default:
+                break
+            }
+        }
         if fieldDef!.fieldType.typeString == NotenikConstants.comboType && fieldDef!.comboList != nil {
             comboList = fieldDef!.comboList!
         }
