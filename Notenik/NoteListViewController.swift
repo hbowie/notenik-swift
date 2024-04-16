@@ -557,6 +557,8 @@ class NoteListViewController:   NSViewController,
                 modifyCellView(cellView: cellView, value: displayValue)
             } else if tableColumn?.title == "Class" {
                 modifyCellView(cellView: cellView, value: note.klass.value)
+            } else if tableColumn?.title == NotenikConstants.folder {
+                modifyCellView(cellView: cellView, value: note.folder.value)
             } else if tableColumn?.title == "Rank" {
                 modifyCellView(cellView: cellView, value: note.rank.value)
             } else if tableColumn?.title == "Seq" {
@@ -598,6 +600,8 @@ class NoteListViewController:   NSViewController,
                     modifyCellView(cellView: cellView, value: note.klass.value)
                 } else if notenikIO!.collection!.personDef != nil && tableColumn?.title == notenikIO!.collection!.personDef!.fieldLabel.properForm {
                     modifyCellView(cellView: cellView, value: note.person.value)
+                } else if notenikIO!.collection!.folderFieldDef != nil && tableColumn?.title == notenikIO!.collection!.folderFieldDef?.fieldLabel.properForm {
+                    modifyCellView(cellView: cellView, value: note.folder.value)
                 }
             }
         }
@@ -744,10 +748,21 @@ class NoteListViewController:   NSViewController,
         case .klassTitle:
             addKlassColumn(at: 0)
             _ = addTitleColumn(at: 1)
+            trimColumns(to: 2)
         case .klassDateTitle:
             addKlassColumn(at: 0)
             addDateColumn(at: 1)
             _ = addTitleColumn(at: 2)
+            trimColumns(to: 3)
+        case .folderTitle:
+            addFolderColumn(at: 0)
+            _ = addTitleColumn(at: 1)
+            trimColumns(to: 2)
+        case .folderDateTitle:
+            addFolderColumn(at: 0)
+            addDateColumn(at: 1)
+            _ = addTitleColumn(at: 2)
+            trimColumns(to: 3)
         case .lastNameFirst:
             switch collection.lastNameFirstConfig {
             case .author:
@@ -812,6 +827,20 @@ class NoteListViewController:   NSViewController,
                       at: desiredIndex, min: col.min, width: col.pref, max: col.max)
         } else {
             addColumn(title: NotenikConstants.klass, strID: "klass-column",
+                      at: desiredIndex, min: 60, width: 80, max: 150)
+        }
+    }
+    
+    func addFolderColumn(at desiredIndex: Int) {
+        if notenikIO != nil
+            && notenikIO!.collection != nil
+            && notenikIO!.collection!.folderFieldDef != nil {
+            let col = notenikIO!.collection!.columnWidths.getColumn(withTitle: "Klass")
+            addColumn(title: notenikIO!.collection!.folderFieldDef!.fieldLabel.properForm,
+                      strID: "klass-column",
+                      at: desiredIndex, min: col.min, width: col.pref, max: col.max)
+        } else {
+            addColumn(title: NotenikConstants.folder, strID: "klass-column",
                       at: desiredIndex, min: 60, width: 80, max: 150)
         }
     }

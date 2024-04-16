@@ -1234,8 +1234,12 @@ class CollectionJuggler: NSObject {
             sortMenu!.items[11].state = .on
         case .klassDateTitle:
             sortMenu!.items[12].state = .on
-        case .lastNameFirst:
+        case .folderTitle:
             sortMenu!.items[13].state = .on
+        case .folderDateTitle:
+            sortMenu!.items[14].state = .on
+        case .lastNameFirst:
+            sortMenu!.items[15].state = .on
         }
         if collection.sortDescending && reverseMenuItem != nil {
             reverseMenuItem!.state = .on

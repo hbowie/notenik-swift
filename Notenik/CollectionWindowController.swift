@@ -416,14 +416,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
 
-        var str = "notenik://open?"
-        if collection.shortcut.count > 0 {
-            str.append("shortcut=\(collection.shortcut)")
-        } else {
-            let folderURL = URL(fileURLWithPath: collection.fullPath)
-            let encodedPath = String(folderURL.absoluteString.dropFirst(7))
-            str.append("path=\(encodedPath)")
-        }
+        let str = CustomURLFormatter().open(collection: collection)
         let board = NSPasteboard.general
         board.clearContents()
         board.setString(str, forType: NSPasteboard.PasteboardType.string)
@@ -1814,7 +1807,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                         updateExisting = true
                     }
                 } else {
-                    // print("  - could not find an existing note with this id")
+                    // printprint("  - could not find an existing note with this id")
                 }
             }
 
@@ -3626,6 +3619,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     @IBAction func sortByKlassDateAndTitle(_ sender: Any) {
         setSortParm(.klassDateTitle)
+    }
+    
+    @IBAction func sortByFolderAndTitle(_ sender: Any) {
+        setSortParm(.folderTitle)
+    }
+    
+    @IBAction func sortByFolderDateAndTitle(_ sender: Any) {
+        setSortParm(.folderDateTitle)
     }
     
     @IBAction func sortByLastNameFirst(_ sender: Any) {
