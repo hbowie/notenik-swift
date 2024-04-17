@@ -1,0 +1,10 @@
+Title: <title>
+
+Folder: <folder>
+
+Tags: <tags>
+
+Link: <link>
+
+Body: 
+

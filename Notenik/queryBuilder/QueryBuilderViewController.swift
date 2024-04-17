@@ -442,15 +442,7 @@ class QueryBuilderViewController: NSViewController {
             break
         }
         if def.fieldLabel.commonForm == NotenikConstants.titleCommon || def.fieldType.typeString == NotenikConstants.titleCommon {
-            var str = "notenik://open?"
-            if collection.shortcut.count > 0 {
-                str.append("shortcut=\(collection.shortcut)")
-            } else {
-                let folderURL = URL(fileURLWithPath: collection.fullPath)
-                let encodedPath = String(folderURL.absoluteString.dropFirst(7))
-                str.append("path=\(encodedPath)")
-            }
-            str.append("&id==$\(def.fieldLabel.commonForm)&i$=")
+            let str = CustomURLFormatter().openWithUniqueID(collection: collection)
             templateWriter.link(text: "=$\(def.fieldLabel.commonForm)\(mods)$=", path: str)
         } else {
             templateWriter.templateVariable(name: fields[rowIndex].fieldLabel.commonForm, mods: mods)

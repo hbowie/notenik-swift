@@ -28,12 +28,20 @@ class CustomURLActor {
     }
     
     func act(on customURL: String) -> Bool {
-        // logInfo(msg: "Received request to act on Custom URL: \(customURL)")
-        guard let url = URL(string: customURL) else {
+  
+        var url: URL? = nil
+        url = URL(string: customURL)
+        if url == nil {
+            let encoded = customURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            if encoded != nil {
+                url = URL(string: encoded!)
+            }
+        }
+        guard url != nil else {
             communicateError("Could not fashion a URL from this string: \(customURL)")
             return false
         }
-        guard let scheme = url.scheme else {
+        guard let scheme = url!.scheme else {
             communicateError("Could not extract a scheme from this URL: \(customURL)")
             return false
         }
@@ -41,12 +49,12 @@ class CustomURLActor {
             communicateError("Invalid scheme detected: \(scheme)")
             return false
         }
-        guard let command = url.host else {
+        guard let command = url!.host else {
             communicateError("Could not extract a command from this URL: \(customURL)")
             return false
         }
         var query = ""
-        let possibleQuery = url.query
+        let possibleQuery = url!.query
         if possibleQuery != nil {
             query = possibleQuery!
         }
