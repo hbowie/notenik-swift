@@ -96,7 +96,7 @@ class NoteEditViewController: NSViewController {
         }
         editDefs = []
         for def in fieldDefs {
-            if def.fieldType.userEditable {
+            if def.fieldType.userEditable && !def.parentField {
                 editDefs.append(def)
             }
         }
@@ -214,7 +214,7 @@ class NoteEditViewController: NSViewController {
     
     /// Make a View to contain a field label
     func makeLabelView(with label: FieldLabel) -> NSView {
-        let str = AppPrefsCocoa.shared.makeUserAttributedString(text: label.properForm + ": ", usage: .labels)
+        let str = AppPrefsCocoa.shared.makeUserAttributedString(text: label.properWithParent + ": ", usage: .labels)
         let vw = NSTextField(labelWithAttributedString: str)
         return vw
     }

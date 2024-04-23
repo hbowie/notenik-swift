@@ -3629,6 +3629,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         setSortParm(.folderDateTitle)
     }
     
+    @IBAction func sortByFolderSeqAndTitle(_ sender: Any) {
+        setSortParm(.folderSeqTitle)
+    }
+    
     @IBAction func sortByLastNameFirst(_ sender: Any) {
         setSortParm(.lastNameFirst)
     }

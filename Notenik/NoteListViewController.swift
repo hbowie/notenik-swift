@@ -763,6 +763,11 @@ class NoteListViewController:   NSViewController,
             addDateColumn(at: 1)
             _ = addTitleColumn(at: 2)
             trimColumns(to: 3)
+        case .folderSeqTitle:
+            addFolderColumn(at: 0)
+            addSeqColumn(at: 1)
+            _ = addTitleColumn(at: 2)
+            trimColumns(to: 3)
         case .lastNameFirst:
             switch collection.lastNameFirstConfig {
             case .author:

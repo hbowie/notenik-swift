@@ -139,6 +139,10 @@ class QueryBuilderViewController: NSViewController {
             setSelector(labelOrType: NotenikConstants.folder, sortSeq: 1)
             setSelector(labelOrType: NotenikConstants.date,  sortSeq: 2)
             setSelector(labelOrType: NotenikConstants.title, sortSeq: 3)
+        case .folderSeqTitle:
+            setSelector(labelOrType: NotenikConstants.folder, sortSeq: 1)
+            setSelector(labelOrType: NotenikConstants.seq, sortSeq: 2)
+            setSelector(labelOrType: NotenikConstants.title, sortSeq: 3)
         case .lastNameFirst:
             if collection.personDef != nil {
                 setSelector(labelOrType: NotenikConstants.person, sortSeq: 1)
