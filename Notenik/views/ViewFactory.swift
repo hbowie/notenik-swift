@@ -117,6 +117,14 @@ class ViewFactory {
             return LookupView(def: def)
         case NotenikConstants.minutesToReadCommon:
             return LabelView()
+        case NotenikConstants.pageStyleCommon:
+            if auxLongText {
+                let psView = AuxTextView(properLabel: def.fieldLabel.properForm,
+                                         typeString: def.fieldType.typeString)
+                return psView
+            } else {
+                return PageStyleView()
+            }
         case NotenikConstants.personCommon:
             return PersonView()
         case NotenikConstants.rankCommon:
