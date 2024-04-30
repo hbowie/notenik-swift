@@ -1,0 +1,10 @@
+Title:  Note 1
+
+Timestamp: 20240426195843
+
+Wiki Links: Note 2 20240426195900
+
+Body:
+
+Note 1 was created before [[Note 2 20240426195900]].
+

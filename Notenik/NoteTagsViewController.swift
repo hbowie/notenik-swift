@@ -54,6 +54,7 @@ class NoteTagsViewController: NSViewController,
         // Setup the popup menu for rows in the list.
         shortcutMenu = NSMenu()
         shortcutMenu.addItem(NSMenuItem(title: "Launch Link", action: #selector(launchLinkForItem(_:)), keyEquivalent: ""))
+        shortcutMenu.addItem(NSMenuItem(title: "Bulk Edit...", action: #selector(bulkEdit(_:)), keyEquivalent: ""))
         outlineView.menu = shortcutMenu
     }
     
@@ -155,6 +156,46 @@ class NoteTagsViewController: NSViewController,
             let clickedNote = node.note
             if clickedNote != nil {
                 wc.launchLink(for: clickedNote!)
+            }
+        }
+    }
+    
+    /// Bulk edit a set of selected Notes.
+    @IBAction func bulkEdit(_ sender: Any) {
+        guard let wc = collectionWindowController else { return }
+        guard let io = notenikIO else { return }
+        var selNotes: [Note] = []
+        
+        var clickedWithinSelected = false
+        for index in outlineView.selectedRowIndexes {
+            if outlineView.clickedRow == index {
+                clickedWithinSelected = true
+                break
+            }
+        }
+        
+        if clickedWithinSelected {
+            for index in outlineView.selectedRowIndexes {
+                selectNoteAtRow(index, notes: &selNotes)
+            }
+        } else {
+            selectNoteAtRow(outlineView.clickedRow, notes: &selNotes)
+        }
+        
+        wc.bulkEdit(notes: selNotes)
+    }
+    
+    func selectNoteAtRow(_ row: Int, notes: inout [Note]) {
+        
+        guard row >= 0 else { return }
+        
+        let item = outlineView.item(atRow: row)
+        guard let node = item as? TagsNode else { return }
+        
+        if node.type == .note {
+            let clickedNote = node.note
+            if clickedNote != nil {
+                notes.append(clickedNote!)
             }
         }
     }

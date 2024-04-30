@@ -1,0 +1,9 @@
+Title:  Note 3
+
+Timestamp: 20240426200016
+
+Wiki Links: Note 2 20240426195900
+
+Body:
+
+Note 3 was created after [[Note 2 20240426195900]].

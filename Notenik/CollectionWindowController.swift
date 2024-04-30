@@ -74,6 +74,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let queryBuilderStoryboard:    NSStoryboard = NSStoryboard(name: "QueryBuilder", bundle: nil)
     let tagsAssignStoryboard:      NSStoryboard = NSStoryboard(name: "TagsAssign", bundle: nil)
     let fieldRenameStoryboard:     NSStoryboard = NSStoryboard(name: "FieldRename", bundle: nil)
+    let bulkEditStoryboard:        NSStoryboard = NSStoryboard(name: "BulkEdit", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -1449,6 +1450,64 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         finishBatchOperation()
         reportNumberOfNotesUpdated(updated)
+    }
+    
+    func bulkEdit(notes: [Note]) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
+        guard !collection.readOnly else {
+            communicateError("A Bulk Edit cannot be performed on a read-only Collection", alert: true)
+            return
+        }
+        
+        if let bulkEditController = self.bulkEditStoryboard.instantiateController(withIdentifier: "bulkEditWC") as? BulkEditWindowController {
+            bulkEditController.showWindow(self)
+            bulkEditController.passRequestInfo(io: noteIO, collectionWC: self, selNotes: notes)
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Bulk Edit Window Controller!")
+        }
+    }
+    
+    func bulkEditOK(fieldSelected: String, valueToAssign: String, notes: [Note], vc: BulkEditViewController) {
+        
+        guard !notes.isEmpty else { return }
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard let def = noteIO.collection?.dict.getDef(fieldSelected) else { return }
+        
+        guard confirmAction(msg: "Proceed with Bulk Edit?",
+                            info: "This will change the field labeled \(def.fieldLabel.properForm) to a value of '\(valueToAssign)' for \(notes.count) notes") else {
+            return
+        }
+        
+        var firstNote: Note?
+        
+        for noteToUpdate in notes {
+            let modNote = noteToUpdate.copy() as! Note
+            if let field = modNote.getField(def: def) {
+                if let multi = field.value as? MultiValues {
+                    multi.append(valueToAssign)
+                } else {
+                    field.setValue(valueToAssign)
+                }
+            } else {
+                _ = modNote.setField(label: def.fieldLabel.commonForm, value: valueToAssign)
+            }
+            if firstNote == nil {
+                firstNote = modNote
+            }
+            _ = io!.modNote(oldNote: noteToUpdate, newNote: modNote)
+        }
+        vc.window!.close()
+        reloadViews()
+        if firstNote != nil {
+            select(note: firstNote, position: nil, source: .nav, andScroll: true)
+        } else {
+            let (note, position) = io!.firstNote()
+            select(note: note, position: position, source: .nav, andScroll: true)
+        }
     }
     
     /// The user has requested a chance to make mass changes to tags in  this Collection. 
@@ -3102,10 +3161,15 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     /// Present the user with a confirmation dialog.
     /// - Parameter msg: The warning to be presented to the user.
     /// - Returns: True for OK to proceed; false otherwise.
-    func confirmAction(msg: String) -> Bool {
+    func confirmAction(msg: String, info: String? = nil) -> Bool {
         let alert = NSAlert()
         alert.alertStyle = .warning
         alert.messageText = msg
+        if let infoText = info {
+            if !infoText.isEmpty {
+                alert.informativeText = infoText
+            }
+        }
         alert.addButton(withTitle: "OK")
         alert.addButton(withTitle: "Cancel")
         let response = alert.runModal()
