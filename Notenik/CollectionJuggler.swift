@@ -36,6 +36,8 @@ class CollectionJuggler: NSObject {
     var displayModeMenu: NSMenu!
     
     let modelsPath = "/models"
+    let notenikSupport = "com.powersurgepub.notenik.macos"
+    let styleSheets = "Style Sheets"
     let introModelPath = "/02 - Notenik Intro"
     var introModelFullPath = ""
 
@@ -83,6 +85,23 @@ class CollectionJuggler: NSObject {
                               message: "Couldn't get a Log Window Controller! at startup")
         }
         notenikFolderList = NotenikFolderList.shared
+    }
+    
+    func appSupport() {
+        
+        let appSupportURL = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let notenikSupportURL = appSupportURL.appendingPathComponent(notenikSupport)
+        let styleSheetsURL = notenikSupportURL.appendingPathComponent(styleSheets)
+        let styleSheetsPath = styleSheetsURL.relativePath
+        if fm.fileExists(atPath: styleSheetsPath) {
+            
+        } else {
+            do {
+                try fm.createDirectory(atPath: styleSheetsPath, withIntermediateDirectories: true)
+            } catch {
+                print("error creating directory")
+            }
+        }
     }
     
     func makeRecentDocsKnown(_ recentDocumentURLs: [URL]) {
@@ -944,13 +963,14 @@ class CollectionJuggler: NSObject {
         } else {
             collectionURL = fileURL.deletingLastPathComponent()
         }
-        
         // If the collection is already open, then simply bring
         // that window to the front.
         for window in windows {
             guard let windowCollection = window.io?.collection else { continue }
             guard let windowURL = windowCollection.fullPathURL else { continue }
-            if windowURL == collectionURL && !windowCollection.isRealmCollection && window.window != nil {
+            if folderURLsEqual(url1: windowURL, url2: collectionURL)
+                && !windowCollection.isRealmCollection
+                && window.window != nil {
                 window.window!.makeKeyAndOrderFront(self)
                 return window
             }
@@ -1297,6 +1317,18 @@ class CollectionJuggler: NSObject {
             countsWC!.showWindow(sender)
         }
         return countsVC
+    }
+    
+    func folderURLsEqual(url1: URL, url2: URL) -> Bool {
+        return folderPathWithoutSlash(url: url1) == folderPathWithoutSlash(url: url2)
+    }
+    
+    func folderPathWithoutSlash(url: URL) -> String {
+        var path = url.absoluteString
+        if path.hasSuffix("/") {
+            path.removeLast()
+        }
+        return path
     }
     
     /// Log an error message and optionally display an alert message.
