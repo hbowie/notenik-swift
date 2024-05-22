@@ -53,11 +53,11 @@ class BodyView: MacEditView {
         let textRect = NSRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
         textView = NSTextView(frame: textRect)
         textView.minSize = NSSize(width: 0, height: contentSize.height)
-        textView.maxSize = NSSize(width: 32000, height: 32000)
+        textView.maxSize = NSSize(width: 32000, height: 256000)
         textView.isVerticallyResizable = true
         textView.isHorizontallyResizable = false
         textView.autoresizingMask = [.width, .height]
-        textView.textContainer!.containerSize = NSSize(width: contentSize.width, height: 32000)
+        textView.textContainer!.containerSize = NSSize(width: contentSize.width, height: 256000)
         textView.textContainer!.widthTracksTextView = true
         
         textView.isRichText = false

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="22505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="22690"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -65,7 +65,7 @@ Gw
                                     <action selector="cancelClicked:" target="gR8-K9-NHb" id="u2M-AS-MIO"/>
                                 </connections>
                             </button>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hin-M2-ly1">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hin-M2-ly1">
                                 <rect key="frame" x="15" y="684" width="113" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Center Headings?" id="cmY-We-fTs">
                                     <font key="font" metaFont="system"/>
@@ -118,7 +118,7 @@ Gw
                                     <action selector="centerHeadingFinishAdjustment:" target="gR8-K9-NHb" id="XZq-au-0z3"/>
                                 </connections>
                             </popUpButton>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ljw-gD-PBG">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ljw-gD-PBG">
                                 <rect key="frame" x="231" y="684" width="68" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="AzG-g4-xZ9"/>
@@ -129,7 +129,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jVd-Dh-FmS">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jVd-Dh-FmS">
                                 <rect key="frame" x="15" y="652" width="164" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Apply Fonts to:" id="MR4-2j-AgP">
                                     <font key="font" metaFont="system"/>
@@ -157,7 +157,7 @@ Gw
                                     <action selector="bodyOrHeadings:" target="gR8-K9-NHb" id="ozG-pQ-COC"/>
                                 </connections>
                             </button>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yuP-Ux-PuA">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yuP-Ux-PuA">
                                 <rect key="frame" x="15" y="590" width="83" height="18"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Display Font:" id="asm-vI-Thk">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -165,7 +165,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AeZ-Tj-lt4">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AeZ-Tj-lt4">
                                 <rect key="frame" x="15" y="558" width="81" height="18"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Display Size:" id="kGK-aa-cwb">
                                     <font key="font" metaFont="system"/>
@@ -222,7 +222,7 @@ Gw
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7xo-eC-I4v">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7xo-eC-I4v">
                                 <rect key="frame" x="15" y="622" width="100" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Show All Fonts?" id="sXj-ce-DzO">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -230,7 +230,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <comboBox focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V3o-zb-THK">
+                            <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V3o-zb-THK">
                                 <rect key="frame" x="145" y="585" width="251" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="247" id="K5f-9k-P5i"/>
@@ -244,7 +244,7 @@ Gw
                                     <action selector="fontAdjusted:" target="gR8-K9-NHb" id="BAE-DD-RBH"/>
                                 </connections>
                             </comboBox>
-                            <comboBox focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yaD-pn-O2N">
+                            <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yaD-pn-O2N">
                                 <rect key="frame" x="145" y="553" width="88" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="9IF-XA-fQj"/>
@@ -289,7 +289,7 @@ Gw
                                     <action selector="generateCSSButtonPushed:" target="gR8-K9-NHb" id="DJz-a2-CNF"/>
                                 </connections>
                             </button>
-                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="obI-Si-pSM">
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="obI-Si-pSM">
                                 <rect key="frame" x="16" y="48" width="565" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="t9M-97-u34"/>
@@ -301,7 +301,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fjo-dK-Ub0">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fjo-dK-Ub0">
                                 <rect key="frame" x="245" y="559" width="27" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="23" id="eHk-jI-q11"/>

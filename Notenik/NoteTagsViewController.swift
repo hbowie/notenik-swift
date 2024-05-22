@@ -163,7 +163,7 @@ class NoteTagsViewController: NSViewController,
     /// Bulk edit a set of selected Notes.
     @IBAction func bulkEdit(_ sender: Any) {
         guard let wc = collectionWindowController else { return }
-        guard let io = notenikIO else { return }
+        // guard let io = notenikIO else { return }
         var selNotes: [Note] = []
         
         var clickedWithinSelected = false

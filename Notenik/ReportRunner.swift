@@ -27,7 +27,7 @@ public class ReportRunner: NSObject, TemplateOutputSource {
     
     var report: MergeReport!
     
-    var queryOutputLauncher: QueryOutputLauncher!
+    var queryOutputLauncher: QueryOutputLauncher?
     
     init(io: NotenikIO) {
         self.io = io
@@ -69,8 +69,8 @@ public class ReportRunner: NSObject, TemplateOutputSource {
         let html = calendar.finishCalendar()
         
         queryOutputLauncher = QueryOutputLauncher(windowTitle: "Calendar")
-        queryOutputLauncher.supplySource(self)
-        queryOutputLauncher.consumeTemplateOutput(html)
+        queryOutputLauncher!.supplySource(self)
+        queryOutputLauncher!.consumeTemplateOutput(html)
     }
     
     public func runFavorites() {
@@ -80,8 +80,8 @@ public class ReportRunner: NSObject, TemplateOutputSource {
         let html = favsToHTML.generate()
         if !html.isEmpty {
             queryOutputLauncher = QueryOutputLauncher(windowTitle: "Favorites")
-            queryOutputLauncher.supplySource(self)
-            queryOutputLauncher.consumeTemplateOutput(html)
+            queryOutputLauncher!.supplySource(self)
+            queryOutputLauncher!.consumeTemplateOutput(html)
         }
     }
     
@@ -113,8 +113,12 @@ public class ReportRunner: NSObject, TemplateOutputSource {
     private func runReportWithTemplate(_ templateURL: URL) -> Bool {
         guard let collection = io.collection else { return false }
         let template = Template()
-        queryOutputLauncher = QueryOutputLauncher(windowTitle: "Query Output")
-        queryOutputLauncher.supplySource(self)
+        queryOutputLauncher = nil
+        let ext = templateURL.pathExtension.lowercased()
+        if ext.contains("htm") {
+            queryOutputLauncher = QueryOutputLauncher(windowTitle: "Query Output")
+            queryOutputLauncher!.supplySource(self)
+        }
         var ok = template.openTemplate(templateURL: templateURL)
         if ok {
             template.supplyData(notesList: io.notesList,
@@ -135,7 +139,7 @@ public class ReportRunner: NSObject, TemplateOutputSource {
         let player = ScriptPlayer()
         let scriptPath = fileURL.path
         queryOutputLauncher = QueryOutputLauncher(windowTitle: "Script Output")
-        queryOutputLauncher.supplySource(self)
+        queryOutputLauncher!.supplySource(self)
         player.playScript(fileName: scriptPath, templateOutputConsumer: queryOutputLauncher)
         return ok
     }
