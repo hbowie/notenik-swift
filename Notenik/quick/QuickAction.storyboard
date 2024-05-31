@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -65,7 +64,7 @@ DQ
                                     <action selector="okToProceed:" target="p4w-Zd-lbL" id="eT7-GB-CE0"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jl9-Zy-pu3">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jl9-Zy-pu3">
                                 <rect key="frame" x="20" y="328" width="125" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Collection Shortcut:" id="4No-Bl-O82">
                                     <font key="font" metaFont="system"/>
@@ -73,8 +72,8 @@ DQ
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xby-u7-CGk">
-                                <rect key="frame" x="152" y="322" width="311" height="25"/>
+                            <comboBox focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xby-u7-CGk">
+                                <rect key="frame" x="151" y="324" width="312" height="23"/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="5" id="zBH-Ka-Kmy">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -84,7 +83,7 @@ DQ
                                     <action selector="shortcutAction:" target="p4w-Zd-lbL" id="CMk-rc-9iB"/>
                                 </connections>
                             </comboBox>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pp3-H3-Vph">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pp3-H3-Vph">
                                 <rect key="frame" x="20" y="304" width="67" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Note Title:" id="tWF-Ym-9Mq">
                                     <font key="font" metaFont="system"/>
@@ -92,8 +91,8 @@ DQ
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Waw-zQ-jJl">
-                                <rect key="frame" x="20" y="270" width="443" height="25"/>
+                            <comboBox focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Waw-zQ-jJl">
+                                <rect key="frame" x="19" y="271" width="444" height="23"/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="5" id="c02-UV-80s">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -103,8 +102,8 @@ DQ
                                     <action selector="noteTitleAction:" target="p4w-Zd-lbL" id="Aoe-x5-1lo"/>
                                 </connections>
                             </comboBox>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mZE-j6-DUs">
-                                <rect key="frame" x="20" y="250" width="69" height="16"/>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mZE-j6-DUs">
+                                <rect key="frame" x="20" y="249" width="69" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Body text: " id="Qae-Gz-PL0">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -112,17 +111,17 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ekJ-yO-CSb">
-                                <rect key="frame" x="20" y="72" width="438" height="170"/>
+                                <rect key="frame" x="20" y="72" width="438" height="169"/>
                                 <clipView key="contentView" drawsBackground="NO" id="ai9-Cm-sin">
-                                    <rect key="frame" x="0.0" y="0.0" width="423" height="170"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="423" height="169"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" continuousSpellChecking="YES" allowsUndo="YES" smartInsertDelete="YES" id="mYg-T5-LX3">
-                                            <rect key="frame" x="0.0" y="0.0" width="423" height="170"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="423" height="169"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="423" height="170"/>
+                                            <size key="minSize" width="423" height="169"/>
                                             <size key="maxSize" width="438" height="10000000"/>
                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
@@ -133,7 +132,7 @@ DQ
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="CD5-V7-dR9">
-                                    <rect key="frame" x="423" y="0.0" width="15" height="170"/>
+                                    <rect key="frame" x="423" y="0.0" width="15" height="169"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>

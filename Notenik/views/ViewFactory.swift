@@ -50,7 +50,7 @@ class ViewFactory {
         case NotenikConstants.backlinksCommon:
             return LabelView()
         case NotenikConstants.bodyCommon:
-            return BodyView()
+            return BodyView(minBodyEditViewHeight: collection.minBodyEditViewHeight)
         case NotenikConstants.booleanType:
             return BooleanView()
         case NotenikConstants.codeCommon:

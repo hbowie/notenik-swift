@@ -32,11 +32,11 @@ class BodyView: MacEditView {
         }
     }
     
-    init() {
-        buildView()
+    init(minBodyEditViewHeight: Float = 5.0) {
+        buildView(minBodyEditViewHeight: minBodyEditViewHeight)
     }
     
-    func buildView() {
+    func buildView(minBodyEditViewHeight: Float = 5.0) {
         
         // Set up the Scroll View
         let scrollRect = NSRect(x: 0, y: 0, width: 300, height: 150)
@@ -44,7 +44,7 @@ class BodyView: MacEditView {
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
         scrollView.autoresizingMask = [.width, .height]
-        let height = AppPrefsCocoa.shared.getViewHeight(lines: 5.0)
+        let height = AppPrefsCocoa.shared.getViewHeight(lines: minBodyEditViewHeight)
         scrollView.heightAnchor.constraint(greaterThanOrEqualToConstant: height).isActive = true
         scrollView.borderType = .bezelBorder
         

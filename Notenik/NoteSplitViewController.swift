@@ -28,15 +28,6 @@ class NoteSplitViewController: NSSplitViewController {
         return splitView.subviews[0] == subview
     }
     
-    /// Respond to a user request to show/hide the list/tabs view.
-    @IBAction func toggleListPane(_ sender: Any) {
-        if leftViewCollapsed {
-            _ = changeLeftViewVisibility(makeVisible: true)
-        } else {
-            _ = changeLeftViewVisibility(makeVisible: false)
-        }
-    }
-    
     /// The actual mechanics of showing or hiding the leftmost view.
     func changeLeftViewVisibility(makeVisible: Bool) -> CGFloat {
         var newPosition: CGFloat = 0.0

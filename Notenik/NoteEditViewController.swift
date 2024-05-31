@@ -18,7 +18,14 @@ import NotenikUtils
 /// Controls the view shown to allow the user to edit a note.
 class NoteEditViewController: NSViewController {
     
+    /// This is the view defined in the Main storyboard, set within a bordered scroll view.
     @IBOutlet var parentView: NSView!
+    
+    var clipView: NSClipView?
+    var scrollView: NSScrollView?
+    
+    /// This is the grid view that will be set inside the parent view.
+    var gridView:  NSGridView!
     
     var subView: NSView?
     
@@ -35,7 +42,6 @@ class NoteEditViewController: NSViewController {
     var editViews: [MacEditView] = []
     var lookupViews: [LookupView] = []
     var grid:      [[NSView]] = []
-    var gridView:  NSGridView!
     
     var titleView:  MacEditView?
     var dateView:   DateView?
@@ -72,10 +78,37 @@ class NoteEditViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialViewLoaded = true
+        if parentView != nil {
+            if parentView!.superview != nil {
+                clipView = parentView?.superview as? NSClipView
+                if clipView!.superview != nil {
+                    scrollView = clipView?.superview as? NSScrollView
+                }
+            }
+        }
+        
         guard notenikIO != nil && notenikIO!.collection != nil else { return }
         configureEditView(noteIO: notenikIO!, klassName: nil)
     }
     
+    func scrollToBottom() {
+        guard io != nil else { return }
+        guard io!.collection != nil else { return }
+        guard io!.collectionOpen else { return }
+        guard initialViewLoaded && containerViewBuilt else { return }
+        if clipView == nil {
+            print("Clip View Not Available!")
+        } else if clipView!.documentView == nil {
+            print("Document View Not Available!")
+        } else if scrollView == nil {
+            print("Scroll View Not Available!")
+        } else {
+            // print("\(scrollView!.documentView!.size)")
+            // let docBounds = clipView!.documentView!.bounds
+            // let scrollPoint = CGPoint(x: docBounds.width, y: (docBounds.height * -1.00))
+            //  clipView!.scroll(to: scrollPoint)
+        }
+    }
     /// Save any important info prior to the view's disappearance.
     override func viewWillDisappear() {
         super.viewWillDisappear()
@@ -84,6 +117,7 @@ class NoteEditViewController: NSViewController {
     func configureEditView(noteIO: NotenikIO, klassName: String? = nil) {
         guard initialViewLoaded else { return }
         guard let collection = noteIO.collection else { return }
+        
         containerViewBuilt = false
         var fieldDefs = collection.dict.list
         if collection.klassFieldDef != nil && klassName != nil && !klassName!.isEmpty {
@@ -109,6 +143,7 @@ class NoteEditViewController: NSViewController {
         editViews = []
         lookupViews = []
         grid = []
+        
         dateView = nil
         recursView = nil
         statusView = nil
@@ -156,14 +191,14 @@ class NoteEditViewController: NSViewController {
         if def.fieldType.typeString == NotenikConstants.bodyCommon {
             if collection.bodyLabel {
                 let row = [labelView]
-                grid.append(row)
+                appendToGrid(row)
             }
             bodyRow = grid.count
             let row = [valueView]
-            grid.append(row)
+            appendToGrid(row)
         } else {
             let row = [labelView, valueView]
-            grid.append(row)
+            appendToGrid(row)
         }
         
         if label.commonForm == NotenikConstants.titleCommon {
@@ -187,10 +222,13 @@ class NoteEditViewController: NSViewController {
         }
     }
     
+    func appendToGrid(_ row: [NSView]) {
+        grid.append(row)
+    }
+    
     /// Create a Grid View to hold the field labels and values to be edited
     func makeGridView() {
         gridView = NSGridView(views: grid)
-        
         gridView.translatesAutoresizingMaskIntoConstraints = false
         
         if bodyRow >= 0 {
@@ -198,6 +236,11 @@ class NoteEditViewController: NSViewController {
             let vRange = NSRange(location: bodyRow, length: 1)
             gridView.mergeCells(inHorizontalRange: hRange, verticalRange: vRange)
         }
+        
+        finishGridSubView()
+    }
+    
+    func finishGridSubView() {
         if subView == nil {
             parentView.addSubview(gridView)
         } else {
@@ -372,4 +415,6 @@ class NoteEditViewController: NSViewController {
 
         return (outcome, outNote)
     } // end modIfChanged method
+    
 }
+

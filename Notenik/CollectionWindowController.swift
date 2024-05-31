@@ -365,6 +365,43 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
     }
     
+    /// Respond to a user request to show/hide the list/tabs view.
+    @IBAction func toggleListPane(_ sender: Any) {
+        if let splits = splitViewController {
+            if splits.leftViewCollapsed {
+                changeLeftViewVisibility(makeVisible: true)
+            } else {
+                changeLeftViewVisibility(makeVisible: false)
+            }
+        }
+    }
+    
+    @IBAction func increaseBodyEditSpace(_ sender: Any) {
+        guard let io = notenikIO else { return }
+        guard let collection = io.collection else { return }
+        collection.minBodyEditViewHeight += 5.0
+        adjustEditWindow()
+        if let evc = editVC {
+            evc.scrollToBottom()
+        } else {
+            print("No Edit View Controller Available!")
+        }
+    }
+    
+    @IBAction func decreaseBodyEditSpace(_ sender: Any) {
+        guard let io = notenikIO else { return }
+        guard let collection = io.collection else { return }
+        if collection.minBodyEditViewHeight >= 10.0 {
+            collection.minBodyEditViewHeight -= 5.0
+            adjustEditWindow()
+            if let evc = editVC {
+                evc.scrollToBottom()
+            } else {
+                print("No Edit View Controller Available!")
+            }
+        }
+    }
+    
     func ensureQuotesMode() {
         
         if let splits = splitViewController {
@@ -1117,6 +1154,36 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         }
         editVC!.refreshLookupData()
         editVC!.populateFields(with: note)
+    }
+    
+    /// Adjust  the edit window to reflect any changes in the UI appearance.
+    func adjustEditWindow() {
+        let editing = noteTabs!.tabView.selectedTabViewItem!.label == "Edit"
+        guard let noteIO = io else { return }
+        var klassName: String?
+        var note = editVC!.selectedNote
+        if editing {
+            let (outcome, modNote) = modIfChanged()
+            if modNote != nil {
+                note = modNote
+            }
+            guard outcome != .tryAgain else { return }
+        }
+        if note != nil && note!.hasKlass() {
+            klassName = note!.klass.value
+        }
+        editVC!.containerViewBuilt = false
+        editVC!.configureEditView(noteIO: noteIO, klassName: klassName)
+        if note != nil {
+            select(note: note,
+                   position: nil,
+                   source: .action,
+                   andScroll: true,
+                   searchPhrase: nil)
+            if editing {
+                openEdits(self)
+            }
+        }
     }
     
     func newNote(title: String, bodyText: String) {

@@ -17,7 +17,7 @@ import NotenikLib
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NoteDisplayMaster {
-    
+        
     let fm      = FileManager.default
 
     @IBOutlet weak var favsToHTML: NSMenuItem!

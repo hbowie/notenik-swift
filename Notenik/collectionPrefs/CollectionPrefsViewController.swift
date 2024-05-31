@@ -41,7 +41,10 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet weak var scrollingSyncCkBox: NSButton!
     @IBOutlet var pathControl:          NSPathControl!
     @IBOutlet var parentView:           NSView!
-    @IBOutlet var displayModePopUp: NSPopUpButton!
+    @IBOutlet var displayModePopUp:     NSPopUpButton!
+    @IBOutlet var minEditBodySlider:    NSSlider!
+    @IBOutlet var minEditBodyHeight: NSTextField!
+    
     var extPicker: FileExtensionPicker!
     
     @IBOutlet var horizontalStack: NSStackView!
@@ -142,6 +145,7 @@ class CollectionPrefsViewController: NSViewController {
         setHashTags(collection!.hashTags)
         setMirrorAutoIndex(collection!.mirrorAutoIndex)
         setBodyLabel(collection!.bodyLabel)
+        setMinBodyEdit(collection!.minBodyEditViewHeight)
         setTitleDisplay(collection!.titleDisplayOption)
         setStreamlined(collection!.displayMode != .normal)
         switch collection!.displayMode {
@@ -366,6 +370,17 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
+    func setMinBodyEdit(_ height: Float) {
+        var int = Int(round(height))
+        if int < 5 {
+            int = 5
+        } else if int > 60 {
+            int = 60
+        }
+        minEditBodySlider.integerValue = int
+        minEditBodyHeight.stringValue = "\(int)"
+    }
+    
     func setTitleDisplay(_ opt: LineDisplayOption) {
         noteTitleDisplayPopUp.selectItem(withTitle: opt.rawValue)
     }
@@ -437,6 +452,15 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
+    @IBAction func minBodyEditHeightChanged(_ sender: Any) {
+        var int = Int(round(minEditBodySlider.floatValue))
+        if int < 5 {
+            int = 5
+        } else if int > 60 {
+            int = 60
+        }
+        minEditBodyHeight.stringValue = "\(int)"
+    }
     
     @IBAction func okButtonClicked(_ sender: Any) {
         guard collection != nil else { return }
@@ -466,6 +490,8 @@ class CollectionPrefsViewController: NSViewController {
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
         collection!.mirrorAutoIndex = (mirrorAutoIndexCkBox.state == .on)
         collection!.bodyLabel = (bodyLabelCkBox.state == .on)
+        collection!.minBodyEditViewHeight = minEditBodySlider.floatValue
+        
         if let displayOptTitle = noteTitleDisplayPopUp.titleOfSelectedItem {
             if let titleDisplayOpt = LineDisplayOption(rawValue: displayOptTitle) {
                 collection!.titleDisplayOption = titleDisplayOpt
