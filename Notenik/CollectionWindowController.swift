@@ -3952,6 +3952,19 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     /// Import additional notes from a comma- or tab-separated text file.
     @IBAction func importDelimited(_ sender: Any) {
         
+        importParms = ImportParms()
+        importParms.format = .delim
+        importWithParms()
+    }
+    
+    /// Import the notes from another Notenik Collection
+    @IBAction func importNotenik(_ sender: Any) {
+        importParms = ImportParms()
+        importParms.format = .notenik
+        importWithParms()
+    }
+    
+    func importWithParms() {
         guard let noteIO = guardForCollectionAction() else { return }
         
         if let importController = self.importStoryboard.instantiateController(withIdentifier: "importWC") as? ImportWindowController {
@@ -3970,7 +3983,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     /// User has finished with import settings.
     func importSettingsObtained() {
         if importParms.userOkToSettings {
-            importDelimitedOK()
+            switch importParms.format {
+            case .delim:
+                importDelimitedOK()
+            case .notenik:
+                importNotenikOK()
+            default:
+                break
+            }
         }
     }
     
@@ -3998,6 +4018,48 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         alert.messageText = "Imported \(imports) notes, modified \(mods) notes, from \(fileURL.path)"
         alert.addButton(withTitle: "OK")
         _ = alert.runModal()
+        editVC!.io = noteIO
+        finishBatchOperation()
+    }
+    
+    func importNotenikOK() {
+        // See if we're ready to take action
+        let nio = guardForCollectionAction()
+        guard let noteIO = nio else { return }
+        
+        // Ask the user for an import location
+        let openPanel = juggler.prepCollectionOpenPanel()
+        openPanel.canCreateDirectories = false
+        if let parent = noteIO.collection?.getLastImportParent() {
+            openPanel.directoryURL = parent
+        }
+        let userChoice = openPanel.runModal()
+        guard userChoice == .OK else { return }
+
+        let importIO: NotenikIO = FileIO()
+        let importRealm = importIO.getDefaultRealm()
+        let importURL = openPanel.url!
+        importRealm.path = ""
+        let importCollection = importIO.openCollection(realm: importRealm,
+                                                       collectionPath: importURL.path,
+                                                       readOnly: true,
+                                                       multiRequests: nil)
+        guard importCollection != nil else {
+            blockingAlert(msg: "The import location does not seem to be a valid Notenik Collection",
+                          info: "Attempted to import from \(importURL.path)")
+            return
+        }
+
+        let importer = NotenikImporter(parms: importParms, importIO: importIO, updateIO: noteIO)
+        importer.importNotes()
+        importParms.logTotals()
+        
+        let ok = (importParms.added > 0 || importParms.modified > 0)
+        if ok {
+            noteIO.collection!.setLastImportParent(url: importURL.deletingLastPathComponent())
+        }
+        informUserOfImportExportResults(operation: "import", ok: ok, numberOfNotes: importParms.input, path: importURL.path)
+        
         editVC!.io = noteIO
         finishBatchOperation()
     }
@@ -4075,63 +4137,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         alert.messageText = "Imported \(imports) notes, Modified \(mods) notes, from \(fileURL.path)"
         alert.addButton(withTitle: "OK")
         _ = alert.runModal()
-        editVC!.io = noteIO
-        finishBatchOperation()
-    }
-    
-    /// Import the notes from another Notenik Collection
-    @IBAction func importNotenik(_ sender: Any) {
-
-        // See if we're ready to take action
-        let nio = guardForCollectionAction()
-        guard let noteIO = nio else { return }
-        
-        // Ask the user for an import location
-        let openPanel = juggler.prepCollectionOpenPanel()
-        openPanel.canCreateDirectories = false
-        let userChoice = openPanel.runModal()
-        guard userChoice == .OK else { return }
-
-        let importIO: NotenikIO = FileIO()
-        let importRealm = importIO.getDefaultRealm()
-        let importURL = openPanel.url!
-        importRealm.path = ""
-        let importCollection = importIO.openCollection(realm: importRealm, 
-                                                       collectionPath: importURL.path,
-                                                       readOnly: true,
-                                                       multiRequests: nil)
-        guard importCollection != nil else {
-            blockingAlert(msg: "The import location does not seem to be a valid Notenik Collection",
-                          info: "Attempted to import from \(importURL.path)")
-            return
-        }
-
-        // OK, let's import
-        var imported = 0
-        var rejected = 0
-        var (importNote, importPosition) = importIO.firstNote()
-        while importNote != nil && importPosition.valid {
-            let noteCopy = importNote!.copy() as! Note
-            noteCopy.collection = noteIO.collection!
-            let (importedNote, _) = noteIO.addNote(newNote: noteCopy)
-            if importedNote == nil {
-                rejected += 1
-                Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
-                                  category: "CollectionWindowController",
-                                  level: .error,
-                                  message: "Could not import note titled '\(importNote!.title.value)'")
-            } else {
-                imported += 1
-            }
-            (importNote, importPosition) = importIO.nextNote(importPosition)
-        }
-        
-        if rejected > 0 {
-            blockingAlert(msg: "\(rejected) Notes could not be imported", info: "See the Log Window for details")
-        }
-        let ok = imported > 0
-        informUserOfImportExportResults(operation: "import", ok: ok, numberOfNotes: imported, path: importURL.path)
-        
         editVC!.io = noteIO
         finishBatchOperation()
     }

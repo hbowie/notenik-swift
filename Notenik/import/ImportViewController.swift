@@ -35,6 +35,8 @@ class ImportViewController: NSViewController {
     
     @IBOutlet var rowsPopup: NSPopUpButton!
     
+    @IBOutlet var consolidateLookupsCkBox: NSButtonCell!
+    
     var importParms = ImportParms()
     
     /// Perform any initial view setup needed.
@@ -62,6 +64,8 @@ class ImportViewController: NSViewController {
                 importParms.rowParm = rp
             }
         }
+        
+        importParms.consolidateLookups = (consolidateLookupsCkBox.state == .on)
         
         finishUp()
     }
