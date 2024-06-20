@@ -164,9 +164,27 @@ class ShareViewController: NSViewController {
                     if workTypeField != nil {
                         workType = workTypeField!.value.value
                     }
-                    let workTitle = note!.workTitle.value
+                    if workType.lowercased() == "unknown" {
+                        workType = ""
+                    }
+                    var theType = ""
+                    var delim = "*"
+                    if !workType.isEmpty {
+                        if let typeValue = workTypeField?.value as? WorkTypeValue? {
+                            theType = typeValue!.theType
+                            if !typeValue!.isMajor {
+                                delim = "\""
+                            }
+                        } else {
+                            theType = "the \(workType)"
+                        }
+                    }
+                    var workTitle = note!.workTitle.value
+                    if workTitle.lowercased() == "unknown" {
+                        workTitle = ""
+                    }
                     if workType.count > 0 && workTitle.count > 0 {
-                        authorLine.append(", from the \(workType) titled *\(workTitle)*")
+                        authorLine.append(", from \(theType) titled \(delim)\(workTitle)\(delim)")
                     }
                     markedUp.writeLine(authorLine)
                 }
