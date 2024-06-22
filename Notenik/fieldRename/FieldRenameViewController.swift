@@ -30,6 +30,8 @@ class FieldRenameViewController: NSViewController, NSComboBoxDataSource {
     
     @IBOutlet var msgText: NSTextField!
     
+    @IBOutlet var defaultText: NSTextField!
+    
     var _io: NotenikIO?
     var collection = NoteCollection()
     var dict: FieldDictionary = FieldDictionary()
@@ -163,6 +165,7 @@ class FieldRenameViewController: NSViewController, NSComboBoxDataSource {
         } else {
             parms.newFieldType = ""
         }
+        parms.newFieldDefault = defaultText.stringValue
         
         switch parms.action {
         case .rename:

@@ -18,6 +18,7 @@ class FieldRenameParms {
     var newFieldLabel = ""
     var newFieldType = ""
     var typeConfigText = ""
+    var newFieldDefault = ""
     
     var addOrRename: Bool {
         switch action {

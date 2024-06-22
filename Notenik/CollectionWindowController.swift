@@ -968,6 +968,22 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 _ = io!.modNote(oldNote: noteToUpdate, newNote: modNote)
             }
             _ = dict.removeDef(oldDef!)
+            
+        } else if parms.add && !parms.newFieldDefault.isEmpty {
+            var (note, position) = noteIO.firstNote()
+            while note != nil {
+                let modNote = note!.copy() as! Note
+                let newValue = newDef!.fieldType.createValue(parms.newFieldDefault)
+                let newField = NoteField(def: newDef!, value: newValue)
+                _ = modNote.setField(newField)
+                if let noteID = editVC?.selectedNote?.id {
+                    if noteID == modNote.id {
+                        populateEditFields(with: modNote)
+                    }
+                }
+                _ = io!.modNote(oldNote: note!, newNote: modNote)
+                (note, position) = noteIO.nextNote(position)
+            }
         }
                 
         noteIO.persistCollectionInfo()
