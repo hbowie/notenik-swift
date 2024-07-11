@@ -157,6 +157,8 @@ class CollectionPrefsViewController: NSViewController {
             displayModePopUp.selectItem(at: 3)
         case .streamlinedReading:
             displayModePopUp.selectItem(at: 1)
+        case .custom:
+            displayModePopUp.selectItem(at: 4)
         }
         setMathJax(collection!.mathJax)
         setImgLocal(collection!.imgLocal)

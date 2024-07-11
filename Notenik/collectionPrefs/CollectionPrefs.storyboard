@@ -253,6 +253,9 @@ DQ
                                             <menuItem title="Quotations" id="NRu-LL-3Dl">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
+                                            <menuItem title="Custom" id="ceT-3k-geF">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>

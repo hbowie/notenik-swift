@@ -3065,7 +3065,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         // Ask the user for a location on disk
         let openPanel = NSOpenPanel();
         openPanel.title = "Select an attachment for this Note"
-        let parent = io!.collection!.fullPathURL!.deletingLastPathComponent()
+        var parent = io!.collection!.fullPathURL!.deletingLastPathComponent()
+        if let lastParent = io?.collection?.lastAttachmentParent {
+            parent = lastParent
+        }
         openPanel.directoryURL = parent
         openPanel.showsResizeIndicator = true
         openPanel.showsHiddenFiles = false
@@ -3076,6 +3079,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let response = openPanel.runModal()
         guard response == .OK else { return }
         guard let urlToAttach = openPanel.url else { return }
+        io!.collection!.lastAttachmentParent = urlToAttach.deletingLastPathComponent()
         addAttachment(urlToAttach: urlToAttach)
     }
     
@@ -3854,10 +3858,29 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         setDisplayTo(.quotations)
     }
     
+    @IBAction func setDisplayToCustom(_sender: Any) {
+        setDisplayTo(.custom)
+    }
+    
     func setDisplayTo(_ displayMode: DisplayMode) {
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
-        collection.displayMode = displayMode
+        if !collection.displayTemplate.isEmpty {
+            collection.displayMode = displayMode
+            if displayMode == .custom {
+                collection.overrideCustomDisplay = false
+            } else {
+                collection.overrideCustomDisplay = true
+            }
+        } else {
+            collection.overrideCustomDisplay = false
+            if displayMode == .custom {
+                collection.displayMode = .normal
+                communicateError("No Custom Display Template Was Found", alert: true)
+            } else {
+                collection.displayMode = displayMode
+            }
+        }
         noteIO.persistCollectionInfo()
         reloadCollection(self)
     }
@@ -3873,6 +3896,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         case .streamlinedReading:
             collection.displayMode = .presentation
         case .quotations:
+            collection.displayMode = .normal
+        case .custom:
             collection.displayMode = .normal
         }
         noteIO.persistCollectionInfo()
