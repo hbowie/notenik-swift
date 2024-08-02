@@ -30,6 +30,7 @@ class ShareViewController: NSViewController {
     let htmlBlockquoteValue = "html-blockquote"
     let markkdownValue = "markdown"
     let markdownQuoteValue = "mdquote"
+    let markdownQuoteFromValue = "mdquotefrom"
     let notenikValue = "notenik"
     let jsonValue = "json"
     let microValue = "micro"
@@ -53,6 +54,7 @@ class ShareViewController: NSViewController {
     @IBOutlet var formatHTMLBlockquoteButton: NSButton!
     @IBOutlet var formatMarkdownButton: NSButton!
     @IBOutlet var formatMarkdownQuoteButton: NSButton!
+    @IBOutlet var formatMarkdownQuoteFrom: NSButton!
     @IBOutlet var formatNotenikButton: NSButton!
     @IBOutlet var formatJSONButton: NSButton!
     @IBOutlet var formatMicroButton: NSButton!
@@ -84,6 +86,8 @@ class ShareViewController: NSViewController {
             formatMarkdownButton.state = .on
         } else if formatSelector == markdownQuoteValue {
             formatMarkdownQuoteButton.state = .on
+        } else if formatSelector == markdownQuoteFromValue {
+            formatMarkdownQuoteFrom.state = .on
         } else if formatSelector == jsonValue {
             formatJSONButton.state = .on
         } else if formatSelector == microValue {
@@ -188,6 +192,42 @@ class ShareViewController: NSViewController {
                     }
                     markedUp.writeLine(authorLine)
                 }
+            }
+            stringToShare = markedUp.code
+            
+            // Format Markdown with quote-from command
+        } else if formatMarkdownQuoteFrom.state == .on {
+            let markedUp = Markedup(format: .markdown)
+            if note!.hasBody() {
+                markedUp.startBlockQuote()
+                markedUp.writeBlockOfLines(note!.body.value)
+                markedUp.finishBlockQuote()
+            }
+            if contentEntireNoteButton.state == .on {
+                markedUp.newLine()
+                let workTypeField = FieldGrabber.getField(note: note!, label: note!.collection.workTypeFieldDef.fieldLabel.commonForm)
+                var workType = ""
+                if workTypeField != nil {
+                    workType = workTypeField!.value.value
+                }
+                if workType.lowercased() == "unknown" {
+                    workType = ""
+                }
+                var workTitle = note!.workTitle.value
+                if workTitle.lowercased() == "unknown" {
+                    workTitle = ""
+                }
+                let authorLinkField = FieldGrabber.getField(note: note!, label: NotenikConstants.authorLinkCommon)
+                var authorLink = ""
+                if authorLinkField != nil {
+                    authorLink = authorLinkField!.value.value
+                }
+                let workLinkField = FieldGrabber.getField(note: note!, label: note!.collection.workLinkFieldDef.fieldLabel.commonForm)
+                var workLink = ""
+                if workLinkField != nil {
+                    workLink = workLinkField!.value.value
+                }
+                markedUp.writeLine("{:quote-from:\(note!.creatorValue)|\(note!.date.value)|\(workType)|\(workTitle)|\(authorLink)|\(workLink)}")
             }
             stringToShare = markedUp.code
             
@@ -417,6 +457,8 @@ class ShareViewController: NSViewController {
             formatSelector = markkdownValue
         } else if formatMarkdownQuoteButton.state == .on {
             formatSelector = markdownQuoteValue
+        } else if formatMarkdownQuoteFrom.state == .on {
+            formatSelector = markdownQuoteFromValue
         } else if formatJSONButton.state == .on {
             formatSelector = jsonValue
         } else if formatMicroButton.state == .on {
