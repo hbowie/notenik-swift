@@ -113,7 +113,10 @@ class CustomURLActor {
                 communicateError("Note could not be found with this ID: \(value)")
                 return
             }
-            cwc.select(note: note, position: nil, source: .action, andScroll: true)
+            _ = cwc.viewCoordinator.focusOn(initViewID: "custom-url-actor",
+                                            note: note,
+                                            position: nil, row: -1, searchPhrase: nil)
+            // cwc.select(note: note, position: nil, source: .action, andScroll: true)
         default:
             communicateError("Help Query Parameter of \(label) not recognized")
         }
@@ -184,7 +187,10 @@ class CustomURLActor {
                 communicateError("Note could not be found with this ID: \(value)")
                 return
             }
-            controller.select(note: note, position: nil, source: .action, andScroll: true)
+            _ = controller.viewCoordinator.focusOn(initViewID: "custom-url-actor",
+                                                   note: note,
+                                                   position: nil, row: -1, searchPhrase: nil)
+            // controller.select(note: note, position: nil, source: .action, andScroll: true)
         case "timestamp":
             guard let controller = cwc else {
                 communicateError("Unable to open desired Collection")
@@ -200,7 +206,10 @@ class CustomURLActor {
                 communicateError("Note could not be found with this Timestamp: \(value)")
                 return
             }
-            controller.select(note: note, position: nil, source: .action, andScroll: true)
+            _ = controller.viewCoordinator.focusOn(initViewID: "custom-url-actor",
+                                                   note: note,
+                                                   position: nil, row: -1, searchPhrase: nil)
+            // controller.select(note: note, position: nil, source: .action, andScroll: true)
         case "notepath":
             guard fm.fileExists(atPath: value) else {
                 communicateError("Note file could not be located")
@@ -220,7 +229,10 @@ class CustomURLActor {
                 communicateError("Note could not be found with this ID: \(value)")
                 return
             }
-            controller.select(note: note, position: nil, source: .action, andScroll: true)
+            _ = controller.viewCoordinator.focusOn(initViewID: "custom-url-actor",
+                                                   note: note,
+                                                   position: nil, row: -1, searchPhrase: nil)
+            // controller.select(note: note, position: nil, source: .action, andScroll: true)
         case "attachment":
             guard let controller = cwc else {
                 communicateError("Unable to open desired Collection")
@@ -261,7 +273,10 @@ class CustomURLActor {
         if id.count == 0 { return true }
         guard let io = wc.io else { return false }
         guard let note = io.getNote(knownAs: id) else { return false }
-        wc.select(note: note, position: nil, source: .action, andScroll: true)
+        _ = wc.viewCoordinator.focusOn(initViewID: "custom-url-actor",
+                                       note: note,
+                                       position: nil, row: -1, searchPhrase: nil)
+       //  wc.select(note: note, position: nil, source: .action, andScroll: true)
         return true
     }
     

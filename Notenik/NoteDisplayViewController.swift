@@ -17,6 +17,7 @@ import NotenikLib
 import NotenikMkdown
 
 class NoteDisplayViewController: NSViewController, 
+                                    CollectionView,
                                     WKUIDelegate,
                                     WKNavigationDelegate,
                                     WKScriptMessageHandler {
@@ -110,6 +111,32 @@ class NoteDisplayViewController: NSViewController,
                 scroller.displayEnd(note: note!, webView: webView)
             }
         }
+    }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Compliance with CollectionView.
+    //
+    // -----------------------------------------------------------
+    
+    var viewID = "note-display"
+    
+    var coordinator: CollectionViewCoordinator?
+    
+    func setCoordinator(coordinator: CollectionViewCoordinator) {
+        self.coordinator = coordinator
+    }
+    
+    func focusOn(initViewID: String, 
+                 note: NotenikLib.Note?,
+                 position: NotenikLib.NotePosition?,
+                 io: NotenikIO,
+                 searchPhrase: String?,
+                 withUpdates: Bool = false) {
+        self.io = io
+        self.note = note
+        self.searchPhrase = searchPhrase
+        display()
     }
     
     // -----------------------------------------------------------

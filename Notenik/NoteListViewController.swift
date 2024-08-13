@@ -16,7 +16,8 @@ import NotenikLib
 
 class NoteListViewController:   NSViewController,
                                 NSTableViewDataSource,
-                                NSTableViewDelegate {
+                                NSTableViewDelegate,
+                                CollectionView {
     
     let defaults = UserDefaults.standard
 
@@ -645,15 +646,22 @@ class NoteListViewController:   NSViewController,
     /// Respond to a user selection of a row in the table.
     func tableViewSelectionDidChange(_ notification: Notification) {
         guard checkForMods else { return }
-        let row = tableView.selectedRow
-        guard collectionWindowController != nil && row >= 0 else { return }
-        let (outcome, _) = collectionWindowController!.modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return }
-        collectionWindowController!.applyCheckBoxUpdates()
         guard !programmaticSelection else { return }
-        if let (note, position) = notenikIO?.selectNote(at: row) {
-            collectionWindowController!.select(note: note, position: position, source: NoteSelectionSource.list)
-        }
+        let row = tableView.selectedRow
+        guard row >= 0 else { return }
+        guard coordinator != nil else { return }
+        guard collectionWindowController != nil else { return }
+        // let (outcome, _) = collectionWindowController!.modIfChanged()
+        // guard outcome != modIfChangedOutcome.tryAgain else { return }
+        // collectionWindowController!.applyCheckBoxUpdates()
+        coordinator!.focusOn(initViewID: viewID,
+                             note: nil,
+                             position: nil,
+                             row: row,
+                             searchPhrase: nil)
+        // if let (note, position) = notenikIO?.selectNote(at: row) {
+        //     collectionWindowController!.select(note: note, position: position, source: NoteSelectionSource.list)
+        // }
         lastRowSelected = row
     }
     
@@ -1025,6 +1033,49 @@ class NoteListViewController:   NSViewController,
             }
         }
     }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Compliance with CollectionView protocol.
+    //
+    // -----------------------------------------------------------
+    
+    var viewID = "notes-list"
+    
+    var coordinator: CollectionViewCoordinator?
+    
+    func setCoordinator(coordinator: CollectionViewCoordinator) {
+        self.coordinator = coordinator
+    }
+    
+    func focusOn(initViewID: String, 
+                 note: NotenikLib.Note?,
+                 position: NotenikLib.NotePosition?,
+                 io: any NotenikLib.NotenikIO,
+                 searchPhrase: String?,
+                 withUpdates: Bool = false) {
+        
+        guard initViewID != viewID else { return }
+        guard position != nil && position!.valid else { return }
+        if withUpdates {
+            reload()
+        }
+        programmaticSelection = true
+        self.checkForMods = false
+        let indexSet = IndexSet(integer: position!.index)
+        tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
+        // if andScroll {
+            scrollToSelectedRow()
+        // }
+        self.checkForMods = true
+        programmaticSelection = false
+    }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Utilities.
+    //
+    // -----------------------------------------------------------
     
     /// Send an informational message to the log.
     func logInfo(msg: String) {

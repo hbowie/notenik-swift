@@ -16,7 +16,7 @@ import NotenikLib
 import NotenikUtils
 
 /// Controls the view shown to allow the user to edit a note.
-class NoteEditViewController: NSViewController {
+class NoteEditViewController: NSViewController, CollectionView {
     
     /// This is the view defined in the Main storyboard, set within a bordered scroll view.
     @IBOutlet var parentView: NSView!
@@ -260,6 +260,48 @@ class NoteEditViewController: NSViewController {
         let str = AppPrefsCocoa.shared.makeUserAttributedString(text: label.properWithParent + ": ", usage: .labels)
         let vw = NSTextField(labelWithAttributedString: str)
         return vw
+    }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Conformace to OutlineView protocol
+    //
+    // -----------------------------------------------------------
+    
+    var viewID: String = "note-edit"
+    
+    var coordinator: CollectionViewCoordinator?
+    
+    func setCoordinator(coordinator: CollectionViewCoordinator) {
+        self.coordinator = coordinator
+    }
+    
+    func focusOn(initViewID: String, 
+                 note: NotenikLib.Note?,
+                 position: NotenikLib.NotePosition?,
+                 io: any NotenikLib.NotenikIO,
+                 searchPhrase: String?,
+                 withUpdates: Bool = false) {
+        
+        guard viewID != initViewID else { return }
+        guard initialViewLoaded && containerViewBuilt else { return }
+        guard io.collectionOpen else { return }
+        guard let collection = io.collection else { return }
+        guard let focusNote = note else { return }
+        
+        selectedNote = focusNote
+        if collection.klassFieldDef != nil {
+            let klassName = focusNote.klass.value
+            configureEditView(noteIO: io, klassName: klassName)
+        }
+        refreshLookupData()
+        populateFieldsWithSelectedNote()
+        
+        if let scroller = collectionWindowController?.scroller {
+            if let sv = bodyView?.scrollView {
+                scroller.editStart(scrollView: sv)
+            }
+        }
     }
     
     /// Update appropriate stuff when a new note has been selected

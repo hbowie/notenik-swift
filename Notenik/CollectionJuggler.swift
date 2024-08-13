@@ -34,6 +34,7 @@ class CollectionJuggler: NSObject {
     let osdir     = OpenSaveDirectory.shared
     var sortMenu: NSMenu!
     var displayModeMenu: NSMenu!
+    var showHideOutline: NSMenuItem!
     
     let modelsPath = "/models"
     let notenikSupport = "com.powersurgepub.notenik.macos"
@@ -707,11 +708,14 @@ class CollectionJuggler: NSObject {
             window.editVC!.containerViewBuilt = false
             window.editVC!.configureEditView(noteIO: noteIO, klassName: klassName)
             if note != nil {
-                window.select(note: note,
+                _ = window.viewCoordinator.focusOn(initViewID: "juggler",
+                                                   note: note,
+                                                   position: nil, row: -1, searchPhrase: nil)
+                /* window.select(note: note,
                               position: nil,
                               source: .action,
                               andScroll: true,
-                              searchPhrase: nil)
+                              searchPhrase: nil) */
                 if editing {
                     window.openEdits(self)
                 }
@@ -825,7 +829,10 @@ class CollectionJuggler: NSObject {
         }
         let position = io.positionOfNote(note)
         let (nextNote, nextPosition) = io.nextNote(position)
-        kbwc.select(note: nextNote, position: nextPosition, source: .action, andScroll: true)
+        _ = kbwc.viewCoordinator.focusOn(initViewID: "juggler",
+                                         note: nextNote, position: nextPosition,
+                                         row: -1, searchPhrase: nil)
+        // kbwc.select(note: nextNote, position: nextPosition, source: .action, andScroll: true)
     }
     
     func mdCheatSheet() {
@@ -840,7 +847,10 @@ class CollectionJuggler: NSObject {
             return
         }
         let position = io.positionOfNote(note)
-        kbwc.select(note: note, position: position, source: .action, andScroll: true)
+        _ = kbwc.viewCoordinator.focusOn(initViewID: "juggler",
+                                         note: note, position: position,
+                                         row: -1, searchPhrase: nil)
+        // kbwc.select(note: note, position: position, source: .action, andScroll: true)
     }
     
     func openTips() -> CollectionWindowController? {
@@ -930,7 +940,10 @@ class CollectionJuggler: NSObject {
             communicateError("Note could not be found with this ID: \(noteID)")
             return false
         }
-        controller.select(note: note, position: nil, source: .action, andScroll: true)
+        _ = controller.viewCoordinator.focusOn(initViewID: "juggler",
+                                               note: note,
+                                               position: nil, row: -1, searchPhrase: nil)
+        // controller.select(note: note, position: nil, source: .action, andScroll: true)
         return true
     }
     
@@ -1290,6 +1303,20 @@ class CollectionJuggler: NSObject {
             displayModeMenu!.items[3].state = .on
         case .custom:
             displayModeMenu!.items[4].state = .on
+        }
+    }
+    
+    func updateShowHideOutline() {
+        guard let collection = _lastWC?.io?.collection else { return }
+        if collection.outlineTab {
+            showHideOutline.title = "Hide Outline Tab"
+        } else {
+            showHideOutline.title = "Show Outline Tab"
+        }
+        if collection.seqFieldDef == nil {
+            showHideOutline.isEnabled = false
+        } else {
+            showHideOutline.isEnabled = true
         }
     }
     

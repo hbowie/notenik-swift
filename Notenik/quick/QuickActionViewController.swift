@@ -162,7 +162,10 @@ class QuickActionViewController: NSViewController, NSComboBoxDataSource {
         guard let io = wc.io else { return }
         let matchingNote = io.getNote(forID: noteID)
         guard let note = matchingNote else { return }
-        wc.select(note: note, position: nil, source: .action, andScroll: true)
+        _ = wc.viewCoordinator.focusOn(initViewID: "custom-url-actor",
+                                       note: note,
+                                       position: nil, row: -1, searchPhrase: nil)
+        // wc.select(note: note, position: nil, source: .action, andScroll: true)
     }
     
     @IBAction func cancel(_ sender: Any) {

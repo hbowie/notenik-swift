@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 1/28/19.
-//  Copyright © 2019 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019-2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -15,7 +15,8 @@ import NotenikLib
 
 class NoteTagsViewController: NSViewController,
                               NSOutlineViewDataSource,
-                              NSOutlineViewDelegate {
+                              NSOutlineViewDelegate,
+                              CollectionView {
     
     var collectionWindowController: CollectionWindowController?
     var notenikIO: NotenikIO?
@@ -273,15 +274,18 @@ class NoteTagsViewController: NSViewController,
         guard let outlineView = notification.object as? NSOutlineView else { return }
         guard collectionWindowController != nil else { return }
         
-        let (outcome, _) = collectionWindowController!.modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return }
-        collectionWindowController!.applyCheckBoxUpdates()
+        // let (outcome, _) = collectionWindowController!.modIfChanged()
+        // guard outcome != modIfChangedOutcome.tryAgain else { return }
+        // collectionWindowController!.applyCheckBoxUpdates()
         
         let selectedIndex = outlineView.selectedRow
         guard let node = outlineView.item(atRow: selectedIndex) as? TagsNode else { return }
         switch node.type {
         case .note:
-            collectionWindowController!.select(note: node.note!, position: nil, source: .tree)
+            _ = coordinator!.focusOn(initViewID: viewID,
+                                     note: node.note!,
+                                     position: nil, row: -1, searchPhrase: nil)
+            // collectionWindowController!.select(note: node.note!, position: nil, source: .tree)
         case .tag:
             var nextChildNode: TagsNode = node
             var childrenExhausted = false
@@ -293,11 +297,85 @@ class NoteTagsViewController: NSViewController,
                 }
             }
             if nextChildNode.type == .note {
-                collectionWindowController!.select(note: nextChildNode.note!, position: nil, source: .tree)
+                _ = coordinator!.focusOn(initViewID: viewID,
+                                         note: nextChildNode.note!,
+                                         position: nil, row: -1, searchPhrase: nil)
+                // collectionWindowController!.select(note: nextChildNode.note!, position: nil, source: .tree)
             }
         case .root:
             break
         }
+    }
+    
+    // -----------------------------------------------------------
+    //
+    // MARK: Implement ControlView protocol.
+    //
+    // -----------------------------------------------------------
+    
+    var viewID: String = "tags-outline"
+    
+    var coordinator: CollectionViewCoordinator?
+    
+    func setCoordinator(coordinator: CollectionViewCoordinator) {
+        self.coordinator = coordinator
+    }
+    
+    func focusOn(initViewID: String, 
+                 note: NotenikLib.Note?, 
+                 position: NotenikLib.NotePosition?,
+                 io: any NotenikLib.NotenikIO, 
+                 searchPhrase: String?,
+                 withUpdates: Bool = false) {
+        
+        guard viewID != initViewID else { return }
+        guard note != nil else { return }
+        guard outlineView != nil else {
+            print("  - outline view is nil!")
+            return
+        }
+
+        guard notenikIO != nil else {
+            return
+        }
+        
+        if withUpdates {
+            reload()
+        }
+        let iterator = notenikIO!.makeTagsNodeIterator()
+        var nextNode = iterator.next()
+        var found = false
+        while nextNode != nil && !found {
+            if nextNode!.type == .note {
+                if nextNode!.note!.id == note!.id {
+                    found = true
+                }
+            }
+            if !found {
+                nextNode = iterator.next()
+            }
+        }
+        if found {
+            var parentNode: TagsNode?
+            if nextNode!.hasParent {
+                parentNode = nextNode!.parent
+            } else if let parent = outlineView.parent(forItem: nextNode) as? TagsNode {
+                parentNode = parent
+            }
+            if parentNode != nil {
+                outlineView.expandItem(parentNode)
+            } else {
+                print("  - could not find a parent!")
+            }
+            let row = outlineView.row(forItem: nextNode)
+            if row >= 0 {
+                let iSet = IndexSet(integer: row)
+                outlineView.selectRowIndexes(iSet, byExtendingSelection: false)
+            }
+        } else {
+            print("  - Note ID of \(note!.id) could not be found")
+        }
+        return
     }
     
 }

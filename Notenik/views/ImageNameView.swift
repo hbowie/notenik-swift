@@ -87,6 +87,8 @@ class ImageNameView: MacEditView {
         lister.addItem(withTitle: noFileSelected)
     }
     
+    /// Update attachments list with latest attachments.
+    /// - Parameter note: The note being edited.
     func customizeForNote(_ note: Note) {
         lister.removeAllItems()
         lister.addItem(withTitle: noFileSelected)
@@ -96,4 +98,5 @@ class ImageNameView: MacEditView {
             }
         }
     }
+    
 }

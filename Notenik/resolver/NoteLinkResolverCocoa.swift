@@ -19,7 +19,10 @@ class NoteLinkResolverCocoa {
     static func link(wc: CollectionWindowController?, resolution: NoteLinkResolution) -> CollectionWindowController? {
 
         if resolution.resolvedPath.isEmpty && wc != nil {
-            wc!.select(note: resolution.resolvedNote, position: nil, source: .action, andScroll: true)
+            _ = wc!.viewCoordinator.focusOn(initViewID: "note-link-resolver",
+                                            note: resolution.resolvedNote,
+                                            position: nil, row: -1, searchPhrase: nil)
+            // wc!.select(note: resolution.resolvedNote, position: nil, source: .action, andScroll: true)
             return wc
         } else {
             let folders = NotenikFolderList.shared
@@ -35,7 +38,10 @@ class NoteLinkResolverCocoa {
             }
             guard let collectionLink = link else { return nil  }
             guard let controller = juggler.open(link: collectionLink) else { return nil }
-            controller.select(note: resolution.resolvedNote!, position: nil, source: .action, andScroll: true)
+            _ = wc!.viewCoordinator.focusOn(initViewID: "note-link-resolver",
+                                            note: resolution.resolvedNote,
+                                            position: nil, row: -1, searchPhrase: nil)
+            // controller.select(note: resolution.resolvedNote!, position: nil, source: .action, andScroll: true)
             return controller
         }
     }

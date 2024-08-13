@@ -428,6 +428,7 @@ class NotePickerViewController: NSViewController,
             i += 1
             if i < noteTableView.numberOfRows {
                 noteTableView.selectRowIndexes([i], byExtendingSelection: false)
+                noteTableView.scrollRowToVisible(i)
             }
             return true
         case upArrow:
@@ -435,6 +436,7 @@ class NotePickerViewController: NSViewController,
             i -= 1
             if i >= 0 && i < noteTableView.numberOfRows {
                 noteTableView.selectRowIndexes([i], byExtendingSelection: false)
+                noteTableView.scrollRowToVisible(i)
             }
             return true
         default:
@@ -582,7 +584,10 @@ class NotePickerViewController: NSViewController,
         guard let io = noteIO else { return }
         guard let collWC = collectionController else { return }
         guard let note = io.getNote(knownAs: title) else { return }
-        collWC.select(note: note, position: nil, source: .nav, andScroll: true)
+        _ = collWC.viewCoordinator.focusOn(initViewID: "note-picker",
+                                           note: note,
+                                           position: nil, row: -1, searchPhrase: nil)
+        // collWC.select(note: note, position: nil, source: .nav, andScroll: true)
         closeWindow()
 
     }
