@@ -133,6 +133,8 @@ class CollectionViewCoordinator: NSObject {
         
         guard noteToUse != nil else { return false }
         
+        // print("CollectionViewCoordinator.focusOn from view \(initViewID) for note titled \(noteToUse!.title.value)")
+        
         /*
         if listVC != nil && source != .list && positionToUse != nil && positionToUse!.index >= 0 {
             listVC!.selectRow(index: positionToUse!.index, andScroll: andScroll, checkForMods: (source != .action))

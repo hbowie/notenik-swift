@@ -104,6 +104,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     var listVC: NoteListViewController?
                 var tagsItem: NSTabViewItem?
                     var tagsVC: NoteTagsViewController?
+                    var seqOutlineVC: SeqOutlineViewController?
 
         var noteItem: NSSplitViewItem?
             var noteTabs: NoteTabsViewController?
@@ -408,7 +409,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     @IBAction func toggleOutlineTab(_ sender: Any) {
-        print("Toggle Outline Tab")
         var success = false
         guard let io = notenikIO else { return }
         guard io.collectionOpen else { return }
@@ -443,13 +443,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             tabs.tabViewItems.removeLast()
         }
         viewCoordinator.removeView(viewID: SeqOutlineViewController.staticViewID)
+        seqOutlineVC = nil
         guard let collection = nio.collection else { return false }
         guard collection.seqFieldDef != nil else { return false }
-        print("Ready to prep seq outline!")
         
         if let seqOutlineController = self.seqOutlineStoryboard.instantiateController(withIdentifier: "seqOutlineVC") as? SeqOutlineViewController {
             seqOutlineController.collectionWindowController = self
             seqOutlineController.io = nio
+            seqOutlineVC = seqOutlineController
             let outlineTab = NSTabViewItem(viewController: seqOutlineController)
             outlineTab.label = "Outline"
             tabs.addTabViewItem(outlineTab)
@@ -2348,11 +2349,12 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         var keyFound = true
         var dupCount = 1
         while keyFound {
-            let id = noteToAdd.noteID
+            let id = noteToAdd.noteID.id
             let existingNote = noteIO.getNote(forID: id)
             if existingNote != nil {
                 dupCount += 1
                 _ = noteToAdd.setTitle("\(originalTitle) \(dupCount)")
+                noteToAdd.identify()
                 keyFound = true
             } else {
                 keyFound = false
@@ -2625,8 +2627,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard indentLevels != 0 else { return }
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
-        
-        let (lowIndex, highIndex) = listVC!.getRangeOfSelectedRows()
+        guard let ctabs = collectionTabs else { return }
+        var lowIndex = -1
+        var highIndex = -2
+        if ctabs.selectedTabViewItemIndex == 2 && seqOutlineVC != nil {
+            (lowIndex, highIndex) = seqOutlineVC!.getRangeOfSelectedNotes(io: noteIO, withClick: false)
+        } else {
+            (lowIndex, highIndex) = listVC!.getRangeOfSelectedRows()
+        }
         guard lowIndex >= 0 else { return }
         guard let selNote = noteIO.getNote(at: lowIndex) else { return }
         

@@ -271,6 +271,7 @@ class NoteTagsViewController: NSViewController,
     
     /// Show the user the details for the row s/he selected
     func outlineViewSelectionDidChange(_ notification: Notification) {
+
         guard let outlineView = notification.object as? NSOutlineView else { return }
         guard collectionWindowController != nil else { return }
         
@@ -331,7 +332,7 @@ class NoteTagsViewController: NSViewController,
         guard viewID != initViewID else { return }
         guard note != nil else { return }
         guard outlineView != nil else {
-            print("  - outline view is nil!")
+            print("  - tags outline view is nil!")
             return
         }
 
