@@ -1308,15 +1308,17 @@ class CollectionJuggler: NSObject {
     
     func updateShowHideOutline() {
         guard let collection = _lastWC?.io?.collection else { return }
-        if collection.outlineTab {
-            showHideOutline.title = "Hide Outline Tab"
-        } else {
-            showHideOutline.title = "Show Outline Tab"
-        }
         if collection.seqFieldDef == nil {
             showHideOutline.isEnabled = false
+            showHideOutline.title = "Show/Hide Outline Tab"
+            collection.outlineTab = false
         } else {
             showHideOutline.isEnabled = true
+            if collection.outlineTab {
+                showHideOutline.title = "Hide Outline Tab"
+            } else {
+                showHideOutline.title = "Show Outline Tab"
+            }
         }
     }
     

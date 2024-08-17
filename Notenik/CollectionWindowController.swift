@@ -429,6 +429,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if success {
             io.persistCollectionInfo()
             reloadCollection(self)
+            juggler.updateShowHideOutline()
         }
     }
     
@@ -439,6 +440,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             return false
         }
         guard let tabs = collectionTabs else { return false }
+        let selectedTab = tabs.selectedTabViewItemIndex
         if tabs.tabViewItems.count > 2 {
             tabs.tabViewItems.removeLast()
         }
@@ -472,6 +474,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                               level: .fault,
                               message: "Couldn't get a Seq Outline View Controller!")
             return false
+        }
+        if selectedTab >= 0 && selectedTab < tabs.tabViewItems.count {
+            tabs.selectedTabViewItemIndex = selectedTab
         }
         return true
     }
@@ -1180,9 +1185,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                             position: nil, row: -1, searchPhrase: nil)
                 // select(note: modStartingNote!, position: nil, source: .nav, andScroll: true)
                 if listVC != nil && rowCount > 1 {
+                    print("  - extendintg listVC selection")
                     listVC!.extendSelection(rowCount: rowCount)
                 }
             } else {
+                print("  - positioning on first note")
                 let (note, position) = io!.firstNote()
                 _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                             note: note, position: position,
@@ -1309,7 +1316,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         editVC!.containerViewBuilt = false
         editVC!.configureEditView(noteIO: noteIO, klassName: klassName)
         if note != nil {
-            let focused = viewCoordinator.focusOn(initViewID: collectionViewID, 
+            _ = viewCoordinator.focusOn(initViewID: collectionViewID, 
                                                   note: note,
                                                   position: nil, row: -1, searchPhrase: nil)
             /* select(note: note,
@@ -1946,7 +1953,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         var newKlass: KlassValue?
                             
         // Gen Seq and Level, if appropriate
-        if row > 0 && dropOperation == .above && seqDef != nil && collection.sortParm == .seqPlusTitle {
+        if row > 0 && dropOperation == .above && seqDef != nil
+            && (collection.sortParm == .seqPlusTitle || collectionTabs!.selectedTabViewItemIndex == 2) {
             let seqType = seqDef!.fieldType as! SeqType
             var seqAbove = seqType.createValue() as! SeqValue
             let noteAbove = noteIO.getNote(at: row - 1)
@@ -2128,12 +2136,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 }
             }
         } // end for each item
-        finishBatchOperation()
         if firstNotePasted != nil {
             _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                         note: firstNotePasted,
-                                        position: nil, row: -1, searchPhrase: nil)
+                                        position: nil, row: -1, searchPhrase: nil,
+                                        withUpdatess: true)
             // select(note: firstNotePasted, position: nil, source: .nav, andScroll: true)
+        } else {
+            finishBatchOperation()
         }
         return notesAdded
     }
@@ -2574,7 +2584,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///   - note: The note prior to being incremented.
     ///   - modNote: A copy of the note being incremented.
     func incSeq(noteIO: NotenikIO, note: Note, modNote: Note) {
-        print("CollectionWindowContoller.incSeq")
         guard let sequencer = Sequencer(io: noteIO) else { return }
         let (notesInced, firstModNote) = sequencer.incrementSeq(startingNote: note)
         logInfo(msg: "\(notesInced) Notes had their Seq values incremented")
@@ -2582,7 +2591,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             // displayModifiedNote(updatedNote: firstModNote!)
             // populateEditFields(with: firstModNote!)
             // reloadViews()
-            print("  - viewCoordinator.focusOn \(firstModNote!.title.value)")
             _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                         note: firstModNote!,
                                         position: nil, row: -1, searchPhrase: nil,

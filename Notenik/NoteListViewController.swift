@@ -654,7 +654,7 @@ class NoteListViewController:   NSViewController,
         // let (outcome, _) = collectionWindowController!.modIfChanged()
         // guard outcome != modIfChangedOutcome.tryAgain else { return }
         // collectionWindowController!.applyCheckBoxUpdates()
-        coordinator!.focusOn(initViewID: viewID,
+        _ = coordinator!.focusOn(initViewID: viewID,
                              note: nil,
                              position: nil,
                              row: row,
