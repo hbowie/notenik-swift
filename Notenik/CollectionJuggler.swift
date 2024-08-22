@@ -1181,6 +1181,7 @@ class CollectionJuggler: NSObject {
             _lastWC = newValue
             updateSortMenu()
             updateDisplayModeMenu()
+            updateShowHideOutline()
         }
     }
     var _lastWC: CollectionWindowController? = nil

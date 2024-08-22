@@ -18,6 +18,8 @@ class NoteTagsViewController: NSViewController,
                               NSOutlineViewDelegate,
                               CollectionView {
     
+    let defaults = UserDefaults.standard
+    
     var collectionWindowController: CollectionWindowController?
     var notenikIO: NotenikIO?
 
@@ -50,6 +52,7 @@ class NoteTagsViewController: NSViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        adjustFonts()
         outlineView.dataSource = self
         
         // Setup the popup menu for rows in the list.
@@ -60,7 +63,41 @@ class NoteTagsViewController: NSViewController,
     }
     
     func reload() {
+        adjustFonts()
         outlineView.reloadData()
+    }
+    
+    var monoDigitFont: NSFont?
+    var userFont: NSFont?
+    var userFontName = ""
+    var fontToUse: NSFont?
+    
+    func adjustFonts() {
+
+        monoDigitFont = NSFont.monospacedDigitSystemFont(ofSize: 13.0,
+                                                         weight: NSFont.Weight.regular)
+        fontToUse = monoDigitFont
+        userFont = nil
+        var rowHeight: CGFloat = 17.0
+        if let userFontName = defaults.string(forKey: NotenikConstants.listDisplayFont) {
+            if !userFontName.isEmpty && !userFontName.lowercased().contains("system font") {
+                if let userFontSize = defaults.string(forKey: NotenikConstants.listDisplaySize) {
+                    if let doubleValue = Double(userFontSize) {
+                        let cgFloat = CGFloat(doubleValue)
+                        rowHeight = cgFloat * 1.3
+                        userFont = NSFont(name: userFontName, size: cgFloat)
+                        fontToUse = userFont
+                    }
+                }
+            }
+        }
+        if userFont == nil {
+            outlineView.rowHeight = CGFloat(17.0)
+            outlineView.rowSizeStyle = .custom
+        } else {
+            outlineView.rowHeight = rowHeight
+            outlineView.rowSizeStyle = .custom
+        }
     }
     
     /// Expand the given tag so that its children are visible
@@ -243,6 +280,7 @@ class NoteTagsViewController: NSViewController,
             let cellID = NSUserInterfaceItemIdentifier("tagsCell")
             view = outlineView.makeView(withIdentifier: cellID, owner: self) as? NSTableCellView
             if let textField = view?.textField {
+                textField.font = fontToUse!
                 switch node.type {
                 case .root:
                     textField.stringValue = notenikIO!.collection!.path
