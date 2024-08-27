@@ -1,0 +1,13 @@
+Title:  Inline Tags Test 1
+
+Body:
+
+# This is a level 1 heading
+
+#headings
+
+## This is a level 2 heading
+
+This is a sentence about #inline-tags, and how neat they are. 
+
+Notenik is my #1 pick for note-taking.

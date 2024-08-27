@@ -27,7 +27,7 @@ class CollectionPrefsViewController: NSViewController {
     var collectionTitleSetByUser =      true
     @IBOutlet var fileExtComboBox:      NSComboBox!
     @IBOutlet var fileFormatComboBox:   NSComboBox!
-    @IBOutlet var hashTagsCkBox:        NSButton!
+    @IBOutlet var tagsHandlingPopup:    NSPopUpButton!
     @IBOutlet var collectionShortcut:   NSTextField!
     @IBOutlet var noteTitleDisplayPopUp: NSPopUpButton!
     @IBOutlet var mirrorAutoIndexCkBox: NSButton!
@@ -43,7 +43,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var parentView:           NSView!
     @IBOutlet var displayModePopUp:     NSPopUpButton!
     @IBOutlet var minEditBodySlider:    NSSlider!
-    @IBOutlet var minEditBodyHeight: NSTextField!
+    @IBOutlet var minEditBodyHeight:    NSTextField!
     
     var extPicker: FileExtensionPicker!
     
@@ -142,7 +142,7 @@ class CollectionPrefsViewController: NSViewController {
         
         extPicker.setFileExt(collection!.preferredExt)
         setFileFormat(collection!.noteFileFormat.rawValue)
-        setHashTags(collection!.hashTags)
+        setHashTags(collection!.hashTagsOption)
         setMirrorAutoIndex(collection!.mirrorAutoIndex)
         setBodyLabel(collection!.bodyLabel)
         setMinBodyEdit(collection!.minBodyEditViewHeight)
@@ -340,11 +340,14 @@ class CollectionPrefsViewController: NSViewController {
         }
     }
     
-    func setHashTags(_ on: Bool) {
-        if on {
-            hashTagsCkBox.state = .on
-        } else {
-            hashTagsCkBox.state = .off
+    func setHashTags(_ opt: HashtagsOption) {
+        switch opt {
+        case .notenikField:
+            tagsHandlingPopup.selectItem(at: 0)
+        case .fieldWithHashSymbols:
+            tagsHandlingPopup.selectItem(at: 1)
+        case .inlineHashtags:
+            tagsHandlingPopup.selectItem(at: 2)
         }
     }
     
@@ -488,7 +491,18 @@ class CollectionPrefsViewController: NSViewController {
         }
         collection!.preferredExt = fileExtComboBox.stringValue
         collection!.setFileFormat(format: fileFormatComboBox.stringValue)
-        collection!.hashTags = (hashTagsCkBox.state == .on)
+        
+        switch tagsHandlingPopup.indexOfSelectedItem {
+        case 0:
+            collection!.hashTagsOption = .notenikField
+        case 1:
+            collection!.hashTagsOption = .fieldWithHashSymbols
+        case 2:
+            collection!.hashTagsOption = .inlineHashtags
+        default:
+            collection!.hashTagsOption = .notenikField
+        }
+        
         collection!.otherFields = otherFieldsCkBox.state == NSControl.StateValue.on
         collection!.mirrorAutoIndex = (mirrorAutoIndexCkBox.state == .on)
         collection!.bodyLabel = (bodyLabelCkBox.state == .on)

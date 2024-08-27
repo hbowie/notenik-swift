@@ -1,0 +1,10 @@
+Title:  Original Example
+
+Body:
+
+I use #hashtags
+
++ I will have to look into this later #focus
++ This sentence contains vital information. #important
++ This sentence is not finished… #continue
++ #modifications should be recognized

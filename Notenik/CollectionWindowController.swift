@@ -49,7 +49,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     var preferredExt        = ""
     var backLinksDef:       FieldDefinition?
     var noteFileFormat:     NoteFileFormat = .notenik
-    var hashTags            = false
+    var hashtagsOption:     HashtagsOption = .notenikField
     var defsRemoved         = DefsRemoved()
     
     var viewCoordinator:    CollectionViewCoordinator!
@@ -457,17 +457,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             outlineTab.label = "Outline"
             tabs.addTabViewItem(outlineTab)
             viewCoordinator.addView(newView: seqOutlineController)
-            /*
-            if let collectionPrefsWindow = collectionPrefsController.window {
-                let collectionPrefsVC = collectionPrefsWindow.contentViewController as! CollectionPrefsViewController
-                collectionPrefsVC.passCollectionPrefsRequesterInfo(collection: collection,
-                                                                   window: collectionPrefsController,
-                                                                   defsRemoved: defsRemoved)
-                let returnCode = application.runModal(for: collectionPrefsWindow)
-                if returnCode == NSApplication.ModalResponse.OK {
-                    collectionPrefsModified()
-                }
-            } */
+            viewCoordinator.addView(newView: seqOutlineController)
         } else {
             Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
                               category: "CollectionWindowController",
@@ -596,7 +586,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         preferredExt = collection.preferredExt
         noteFileFormat = collection.noteFileFormat
         backLinksDef = collection.backlinksDef
-        hashTags = collection.hashTags
+        hashtagsOption = collection.hashTagsOption
         defsRemoved.clear()
                 
         if let collectionPrefsController = self.collectionPrefsStoryboard.instantiateController(withIdentifier: "collectionPrefsWC") as? CollectionPrefsWindowController {
@@ -631,7 +621,13 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     noteIO.collection!.preferredExt = preferredExt
                 }
             }
-            if collection.noteFileFormat != noteFileFormat || collection.hashTags != hashTags {
+            var hashtagsUpdate = false
+            if collection.hashTagsOption != hashtagsOption
+                && collection.hashTagsOption != .inlineHashtags
+                && hashtagsOption != .inlineHashtags {
+                hashtagsUpdate = true
+            }
+            if collection.noteFileFormat != noteFileFormat || hashtagsUpdate {
                 confirmFileFormatChange(fileIO: fileIO, collection: collection)
             }
         }
@@ -651,8 +647,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         if noteFileFormat != collection.noteFileFormat {
             msg.append( "  - from \(noteFileFormat.forDisplay) to \(collection.noteFileFormat.forDisplay) \n")
         }
-        if hashTags != collection.hashTags {
-            if collection.hashTags {
+        if hashtagsOption != collection.hashTagsOption {
+            if collection.hashTagsOption == .fieldWithHashSymbols {
                 msg.append("  - adding hash tags")
             } else {
                 msg.append("  - removing hash tags")
@@ -695,14 +691,14 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         // Now rewrite the Collection to disk.
         let newFormat = fileIO.collection!.noteFileFormat
-        let newTags = fileIO.collection!.hashTags
+        let newHashtagsOption = fileIO.collection!.hashTagsOption
         var updated = 0
         var (note, position) = fileIO.firstNote()
         while note != nil {
             note!.noteID.setNoteFileFormat(newFormat: newFormat)
             if let tagsField = note!.getTagsAsField() {
                 if let tags = tagsField.value as? TagsValue {
-                    tags.hashTags = newTags
+                    tags.hashtagsOption = newHashtagsOption
                 }
             }
             let written = fileIO.writeNote(note!)

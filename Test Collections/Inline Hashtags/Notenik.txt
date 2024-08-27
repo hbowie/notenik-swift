@@ -1,0 +1,9 @@
+Title:  Notenik
+
+Link:   https://notenik.app
+
+Body:
+
+A note-taking system cunningly devised by Herb Bowie.
+
+You can delete this starting Note after creating one or two of your own.
