@@ -1,0 +1,19 @@
+Title:  Headings become tags?
+
+Body:
+
+[toc]
+
+# Heading 1
+
+## Heading 2
+
+- [x] task
+- [ ] task 2
+	- [ ] task
+- [ ] task 3
+	- [ ] task 4
+		- [ ] task 5
+		- [ ] task 6
+		~~sfdvdvs~~
+

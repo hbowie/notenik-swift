@@ -2,6 +2,12 @@ Title:  Original Example
 
 Body:
 
+# Level 1 Heading
+
+blah-blah-blah
+
+## Level 2 Heading
+
 I use #hashtags
 
 + I will have to look into this later #focus

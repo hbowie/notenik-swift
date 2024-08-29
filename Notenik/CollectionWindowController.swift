@@ -1181,11 +1181,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                             position: nil, row: -1, searchPhrase: nil)
                 // select(note: modStartingNote!, position: nil, source: .nav, andScroll: true)
                 if listVC != nil && rowCount > 1 {
-                    print("  - extendintg listVC selection")
                     listVC!.extendSelection(rowCount: rowCount)
                 }
             } else {
-                print("  - positioning on first note")
                 let (note, position) = io!.firstNote()
                 _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                             note: note, position: position,
@@ -3737,6 +3735,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         // Update directions, if requested.
         if outcome == .add || outcome == .modWithKeyChanges || outcome == .modify {
+            
+            // Update driving direcetions if needed
             if let directionsDef = io?.collection?.directionsFieldDef {
                 if let directionsField = note!.getField(def: directionsDef) {
                     if let value = directionsField.value as? DirectionsValue {
