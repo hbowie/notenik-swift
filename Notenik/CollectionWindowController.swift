@@ -370,6 +370,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             splitViewController = contentViewController as? NoteSplitViewController
         }
         if splitViewController != nil {
+            let view = splitViewController!.view
             undoMgr = splitViewController!.undoManager
             collectionItem = splitViewController!.splitViewItems[0]
             noteItem = splitViewController!.splitViewItems[1]
@@ -2174,6 +2175,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     }
     
     func copyAttachments(note: Note, io: NotenikIO, attachmentPaths: String) {
+        guard let collection = io.collection else { return }
         let paths = attachmentPaths.components(separatedBy: "; ")
         for path in paths {
             var fromURL: URL?
@@ -2188,12 +2190,20 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                     let suffix = piped[piped.count - 1]
                     let added = io.addAttachment(from: fromURL!, to: note, with: suffix, move: false)
                     if added {
-                        if let imageDef = io.collection?.imageNameFieldDef {
-                            let imageField = note.getField(def: imageDef)
+                        var imageDef: FieldDefinition?
+                        var imageField: NoteField?
+                        var ext: FileExtension?
+                        if suffix.lowercased().contains("dark") && collection.imageDarkFieldDef != nil {
+                            imageDef = collection.imageDarkFieldDef
+                        } else {
+                            imageDef = collection.imageNameFieldDef
+                        }
+                        if imageDef != nil {
+                            imageField = note.getField(def: imageDef!)
                             if imageField == nil || imageField!.value.value.count == 0 {
-                                let ext = FileExtension(fromURL!.pathExtension)
-                                if ext.isImage {
-                                    _ = note.setField(label: imageDef.fieldLabel.commonForm, value: suffix)
+                                ext = FileExtension(fromURL!.pathExtension)
+                                if ext!.isImage {
+                                    _ = note.setField(label: imageDef!.fieldLabel.commonForm, value: suffix)
                                     _ = io.writeNote(note)
                                 }
                             }
@@ -3356,17 +3366,24 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     ///
     func okToAddAttachment(note: Note, file: URL, suffix: String, move: Bool, clearLink: Bool = false) {
         guard let noteIO = guardForCollectionAction() else { return }
+        guard let collection = noteIO.collection else { return }
         let added = noteIO.addAttachment(from: file, to: note, with: suffix, move: move)
         var noteUpdates = false
         if added {
             adjustAttachmentsMenu(note)
             noteUpdates = true
-            if let imageDef = noteIO.collection?.imageNameFieldDef {
-                let imageField = note.getField(def: imageDef)
+            var imageDef: FieldDefinition?
+            if suffix.lowercased().contains("dark") && collection.imageDarkFieldDef != nil {
+                imageDef = collection.imageDarkFieldDef
+            } else {
+                imageDef = collection.imageNameFieldDef
+            }
+            if imageDef != nil {
+                let imageField = note.getField(def: imageDef!)
                 if imageField == nil || imageField!.value.value.count == 0 {
                     let ext = FileExtension(file.pathExtension)
                     if ext.isImage {
-                        _ = note.setField(label: imageDef.fieldLabel.commonForm, value: suffix)
+                        _ = note.setField(label: imageDef!.fieldLabel.commonForm, value: suffix)
                         noteUpdates = true
                     }
                 }

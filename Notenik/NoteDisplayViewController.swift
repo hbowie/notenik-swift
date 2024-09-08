@@ -216,7 +216,14 @@ class NoteDisplayViewController: NSViewController,
         
         mdResults = TransformMdResults()
         
-        let displayHTML = noteDisplay.display(note!, io: io!, parms: parms, mdResults: mdResults)
+        var imagePref: ImagePref = .light
+        let appearance = view.effectiveAppearance
+        if appearance.name.rawValue.lowercased().contains("dark") {
+            imagePref = .dark
+        } else {
+            imagePref = .light
+        }
+        let displayHTML = noteDisplay.display(note!, io: io!, parms: parms, mdResults: mdResults, imagePref: imagePref)
         var html = ""
         if searchPhrase == nil || searchPhrase!.isEmpty {
             html = displayHTML
@@ -260,7 +267,7 @@ class NoteDisplayViewController: NSViewController,
                 if updatedNote == nil {
                     communicateError("Attempt to modify derived values failed")
                 } else {
-                    let displayHTML = noteDisplay.display(updatedNote!, io: io!, parms: parms, mdResults: mdResults)
+                    let displayHTML = noteDisplay.display(updatedNote!, io: io!, parms: parms, mdResults: mdResults, imagePref: imagePref)
                     if searchPhrase == nil || searchPhrase!.isEmpty {
                         html = displayHTML
                     } else {
