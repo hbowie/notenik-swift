@@ -101,16 +101,19 @@ class CollectionViewCoordinator: NSObject {
                  position: NotePosition?,
                  row: Int,
                  searchPhrase: String?,
-                 withUpdatess: Bool = false) -> Bool {
+                 withUpdates: Bool = false) -> Bool {
         
         guard !focusPending else {
             return false
         }
-        
         guard notenikIO != nil && notenikIO!.collectionOpen else { return false }
         
+        focusPending = true
         let (outcome, _) = collectionWindowController.modIfChanged()
-        guard outcome != modIfChangedOutcome.tryAgain else { return false }
+        guard outcome != modIfChangedOutcome.tryAgain else {
+            focusPending = false
+            return false
+        }
         
         collectionWindowController.applyCheckBoxUpdates()
         
@@ -131,7 +134,10 @@ class CollectionViewCoordinator: NSObject {
             noteToUse = notenikIO!.getNote(at: position!.index)
         }
         
-        guard noteToUse != nil else { return false }
+        guard noteToUse != nil else {
+            focusPending = false
+            return false
+        }
         
         /*
         if listVC != nil && source != .list && positionToUse != nil && positionToUse!.index >= 0 {
@@ -157,7 +163,7 @@ class CollectionViewCoordinator: NSObject {
                          position: positionToUse,
                          io: notenikIO!,
                          searchPhrase: searchPhrase,
-                         withUpdates: withUpdatess)
+                         withUpdates: withUpdates)
         }
         
         lastNote = noteToUse

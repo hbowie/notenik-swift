@@ -1410,7 +1410,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 _ = viewCoordinator.focusOn(initViewID: collectionViewID, 
                                             note: newNote!,
                                             position: nil, row: -1, searchPhrase: nil,
-                                            withUpdatess: true)
+                                            withUpdates: true)
                 // select(note: newNote!, position: nil, source: .action, andScroll: true)
                 newWithOptions(currentNote: newNote!)
             }
@@ -1613,7 +1613,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                     note: note, 
                                     position: position, row: -1, searchPhrase: nil,
-                                    withUpdatess: true)
+                                    withUpdates: true)
         // select(note: note, position: position, source: .nav, andScroll: true)
     }
     
@@ -1720,7 +1720,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                         note: firstNote,
                                         position: nil, row: -1, searchPhrase: nil,
-                                        withUpdatess: true)
+                                        withUpdates: true)
             // select(note: firstNote, position: nil, source: .nav, andScroll: true)
         } else {
             let (note, position) = io!.firstNote()
@@ -1865,7 +1865,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                         note: tagStartNote,
                                         position: tagStartPosition,
                                         row: -1, searchPhrase: nil,
-                                        withUpdatess: true)
+                                        withUpdates: true)
             // select(note: tagStartNote, position: tagStartPosition, source: .action)
         } else {
             let (note, position) = io!.firstNote()
@@ -2135,7 +2135,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                         note: firstNotePasted,
                                         position: nil, row: -1, searchPhrase: nil,
-                                        withUpdatess: true)
+                                        withUpdates: true)
             // select(note: firstNotePasted, position: nil, source: .nav, andScroll: true)
         } else {
             finishBatchOperation()
@@ -2431,7 +2431,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                         note: selNote,
                                         position: nil, row: -1, searchPhrase: nil,
-                                        withUpdatess: true)
+                                        withUpdates: true)
             // select(note: selNote, position: nil, source: .action, andScroll: true)
         }
     }
@@ -2514,7 +2514,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                 _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                             note: chgNote,
                                             position: nil, row: -1, searchPhrase: nil,
-                                            withUpdatess: true)
+                                            withUpdates: true)
                 // select(note: chgNote, position: nil, source: .action)
             }
         }
@@ -2598,7 +2598,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                         note: firstModNote!,
                                         position: nil, row: -1, searchPhrase: nil,
-                                        withUpdatess: true)
+                                        withUpdates: true)
             // select(note: firstModNote!, position: nil, source: .action, andScroll: true)
         } else {
             print("  - first mod note is nil!")
@@ -2620,7 +2620,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                         note: firstModNote!,
                                         position: nil, row: -1, searchPhrase: nil,
-                                        withUpdatess: true)
+                                        withUpdates: true)
             // select(note: firstModNote!, position: nil, source: .action, andScroll: true)
         }
     }
@@ -2698,7 +2698,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                         note: modNote,
                                         position: nil, row: -1, searchPhrase: nil,
-                                        withUpdatess: true)
+                                        withUpdates: true)
         }
     }
     
@@ -2726,7 +2726,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             _ = viewCoordinator.focusOn(initViewID: collectionViewID,
                                         note: chgNote,
                                         position: nil, row: -1, searchPhrase: nil,
-                                        withUpdatess: true)
+                                        withUpdates: true)
             // select(note: chgNote, position: nil, source: .action, andScroll: true)
             return true
         }
@@ -3582,7 +3582,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                         note: selNote,
                                         position: nil,
                                         row: -1, searchPhrase: nil,
-                                        withUpdatess: true)
+                                        withUpdates: true)
             // select(note: selNote, position: nil, source: .action, andScroll: true)
         }
     }
@@ -3638,7 +3638,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                         note: nextNote,
                                         position: nextPosition,
                                         row: -1, searchPhrase: nil,
-                                        withUpdatess: true)
+                                        withUpdates: true)
             // select(note: nextNote, position: nextPosition, source: .action, andScroll: true)
         }
     }
@@ -3799,7 +3799,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                         note: note,
                                         position: nil,
                                         row: -1, searchPhrase: nil,
-                                        withUpdatess: true)
+                                        withUpdates: true)
             // select(note: note, position: nil, source: .action, andScroll: true)
             if note != nil {
                 mirrorNote(note!)
@@ -3954,7 +3954,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                     note: reloaded,
                                     position: nil,
                                     row: -1, searchPhrase: nil,
-                                    withUpdatess: true)
+                                    withUpdates: true)
         // select(note: reloaded, position: nil, source: .action, andScroll: true)
     }
     
@@ -4276,7 +4276,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                     note: note,
                                     position: position,
                                     row: -1, searchPhrase: nil,
-                                    withUpdatess: true)
+                                    withUpdates: true)
         // select(note: note, position: position, source: .nav, andScroll: true)
         
         let alert = NSAlert()
@@ -5607,7 +5607,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                                     note: note,
                                     position: position,
                                     row: -1, searchPhrase: nil,
-                                    withUpdatess: true)
+                                    withUpdates: true)
         // select(note: note, position: position, source: .action, andScroll: true)
     }
     

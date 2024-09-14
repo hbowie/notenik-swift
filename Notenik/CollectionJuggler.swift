@@ -705,6 +705,8 @@ class CollectionJuggler: NSObject {
             if note != nil && note!.hasKlass() {
                 klassName = note!.klass.value
             }
+            let holdPendingEdits = window.pendingEdits
+            window.pendingEdits = false
             window.editVC!.containerViewBuilt = false
             window.editVC!.configureEditView(noteIO: noteIO, klassName: klassName)
             if note != nil {
@@ -716,6 +718,7 @@ class CollectionJuggler: NSObject {
                               source: .action,
                               andScroll: true,
                               searchPhrase: nil) */
+                window.pendingEdits = holdPendingEdits
                 if editing {
                     window.openEdits(self)
                 }
