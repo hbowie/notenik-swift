@@ -10,7 +10,7 @@
 //
 
 import Cocoa
-import WebKit
+@preconcurrency import WebKit
 
 import NotenikUtils
 import NotenikLib

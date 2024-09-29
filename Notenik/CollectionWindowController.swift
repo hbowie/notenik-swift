@@ -79,6 +79,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     let fieldRenameStoryboard:     NSStoryboard = NSStoryboard(name: "FieldRename", bundle: nil)
     let bulkEditStoryboard:        NSStoryboard = NSStoryboard(name: "BulkEdit", bundle: nil)
     let seqOutlineStoryboard:      NSStoryboard = NSStoryboard(name: "SeqOutline", bundle: nil)
+    let wikiQuoteStoryboard:       NSStoryboard = NSStoryboard(name: "WikiQuote", bundle: nil)
     
     // Has the user requested the opportunity to add a new Note to the Collection?
     var newNoteRequested = false
@@ -370,7 +371,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             splitViewController = contentViewController as? NoteSplitViewController
         }
         if splitViewController != nil {
-            let view = splitViewController!.view
+            // let view = splitViewController!.view
             undoMgr = splitViewController!.undoManager
             collectionItem = splitViewController!.splitViewItems[0]
             noteItem = splitViewController!.splitViewItems[1]
@@ -400,13 +401,54 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
     
     /// Respond to a user request to show/hide the list/tabs view.
     @IBAction func toggleListPane(_ sender: Any) {
-        if let splits = splitViewController {
-            if splits.leftViewCollapsed {
-                changeLeftViewVisibility(makeVisible: true)
-            } else {
-                changeLeftViewVisibility(makeVisible: false)
-            }
+        guard let splits = splitViewController else { return }
+        if splits.leftViewCollapsed {
+            changeLeftViewVisibility(makeVisible: true, narrow: false)
+        } else {
+            changeLeftViewVisibility(makeVisible: false, narrow: false)
         }
+    }
+    
+    @IBAction func hideListNarrowWindow(_ sender: Any) {
+        guard let splits = splitViewController else { return }
+        if splits.leftViewCollapsed {
+            changeLeftViewVisibility(makeVisible: true, narrow: false)
+        } else {
+            changeLeftViewVisibility(makeVisible: false, narrow: true)
+        }
+    }
+    
+    func changeLeftViewVisibility(makeVisible: Bool, narrow: Bool = false) {
+        guard let splits = splitViewController else { return }
+        let dividerPosition = splits.changeLeftViewVisibility(makeVisible: makeVisible)
+        if makeVisible || !narrow {
+            changeWindowWidth(shrink: false, minWidth: dividerPosition + minimumWindowWidth)
+        } else {
+            changeWindowWidth(shrink: true, minWidth: minimumWindowWidth)
+        }
+    }
+    
+    var wideWidth: CGFloat = 0.0
+    
+    func changeWindowWidth(shrink: Bool, minWidth: CGFloat) {
+        guard let frame = window?.frame else { return }
+        let origin = frame.origin
+        let size   = frame.size
+        let height = size.height
+        let width = size.width
+        var newWidth = width
+        if shrink {
+            wideWidth = width
+            newWidth = width / 2.0
+        } else if wideWidth > 0.0 {
+            newWidth = wideWidth
+        }
+        if newWidth < minWidth {
+            newWidth = minWidth
+        }
+        let newSize = NSSize(width: newWidth, height: height)
+        let newRect = NSRect(origin: origin, size: newSize)
+        window!.setFrame(newRect, display: true, animate: true)
     }
     
     @IBAction func toggleOutlineTab(_ sender: Any) {
@@ -511,7 +553,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         if let splits = splitViewController {
             if splits.leftViewWidth > 0.0 {
-                changeLeftViewVisibility(makeVisible: false)
+                changeLeftViewVisibility(makeVisible: false, narrow: true)
             }
         }
     
@@ -521,36 +563,6 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             collection.displayMode = .quotations
             noteIO.persistCollectionInfo()
             reloadCollection(self)
-        }
-    }
-    
-    func changeLeftViewVisibility(makeVisible: Bool) {
-        if splitViewController != nil {
-            let dividerPosition = splitViewController!.changeLeftViewVisibility(makeVisible: makeVisible)
-            if makeVisible {
-                changeWindowWidth(shrink: false, minWidth: dividerPosition + minimumWindowWidth)
-            } else {
-                changeWindowWidth(shrink: true, minWidth: minimumWindowWidth)
-            }
-        }
-    }
-    
-    func changeWindowWidth(shrink: Bool, minWidth: CGFloat) {
-        if let frame = window?.frame {
-            let origin = frame.origin
-            let size   = frame.size
-            let height = size.height
-            let width = size.width
-            var newWidth = width
-            if shrink {
-                newWidth = width / 2.0
-            }
-            if newWidth < minWidth {
-                newWidth = minWidth
-            }
-            let newSize = NSSize(width: newWidth, height: height)
-            let newRect = NSRect(origin: origin, size: newSize)
-            window!.setFrame(newRect, display: true, animate: true)
         }
     }
     
@@ -889,6 +901,54 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         self.io = newIO
         
+    }
+    
+    @IBAction func importFromWikiQuote(_ sender: Any) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        
+        if let wqController = self.wikiQuoteStoryboard.instantiateController(withIdentifier: "wikiQuoteWC") as? WikiQuoteWindowController {
+            wqController.io = noteIO
+            wqController.cwc = self
+            wqController.showWindow(self)
+        } else {
+            Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                              category: "CollectionWindowController",
+                              level: .fault,
+                              message: "Couldn't get a Wiki Quote Window Controller!")
+        }
+    }
+    
+    func newNote(quote: Quote) {
+        
+        guard let noteIO = guardForCollectionAction() else { return }
+        guard !quote.text.isEmpty else { return }
+        
+        newNote = Note(collection: noteIO.collection!)
+        
+        _ = newNote!.setBody(quote.text)
+        _ = newNote!.setTitle(StringUtils.summarize(quote.text, max: 60, ellipsis: false))
+        _ = newNote!.setAuthor(quote.author)
+        _ = newNote!.setDate(quote.date)
+        if !quote.link.isEmpty {
+            _ = newNote!.setLink(quote.link)
+        }
+        if !quote.majorTitle.isEmpty {
+            _ = newNote!.setField(label: NotenikConstants.workTitleCommon, value: quote.majorTitle)
+            _ = newNote!.setField(label: NotenikConstants.workTypeCommon, value: "Major Work")
+        } else {
+            _ = newNote!.setField(label: NotenikConstants.workTitleCommon, value: quote.minorTitle)
+            _ = newNote!.setField(label: NotenikConstants.workTypeCommon, value: "Minor Work")
+        }
+        
+        newNoteRequested = true
+        editVC!.configureEditView(noteIO: noteIO)
+        editVC!.refreshLookupData()
+        editVC!.populateFields(with: newNote!)
+        noteTabs!.tabView.selectTabViewItem(at: 1)
+        guard let window = self.window else { return }
+        guard let titleView = editVC?.titleView else { return }
+        window.makeFirstResponder(titleView.view)
     }
     
     /// The user has requested an export of this Collection. 

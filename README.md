@@ -41,6 +41,7 @@ This is additional open-source code, written by others, and used by Notenik. The
 + [Down](https://github.com/iwasrobbed/Down)
 + [Ink](https://github.com/JohnSundell/Ink)
 + [MathJax](https://www.mathjax.org)
++ [SwiftSoup](https://github.com/scinfu/SwiftSoup.git)
 + [TrackerZapper](https://github.com/rknightuk/TrackerZapper)
 + [XMLCoder](https://github.com/MaxDesiatov/XMLCoder)
 + [ZIPFoundation](https://github.com/weichsel/ZIPFoundation)

@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		9C00AD632658158A002B6A0F /* CustomURLActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C00AD622658158A002B6A0F /* CustomURLActor.swift */; };
 		9C01E46624D74E1C00AEB4F6 /* BooleanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C01E46524D74E1C00AEB4F6 /* BooleanView.swift */; };
+		9C02117F2CA2344B00167707 /* WikiQuote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C02117E2CA2344B00167707 /* WikiQuote.storyboard */; };
+		9C0211812CA2358800167707 /* WikiQuoteWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0211802CA2358800167707 /* WikiQuoteWindowController.swift */; };
+		9C0211832CA2367600167707 /* WikiQuoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0211822CA2367600167707 /* WikiQuoteViewController.swift */; };
+		9C0211842CA2367600167707 /* WikiQuoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0211822CA2367600167707 /* WikiQuoteViewController.swift */; };
 		9C02D2AE2267D46000587EDF /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C02D2AD2267D46000587EDF /* DateView.swift */; };
 		9C02D2B02267F29400587EDF /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C02D2AF2267F29400587EDF /* Calendar.storyboard */; };
 		9C02D2B12267F29400587EDF /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C02D2AF2267F29400587EDF /* Calendar.storyboard */; };
@@ -374,6 +378,9 @@
 /* Begin PBXFileReference section */
 		9C00AD622658158A002B6A0F /* CustomURLActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomURLActor.swift; sourceTree = "<group>"; };
 		9C01E46524D74E1C00AEB4F6 /* BooleanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooleanView.swift; sourceTree = "<group>"; };
+		9C02117E2CA2344B00167707 /* WikiQuote.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WikiQuote.storyboard; sourceTree = "<group>"; };
+		9C0211802CA2358800167707 /* WikiQuoteWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikiQuoteWindowController.swift; sourceTree = "<group>"; };
+		9C0211822CA2367600167707 /* WikiQuoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WikiQuoteViewController.swift; path = Notenik/wikiQuote/WikiQuoteViewController.swift; sourceTree = SOURCE_ROOT; };
 		9C02D2AD2267D46000587EDF /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		9C02D2AF2267F29400587EDF /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
 		9C02D2B22267F41200587EDF /* CalendarWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWindowController.swift; sourceTree = "<group>"; };
@@ -687,6 +694,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C02117D2CA233F500167707 /* wikiQuote */ = {
+			isa = PBXGroup;
+			children = (
+				9C02117E2CA2344B00167707 /* WikiQuote.storyboard */,
+				9C0211802CA2358800167707 /* WikiQuoteWindowController.swift */,
+				9C0211822CA2367600167707 /* WikiQuoteViewController.swift */,
+			);
+			path = wikiQuote;
+			sourceTree = "<group>";
+		};
 		9C10831225AA66A8004B33CA /* news */ = {
 			isa = PBXGroup;
 			children = (
@@ -872,6 +889,7 @@
 				9CB06CB522CCF4A200887778 /* tags */,
 				9CC902672AE073EF0004101B /* tagsAssign */,
 				9CD3261E2233063100D06B77 /* views */,
+				9C02117D2CA233F500167707 /* wikiQuote */,
 			);
 			path = Notenik;
 			sourceTree = "<group>";
@@ -1512,6 +1530,7 @@
 				9C9361472B7836690077BA22 /* IdPrefs.storyboard in Resources */,
 				9C46A71525D05CC0006E9C16 /* NewCollection.storyboard in Resources */,
 				9CD400D32A3A5CE700347106 /* AuxTextEdit.storyboard in Resources */,
+				9C02117F2CA2344B00167707 /* WikiQuote.storyboard in Resources */,
 				9CCE7C63264AE8FD003818DF /* QuickAction.storyboard in Resources */,
 				9C5BE16A277163FA0013C0D3 /* SeqMod.storyboard in Resources */,
 			);
@@ -1562,6 +1581,7 @@
 			files = (
 				9CFCB9EB293A65F3008D53E7 /* ComboData.swift in Sources */,
 				9CFA1A522A420105001A4555 /* DirectionsView.swift in Sources */,
+				9C0211832CA2367600167707 /* WikiQuoteViewController.swift in Sources */,
 				9CD358892293C42B00C9203F /* LinkView.swift in Sources */,
 				9CCE7C65264AEB1E003818DF /* QuickActionWindowController.swift in Sources */,
 				9C3CC8F8250AA0F8002C95D0 /* NavigatorWindowController.swift in Sources */,
@@ -1586,6 +1606,7 @@
 				9C02D2B32267F41200587EDF /* CalendarWindowController.swift in Sources */,
 				9CC9026D2AE075C90004101B /* TagsAssignViewController.swift in Sources */,
 				9C3A3B902C6BF911005BAE8C /* NoteActionType.swift in Sources */,
+				9C0211812CA2358800167707 /* WikiQuoteWindowController.swift in Sources */,
 				9C1E0C9822E5306B0025C99C /* AttachmentMasterController.swift in Sources */,
 				9C66C88E2881D2CF001F5E2A /* QueryBuilderWindowController.swift in Sources */,
 				9CDB562B259BAE3400AB93A4 /* MediumAuthViewController.swift in Sources */,
@@ -1800,6 +1821,7 @@
 				9CC78E6D2283587300640477 /* DisplayPrefsWindowController.swift in Sources */,
 				9C2AE529220A34D400AE8BEE /* NoteDisplayViewController.swift in Sources */,
 				9C857C6523830F1600EDB93C /* FavoritesPrefsViewController.swift in Sources */,
+				9C0211842CA2367600167707 /* WikiQuoteViewController.swift in Sources */,
 				9C1E0C9322E4F7D00025C99C /* AttachmentWindowController.swift in Sources */,
 				9C568DEB2322F701005D6B0A /* WorkTitleView.swift in Sources */,
 				9C2AE527220A34CC00AE8BEE /* NoteListViewController.swift in Sources */,
@@ -2026,7 +2048,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 710;
+				CURRENT_PROJECT_VERSION = 721;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2040,7 +2062,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 15.2.7;
+				MARKETING_VERSION = 15.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2056,7 +2078,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 710;
+				CURRENT_PROJECT_VERSION = 721;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = W3CJLBABN3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2070,7 +2092,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 15.2.7;
+				MARKETING_VERSION = 15.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powersurgepub.notenik.macos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
