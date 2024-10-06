@@ -1,0 +1,7 @@
+Title:  Referring note
+
+Timestamp: 20241003235618
+
+Body:
+
+Job 1 is to [[Rate and Review Notenik in the Mac App Store]].

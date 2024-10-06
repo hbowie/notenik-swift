@@ -1,0 +1,19 @@
+Title:  Rate and Review Notenik
+
+Tags:   notenik
+
+Link:   https://apps.apple.com/us/app/notenik/id1465997984?mt=12
+
+Status: 0 - Idea
+
+Date:   2021-02-09
+
+Recurs: Daily
+
+Timestamp: 20241003235525
+
+Body:
+
+This is a sample Note set up as a To Do item. 
+
+You can delete this starting Note after creating one or two of your own.

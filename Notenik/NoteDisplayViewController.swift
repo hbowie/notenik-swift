@@ -201,7 +201,7 @@ class NoteDisplayViewController: NSViewController,
         guard io != nil else { return }
         guard isViewLoaded else { return }
         guard let collection = io!.collection else { return }
-        if let filepath = note!.noteID.getFullPath(note: note!){
+        if let filepath = note!.noteID.getFullPath(note: note!) {
             CollectionJuggler.shared.setLastSelection(title: note!.title.value,
                                                       link: note!.getNotenikLink(preferringTimestamp: true),
                                                       filepath: filepath,
@@ -286,13 +286,14 @@ class NoteDisplayViewController: NSViewController,
         var nav: WKNavigation?
         var tempHTML = false
         if collection.imgLocal {
-            if let collectionURL = io?.collection?.fullPathURL {
-                let tempURL = collectionURL.appendingPathComponent(NotenikConstants.tempDisplayBase).appendingPathExtension(NotenikConstants.tempDisplayExt)
+            if let lib = io?.collection?.lib {
+                let imgFolder = lib.getResource(type: .notenikFiles)
+                let tempURL = imgFolder.url!.appendingPathComponent(NotenikConstants.tempDisplayBase).appendingPathExtension(NotenikConstants.tempDisplayExt)
                 do {
                     try html.write(to: tempURL, atomically: true, encoding: .utf8)
                     tempHTML = true
-                    base = collectionURL
-                    nav = webView.loadFileURL(tempURL, allowingReadAccessTo: collectionURL)
+                    base = imgFolder.url!
+                    nav = webView.loadFileURL(tempURL, allowingReadAccessTo: imgFolder.url!)
                 } catch {
                     communicateError("Could not write html to temporary file")
                 }

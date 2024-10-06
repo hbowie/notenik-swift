@@ -5215,6 +5215,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         _ = juggler.stashNotesInSubfolder(currentIO: noteIO, currentWindow: window)
     }
     
+    @IBAction func stashNotenikFilesInSubfolder(_ sender: Any) {
+        guard let noteIO = guardForCollectionAction() else { return }
+        noteIO.stashNotenikFilesInSubfolder()
+    }
+    
     @IBAction func genMirrorSample(_ sender: Any) {
         guard let noteIO = guardForCollectionAction() else { return }
         let collection = noteIO.collection!
@@ -5470,8 +5475,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         let ok = sampler.genSampleFiles(io: noteIO)
         if ok {
             communicateSuccess("Sample Display Template Successfully Generated",
-                               info: "Edit \(ResourceFileSys.displayHTMLFileName)"
-                               + " and \(ResourceFileSys.displayCSSFileName)"
+                               info: "Edit \(NotenikConstants.displayHTMLFileName)"
+                               + " and \(NotenikConstants.displayCSSFileName)"
                                + " files as needed",
                                alert: true)
         } else {
