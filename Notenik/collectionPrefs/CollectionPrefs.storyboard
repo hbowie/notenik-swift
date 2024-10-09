@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23094"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -35,7 +35,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="785" height="641"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nRr-0A-BNF">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nRr-0A-BNF">
                                 <rect key="frame" x="22" y="605" width="99" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Collection Title:" id="EmA-Z0-c3S">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -43,7 +43,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hAm-Gx-DYu">
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hAm-Gx-DYu">
                                 <rect key="frame" x="24" y="576" width="286" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Lu6-a8-Qft">
                                     <font key="font" metaFont="system"/>
@@ -54,7 +54,7 @@
                                     <action selector="titleEdited:" target="xFs-We-J5Y" id="5dv-CS-tEu"/>
                                 </connections>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ctF-qt-QqX">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ctF-qt-QqX">
                                 <rect key="frame" x="22" y="552" width="152" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Preferred File Extension:" id="kRV-BC-Hq9">
                                     <font key="font" metaFont="system"/>
@@ -62,7 +62,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <comboBox focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ej5-lu-c8j">
+                            <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ej5-lu-c8j">
                                 <rect key="frame" x="23" y="522" width="186" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="182" id="bEI-NU-EGt"/>
@@ -85,7 +85,7 @@
                                     </objectValues>
                                 </comboBoxCell>
                             </comboBox>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oqg-Xn-baG">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oqg-Xn-baG">
                                 <rect key="frame" x="22" y="448" width="61" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Shortcut:" id="5HL-L1-LLh">
                                     <font key="font" metaFont="system"/>
@@ -93,7 +93,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f1z-0l-Wus">
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f1z-0l-Wus">
                                 <rect key="frame" x="24" y="421" width="182" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="kji-uT-oAO">
                                     <font key="font" metaFont="system"/>
@@ -108,7 +108,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IdW-jq-Om6">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IdW-jq-Om6">
                                 <rect key="frame" x="22" y="397" width="115" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Note Title Display:" id="L9N-0m-VSW">
                                     <font key="font" metaFont="system"/>
@@ -120,7 +120,7 @@
                                 <rect key="frame" x="21" y="365" width="290" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3PZ-7g-DSX" id="WJf-Qx-gy8">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menu"/>
+                                    <font key="font" metaFont="message"/>
                                     <menu key="menu" id="4f7-ay-tyf">
                                         <items>
                                             <menuItem title="Item 1" state="on" id="3PZ-7g-DSX"/>
@@ -130,7 +130,7 @@
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MCf-az-OF2">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MCf-az-OF2">
                                 <rect key="frame" x="22" y="500" width="136" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Preferred File Format:" id="Jjw-j7-IBa">
                                     <font key="font" metaFont="system"/>
@@ -138,7 +138,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <comboBox toolTip="This selection controls the way Notes are stored on disk" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Efh-7d-Aq5">
+                            <comboBox toolTip="This selection controls the way Notes are stored on disk" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Efh-7d-Aq5">
                                 <rect key="frame" x="23" y="470" width="186" height="23"/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" numberOfVisibleItems="5" id="tdz-8h-9bB">
                                     <font key="font" metaFont="system"/>
@@ -221,7 +221,7 @@ Gw
                                 <rect key="frame" x="139" y="277" width="172" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Normal" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ZIi-Hu-CTZ" id="pfu-wJ-dWr">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menu"/>
+                                    <font key="font" metaFont="message"/>
                                     <menu key="menu" id="Ldh-XZ-EoO">
                                         <items>
                                             <menuItem title="Normal" state="on" id="ZIi-Hu-CTZ">
@@ -239,7 +239,7 @@ Gw
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vuW-aL-vrZ">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vuW-aL-vrZ">
                                 <rect key="frame" x="22" y="284" width="90" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Display Mode:" id="NDi-2z-zQC">
                                     <font key="font" metaFont="system"/>
@@ -254,7 +254,7 @@ Gw
                                     <url key="url" string="file://localhost/Applications/"/>
                                 </pathCell>
                             </pathControl>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u91-9V-e64">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u91-9V-e64">
                                 <rect key="frame" x="24" y="345" width="94" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Tags Handling:" id="qTe-Zh-AnU">
                                     <font key="font" metaFont="system"/>
@@ -266,7 +266,7 @@ Gw
                                 <rect key="frame" x="21" y="313" width="290" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Inline hashtags within Body" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="MeQ-zD-2Rf" id="rKZ-7w-Q4T">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menu"/>
+                                    <font key="font" metaFont="message"/>
                                     <menu key="menu" id="xjO-LY-fQI">
                                         <items>
                                             <menuItem title="Notenik Field" id="sN0-bG-W22"/>
@@ -283,7 +283,7 @@ Gw
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AjV-Tf-hMa">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AjV-Tf-hMa">
                                 <rect key="frame" x="354" y="178" width="91" height="19"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Edit Settings" id="vSp-J3-uXz">
                                     <font key="font" textStyle="title3" name=".SFNS-Regular"/>
@@ -300,7 +300,7 @@ Gw
                                     <action selector="minBodyEditHeightChanged:" target="xFs-We-J5Y" id="xoI-qi-O9R"/>
                                 </connections>
                             </slider>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fdT-XG-ugq">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fdT-XG-ugq">
                                 <rect key="frame" x="354" y="157" width="218" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Minimum Body Edit Height in Lines:" id="Man-5B-dGM">
                                     <font key="font" metaFont="system"/>
@@ -308,7 +308,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fGj-ZP-Aod">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fGj-ZP-Aod">
                                 <rect key="frame" x="566" y="157" width="44" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="TcZ-zc-zab"/>

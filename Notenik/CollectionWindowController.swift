@@ -2418,7 +2418,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         guard !pendingMod else { return nil }
         guard io != nil && io!.collectionOpen else { return nil }
         guard let noteIO = io else { return nil }
-        guard noteToAdd.hasTitle() else { return nil }
+        guard noteToAdd.hasTitle() else {
+            return nil
+        }
         let originalTitle = noteToAdd.title.value
         var keyFound = true
         var dupCount = 1
@@ -5228,9 +5230,10 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
                              alert: true)
             return
         }
-        collection.mirror = NoteTransformer.genSampleMirrorFolder(io: noteIO)
+        var mirrorMsg = ""
+        (collection.mirror, mirrorMsg) = NoteTransformer.genSampleMirrorFolder(io: noteIO)
         if collection.mirror == nil {
-            communicateError("Problems encountered trying to generate sample mirror folder",
+            communicateError(mirrorMsg,
                              alert: true)
         } else {
             let alert = NSAlert()
