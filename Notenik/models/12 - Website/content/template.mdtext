@@ -1,24 +1,34 @@
-Title: <title> 
+Title: <title>
 
-Tags: <tags> 
+Tags: <tags>
 
-AKA: <aka> 
+AKA: <aka>
 
-Link: <link> 
+Link: <link>
 
-Status: 0 - Idea; 1 - Proposed; 2 - Approved; 3 - Planned; 4 - In Work; 5 - Held; 6 - Completed; 7 - FollowUp; 8 - Canceled; 9 - Closed;  
+Status: 0 - Idea; 1 - Proposed; 2 - Approved; 3 - Planned; 4 - In Work; 5 - Held; 6 - Completed; 7 - FollowUp; 8 - Canceled; 9 - Closed; 
 
-Class: <class:  home, page, post > 
+Class: <class: , home, page, post >
 
-Date: <date> 
+Date: <date>
 
-Author: <author> 
+Author: <author>
 
-Teaser: <teaser> 
+Image Name: <imagename>
 
-Date Added: <dateadded> 
+Image Alt:
 
-Date Modified: <datemodified> 
+Image Caption: 
 
-Body:  
+Image Credit: 
+
+Image Credit Link: 
+
+Teaser: <teaser>
+
+Date Added: <dateadded>
+
+Date Modified: <datemodified>
+
+Body: 
 

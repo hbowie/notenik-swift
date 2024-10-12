@@ -18,8 +18,11 @@
 <?include "../includes/header.html" ?>
 
 	<main>
+	
+<?copyfile "../../content/files/=$imagename$=" "../../web/images/=$imagename&f$=" ?>
+=$image-slug$=
 
-=$body&o$=
+=$body&w1o$=
 
 <?if "=$title$=" eq "Index"?>
 <?include "../includes-gen/teasers.html" ?>

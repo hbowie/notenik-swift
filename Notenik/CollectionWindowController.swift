@@ -2223,7 +2223,8 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             possibleTitle = defaultTitle!
         }
         let tempNote = parser.getNote(defaultTitle: possibleTitle,
-                                      allowDictAdds: true)
+                                      allowDictAdds: true,
+                                      flexibleFieldAssignment: true)
         if !tempNote.title.value.hasPrefix("Pasted Note")
                 || tempNote.hasBody() || tempNote.hasLink() {
             tempNote.copyDefinedFields(to: note)
