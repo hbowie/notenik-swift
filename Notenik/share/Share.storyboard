@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23094"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -255,11 +255,23 @@ DQ
                                     <action selector="shareFormatSelection:" target="C6S-Gq-nNR" id="HuV-95-8S1"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4wh-Ks-8eV">
+                                <rect key="frame" x="19" y="214" width="98" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="radio" title="Teaser Only" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="12T-68-zIh">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="shareContentSelection:" target="C6S-Gq-nNR" id="7qi-jD-sRV"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="contentBodyOnlyButton" destination="MUC-MA-WTX" id="Zhf-IY-X0r"/>
                         <outlet property="contentEntireNoteButton" destination="8s6-Se-dMB" id="lPY-cX-N7t"/>
+                        <outlet property="contentTeaserOnlyButton" destination="4wh-Ks-8eV" id="Bxu-on-4jL"/>
                         <outlet property="destinationBrowserButton" destination="qVS-hI-ibo" id="jLK-0s-HcT"/>
                         <outlet property="destinationClipboardButton" destination="FqU-1u-Irh" id="ZBi-dk-y63"/>
                         <outlet property="destinationFileButton" destination="kPg-JB-VjE" id="QP9-b9-lpk"/>

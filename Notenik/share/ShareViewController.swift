@@ -48,6 +48,7 @@ class ShareViewController: NSViewController {
 
     @IBOutlet var contentBodyOnlyButton: NSButton!
     @IBOutlet var contentEntireNoteButton: NSButton!
+    @IBOutlet var contentTeaserOnlyButton: NSButton!
     
     @IBOutlet var formatHTMLDocButton: NSButton!
     @IBOutlet var formatHTMLFragmentButton: NSButton!
@@ -238,6 +239,21 @@ class ShareViewController: NSViewController {
                 stringToShare = note!.body.value
             }
             
+            // Format teaser.
+        } else if contentTeaserOnlyButton.state == .on {
+            if note!.hasTeaser() {
+                if format == .htmlDoc || format == .htmlFragment {
+                    let markdown = Markdown()
+                    markdown.md = note!.teaser.value
+                    let context = NotesMkdownContext(io: io!)
+                    let html = markdown.parse(markdown: note!.teaser.value,
+                                              options: mkdownOptions,
+                                              context: context)
+                    stringToShare = html
+                } else {
+                    stringToShare = note!.teaser.value
+                }
+            }
         // Format as Notenik.
         } else if formatNotenikButton.state == .on {
             // Share in Notenik format
