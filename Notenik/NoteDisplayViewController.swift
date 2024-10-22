@@ -287,7 +287,7 @@ class NoteDisplayViewController: NSViewController,
         var tempHTML = false
         if collection.imgLocal {
             if let lib = io?.collection?.lib {
-                let imgFolder = lib.getResource(type: .notenikFiles)
+                let imgFolder = lib.getResource(type: .notes)
                 let tempURL = imgFolder.url!.appendingPathComponent(NotenikConstants.tempDisplayBase).appendingPathExtension(NotenikConstants.tempDisplayExt)
                 do {
                     try html.write(to: tempURL, atomically: true, encoding: .utf8)
