@@ -559,11 +559,16 @@ class CollectionJuggler: NSObject {
             return false
         }
         
+        if let lib = collection.lib {
+            lib.setPaths()
+        }
+        
         currentWindow.close()
         let wc = openFileWithNewWindow(fileURL: url, readOnly: false)
         if wc != nil {
             notenikFolderList.add(url: url, type: .webCollection, location: .undetermined)
         }
+        
         return (wc != nil)
     }
     
