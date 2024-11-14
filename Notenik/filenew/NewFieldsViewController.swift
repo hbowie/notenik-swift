@@ -66,6 +66,8 @@ class NewFieldsViewController: NSViewController {
                         menuItem!.toolTip = "Record Your Plans for a Trip"
                     case "15 - Code Snippets":
                         menuItem!.toolTip = "Code Snippets for use with Notenik"
+                    case "16 - HTML for People demo":
+                        menuItem!.toolTip = "Web Building Tutorial"
                     default:
                         break
                     }

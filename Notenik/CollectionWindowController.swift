@@ -141,7 +141,11 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             if notenikIO!.collection!.title == "" {
                 notenikIO!.collection!.setDefaultTitle()
             }
-            window!.title = notenikIO!.collection!.userFacingLabel()
+            if notenikIO!.collection!.fullPathURL == appPrefs.essentialURL {
+                window!.title = notenikIO!.collection!.userFacingLabel() + " (E)"
+            } else {
+                window!.title = notenikIO!.collection!.userFacingLabel()
+            }
             scroller = NoteScroller(collection: notenikIO!.collection!)
             
             if self.window == nil {

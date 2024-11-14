@@ -42,6 +42,7 @@ class NoteDisplayViewController: NSViewController,
     var webView: NoteDisplayWebView!
     var webConfig: WKWebViewConfiguration!
     var userContentController: WKUserContentController!
+    var dataStore: WKWebsiteDataStore?
     
     let noteDisplay = NoteDisplay()
     
@@ -85,6 +86,10 @@ class NoteDisplayViewController: NSViewController,
         userContentController.addUserScript(script) */
         userContentController.add(self, name: NotenikConstants.checkBoxMessageHandlerName)
         webConfig.userContentController = userContentController
+        
+        dataStore = WKWebsiteDataStore.nonPersistent()
+        webConfig.websiteDataStore = dataStore!
+        
         webView = NoteDisplayWebView(frame: .zero, configuration: webConfig)
         webView.uiDelegate = self
         webView.navigationDelegate = self

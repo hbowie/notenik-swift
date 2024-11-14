@@ -4,7 +4,7 @@
 //
 //  Created by Herb Bowie on 2/7/21.
 //
-//  Copyright © 2021 - 2023 Herb Bowie (https://hbowie.net)
+//  Copyright © 2021 - 2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -216,15 +216,18 @@ class NewCollectionViewController: NSTabViewController {
         case "12 - Website":
             parentRealm = true
             primaryFolder = "content"
+        case "16 - HTML for People demo":
+            parentRealm = true
+            primaryFolder = "content"
         default:
             break
         }
         
         if parentRealm {
             ok = copyFolders(fromURL: modelURL, toURL: toURL)
-            print("Copying folders")
+            logInfo(msg: "Copying folders")
         } else {
-            print("Relocating Collection")
+            logInfo(msg: "Relocating Collection")
             let relo = CollectionRelocation()
             ok = relo.copyOrMoveCollection(from: modelURL.path, to: toURL.path, move: false)
         }
@@ -237,7 +240,7 @@ class NewCollectionViewController: NSTabViewController {
         var wc: CollectionWindowController?
         var notesURL: URL? = toURL
         if parentRealm {
-            print("Opening parent realm")
+            logInfo(msg: "Opening parent realm")
             _ = juggler.openParentRealm(parentURL: toURL)
             notesURL = URL(string: primaryFolder, relativeTo: toURL)
             wc = juggler.openFileWithNewWindow(fileURL: notesURL!, readOnly: false)
@@ -287,6 +290,14 @@ class NewCollectionViewController: NSTabViewController {
     
     func closeWindow() {
         wc.close()
+    }
+    
+    /// Send an informational message to the log.
+    func logInfo(msg: String) {
+        Logger.shared.log(subsystem: "com.powersurgepub.notenik.macos",
+                          category: "NewCollectionViewController",
+                          level: .info,
+                          message: msg)
     }
     
     /// Log an error message and optionally display an alert message.
