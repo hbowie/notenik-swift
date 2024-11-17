@@ -23,6 +23,10 @@ class KlassView: MacEditView {
         return klassField
     }
     
+    func setToDefaultValue() {
+        text = dataSource.defaultValue
+    }
+    
     var text: String {
         get {
             if klassField.indexOfSelectedItem >= 0 {

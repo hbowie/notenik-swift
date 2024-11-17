@@ -597,7 +597,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             return
         }
         guard !collection.isRealmCollection else {
-            communicateError("The Collection Settings cannot be adjusted for a Parent Realm Pseudo-Collection", alert: true)
+            communicateError("The Collection Settings cannot be adjusted for a Project Folder Pseudo-Collection", alert: true)
             return
         }
         preferredExt = collection.preferredExt
@@ -815,7 +815,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             return
         }
         guard !collection.isRealmCollection else {
-            communicateError("The Note ID Config cannot be adjusted for a Parent Realm Pseudo-Collection", alert: true)
+            communicateError("The Note ID Config cannot be adjusted for a Project Folder Pseudo-Collection", alert: true)
             return
         }
                 

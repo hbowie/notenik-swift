@@ -352,7 +352,13 @@ class NoteEditViewController: NSViewController, CollectionView {
                 let imageNameView = fieldView as! ImageNameView
                 imageNameView.customizeForNote(note)
             }
-            if field == nil {
+            if fieldView is KlassView && (field == nil || field!.value.isEmpty) {
+                let klassView = fieldView as! KlassView
+                klassView.setToDefaultValue()
+            } else if fieldView is StatusView && (field == nil || field!.value.isEmpty) {
+                let statusView = fieldView as! StatusView
+                statusView.setToDefaultValue()
+            } else if field == nil {
                 fieldView.text = ""
             } else {
                 let strVal = String(describing: field!.value)

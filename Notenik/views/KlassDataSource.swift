@@ -31,6 +31,10 @@ class KlassDataSource: NSObject, NSComboBoxDataSource, NSComboBoxDelegate {
         return klassList.count
     }
     
+    public var defaultValue: String {
+        return klassList.defaultValue
+    }
+    
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
         return itemAt(index: index)
     }

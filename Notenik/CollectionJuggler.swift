@@ -342,7 +342,7 @@ class CollectionJuggler: NSObject {
     /// Open a Parent Folder containing one or more Notenik Collections
     func openParentRealm() -> CollectionWindowController? {
         let openPanel = NSOpenPanel();
-        openPanel.title = "Select a Parent Folder containing one or more Collections"
+        openPanel.title = "Select a Project Folder containing one or more Collections"
         if appPrefs.parentRealmParentURL != nil {
             openPanel.directoryURL = appPrefs.parentRealmParentURL!
         } else {
@@ -354,7 +354,7 @@ class CollectionJuggler: NSObject {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = false
         openPanel.allowsMultipleSelection = false
-        openPanel.prompt = "Open Realm"
+        openPanel.prompt = "Open Project"
         let result = openPanel.runModal()
         if result == .OK {
             MultiFileIO.shared.registerBookmark(url: openPanel.url!)

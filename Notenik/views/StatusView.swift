@@ -20,6 +20,12 @@ class StatusView: MacEditView {
         return combo
     }
     
+    func setToDefaultValue() {
+        if config.defaultIndex >= 0 {
+            text = config.get(config.defaultIndex)
+        }
+    }
+    
     var text: String {
         get {
             return config.normalize(str: combo.stringValue, withDigit: true)
