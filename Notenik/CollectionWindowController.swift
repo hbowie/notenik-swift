@@ -600,6 +600,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             communicateError("The Collection Settings cannot be adjusted for a Project Folder Pseudo-Collection", alert: true)
             return
         }
+        if let fileIO = noteIO as? FileIO {
+            fileIO.loadCSSfiles()
+        }
         preferredExt = collection.preferredExt
         noteFileFormat = collection.noteFileFormat
         backLinksDef = collection.backlinksDef
@@ -647,6 +650,9 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             if collection.noteFileFormat != noteFileFormat || hashtagsUpdate {
                 confirmFileFormatChange(fileIO: fileIO, collection: collection)
             }
+            /* if collection.selCSSfile.isEmpty {
+                fileIO.loadDisplayCSS()
+            } */
         }
         removeFields()
         

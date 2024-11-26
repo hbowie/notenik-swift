@@ -3,7 +3,7 @@
 //  Notenik
 //
 //  Created by Herb Bowie on 4/5/19.
-//  Copyright © 2019 - 2023 Herb Bowie (https://hbowie.net)
+//  Copyright © 2019 - 2024 Herb Bowie (https://hbowie.net)
 //
 //  This programming code is published as open source software under the
 //  terms of the MIT License (https://opensource.org/licenses/MIT).
@@ -18,6 +18,9 @@ import NotenikLib
 class CollectionPrefsViewController: NSViewController {
     
     let application = NSApplication.shared
+    
+    let noCSSfilesMsg = "No CSS files found"
+    let noCSSfileSelMsg = "No CSS file selected"
     
     var collection: NoteCollection?
     var windowController: CollectionPrefsWindowController?
@@ -44,6 +47,7 @@ class CollectionPrefsViewController: NSViewController {
     @IBOutlet var displayModePopUp:     NSPopUpButton!
     @IBOutlet var minEditBodySlider:    NSSlider!
     @IBOutlet var minEditBodyHeight:    NSTextField!
+    @IBOutlet var cssFilePopup:         NSPopUpButton!
     
     var extPicker: FileExtensionPicker!
     
@@ -126,6 +130,7 @@ class CollectionPrefsViewController: NSViewController {
     }
     
     func setCollectionValues() {
+        print("CollectionPrefsController.setCollectionValues")
         guard collection != nil else { return }
         
         if collection!.title.isEmpty {
@@ -166,6 +171,22 @@ class CollectionPrefsViewController: NSViewController {
         setCurlyApostrophes(collection!.curlyApostrophes)
         setExtLinks(collection!.extLinksOpenInNewWindows)
         setScrollingSync(collection!.scrollingSync)
+        
+        print("  - collection has \(collection!.cssFiles.count) css files")
+        cssFilePopup.removeAllItems()
+        if collection!.cssFiles.isEmpty {
+            cssFilePopup.addItem(withTitle: noCSSfilesMsg)
+        } else {
+            cssFilePopup.addItem(withTitle: noCSSfileSelMsg)
+            for style in collection!.cssFiles {
+                cssFilePopup.addItem(withTitle: style)
+            }
+            if collection!.selCSSfile.isEmpty {
+                cssFilePopup.selectItem(at: 0)
+            } else {
+                cssFilePopup.selectItem(withTitle: collection!.selCSSfile)
+            }
+        }
     }
     
     func makeStackViews() {
@@ -530,6 +551,14 @@ class CollectionPrefsViewController: NSViewController {
         collection!.curlyApostrophes = (curlyApostsCkBox.state == .on)
         collection!.extLinksOpenInNewWindows = (extLinksCkBox.state == .on)
         collection!.scrollingSync = (scrollingSyncCkBox.state == .on)
+        
+        collection!.selCSSfile = ""
+        if let selectedCSSfile = cssFilePopup.titleOfSelectedItem {
+            if selectedCSSfile != noCSSfilesMsg && selectedCSSfile != noCSSfileSelMsg {
+                collection!.selCSSfile = selectedCSSfile
+            }
+        }
+        
         defsRemoved.clear()
         let dict = collection!.dict
         dict.unlock()
