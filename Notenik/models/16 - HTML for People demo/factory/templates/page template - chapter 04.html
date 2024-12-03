@@ -1,16 +1,28 @@
 <?copycss?>
 <?nextrec?>
+<?if "=$aka$=" ?>
+<?output "../../web/=$aka&f$=.html"?>
+<?else?>
 <?output "../../web/=$title&f$=.html"?>
+<?endif?>
 <!doctype html>
 <html>
   <head>
   	<meta charset="utf-8">
-		<title>Herb's Website</title>
-		<link rel="stylesheet" href="css/styles.css">
+	<title>=$title$=</title>
+	<link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
-=$body&fo$=
+    <header>
+      <h1>=$title$=</h1>
+    </header>
+    <main>
+      =$body&fo$=
+    </main>
 <?copyimages?>
+    <footer>
+      <p>Made with ❤️ and ☕️ by Herb Bowie.</p>
+    </footer>
   </body>
 </html>
 <?loop?>
