@@ -592,6 +592,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
         
         guard let noteIO = guardForCollectionAction() else { return }
         guard let collection = noteIO.collection else { return }
+        guard let lib = collection.lib else { return }
         guard !collection.readOnly else {
             communicateError("The Collection Settings cannot be adjusted for a read-only Collection", alert: true)
             return
@@ -601,6 +602,7 @@ class CollectionWindowController: NSWindowController, NSWindowDelegate, Attachme
             return
         }
         if let fileIO = noteIO as? FileIO {
+            lib.checkStatus(type: .cssFolder)
             fileIO.loadCSSfiles()
         }
         preferredExt = collection.preferredExt

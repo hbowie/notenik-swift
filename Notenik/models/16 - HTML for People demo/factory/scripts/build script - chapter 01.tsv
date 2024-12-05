@@ -1,4 +1,0 @@
-module	action	modifier	object	value
-input	open	notenik-defined		#PATH#../../content
-template	open			#PATH#../templates/page template - chapter 01.html
-template	generate			

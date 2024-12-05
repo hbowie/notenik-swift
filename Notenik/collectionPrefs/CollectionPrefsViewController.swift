@@ -130,7 +130,6 @@ class CollectionPrefsViewController: NSViewController {
     }
     
     func setCollectionValues() {
-        print("CollectionPrefsController.setCollectionValues")
         guard collection != nil else { return }
         
         if collection!.title.isEmpty {
@@ -172,7 +171,6 @@ class CollectionPrefsViewController: NSViewController {
         setExtLinks(collection!.extLinksOpenInNewWindows)
         setScrollingSync(collection!.scrollingSync)
         
-        print("  - collection has \(collection!.cssFiles.count) css files")
         cssFilePopup.removeAllItems()
         if collection!.cssFiles.isEmpty {
             cssFilePopup.addItem(withTitle: noCSSfilesMsg)

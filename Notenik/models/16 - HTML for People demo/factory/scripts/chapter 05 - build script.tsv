@@ -1,0 +1,13 @@
+module	action	modifier	object	value
+input	open	notenik-defined		#PATH#../../content/pages
+sort	clear			
+sort	add	ascending	Seq	
+sort	add	ascending	AKA	
+sort	set		params	
+template	webroot			#PATH#../../web
+template	open			#PATH#../templates/chapter 05 - nav template.html
+template	generate			
+template	open			#PATH#../templates/chapter 05 - nav clear.html
+template	generate			
+template	open			#PATH#../templates/chapter 05 - page template.html
+template	generate			
