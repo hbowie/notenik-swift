@@ -6,6 +6,10 @@ This is one of several active repositories on GitHub containing code and/or docu
 
 (There are also some inactive repos concerning an earlier version of Notenik, written in Java, and these will not be further mentioned in this README.)
 
+## New Repo for 2025
+
+Please see [hbowie/Notenik-25](https://github.com/hbowie/Notenik-25) for the latest changes to this code. This repo is being kept for history, but is not being further maintained. 
+
 ## Notenik Links Outside of GitHub
 
 Use these links to obtain more info about the app, and to actually download a working version to your Mac. 
@@ -19,7 +23,8 @@ Use these links to obtain more info about the app, and to actually download a wo
 
 This is all of the Swift code written as part of the Notenik application. These are all released under the terms of the MIT License. 
 
-+ [notenik-swift](https://github.com/hbowie/notenik-swift) - The Mac UI, written using AppKit/Cocoa
++ [Notenik-25](https://github.com/hbowie/Notenik-25) - The latest version of the Mac UI, written using AppKit/Cocoa, with commit history starting in 2025
++ [notenik-swift](https://github.com/hbowie/notenik-swift) - The Mac UI, written using AppKit/Cocoa, updated through (nearly) the end of 2024
 + [NotenikLib](https://github.com/hbowie/NotenikLib) - Underlying code that does not need Cocoa
 + [NotenikUtils](https://github.com/hbowie/NotenikUtils) - General-purpose utilities
 + [NotenikTextile](https://github.com/hbowie/NotenikTextile) - A very basic and incomplete parser for Textile
